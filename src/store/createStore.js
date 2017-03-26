@@ -6,7 +6,14 @@ import { createEpicMiddleware } from 'redux-observable'
 import { rootEpics }   from './epics/rootEpics'
 import { rootReducers} from './reducers/rootReducer'
 
-const epicMiddleware = createEpicMiddleware(rootEpics);
+// Websockets services
+import { WebSocketService } from '../utils/webSockets.observable'
+import { WebsocketAPI } from '../utils/webSockets.service'
+const wsAPI = new WebsocketAPI(new WebSocketService())
+
+const epicMiddleware = createEpicMiddleware(rootEpics, {
+  dependencies: { wsAPI: wsAPI }
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

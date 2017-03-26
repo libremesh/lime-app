@@ -1,10 +1,9 @@
 import createStore from './store/createStore'
-import makeFetch from './utils/makeFetch'
 
 import { updateLocation } from './store/actions/ActionCreators'
 import { getUrl } from './store/selectors/meta'
 
-const store = createStore(window.__STATE__,makeFetch)
+const store = createStore(window.__STATE__)
 
 //Listen change location on browser
 window.addEventListener('popstate', (e) => {
@@ -21,5 +20,8 @@ store.subscribe(() => {
 
 // Init location
 store.dispatch(updateLocation(window.location.pathname + window.location.search))
+
+// Init websocket
+store.dispatch({ type: 'ws/CONECTION_START', payload: 'ws://10.13.207.235/websocket/'})
 
 export default store;

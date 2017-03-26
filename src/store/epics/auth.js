@@ -4,9 +4,9 @@ export const defaultLoginAction = ( action$ ) =>
   action$.ofType(CONECTION_SUCCESS)
         .mapTo({ type: AUTH_LOGIN, payload: {user: 'admin', password: 'admin'}});
 
- export const loginAction = ( action$ ) => 
+ export const loginAction = ( action$, store, { wsAPI } ) => 
   action$.ofType(AUTH_LOGIN)
-        .mergeMap( action => window.wsAPI.login(action.payload))
+        .mergeMap( action => wsAPI.login(action.payload))
             .map((sid) => ({ type: AUTH_LOGIN_SUCCESS, payload: sid }));
 
  

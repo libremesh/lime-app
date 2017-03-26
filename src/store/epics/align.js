@@ -26,9 +26,9 @@ import {
 
 
 // LOAD INTERFACES -> Dispatch success and stations loads
-export const ifaceLoad = ( action$, { getState } ) => 
+export const ifaceLoad = ( action$, { getState }, { wsAPI } ) => 
     action$.ofType(...[IFACES_LOAD, AUTH_LOGIN_SUCCESS])
-        .mergeMap((action) => window.wsAPI.getInterfaces(getState().meta.sid))
+        .mergeMap((action) => wsAPI.getInterfaces(getState().meta.sid))
             .mergeMap((payload) => Observable.from([
                 ({ type: IFACES_LOAD_SUCCESS, payload: payload }),
                 ({ type: STATIONS_LOAD }),
@@ -36,16 +36,16 @@ export const ifaceLoad = ( action$, { getState } ) =>
 
 
 // LOAD ALL STATIONS -> Dispatch success and Init Align
-export const allStationsLoad = (action$, { getState } ) =>
+export const allStationsLoad = (action$, { getState }, { wsAPI }  ) =>
     action$.ofType(STATIONS_LOAD)
-        .mergeMap(() => window.wsAPI.getStations(getState().meta.sid))
+        .mergeMap(() => wsAPI.getStations(getState().meta.sid))
             .map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload: payload }));
 
 
 // CHANGE INTEFACE -> DIspatch get station by interface and select best signal
-export const ifaceChange = (action$, { getState } ) =>
+export const ifaceChange = (action$, { getState }, { wsAPI } ) =>
     action$.ofType(IFACE_CHANGE)
-        .mergeMap((action) => window.wsAPI.getIfaceStation(getState().meta.sid, action.payload.iface))
+        .mergeMap((action) => wsAPI.getIfaceStation(getState().meta.sid, action.payload.iface))
         .map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload: payload }))
         .catch(error => Observable.of({
         	type: 'NOTIFICATION',
@@ -67,9 +67,9 @@ export const initAlign = (action$ ) =>
 
 
 // GET_SIGNAL -> Update current signal and nodes
-export const getSignal = ( action$, { getState} ) => 
+export const getSignal = ( action$, { getState}, { wsAPI } ) => 
     action$.ofType(SIGNAL_GET)
-        .mergeMap(() => window.wsAPI.getStationSignal(getState().meta.sid, getState().align.currentReading))
+        .mergeMap(() => wsAPI.getStationSignal(getState().meta.sid, getState().align.currentReading))
             .map( signal => ({ type: SIGNAL_GET_SUCCESS, payload: signal }))
 
 // TIMER MANAGER
