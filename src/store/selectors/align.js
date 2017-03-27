@@ -1,1 +1,1 @@
-export const getAll = (state) => state.align
+export const getAll = (state) => state.align;

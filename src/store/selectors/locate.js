@@ -1,1 +1,1 @@
-export const getLocation = (state) => state.locate.station
+export const getLocation = (state) => state.locate.station;

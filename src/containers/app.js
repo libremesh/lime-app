@@ -1,13 +1,13 @@
 import { h, Component } from 'preact';
 
-import { Router } from 'preact-router'
-import {syncHistoryWithStore } from 'preact-router-redux'
+import { Router } from 'preact-router';
+import { syncHistoryWithStore } from 'preact-router-redux';
 
-import { Provider } from 'preact-redux'
+import { Provider } from 'preact-redux';
 
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createBrowserHistory';
 
-import { getPathname } from './../store/selectors/meta'
+import { getPathname } from './../store/selectors/meta';
 
 import Header from '../components/header';
 
@@ -16,7 +16,7 @@ import Locate from './locate';
 
 
 export const App = ({store}) => {
-  const history = syncHistoryWithStore(createHistory(), store)
+  const history = syncHistoryWithStore(createHistory(), store);
   return (
       <Provider store={store}>
         <div>
@@ -27,5 +27,5 @@ export const App = ({store}) => {
           </Router>
         </div>
       </Provider>
-)};
-    
+  );
+};
