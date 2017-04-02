@@ -1,27 +1,28 @@
+import { combineReducers } from 'redux';
+import { routerReducer } from 'preact-router-redux';
+
+import { combineEpics } from 'redux-observable';
+
 import createStore from './store/createStore';
+import { loadConstants, loadEpics, loadReducers, loadSelectors } from './utils/loader';
 
-import { updateLocation } from './store/actions/ActionCreators';
-import { getUrl } from './store/selectors/meta';
+import wsAPI from './utils/webSockets.service';
 
-const store = createStore(window.__STATE__);
+import { plugins } from './config';
 
-//Listen change location on browser
-window.addEventListener('popstate', (e) => {
-  store.dispatch(updateLocation(window.location.pathname + window.location.search));
-});
 
-//Change locatin on state change
-store.subscribe(() => {
-  const url = getUrl(store.getState());
-  if (window.location.pathname + window.location.search !== url) {
-    window.history.pushState({}, '', url);
-  }
-});
+//GENERATE REDUCERS
+let reducers = loadReducers(plugins);
+reducers.routing = routerReducer;
+const rootReducers = combineReducers(reducers);
 
-// Init location
-store.dispatch(updateLocation(window.location.pathname + window.location.search));
+//GENERATE EPICS
+const rootEpics =  combineEpics(...loadEpics(plugins));
+
+//CREATE STORE
+const store = createStore({},rootEpics,rootReducers,wsAPI);
 
 // Init websocket
-store.dispatch({ type: 'ws/CONECTION_START', payload: 'ws://10.13.207.235/websocket/'});
+store.dispatch({ type: 'meta/CONECTION_START', payload: 'ws://thisnode.info/websocket/'});
 
 export default store;

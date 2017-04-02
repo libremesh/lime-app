@@ -2,24 +2,27 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import { createEpicMiddleware } from 'redux-observable';
+import { routerMiddleware } from 'preact-router-redux';
 
-import { rootEpics }   from './epics/rootEpics';
-import { rootReducers} from './reducers/rootReducer';
+import { history } from './history';
 
-// Websockets services
-import { WebSocketService } from '../utils/webSockets.observable';
-import { WebsocketAPI } from '../utils/webSockets.service';
-const wsAPI = new WebsocketAPI(new WebSocketService());
 
-const epicMiddleware = createEpicMiddleware(rootEpics, {
-  dependencies: { wsAPI }
-});
+export default (initialState,rootEpics,rootReducers, wsAPI) => {
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default (initialState, fetchMethod) => {
+  const reduxRouterMiddleware = routerMiddleware(history);
+
+  const epicMiddleware = createEpicMiddleware(rootEpics, {
+    dependencies: { wsAPI }
+  });
+  
   const enhancer = composeEnhancers(
-      applyMiddleware(...[epicMiddleware,thunk.withExtraArgument(fetchMethod)]),
+      applyMiddleware(...[reduxRouterMiddleware,epicMiddleware,thunk.withExtraArgument()]),
   );
-  return createStore(rootReducers, initialState, enhancer);
+  
+
+  const store = createStore(rootReducers, initialState, enhancer);
+  return store;
+
 };

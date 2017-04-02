@@ -5,7 +5,13 @@
     "stage-0"
   ],
   "plugins": [
-    ["transform-decorators-legacy"],
-    ["transform-react-jsx", { "pragma": "h" }]
+    ["transform-react-jsx", { "pragma":"h" }],
+    ["module-resolver", {
+    "root": ["."],
+    "alias": {
+        "react": "preact-compat",
+        "react-dom": "preact-compat"
+    }
+    }]
   ]
 }

@@ -25,6 +25,7 @@
     "babel-core": "^6.14.0",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.5",
+    "babel-plugin-module-resolver": "^2.5.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-react-jsx": "^6.8.0",
     "babel-preset-es2015": "^6.14.0",
@@ -73,6 +74,7 @@
   "dependencies": {
     "history": "^4.6.1",
     "jssha": "^2.2.0",
+    "leaflet": "^1.0.3",
     "preact": "^7.1.0",
     "preact-compat": "^3.0.0",
     "preact-redux": "^2.0.0",
@@ -80,10 +82,16 @@
     "preact-router-redux": "^4.1.0",
     "promise-polyfill": "^6.0.2",
     "proptypes": "^0.14.3",
+    "purecss": "^0.6.2",
+    "react-leaflet": "^1.1.4",
+    "react-leaflet-google": "^2.1.0",
+    "react-pure": "^0.3.1",
     "redux": "^3.6.0",
     "redux-observable": "^0.14.1",
     "redux-thunk": "^2.2.0",
     "rxjs": "^5.2.0",
-    "serve": "^3.1.0"
+    "serve": "^3.1.0",
+    "simplegrid": "^1.0.2",
+    "skeleton-less": "^2.0.1"
   }
 }

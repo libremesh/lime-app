@@ -1,15 +1,21 @@
-import runtime from 'offline-plugin/runtime';
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 
-runtime.install({
-  // When an update is ready, tell ServiceWorker to take control immediately:
-  onUpdateReady() {
-    console.log('update ready');
-    runtime.applyUpdate();
+OfflinePluginRuntime.install({
+  onUpdating: () => {
+    console.log('SW Event:', 'onUpdating');
+  },
+  onUpdateReady: () => {
+    console.log('SW Event:', 'onUpdateReady');
+    // Tells to new SW to take control immediately
+    OfflinePluginRuntime.applyUpdate();
+  },
+  onUpdated: () => {
+    console.log('SW Event:', 'onUpdated');
+    // Reload the webpage to load into the new version
+    window.location.reload();
   },
 
-  // Reload to get the new version:
-  onUpdated() {
-    console.log('updated');
-    location.reload();
+  onUpdateFailed: () => {
+    console.log('SW Event:', 'onUpdateFailed');
   }
 });

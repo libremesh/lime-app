@@ -1,31 +1,63 @@
 import { h, Component } from 'preact';
+import Router from 'preact-router';
 
-import { Router } from 'preact-router';
-import { syncHistoryWithStore } from 'preact-router-redux';
+import style from './style';
 
-import { Provider } from 'preact-redux';
-
-import createHistory from 'history/createBrowserHistory';
-
-import { getPathname } from './../store/selectors/meta';
+import { bindActionCreators } from 'redux';
+import { connect } from 'preact-redux';
 
 import Header from '../components/header';
+import Status from '../components/status';
+import { plugins } from '../config';
 
-import Align from './align';
-import Locate from './locate';
-
-
-export const App = ({store}) => {
-  const history = syncHistoryWithStore(createHistory(), store);
-  return (
-      <Provider store={store}>
-        <div>
-        <Header />
-          <Router history={history}>
-            <Align path='/align' />
-            <Locate path='/locate' />
-          </Router>
+class App extends Component {
+  render({store,history}) {
+    const is_connected = (meta) => {
+      if (meta.sid !== 'no_user' && meta.stauts !== 'start' ) {
+        return (
+            <div class={style.wraper}>
+              <Router history={history}>
+                {plugins
+                  .filter(plugin => plugin.page !== false)
+                  .map(Component => (<Component.page path={Component.name.toLowerCase()} />))
+                }
+              </Router>
+            </div>
+        );
+      }
+      return (
+            <div class={style.wraper}>
+              <Router history={history}>
+              </Router>
+              <Status meta={meta} back={this.props.goBase} />
+            </div>
+      );
+    };
+    
+    return (
+        <div style={{minWidth: '100%'}}>
+          <Header />
+          {is_connected(this.props.meta)}
         </div>
-      </Provider>
-  );
+    );
+  }
+}
+
+
+const mapStateToProps = (state) => {
+  return { meta: state.meta };
 };
+
+const goBase = (hostname) => (dispatch) => {
+  dispatch({
+    type: 'meta/CONECTION_CHANGE_URL',
+    payload: 'ws://thisnode.info/websocket/'
+  });
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    goBase : bindActionCreators(goBase, dispatch)  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

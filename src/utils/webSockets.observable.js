@@ -16,7 +16,7 @@ export class WebSocketService {
   }
 
   create() {
-    let autoReconnectInterval = 5000;
+    let autoReconnectInterval = 2000;
     let ws;
     
     const open = () => {

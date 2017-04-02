@@ -1,3 +1,5 @@
+import { WebSocketService } from '../utils/webSockets.observable';
+
 const jsSHA = require("jssha");
 
 import 'rxjs/add/operator/map';
@@ -6,7 +8,7 @@ import 'rxjs/add/operator/switchMap';
 
 
 
-export class WebsocketAPI {
+class WebsocketAPI {
   constructor(_wss) {
     this._wss = _wss;
     this.jsonrpc = '2.0';
@@ -61,19 +63,27 @@ export class WebsocketAPI {
       .map(iface => iface.map((x) => { return { name: x }; }));
   }
   getNeighbors(sid) {
-    return this.call(sid, 'get_neighbors', {});
+    return this.call(sid, 'get_neighbors', {})
+            .map(data => Object.keys(data).map((key, index)=>data[key]).reduce((x,y) => x.concat(y), []));
   }
 
   getStations(sid) {
-    return this.call(sid, 'get_stations', {})
-      .map(data => Object.keys(data).map((key, index)=>data[key]).reduce((x,y) => x.concat(y), []))
-      .map((y) => {
-        return y.reduce((a, b) => a.concat(b), []);
-      })
-      .map((nodes) => nodes.map(node => {
-        node.signal = Number(node.signal);
-        return node;
-      }));
+    let a = new Promise((res,rej) => {
+      this.call(sid, 'get_stations', {})
+        .map(data => Object.keys(data).map((key, index)=>data[key]).reduce((x,y) => x.concat(y), []))
+        .map((y) => {
+          return y.reduce((a, b) => a.concat(b), []);
+        })
+        .map((nodes) => nodes.map(node => {
+          node.signal = Number(node.signal);
+          return node;
+        }))
+        .subscribe( x => {
+          if (x.length > 0) { res(x); }
+          rej(x);
+        });
+    });
+    return a;
   }
   getIfaceStation(sid, iface) {
     let a = new Promise((res,rej) => {
@@ -112,3 +122,7 @@ export class WebsocketAPI {
     return this.call(sid, 'get_hostname', {});
   }
 }
+
+
+// Websockets services
+export default new WebsocketAPI(new WebSocketService());
