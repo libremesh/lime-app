@@ -8,7 +8,7 @@ export class Navs extends Component {
   render() {
     const menuItems = plugins
       .filter( plugin => plugin.page !== false)
-      .map( plugin => (<a href={'#/'+plugin.name.toLowerCase()}>{plugin.name}</a>));
+      .map( plugin => <plugin.menu />);
     return (<nav>{menuItems}</nav>);
   }
 }
