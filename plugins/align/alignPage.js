@@ -20,9 +20,6 @@ class Align extends Component {
     this.props.stopAlign();
   }
 
-
-  changeStation = (e)  => e;
-
   render(state) {
     return (
       <div class="container" style={{paddingTop:'100px'}}>
@@ -39,13 +36,13 @@ class Align extends Component {
             </span>
           </div>
           <div class="six columns">
-            <label>Intefaces</label>
+            <label translate="yes">Intefaces</label>
             <select class="block" onChange={(e)=>{ this.props.changeInterface(e.target.value); }} value={state.alignData.currentReading.iface ? state.alignData.currentReading.iface : null }>
               {state.alignData.ifaces.map((iface)=> {
                 return <option value={iface.name}>{iface.name}</option>;
               })}
             </select>
-            <label>Nodes</label>
+            <label translate="yes">Stations</label>
             <select  class="block" onChange={(e) => { this.props.changeStation(e.target.value); }} value={state.alignData.currentReading.mac ? state.alignData.currentReading.mac : null }>
               {state.alignData.stations.map((station)=> {
                 return <option value={station.mac}>{station.hostname}</option>;

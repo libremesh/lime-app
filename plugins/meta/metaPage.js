@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 
 import style from './style';
 
+import I18n from 'i18n-js';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
@@ -10,14 +12,14 @@ import { getBase, getStations, getSelectedHost } from './metaSelectors';
 
 class Meta extends Component {
 
-  nextStation = (e) => {
+  nextStation(e) {
     if (typeof this.state.station !== 'undefined') {
       this.props.changeBase(this.state.station);
     }
     e.preventDefault();
   }
 
-  handleChange = (e) => {
+  handleChange(e) {
     this.setState({station: e.target.value});
   }
 
@@ -28,13 +30,13 @@ class Meta extends Component {
             <div class="row">
                 <div class="six columns">
                   <p>
-                    <label>Current status</label>
-                    Conected Host: {this.props.selectedHost}<br />
-                    Base Host: {this.props.base}
+                    <label translate='yes'>Current status</label>
+                    <span  translate='yes'>Conected Host</span>: {this.props.selectedHost}<br />
+                    <span  translate='yes'>Base Host</span>: {this.props.base}
                   </p>
                 </div>
                 <div class="six columns">
-                  <p>
+                 <p>
                     <label for="exampleRecipientInput">Select new base station</label>
                     <select class="u-full-width" onChange={this.handleChange} >
                         <option value={this.props.selectedHost}>{this.props.selectedHost}</option>

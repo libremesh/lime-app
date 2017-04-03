@@ -10,7 +10,8 @@
     "prebuild": "mkdirp build && ncp src/assets build/assets",
     "test": "npm run -s lint && npm run -s test:karma",
     "test:karma": "karma start test/karma.conf.js --single-run",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "translations": "node ./node_modules/i18nline/bin/i18nline.js export"
   },
   "keywords": [
     "preact",
@@ -41,6 +42,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.10.0",
     "html-webpack-plugin": "^2.22.0",
+    "i18nline": "^1.5.0",
     "isparta-loader": "^2.0.0",
     "json-loader": "^0.5.4",
     "karma": "^1.0.0",
@@ -77,6 +79,7 @@
     "leaflet": "^1.0.3",
     "preact": "^7.1.0",
     "preact-compat": "^3.0.0",
+    "preact-i18nline": "^1.5.0",
     "preact-redux": "^2.0.0",
     "preact-router": "^2.0.0",
     "preact-router-redux": "^4.1.0",
@@ -92,6 +95,7 @@
     "rxjs": "^5.2.0",
     "serve": "^3.1.0",
     "simplegrid": "^1.0.2",
-    "skeleton-less": "^2.0.1"
+    "skeleton-less": "^2.0.1",
+    "ulog": "^1.0.2"
   }
 }

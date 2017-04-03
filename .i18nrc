@@ -1,0 +1,6 @@
+{
+  "plugins": [
+    "preact-i18nline"
+  ],
+  "outputFile": "i18n/translations/en.json"
+}
