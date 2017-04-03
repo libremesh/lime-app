@@ -82,7 +82,7 @@ class Locate extends Component {
               </BaseLayer>
           </LayersControl>
           <Marker
-            onDragend={this.updatePosition}
+            onDragend={this.updatePosition.bind(this)}
             position={[this.props.stationLocation.lat,this.props.stationLocation.lon]}
             draggable={this.state.draggable}>
               <Popup>

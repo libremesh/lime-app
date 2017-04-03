@@ -26,7 +26,7 @@ class Meta extends Component {
   render(state) {
     return (
       <div class="container" style={{paddingTop:'100px'}}>
-        <form onSubmit={this.nextStation}>
+        <form onSubmit={this.nextStation.bind(this)}>
             <div class="row">
                 <div class="six columns">
                   <p>
@@ -38,7 +38,7 @@ class Meta extends Component {
                 <div class="six columns">
                  <p>
                     <label for="exampleRecipientInput">Select new base station</label>
-                    <select class="u-full-width" onChange={this.handleChange} >
+                    <select class="u-full-width" onChange={this.handleChange.bind(this)} >
                         <option value={this.props.selectedHost}>{this.props.selectedHost}</option>
                         {this.props.stations.map(x => (<option value={x}>{x}</option>))}
                     </select>
