@@ -13,8 +13,7 @@ const CSS_MAPS = ENV!=='production';
 
 module.exports = {
   context: path.resolve(__dirname, "src"),
-  entry: './index.js',
-
+  entry: ['./i18nline-glue.js','./index.js'],
   output: {
     path: path.resolve(__dirname, "build"),
     publicPath: './',
@@ -75,8 +74,10 @@ module.exports = {
     {
       test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
       loader: ENV==='production' ? 'file-loader' : 'url-loader'
-    }
-    ]
+    },
+    {
+      test: /\.js$/, loader: "preact-i18nline/webpack-loader"
+    }]
   },
 
   postcss: () => [
@@ -98,8 +99,7 @@ module.exports = {
       minify: { collapseWhitespace: true }
     }),
     new CopyWebpackPlugin([
-			{ from: './manifest.json', to: './' },
-			{ from: './assets/favicon.ico', to: './assets' }
+			{ from: './manifest.json', to: './' }
     ])
   ]).concat(ENV==='production' ? [
     new V8LazyParseWebpackPlugin(),
