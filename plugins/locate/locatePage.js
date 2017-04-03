@@ -2,6 +2,8 @@ import { h, Component } from 'preact';
 
 import style from './style';
 
+import I18n from 'i18n-js';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
@@ -16,18 +18,14 @@ const { BaseLayer } = LayersControl;
 const key = 'AIzaSyBS0M7H7Ltk1ipjwqi8r9_WQJOzWfav4Ok	';
 const hybrid = 'HYBRID';
 const road = 'ROADMAP';
-
 import L from 'leaflet';
-
-L.Icon.Default.imagePath = '.';
-// OR
-delete L.Icon.Default.prototype._getIconUrl;
-
 
 /*
  * Fix issue leaflet+webpack
  * https://github.com/Leaflet/Leaflet/issues/4968
 */
+L.Icon.Default.imagePath = '.';
+delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
@@ -50,7 +48,7 @@ class Locate extends Component {
     this.requestCurrentPosition();
   }
 
-  updatePosition = (e) => {
+  updatePosition(e) {
     let { lat, lng } = e.target._latlng;
     this.props.changeLocation({lat: lat.toFixed(5),lon:lng.toFixed(5)});
   }
@@ -63,7 +61,7 @@ class Locate extends Component {
     }
   }
 
-  toggleDraggable = () => {
+  toggleDraggable() {
     this.setState({draggable: !this.state.draggable});
   }
 
@@ -89,9 +87,9 @@ class Locate extends Component {
             draggable={this.state.draggable}>
               <Popup>
                 <span>
-                  <strong>Station </strong>{this.props.stationHostname}<br/>
+                  <strong translate="yes">Station </strong>{this.props.stationHostname}<br/>
                   <span onClick={this.toggleDraggable.bind(this)}>
-                      <u>{this.state.draggable ? 'MOVE TO NEW POSITION' : 'PRES TO ENABLE CHANGES'}</u>
+                      {this.state.draggable ? (<u translate="yes">MOVE TO NEW POSITION</u>) : (<u translate="yes">PRES TO ENABLE CHANGES</u>)}
                   </span>
                 </span>
               </Popup>
@@ -101,7 +99,7 @@ class Locate extends Component {
             draggable={false}>
               <Popup>
                 <span>
-                  <strong>User</strong>
+                  <strong  translate="yes">User</strong>
                 </span>
               </Popup>
           </Marker>
