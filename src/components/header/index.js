@@ -11,11 +11,17 @@ class Header extends Component {
     this.setState({open:!this.state.open});
   }
 
+  menuStatus(open){
+    return (open)? [style.hamburger, style.isActive].join(' ') : style.hamburger;
+  }
+
   render() {
     return (
       <header class={style.header}>
         <h1>LimeApp</h1>
-        <span onClick={this.toggle.bind(this)} class={style.menuIcon}>X</span>
+        <div class={this.menuStatus(this.state.open)} onClick={this.toggle.bind(this)}>
+          <span>toggle menu</span>
+        </div>
         <Drawer status={this.state.open} toggle={this.toggle.bind(this)}>
           <Navs />
         </Drawer>
