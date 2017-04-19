@@ -1,0 +1,9 @@
+export const LOAD_GATEWAY = 'metrics/LOAD_GATEWAY';
+export const LOAD_GATEWAY_SUCCESS = 'metrics/LOAD_GATEWAY_SUCCESS';
+export const LOAD_GATEWAY_ERROR = 'metrics/LOAD_GATEWAY_ERROR';
+export const LOAD_METRICS = 'metrics/LOAD_METRICS';
+export const LOAD_METRICS_SUCCESS = 'metrics/LOAD_METRICS_SUCCESS';
+export const LOAD_METRICS_ERROR = 'metrics/LOAD_METRICS_ERROR';
+export const LOAD_PATH = 'metrics/LOAD_PATH';
+export const LOAD_PATH_SUCCESS = 'metrics/LOAD_PATH_SUCCESS';
+export const LOAD_PATH_ERROR = 'metrics/LOAD_PATH_ERROR';
