@@ -2,6 +2,7 @@ import { WebSocketService } from '../utils/webSockets.observable';
 
 const jsSHA = require("jssha");
 
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/switchMap';
@@ -9,39 +10,80 @@ import 'rxjs/add/operator/switchMap';
 
 
 class WebsocketAPI {
+  responses = [];
+  sec = 0;
+  socket;
   constructor(_wss) {
     this._wss = _wss;
     this.jsonrpc = '2.0';
-    this.sec = 0;
   }
+
+  register(x) {
+    if (x.type === 'message'){
+      let data = JSON.parse(x.data);
+      this.responses[data.id](data);
+      delete this.responses[data.id];
+    }
+    else if (x.type === 'open') {
+      this.responses['conect'](true);
+    }
+  }
+
   conect(url) {
     this.socket = this._wss.connect(url);
-    return this.socket;
+    this.socket.subscribe(this.register.bind(this));
+    let observable = Observable.create((obs)=>{
+      this.responses['conect'] = obs.next.bind(obs);
+    });
+    return observable;
   }
-  send(mensaje) {
+
+  addId(){
     this.sec += 1;
-    mensaje.id = this.sec;
-    mensaje.jsonrpc = this.jsonrpc;
-    this.socket.next(mensaje);
-    return this.socket.map(x => JSON.parse(x.data))
-      .filter(x => x.id === mensaje.id)
-      .map(x => x.result);
+    return Number(this.sec);
   }
-  call(sid, action, data) {
-    return this.send({ 'method': 'call', 'params': [
-      sid, '/lime/api', action, data
-    ]});
+
+  send(mensaje) {
+    const newMensaje = Object.assign({}, mensaje, {id:this.addId(), jsonrpc: this.jsonrpc});
+    this.socket.next(newMensaje);
+    return newMensaje.id;
   }
+
+  call(sid, action, data, method) {
+    let id;
+    if (typeof method === 'undefined') { method = 'call'; }
+    if (method !== 'login')  {
+      id = this.send({ method, 'params': [
+        sid, '/lime/api', action, data
+      ]});
+    } else {
+      id = this.send({ method, 'params': data });
+    }
+
+    let filter = (x) => x.id === id;
+
+    let observable = Observable.create((obs)=>{
+      this.responses[id] = obs.next.bind(obs);
+    });
+    return observable
+        .filter(filter)
+        .map(x => x.result);
+  }
+
   login(auth) {
     return this.getChallenge()
       .map(x => x.token)
       .switchMap((token) => {
         let shaPassword = this.shaToken(auth.password, token);
-        return this.send({ 'method': 'login', 'params': [auth.user, shaPassword] }).map(data => data.success);
+        return this.call('','', [auth.user, shaPassword],'login').map(data => data.success);
       });
   }
+  
   getChallenge() {
-    return this.send({ 'method': 'challenge', 'params': [] });
+    return this.call('','',[],'challenge');
+    /*return this.socket.map(x => JSON.parse(x.data))
+        .filter(x => x.id === id)
+        .map(x => x.result);*/
   }
 
   shaToken(password, token) {
@@ -54,8 +96,8 @@ class WebsocketAPI {
   }
   changeUrl(url) {
     this._wss.url = url;
-    this.send({ 'method': 'reconect' });
-    return this.socket;
+    this.call('','',[],'reconect');
+    /*return this.socket;*/
   }
   getInterfaces(sid) {
     return this.call(sid, 'get_interfaces', {})
@@ -63,7 +105,7 @@ class WebsocketAPI {
       .map(iface => iface.map((x) => { return { name: x }; }));
   }
   getNeighbors(sid) {
-    return this.call(sid, 'get_neighbors', {})
+    return this.call(sid, 'get_cloud_nodes', {})
             .map(data => Object.keys(data).map((key, index)=>data[key]).reduce((x,y) => x.concat(y), []));
   }
 
