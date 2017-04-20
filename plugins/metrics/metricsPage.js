@@ -12,6 +12,13 @@ import Loading from './components/loading';
 
 import colorScale from 'simple-color-scale';
 
+colorScale.setConfig({
+  outputStart:1,
+  outputEnd:100,
+  inputStart:0,
+  inputEnd:30
+});
+
 
 class Metrics extends Component {
   componentWillMount() {
@@ -58,7 +65,7 @@ class Metrics extends Component {
                 {this.isGateway(station.hostname, this.props.metrics.gateway)}
                 <br/>
                 {station.bandwidth} Mbps / <span translate="yes">Package loss</span> {station.loss}%<br/>                
-                <div class="line" style={{width:(station.bandwidth*100/this.props.metrics.metrics[0].bandwidth).toString()+'%',backgroundColor: colorScale.getColor(100-station.bandwidth*100/this.props.metrics.metrics[0].bandwidth)}}></div>
+                <div class="line" style={{width:(station.bandwidth*100/this.props.metrics.metrics[0].bandwidth).toString()+'%',backgroundColor: colorScale.getColor(station.loss)}}></div>
             </li>))}
         </ul>
         {this.showButton(this.props.metrics.loading)}<br />
