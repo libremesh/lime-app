@@ -15,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/mergeAll';
-
+import 'rxjs/add/operator/concatAll';
 
 
 /*
@@ -37,10 +37,10 @@ const loadPath = ( action$, store, { wsAPI }) =>
       .map(payload => ({type:LOAD_PATH_SUCCESS, payload}));
 
 const loadMetrics = ( action$, store, { wsAPI }) =>
-  action$.ofType(LOAD_PATH_SUCCESS)
-    .map(action => action.payload)
-    .concatMap(paths => getAllMetrics(wsAPI,store.getState().meta.sid,{targets:paths}))
-    .mergeAll()
-    .map(payload =>({type:LOAD_METRICS_SUCCESS, payload }));
-
+    action$.ofType(LOAD_PATH_SUCCESS)
+      .map(action => action.payload)
+      .concatMap(paths => paths.map((path)=>getMetrics(wsAPI,store.getState().meta.sid,{target:path})))
+      .concatAll()
+      .map(payload => ({type:LOAD_METRICS_SUCCESS, payload }));
+      
 export default { loadGateway, loadPath, loadMetrics };
