@@ -5,10 +5,29 @@ ul.box {
         padding:10px;
         background: #f5f5f5;
         text-align: center;
+        -moz-transition: height 04s ease;
+        -webkit-transition: height 04s ease;
+        -o-transition: height 04s ease;
+        transition: height 04s ease;
+        overflow: hidden;
+        height: auto;
+    }
+    li.loading {
+        height: 34px;
+        -moz-transition: height 04s ease;
+        -webkit-transition: height 04s ease;
+        -o-transition: height 04s ease;
+        transition: height 04s ease;
+        
     }
 }
 .line {
-    padding:0 auto;
+    margin:0 auto;
     height: 8px;
     background: cyan;
+}
+
+span.text-loading {
+    text-align: center;
+    display: block
 }
