@@ -10,6 +10,7 @@ import {
   CONECTION_LOAD_HOSTNAME_SUCCESS
 } from './metaConstants';
 
+
 import {
   AUTH_LOGIN_SUCCESS
 } from '../auth/authConstants';
@@ -34,7 +35,7 @@ const loadHostname = ( action$, store, { wsAPI }) =>
     .map(payload => ({type:CONECTION_LOAD_HOSTNAME_SUCCESS, payload}));
 
 const loadNetwork = ( action$, store, { wsAPI }) =>
-  action$.ofType(...[CONECTION_LOAD_HOSTNAME_SUCCESS])
+  action$.ofType(...[CONECTION_LOAD_NEIGHBORS])
     .mergeMap(() => wsAPI.getNeighbors(store.getState().meta.sid))
     .map(payload => ({type:CONECTION_LOAD_NEIGHBORS_SUCCESS, payload}));
  

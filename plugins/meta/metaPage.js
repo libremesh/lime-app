@@ -37,7 +37,7 @@ class Meta extends Component {
                 </div>
                 <div class="six columns">
                  <p>
-                    <label for="exampleRecipientInput">Select new base station</label>
+                    <label for="exampleRecipientInput" translate='yes'>Select new base station</label>
                     <select class="u-full-width" onChange={this.handleChange.bind(this)} >
                         <option value={this.props.selectedHost}>{this.props.selectedHost}</option>
                         {this.props.stations.map(x => (<option value={x}>{x}</option>))}
