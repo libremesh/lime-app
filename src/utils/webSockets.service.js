@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/take';
 
 
 
@@ -19,6 +20,7 @@ class WebsocketAPI {
   }
 
   register(x) {
+    
     if (x.type === 'message'){
       let data = JSON.parse(x.data);
       this.responses[data.id](data);
@@ -51,23 +53,23 @@ class WebsocketAPI {
 
   call(sid, action, data, method) {
     let id;
-    if (typeof method === 'undefined') { method = 'call'; }
-    if (method !== 'login')  {
-      id = this.send({ method, 'params': [
-        sid, '/lime/api', action, data
-      ]});
-    } else {
-      id = this.send({ method, 'params': data });
-    }
-
-    let filter = (x) => x.id === id;
-
     let observable = Observable.create((obs)=>{
+      if (typeof method === 'undefined') { method = 'call'; }
+      if (method !== 'login')  {
+        id = this.send({ method, 'params': [
+          sid, '/lime/api', action, data
+        ]});
+      } else {
+        id = this.send({ method, 'params': data });
+      }
+
+      let filter = (x) => x.id === id;
       this.responses[id] = obs.next.bind(obs);
     });
     return observable
-        .filter(filter)
-        .map(x => x.result);
+        .filter((x) => x.id === id)
+        .map(x => x.result)
+        .take(1);
   }
 
   login(auth) {
@@ -96,8 +98,7 @@ class WebsocketAPI {
   }
   changeUrl(url) {
     this._wss.url = url;
-    this.call('','',[],'reconect');
-    /*return this.socket;*/
+    return this.call('','',[],'reconect');
   }
   getInterfaces(sid) {
     return this.call(sid, 'get_interfaces', {})
@@ -106,12 +107,14 @@ class WebsocketAPI {
   }
   getNeighbors(sid) {
     return this.call(sid, 'get_cloud_nodes', {})
+            .map(x => x.nodes)
             .map(data => Object.keys(data).map((key, index)=>data[key]).reduce((x,y) => x.concat(y), []));
   }
 
   getStations(sid) {
     let a = new Promise((res,rej) => {
       this.call(sid, 'get_stations', {})
+        .map(x => x.stations)
         .map(data => Object.keys(data).map((key, index)=>data[key]).reduce((x,y) => x.concat(y), []))
         .map((y) => {
           return y.reduce((a, b) => a.concat(b), []);
