@@ -13,9 +13,13 @@
     "conected_host_f092f668": "Nodo seleccionado",
     "base_host_a17d45a4": "Nodo base",
     "select_new_base_station_3652ae73": "Select new base station",
-    "get_metrics_e0f17084": "Medir",
+    "get_metrics_e0f17084": "Medir nuevamente",
+    "package_loss_a81b6c86": "Paquetes perdidos",
     "metrics_c80fba05": "Metricas",
     "back_to_base_443797cb": "Volver al nodo base",
-    "trying_to_connect_meta_ws_bde85f73": "Intentando conectar con %{meta_ws}"
+    "trying_to_connect_meta_ws_bde85f73": "Intentando conectar con %{meta_ws}",
+    "metrics_status_gateway":"Buscando tu salida a Internet",
+    "metrics_status_path":"Cargando el recorrido en la red",
+    "metrics_status_stations":"Midiendo cada enlace"
   }
 }
