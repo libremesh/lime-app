@@ -10,6 +10,15 @@ import { changeInterface, changeStation, startAlign, stopTimer } from './alignAc
 import { getAll } from './alignSelectors';
 import { getSelectedHost } from '../meta/metaSelectors';
 
+import colorScale from 'simple-color-scale';
+
+colorScale.setConfig({
+  outputStart:1,
+  outputEnd:85,
+  inputStart:65,
+  inputEnd:100
+});
+
 class Align extends Component {
 
   componentWillMount() {
@@ -30,6 +39,7 @@ class Align extends Component {
             </span>
             <h1 class="signal">
               {state.alignData.currentReading.signal || 0}
+              <span class="bar" style={{backgroundColor:colorScale.getColor(state.alignData.currentReading.signal || 0)}}></span>
             </h1>
             <span class="hostname">
               {state.alignData.currentReading.hostname || ''}
