@@ -1,6 +1,6 @@
 const extend = require('extend');
 const I18n = require("i18n-js");
-I18n.locale = navigator.languages[0];
+I18n.locale = navigator.language.split('-')[0];
 require("i18nline/lib/extensions/i18n_js")(I18n);
 require("preact-i18nline/dist/extensions/i18n_js")(I18n);
 
