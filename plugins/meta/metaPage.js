@@ -46,7 +46,7 @@ class Meta extends Component {
                 </div>
             </div>
             
-            <input class="button green block" type="submit" value="Change" />
+            <button class="button green block" type="submit" translate='yes'>Change</button>
             </form>
       </div>
     );

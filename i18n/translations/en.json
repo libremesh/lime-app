@@ -20,6 +20,7 @@
     "trying_to_connect_meta_ws_bde85f73": "Trying to connect %{meta_ws}",
     "metrics_status_gateway":"Searching gateway",
     "metrics_status_path":"Calculating network path",
-    "metrics_status_stations":"Measuring each link"
+    "metrics_status_stations":"Measuring each link",
+    "change_dcaa253a": "Change"
   }
 }
