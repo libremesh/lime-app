@@ -8,6 +8,7 @@ import { connect } from 'preact-redux';
 
 import Header from '../components/header';
 import Status from '../components/status';
+import Navigator from '../components/navigator';
 import { plugins } from '../config';
 
 class App extends Component {
@@ -34,9 +35,18 @@ class App extends Component {
       );
     };
     
+    const is_base = (meta) => {
+      if (meta.selectedHost !== meta.base && meta.sid !== 'no_user' && meta.stauts !== 'start') {
+        return {minWidth: '100%', paddingTop:'55px'};
+      }
+      return {minWidth: '100%'};
+    };
+    
+
     return (
-        <div style={{minWidth: '100%'}}>
+        <div style={is_base(this.props.meta)}>
           <Header />
+          <Navigator hostname={this.props.meta} goHome={this.props.goBase} />
           {is_connected(this.props.meta)}
         </div>
     );
