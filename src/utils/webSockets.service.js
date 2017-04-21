@@ -64,12 +64,15 @@ class WebsocketAPI {
       }
 
       let filter = (x) => x.id === id;
-      this.responses[id] = obs.next.bind(obs);
+      this.responses[id] = (data) => {
+        obs.next(data);
+        obs.complete();
+      };
+    
     });
     return observable
         .filter((x) => x.id === id)
-        .map(x => x.result)
-        .take(1);
+        .map(x => x.result);
   }
 
   login(auth) {
