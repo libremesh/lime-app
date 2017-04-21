@@ -9,6 +9,7 @@ import { connect } from 'preact-redux';
 import { getMetrics } from './metricsActions';
 
 import Loading from './components/loading';
+import Box from './components/box';
 
 import colorScale from 'simple-color-scale';
 
@@ -54,20 +55,16 @@ class Metrics extends Component {
     return (hostname === gateway)? (
       <span><img src=""/></span>
     ) : (false);
-  };
+  }
+  
   render() {
     return (
       <div class="container" style={{paddingTop:'50px'}}>
         {this.showLoading(this.props.metrics.loading)}<br />
-        <ul class="box">
+        
           {this.props.metrics.metrics.map(station => (
-            <li class={(station.loading)? 'loading': 'load'}><b>{station.hostname}</b>
-                {this.isGateway(station.hostname, this.props.metrics.gateway)}
-                <br/>
-                {station.bandwidth} Mbps / <span translate="yes">Package loss</span> {station.loss}%<br/>                
-                <div class="line" style={{width:(station.bandwidth*100/this.props.metrics.metrics[0].bandwidth).toString()+'%',backgroundColor: colorScale.getColor(station.loss)}}></div>
-            </li>))}
-        </ul>
+            <Box station={station} />
+            ))}
         {this.showButton(this.props.metrics.loading)}<br />
       </div>
     );
