@@ -60,8 +60,13 @@ class WebsocketAPI {
 
       let filter = (x) => x.id === id;
       this.responses[id] = (data) => {
-        obs.next(data);
-        obs.complete();
+        if (!data.error) {
+          obs.next(data);
+          obs.complete();
+        } else {
+          obs.error(data.error);
+        }
+
       };
     
     });
