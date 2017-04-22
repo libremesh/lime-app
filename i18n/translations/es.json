@@ -21,6 +21,9 @@
     "metrics_status_gateway":"Buscando tu salida a Internet",
     "metrics_status_path":"Cargando el recorrido en la red",
     "metrics_status_stations":"Midiendo cada enlace",
-    "change_dcaa253a": "Cambiar de nodo"
+    "change_dcaa253a": "Cambiar de nodo",
+    "tasks_956dccce": "Notas",
+    "notes_of_a44a4158": "Notas de",
+    "save_notes_616850ea": "Guardar notas"
   }
 }
