@@ -1,6 +1,8 @@
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 
+import { changeLocation, getLocation } from './locateApi';
+
 import {
   LOCATION_LOAD,
   LOCATION_LOAD_SUCCESS,
@@ -8,19 +10,16 @@ import {
   LOCATION_CHANGE_SUCCESS
 } from './locateConstants';
 
-import {
-  AUTH_LOGIN_SUCCESS
-} from '../auth/authConstants';
 
 // LOAD INTERFACES -> Dispatch success and stations loads
 const locateLoad = ( action$, { getState }, { wsAPI } ) =>
   action$.ofType(...[LOCATION_LOAD,LOCATION_CHANGE_SUCCESS])
-    .mergeMap(() => wsAPI.getLocation(getState().meta.sid))
+    .mergeMap(() => getLocation(wsAPI, getState().meta.sid))
     .map((payload) => ({ type: LOCATION_LOAD_SUCCESS, payload }));
 
 const locateChange = ( action$, { getState }, { wsAPI } ) =>
   action$.ofType(LOCATION_CHANGE)
-    .mergeMap((action) => wsAPI.changeLocation(getState().meta.sid, action.payload))
+    .mergeMap((action) => changeLocation(wsAPI, getState().meta.sid, action.payload))
     .map((payload) => ({ type: LOCATION_CHANGE_SUCCESS }));
 
 export default { locateLoad, locateChange };

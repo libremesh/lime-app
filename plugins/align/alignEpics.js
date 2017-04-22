@@ -1,3 +1,5 @@
+import { getInterfaces, getStations, getIfaceStation, getStationSignal} from './alignApi';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
@@ -32,7 +34,7 @@ import {
 // LOAD INTERFACES -> Dispatch success and stations loads
 const ifaceLoad = ( action$, { getState }, { wsAPI } ) =>
   action$.ofType(...[IFACES_LOAD])
-    .mergeMap((action) => wsAPI.getInterfaces(getState().meta.sid))
+    .mergeMap((action) => getInterfaces(wsAPI, getState().meta.sid))
       .mergeMap((payload) => Observable.from([
         ({ type: IFACES_LOAD_SUCCESS, payload }),
         ({ type: STATIONS_LOAD })
@@ -42,7 +44,7 @@ const ifaceLoad = ( action$, { getState }, { wsAPI } ) =>
 // LOAD ALL STATIONS -> Dispatch success and Init Align
 const allStationsLoad = (action$, { getState }, { wsAPI }  ) =>
   action$.ofType(STATIONS_LOAD)
-    .mergeMap(() => wsAPI.getStations(getState().meta.sid))
+    .mergeMap(() => getStations(wsAPI, getState().meta.sid))
       .map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload }))
       .catch(error => Observable.of({
         type: 'NOTIFICATION',
@@ -53,7 +55,7 @@ const allStationsLoad = (action$, { getState }, { wsAPI }  ) =>
 // CHANGE INTEFACE -> DIspatch get station by interface and select best signal
 const ifaceChange = (action$, { getState }, { wsAPI } ) =>
   action$.ofType(IFACE_CHANGE)
-    .mergeMap((action) => wsAPI.getIfaceStation(getState().meta.sid, action.payload.iface))
+    .mergeMap((action) => getIfaceStation(wsAPI, getState().meta.sid, action.payload.iface))
     .map( payload => payload.nodes)
     .map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload }))
     .catch(error => Observable.of({
@@ -78,8 +80,8 @@ const initAlign = (action$ ) =>
 // GET_SIGNAL -> Update current signal and nodes
 const getSignal = ( action$, { getState}, { wsAPI } ) =>
   action$.ofType(SIGNAL_GET)
-    .switchMap(() => wsAPI.getStationSignal(getState().meta.sid, getState().align.currentReading))
-      .map( signal => ({ type: SIGNAL_GET_SUCCESS, payload: signal }))
+    .switchMap(() => getStationSignal(wsAPI, getState().meta.sid, getState().align.currentReading))
+      .map( signal => ({ type: SIGNAL_GET_SUCCESS, payload: signal }));
 
 // TIMER MANAGER
 const runTimer = ( action$, { getState} ) =>
