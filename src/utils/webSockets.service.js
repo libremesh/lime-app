@@ -1,13 +1,8 @@
 import { WebSocketService } from '../utils/webSockets.observable';
 
-const jsSHA = require("jssha");
-
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/take';
-
 
 
 class WebsocketAPI {
@@ -73,14 +68,6 @@ class WebsocketAPI {
     return observable
         .filter((x) => x.id === id)
         .map(x => x.result);
-  }
-
-  getLocation = (sid) => {
-    return this.call(sid, 'get_location', {});
-  }
-
-  changeLocation(sid, location) {
-    return this.call(sid, 'set_location', location);
   }
 
 }
