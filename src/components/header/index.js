@@ -18,7 +18,7 @@ class Header extends Component {
   render() {
     return (
       <header class={style.header}>
-        <h1>LimeApp</h1>
+        <h1>LiMe</h1>
         <div class={this.menuStatus(this.state.open)} onClick={this.toggle.bind(this)}>
           <span>toggle menu</span>
         </div>
