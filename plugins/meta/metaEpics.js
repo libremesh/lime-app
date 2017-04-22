@@ -19,6 +19,8 @@ import {
   login
 } from './metaApi';
 
+import { push } from 'preact-router-redux';
+
 const conectionOff = ( action$ ) =>
   action$.ofType(CONECTION_START)
     .mapTo((action) => ({type: CONECTION_SETTINGS, payload: {conection: false, ws: action.payload }}));
@@ -49,9 +51,12 @@ const defaultLoginAction = ( action$ ) =>
 
 const loginAction = ( action$, store, { wsAPI } ) =>
   action$.ofType(AUTH_LOGIN)
-
     .mergeMap( action => login(wsAPI,action.payload))
     .map((sid) => ({ type: AUTH_LOGIN_SUCCESS, payload: sid }));
+
+const redirectOnConnection = ( action$, store ) =>
+  action$.ofType(CONECTION_SUCCESS)
+    .mapTo(push(store.getState().meta.home));
 
 
 export default {
@@ -61,5 +66,6 @@ export default {
   loadNetwork,
   loadHostname,
   defaultLoginAction,
-  loginAction
+  loginAction,
+  redirectOnConnection
 };
