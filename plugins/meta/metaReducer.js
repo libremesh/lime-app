@@ -5,12 +5,9 @@ import {
   CONECTION_CHANGE_URL,
   CONECTION_LOAD_NEIGHBORS_SUCCESS,
   CONECTION_LOAD_HOSTNAME_SUCCESS,
-  CONECTION_CHANGE_CURRENT_BASE
-} from './metaConstants';
-
-import {
+  CONECTION_CHANGE_CURRENT_BASE,
   AUTH_LOGIN_SUCCESS
-} from '../auth/authConstants';
+} from './metaConstants';
 
 const initialState = {
   title: 'LimeApp',

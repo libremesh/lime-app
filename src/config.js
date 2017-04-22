@@ -1,6 +1,5 @@
 import Meta   from '../plugins/meta';
 import Align  from '../plugins/align';
-import Auth   from '../plugins/auth';
 import Locate from '../plugins/locate';
 import Metrics from '../plugins/metrics';
 
@@ -8,7 +7,6 @@ import Metrics from '../plugins/metrics';
 export const plugins = [
   Meta,
   Align,
-  Auth,
   Locate,
   Metrics
 ];

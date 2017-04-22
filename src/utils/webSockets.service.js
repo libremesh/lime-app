@@ -75,42 +75,7 @@ class WebsocketAPI {
         .map(x => x.result);
   }
 
-  login(auth) {
-    return this.getChallenge()
-      .map(x => x.token)
-      .switchMap((token) => {
-        let shaPassword = this.shaToken(auth.password, token);
-        return this.call('','', [auth.user, shaPassword],'login').map(data => data.success);
-      });
-  }
-  
-  getChallenge() {
-    return this.call('','',[],'challenge');
-    /*return this.socket.map(x => JSON.parse(x.data))
-        .filter(x => x.id === id)
-        .map(x => x.result);*/
-  }
-
-  shaToken(password, token) {
-    let shaPassword = new jsSHA("SHA-1", "TEXT");
-    let shaToken = new jsSHA("SHA-1", "TEXT");
-    shaPassword.update(password);
-    shaToken.update(token);
-    shaToken.update(shaPassword.getHash('HEX'));
-    return shaToken.getHash('HEX');
-  }
-  changeUrl(url) {
-    this._wss.url = url;
-    return this.call('','',[],'reconect');
-  }
-
-  getNeighbors(sid) {
-    return this.call(sid, 'get_cloud_nodes', {})
-            .map(x => x.nodes)
-            .map(data => Object.keys(data).map((key, index)=>data[key]).reduce((x,y) => x.concat(y), []));
-  }
-  
-  getLocation(sid) {
+  getLocation = (sid) => {
     return this.call(sid, 'get_location', {});
   }
 
@@ -118,9 +83,6 @@ class WebsocketAPI {
     return this.call(sid, 'set_location', location);
   }
 
-  getHostname(sid) {
-    return this.call(sid, 'get_hostname', {});
-  }
 }
 
 
