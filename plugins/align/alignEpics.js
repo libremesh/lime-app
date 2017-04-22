@@ -26,10 +26,6 @@ import {
   INIT_ALIGN
 } from './alignConstants';
 
-import {
-  AUTH_LOGIN_SUCCESS
-} from '../auth/authConstants';
-
 
 // LOAD INTERFACES -> Dispatch success and stations loads
 const ifaceLoad = ( action$, { getState }, { wsAPI } ) =>
