@@ -1,13 +1,24 @@
-# LimeApp (Preact + Redux + Rjxs)
-*Based on Preact Boilerplate / Starter Kit*
+<p align="center">
+    <img src="https://cdn.rawgit.com/libremesh/lime-app/fd31c213/src/assets/icons/mstile-150x150.png" alt="Screenshot" />
+</p>
+
+<h1 align="center">
+    LiMeApp<br>
+    <small>Simple, lightweight and scalable PWA for diagnosis of Libremesh nodes</small>
+</h1>
+
+<p align="center"><br><br>
+    <img src="https://raw.githubusercontent.com/libremesh/lime-app/fd31c213/screenshot.gif" alt="Screenshot" />
+</p>
+
 
 ## Installation
 
 **Clone this repo:**
 
 ```sh
-git clone --depth 1 https://github.com/gmarcos87/preact-limeapp.git plapp
-cd plapp
+git clone https://github.com/libremesh/lime-app.git limeapp
+cd limeapp
 ```
 
 **Install the dependencies:**
@@ -19,20 +30,11 @@ npm install
 
 ## Development Workflow
 
-
 **Start a live-reload development server:**
 
 ```sh
 npm run dev
 ```
-
-**Testing with `mocha`, `karma`, `chai`, `sinon` via `phantomjs`:**
-
-```sh
-npm test
-```
-
-> 🌟 This also instruments the code in `src/` using [isparta](https://github.com/douglasduteil/isparta), giving you pretty code coverage statistics at the end of your tests! If you want to see detailed coverage information, a full HTML report is placed into `coverage/`.
 
 **Generate a production build in `./build`:**
 
@@ -40,19 +42,13 @@ npm test
 npm run build
 ```
 
-> You can now deploy the contents of the `build` directory to production!
+> You can now deploy the contents of the `build` directory to production on github pages!
 >
-> **[Surge.sh](https://surge.sh) Example:** `surge ./build -d my-app.surge.sh`
-> 
-> **[Netlify](https://www.netlify.com/docs/cli/) Example:** `netlify deploy`
->
-> [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/developit/preact-boilerplate)
+> Fork and `npm run deploy`
 
 
-**Start local production server with [serve](https://github.com/zeit/serve):**
+**Start local production server:**
 
 ```sh
 npm start
 ```
-
-> This is to simulate a production (CDN) server with gzip. It just serves up the contents of `./build`.
