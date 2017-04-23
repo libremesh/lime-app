@@ -1,11 +1,6 @@
-<p align="center">
-    <img src="https://cdn.rawgit.com/libremesh/lime-app/fd31c213/src/assets/icons/mstile-150x150.png" alt="Screenshot" />
-</p>
+# LiMeApp
+**Simple, lightweight and scalable PWA for diagnosis of Libremesh nodes**
 
-<h1 align="center">
-    LiMeApp<br>
-    <small>Simple, lightweight and scalable PWA for diagnosis of Libremesh nodes</small>
-</h1>
 
 <p align="center"><br><br>
     <img src="https://raw.githubusercontent.com/libremesh/lime-app/fd31c213/screenshot.gif" alt="Screenshot" />
