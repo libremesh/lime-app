@@ -33,8 +33,9 @@ const loadGateway = ( action$, store, { wsAPI }) =>
 
 const loadPath = ( action$, store, { wsAPI }) =>
   action$.ofType(LOAD_GATEWAY_SUCCESS)
-    .mergeMap((action)=> getPath(wsAPI,store.getState().meta.sid,{target:action.payload.gateway}))
-      .map(payload => ({type:LOAD_PATH_SUCCESS, payload}));
+      .mergeMap((action)=> getPath(wsAPI,store.getState().meta.sid,{target:action.payload.gateway}))
+      .map(payload => ({type:LOAD_PATH_SUCCESS, payload}))
+      .catch([({type:'ERROR'})]);
 
 const loadMetrics = ( action$, store, { wsAPI }) =>
     action$.ofType(LOAD_PATH_SUCCESS)
