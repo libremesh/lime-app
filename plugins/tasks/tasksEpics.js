@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import {
   TASKS_GET,
   TASKS_GET_SUCCESS,
+  TASKS_GET_ERROR,
   TASKS_SET,
   TASKS_SET_SUCCESS,
   TASKS_SET_ERROR
@@ -15,7 +16,8 @@ import {
 const getTasksEpic = ( action$, { getState}, { wsAPI } ) =>
   action$.ofType(...[TASKS_GET,TASKS_SET_SUCCESS])
     .mergeMap(() => getTasks(wsAPI, getState().meta.sid))
-      .map( tasks => ({ type: TASKS_GET_SUCCESS, payload: tasks }));
+      .map( tasks => ({ type: TASKS_GET_SUCCESS, payload: tasks }))
+      .catch( error => [({ type: TASKS_GET_ERROR, payload: error })]);
 
 const setTasksEpic = ( action$, { getState}, { wsAPI } ) =>
   action$.ofType(TASKS_SET)
