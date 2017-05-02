@@ -51,6 +51,13 @@ class Metrics extends Component {
     );
   }
 
+  showError(error){
+    if (error !== null) {
+      return (<p class="text-error">Error: {error.msg}</p>);
+    }
+    return;
+  }
+
   isGateway(hostname, gateway) {
     return (hostname === gateway)? (
       <span><img src=""/></span>
@@ -61,7 +68,7 @@ class Metrics extends Component {
     return (
       <div class="container" style={{paddingTop:'50px'}}>
         {this.showLoading(this.props.metrics.loading)}<br />
-        
+        {this.props.metrics.error.map(x => this.showError(x))}
           {this.props.metrics.metrics.map(station => (
             <Box station={station} />
             ))}
