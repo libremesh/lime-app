@@ -8,9 +8,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import { loadLocation, changeLocation, setUserLocation } from './locateActions';
-import { getLocation, getUserLocation } from './locateSelectors';
-
-import { getSelectedHost } from '../meta/metaSelectors';
+import { getLocation, getUserLocation, getSelectedHost } from './locateSelectors';
 
 import { Map, Marker, Popup, LayersControl, TileLayer } from 'react-leaflet';
 import {GoogleLayer} from 'react-leaflet-google';

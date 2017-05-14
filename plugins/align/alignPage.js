@@ -7,8 +7,7 @@ import { connect } from 'preact-redux';
 import { changeInterface, changeStation, startAlign, stopTimer } from './alignActions';
 
 
-import { getAll } from './alignSelectors';
-import { getSelectedHost } from '../meta/metaSelectors';
+import { getAll, getSelectedHost } from './alignSelectors';
 
 import colorScale from 'simple-color-scale';
 

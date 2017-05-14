@@ -11,6 +11,5 @@ export const getLocation = (state) => {
   };
 };
 
-export const getUserLocation = (state) => {
-  return state.locate.user;
-};
+export const getUserLocation = (state) => state.locate.user;
+export const getSelectedHost = (state) => state.meta.selectedHost;
