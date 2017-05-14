@@ -30,3 +30,9 @@ export const loadSelectors = (plugins) => {
 export const loadConstants = (plugins) => {
   return simpleLoader('constants',plugins);
 };
+
+export const loadTranslations = (plugins) => {
+  return plugins
+    .filter(x => typeof x.translations !== 'undefined')
+    .map(x => x.translations);;
+};
