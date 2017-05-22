@@ -78,6 +78,7 @@
   "dependencies": {
     "@libremesh/limeapp-plugin-align": "^0.1.0",
     "@libremesh/limeapp-plugin-core": "^0.1.1",
+    "@libremesh/limeapp-plugin-metrics": "^0.1.0",
     "@libremesh/limeapp-plugin-rx": "^0.1.1",
     "history": "^4.6.1",
     "jssha": "^2.2.0",
