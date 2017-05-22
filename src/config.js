@@ -2,7 +2,7 @@ import Meta   from '@libremesh/limeapp-plugin-core';
 import Align  from '@libremesh/limeapp-plugin-align';
 import Locate from '../plugins/locate';
 import Metrics from '@libremesh/limeapp-plugin-metrics';
-import Tasks from '../plugins/tasks';
+import Notes from '@libremesh/limeapp-plugin-notes';
 import Rx from '@libremesh/limeapp-plugin-rx';
 
 // REGISTER PLUGINS
@@ -12,5 +12,5 @@ export const plugins = [
   Align,
   Locate,
   Metrics,
-  Tasks
-];
+  Notes
+]; 
