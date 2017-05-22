@@ -1,21 +1,9 @@
 {
   "en": {
-    "align_11050992": "Align",
-    "intefaces_bec06316": "Intefaces",
     "locate_5f6685db": "Locate",
-    "metrics_c80fba05": "Metrics",
     "move_to_new_position_eb97c4c3": "MOVE TO NEW POSITION",
     "pres_to_enable_changes_7cdfc920": "PRES TO ENABLE CHANGES",
     "user_c95de254": "User",
-    "get_metrics_e0f17084": "Get metrics",
-    "package_loss_a81b6c86": "Package loss",
-    "trying_to_connect_meta_ws_bde85f73": "Trying to connect %{meta_ws}",
-    "metrics_status_gateway":"Searching gateway",
-    "metrics_status_path":"Calculating network path",
-    "metrics_status_stations":"Measuring each link",
-    "tasks_956dccce": "Tasks",
-    "notes_of_a44a4158": "Notes of",
-    "save_notes_616850ea": "Save notes",
-    "load_last_known_internet_path": "Load last known Internet path"
+    "trying_to_connect_meta_ws_bde85f73": "Trying to connect %{meta_ws}"
   }
 }
