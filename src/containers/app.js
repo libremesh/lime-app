@@ -37,7 +37,7 @@ class App extends Component {
     
     const is_base = (meta) => {
       if (meta.selectedHost !== meta.base && meta.sid !== 'no_user' && meta.stauts !== 'start') {
-        return {minWidth: '100%', paddingTop:'55px'};
+        return {minWidth: '100%'};
       }
       return {minWidth: '100%'};
     };
@@ -45,8 +45,8 @@ class App extends Component {
 
     return (
         <div style={is_base(this.props.meta)}>
-          <Header />
-          <Navigator hostname={this.props.meta} goHome={this.props.goBase} />
+          <Header hostname={this.props.meta.selectedHost} goHome={this.props.goBase} />
+          { /*<Navigator hostname={this.props.meta} goHome={this.props.goBase} /> */ }
           {is_connected(this.props.meta)}
         </div>
     );
