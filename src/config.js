@@ -13,4 +13,4 @@ export const plugins = [
   Locate,
   Metrics,
   Notes
-]; 
+];
