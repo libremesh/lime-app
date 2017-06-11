@@ -24,6 +24,7 @@ npm install
 
 
 ## Development Workflow
+Read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentation
 
 **Start a live-reload development server:**
 
