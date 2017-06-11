@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import Router from 'preact-router';
+import Match from 'preact-router/match';
 
 import style from './style';
 
@@ -11,6 +12,14 @@ import Status from '../components/status';
 import Navigator from '../components/navigator';
 import { plugins } from '../config';
 
+class ChangeNode extends Component {
+  componentWillMount () {
+    console.log(this.props.hostname);
+    this.props.change(this.props.hostname)
+  }
+}
+
+
 class App extends Component {
   render({store,history}) {
     const is_connected = (meta) => {
@@ -18,6 +27,7 @@ class App extends Component {
         return (
             <div class={style.wraper}>
               <Router history={history}>
+                <ChangeNode path="/changeNode/:hostname" change={this.props.changeNode}/>
                 {plugins
                   .filter(plugin => plugin.page !== false)
                   .map(Component => (<Component.page path={Component.name.toLowerCase()} />))
@@ -35,6 +45,7 @@ class App extends Component {
       );
     };
     
+    /* Ignore for now */
     const is_base = (meta) => {
       if (meta.selectedHost !== meta.base && meta.sid !== 'no_user' && meta.stauts !== 'start') {
         return {minWidth: '100%'};
@@ -63,11 +74,23 @@ const goBase = (hostname) => (dispatch) => {
     type: 'meta/CONECTION_CHANGE_URL',
     payload: 'ws://thisnode.info/websocket/'
   });
-}
+};
+
+
+const changeNode = (hostname) => (dispatch) => {
+  dispatch({
+    type: 'meta/CONECTION_CHANGE_URL',
+    payload: 'ws://'+ hostname +'/websocket/'
+  });
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    goBase : bindActionCreators(goBase, dispatch)  };
+    goBase : bindActionCreators(goBase, dispatch),
+    changeNode: bindActionCreators(changeNode, dispatch)
+  };
 };
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
