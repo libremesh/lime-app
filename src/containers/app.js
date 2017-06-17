@@ -82,6 +82,10 @@ const changeNode = (hostname) => (dispatch) => {
     type: 'meta/CONECTION_CHANGE_URL',
     payload: 'ws://'+ hostname +'/websocket/'
   });
+  dispatch({
+    type: 'meta/CONECTION_CHANGE_CURRENT_BASE',
+    payload: hostname
+  });
 };
 
 const mapDispatchToProps = (dispatch) => {
