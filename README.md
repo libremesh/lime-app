@@ -11,14 +11,14 @@
 
 **Clone this repo:**
 
-```sh
+```
 git clone https://github.com/libremesh/lime-app.git limeapp
 cd limeapp
 ```
 
 **Install the dependencies:**
 
-```sh
+```
 npm install
 ```
 
@@ -28,13 +28,13 @@ Read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentatio
 
 **Start a live-reload development server:**
 
-```sh
+```
 npm run dev
 ```
 
 **Generate a production build in `./build`:**
 
-```sh
+```
 npm run build
 ```
 
@@ -45,6 +45,6 @@ npm run build
 
 **Start local production server:**
 
-```sh
+```
 npm start
 ```
