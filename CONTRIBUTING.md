@@ -73,6 +73,7 @@ The general workflow for branching is as follows:
 2. Check-out you copy of develop and merge the upstream changes:
 
     ```git checkout develop```
+    
     ```git merge upstream/develop```
 
     You now have an up-to-day copy of the `develop` branch.
@@ -144,6 +145,7 @@ In order to do so:
 6. Commit the changes and push to origin.
 
      ```git commit```
+
      ```git push origin <branch>```
 
 If you have a Pull Request already pending, GitHub should pick up the recent
