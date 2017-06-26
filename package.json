@@ -79,7 +79,7 @@
     "@libremesh/limeapp-plugin-align": "^0.1.1",
     "@libremesh/limeapp-plugin-core": "^0.1.1",
     "@libremesh/limeapp-plugin-locate": "0.0.1",
-    "@libremesh/limeapp-plugin-metrics": "^0.1.1",
+    "@libremesh/limeapp-plugin-metrics": "^0.1.2",
     "@libremesh/limeapp-plugin-notes": "^0.1.0",
     "@libremesh/limeapp-plugin-rx": "^0.1.2",
     "history": "^4.6.1",
