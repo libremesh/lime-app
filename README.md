@@ -7,7 +7,7 @@
 </p>
 
 
-## Installation
+## Development Environment Installation
 
 **Clone this repo:**
 
@@ -48,3 +48,9 @@ npm run build
 ```
 npm start
 ```
+
+## Router Installation
+
+In order to install the softwarae in the node, the node must have the lime-webui-ng-luci package installed (can be found in the flavor lime_newui_test available through https://github.com/libremesh/lime-sdk). That is the API.
+
+There is currently no package for the interface. You can run npm run build && rm ./build/*.map and then copy the build folder to the /www directory of the node and go.
