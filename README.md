@@ -53,4 +53,9 @@ npm start
 
 In order to install the softwarae in the node, the node must have the lime-webui-ng-luci package installed (can be found in the flavor lime_newui_test available through https://github.com/libremesh/lime-sdk). That is the API.
 
+To generate the image for a wdr-4310 for example, you do this:
+```
+./cooker -c ar71xx/generic --flavor=lime_newui_test --profile=tl-wdr4310-v1
+```
+
 There is currently no package for the interface. You can run npm run build && rm ./build/*.map and then copy the build folder to the /www directory of the node and go.
