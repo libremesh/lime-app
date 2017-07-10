@@ -81,7 +81,9 @@ module.exports = {
       test: /\.js$/, loader: "preact-i18nline/webpack-loader"
     }]
   },
-
+  externals: {
+    leaflet: 'L'
+  },
   plugins: ([
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -106,16 +108,28 @@ module.exports = {
         comments: false
       },
       compress: {
+        unsafe_comps: true,
+        properties: true,
+        keep_fargs: false,
+        pure_getters: true,
+        collapse_vars: true,
+        unsafe: true,
         warnings: false,
-        conditionals: true,
-        unused: true,
-        comparisons: true,
+        screw_ie8: true,
         sequences: true,
         dead_code: true,
+        drop_debugger: true,
+        comparisons: true,
+        conditionals: true,
         evaluate: true,
+        booleans: true,
+        loops: true,
+        unused: true,
+        hoist_funs: true,
         if_return: true,
         join_vars: true,
-        negate_iife: false
+        cascade: true,
+        drop_console: true
       }
     }),
 
@@ -153,7 +167,6 @@ module.exports = {
     publicPath: '/',
     contentBase: './src',
     historyApiFallback: true,
-    open: true,
     proxy: {
 			// OPTIONAL: proxy configuration:
 			// '/optional-prefix/**': { // path pattern to rewrite
