@@ -6,14 +6,16 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ReplacePlugin from 'replace-bundle-webpack-plugin';
 import OfflinePlugin from 'offline-plugin';
 import path from 'path';
-import V8LazyParseWebpackPlugin from 'v8-lazy-parse-webpack-plugin';
+
 const ENV = process.env.NODE_ENV || 'development';
 
 const CSS_MAPS = ENV!=='production';
 
 module.exports = {
   context: path.resolve(__dirname, "src"),
-  entry: ['./i18nline-glue.js','./index.js'],
+  entry: {
+    app: ['./i18nline-glue.js','./index.js']
+  },
   output: {
     path: path.resolve(__dirname, "build"),
     publicPath: './',
@@ -21,8 +23,8 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.jsx', '.js', '.json', '.less'],
-    modulesDirectories: [
+    extensions: ['.jsx', '.js', '.json', '.less'],
+    modules: [
       path.resolve(__dirname, "src/lib"),
       path.resolve(__dirname, "node_modules"),
       'node_modules'
@@ -35,12 +37,7 @@ module.exports = {
     }
   },
   module: {
-    preLoaders: [{
-      test: /\.jsx?$/,
-      exclude: path.resolve(__dirname, 'src'),
-      loader: 'source-map-loader'
-    }],
-    loaders: [{
+    rules: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: 'babel-loader'
@@ -49,19 +46,24 @@ module.exports = {
 			// Transform our own .(less|css) files with PostCSS and CSS-modules
       test: /\.(less|css)$/,
       include: [path.resolve(__dirname, 'src')],
-      loader: ExtractTextPlugin.extract('style?singleton', [
-        `css-loader?modules&importLoaders=1&sourceMap=${CSS_MAPS}`,
-        `postcss-loader`,
-        `less-loader?sourceMap=${CSS_MAPS}`].join('!'))
+      loader: ExtractTextPlugin.extract({
+        fallback:'style-loader',
+        use: [
+          `css-loader?modules&importLoaders=1&sourceMap=${CSS_MAPS}`,
+          `postcss-loader`,
+          `less-loader?sourceMap=${CSS_MAPS}`].join('!')
+      })
     },
     {
       test: /\.(less|css)$/,
       exclude: [path.resolve(__dirname, 'src')],
-      loader: ExtractTextPlugin.extract('style?singleton', [
-        `css-loader?sourceMap=${CSS_MAPS}`,
-        `postcss-loader`,
-        `less-loader?sourceMap=${CSS_MAPS}`
-      ].join('!'))
+      loader: ExtractTextPlugin.extract({
+        fallback:'style-loader',
+        use: [
+          `css-loader?sourceMap=${CSS_MAPS}`,
+          `postcss-loader`,
+          `less-loader?sourceMap=${CSS_MAPS}`].join('!')
+      })
     },
     {
       test: /\.json$/,
@@ -79,15 +81,14 @@ module.exports = {
       test: /\.js$/, loader: "preact-i18nline/webpack-loader"
     }]
   },
-
-  postcss: () => [
-    autoprefixer({ browsers: 'last 2 versions' })
-  ],
-
+  externals: {
+    leaflet: 'L'
+  },
   plugins: ([
-    new webpack.NoErrorsPlugin(),
-    new ExtractTextPlugin('style.css', {
-      publicPath: './',
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin({
+      filename: 'style.css',
       allChunks: true,
       disable: ENV!=='production'
     }),
@@ -102,22 +103,33 @@ module.exports = {
 			{ from: './manifest.json', to: './' }
     ])
   ]).concat(ENV==='production' ? [
-    new V8LazyParseWebpackPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       output: {
         comments: false
       },
       compress: {
+        unsafe_comps: true,
+        properties: true,
+        keep_fargs: false,
+        pure_getters: true,
+        collapse_vars: true,
+        unsafe: true,
         warnings: false,
-        conditionals: true,
-        unused: true,
-        comparisons: true,
+        screw_ie8: true,
         sequences: true,
         dead_code: true,
+        drop_debugger: true,
+        comparisons: true,
+        conditionals: true,
         evaluate: true,
+        booleans: true,
+        loops: true,
+        unused: true,
+        hoist_funs: true,
         if_return: true,
         join_vars: true,
-        negate_iife: false
+        cascade: true,
+        drop_console: true
       }
     }),
 
@@ -155,7 +167,6 @@ module.exports = {
     publicPath: '/',
     contentBase: './src',
     historyApiFallback: true,
-    open: true,
     proxy: {
 			// OPTIONAL: proxy configuration:
 			// '/optional-prefix/**': { // path pattern to rewrite
