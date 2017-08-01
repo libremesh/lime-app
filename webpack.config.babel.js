@@ -43,14 +43,14 @@ module.exports = {
       loader: 'babel-loader'
     },
     {
-			// Transform our own .(less|css) files with PostCSS and CSS-modules
+      // Transform our own .(less|css) files with PostCSS and CSS-modules
       test: /\.(less|css)$/,
       include: [path.resolve(__dirname, 'src')],
       loader: ExtractTextPlugin.extract({
         fallback:'style-loader',
         use: [
           `css-loader?modules&importLoaders=1&sourceMap=${CSS_MAPS}`,
-          `postcss-loader`,
+          `postcss-loader?sourceMap=${CSS_MAPS}`,
           `less-loader?sourceMap=${CSS_MAPS}`].join('!')
       })
     },
@@ -61,7 +61,7 @@ module.exports = {
         fallback:'style-loader',
         use: [
           `css-loader?sourceMap=${CSS_MAPS}`,
-          `postcss-loader`,
+          `postcss-loader?sourceMap=${CSS_MAPS}`,
           `less-loader?sourceMap=${CSS_MAPS}`].join('!')
       })
     },
@@ -100,7 +100,7 @@ module.exports = {
       minify: { collapseWhitespace: true }
     }),
     new CopyWebpackPlugin([
-			{ from: './manifest.json', to: './' }
+      { from: './manifest.json', to: './' }
     ])
   ]).concat(ENV==='production' ? [
     new webpack.optimize.UglifyJsPlugin({
@@ -133,9 +133,9 @@ module.exports = {
       }
     }),
 
-		// strip out babel-helper invariant checks
+    // strip out babel-helper invariant checks
     new ReplacePlugin([{
-			// this is actually the property name https://github.com/kimhou/replace-bundle-webpack-plugin/issues/1
+      // this is actually the property name https://github.com/kimhou/replace-bundle-webpack-plugin/issues/1
       partten: /throw\s+(new\s+)?[a-zA-Z]+Error\s*\(/g,
       replacement: () => 'return;('
     }]),
@@ -163,16 +163,15 @@ module.exports = {
   devServer: {
     port: process.env.PORT || 8080,
     host: 'localhost',
-    colors: true,
     publicPath: '/',
     contentBase: './src',
     historyApiFallback: true,
     proxy: {
-			// OPTIONAL: proxy configuration:
-			// '/optional-prefix/**': { // path pattern to rewrite
-			//   target: 'http://target-host.com',
-			//   pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
-			// }
+      // OPTIONAL: proxy configuration:
+      // '/optional-prefix/**': { // path pattern to rewrite
+      //   target: 'http://target-host.com',
+      //   pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
+      // }
     }
   }
 };
