@@ -1,4 +1,6 @@
 # LiMeApp
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/libremesh/lime-app.svg)](https://greenkeeper.io/)
 **Simple, lightweight and scalable PWA for diagnosis of Libremesh nodes**
 
 
