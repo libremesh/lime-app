@@ -6,7 +6,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
     "start": "serve build -s -c 1",
     "prestart": "npm run build",
-    "build": "cross-env NODE_ENV=production webpack -p --progress --display-optimization-bailout --optimize-minimize",
+    "build": "cross-env NODE_ENV=production webpack -p --progress --display-optimization-bailout --optimize-minimize && rm ./build/*.map",
     "prebuild": "mkdirp build && ncp src/assets build/assets",
     "deploy": "gh-pages -d build",
     "test": "npm run -s lint && npm run -s test:karma",
