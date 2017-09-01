@@ -1,4 +1,6 @@
 # LiMeApp
+[![Greenkeeper badge](https://badges.greenkeeper.io/libremesh/lime-app.svg)](https://greenkeeper.io/) [![Build Status](https://travis-ci.org/libremesh/lime-app.svg?branch=develop)](https://travis-ci.org/libremesh/lime-app)
+
 **Simple, lightweight and scalable PWA for diagnosis of Libremesh nodes**
 
 
