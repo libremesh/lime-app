@@ -1,17 +1,19 @@
-{
-  "sourceMaps": true,
-  "presets": [
-    ["es2015", { "loose":true }],
-    "stage-0"
-  ],
-  "plugins": [
-    ["transform-react-jsx", { "pragma":"h" }],
-    ["module-resolver", {
-    "root": ["."],
-    "alias": {
-        "react": "preact-compat",
-        "react-dom": "preact-compat"
-    }
-    }]
-  ]
-}
+  {
+    "sourceMaps": true,
+    "presets": [
+      ["es2015", { "loose":true }],
+      "stage-0"
+    ],
+    "plugins": [
+      ["transform-react-jsx", { "pragma":"h" }],
+      "syntax-dynamic-import",
+      "transform-async-to-generator",
+      ["module-resolver", {
+      "root": ["."],
+      "alias": {
+          "react": "preact-compat",
+          "react-dom": "preact-compat"
+      }
+      }]
+    ]
+  }
