@@ -14,12 +14,6 @@ import { getAll, getSelectedHost } from './alignSelectors';
 import I18n from 'i18n-js';
 
 import colorScale from 'simple-color-scale';
-colorScale.setConfig({
-	outputStart: 1,
-	outputEnd: 85,
-	inputStart: 65,
-	inputEnd: 100
-});
 
 //Eperimental text-to-speech
 let synth = window.speechSynthesis;
@@ -43,7 +37,7 @@ const style = {
 	},
 	bar: {
 		display: 'block',
-		height: '5px'
+		height: '10px'
 	},
 	hostname: {
 		display: 'block',
@@ -84,6 +78,10 @@ class Align extends Component {
 		this.speechSubscription.unsubscribe();
 	}
 
+	colorBar(signal) {
+		return Object.assign({}, style.bar,{ backgroundColor: colorScale.getColor(signal) });
+	}
+
 	constructor() {
 		super();
 		this.alignValue = new BehaviorSubject();
@@ -97,6 +95,12 @@ class Align extends Component {
 	componentWillMount() {
 		this.props.startAlign();
 		this.startSpeech();
+		colorScale.setConfig({
+			outputStart: 1,
+			outputEnd: 80,
+			inputStart: 60,
+			inputEnd: 90
+		});
 	}
 
 	componentWillUnmount() {
@@ -106,8 +110,10 @@ class Align extends Component {
 
 	render(state) {
 		this.alignValue.next(state.alignData.currentReading.signal * -1);
+		//speech(state.alignData.currentReading.signal*-1 || 0, 'es-ES', voices, synth);
 		return (
 			<div className="container" style={{ paddingTop: '100px' }}>
+				{/*[1,10,20,30,40,50,55,60,65,70,75,80,85,90,95].map(x => (<span style={this.colorBar(x)} >{x}</span>))*/}
 				<div className="row">
 					<div className="six columns">
 						<span style={style.hostname}>
@@ -115,7 +121,7 @@ class Align extends Component {
 						</span>
 						<h1 style={style.signal}>
 							{state.alignData.currentReading.signal || 0}
-							<span style={Object.assign(style.bar,{ backgroundColor: colorScale.getColor(state.alignData.currentReading.signal || 0) })} />
+							<span style={this.colorBar(this.props.alignData.currentReading.signal * -1)} />
 						</h1>
 						<span style={style.hostname}>
 							{state.alignData.currentReading.hostname || ''}
