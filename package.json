@@ -11,7 +11,7 @@
     "deploy": "gh-pages -d build",
     "test": "npm run -s lint && npm run -s test:karma",
     "test:karma": "karma start test/karma.conf.js --single-run",
-    "lint": "eslint src",
+    "lint": "eslint ./",
     "translations": "node ./node_modules/i18nline/bin/i18nline.js export"
   },
   "keywords": [
@@ -42,6 +42,7 @@
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "eslint": "^4.5.0",
+    "eslint-config-synacor": "^1.1.1",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "gh-pages": "^1.0.0",

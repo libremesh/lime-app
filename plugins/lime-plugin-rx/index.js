@@ -6,14 +6,14 @@ import Rx from './src/rxPage';
 import { RxMenu } from './src/rxMenu';
 
 export default {
-  name: 'Rx',
-  page: Rx,
-  menu: RxMenu,
-  store: {
-    name: 'rx',
-    epics,
-    reducer,
-    selector,
-    constants
-  }
+	name: 'Rx',
+	page: Rx,
+	menu: RxMenu,
+	store: {
+		name: 'rx',
+		epics,
+		reducer,
+		selector,
+		constants
+	}
 };

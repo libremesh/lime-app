@@ -7,8 +7,8 @@ chai.use(assertJsx);
 import { MetaMenu } from '../src/metaMenu';
 
 describe('Menu item', () => {
-  it.skip('Render html', () => {
-    expect(<MetaMenu />)
-        .to.eql(<a href='#/config' translate="yes">Config</a>);
-  });
+	it.skip('Render html', () => {
+		expect(<MetaMenu />)
+			.to.eql(<a href="#/config" translate="yes">Config</a>);
+	});
 });

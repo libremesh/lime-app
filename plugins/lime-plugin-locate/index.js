@@ -6,14 +6,14 @@ import Locate from './src/locatePage';
 import { LocateMenu } from './src/locateMenu';
 
 export default {
-  name: 'Locate',
-  page: Locate,
-  menu: LocateMenu,
-  store: {
-    name: 'locate',
-    epics,
-    reducer,
-    selector,
-    constants
-  }
+	name: 'Locate',
+	page: Locate,
+	menu: LocateMenu,
+	store: {
+		name: 'locate',
+		epics,
+		reducer,
+		selector,
+		constants
+	}
 };
