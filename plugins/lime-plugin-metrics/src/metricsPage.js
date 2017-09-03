@@ -12,13 +12,6 @@ import I18n from 'i18n-js';
 
 import colorScale from 'simple-color-scale';
 
-colorScale.setConfig({
-	outputStart: 1,
-	outputEnd: 100,
-	inputStart: 0,
-	inputEnd: 30
-});
-
 const style = {
 	textLoading: {
 		textAlign: 'center',
@@ -121,6 +114,12 @@ class Metrics extends Component {
   
 	componentWillMount() {
 		this.props.getMetrics();
+		colorScale.setConfig({
+			outputStart: 1,
+			outputEnd: 100,
+			inputStart: 0,
+			inputEnd: 30
+		});
 	}
 	render() {
 		return (
