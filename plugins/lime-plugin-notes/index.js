@@ -5,13 +5,13 @@ import Page from './src/notesPage';
 import { Menu } from './src/notesMenu';
 
 export default {
-  name: 'Notes',
-  page: Page,
-  menu: Menu,
-  store: {
-    name: 'notes',
-    epics,
-    reducer,
-    constants
-  }
+	name: 'Notes',
+	page: Page,
+	menu: Menu,
+	store: {
+		name: 'notes',
+		epics,
+		reducer,
+		constants
+	}
 };
