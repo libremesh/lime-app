@@ -4,6 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 import { changeInterface, changeStation, startAlign, stopTimer } from './alignActions';
 
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/debounce';
+import 'rxjs/add/observable/timer';
+
 import { getAll, getSelectedHost } from './alignSelectors';
 
 import I18n from 'i18n-js';
@@ -23,7 +28,7 @@ let voices = synth.getVoices();
 const speech = (text, lang, voices, synth) => {
 	let utterThis = new SpeechSynthesisUtterance(text);
 	utterThis.pitch = 0.9;
-	utterThis.rate = 2.2;
+	utterThis.rate = 1.2;
 	utterThis.voice = voices.filter(x => x.name === lang)[0];
 	synth.speak(utterThis);
 };
@@ -59,22 +64,48 @@ class Align extends Component {
 		this.props.changeStation(e.target.value);
 	}
 
+	startSpeech() {
+		this.speechSubscription = this.alignValue
+			.debounce(() => Observable.timer(1000))
+			.subscribe((value) => {
+				if ( (Math.floor(this.lastSpeech/10) !== Math.floor(value/10)) || this.resumedTimes === 5 ) {
+					speech(value || 0, 'es-ES', voices, synth);
+					this.resumedTimes = 0;
+				}
+				else {
+					speech(value.toString()[value.toString().length - 1] || 0, 'es-ES', voices, synth);
+					this.resumedTimes++;
+				}
+				this.lastSpeech = value;
+			});
+	}
+
+	stopSpeech() {
+		this.speechSubscription.unsubscribe();
+	}
+
 	constructor() {
 		super();
+		this.alignValue = new BehaviorSubject();
+		this.speechSubscription = null;
+		this.lastSpeech = 0;
+		this.resumedTimes = 0;
 		this.changeInterface = this.changeInterface.bind(this);
 		this.changeStation = this.changeStation.bind(this);
 	}
 
 	componentWillMount() {
 		this.props.startAlign();
+		this.startSpeech();
 	}
 
 	componentWillUnmount() {
 		this.props.stopAlign();
+		this.stopSpeech();
 	}
 
 	render(state) {
-		speech(state.alignData.currentReading.signal*-1 || 0, 'es-ES', voices, synth);
+		this.alignValue.next(state.alignData.currentReading.signal * -1);
 		return (
 			<div className="container" style={{ paddingTop: '100px' }}>
 				<div className="row">
