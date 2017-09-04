@@ -9,6 +9,7 @@ import {
 	GET_SIGNAL_SUCCESS,
 	GET_TRAFFIC,
 	GET_TRAFFIC_SUCCESS,
+	GET_INTERNET_STATUS,
 	GET_INTERNET_STATUS_SUCCESS
 
 } from './rxConstants';
@@ -52,7 +53,7 @@ const getTraffic = ( action$, { getState }, { wsAPI } ) =>
 		.map( signal => ({ type: GET_TRAFFIC_SUCCESS, payload: signal }));
 
 const getInternet = ( action$, { getState }, { wsAPI } ) =>
-	action$.ofType(...[GET_NODE_STATUS_SUCCESS])
+	action$.ofType(...[GET_NODE_STATUS_SUCCESS, GET_INTERNET_STATUS])
 		.switchMap(() => getInternetStatus(wsAPI, getState().meta.sid))
 		.map( status => ({ type: GET_INTERNET_STATUS_SUCCESS, payload: status }));
 
