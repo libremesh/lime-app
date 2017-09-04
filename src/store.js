@@ -4,7 +4,7 @@ import { routerReducer } from 'preact-router-redux';
 import { combineEpics } from 'redux-observable';
 
 import createStore from './store/createStore';
-import { loadConstants, loadEpics, loadReducers, loadSelectors } from './utils/loader';
+import { loadEpics, loadReducers } from './utils/loader';
 
 import wsAPI from './utils/webSockets.service';
 
@@ -23,6 +23,6 @@ const rootEpics =  combineEpics(...loadEpics(plugins));
 const store = createStore({},rootEpics,rootReducers,wsAPI);
 
 // Init websocket
-store.dispatch({ type: 'meta/CONECTION_START', payload: 'ws://thisnode.info/websocket/'});
+store.dispatch({ type: 'meta/CONECTION_START', payload: 'ws://thisnode.info/websocket/' });
 
 export default store;

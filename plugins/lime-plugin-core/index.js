@@ -6,14 +6,14 @@ import Meta from './src/metaPage';
 import { MetaMenu } from './src/metaMenu';
 
 export default {
-  name: 'Config',
-  page: Meta,
-  menu: MetaMenu,
-  store: {
-    name: 'meta',
-    epics,
-    reducer,
-    selector,
-    constants
-  }
+	name: 'Config',
+	page: Meta,
+	menu: MetaMenu,
+	store: {
+		name: 'meta',
+		epics,
+		reducer,
+		selector,
+		constants
+	}
 };
