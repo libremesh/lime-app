@@ -39,7 +39,7 @@
     "system_55b0ca91" :"System",
     "to_internet_494eb85c" :"To Internet",
     "traffic_bfe536d2" :"Traffic",
-    "trying_to_connect_meta_ws_bde85f73" :"Trying to connect %{meta_ws}",
+    "trying_to_connect_ff82bf9f" :"Trying to connect to %{meta_ws}",
     "uptime_c1d2415d" :"Uptime",
     "user_c95de254" :"User"
   }

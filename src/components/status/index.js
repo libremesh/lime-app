@@ -1,6 +1,8 @@
 import { h, Component } from 'preact';
 import style from './style';
 
+import I18n from 'i18n-js';
+
 class Status extends Component {
 	goBack () {
 		this.props.back(this.props.meta.base);
@@ -19,7 +21,7 @@ class Status extends Component {
 		};
 		return (
 			<div class={style.center}>
-				<p translate="yes">Trying to connect {this.props.meta.ws}</p>
+				<p>{I18n.t('Trying to connect',{ meta_ws: this.props.meta.ws.split('/')[2] })}</p>
 				{isBase(this.props.meta.base,this.props.meta.selectedHost)}
 			</div>
 		);
