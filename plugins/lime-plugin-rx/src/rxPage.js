@@ -79,7 +79,7 @@ export class Page extends Component {
 				<div>
 					<Box title={I18n.t('Most Active')}>
 						<span style={{ float: 'right',fontSize: '2.7em' }}>{node.most_active.signal}</span>
-						<span style={{ fontSize: '1.4em' }} onClick={changeNode(node)}><b>{node.most_active.hostname.split('_')[0]}</b></span><br />
+						<span style={{ fontSize: '1.4em' }} onClick={this.changeNode(node)}><b>{node.most_active.hostname.split('_')[0]}</b></span><br />
 						<b>{I18n.t('Interface')} </b>{node.most_active.iface.split('-')[0]}<br />
 						<b>{I18n.t('Traffic')} </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
 						<div style={{ clear: 'both' }} />
