@@ -4,9 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import { getMetrics, getMetricsAll, getMetricsGateway, changeNode } from './metricsActions';
+import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
-import Box from './components/box';
+import MetricsBox from './components/box';
+import { Box } from '../../../src/components/box';
 
 import I18n from 'i18n-js';
 
@@ -88,6 +90,23 @@ class Metrics extends Component {
 		);
 	}
 
+	showInternetStatus(loading,node) {
+		if (!loading) {
+			return (
+				<Box title={I18n.t('Internet connection')} style={{ marginTop: '15px' }}>
+					<span>
+						<b> {(node.internet.IPv4.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv4 </b>
+						<b> {(node.internet.IPv6.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv6 </b>
+						<b> {(node.internet.DNS.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} DNS </b>
+					</span>
+				</Box>
+			);
+		}
+		return (
+			<div />
+		);
+	}
+
 	showError(error){
 		if (error !== null) {
 			return (<p style={style.textError}>Error: {error.msg}</p>);
@@ -127,9 +146,10 @@ class Metrics extends Component {
 				{this.props.metrics.error.map(x => this.showError(x))}
 				<div style={style.box}>{I18n.t('From')+' '+this.props.meta.selectedHost}</div>
 				{this.props.metrics.metrics.map(station => (
-					<Box station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.hostname,this.props.metrics.gateway)} />
+					<MetricsBox station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.hostname,this.props.metrics.gateway)} />
 				))}
 				<div style={style.box}>{I18n.t('To Internet')}</div>
+				{this.showInternetStatus(this.props.metrics.loading, this.props.node)}
 				{this.showLoading(this.props.metrics.loading)}
 				{this.showButton(this.props.metrics.loading)}<br />
 			</div>
@@ -140,7 +160,8 @@ class Metrics extends Component {
 
 const mapStateToProps = (state) => ({
 	metrics: state.metrics,
-	meta: state.meta
+	meta: state.meta,
+	node: getNodeData(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
