@@ -22,10 +22,16 @@ export class Meta extends Component {
 		}
 	}
 
-	constructor() {
-		super();
+	isSelected(target) {
+		return target === this.props.selectedHost;
+	}
+
+	constructor(props) {
+		super(props);
+		this.state = { station: this.props.selectedHost };
 		this.nextStation = this.nextStation.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+		this.isSelected = this.isSelected.bind(this);
 	}
 
 	render() {
@@ -44,8 +50,7 @@ export class Meta extends Component {
 							<p>
 								<label>{I18n.t('Select new base station')}</label>
 								<select class="u-full-width" onChange={this.handleChange} >
-									<option selected value={this.props.selectedHost}>{this.props.selectedHost}</option>
-									{this.props.stations.map(x => (<option value={x}>{x}</option>))}
+									{this.props.stations.map(x => (<option value={x} selected={this.isSelected(x)}>{x}</option>))}
 								</select>
 							</p>
 						</div>
