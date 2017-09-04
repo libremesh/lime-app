@@ -2,8 +2,7 @@ import { push } from 'preact-router-redux';
 
 import {
 	LOAD_METRICS,
-	LOAD_METRICS_ALL,
-	LOAD_METRICS_GATEWAY
+	LOAD_METRICS_ALL
 } from './metricsConstants';
 
 export const getMetrics = ( ) => (dispatch) => {
@@ -20,8 +19,7 @@ export const getMetricsAll = ( ) => (dispatch) => {
 
 export const getMetricsGateway = ( hostname ) => (dispatch) => {
 	dispatch({
-		type: LOAD_METRICS_GATEWAY,
-		payload: { hostname }
+		type: LOAD_METRICS
 	});
 };
 
