@@ -25,26 +25,13 @@ import 'rxjs/add/operator/catch';
 
 import { push } from 'preact-router-redux';
 
-const genericUbus = ( action$, store, { wsAPI } ) =>
-	action$.ofType('UBUSCALL')
-		.map(x => x.payload)
-		.mergeMap( payload => wsAPI.call(
-			store.getState().meta.sid,
-			payload.action,
-			payload.data,
-			payload.method,
-			payload.path
-		).catch(payload => ([{ type: 'UBUSCALL_ERROR', payload }])))
-		.map(payload => ({ type: 'UBUSCALL_SUCCESS', payload }));
-
-
 const conectionOff = ( action$ ) =>
 	action$.ofType(CONECTION_START)
 		.map((action) => ({ type: CONECTION_SETTINGS, payload: { conection: false, ws: action.payload } }));
 
 const conectionAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(CONECTION_START)
-		.mergeMap( url => wsAPI.conect(url.payload))
+		.mergeMap( url => wsAPI.connect(url.payload))
 		.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } });
 
 const changeUrlAction = ( action$, store, { wsAPI } ) =>
@@ -64,20 +51,19 @@ const loadNetwork = ( action$, store, { wsAPI }) =>
  
 const defaultLoginAction = ( action$ ) =>
 	action$.ofType(CONECTION_SUCCESS)
-		.mapTo({ type: AUTH_LOGIN, payload: { user: 'admin', password: 'admin' } });
+		.mapTo({ type: AUTH_LOGIN, payload: { username: 'root', password: 'test' } });
 
 const loginAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(AUTH_LOGIN)
-		.mergeMap( action => login(wsAPI,action.payload))
+		.mergeMap( action => login(store.getState().meta.sid, wsAPI,action.payload))
 		.map((sid) => ({ type: AUTH_LOGIN_SUCCESS, payload: sid }));
 
 const redirectOnConnection = ( action$, store ) =>
-	action$.ofType(CONECTION_SUCCESS)
+	action$.ofType(AUTH_LOGIN_SUCCESS)
 		.mapTo(push(store.getState().meta.home));
 
 
 export default {
-	genericUbus,
 	conectionOff,
 	conectionAction,
 	changeUrlAction,

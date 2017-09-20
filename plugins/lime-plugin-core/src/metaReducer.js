@@ -10,7 +10,7 @@ import {
 
 export const initialState = {
 	title: 'LimeApp',
-	sid: 'no_user',
+	sid: '00000000000000000000000000000000',
 	status: 'start',
 	url: '/',
 	conection: false,
@@ -25,9 +25,9 @@ export const initialState = {
 export const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 		case CONECTION_START:
-			return Object.assign({}, state, { conection: false, ws: payload, sid: 'no_user' });
+			return Object.assign({}, state, { conection: false, ws: payload, sid: '00000000000000000000000000000000' });
 		case CONECTION_CHANGE_URL:
-			return Object.assign({}, state, { conection: false, ws: payload, sid: 'no_user' });
+			return Object.assign({}, state, { conection: false, ws: payload, sid: '00000000000000000000000000000000' });
 		case CONECTION_SUCCESS:
 			return Object.assign({}, state, payload);
 		case AUTH_LOGIN_SUCCESS:
