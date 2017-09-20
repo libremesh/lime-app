@@ -35,6 +35,20 @@ const SystemBox = ({ node, update, count }) => {
 	return (<span />);
 };
 
+const MostActiveBox = ({ node, changeNode }) => {
+	if (typeof node.most_active !== 'undefined') {
+		return (
+			<Box title={I18n.t('Most Active')}>
+				<span style={{ float: 'right',fontSize: '2.7em' }}>{node.most_active.signal}</span>
+				<span style={{ fontSize: '1.4em' }} onClick={changeNode(node)}><b>{node.most_active.station_hostname.split('_')[0]}</b></span><br />
+				<b>{I18n.t('Interface')} </b>{node.most_active.iface.split('-')[0]}<br />
+				<b>{I18n.t('Traffic')} </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
+				<div style={{ clear: 'both' }} />
+			</Box>
+		);
+	}
+	return (<span />);
+};
 
 export class Page extends Component {
   
@@ -77,21 +91,16 @@ export class Page extends Component {
 			this.startCount();
 			return (
 				<div>
-					<Box title={I18n.t('Most Active')}>
-						<span style={{ float: 'right',fontSize: '2.7em' }}>{node.most_active.signal}</span>
-						<span style={{ fontSize: '1.4em' }} onClick={this.changeNode(node)}><b>{node.most_active.hostname.split('_')[0]}</b></span><br />
-						<b>{I18n.t('Interface')} </b>{node.most_active.iface.split('-')[0]}<br />
-						<b>{I18n.t('Traffic')} </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
-						<div style={{ clear: 'both' }} />
-					</Box>
+
+					<MostActiveBox node={node} changeNode={this.changeNode} />
 
 					<SystemBox node={node} count={this.state.plusTime} update={this.startCount} />
 
 					<Box title={I18n.t('Internet connection')}>
 						<span>
-							<b> {(node.internet.IPv4.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv4 </b>
-							<b> {(node.internet.IPv6.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv6 </b>
-							<b> {(node.internet.DNS.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} DNS </b>
+							<b> {(node.internet.IPv4.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv4 </b>
+							<b> {(node.internet.IPv6.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv6 </b>
+							<b> {(node.internet.DNS.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} DNS </b>
 						</span>
 					</Box>
             
