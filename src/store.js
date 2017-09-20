@@ -6,7 +6,7 @@ import { combineEpics } from 'redux-observable';
 import createStore from './store/createStore';
 import { loadEpics, loadReducers } from './utils/loader';
 
-import wsAPI from './utils/webSockets.service';
+import { UhttpdService } from './utils/uhttpd.service';
 
 import { plugins } from './config';
 
@@ -20,9 +20,9 @@ const rootReducers = combineReducers(reducers);
 const rootEpics =  combineEpics(...loadEpics(plugins));
 
 //CREATE STORE
-const store = createStore({},rootEpics,rootReducers,wsAPI);
+const store = createStore({},rootEpics,rootReducers, new UhttpdService());
 
 // Init websocket
-store.dispatch({ type: 'meta/CONECTION_START', payload: 'ws://thisnode.info/websocket/' });
+store.dispatch({ type: 'meta/CONECTION_START', payload: 'http://192.168.0.223/ubus' });
 
 export default store;
