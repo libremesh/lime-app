@@ -51,7 +51,7 @@ const loadNetwork = ( action$, store, { wsAPI }) =>
  
 const defaultLoginAction = ( action$ ) =>
 	action$.ofType(CONECTION_SUCCESS)
-		.mapTo({ type: AUTH_LOGIN, payload: { username: 'root', password: 'test' } });
+		.mapTo({ type: AUTH_LOGIN, payload: { username: 'lime-app', password: 'generic' } });
 
 const loginAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(AUTH_LOGIN)
