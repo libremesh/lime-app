@@ -39,7 +39,7 @@ const ifaceLoad = ( action$, { getState }, { wsAPI } ) =>
 // LOAD ALL STATIONS -> Dispatch success and Init Align
 const allStationsLoad = (action$, { getState }, { wsAPI }  ) =>
 	action$.ofType(STATIONS_LOAD)
-		.mergeMap(() => getStations(wsAPI, getState().meta.sid))
+		.mergeMap(() => getStations(wsAPI, getState().meta.sid, getState().align.ifaces))
 		.map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload }))
 		.catch(error => ([{
 			type: 'NOTIFICATION',
@@ -63,8 +63,8 @@ const initAlign = (action$, { getState } ) =>
 		.map(payload => {
 			//Select most active node as default
 			if (typeof getState().rx.data.most_active !== 'undefined'){
-				if (payload.filter(x => x.mac === getState().rx.data.most_active.mac).length > 0) {
-					return payload.filter(x => x.mac === getState().rx.data.most_active.mac)[0];
+				if (payload.filter(x => x.mac === getState().rx.data.most_active.station_mac).length > 0) {
+					return payload.filter(x => x.mac === getState().rx.data.most_active.station_mac)[0];
 				}
 			}
 			//Or select best node if not found most active node.
