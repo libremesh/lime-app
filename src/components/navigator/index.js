@@ -3,7 +3,7 @@ import style from './style';
 
 class Navigator extends Component {
 	notInBase(meta){
-		if (meta.selectedHost !== meta.base && meta.sid !== 'no_user' && meta.stauts !== 'start') {
+		if (meta.selectedHost !== meta.base && meta.sid !== '00000000000000000000000000000000' && meta.stauts !== 'start') {
 			return 'transform: translate(0,0)';
 		}
 		return 'transform: translate(0,-100px)';

@@ -8,9 +8,9 @@ import Rx from '../plugins/lime-plugin-rx';
 // REGISTER PLUGINS
 export const plugins = [
 	Rx,
-	Meta,
 	Align,
 	Locate,
 	Metrics,
-	Notes
+	Notes,
+	Meta
 ];

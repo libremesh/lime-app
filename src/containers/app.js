@@ -20,7 +20,7 @@ class ChangeNode extends Component {
 class App extends Component {
 	render({ store,history }) {
 		const isConnected = (meta) => {
-			if (meta.sid !== 'no_user' && meta.stauts !== 'start' ) {
+			if (meta.sid !== '00000000000000000000000000000000' && meta.stauts !== 'start' ) {
 				return (
 					<div class={style.wraper}>
 						<Router history={history}>

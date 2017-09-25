@@ -1,4 +1,4 @@
-export const getNotes = (api, sid) => api.call(sid, 'get_notes', { })
+export const getNotes = (api, sid) => api.call(sid, 'lime-utils', 'get_notes', { })
 	.map(x => {
 		if (typeof x.notes === 'undefined') {
 			throw { error: true };
@@ -6,4 +6,4 @@ export const getNotes = (api, sid) => api.call(sid, 'get_notes', { })
 		return x;
 	});
 
-export const setNotes = (api, sid, notes) => api.call(sid, 'set_notes', notes);
+export const setNotes = (api, sid, notes) => api.call(sid, 'lime-utils', 'set_notes', notes);
