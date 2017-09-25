@@ -10,7 +10,7 @@ export const plugins = [
 	Rx,
 	// Meta,
 	// Align,
-	// Locate,
+	Locate,
 	// Metrics,
 	// Notes
 	Meta
