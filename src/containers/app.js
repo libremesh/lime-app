@@ -66,7 +66,7 @@ const mapStateToProps = (state) => ({ meta: state.meta });
 const goBase = (hostname) => (dispatch) => {
 	dispatch({
 		type: 'meta/CONECTION_CHANGE_URL',
-		payload: 'ws://thisnode.info/websocket/'
+		payload: 'http://thisnode.info/ubus'
 	});
 };
 
@@ -74,7 +74,7 @@ const goBase = (hostname) => (dispatch) => {
 const changeNode = (hostname) => (dispatch) => {
 	dispatch({
 		type: 'meta/CONECTION_CHANGE_URL',
-		payload: 'ws://'+ hostname +'/websocket/'
+		payload: 'http://'+ hostname +'/ubus'
 	});
 	dispatch({
 		type: 'meta/CONECTION_CHANGE_CURRENT_BASE',

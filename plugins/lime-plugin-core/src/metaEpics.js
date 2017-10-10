@@ -31,13 +31,29 @@ const conectionOff = ( action$ ) =>
 
 const conectionAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(CONECTION_START)
-		.mergeMap( url => wsAPI.connect(url.payload))
-		.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } });
-
+		.mergeMap( url => wsAPI.connect(url.payload)
+			.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } })
+			.catch(error => ([{
+				type: 'NOTIFICATION',
+				payload: { msg: 'Not UBUS api in remote device', error }
+			},{
+				type: CONECTION_START,
+				payload: 'http://thisnode.info/ubus'
+			}]))
+		);
 const changeUrlAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(CONECTION_CHANGE_URL)
-		.mergeMap( url => changeUrl(wsAPI, url.payload))
-		.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } });
+		.mergeMap( url => changeUrl(wsAPI, url.payload)
+			.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } })
+			.catch(error => ([{
+				type: 'NOTIFICATION',
+				payload: { msg: 'Not UBUS api in remote device', error }
+			},{
+				type: CONECTION_START,
+				payload: 'http://thisnode.info/ubus'
+			}]))
+		);
+
 
 const loadHostname = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[CONECTION_LOAD_HOSTNAME,AUTH_LOGIN_SUCCESS])
