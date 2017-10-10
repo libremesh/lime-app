@@ -62,7 +62,7 @@ class Align extends Component {
 		this.speechSubscription = this.alignValue
 			.debounce(() => Observable.timer(1000))
 			.subscribe((value) => {
-				if ( (Math.floor(this.lastSpeech/10) !== Math.floor(value/10)) || this.resumedTimes === 5 ) {
+				if ( (Math.floor(this.lastSpeech/10) !== Math.floor(value/10)) || Number(value.toString()[value.toString().length -1 ]) === 0 || this.resumedTimes === 5 ) {
 					speech(value || 0, 'es-ES', voices, synth);
 					this.resumedTimes = 0;
 				}
