@@ -6,7 +6,7 @@ import {
 export const changeBase = ( hostname ) => (dispatch, getState) => {
 	dispatch({
 		type: CONECTION_CHANGE_URL,
-		payload: 'ws://'+ hostname +'/websocket/'
+		payload: 'http://'+ hostname +'/ubus'
 	});
 	dispatch({
 		type: CONECTION_CHANGE_CURRENT_BASE,

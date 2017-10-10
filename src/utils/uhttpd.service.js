@@ -26,11 +26,22 @@ export class UhttpdService {
 	call(sid,action, method, data) {
 		return this.request([sid, action, method, data]);
 	}
-    
+
 	connect(newUrl) {
-		return new Promise((res,rej) => {
-			this.url = newUrl;
-			res();
-		});
+		this.url = newUrl;
+		return Observable.fromPromise( new Promise((res,rej) => {
+			axios.get(this.url).catch(
+				err => {
+					try {
+						( err.response.status === 400)? res(): rej();
+					}
+					catch (error) {
+						rej();
+					}
+
+				}
+			);
+		}));
 	}
+
 }
