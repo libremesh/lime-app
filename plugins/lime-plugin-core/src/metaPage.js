@@ -49,8 +49,8 @@ export class Meta extends Component {
 						<div class="six columns">
 							<p>
 								<label>{I18n.t('Select new base station')}</label>
-								<select class="u-full-width" onChange={this.handleChange} >
-									{this.props.stations.map(x => (<option value={x} selected={this.isSelected(x)}>{x}</option>))}
+								<select class="u-full-width" onChange={this.handleChange} value={this.state.station} >
+									{this.props.stations.map(x => (<option value={x}>{x}</option>))}
 								</select>
 							</p>
 						</div>
