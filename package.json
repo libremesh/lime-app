@@ -44,7 +44,7 @@
     "eslint": "^4.5.0",
     "eslint-config-synacor": "^2.0.0",
     "extract-text-webpack-plugin": "^3.0.0",
-    "file-loader": "^0.11.2",
+    "file-loader": "^1.1.0",
     "gh-pages": "^1.0.0",
     "html-webpack-plugin": "^2.30.1",
     "i18nline": "^1.5.0",
