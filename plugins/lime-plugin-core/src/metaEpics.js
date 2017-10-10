@@ -41,6 +41,7 @@ const conectionAction = ( action$, store, { wsAPI } ) =>
 				payload: 'http://thisnode.info/ubus'
 			}]))
 		);
+
 const changeUrlAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(CONECTION_CHANGE_URL)
 		.mergeMap( url => changeUrl(wsAPI, url.payload)
@@ -88,4 +89,4 @@ export default {
 	defaultLoginAction,
 	loginAction,
 	redirectOnConnection
-};
+};	

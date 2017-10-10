@@ -93,7 +93,7 @@ export class Page extends Component {
 				<div>
 
 					<MostActiveBox node={node} changeNode={this.changeNode} />
-
+					
 					<SystemBox node={node} count={this.state.plusTime} update={this.startCount} />
 
 					<Box title={I18n.t('Internet connection')}>
