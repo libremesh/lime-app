@@ -1,5 +1,4 @@
-{  
-  "es": {
+{
     "align_11050992" : "Alineación",
     "base_host_a17d45a4" : "Nodo local",
     "back_to_base_443797cb": "Volver al nodo local",
@@ -40,5 +39,4 @@
     "trying_to_connect_ff82bf9f" : "Intentando conectar con %{meta_ws}",
     "uptime_c1d2415d" : "Encendido",
     "user_c95de254" : "Usuario"
-  }
 }
