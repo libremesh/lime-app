@@ -59,7 +59,7 @@ const loadingMessages = {
 
 const errorMessages = {
 	load_last_known_internet_path: I18n.t('load_last_known_internet_path')
-}
+};
 
 class Metrics extends Component {
   
