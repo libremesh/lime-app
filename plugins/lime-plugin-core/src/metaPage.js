@@ -42,15 +42,15 @@ export class Meta extends Component {
 						<div class="six columns">
 							<p>
 								<label>{I18n.t('Current status')}</label>
-								<span>{I18n.t('Conected Host')}</span>: {this.props.selectedHost}<br />
+								<span>{I18n.t('Connected Host')}</span>: {this.props.selectedHost}<br />
 								<span>{I18n.t('Base Host')}</span>: {this.props.base}
 							</p>
 						</div>
 						<div class="six columns">
 							<p>
 								<label>{I18n.t('Select new base station')}</label>
-								<select class="u-full-width" onChange={this.handleChange} >
-									{this.props.stations.map(x => (<option value={x} selected={this.isSelected(x)}>{x}</option>))}
+								<select class="u-full-width" onChange={this.handleChange} value={this.state.station} >
+									{this.props.stations.map(x => (<option value={x}>{x}</option>))}
 								</select>
 							</p>
 						</div>

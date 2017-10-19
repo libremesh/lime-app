@@ -51,6 +51,16 @@ const style = {
 	}
 };
 
+const loadingMessages = {
+	metrics_status_gateway: I18n.t('metrics_status_gateway'),
+	metrics_status_path: I18n.t('metrics_status_path'),
+	metrics_status_stations: I18n.t('metrics_status_stations')
+};
+
+const errorMessages = {
+	load_last_known_internet_path: I18n.t('load_last_known_internet_path')
+};
+
 class Metrics extends Component {
   
 	clickGateway(gateway) {
@@ -85,7 +95,7 @@ class Metrics extends Component {
 		return (
 			<div style={style.loadingBox}>
 				<Loading />
-				<span style={style.textLoading}>{I18n.translateWithoutI18nline(this.props.metrics.status)}</span>
+				<span style={style.textLoading}>{loadingMessages[this.props.metrics.status]}</span>
 			</div>
 		);
 	}
@@ -109,7 +119,7 @@ class Metrics extends Component {
 
 	showError(error){
 		if (error !== null) {
-			return (<p style={style.textError}>Error: {error.msg}</p>);
+			return (<p style={style.textError}>Error: {errorMessages[error.msg]}</p>);
 		}
 		return;
 	}

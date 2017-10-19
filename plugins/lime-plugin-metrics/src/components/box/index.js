@@ -58,7 +58,7 @@ class Box extends Component {
 		return (
 			<div style={(this.props.station.loading)? style.loading: style.box} onClick={this.props.click} >
 				<span><b>{this.isGateway(this.props.gateway, this.props.station.hostname)}</b><br /></span>
-				{this.props.station.bandwidth} Mbps / <span>{I18n.t('Package loss')}</span> {this.props.station.loss}%<br />
+				{this.props.station.bandwidth} Mbps / <span>{I18n.t('Packet loss')}</span> {this.props.station.loss}%<br />
 				<div style={this.barStyle(this.props.station.loss)} />
 			</div>
 		);
