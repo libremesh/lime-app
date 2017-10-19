@@ -110,10 +110,8 @@ class Align extends Component {
 
 	render(state) {
 		this.alignValue.next(state.alignData.currentReading.signal * -1);
-		//speech(state.alignData.currentReading.signal*-1 || 0, 'es-ES', voices, synth);
 		return (
 			<div className="container" style={{ paddingTop: '100px' }}>
-				{/*[1,10,20,30,40,50,55,60,65,70,75,80,85,90,95].map(x => (<span style={this.colorBar(x)} >{x}</span>))*/}
 				<div className="row">
 					<div className="six columns">
 						<span style={style.hostname}>
@@ -128,7 +126,7 @@ class Align extends Component {
 						</span>
 					</div>
 					<div className="six columns">
-						<label>{I18n.t('Intefaces')}</label>
+						<label>{I18n.t('Interfaces')}</label>
 						<select style={style.block} onChange={this.changeInterface} value={state.alignData.currentReading.iface ? state.alignData.currentReading.iface : null}>
 							{state.alignData.ifaces.map((iface) => <option value={iface.name}>{iface.name}</option>)}
 						</select>
