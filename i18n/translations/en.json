@@ -1,5 +1,4 @@
 {
-  "en":{
     "align_11050992" :"Align",
     "back_to_base_443797cb" :"Back to base",
     "base_host_a17d45a4" :"Base Host",
@@ -42,5 +41,4 @@
     "trying_to_connect_ff82bf9f" :"Trying to connect to %{meta_ws}",
     "uptime_c1d2415d" :"Uptime",
     "user_c95de254" :"User"
-  }
 }
