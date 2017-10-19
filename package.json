@@ -12,7 +12,8 @@
     "test": "npm run -s lint && npm run -s test:karma",
     "test:karma": "karma start test/karma.conf.js --single-run",
     "lint": "eslint ./",
-    "translations": "node ./node_modules/i18nline/bin/i18nline.js export"
+    "translations": "node ./node_modules/i18nline/bin/i18nline.js export",
+    "posttranslations": "node ./i18n-diff.js"
   },
   "keywords": [
     "preact",
@@ -37,6 +38,7 @@
     "babel-register": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "chai": "^4.1.2",
+    "colors": "^1.1.2",
     "copy-webpack-plugin": "^4.0.1",
     "core-js": "^2.5.1",
     "cross-env": "^5.0.5",
