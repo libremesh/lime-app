@@ -42,7 +42,7 @@ export class Meta extends Component {
 						<div class="six columns">
 							<p>
 								<label>{I18n.t('Current status')}</label>
-								<span>{I18n.t('Conected Host')}</span>: {this.props.selectedHost}<br />
+								<span>{I18n.t('Connected Host')}</span>: {this.props.selectedHost}<br />
 								<span>{I18n.t('Base Host')}</span>: {this.props.base}
 							</p>
 						</div>

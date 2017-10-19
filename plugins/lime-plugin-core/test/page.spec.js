@@ -20,7 +20,7 @@ describe('Meta page', () => {
 		expect(component).to.contain(
 			<p>
 				<label>Current status</label>
-				<span>Conected Host</span>: host-01<br />
+				<span>Connected Host</span>: host-01<br />
 				<span>Base Host</span>: host-base
 			</p>
 		);
