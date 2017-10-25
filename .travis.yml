@@ -10,6 +10,7 @@ deploy:
   api_key:
     secure: piqSk7MFmSFohAFFLqH8XLTTi825NIJgOVw+yeeDEjZcRV8prdGSTulvWrLF+94MKR/veIW1DC6F2n5ZOtgzrTRIy+BzRstI6T1Np+h2FO0cg6mBgXnc8zi2G9S5CSR/Y4R5S4JUooTz+Yu2GTldkxJnf5DLl0C62AA2UjQclgWYes10gzO0PlO8nMJe2KkZYrWZwEgBJp+aLFme80mwkPY4F6fq4GL3xYRNRSzPD4SG1Rdj8qe+YyExT/AXsiMUEde86Bqq4U1c8Eaglum7n6Y/SnKvt6I9vpp+eSw2vPGh+ruS2Qb38mAMY1juE7czPQ1Afg4mLenwCoz9YrV/uq5RTtg/+3IpReoygbcJKvB/oqPUNjjONr2xrI/SplkAnan/WC5UHW1sl0hRDLfIsgIE0XhJqmUISSsyxEHIAjExVq1Q7nZp3wbl33bDGz9JM6quMrKgSoLTPSy7UC7x5FzPNxGj9MsAcQtnwIxDXg95iYG6u2mmQqA5BlGPcNl4CT9CIWh0kljRZqrSACN8QSQGjam109pcRdP9LbBJ4QWu6DBqK7MeVcBt1rmZa4cm9cF2ufEkm6V9MZ7k6YS+7tqm8BOYaalu2Sv63mfcGaf3GqYkgoAyUQ4xImQgBdD3e+FoG0P5UUORLPDz7u1BQ9Hv6M2Kdyu2XphiKUHxedk=
   file: $TRAVIS_BUILD_DIR/lime-app-$TRAVIS_BRANCH.tar.gz
+  skip_cleanup: true
   on:
     repo: libremesh/lime-app
     tags: true
