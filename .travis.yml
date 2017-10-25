@@ -4,9 +4,11 @@ node_js:
 script: npm run build --production
 
 deploy:
-  provider: pages
+  provider: releases
   skip_cleanup: true
-  github_token: $GITHUB_TOKEN
+  overwrite: true
   local_dir: build
+  github_token: $GITHUB_TOKEN
+  file: "FILE TO UPLOAD"
   on:
-    branch: master
+    tags: true
