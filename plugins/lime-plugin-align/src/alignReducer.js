@@ -16,7 +16,7 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 	switch (type) {
 
 		case IFACES_LOAD_SUCCESS:
-			return Object.assign({}, state, { ifaces: payload });
+			return Object.assign({}, state, { ifaces: payload.filter(x => x.name) });
 
 		case STATIONS_LOAD_SUCCESS:
 			return Object.assign({}, state, { stations: payload });
