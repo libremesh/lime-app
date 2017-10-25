@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.1-alpha.4"></a>
+## [0.0.1-alpha.4](https://github.com/libremesh/lime-app/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2017-10-25)
+
+
+### Bug Fixes
+
+* **travis:** Wrong credentials ([d9c14b4](https://github.com/libremesh/lime-app/commit/d9c14b4))
+
+
+
 <a name="0.0.1-alpha.3"></a>
 ## [0.0.1-alpha.3](https://github.com/libremesh/lime-app/compare/v0.0.1-alpha.2...v0.0.1-alpha.3) (2017-10-25)
 
