@@ -12,5 +12,4 @@ deploy:
   file: $TRAVIS_BUILD_DIR/lime-app-$TRAVIS_BRANCH.tar.gz
   skip_cleanup: true
   on:
-    repo: libremesh/lime-app
     tags: true
