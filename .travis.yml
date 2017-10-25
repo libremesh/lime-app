@@ -1,14 +1,13 @@
 language: node_js
 node_js:
-  - 7.8.0
+- 7.8.0
 script: npm run build --production
-
 deploy:
   provider: releases
+  api_key:
+    secure: RmIu0GL+/VGBwMoMKrgLBel2i3kjUE86vSUidgIuOY+uQvI3fwBl0O1icWkzmW12kIRj5D1pZdQXjpS2pCxOn5Ytmv80VPzq5VbcXnxQWRJ6xLk0s/MEjMGcSHiz4aVNrnJbn3YliT9XETYj7CB3Uby/UPuKBoywW8z6TByyd9Fd6s9MqgooHRk31Uu0zDvyJonQ+EZajzmCz+RTPmZrqxq3xsHzNlfOTq7AjypHidJaAO9rl4XUtIAPKAptsFcySmv4riKGnw9fMuuDZIuTmuHE6Nh5hvZIFfBYZmKDtOE9DMSwd8iVkpACs6lDBw/TrcQDLFjAIU5ZQGQOPQT81eH4S0J8n0FSJCWrGwr26nQKBbrreAEWeAyOHmGYXc/FzfXU75jGH9x+QI977c1bVDDl62WusAHBHvcG/Xt2mF0F1PKXSmj801pvCC9earcqRTKTbCEMO1xxsywT0n+yPSsB6eWnWjBipLe4KHKLsc8v8z9Jn9v9tdQ7825U+ELy5hE9CNWvDOcrkfX3OFvWNlWwMaWkQPsSNIlGvxuXoV60ZFHBU/DHCXyhFhHCnFzuRZ20jVWZeYImchDp7dcWiRTHq6+FYBeFAkH8AbnJDCPAeqHt5x00y3pZsVsOsyyB9u1nbyLCXyYYGjLSbXJQtrV+Y58FxbcbsJ58NW4qU+k=
+  file_glob: true
+  file: build/*
   skip_cleanup: true
-  overwrite: true
-  local_dir: build
-  github_token: $GITHUB_TOKEN
-  file: "FILE TO UPLOAD"
   on:
     tags: true
