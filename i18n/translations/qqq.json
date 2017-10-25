@@ -33,6 +33,8 @@
     "system_55b0ca91" :"TO DO: System",
     "to_internet_494eb85c" :"TO DO: To Internet",
     "traffic_bfe536d2" :"TO DO: Traffic",
-    "trying_to_connect_ff82bf9f" :"TO DO: Do not translate the code %{meta_ws}",
+    "connection_fail_57f84354": "TO DO: Connection to %{meta_ws} fail",
+    "trying_to_connect_ff82bf9f" :"TO DO: Trying to connect to %{meta_ws}",
+    "try_thisnode_info_1ee1bfe2" :"TO DO: Try thisnode.info",
     "uptime_c1d2415d" :"TO DO: Uptime"
 }

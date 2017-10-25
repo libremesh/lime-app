@@ -32,7 +32,9 @@
   "system_55b0ca91" :"System",
   "to_internet_494eb85c" :"To Internet",
   "traffic_bfe536d2" :"Traffic",
+  "connection_fail_57f84354": "Connection to %{meta_ws} fail",
   "trying_to_connect_ff82bf9f" :"Trying to connect to %{meta_ws}",
+  "try_thisnode_info_1ee1bfe2" :"Try thisnode.info",
   "uptime_c1d2415d" :"Uptime",
   "interfaces_44f8a99c": "Interfaces"
 }

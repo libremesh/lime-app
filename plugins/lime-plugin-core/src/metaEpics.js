@@ -1,6 +1,7 @@
 import {
 	CONECTION_START,
 	CONECTION_SUCCESS,
+	CONECTION_ERROR,
 	CONECTION_CHANGE_URL,
 	CONECTION_SETTINGS,
 	CONECTION_LOAD_NEIGHBORS,
@@ -22,6 +23,7 @@ import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/retry';
 
 import { push } from 'preact-router-redux';
 
@@ -37,7 +39,7 @@ const conectionAction = ( action$, store, { wsAPI } ) =>
 				type: 'NOTIFICATION',
 				payload: { msg: 'Not UBUS api in remote device', error }
 			},{
-				type: CONECTION_START,
+				type: CONECTION_ERROR,
 				payload: 'http://thisnode.info/ubus'
 			}]))
 		);

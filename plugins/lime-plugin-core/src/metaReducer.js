@@ -1,5 +1,6 @@
 import {
 	CONECTION_SUCCESS,
+	CONECTION_ERROR,
 	CONECTION_START,
 	CONECTION_CHANGE_URL,
 	CONECTION_LOAD_NEIGHBORS_SUCCESS,
@@ -29,7 +30,9 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case CONECTION_CHANGE_URL:
 			return Object.assign({}, state, { conection: false, ws: payload, sid: '00000000000000000000000000000000' });
 		case CONECTION_SUCCESS:
-			return Object.assign({}, state, payload);
+			return Object.assign({}, state, payload, { error: undefined });
+		case CONECTION_ERROR:
+			return Object.assign({}, state, { conection: false, error: 'ubusapi-not-found' });
 		case AUTH_LOGIN_SUCCESS:
 			return Object.assign({}, state, { sid: payload });
 		case CONECTION_LOAD_HOSTNAME_SUCCESS:

@@ -31,7 +31,9 @@
   "system_55b0ca91" : "Sistema",
   "to_internet_494eb85c" : "Hasta Internet",
   "traffic_bfe536d2" : "Trafico",
+  "connection_fail_57f84354": "Conexión con %{meta_ws} fallida",
   "trying_to_connect_ff82bf9f" : "Intentando conectar con %{meta_ws}",
+  "try_thisnode_info_1ee1bfe2" :"Intentar con thisnode.info",
   "uptime_c1d2415d" : "Encendido",
   "interfaces_44f8a99c": "Interfaces",
   "station_75bce853" :"Nodo"

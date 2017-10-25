@@ -35,6 +35,8 @@
     "loading_node_status_547ed318": "Loading node status...",
     "ip_addresses_440ac240": "IP Addresses",
     "back_to_base_443797cb": "Back to base",
+    "connection_fail_57f84354": "Connection fail",
+    "try_thisnode_info_1ee1bfe2": "Try thisnode.info",
     "trying_to_connect_ff82bf9f": "Trying to connect"
   }
 }
