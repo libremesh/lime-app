@@ -48,6 +48,7 @@ class Box extends Component {
 	barStyle(loss) {
 		return Object.assign({},style.line,{
 			width: (this.props.station.bandwidth*100/20).toString()+'%',
+			maxWidth: '100%',
 			backgroundColor: colorScale.getColor(loss)
 		});
 	}
