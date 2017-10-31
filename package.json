@@ -94,7 +94,7 @@
     "react-load-script": "0.0.6",
     "react-pure": "^0.3.1",
     "redux": "^3.7.2",
-    "redux-observable": "^0.16.0",
+    "redux-observable": "^0.17.0",
     "redux-thunk": "^2.2.0",
     "rxjs": "^5.4.3",
     "serve": "^6.0.6",
