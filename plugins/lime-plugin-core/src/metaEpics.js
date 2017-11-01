@@ -9,14 +9,16 @@ import {
 	CONECTION_LOAD_HOSTNAME,
 	CONECTION_LOAD_HOSTNAME_SUCCESS,
 	AUTH_LOGIN,
-	AUTH_LOGIN_SUCCESS
+	AUTH_LOGIN_SUCCESS,
+	COMMUNITY_SETTINGS_LOAD_SUCCESS
 } from './metaConstants';
 
 import {
 	changeUrl,
 	getHostname,
 	getCloudNodes,
-	login
+	login,
+	getCommunitySettings
 } from './metaApi';
 
 import 'rxjs/add/operator/mapTo';
@@ -80,6 +82,10 @@ const redirectOnConnection = ( action$, store ) =>
 	action$.ofType(AUTH_LOGIN_SUCCESS)
 		.mapTo(push(store.getState().meta.home));
 
+const communitySettings = (action$, store, { wsAPI } ) =>
+	action$.ofType(AUTH_LOGIN_SUCCESS)
+		.mergeMap( action => getCommunitySettings(wsAPI, store.getState().meta.sid))
+		.map((settings) => ({ type: COMMUNITY_SETTINGS_LOAD_SUCCESS, payload: settings }));
 
 export default {
 	conectionOff,
@@ -89,5 +95,6 @@ export default {
 	loadHostname,
 	defaultLoginAction,
 	loginAction,
-	redirectOnConnection
-};	
+	redirectOnConnection,
+	communitySettings
+};

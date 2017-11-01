@@ -6,8 +6,17 @@ import {
 	CONECTION_LOAD_NEIGHBORS_SUCCESS,
 	CONECTION_LOAD_HOSTNAME_SUCCESS,
 	CONECTION_CHANGE_CURRENT_BASE,
-	AUTH_LOGIN_SUCCESS
+	AUTH_LOGIN_SUCCESS,
+	COMMUNITY_SETTINGS_LOAD_SUCCESS
 } from './metaConstants';
+
+const defaultSettings = {
+	bad_signal: '-82',
+	acceptable_loss: '20',
+	bad_bandwidth: '1',
+	good_signal: '-65',
+	good_bandwidth: '5'
+};
 
 export const initialState = {
 	title: 'LimeApp',
@@ -20,7 +29,8 @@ export const initialState = {
 	stations: [],
 	base: '',
 	home: '/rx',
-	selectedHost: ''
+	selectedHost: '',
+	settings: defaultSettings
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -44,6 +54,8 @@ export const reducer = (state = initialState, { type, payload }) => {
 			return Object.assign({}, state, { selectedHost: '' });
 		case CONECTION_LOAD_NEIGHBORS_SUCCESS:
 			return Object.assign({}, state, { stations: payload.concat([state.selectedHost]).sort(),status: 'ready' });
+		case COMMUNITY_SETTINGS_LOAD_SUCCESS:
+			return Object.assign({}, state, { settings: Object.assign({},defaultSettings, payload) });
 		default:
 			return state;
 	}
