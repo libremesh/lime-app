@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import { getMetrics, getMetricsAll, getMetricsGateway, changeNode } from './metricsActions';
-import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
+import { getNodeData, getSettings } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
 import MetricsBox from './components/box';
@@ -156,7 +156,7 @@ class Metrics extends Component {
 				{this.props.metrics.error.map(x => this.showError(x))}
 				<div style={style.box}>{I18n.t('From')+' '+this.props.meta.selectedHost}</div>
 				{this.props.metrics.metrics.map(station => (
-					<MetricsBox station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.hostname,this.props.metrics.gateway)} />
+					<MetricsBox settings={this.props.settings} station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.hostname,this.props.metrics.gateway)} />
 				))}
 				<div style={style.box}>{I18n.t('To Internet')}</div>
 				{this.showInternetStatus(this.props.metrics.loading, this.props.node)}
@@ -171,7 +171,8 @@ class Metrics extends Component {
 const mapStateToProps = (state) => ({
 	metrics: state.metrics,
 	meta: state.meta,
-	node: getNodeData(state)
+	node: getNodeData(state),
+	settings: getSettings(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

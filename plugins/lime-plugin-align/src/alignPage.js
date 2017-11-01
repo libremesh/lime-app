@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounce';
 import 'rxjs/add/observable/timer';
 
-import { getAll, getSelectedHost } from './alignSelectors';
+import { getAll, getSelectedHost, getSettings } from './alignSelectors';
 
 import I18n from 'i18n-js';
 
@@ -97,9 +97,9 @@ class Align extends Component {
 		this.startSpeech();
 		colorScale.setConfig({
 			outputStart: 1,
-			outputEnd: 80,
-			inputStart: 60,
-			inputEnd: 90
+			outputEnd: Number(this.props.settings.bad_signal)* -1,
+			inputStart: Number(this.props.settings.good_signal)* -1,
+			inputEnd: Number(this.props.settings.bad_signal)* -1 + 10
 		});
 	}
 
@@ -144,7 +144,8 @@ class Align extends Component {
 
 const mapStateToProps = (state) => ({
 	alignData: getAll(state),
-	selectedHost: getSelectedHost(state)
+	selectedHost: getSelectedHost(state),
+	settings: getSettings(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
