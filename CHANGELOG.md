@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0-alpha.0"></a>
+# [0.1.0-alpha.0](https://github.com/libremesh/lime-app/compare/v0.0.1-alpha.6...v0.1.0-alpha.0) (2017-11-24)
+
+
+### Features
+
+* **location:** Changes in how to select the new location of a node ([31fdabf](https://github.com/libremesh/lime-app/commit/31fdabf)), closes [#53](https://github.com/libremesh/lime-app/issues/53)
+* **settings:** Metrics box and align status now respond to community settings ([dbc3c8d](https://github.com/libremesh/lime-app/commit/dbc3c8d)), closes [#28](https://github.com/libremesh/lime-app/issues/28)
+
+
+
 <a name="0.0.1-alpha.6"></a>
 ## [0.0.1-alpha.6](https://github.com/libremesh/lime-app/compare/v0.0.1-alpha.4...v0.0.1-alpha.6) (2017-10-25)
 
