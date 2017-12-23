@@ -88,7 +88,7 @@
     "preact-redux": "^2.0.2",
     "preact-router": "^2.5.7",
     "preact-router-redux": "^4.1.0",
-    "promise-polyfill": "^6.0.2",
+    "promise-polyfill": "^7.0.0",
     "proptypes": "^1.1.0",
     "purecss": "^1.0.0",
     "react-load-script": "0.0.6",
