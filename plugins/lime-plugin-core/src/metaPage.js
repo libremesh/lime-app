@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
-import { changeBase } from './metaActions';
+import { changeBase, setHostname } from './metaActions';
 import { getBase, getStations, getSelectedHost } from './metaSelectors';
 
 import I18n from 'i18n-js';
@@ -28,7 +28,9 @@ export class Meta extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { station: this.props.selectedHost };
+		this.state = {
+			station: this.props.selectedHost
+		};
 		this.nextStation = this.nextStation.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.isSelected = this.isSelected.bind(this);

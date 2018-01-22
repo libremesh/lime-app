@@ -10,7 +10,10 @@ import {
 	CONECTION_LOAD_HOSTNAME_SUCCESS,
 	AUTH_LOGIN,
 	AUTH_LOGIN_SUCCESS,
-	COMMUNITY_SETTINGS_LOAD_SUCCESS
+	COMMUNITY_SETTINGS_LOAD_SUCCESS,
+	SET_HOSTNAME,
+	SET_HOSTNAME_SUCCESS,
+	SET_HOSTNAME_ERROR
 } from './metaConstants';
 
 import {
@@ -18,13 +21,17 @@ import {
 	getHostname,
 	getCloudNodes,
 	login,
-	getCommunitySettings
+	getCommunitySettings,
+	setHostname
 } from './metaApi';
 
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/delay';
+
 
 import { push } from 'preact-router-redux';
 
@@ -64,6 +71,12 @@ const loadHostname = ( action$, store, { wsAPI }) =>
 		.mergeMap(() => getHostname(wsAPI, store.getState().meta.sid))
 		.map(payload => ({ type: CONECTION_LOAD_HOSTNAME_SUCCESS, payload }));
 
+const changeHostname = (action$, store, { wsAPI }) =>
+	action$.ofType(SET_HOSTNAME)
+		.mergeMap((action) => setHostname(wsAPI, store.getState().meta.sid, action.payload)
+			.map( payload => ({ type: SET_HOSTNAME_SUCCESS, payload }))
+			.catch( error => ([{ type: SET_HOSTNAME_ERROR, payload: error }]) ));
+
 const loadNetwork = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[CONECTION_LOAD_NEIGHBORS, CONECTION_LOAD_HOSTNAME_SUCCESS])
 		.mergeMap(() => getCloudNodes(wsAPI,store.getState().meta.sid))
@@ -87,6 +100,10 @@ const communitySettings = (action$, store, { wsAPI } ) =>
 		.mergeMap( action => getCommunitySettings(wsAPI, store.getState().meta.sid))
 		.map((settings) => ({ type: COMMUNITY_SETTINGS_LOAD_SUCCESS, payload: settings }));
 
+const closeNotificatins = (action$, store, { wsAPI } ) =>
+	action$.ofType('NOTIFICATION')
+		.mergeMap(() => Observable.of({ type: 'NOTIFICATION_HIDE' }).delay(2000));
+
 export default {
 	conectionOff,
 	conectionAction,
@@ -96,5 +113,7 @@ export default {
 	defaultLoginAction,
 	loginAction,
 	redirectOnConnection,
-	communitySettings
+	communitySettings,
+	changeHostname,
+	closeNotificatins
 };
