@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/libremesh/lime-app/compare/v0.1.0-alpha.1...v0.1.0) (2018-01-22)
+
+
+### Bug Fixes
+
+* **package:** update redux-observable to version 0.17.0 ([e5bafbc](https://github.com/libremesh/lime-app/commit/e5bafbc))
+* Remove admin options form config page ([ccbe3ab](https://github.com/libremesh/lime-app/commit/ccbe3ab))
+
+
+### Features
+
+* Add admin section ([c416cc4](https://github.com/libremesh/lime-app/commit/c416cc4))
+* Setup notifications ([6e5ce8c](https://github.com/libremesh/lime-app/commit/6e5ce8c))
+
+
+
 <a name="0.1.0-alpha.1"></a>
 # [0.1.0-alpha.1](https://github.com/libremesh/lime-app/compare/v0.1.0-alpha.0...v0.1.0-alpha.1) (2017-11-24)
 
