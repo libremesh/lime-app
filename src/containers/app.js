@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import Header from '../components/header';
+import Alert from '../components/alert';
 import Status from '../components/status';
 import { plugins } from '../config';
 
@@ -55,6 +56,7 @@ class App extends Component {
 				<Header hostname={this.props.meta.selectedHost} goHome={this.props.goBase} />
 				{ /*<Navigator hostname={this.props.meta} goHome={this.props.goBase} /> */ }
 				{isConnected(this.props.meta)}
+				<Alert text={this.props.meta.alert} hide={this.props.hideAlert} />
 			</div>
 		);
 	}
@@ -70,6 +72,11 @@ const goBase = (hostname) => (dispatch) => {
 	});
 };
 
+const hideAlert = () => (dispatch) => {
+	dispatch({
+		type: 'NOTIFICATION_HIDE'
+	});
+};
 
 const changeNode = (hostname) => (dispatch) => {
 	dispatch({
@@ -84,7 +91,8 @@ const changeNode = (hostname) => (dispatch) => {
 
 const mapDispatchToProps = (dispatch) => ({
 	goBase: bindActionCreators(goBase, dispatch),
-	changeNode: bindActionCreators(changeNode, dispatch)
+	changeNode: bindActionCreators(changeNode, dispatch),
+	hideAlert: bindActionCreators(hideAlert, dispatch)
 });
 
 

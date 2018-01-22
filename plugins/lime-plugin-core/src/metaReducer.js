@@ -22,6 +22,7 @@ export const initialState = {
 	title: 'LimeApp',
 	sid: '00000000000000000000000000000000',
 	status: 'start',
+	alert: undefined,
 	url: '/',
 	conection: false,
 	ws: '',
@@ -56,6 +57,10 @@ export const reducer = (state = initialState, { type, payload }) => {
 			return Object.assign({}, state, { stations: payload.concat([state.selectedHost]).sort(),status: 'ready' });
 		case COMMUNITY_SETTINGS_LOAD_SUCCESS:
 			return Object.assign({}, state, { settings: Object.assign({},defaultSettings, payload) });
+		case 'NOTIFICATION':
+			return Object.assign({}, state, { alert: payload.msg });
+		case 'NOTIFICATION_HIDE':
+			return Object.assign({}, state, { alert: undefined });
 		default:
 			return state;
 	}
