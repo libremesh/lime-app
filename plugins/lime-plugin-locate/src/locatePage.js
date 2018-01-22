@@ -11,6 +11,17 @@ import { getLocation, getUserLocation, getSelectedHost } from './locateSelectors
 
 import I18n from 'i18n-js';
 
+const style = {
+	buttonOver: {
+		position: 'absolute',
+		left: '15px',
+		zIndex: '10000',
+		bottom: '20px',
+		background: '#90d504',
+		color: '#fff',
+		borderWidth: '2px'
+	}
+};
 
 const key = 'AIzaSyBS0M7H7Ltk1ipjwqi8r9_WQJOzWfav4Ok';
 
@@ -18,9 +29,15 @@ let L;
 
 class Locate extends Component {
 
-	updatePosition(e) {
-		let { lat, lng } = e.target._latlng;
-		this.props.changeLocation({ lat: lat.toFixed(5),lon: lng.toFixed(5) });
+	updatePosition() {
+		let position = this.state.map.getCenter();
+		position = {
+			lat: (position.lat_neg)? position.lat * -1: position.lat,
+			lon: (position.lng_neg)? position.lng * -1: position.lng
+		};
+		this.props.changeLocation({ lat: position.lat.toFixed(5),lon: position.lon.toFixed(5) });
+		this.state.map.setView([position.lat, position.lon]);
+		this.toogleEdit();
 	}
 
 	requestCurrentPosition() {
@@ -40,10 +57,16 @@ class Locate extends Component {
 	}
   
 	handleScriptLoad() {
-		this.setState({ scriptLoaded: true });
 		L = window.L;
-    
-		const map = this.map = L.map('map').setView([this.props.stationLocation.lat, this.props.stationLocation.lon], 13);
+		this.setState({ scriptLoaded: true });
+		
+		if (typeof this.state.map === 'undefined') {
+			const initMap = L.map('map').setView([this.props.stationLocation.lat, this.props.stationLocation.lon], 13);
+			this.setState({ map: initMap });
+		}
+		
+		const map = this.state.map;
+
 
 		require('leaflet.gridlayer.googlemutant');
 
@@ -73,23 +96,19 @@ class Locate extends Component {
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(map);
 
-
-		const popupNode = L.popup()
+		const popup = L.popup()
 			.setLatLng([this.props.stationLocation.lat, this.props.stationLocation.lon])
-			.setContent(`<strong>${I18n.t('Station')} </strong> ${this.props.stationHostname}<br/>
-          <span">
-              ${I18n.t('MOVE TO NEW POSITION')}
-          </span>
-        </span>`);
+			.setContent(`<h4 style="margin-bottom:-11px; ">${I18n.t('Station')} </strong> ${this.props.stationHostname}</h4><br/>
+						<button onClick='window.toggleEdit()'>${this.state.buttonText}</button>
+			</span>`)
+			.openOn(map);
+		this.setState({ popup });
 
-		this.marker = L.marker([this.props.stationLocation.lat, this.props.stationLocation.lon],{
-			draggable: true
-		})
+		const marker = L.marker([this.props.stationLocation.lat, this.props.stationLocation.lon],{ draggable: false })
 			.addTo(map)
 			.on('click', (x) => map.setView(x.target._latlng))
-			.on('drag', (x) => map.setView(x.target._latlng))
-			.on('moveend', (x) => this.updatePosition(x))
-			.bindPopup(popupNode);
+			.bindPopup(popup);
+		this.setState({ marker });
 	}
 
 	isLoaded(exist) {
@@ -100,11 +119,47 @@ class Locate extends Component {
 		}
 		return (<div>Loading...</div>);
 	}
-  
+
+	showButton(change) {
+		if (change) {
+			return (<button style={style.buttonOver} onClick={this.updatePosition}>Set as new location</button>);
+		}
+	}
+
 	rerenderMap(latlon) {
 		if (this.state.scriptLoaded === true) {
-			this.map.setView([latlon.lat, latlon.lon]);
-			this.marker.setLatLng([latlon.lat, latlon.lon]);
+			if (this.state.scriptCoords === false ) {
+				this.state.map.setView([latlon.lat, latlon.lon]);
+			}
+			this.state.marker.setLatLng([latlon.lat, latlon.lon]);
+			return (
+				<span>
+					<Script url={'https://xguaita.github.io/Leaflet.MapCenterCoord/dist/L.Control.MapCenterCoord.min.js'}
+						onLoad={this.addCoord}
+					/>
+				</span>
+			);
+		}
+	}
+
+	addCoord() {
+		if (this.state.scriptCoords === false ) {
+			L = window.L;
+			L.control.mapCenterCoord().addTo(this.state.map);
+			this.setState({ scriptCoords: true });
+		}
+	}
+
+	toogleEdit() {
+		this.setState({ change: !this.state.change });
+		this.state.map.closePopup();
+		let pointer = document.getElementsByClassName('leaflet-control-mapcentercoord-icon');
+		if (pointer.length > 0) {
+			this.setState({ buttonText: (this.state.change)? 'Close edit mode' : 'Edit location' });
+			this.state.popup.setContent(`<h4 style="margin-bottom:-11px; ">${I18n.t('Station')} </strong> ${this.props.stationHostname}</h4><br/>
+					<button onClick='window.toggleEdit()'>${this.state.buttonText}</button>
+					</span>`);
+			pointer[0].style.opacity = (this.state.change)? 1 : 0;
 		}
 	}
 
@@ -112,11 +167,19 @@ class Locate extends Component {
 		super(props);
 		this.state = {
 			scriptLoaded: false,
-			scriptError: false
+			scriptCoords: false,
+			scriptError: false,
+			buttonText: 'Edit location',
+			change: false
 		};
 		this.handleScriptCreate = this.handleScriptCreate.bind(this);
 		this.handleScriptError = this.handleScriptError.bind(this);
 		this.handleScriptLoad = this.handleScriptLoad.bind(this);
+		this.updatePosition = this.updatePosition.bind(this);
+		this.toogleEdit = this.toogleEdit.bind(this);
+		this.addCoord = this.addCoord.bind(this);
+
+		window.toggleEdit = this.toogleEdit;
 	}
 
 	componentWillMount() {
@@ -138,6 +201,7 @@ class Locate extends Component {
 				<div id="map" />
 				{this.isLoaded(this.state.scriptLoaded)}
 				{this.rerenderMap(this.props.stationLocation)}
+				{this.showButton(this.state.change)}
 			</div>
 		);
 	}

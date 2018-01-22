@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import { getMetrics, getMetricsAll, getMetricsGateway, changeNode } from './metricsActions';
-import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
+import { getNodeData, getSettings } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
 import MetricsBox from './components/box';
@@ -51,6 +51,16 @@ const style = {
 	}
 };
 
+const loadingMessages = {
+	metrics_status_gateway: I18n.t('metrics_status_gateway'),
+	metrics_status_path: I18n.t('metrics_status_path'),
+	metrics_status_stations: I18n.t('metrics_status_stations')
+};
+
+const errorMessages = {
+	load_last_known_internet_path: I18n.t('load_last_known_internet_path')
+};
+
 class Metrics extends Component {
   
 	clickGateway(gateway) {
@@ -85,7 +95,7 @@ class Metrics extends Component {
 		return (
 			<div style={style.loadingBox}>
 				<Loading />
-				<span style={style.textLoading}>{I18n.translateWithoutI18nline(this.props.metrics.status)}</span>
+				<span style={style.textLoading}>{loadingMessages[this.props.metrics.status]}</span>
 			</div>
 		);
 	}
@@ -95,9 +105,9 @@ class Metrics extends Component {
 			return (
 				<Box title={I18n.t('Internet connection')} style={{ marginTop: '15px' }}>
 					<span>
-						<b> {(node.internet.IPv4.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv4 </b>
-						<b> {(node.internet.IPv6.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv6 </b>
-						<b> {(node.internet.DNS.working === 1)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} DNS </b>
+						<b> {(node.internet.IPv4.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv4 </b>
+						<b> {(node.internet.IPv6.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv6 </b>
+						<b> {(node.internet.DNS.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} DNS </b>
 					</span>
 				</Box>
 			);
@@ -109,7 +119,7 @@ class Metrics extends Component {
 
 	showError(error){
 		if (error !== null) {
-			return (<p style={style.textError}>Error: {error.msg}</p>);
+			return (<p style={style.textError}>Error: {errorMessages[error.msg]}</p>);
 		}
 		return;
 	}
@@ -146,7 +156,7 @@ class Metrics extends Component {
 				{this.props.metrics.error.map(x => this.showError(x))}
 				<div style={style.box}>{I18n.t('From')+' '+this.props.meta.selectedHost}</div>
 				{this.props.metrics.metrics.map(station => (
-					<MetricsBox station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.hostname,this.props.metrics.gateway)} />
+					<MetricsBox settings={this.props.settings} station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.hostname,this.props.metrics.gateway)} />
 				))}
 				<div style={style.box}>{I18n.t('To Internet')}</div>
 				{this.showInternetStatus(this.props.metrics.loading, this.props.node)}
@@ -161,7 +171,8 @@ class Metrics extends Component {
 const mapStateToProps = (state) => ({
 	metrics: state.metrics,
 	meta: state.meta,
-	node: getNodeData(state)
+	node: getNodeData(state),
+	settings: getSettings(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

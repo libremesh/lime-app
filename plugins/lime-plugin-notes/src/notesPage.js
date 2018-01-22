@@ -36,7 +36,7 @@ class Page extends Component {
 
 		return (
 			<div class="container" style={{ paddingTop: '100px' }}>
-				<h4><span translate="yes">{I18n.t('Notes of')}</span> {this.props.hostname}</h4>
+				<h4><span>{I18n.t('Notes of')}</span> {this.props.hostname}</h4>
 				<textarea onChange={this.handleChange} class="notes" value={getNotes(this.props.notes)} />
 				<button onClick={this.saveNotes}>{I18n.t('Save notes')}</button>
 			</div>

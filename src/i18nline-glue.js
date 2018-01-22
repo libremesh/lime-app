@@ -4,19 +4,13 @@ I18n.locale = navigator.language.split('-')[0];
 require('i18nline/lib/extensions/i18n_js')(I18n);
 require('preact-i18nline/dist/extensions/i18n_js')(I18n);
 
-import { loadTranslations } from './utils/loader';
-import { plugins } from './config';
-
 let translationsTotal = {};
-
-const translationPlugins = loadTranslations(plugins);
-translationPlugins.forEach(plugin => {
-	extend(true, translationsTotal, plugin);
-});
 
 const translationFiles = require.context('../i18n/translations', true, /\.json$/);
 translationFiles.keys().forEach((key) => {
-	extend(true, translationsTotal, translationFiles(key));
+	let translation = {};
+	translation[key.substring(2).slice(0,-5)] = translationFiles(key);
+	extend(true, translationsTotal, translation );
 });
 
 extend(true, I18n, { translations: translationsTotal });

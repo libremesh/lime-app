@@ -1,6 +1,7 @@
 import {
 	CONECTION_START,
 	CONECTION_SUCCESS,
+	CONECTION_ERROR,
 	CONECTION_CHANGE_URL,
 	CONECTION_SETTINGS,
 	CONECTION_LOAD_NEIGHBORS,
@@ -8,35 +9,31 @@ import {
 	CONECTION_LOAD_HOSTNAME,
 	CONECTION_LOAD_HOSTNAME_SUCCESS,
 	AUTH_LOGIN,
-	AUTH_LOGIN_SUCCESS
+	AUTH_LOGIN_SUCCESS,
+	COMMUNITY_SETTINGS_LOAD_SUCCESS,
+	SET_HOSTNAME,
+	SET_HOSTNAME_SUCCESS,
+	SET_HOSTNAME_ERROR
 } from './metaConstants';
 
 import {
 	changeUrl,
 	getHostname,
 	getCloudNodes,
-	login
+	login,
+	getCommunitySettings,
+	setHostname
 } from './metaApi';
 
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/delay';
+
 
 import { push } from 'preact-router-redux';
-
-const genericUbus = ( action$, store, { wsAPI } ) =>
-	action$.ofType('UBUSCALL')
-		.map(x => x.payload)
-		.mergeMap( payload => wsAPI.call(
-			store.getState().meta.sid,
-			payload.action,
-			payload.data,
-			payload.method,
-			payload.path
-		).catch(payload => ([{ type: 'UBUSCALL_ERROR', payload }])))
-		.map(payload => ({ type: 'UBUSCALL_SUCCESS', payload }));
-
 
 const conectionOff = ( action$ ) =>
 	action$.ofType(CONECTION_START)
@@ -44,18 +41,41 @@ const conectionOff = ( action$ ) =>
 
 const conectionAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(CONECTION_START)
-		.mergeMap( url => wsAPI.conect(url.payload))
-		.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } });
+		.mergeMap( url => wsAPI.connect(url.payload)
+			.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } })
+			.catch(error => ([{
+				type: 'NOTIFICATION',
+				payload: { msg: 'Not UBUS api in remote device', error }
+			},{
+				type: CONECTION_ERROR,
+				payload: 'http://thisnode.info/ubus'
+			}]))
+		);
 
 const changeUrlAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(CONECTION_CHANGE_URL)
-		.mergeMap( url => changeUrl(wsAPI, url.payload))
-		.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } });
+		.mergeMap( url => changeUrl(wsAPI, url.payload)
+			.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } })
+			.catch(error => ([{
+				type: 'NOTIFICATION',
+				payload: { msg: 'Not UBUS api in remote device', error }
+			},{
+				type: CONECTION_START,
+				payload: 'http://thisnode.info/ubus'
+			}]))
+		);
+
 
 const loadHostname = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[CONECTION_LOAD_HOSTNAME,AUTH_LOGIN_SUCCESS])
 		.mergeMap(() => getHostname(wsAPI, store.getState().meta.sid))
 		.map(payload => ({ type: CONECTION_LOAD_HOSTNAME_SUCCESS, payload }));
+
+const changeHostname = (action$, store, { wsAPI }) =>
+	action$.ofType(SET_HOSTNAME)
+		.mergeMap((action) => setHostname(wsAPI, store.getState().meta.sid, action.payload)
+			.map( payload => ({ type: SET_HOSTNAME_SUCCESS, payload }))
+			.catch( error => ([{ type: SET_HOSTNAME_ERROR, payload: error }]) ));
 
 const loadNetwork = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[CONECTION_LOAD_NEIGHBORS, CONECTION_LOAD_HOSTNAME_SUCCESS])
@@ -64,20 +84,27 @@ const loadNetwork = ( action$, store, { wsAPI }) =>
  
 const defaultLoginAction = ( action$ ) =>
 	action$.ofType(CONECTION_SUCCESS)
-		.mapTo({ type: AUTH_LOGIN, payload: { user: 'admin', password: 'admin' } });
+		.mapTo({ type: AUTH_LOGIN, payload: { username: 'lime-app', password: 'generic' } });
 
 const loginAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(AUTH_LOGIN)
-		.mergeMap( action => login(wsAPI,action.payload))
+		.mergeMap( action => login(store.getState().meta.sid, wsAPI,action.payload))
 		.map((sid) => ({ type: AUTH_LOGIN_SUCCESS, payload: sid }));
 
 const redirectOnConnection = ( action$, store ) =>
-	action$.ofType(CONECTION_SUCCESS)
+	action$.ofType(AUTH_LOGIN_SUCCESS)
 		.mapTo(push(store.getState().meta.home));
 
+const communitySettings = (action$, store, { wsAPI } ) =>
+	action$.ofType(AUTH_LOGIN_SUCCESS)
+		.mergeMap( action => getCommunitySettings(wsAPI, store.getState().meta.sid))
+		.map((settings) => ({ type: COMMUNITY_SETTINGS_LOAD_SUCCESS, payload: settings }));
+
+const closeNotificatins = (action$, store, { wsAPI } ) =>
+	action$.ofType('NOTIFICATION')
+		.mergeMap(() => Observable.of({ type: 'NOTIFICATION_HIDE' }).delay(2000));
 
 export default {
-	genericUbus,
 	conectionOff,
 	conectionAction,
 	changeUrlAction,
@@ -85,5 +112,8 @@ export default {
 	loadHostname,
 	defaultLoginAction,
 	loginAction,
-	redirectOnConnection
+	redirectOnConnection,
+	communitySettings,
+	changeHostname,
+	closeNotificatins
 };

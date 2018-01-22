@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
-import { changeBase } from './metaActions';
+import { changeBase, setHostname } from './metaActions';
 import { getBase, getStations, getSelectedHost } from './metaSelectors';
 
 import I18n from 'i18n-js';
@@ -28,7 +28,9 @@ export class Meta extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { station: this.props.selectedHost };
+		this.state = {
+			station: this.props.selectedHost
+		};
 		this.nextStation = this.nextStation.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.isSelected = this.isSelected.bind(this);
@@ -42,15 +44,15 @@ export class Meta extends Component {
 						<div class="six columns">
 							<p>
 								<label>{I18n.t('Current status')}</label>
-								<span>{I18n.t('Conected Host')}</span>: {this.props.selectedHost}<br />
+								<span>{I18n.t('Connected Host')}</span>: {this.props.selectedHost}<br />
 								<span>{I18n.t('Base Host')}</span>: {this.props.base}
 							</p>
 						</div>
 						<div class="six columns">
 							<p>
 								<label>{I18n.t('Select new base station')}</label>
-								<select class="u-full-width" onChange={this.handleChange} >
-									{this.props.stations.map(x => (<option value={x} selected={this.isSelected(x)}>{x}</option>))}
+								<select class="u-full-width" onChange={this.handleChange} value={this.state.station} >
+									{this.props.stations.map(x => (<option value={x}>{x}</option>))}
 								</select>
 							</p>
 						</div>

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/debounce';
 import 'rxjs/add/observable/timer';
 
-import { getAll, getSelectedHost } from './alignSelectors';
+import { getAll, getSelectedHost, getSettings } from './alignSelectors';
 
 import I18n from 'i18n-js';
 
@@ -62,7 +62,7 @@ class Align extends Component {
 		this.speechSubscription = this.alignValue
 			.debounce(() => Observable.timer(1000))
 			.subscribe((value) => {
-				if ( (Math.floor(this.lastSpeech/10) !== Math.floor(value/10)) || this.resumedTimes === 5 ) {
+				if ( (Math.floor(this.lastSpeech/10) !== Math.floor(value/10)) || Number(value.toString()[value.toString().length -1 ]) === 0 || this.resumedTimes === 5 ) {
 					speech(value || 0, 'es-ES', voices, synth);
 					this.resumedTimes = 0;
 				}
@@ -97,9 +97,9 @@ class Align extends Component {
 		this.startSpeech();
 		colorScale.setConfig({
 			outputStart: 1,
-			outputEnd: 80,
-			inputStart: 60,
-			inputEnd: 90
+			outputEnd: Number(this.props.settings.bad_signal)* -1,
+			inputStart: Number(this.props.settings.good_signal)* -1,
+			inputEnd: Number(this.props.settings.bad_signal)* -1 + 10
 		});
 	}
 
@@ -110,10 +110,8 @@ class Align extends Component {
 
 	render(state) {
 		this.alignValue.next(state.alignData.currentReading.signal * -1);
-		//speech(state.alignData.currentReading.signal*-1 || 0, 'es-ES', voices, synth);
 		return (
 			<div className="container" style={{ paddingTop: '100px' }}>
-				{/*[1,10,20,30,40,50,55,60,65,70,75,80,85,90,95].map(x => (<span style={this.colorBar(x)} >{x}</span>))*/}
 				<div className="row">
 					<div className="six columns">
 						<span style={style.hostname}>
@@ -128,7 +126,7 @@ class Align extends Component {
 						</span>
 					</div>
 					<div className="six columns">
-						<label>{I18n.t('Intefaces')}</label>
+						<label>{I18n.t('Interfaces')}</label>
 						<select style={style.block} onChange={this.changeInterface} value={state.alignData.currentReading.iface ? state.alignData.currentReading.iface : null}>
 							{state.alignData.ifaces.map((iface) => <option value={iface.name}>{iface.name}</option>)}
 						</select>
@@ -146,7 +144,8 @@ class Align extends Component {
 
 const mapStateToProps = (state) => ({
 	alignData: getAll(state),
-	selectedHost: getSelectedHost(state)
+	selectedHost: getSelectedHost(state),
+	settings: getSettings(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

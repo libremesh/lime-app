@@ -4,12 +4,7 @@ import colorScale from 'simple-color-scale';
 
 import I18n from 'i18n-js';
 
-colorScale.setConfig({
-	outputStart: 1,
-	outputEnd: 100,
-	inputStart: 0,
-	inputEnd: 30
-});
+
 
 const style = {
 	box: {
@@ -47,7 +42,8 @@ const style = {
 class Box extends Component {
 	barStyle(loss) {
 		return Object.assign({},style.line,{
-			width: (this.props.station.bandwidth*100/20).toString()+'%',
+			width: (this.props.station.bandwidth*100/this.props.settings.good_bandwidth).toString()+'%',
+			maxWidth: '100%',
 			backgroundColor: colorScale.getColor(loss)
 		});
 	}
@@ -55,10 +51,16 @@ class Box extends Component {
 		return (gateway === true)? hostname + ' (Gateway)' : hostname;
 	}
 	render() {
+		colorScale.setConfig({
+			outputStart: 1,
+			outputEnd: 100,
+			inputStart: 0,
+			inputEnd: this.props.settings.acceptable_loss
+		});
 		return (
 			<div style={(this.props.station.loading)? style.loading: style.box} onClick={this.props.click} >
 				<span><b>{this.isGateway(this.props.gateway, this.props.station.hostname)}</b><br /></span>
-				{this.props.station.bandwidth} Mbps / <span>{I18n.t('Package loss')}</span> {this.props.station.loss}%<br />
+				{this.props.station.bandwidth} Mbps / <span>{I18n.t('Packet loss')}</span> {this.props.station.loss}%<br />
 				<div style={this.barStyle(this.props.station.loss)} />
 			</div>
 		);
