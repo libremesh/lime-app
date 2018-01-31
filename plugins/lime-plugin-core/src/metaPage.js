@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
-import { changeBase, setHostname } from './metaActions';
+import { changeBase } from './metaActions';
 import { getBase, getStations, getSelectedHost } from './metaSelectors';
 
 import I18n from 'i18n-js';

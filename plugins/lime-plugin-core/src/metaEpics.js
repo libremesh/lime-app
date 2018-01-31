@@ -10,10 +10,7 @@ import {
 	CONECTION_LOAD_HOSTNAME_SUCCESS,
 	AUTH_LOGIN,
 	AUTH_LOGIN_SUCCESS,
-	COMMUNITY_SETTINGS_LOAD_SUCCESS,
-	SET_HOSTNAME,
-	SET_HOSTNAME_SUCCESS,
-	SET_HOSTNAME_ERROR
+	COMMUNITY_SETTINGS_LOAD_SUCCESS
 } from './metaConstants';
 
 import {
@@ -21,8 +18,7 @@ import {
 	getHostname,
 	getCloudNodes,
 	login,
-	getCommunitySettings,
-	setHostname
+	getCommunitySettings
 } from './metaApi';
 
 import { Observable } from 'rxjs/Observable';
@@ -71,12 +67,6 @@ const loadHostname = ( action$, store, { wsAPI }) =>
 		.mergeMap(() => getHostname(wsAPI, store.getState().meta.sid))
 		.map(payload => ({ type: CONECTION_LOAD_HOSTNAME_SUCCESS, payload }));
 
-const changeHostname = (action$, store, { wsAPI }) =>
-	action$.ofType(SET_HOSTNAME)
-		.mergeMap((action) => setHostname(wsAPI, store.getState().meta.sid, action.payload)
-			.map( payload => ({ type: SET_HOSTNAME_SUCCESS, payload }))
-			.catch( error => ([{ type: SET_HOSTNAME_ERROR, payload: error }]) ));
-
 const loadNetwork = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[CONECTION_LOAD_NEIGHBORS, CONECTION_LOAD_HOSTNAME_SUCCESS])
 		.mergeMap(() => getCloudNodes(wsAPI,store.getState().meta.sid))
@@ -114,6 +104,5 @@ export default {
 	loginAction,
 	redirectOnConnection,
 	communitySettings,
-	changeHostname,
 	closeNotificatins
 };
