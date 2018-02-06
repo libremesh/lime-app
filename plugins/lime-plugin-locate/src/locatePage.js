@@ -134,6 +134,7 @@ class Locate extends Component {
 			this.state.marker.setLatLng([latlon.lat, latlon.lon]);
 			return (
 				<span>
+					<style type="text/css">@import url("https://xguaita.github.io/Leaflet.MapCenterCoord/dist/L.Control.MapCenterCoord.min.css");</style>
 					<Script url={'https://xguaita.github.io/Leaflet.MapCenterCoord/dist/L.Control.MapCenterCoord.min.js'}
 						onLoad={this.addCoord}
 					/>
