@@ -84,7 +84,7 @@
     "url-loader": "^0.6.2",
     "validate-commit-msg": "^2.14.0",
     "webpack": "^3.5.5",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^3.0.0"
   },
   "dependencies": {
     "axios": "^0.16.2",
