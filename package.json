@@ -65,7 +65,7 @@
     "karma-mocha-reporter": "^2.2.4",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.4",
+    "karma-webpack": "^3.0.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "mkdirp": "^0.5.1",
