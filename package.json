@@ -94,7 +94,7 @@
     "leaflet.gridlayer.googlemutant": "^0.6.2",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
-    "preact-i18nline": "^1.5.0",
+    "preact-i18nline": "^2.0.0",
     "preact-redux": "^2.0.2",
     "preact-router": "^2.5.7",
     "preact-router-redux": "^4.1.0",
