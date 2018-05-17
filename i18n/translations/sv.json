@@ -1,0 +1,42 @@
+{
+	"@metadata": {
+		"authors": [
+			"WikiPhoenix"
+		]
+	},
+	"align_11050992": "Justera",
+	"back_to_base_443797cb": "Tillbaka till basen",
+	"base_host_a17d45a4": "Basvärd",
+	"change_dcaa253a": "Ändra",
+	"connected_host_91e11459": "Ansluten värd",
+	"config_4877f466": "Konfig",
+	"current_status_830c5a75": "Nuvarande status",
+	"from_fdd4956d": "Från",
+	"interface_177dac54": "Gränssnitt",
+	"internet_connection_fda60ffa": "Internetanslutning",
+	"ip_addresses_440ac240": "IP-adresser",
+	"loading_node_status_547ed318": "Läser in nodstatus...",
+	"locate_5f6685db": "Hitta",
+	"metrics_c80fba05": "Mått",
+	"metrics_status_gateway_2a77a113": "Säker gateway",
+	"metrics_status_path_905a8d22": "Beräknar nätverksökväg",
+	"most_active_2d5a3cae": "Mest aktiv",
+	"move_to_new_position_eb97c4c3": "FLYTTA TILL NY POSITION",
+	"notes_c42e0fd5": "Anteckningar",
+	"notes_of_a44a4158": "Anteckningar för",
+	"only_gateway_727b1656": "Endast gateway",
+	"packet_loss_1afe48a8": "Paketförlust",
+	"save_notes_616850ea": "Spara anteckningar",
+	"select_new_base_station_3652ae73": "Välj ny basstation",
+	"station_75bce853": "Station",
+	"stations_18122820": "Stationer",
+	"status_e7fdbe06": "Status",
+	"system_55b0ca91": "System",
+	"to_internet_494eb85c": "Till Internet",
+	"traffic_bfe536d2": "Trafik",
+	"connection_fail_57f84354": "Anslutningen till %{meta_ws} misslyckades",
+	"trying_to_connect_ff82bf9f": "Försökte att ansluta till %{meta_ws}",
+	"try_thisnode_info_1ee1bfe2": "Prova thisnode.info",
+	"uptime_c1d2415d": "Drifttid",
+	"interfaces_44f8a99c": "Gränssnitt"
+}

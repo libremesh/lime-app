@@ -1,0 +1,29 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ilario"
+		]
+	},
+	"align_11050992": "Allineare",
+	"change_dcaa253a": "Modifica",
+	"config_4877f466": "Configurazione",
+	"current_status_830c5a75": "Stato attuale",
+	"from_fdd4956d": "Da",
+	"interface_177dac54": "Interfaccia",
+	"internet_connection_fda60ffa": "Connessione a Internet",
+	"ip_addresses_440ac240": "Indirizzi IP",
+	"loading_node_status_547ed318": "Caricando lo stato del nodo...",
+	"locate_5f6685db": "Localizza",
+	"metrics_c80fba05": "Metriche",
+	"metrics_status_stations_464641e8": "Misurando i collegamenti",
+	"most_active_2d5a3cae": "Più attivi",
+	"notes_c42e0fd5": "Note",
+	"notes_of_a44a4158": "Note di",
+	"packet_loss_1afe48a8": "Perdita di pacchetti",
+	"save_notes_616850ea": "Salvare le note",
+	"status_e7fdbe06": "Stato",
+	"system_55b0ca91": "Sistema",
+	"traffic_bfe536d2": "Traffico di dati",
+	"connection_fail_57f84354": "Connessione con %{meta_ws} fallita",
+	"interfaces_44f8a99c": "Interfacce di rete"
+}
