@@ -12,10 +12,7 @@ import App from './containers/app';
 
 import { history } from './store/history';
 
-// register ServiceWorker via OfflinePlugin, for prod only:
-if (process.env.NODE_ENV==='production') {
-	require('./pwa');
-}
+import './i18nline-glue';
 
 // in development, set up HMR:
 if (module.hot) {
