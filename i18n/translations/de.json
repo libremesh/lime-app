@@ -1,0 +1,30 @@
+{
+	"@metadata": {
+		"authors": [
+			"Jkimmel",
+			"Metalhead64"
+		]
+	},
+	"current_status_830c5a75": "Aktueller Status",
+	"from_fdd4956d": "Von",
+	"internet_connection_fda60ffa": "Internet Verbindung",
+	"ip_addresses_440ac240": "IP-Adressen",
+	"load_last_known_internet_path_677f6229": "Lade letzten bekannten Internetpfad",
+	"loading_node_status_547ed318": "Lade Status des Knoten",
+	"metrics_status_path_905a8d22": "Berechne Netzwerkpfad",
+	"most_active_2d5a3cae": "Am meisten aktiv",
+	"notes_c42e0fd5": "Bemerkungen",
+	"notes_of_a44a4158": "Bemerkungen zu",
+	"only_gateway_727b1656": "Nur Gateway",
+	"packet_loss_1afe48a8": "Paketverlust",
+	"save_notes_616850ea": "Speichere Bemerkungen",
+	"select_new_base_station_3652ae73": "Wähle neue Basisstation",
+	"station_75bce853": "Station",
+	"stations_18122820": "Stationen",
+	"status_e7fdbe06": "Status",
+	"system_55b0ca91": "System",
+	"to_internet_494eb85c": "Zum Internet",
+	"traffic_bfe536d2": "Verkehr",
+	"trying_to_connect_ff82bf9f": "Versuche zu %{meta_ws} zu verbinden",
+	"try_thisnode_info_1ee1bfe2": "Versuche thisnode.info"
+}
