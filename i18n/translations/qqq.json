@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Nike"
+			"Nike",
+			"Robby"
 		]
 	},
 	"align_11050992": "Menu item. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/01-status-align-locate-metrics-notes-conifg.png|Screenshot.]]",
@@ -21,7 +22,7 @@
 	"metrics_status_gateway_2a77a113": "Message shown while waiting for gateway search to complete. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/10-from-searching-gateway.png|Screenshot.]]",
 	"metrics_status_path_905a8d22": "Message shown while waiting for calculation of network path. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/07-from-calculating-network-path.png|Screenshot.]]",
 	"most_active_2d5a3cae": "Section title on node status screen. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/03-node-info-1.png|Screenshot.]]",
-	"notes_c42e0fd5": "Menu item. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/01-status-align-locate-metrics-notes-conifg.png|Screenshot.]]",
+	"notes_c42e0fd5": "Menu item. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/01-status-align-locate-metrics-notes-conifg.png|Screenshot.]]\n{{Identical|Notes}}",
 	"notes_of_a44a4158": "Label followed by node/station name, then followed by notes. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/08-notes.png|Screenshot.]]",
 	"only_gateway_727b1656": "Button label on trace-route screen, UNKNOWN FUNCTION. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/12-bottom-node-list.png|Screenshot.]]",
 	"save_notes_616850ea": "Button label to save changes after editing node/station notes. [[https://raw.githubusercontent.com/libremesh/lime-app/screenshots/08-notes.png|Screenshot.]]",
