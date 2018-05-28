@@ -1,0 +1,33 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kingu"
+		]
+	},
+	"align_11050992": "Juster",
+	"back_to_base_443797cb": "Tilbake til base",
+	"base_host_a17d45a4": "Basevert",
+	"change_dcaa253a": "Endre",
+	"connected_host_91e11459": "Tilkoblet vert",
+	"config_4877f466": "Oppsett",
+	"current_status_830c5a75": "Nåværende status",
+	"from_fdd4956d": "Fra",
+	"interface_177dac54": "Grensesnitt",
+	"internet_connection_fda60ffa": "Internettilkobling",
+	"ip_addresses_440ac240": "IP-adresser",
+	"load_last_known_internet_path_677f6229": "Last ned sist kjente internettsti",
+	"loading_node_status_547ed318": "Laster inn nodestatus…",
+	"most_active_2d5a3cae": "Mest aktive",
+	"move_to_new_position_eb97c4c3": "FLYTT TIL NY POSISJON",
+	"packet_loss_1afe48a8": "Pakketap",
+	"select_new_base_station_3652ae73": "Velg ny basestasjon",
+	"station_75bce853": "Stasjon",
+	"stations_18122820": "Stasjoner",
+	"status_e7fdbe06": "Status",
+	"system_55b0ca91": "System",
+	"to_internet_494eb85c": "Til Internett",
+	"traffic_bfe536d2": "Trafikk",
+	"try_thisnode_info_1ee1bfe2": "Prøv thisnode.info",
+	"uptime_c1d2415d": "Oppetid",
+	"interfaces_44f8a99c": "Grensesnitt"
+}
