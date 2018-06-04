@@ -2,20 +2,46 @@
 	"@metadata": {
 		"authors": [
 			"Okras",
-			"Redredsonia"
+			"Redredsonia",
+			"Viktoriya Yutkina"
 		]
 	},
 	"align_11050992": "Выравнивание",
+	"back_to_base_443797cb": "Вернуться к базе",
+	"base_host_a17d45a4": "Базовый хост",
 	"change_dcaa253a": "Изменить",
+	"connected_host_91e11459": "Подключенный хост",
+	"config_4877f466": "Настройка",
 	"current_status_830c5a75": "Текущее состояние",
+	"from_fdd4956d": "От",
+	"full_path_metrics_2859608f": "Метрики полного пути",
+	"interface_177dac54": "Интерфейс",
 	"internet_connection_fda60ffa": "Подключение к интернету",
 	"ip_addresses_440ac240": "IP-адреса",
+	"load_last_known_internet_path_677f6229": "Загрузить последний известный путь к Интернету",
+	"loading_node_status_547ed318": "Загрузка состояния узла",
+	"locate_5f6685db": "Обнаружить",
 	"metrics_c80fba05": "Метрики",
+	"metrics_status_gateway_2a77a113": "Поиск шлюза",
+	"metrics_status_path_905a8d22": "Вычисление сетевого пути",
+	"metrics_status_stations_464641e8": "Измерение параметров соединений",
+	"most_active_2d5a3cae": "Наболее активные",
+	"move_to_new_position_eb97c4c3": "ПЕРЕМЕСТИТЬ В НОВУЮ ПОЗИЦИЮ",
 	"notes_c42e0fd5": "Примечания",
+	"notes_of_a44a4158": "Заметки о",
+	"only_gateway_727b1656": "Только шлюз",
+	"packet_loss_1afe48a8": "Потеря пакетов",
+	"save_notes_616850ea": "Сохранить заметки",
+	"select_new_base_station_3652ae73": "Выбрать новую базовую станцию",
 	"station_75bce853": "Станция",
 	"stations_18122820": "Станции",
 	"status_e7fdbe06": "Состояние",
 	"system_55b0ca91": "Система",
+	"to_internet_494eb85c": "В интернет",
 	"traffic_bfe536d2": "Трафик",
-	"uptime_c1d2415d": "Время работы"
+	"connection_fail_57f84354": "Ошибка соединения с %{meta_ws}",
+	"trying_to_connect_ff82bf9f": "Попытка соединения с %{meta_ws}",
+	"try_thisnode_info_1ee1bfe2": "Попробуйте thisnode.info",
+	"uptime_c1d2415d": "Время работы",
+	"interfaces_44f8a99c": "Интерфейсы"
 }
