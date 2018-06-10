@@ -5,6 +5,8 @@ import Metrics from '../plugins/lime-plugin-metrics';
 import Notes from '../plugins/lime-plugin-notes';
 import Rx from '../plugins/lime-plugin-rx';
 import Admin from '../plugins/lime-plugin-admin';
+import GroundRouting from '../plugins/lime-plugin-ground-routing';
+
 // REGISTER PLUGINS
 export const plugins = [
 	Rx,
@@ -13,5 +15,6 @@ export const plugins = [
 	Metrics,
 	Notes,
 	Meta,
+	GroundRouting,
 	Admin
 ];
