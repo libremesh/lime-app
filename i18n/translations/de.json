@@ -5,12 +5,19 @@
 			"Metalhead64"
 		]
 	},
+	"back_to_base_443797cb": "Zurück zum Anfang",
+	"base_host_a17d45a4": "Basis-Host",
+	"change_dcaa253a": "Änderung",
+	"connected_host_91e11459": "Verbundener Host",
+	"config_4877f466": "Konfiguration",
 	"current_status_830c5a75": "Aktueller Status",
 	"from_fdd4956d": "Von",
-	"internet_connection_fda60ffa": "Internet Verbindung",
+	"full_path_metrics_2859608f": "Vollständige Pfadmetriken",
+	"internet_connection_fda60ffa": "Internetverbindung",
 	"ip_addresses_440ac240": "IP-Adressen",
 	"load_last_known_internet_path_677f6229": "Lade letzten bekannten Internetpfad",
-	"loading_node_status_547ed318": "Lade Status des Knoten",
+	"loading_node_status_547ed318": "Lade Status des Knotens",
+	"metrics_c80fba05": "Metriken",
 	"metrics_status_path_905a8d22": "Berechne Netzwerkpfad",
 	"most_active_2d5a3cae": "Am meisten aktiv",
 	"notes_c42e0fd5": "Bemerkungen",
@@ -25,6 +32,6 @@
 	"system_55b0ca91": "System",
 	"to_internet_494eb85c": "Zum Internet",
 	"traffic_bfe536d2": "Verkehr",
-	"trying_to_connect_ff82bf9f": "Versuche zu %{meta_ws} zu verbinden",
+	"trying_to_connect_ff82bf9f": "Versuche, zu %{meta_ws} zu verbinden",
 	"try_thisnode_info_1ee1bfe2": "Versuche thisnode.info"
 }
