@@ -29,7 +29,7 @@
     "@commitlint/config-conventional": "^6.1.3",
     "commitizen": "^2.9.6",
     "commitlint": "^6.2.0",
-    "eslint": "^4.5.0",
+    "eslint": "^5.0.0",
     "eslint-config-synacor": "^1.1.0",
     "gh-pages": "^1.1.0",
     "husky": "^0.14.3",
