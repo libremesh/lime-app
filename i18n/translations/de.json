@@ -41,6 +41,6 @@
 	"connection_fail_57f84354": "Verbindung zu %{meta_ws} gescheitert",
 	"trying_to_connect_ff82bf9f": "Versuche, zu %{meta_ws} zu verbinden",
 	"try_thisnode_info_1ee1bfe2": "Versuche thisnode.info",
-	"uptime_c1d2415d": "Uptime",
+	"uptime_c1d2415d": "Laufzeit",
 	"interfaces_44f8a99c": "Schnittstellen"
 }
