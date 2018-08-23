@@ -5,6 +5,7 @@
 			"Metalhead64"
 		]
 	},
+	"align_11050992": "Ausrichten",
 	"back_to_base_443797cb": "Zurück zum Anfang",
 	"base_host_a17d45a4": "Basis-Host",
 	"change_dcaa253a": "Änderung",
@@ -13,13 +14,18 @@
 	"current_status_830c5a75": "Aktueller Status",
 	"from_fdd4956d": "Von",
 	"full_path_metrics_2859608f": "Vollständige Pfadmetriken",
+	"interface_177dac54": "Schnittstelle",
 	"internet_connection_fda60ffa": "Internetverbindung",
 	"ip_addresses_440ac240": "IP-Adressen",
 	"load_last_known_internet_path_677f6229": "Lade letzten bekannten Internetpfad",
 	"loading_node_status_547ed318": "Lade Status des Knotens",
+	"locate_5f6685db": "Lokalisieren",
 	"metrics_c80fba05": "Metriken",
+	"metrics_status_gateway_2a77a113": "Gateway wird gesucht",
 	"metrics_status_path_905a8d22": "Berechne Netzwerkpfad",
+	"metrics_status_stations_464641e8": "Messverbindungen",
 	"most_active_2d5a3cae": "Am meisten aktiv",
+	"move_to_new_position_eb97c4c3": "ZUR NEUEN POSITION BEWEGEN",
 	"notes_c42e0fd5": "Bemerkungen",
 	"notes_of_a44a4158": "Bemerkungen zu",
 	"only_gateway_727b1656": "Nur Gateway",
@@ -32,6 +38,9 @@
 	"system_55b0ca91": "System",
 	"to_internet_494eb85c": "Zum Internet",
 	"traffic_bfe536d2": "Verkehr",
+	"connection_fail_57f84354": "Verbindung zu %{meta_ws} gescheitert",
 	"trying_to_connect_ff82bf9f": "Versuche, zu %{meta_ws} zu verbinden",
-	"try_thisnode_info_1ee1bfe2": "Versuche thisnode.info"
+	"try_thisnode_info_1ee1bfe2": "Versuche thisnode.info",
+	"uptime_c1d2415d": "Laufzeit",
+	"interfaces_44f8a99c": "Schnittstellen"
 }

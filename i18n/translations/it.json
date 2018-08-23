@@ -1,29 +1,46 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ilario"
+			"Ilario",
+			"Beta16"
 		]
 	},
 	"align_11050992": "Allineare",
+	"back_to_base_443797cb": "Torna alla stazione base",
+	"base_host_a17d45a4": "Stazione base",
 	"change_dcaa253a": "Modifica",
+	"connected_host_91e11459": "Stazione connessa",
 	"config_4877f466": "Configurazione",
 	"current_status_830c5a75": "Stato attuale",
 	"from_fdd4956d": "Da",
+	"full_path_metrics_2859608f": "Dettagli sulla rotta",
 	"interface_177dac54": "Interfaccia",
 	"internet_connection_fda60ffa": "Connessione a Internet",
 	"ip_addresses_440ac240": "Indirizzi IP",
+	"load_last_known_internet_path_677f6229": "Carica l'ultima rotta nota per Internet",
 	"loading_node_status_547ed318": "Caricando lo stato del nodo...",
 	"locate_5f6685db": "Localizza",
 	"metrics_c80fba05": "Metriche",
+	"metrics_status_gateway_2a77a113": "Cercando porta di connessione",
+	"metrics_status_path_905a8d22": "Calcolando rotta",
 	"metrics_status_stations_464641e8": "Misurando i collegamenti",
 	"most_active_2d5a3cae": "Più attivi",
+	"move_to_new_position_eb97c4c3": "SPOSTA A NUOVA POSIZIONE",
 	"notes_c42e0fd5": "Note",
 	"notes_of_a44a4158": "Note di",
+	"only_gateway_727b1656": "Solo porta di connessione",
 	"packet_loss_1afe48a8": "Perdita di pacchetti",
 	"save_notes_616850ea": "Salvare le note",
+	"select_new_base_station_3652ae73": "Seleziona una nuova stazione base",
+	"station_75bce853": "Stazione",
+	"stations_18122820": "Stazioni",
 	"status_e7fdbe06": "Stato",
 	"system_55b0ca91": "Sistema",
+	"to_internet_494eb85c": "All'Internet",
 	"traffic_bfe536d2": "Traffico di dati",
 	"connection_fail_57f84354": "Connessione con %{meta_ws} fallita",
+	"trying_to_connect_ff82bf9f": "Cercando di connettersi con %{meta_ws}",
+	"try_thisnode_info_1ee1bfe2": "Provare con thisnode.info",
+	"uptime_c1d2415d": "Tempo di attività",
 	"interfaces_44f8a99c": "Interfacce di rete"
 }
