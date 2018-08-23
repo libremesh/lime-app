@@ -1,14 +1,15 @@
 {
 	"@metadata": {
 		"authors": [
-			"Ilario"
+			"Ilario",
+			"Beta16"
 		]
 	},
 	"align_11050992": "Allineare",
 	"back_to_base_443797cb": "Torna alla stazione base",
-	"base_host_a17d45a4": "Stazione Base",
+	"base_host_a17d45a4": "Stazione base",
 	"change_dcaa253a": "Modifica",
-	"connected_host_91e11459": "Stazione Connessa",
+	"connected_host_91e11459": "Stazione connessa",
 	"config_4877f466": "Configurazione",
 	"current_status_830c5a75": "Stato attuale",
 	"from_fdd4956d": "Da",
@@ -24,7 +25,7 @@
 	"metrics_status_path_905a8d22": "Calcolando rotta",
 	"metrics_status_stations_464641e8": "Misurando i collegamenti",
 	"most_active_2d5a3cae": "Più attivi",
-	"move_to_new_position_eb97c4c3": "MUOVI A NUOVA POSIZIONE",
+	"move_to_new_position_eb97c4c3": "SPOSTA A NUOVA POSIZIONE",
 	"notes_c42e0fd5": "Note",
 	"notes_of_a44a4158": "Note di",
 	"only_gateway_727b1656": "Solo porta di connessione",
