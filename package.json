@@ -30,7 +30,7 @@
     "commitizen": "^3.0.0",
     "commitlint": "^6.2.0",
     "eslint": "^5.0.0",
-    "eslint-config-synacor": "^1.1.0",
+    "eslint-config-synacor": "^3.0.2",
     "gh-pages": "^1.1.0",
     "husky": "^1.0.0",
     "if-env": "^1.0.0",
