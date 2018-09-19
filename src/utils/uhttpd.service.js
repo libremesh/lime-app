@@ -30,17 +30,19 @@ export class UhttpdService {
 	connect(newUrl) {
 		this.url = newUrl;
 		return Observable.fromPromise( new Promise((res,rej) => {
-			axios.get(this.url).catch(
-				err => {
-					try {
-						( err.response.status === 400)? res(): rej();
-					}
-					catch (error) {
-						rej();
-					}
+			axios.post(this.url)
+				.then(response => ( typeof response.data.jsonrpc !== 'undefined')? res(): rej())
+				.catch(
+					(err) => {
+						try {
+							( err.response.status === 400)? res(): rej();
+						}
+						catch (error) {
+							rej();
+						}
 
-				}
-			);
+					}
+				);
 		}));
 	}
 
