@@ -32,7 +32,7 @@
     "eslint": "^5.0.0",
     "eslint-config-synacor": "^1.1.0",
     "gh-pages": "^1.1.0",
-    "husky": "^0.14.3",
+    "husky": "^1.0.0",
     "if-env": "^1.0.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
