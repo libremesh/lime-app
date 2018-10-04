@@ -15,3 +15,6 @@ export const COMMUNITY_SETTINGS_LOAD_SUCCESS = 'meta/COMMUNITY_SETTINGS_LOAD_SUC
 
 export const AUTH_LOGIN = 'meta/AUTH_LOGIN';
 export const AUTH_LOGIN_SUCCESS = 'meta/AUTH_LOGIN_SUCCESS';
+
+export const BANNER_SET = 'meta/BANNER_SET';
+export const BANNER_HIDE = 'meta/BANNER_HIDE';
