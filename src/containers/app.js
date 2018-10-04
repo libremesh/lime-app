@@ -10,6 +10,7 @@ import Header from '../components/header';
 import Alert from '../components/alert';
 import Status from '../components/status';
 import { plugins } from '../config';
+import Banner from '../components/banner';
 
 class ChangeNode extends Component {
 	componentWillMount () {
@@ -19,6 +20,9 @@ class ChangeNode extends Component {
 
 
 class App extends Component {
+	bannerOk = function() { this.props.sendAction(this.props.meta.banner.onOK); }.bind(this);
+	bannerCancel = function() { this.props.sendAction(this.props.meta.banner.onCancel); }.bind(this);
+
 	render({ store,history }) {
 		const isConnected = (meta) => {
 			if (meta.sid !== '00000000000000000000000000000000' && meta.stauts !== 'start' ) {
@@ -50,9 +54,9 @@ class App extends Component {
 			return { minWidth: '100%' };
 		};
     
-
 		return (
 			<div style={isBase(this.props.meta)}>
+				<Banner />
 				<Header hostname={this.props.meta.selectedHost} goHome={this.props.goBase} />
 				{ /*<Navigator hostname={this.props.meta} goHome={this.props.goBase} /> */ }
 				{isConnected(this.props.meta)}

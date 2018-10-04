@@ -7,7 +7,9 @@ import {
 	CONECTION_LOAD_HOSTNAME_SUCCESS,
 	CONECTION_CHANGE_CURRENT_BASE,
 	AUTH_LOGIN_SUCCESS,
-	COMMUNITY_SETTINGS_LOAD_SUCCESS
+	COMMUNITY_SETTINGS_LOAD_SUCCESS,
+	BANNER_SET,
+	BANNER_HIDE
 } from './metaConstants';
 
 const defaultSettings = {
@@ -31,7 +33,8 @@ export const initialState = {
 	base: '',
 	home: '/rx',
 	selectedHost: '',
-	settings: defaultSettings
+	settings: defaultSettings,
+	banner: false
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -61,6 +64,10 @@ export const reducer = (state = initialState, { type, payload }) => {
 			return Object.assign({}, state, { alert: payload.msg });
 		case 'NOTIFICATION_HIDE':
 			return Object.assign({}, state, { alert: undefined });
+		case BANNER_SET:
+			return { ...state, banner: payload };
+		case BANNER_HIDE:
+			return { ...state, banner: false };
 		default:
 			return state;
 	}
