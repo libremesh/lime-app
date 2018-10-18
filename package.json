@@ -31,7 +31,7 @@
     "commitlint": "^7.1.0",
     "eslint": "^5.0.0",
     "eslint-config-synacor": "^1.1.0",
-    "gh-pages": "^1.1.0",
+    "gh-pages": "^2.0.0",
     "husky": "^0.14.3",
     "if-env": "^1.0.0",
     "less": "^3.0.4",
