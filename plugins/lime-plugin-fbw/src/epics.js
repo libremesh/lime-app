@@ -34,8 +34,8 @@ const _searchNetworks = ( action$, { getState }, { wsAPI } ) =>
 const _getStatus = ( action$, { getState }, { wsAPI } ) =>
 	action$.ofType(...[AUTH_LOGIN_SUCCESS, FBW_STATUS])
 	    .mergeMap((action) => getStatus(wsAPI, getState().meta.sid)
-		    .map((payload) => ({ type: FBW_STATUS_SUCCESS, payload }))
-			.catch((error) => ({ type: FBW_STATUS_ERROR })));
+			.map((payload) => ({ type: FBW_STATUS_SUCCESS, payload }))
+			.catch((error) => [{ type: FBW_STATUS_ERROR }]));
 
 const _setNetwork = ( action$, { getState }, {  wsAPI } ) =>
 	action$.ofType(...[FBW_SET_NETWORK])
