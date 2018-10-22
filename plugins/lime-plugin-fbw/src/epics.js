@@ -25,25 +25,25 @@ import { push } from 'preact-router-redux';
 
 import { AUTH_LOGIN_SUCCESS, BANNER_SET, BANNER_HIDE } from '../../lime-plugin-core/src/metaConstants';
 
-const _searchNetworks = ( action$, { getState }, { wsAPI } ) =>
+const _searchNetworks = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[FBW_SEARCH_NETWORKS])
-		.mergeMap((action) => searchNetworks(wsAPI, getState().meta.sid, action.payload.rescan)
+		.mergeMap((action) => searchNetworks(wsAPI, state$.value.meta.sid, action.payload.rescan)
 		    .map((payload) => ({ type: FBW_SEARCH_NETWORKS_SUCCESS, payload }))
 		    .catch((error) => ({ type: FBW_SEARCH_NETWORKS_ERROR })));
 
-const _getStatus = ( action$, { getState }, { wsAPI } ) =>
+const _getStatus = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[AUTH_LOGIN_SUCCESS, FBW_STATUS])
-	    .mergeMap((action) => getStatus(wsAPI, getState().meta.sid)
+	    .mergeMap((action) => getStatus(wsAPI, state$.value.meta.sid)
 			.map((payload) => ({ type: FBW_STATUS_SUCCESS, payload }))
 			.catch((error) => [{ type: FBW_STATUS_ERROR }]));
 
-const _setNetwork = ( action$, { getState }, {  wsAPI } ) =>
+const _setNetwork = ( action$, state$, {  wsAPI } ) =>
 	action$.ofType(...[FBW_SET_NETWORK])
-		.mergeMap((action) => setNetwork(wsAPI, getState().meta.sid, action.payload)
+		.mergeMap((action) => setNetwork(wsAPI, state$.value.meta.sid, action.payload)
 			.map(payload => ({ type: FBW_SET_NETWORK_SUCCESS, payload }))
 			.catch((error) => ({ type: FBW_SET_NETWORK_ERROR })));
 
-const _showBanner = ( action$, { getState }, { wsAPI } ) =>
+const _showBanner = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[FBW_STATUS_SUCCESS])
 		.map(action => (action.payload.lock)?
 			{ type: BANNER_SET, payload: {
