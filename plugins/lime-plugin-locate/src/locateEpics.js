@@ -12,14 +12,14 @@ import {
 
 
 // LOAD INTERFACES -> Dispatch success and stations loads
-const locateLoad = ( action$, { getState }, { wsAPI } ) =>
+const locateLoad = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[LOCATION_LOAD,LOCATION_CHANGE_SUCCESS])
-		.mergeMap(() => getLocation(wsAPI, getState().meta.sid))
+		.mergeMap(() => getLocation(wsAPI, state$.value.meta.sid))
 		.map((payload) => ({ type: LOCATION_LOAD_SUCCESS, payload }));
 
-const locateChange = ( action$, { getState }, { wsAPI } ) =>
+const locateChange = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(LOCATION_CHANGE)
-		.mergeMap((action) => changeLocation(wsAPI, getState().meta.sid, action.payload))
+		.mergeMap((action) => changeLocation(wsAPI, state$.value.meta.sid, action.payload))
 		.map((payload) => ({ type: LOCATION_CHANGE_SUCCESS }));
 
 export default { locateLoad, locateChange };

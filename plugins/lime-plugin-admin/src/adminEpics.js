@@ -23,7 +23,7 @@ import 'rxjs/add/operator/delay';
 
 const loginAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(AUTH_LOGIN)
-		.mergeMap( action => login(store.getState().admin.sid, wsAPI,action.payload)
+		.mergeMap( action => login(store.value.admin.sid, wsAPI,action.payload)
 			.map((sid) => ({ type: AUTH_LOGIN_SUCCESS, payload: sid }))
 			.catch(error => ([{
 				type: 'NOTIFICATION',
@@ -32,7 +32,7 @@ const loginAction = ( action$, store, { wsAPI } ) =>
 
 const setConfig = (action$, store, { wsAPI }) =>
 	action$.ofType(SET_CONFIG)
-		.mergeMap((action) => changeConfig(wsAPI, store.getState().admin.sid, action.payload)
+		.mergeMap((action) => changeConfig(wsAPI, store.value.admin.sid, action.payload)
 			.map( payload => ({ type: SET_CONFIG_SUCCESS, payload }))
 			.catch( error => ([{ type: SET_CONFIG_ERROR, payload: error }]) ));
 
@@ -41,7 +41,7 @@ const whaitAndReload = (action$, store, { wsAPI }) =>
 	action$.ofType(SET_CONFIG_SUCCESS)
 		.mergeMap((payload) => Observable.from(
 			[
-				{ type: CONECTION_CHANGE_URL, payload: 'http://' + store.getState().admin.hostname + '/ubus' },
+				{ type: CONECTION_CHANGE_URL, payload: 'http://' + store.value.admin.hostname + '/ubus' },
 				{ type: RELOAD_CONFIG }
 			]
 		).delay(60000));

@@ -64,12 +64,12 @@ const changeUrlAction = ( action$, store, { wsAPI } ) =>
 
 const loadHostname = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[CONECTION_LOAD_HOSTNAME,AUTH_LOGIN_SUCCESS])
-		.mergeMap(() => getHostname(wsAPI, store.getState().meta.sid))
+		.mergeMap(() => getHostname(wsAPI, store.value.meta.sid))
 		.map(payload => ({ type: CONECTION_LOAD_HOSTNAME_SUCCESS, payload }));
 
 const loadNetwork = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[CONECTION_LOAD_NEIGHBORS, CONECTION_LOAD_HOSTNAME_SUCCESS])
-		.mergeMap(() => getCloudNodes(wsAPI,store.getState().meta.sid))
+		.mergeMap(() => getCloudNodes(wsAPI,store.value.meta.sid))
 		.map(payload => ({ type: CONECTION_LOAD_NEIGHBORS_SUCCESS, payload }));
  
 const defaultLoginAction = ( action$ ) =>
@@ -78,16 +78,16 @@ const defaultLoginAction = ( action$ ) =>
 
 const loginAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(AUTH_LOGIN)
-		.mergeMap( action => login(store.getState().meta.sid, wsAPI,action.payload))
+		.mergeMap( action => login(store.value.meta.sid, wsAPI,action.payload))
 		.map((sid) => ({ type: AUTH_LOGIN_SUCCESS, payload: sid }));
 
 const redirectOnConnection = ( action$, store ) =>
 	action$.ofType(AUTH_LOGIN_SUCCESS)
-		.mapTo(push(store.getState().meta.home));
+		.mapTo(push(store.value.meta.home));
 
 const communitySettings = (action$, store, { wsAPI } ) =>
 	action$.ofType(AUTH_LOGIN_SUCCESS)
-		.mergeMap( action => getCommunitySettings(wsAPI, store.getState().meta.sid))
+		.mergeMap( action => getCommunitySettings(wsAPI, store.value.meta.sid))
 		.map((settings) => ({ type: COMMUNITY_SETTINGS_LOAD_SUCCESS, payload: settings }));
 
 const closeNotificatins = (action$, store, { wsAPI } ) =>

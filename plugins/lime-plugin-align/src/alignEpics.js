@@ -27,9 +27,9 @@ import {
 
 
 // LOAD INTERFACES -> Dispatch success and stations loads
-const ifaceLoad = ( action$, { getState }, { wsAPI } ) =>
+const ifaceLoad = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[IFACES_LOAD])
-		.mergeMap((action) => getInterfaces(wsAPI, getState().meta.sid))
+		.mergeMap((action) => getInterfaces(wsAPI, state$.value.meta.sid))
 		.mergeMap((payload) => Observable.from([
 			({ type: IFACES_LOAD_SUCCESS, payload }),
 			({ type: STATIONS_LOAD })
@@ -37,9 +37,9 @@ const ifaceLoad = ( action$, { getState }, { wsAPI } ) =>
 
 
 // LOAD ALL STATIONS -> Dispatch success and Init Align
-const allStationsLoad = (action$, { getState }, { wsAPI }  ) =>
+const allStationsLoad = (action$, state$, { wsAPI }  ) =>
 	action$.ofType(STATIONS_LOAD)
-		.mergeMap(() => getStations(wsAPI, getState().meta.sid, getState().align.ifaces))
+		.mergeMap(() => getStations(wsAPI, state$.value.meta.sid, state$.value.align.ifaces))
 		.map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload }))
 		.catch(error => ([{
 			type: 'NOTIFICATION',
@@ -47,9 +47,9 @@ const allStationsLoad = (action$, { getState }, { wsAPI }  ) =>
 		}]));
 
 // CHANGE INTEFACE -> DIspatch get station by interface and select best signal
-const ifaceChange = (action$, { getState }, { wsAPI } ) =>
+const ifaceChange = (action$, state$, { wsAPI } ) =>
 	action$.ofType(IFACE_CHANGE)
-		.mergeMap((action) => getIfaceStation(wsAPI, getState().meta.sid, action.payload.iface)
+		.mergeMap((action) => getIfaceStation(wsAPI, state$.value.meta.sid, action.payload.iface)
 			.map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload: payload.nodes }))
 			.catch(error => ([{
 				type: 'NOTIFICATION',
@@ -57,14 +57,14 @@ const ifaceChange = (action$, { getState }, { wsAPI } ) =>
 			}])));
 
 // INIT ALIGN -> Select best node, interface and start timer
-const initAlign = (action$, { getState } ) =>
+const initAlign = (action$, state$ ) =>
 	action$.ofType(STATIONS_LOAD_SUCCESS)
 		.map(action => action.payload)
 		.map(payload => {
 			//Select most active node as default
-			if (typeof getState().rx.data.most_active !== 'undefined'){
-				if (payload.filter(x => x.mac === getState().rx.data.most_active.station_mac).length > 0) {
-					return payload.filter(x => x.mac === getState().rx.data.most_active.station_mac)[0];
+			if (typeof state$.value.rx.data.most_active !== 'undefined'){
+				if (payload.filter(x => x.mac === state$.value.rx.data.most_active.station_mac).length > 0) {
+					return payload.filter(x => x.mac === state$.value.rx.data.most_active.station_mac)[0];
 				}
 			}
 			//Or select best node if not found most active node.
@@ -76,15 +76,15 @@ const initAlign = (action$, { getState } ) =>
 			({ type: TIMER_START })]));
 
 // GET_SIGNAL -> Update current signal and nodes
-const getSignal = ( action$, { getState }, { wsAPI } ) =>
+const getSignal = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(SIGNAL_GET)
-		.switchMap(() => getStationSignal(wsAPI, getState().meta.sid, getState().align.currentReading))
+		.switchMap(() => getStationSignal(wsAPI, state$.value.meta.sid, state$.value.align.currentReading))
 		.map( signal => ({ type: SIGNAL_GET_SUCCESS, payload: signal }));
 
 // TIMER MANAGER
-const runTimer = ( action$, { getState } ) =>
+const runTimer = ( action$, state$ ) =>
 	action$.ofType(TIMER_START)
-		.mergeMap((actions) => Observable.interval(getState().meta.interval)
+		.mergeMap((actions) => Observable.interval(state$.value.meta.interval)
 			.takeUntil(action$.ofType(TIMER_STOP))
 			.map(() => ({ type: SIGNAL_GET })));
 

@@ -13,18 +13,18 @@ export default (initialState,rootEpics,rootReducers, wsAPI) => {
 
 	const reduxRouterMiddleware = routerMiddleware(history);
 
-	const epicMiddleware = createEpicMiddleware();
-	
-	epicMiddleware.run(rootEpics, {
+	const epicMiddleware = createEpicMiddleware({
 		dependencies: { wsAPI }
 	});
-  
+
 	const enhancer = composeEnhancers(
 		applyMiddleware(...[reduxRouterMiddleware,epicMiddleware,thunk.withExtraArgument()]),
 	);
-  
 
 	const store = createStore(rootReducers, initialState, enhancer);
+
+	epicMiddleware.run(rootEpics);
+
 	return store;
 
 };
