@@ -7,7 +7,7 @@ import {
 	AUTH_LOGIN_SUCCESS
 } from './adminConstants';
 
-import { CONECTION_CHANGE_URL } from '../../lime-plugin-core/src/metaConstants'
+import { CONECTION_CHANGE_URL } from '../../lime-plugin-core/src/metaConstants';
 
 import {
 	login,
