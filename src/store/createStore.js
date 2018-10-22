@@ -13,7 +13,9 @@ export default (initialState,rootEpics,rootReducers, wsAPI) => {
 
 	const reduxRouterMiddleware = routerMiddleware(history);
 
-	const epicMiddleware = createEpicMiddleware(rootEpics, {
+	const epicMiddleware = createEpicMiddleware();
+	
+	epicMiddleware.run(rootEpics, {
 		dependencies: { wsAPI }
 	});
   
