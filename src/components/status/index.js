@@ -20,7 +20,7 @@ class Status extends Component {
 	render() {
 		let isBase = (base,current) => {
 			if (base !== current) {
-				return (<button class="button green" onClick={this.goBack} translate="yes">Back to base</button>);
+				return (<button class="button green" onClick={this.goBack}>{I18n.t('Back to base')}</button>);
 			}
 			return;
 		};
@@ -29,7 +29,7 @@ class Status extends Component {
 				return (
 					<span>
 						<p>{I18n.t('Connection fail',{ meta_ws: this.props.meta.ws.split('/')[2] })}</p>
-						<button class="button green" onClick={this.goGeneric} translate="yes">Try thisnode.info</button>
+						<button class="button green" onClick={this.goGeneric}>{I18n.t('Try thisnode.info')}</button>
 					</span>
 				);
 			}
