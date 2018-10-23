@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/libremesh/lime-app/compare/v0.1.0-alpha.5...v0.1.0) (2018-10-23)
+
+
+### Bug Fixes
+
+* **husky:** update hooks in package.json ([87ac1ba](https://github.com/libremesh/lime-app/commit/87ac1ba))
+* **path:** change default path to libremesh lime-app path ([53106c0](https://github.com/libremesh/lime-app/commit/53106c0))
+
+
+
 <a name="0.1.0-alpha.5"></a>
 # [0.1.0-alpha.5](https://github.com/libremesh/lime-app/compare/v0.1.0-alpha.4...v0.1.0-alpha.5) (2018-10-23)
 
