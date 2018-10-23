@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "preact-limeapp",
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-alpha.5",
   "description": "Limeapp webUI and app",
   "license": "GNU",
   "author": "Marcos Gutierrez <gmarcos@altermundi.net>",

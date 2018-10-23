@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.0-alpha.5"></a>
+# [0.1.0-alpha.5](https://github.com/libremesh/lime-app/compare/v0.1.0-alpha.4...v0.1.0-alpha.5) (2018-10-23)
+
+
+### Bug Fixes
+
+* **api:** fix api call ([00dc926](https://github.com/libremesh/lime-app/commit/00dc926))
+* **cors:** fix cors connection ([13ef9b5](https://github.com/libremesh/lime-app/commit/13ef9b5))
+* **groundrouting:** disable groundrouting plugin ([e792737](https://github.com/libremesh/lime-app/commit/e792737))
+* **package:** update leaflet.gridlayer.googlemutant to version 0.7.0 ([5be94dd](https://github.com/libremesh/lime-app/commit/5be94dd))
+* **package:** update redux-observable to version 0.19.0 ([a941dce](https://github.com/libremesh/lime-app/commit/a941dce))
+* **package:** update redux-observable to version 1.0.0-beta.2 ([667aa46](https://github.com/libremesh/lime-app/commit/667aa46))
+* **reducer:** fix wrong state variable ([49edbcb](https://github.com/libremesh/lime-app/commit/49edbcb))
+* **redux:** use new redux-observable api ([f916d61](https://github.com/libremesh/lime-app/commit/f916d61))
+* **transaltion:** fix metrics page transaltions ([07969ad](https://github.com/libremesh/lime-app/commit/07969ad))
+* **translations:** remove preact-inline from status component ([7668701](https://github.com/libremesh/lime-app/commit/7668701))
+* **url:** fix ground routing url in menu ([78a8263](https://github.com/libremesh/lime-app/commit/78a8263))
+
+
+### Features
+
+* **loading:** add loading in ground routing page ([1d92b0f](https://github.com/libremesh/lime-app/commit/1d92b0f))
+* **location:** add new ubus-lime-location api ([a32622b](https://github.com/libremesh/lime-app/commit/a32622b))
+* **location:** detect unassigned location in node ([e0678a9](https://github.com/libremesh/lime-app/commit/e0678a9))
+* **plugin:** init ground routing script ([442e934](https://github.com/libremesh/lime-app/commit/442e934))
+* **plugin:** register groundrouting plugin in config.js ([1688639](https://github.com/libremesh/lime-app/commit/1688639))
+
+
+
 <a name="0.1.0-alpha.4"></a>
 # [0.1.0-alpha.4](https://github.com/libremesh/lime-app/compare/v0.1.0-alpha.3...v0.1.0-alpha.4) (2018-02-06)
 
