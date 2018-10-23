@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import { loadLocation, changeLocation, setUserLocation } from './locateActions';
-import { getLocation, getUserLocation, getSelectedHost } from './locateSelectors';
+import { getLocation, getUserLocation, getSelectedHost, isCommunityLocation } from './locateSelectors';
 
 import I18n from 'i18n-js';
 
@@ -98,8 +98,9 @@ class Locate extends Component {
 
 		const popup = L.popup()
 			.setLatLng([this.props.stationLocation.lat, this.props.stationLocation.lon])
-			.setContent(`<h4 style="margin-bottom:-11px; ">${I18n.t('Station')} </strong> ${this.props.stationHostname}</h4><br/>
-						<button onClick='window.toggleEdit()'>${this.state.buttonText}</button>
+			.setContent(`<h4 style="margin-bottom: 0px;">${I18n.t('Station')} </strong> ${this.props.stationHostname}</h4>
+						<p style="margin: 0 0 5px;"><b>${this.showMsg()}</p>
+						<button style="width: 100%" onClick='window.toggleEdit()'>${this.state.buttonText}</button>
 			</span>`)
 			.openOn(map);
 		this.setState({ popup });
@@ -113,9 +114,7 @@ class Locate extends Component {
 
 	isLoaded(exist) {
 		if (exist === true) {
-			return (
-				<div />
-			);
+			return false;
 		}
 		return (<div>Loading...</div>);
 	}
@@ -157,11 +156,16 @@ class Locate extends Component {
 		let pointer = document.getElementsByClassName('leaflet-control-mapcentercoord-icon');
 		if (pointer.length > 0) {
 			this.setState({ buttonText: (this.state.change)? 'Close edit mode' : 'Edit location' });
-			this.state.popup.setContent(`<h4 style="margin-bottom:-11px; ">${I18n.t('Station')} </strong> ${this.props.stationHostname}</h4><br/>
-					<button onClick='window.toggleEdit()'>${this.state.buttonText}</button>
+			this.state.popup.setContent(`<h4 style="margin-bottom:-11px; ">${I18n.t('Station')} </strong> ${this.props.stationHostname}</h4>
+					<br/>
+					<button onClick='window.toggleEdit()' style="width: 100%">${this.state.buttonText}</button>
 					</span>`);
 			pointer[0].style.opacity = (this.state.change)? 1 : 0;
 		}
+	}
+
+	showMsg() {
+		return this.props.isCommunityLocation? I18n.t('You don\'t have a location, please select one'): '';
 	}
 
 	constructor(props){
@@ -171,7 +175,8 @@ class Locate extends Component {
 			scriptCoords: false,
 			scriptError: false,
 			buttonText: 'Edit location',
-			change: false
+			change: false,
+			ignoreAlert: false
 		};
 		this.handleScriptCreate = this.handleScriptCreate.bind(this);
 		this.handleScriptError = this.handleScriptError.bind(this);
@@ -179,6 +184,7 @@ class Locate extends Component {
 		this.updatePosition = this.updatePosition.bind(this);
 		this.toogleEdit = this.toogleEdit.bind(this);
 		this.addCoord = this.addCoord.bind(this);
+		this.showMsg = this.showMsg.bind(this);
 
 		window.toggleEdit = this.toogleEdit;
 	}
@@ -211,7 +217,8 @@ class Locate extends Component {
 const mapStateToProps = (state) => ({
 	stationLocation: getLocation(state),
 	userLocation: getUserLocation(state),
-	stationHostname: getSelectedHost(state)
+	stationHostname: getSelectedHost(state),
+	isCommunityLocation: !isCommunityLocation(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

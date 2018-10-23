@@ -13,3 +13,4 @@ export const getLocation = (state) => {
 
 export const getUserLocation = (state) => state.locate.user;
 export const getSelectedHost = (state) => state.meta.selectedHost;
+export const isCommunityLocation = (state) => state.locate.isCommunity;
