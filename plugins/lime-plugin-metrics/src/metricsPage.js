@@ -51,16 +51,6 @@ const style = {
 	}
 };
 
-const loadingMessages = {
-	metrics_status_gateway: I18n.t('metrics_status_gateway'),
-	metrics_status_path: I18n.t('metrics_status_path'),
-	metrics_status_stations: I18n.t('metrics_status_stations')
-};
-
-const errorMessages = {
-	load_last_known_internet_path: I18n.t('load_last_known_internet_path')
-};
-
 class Metrics extends Component {
   
 	clickGateway(gateway) {
@@ -92,6 +82,13 @@ class Metrics extends Component {
 		if (!loading) {
 			return;
 		}
+
+		const loadingMessages = {
+			metrics_status_gateway: I18n.t('metrics_status_gateway'),
+			metrics_status_path: I18n.t('metrics_status_path'),
+			metrics_status_stations: I18n.t('metrics_status_stations')
+		};
+
 		return (
 			<div style={style.loadingBox}>
 				<Loading />
@@ -118,6 +115,10 @@ class Metrics extends Component {
 	}
 
 	showError(error){
+		const errorMessages = {
+			load_last_known_internet_path: I18n.t('load_last_known_internet_path')
+		};
+
 		if (error !== null) {
 			return (<p style={style.textError}>Error: {errorMessages[error.msg]}</p>);
 		}
