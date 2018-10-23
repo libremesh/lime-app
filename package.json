@@ -15,7 +15,6 @@
     "translations": "node ./node_modules/i18nline/bin/i18nline.js export",
     "posttranslations": "node ./i18n-diff.js",
     "cz": "git-cz",
-    "commitmsg": "commitlint -e $GIT_PARAMS",
     "release": "standard-version"
   },
   "eslintConfig": {
@@ -61,5 +60,10 @@
     "simple-color-scale": "^1.0.1",
     "simplegrid": "^1.0.2",
     "skeleton-less": "^2.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
+    }
   }
 }
