@@ -8,5 +8,5 @@
  **/
 export default function (config, env, helpers) {
 	// Basepath of lime-app in the router: http://thisnode.info/app/
-	config.output.publicPath = '/';
+	config.output.publicPath = '/app/';
 }
