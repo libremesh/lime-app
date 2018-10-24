@@ -109,33 +109,48 @@ class Align extends Component {
 	}
 
 	render(state) {
-		this.alignValue.next(state.alignData.currentReading.signal * -1);
+		if (typeof state.alignData.currentReading !== 'undefined') {
+			this.alignValue.next(state.alignData.currentReading.signal * -1);
+		}
 		return (
 			<div className="container" style={{ paddingTop: '100px' }}>
-				<div className="row">
-					<div className="six columns">
-						<span style={style.hostname}>
-							{this.props.selectedHost || ''}
-						</span>
-						<h1 style={style.signal}>
-							{state.alignData.currentReading.signal || 0}
-							<span style={this.colorBar(this.props.alignData.currentReading.signal * -1)} />
-						</h1>
-						<span style={style.hostname}>
-							{state.alignData.currentReading.hostname || ''}
-						</span>
+				{ typeof state.alignData.currentReading !== 'undefined'? (
+					<div className="row">
+						<div className="six columns">
+							<span style={style.hostname}>
+								{this.props.selectedHost || ''}
+							</span>
+							<h1 style={style.signal}>
+								{state.alignData.currentReading.signal || 0}
+								<span style={this.colorBar(this.props.alignData.currentReading.signal * -1)} />
+							</h1>
+							<span style={style.hostname}>
+								{state.alignData.currentReading.hostname || ''}
+							</span>
+						</div>
+						<div className="six columns">
+							<label>{I18n.t('Interfaces')}</label>
+							<select style={style.block} onChange={this.changeInterface} value={state.alignData.currentReading.iface ? state.alignData.currentReading.iface : null}>
+								{state.alignData.ifaces.map((iface) => <option value={iface.name}>{iface.name}</option>)}
+							</select>
+							<label>{I18n.t('Stations')}</label>
+							<select  style={style.block} onChange={this.changeStation} value={state.alignData.currentReading.mac ? state.alignData.currentReading.mac : null}>
+								{state.alignData.stations.map((station) => <option value={station.mac}>{station.hostname}</option>)}
+							</select>
+						</div>
 					</div>
-					<div className="six columns">
-						<label>{I18n.t('Interfaces')}</label>
-						<select style={style.block} onChange={this.changeInterface} value={state.alignData.currentReading.iface ? state.alignData.currentReading.iface : null}>
-							{state.alignData.ifaces.map((iface) => <option value={iface.name}>{iface.name}</option>)}
-						</select>
-						<label>{I18n.t('Stations')}</label>
-						<select  style={style.block} onChange={this.changeStation} value={state.alignData.currentReading.mac ? state.alignData.currentReading.mac : null}>
-							{state.alignData.stations.map((station) => <option value={station.mac}>{station.hostname}</option>)}
-						</select>
+				): (
+					<div className="row">
+						<div className="six columns">
+							<span style={style.hostname}>
+								{I18n.t('This node does not see other nodes in the network.')}
+							</span>
+							<h1 style={style.signal}>
+								:(
+							</h1>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		);
 	}

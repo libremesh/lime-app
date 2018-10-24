@@ -22,7 +22,8 @@ import {
 	TIMER_START,
 	TIMER_STOP,
 	SIGNAL_GET,
-	SIGNAL_GET_SUCCESS
+	SIGNAL_GET_SUCCESS,
+	SIGNAL_GET_FAILD
 } from './alignConstants';
 
 
@@ -72,14 +73,15 @@ const initAlign = (action$, state$ ) =>
 		})
 		.mergeMap((res) => Observable.from([
 			({ type: STATION_SET, payload: res }),
-			({ type: IFACE_SET, payload: res.iface }),
+			({ type: IFACE_SET, payload: res? res.iface: undefined }),
 			({ type: TIMER_START })]));
 
 // GET_SIGNAL -> Update current signal and nodes
 const getSignal = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(SIGNAL_GET)
 		.switchMap(() => getStationSignal(wsAPI, state$.value.meta.sid, state$.value.align.currentReading))
-		.map( signal => ({ type: SIGNAL_GET_SUCCESS, payload: signal }));
+		.map( signal => ({ type: SIGNAL_GET_SUCCESS, payload: signal }))
+		.catch(e => [{ type: SIGNAL_GET_FAILD }]);
 
 // TIMER MANAGER
 const runTimer = ( action$, state$ ) =>

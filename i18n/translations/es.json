@@ -51,6 +51,7 @@
     "reload_3e45154f": "Recargar",
     "station_ip_v4_3158a957": "IP v4",
     "station_name_7d67417c": "Nombre del nodo",
-    "you_don_t_have_a_location_please_select_one_2d10649": "El nodo no tiene una ubicación asignada, selecciona una"
+    "you_don_t_have_a_location_please_select_one_2d10649": "El nodo no tiene una ubicación asignada, selecciona una",
+    "this_node_does_not_see_other_nodes_in_the_network_f281b047": "Este nodo no ve a ningún otro nodo la red"
 
 }
