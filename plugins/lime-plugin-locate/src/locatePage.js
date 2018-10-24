@@ -218,7 +218,7 @@ const mapStateToProps = (state) => ({
 	stationLocation: getLocation(state),
 	userLocation: getUserLocation(state),
 	stationHostname: getSelectedHost(state),
-	isCommunityLocation: !isCommunityLocation(state)
+	isCommunityLocation: isCommunityLocation(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
