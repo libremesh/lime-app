@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0-alpha.0"></a>
+# [0.2.0-alpha.0](https://github.com/libremesh/lime-app/compare/v0.1.1-alpha.0...v0.2.0-alpha.0) (2018-10-24)
+
+
+### Bug Fixes
+
+* **location:** fix inverted value in default location ([6fac5dd](https://github.com/libremesh/lime-app/commit/6fac5dd))
+
+
+### Features
+
+* **align:** show message when no other node is found ([84a2c1b](https://github.com/libremesh/lime-app/commit/84a2c1b))
+
+
+
 <a name="0.1.1-alpha.0"></a>
 ## [0.1.1-alpha.0](https://github.com/libremesh/lime-app/compare/v0.1.0-alpha.5...v0.1.1-alpha.0) (2018-10-23)
 
