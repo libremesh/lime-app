@@ -36,7 +36,7 @@
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "preact-cli": "^2.0.0",
-    "standard-version": "^4.3.0"
+    "standard-version": "^5.0.0"
   },
   "dependencies": {
     "axios": "^0.18.0",
