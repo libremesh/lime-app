@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0-alpha.1"></a>
+# [0.2.0-alpha.1](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.0...v0.2.0-alpha.1) (2019-02-25)
+
+
+### Bug Fixes
+
+* **fbw:** change fbw api ([696fc98](https://github.com/libremesh/lime-app/commit/696fc98))
+* **fbw:** remove groundrouting plugin and add fbw ([cb5711d](https://github.com/libremesh/lime-app/commit/cb5711d))
+* **redux:** fbw catch must return an array ([b8d34e2](https://github.com/libremesh/lime-app/commit/b8d34e2))
+* **redux-observable:** update epics to redux-ovservable 1.0 ([a8a9234](https://github.com/libremesh/lime-app/commit/a8a9234))
+
+
+### Features
+
+* **component:** add global banner component ([154568a](https://github.com/libremesh/lime-app/commit/154568a))
+* **fbw:** add firstbootwizard page ([8157a0d](https://github.com/libremesh/lime-app/commit/8157a0d))
+* **fbw:** init first boot wizard ([905b552](https://github.com/libremesh/lime-app/commit/905b552))
+
+
+
 <a name="0.2.0-alpha.0"></a>
 # [0.2.0-alpha.0](https://github.com/libremesh/lime-app/compare/v0.1.1-alpha.0...v0.2.0-alpha.0) (2018-10-24)
 
