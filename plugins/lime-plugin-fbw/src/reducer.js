@@ -8,6 +8,11 @@ export const initialState = {
 	status: null
 };
 
+const getApName = ({ ap = '', file = '' }) => {
+	let getHostname = /(?:__ssid__)(.+)(?:__host)/;
+	return '' + (ap && ap !== '')? '('+ap+') ': '' + getHostname.exec(file)[1];
+};
+
 export const reducer = (state = initialState, { type, payload, meta }) => {
 	switch (type) {
 		case FBW_STATUS_SUCCESS:
@@ -18,7 +23,10 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 		case FBW_SEARCH_NETWORKS_SUCCESS:
 			return {
 				...state,
-				networks: payload.networks || [],
+				networks: payload.networks.map(net => ({
+					...net,
+					...{ ap: getApName(net) }
+				})) || [],
 				status: payload.status || null
 			};
 

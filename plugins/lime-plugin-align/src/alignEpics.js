@@ -86,7 +86,7 @@ const getSignal = ( action$, state$, { wsAPI } ) =>
 // TIMER MANAGER
 const runTimer = ( action$, state$ ) =>
 	action$.ofType(TIMER_START)
-		.mergeMap((actions) => Observable.interval(state$.value.meta.interval)
+		.mergeMap((actions) => Observable.interval(state$.value.meta.interval/2)
 			.takeUntil(action$.ofType(TIMER_STOP))
 			.map(() => ({ type: SIGNAL_GET })));
 

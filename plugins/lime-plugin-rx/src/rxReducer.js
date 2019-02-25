@@ -9,7 +9,7 @@ import {
 
 export const initialState = {
 	loading: false,
-	interval: 800,
+	interval: 2000,
 	data: {
 		internet: {
 			IPv4: { working: null },
