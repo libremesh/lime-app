@@ -12,5 +12,6 @@
       "type": "image/png",
       "sizes": "512x512"
     }
-  ]
+  ],
+  "version": "0.2.0-alpha.2"
 }
