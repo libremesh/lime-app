@@ -5,8 +5,8 @@ import 'rxjs/add/operator/catch';
 import {
 	searchNetworks,
 	getStatus,
-	setNetwork
-	// createNetwork
+	setNetwork,
+	createNetwork
 } from './api';
 
 import {
@@ -18,7 +18,10 @@ import {
 	FBW_SEARCH_NETWORKS_ERROR,
 	FBW_SET_NETWORK,
 	FBW_SET_NETWORK_SUCCESS,
-	FBW_SET_NETWORK_ERROR
+	FBW_SET_NETWORK_ERROR,
+	FBW_CREATE_NETWORK,
+	FBW_CREATE_NETWORK_SUCCESS,
+	FBW_CREATE_NETWORK_ERROR
 } from './constants';
 
 import { push } from 'preact-router-redux';
@@ -34,7 +37,7 @@ const _searchNetworks = ( action$, state$, { wsAPI } ) =>
 const _getStatus = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[AUTH_LOGIN_SUCCESS, FBW_STATUS])
 	    .mergeMap((action) => getStatus(wsAPI, state$.value.meta.sid)
-			.map((payload) => ({ type: FBW_STATUS_SUCCESS, payload }))
+			.map((payload) => ({ type: FBW_STATUS_SUCCESS, payload  }))
 			.catch((error) => [{ type: FBW_STATUS_ERROR }]));
 
 const _setNetwork = ( action$, state$, {  wsAPI } ) =>
@@ -45,14 +48,19 @@ const _setNetwork = ( action$, state$, {  wsAPI } ) =>
 
 const _showBanner = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[FBW_STATUS_SUCCESS])
-		.map(action => (action.payload.lock)?
+		.map(action => true ? //(action.payload.lock && state$.value.firstbootwizard.status === null)?
 			{ type: BANNER_SET, payload: {
 				text: 'Please configure your network',
 				onOk: { type: 'GO_FBW' },
 				onCancel: { type: BANNER_HIDE }
-			} }:
-			{ type: '_' }
+			} }: { type: '_' }
 		);
+
+const _createNetwork = (action$, state$, { wsAPI }) =>
+	action$.ofType(FBW_CREATE_NETWORK)
+		.mergeMap(({ payload }) => createNetwork(wsAPI, state$.value.meta.sid, payload)
+			.map(payload => ({ type: FBW_CREATE_NETWORK_SUCCESS }))
+			.catch(payload => ({ type: FBW_CREATE_NETWORK_ERROR })));
 
 const _goPage = ( action$ ) =>
 	action$.ofType('GO_FBW')
@@ -62,4 +70,4 @@ const _goPage = ( action$ ) =>
 				{ type: BANNER_HIDE }
 			]));
 
-export default { _searchNetworks, _getStatus, _showBanner, _goPage, _setNetwork };
+export default { _searchNetworks, _getStatus, _showBanner, _goPage, _setNetwork, _createNetwork };

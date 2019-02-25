@@ -28,7 +28,7 @@ export const initialState = {
 	url: '/',
 	conection: false,
 	ws: '',
-	interval: 1500,
+	interval: 15000,
 	stations: [],
 	base: '',
 	home: '/rx',

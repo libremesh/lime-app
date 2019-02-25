@@ -37,7 +37,7 @@ export const nodeStatus = ( action$, store, { wsAPI } ) =>
 
   
 const runTimer = ( action$, store ) =>
-	action$.ofType(...[GET_NODE_STATUS_SUCCESS, TIMER_START])
+	action$.ofType(...[TIMER_START])
 		.mergeMap(() => Observable.interval(store.value.rx.interval)
 			.takeUntil(action$.ofType(TIMER_STOP))
 			.map(() => ({ type: INTERVAL_GET })));
