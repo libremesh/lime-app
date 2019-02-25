@@ -3,7 +3,7 @@
 setup_git() {
     set -e
     eval "$(ssh-agent -s)"
-    openssl aes-256-cbc -K $encrypted_bd61809adafc_key -iv $encrypted_bd61809adafc_iv -in lime-app.enc -out ~\/lime-app -d
+    openssl aes-256-cbc -K $encrypted_bd61809adafc_key -iv $encrypted_bd61809adafc_iv -in ../lime-app.enc -out ~\/lime-app -d
     chmod 600 lime-app
     ssh-add lime-app
     git config --global user.email "travis@travis-ci.org"
