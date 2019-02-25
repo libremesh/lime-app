@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
-import { getNodeStatus, stopTimer, changeNode } from './rxActions';
+import { getNodeStatusTimer, stopTimer, changeNode } from './rxActions';
 import { getNodeData, isLoading } from './rxSelectors';
 
 import { Box } from '../../../src/components/box';
@@ -148,7 +148,7 @@ export const mapStateToProps = (state) => ({
 });
 
 export const mapDispatchToProps = (dispatch) => ({
-	getNodeStatus: bindActionCreators(getNodeStatus,dispatch),
+	getNodeStatus: bindActionCreators(getNodeStatusTimer,dispatch),
 	stopTimer: bindActionCreators(stopTimer,dispatch),
 	changeNode: bindActionCreators(changeNode,dispatch)
 });

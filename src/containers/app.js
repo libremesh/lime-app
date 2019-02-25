@@ -11,6 +11,7 @@ import Alert from '../components/alert';
 import Status from '../components/status';
 import { plugins } from '../config';
 import Banner from '../components/banner';
+import { isBanner } from '../../plugins/lime-plugin-rx/src/rxSelectors';
 
 class ChangeNode extends Component {
 	componentWillMount () {
@@ -59,7 +60,7 @@ class App extends Component {
 				<Banner />
 				<Header hostname={this.props.meta.selectedHost} goHome={this.props.goBase} />
 				{ /*<Navigator hostname={this.props.meta} goHome={this.props.goBase} /> */ }
-				{isConnected(this.props.meta)}
+				{!this.props.isBanner && isConnected(this.props.meta)}
 				<Alert text={this.props.meta.alert} hide={this.props.hideAlert} />
 			</div>
 		);
@@ -67,7 +68,10 @@ class App extends Component {
 }
 
 
-const mapStateToProps = (state) => ({ meta: state.meta });
+const mapStateToProps = (state) => ({
+	meta: state.meta,
+	isBanner: isBanner(state)
+});
 
 const goBase = (hostname) => (dispatch) => {
 	dispatch({

@@ -1,7 +1,8 @@
 import {
 	FBW_SEARCH_NETWORKS,
 	FBW_SET_NETWORK,
-	FBW_CREATE_NETWORK
+	FBW_CREATE_NETWORK,
+	FBW_STATUS
 } from './constants';
 
 export const searchNetworks = ( rescan ) => ( dispatch ) => {
@@ -20,9 +21,15 @@ export const setNetwork = ( file ) => ( dispatch ) => {
 	});
 };
 
-export const createNetwork = (network) => (dispatch) => {
+export const createNetwork = (network) => ( dispatch ) => {
 	dispatch({
 		type: FBW_CREATE_NETWORK,
 		payload: network
+	});
+};
+
+export const getStatus = () => ( dispatch ) => {
+	dispatch({
+		type: FBW_STATUS
 	});
 };
