@@ -3,9 +3,9 @@
 setup_git() {
     set -e
     eval "$(ssh-agent -s)"
-    openssl aes-256-cbc -K $encrypted_bd61809adafc_key -iv $encrypted_bd61809adafc_iv -in ../lime-app.enc -out ~\/lime-app -d
-    chmod 600 lime-app
-    ssh-add lime-app
+    openssl aes-256-cbc -K $encrypted_bd61809adafc_key -iv $encrypted_bd61809adafc_iv -in ../lime-app.enc -out ./lime-app -d
+    chmod 600 ./lime-app
+    ssh-add ./lime-app
     git config --global user.email "travis@travis-ci.org"
     git config --global user.name "Travis CI"
 }
@@ -16,10 +16,10 @@ get_repo(){
 }
 
 create_file() {
-    export HASH= sha256sum $TRAVIS_BUILD_DIR/lime-app-$TRAVIS_BRANCH.tar.gz
+    export SHASUM=$(sha256sum $TRAVIS_BUILD_DIR/lime-app-$TRAVIS_BRANCH.tar.gz | awk '{ print $1 }')
     cat ../Makefile.temp | sed -e "s/\${i}/1/" \
-        | sed -e "s/\${version}/$HASH/" \
-        | sed -e "s/\${hash}/$TRAVIS_BRANCH/"  >> packages/lime-app/Makefile
+        | sed -e "s/\${version}/$TRAVIS_BRANCH/" \
+        | sed -e "s/\${hash}/$SHASUM/"  > packages/lime-app/Makefile
 }
 
 commit_file() {
@@ -28,7 +28,7 @@ commit_file() {
 }
 
 push_changes(){
-    git push --quiet lime-app-$TRAVIS_BRANCH
+    git push --force --quiet origin lime-app-$TRAVIS_BRANCH
 }
 
 cd .ci
