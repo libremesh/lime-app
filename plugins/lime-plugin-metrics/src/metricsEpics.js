@@ -58,8 +58,13 @@ const loadMetrics = ( action$, store, { wsAPI }) =>
 const loadGatewayMetrics = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[LOAD_PATH_SUCCESS,LOAD_METRICS_GATEWAY])
 		.map(action => action.payload)
-		.mergeMap(payload => getMetrics(wsAPI,store.value.meta.sid,{ target: store.value.metrics.gateway })
-			.map(payload => ({ type: LOAD_METRICS_GATEWAY_SUCCESS, payload })));
+		.mergeMap(payload => {
+			if (store.value.metrics.gateway !== store.value.meta.selectedHost) {
+				return getMetrics(wsAPI,store.value.meta.sid,{ target: store.value.metrics.gateway })
+					.map(payload => ({ type: LOAD_METRICS_GATEWAY_SUCCESS, payload }));
+			}
+			return [{ type: LOAD_METRICS_GATEWAY_SUCCESS, payload: {} }];
+		});
 
 
 export default { loadGateway, loadPath, loadMetrics, loadLastPath, loadGatewayMetrics };

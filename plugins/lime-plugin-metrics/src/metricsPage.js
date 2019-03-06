@@ -61,17 +61,25 @@ class Metrics extends Component {
 
 	showButton(loading) {
 		if (!loading) {
-			return (
-				<div class="row">
-					<br />
-					<button class="button green block u-full-width" type="submit" onClick={this.clickGateway(this.props.metrics.gateway)}>
-						{I18n.t('Only gateway')}
-					</button>
-					<button class="button green block u-full-width"  type="submit" onClick={this.props.getMetricsAll}>
-						{I18n.t('Full path metrics')}
-					</button>
-				</div>
-			);
+			return !this.isGateway(this.props.meta.selectedHost,this.props.metrics.gateway)
+				? (
+					<div class="row">
+						<br />
+						<button class="button green block u-full-width" type="submit" onClick={this.clickGateway(this.props.metrics.gateway)}>
+							{I18n.t('Only gateway')}
+						</button>
+						<button class="button green block u-full-width"  type="submit" onClick={this.props.getMetricsAll}>
+							{I18n.t('Full path metrics')}
+						</button>
+					</div>
+				)
+				: (
+					<div class="row">
+						<br />
+						<p><b>{I18n.t('This node is the gateway')}</b><br />
+							{I18n.t('You don\'t go through any paths to get here.')}</p>
+					</div>
+				);
 		}
 		return (
 			<div />
