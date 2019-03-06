@@ -48,7 +48,7 @@ const _setNetwork = ( action$, state$, {  wsAPI } ) =>
 
 const _showBanner = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[FBW_STATUS_SUCCESS])
-		.map(action => true ? //(action.payload.lock && state$.value.firstbootwizard.status === null)?
+		.map(action => (action.payload.lock && state$.value.firstbootwizard.status === null)?
 			{ type: BANNER_SET, payload: {
 				text: 'Please configure your network',
 				onOk: { type: 'GO_FBW' },
