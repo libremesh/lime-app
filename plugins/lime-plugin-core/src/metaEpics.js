@@ -28,6 +28,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/delay';
 
+import I18n from 'i18n-js';
 
 import { push } from 'preact-router-redux';
 
@@ -40,26 +41,29 @@ const conectionAction = ( action$, store, { wsAPI } ) =>
 		.mergeMap( url => wsAPI.connect(url.payload)
 			.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } })
 			.catch(error => ([{
-				type: 'NOTIFICATION',
-				payload: { msg: 'Not UBUS api in remote device', error }
-			},{
-				type: CONECTION_ERROR,
-				payload: 'http://thisnode.info/ubus'
-			}]))
+				type: CONECTION_CHANGE_URL,
+				payload: 'http://thisnode.info/ubus',
+				error: true
+			}
+			]))
 		);
 
 const changeUrlAction = ( action$, store, { wsAPI } ) =>
 	action$.ofType(CONECTION_CHANGE_URL)
 		.mergeMap( url => changeUrl(wsAPI, url.payload)
 			.mapTo({ type: CONECTION_SUCCESS, payload: { conection: true } })
-			.catch(error => ([{
-				type: 'NOTIFICATION',
-				payload: { msg: 'Not UBUS api in remote device', error }
-			},{
-				type: CONECTION_START,
-				payload: 'http://thisnode.info/ubus'
-			}]))
-		);
+			.catch(error => ([
+				{
+					type: 'NOTIFICATION',
+					payload: { msg: I18n.t('This node is not compatible with LimeApp'), error }
+				},
+				...(url.error !== true? [{
+					type: CONECTION_START,
+					payload: 'http://thisnode.info/ubus'
+				}]: [{
+					type: CONECTION_ERROR
+				}])
+			])));
 
 
 const loadHostname = ( action$, store, { wsAPI }) =>
