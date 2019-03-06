@@ -60,7 +60,7 @@ class Metrics extends Component {
 	}
 
 	showButton(loading) {
-		if (!loading) {
+		if (!loading && this.props.metrics.error.length === 0) {
 			return (
 				<div class="row">
 					<br />
@@ -69,6 +69,19 @@ class Metrics extends Component {
 					</button>
 					<button class="button green block u-full-width"  type="submit" onClick={this.props.getMetricsAll}>
 						{I18n.t('Full path metrics')}
+					</button>
+				</div>
+			);
+		}
+		else if (!loading && this.props.metrics.error.length > 0) {
+			return (
+				<div class="row">
+					<br />
+					<button class="button green block u-full-width"  type="submit" onClick={this.props.getMetricsAll}>
+						{I18n.t('Full path metrics')}
+					</button>
+					<button class="button green block u-full-width" type="submit" onClick={this.props.getMetrics}>
+						{I18n.t('Check internet connection again')}
 					</button>
 				</div>
 			);
@@ -86,7 +99,8 @@ class Metrics extends Component {
 		const loadingMessages = {
 			metrics_status_gateway: I18n.t('metrics_status_gateway'),
 			metrics_status_path: I18n.t('metrics_status_path'),
-			metrics_status_stations: I18n.t('metrics_status_stations')
+			metrics_status_stations: I18n.t('metrics_status_stations'),
+			load_last_known_internet_path: I18n.t('load_last_known_internet_path')
 		};
 
 		return (
@@ -116,11 +130,12 @@ class Metrics extends Component {
 
 	showError(error){
 		const errorMessages = {
-			load_last_known_internet_path: I18n.t('load_last_known_internet_path')
+			load_last_known_internet_path: I18n.t('load_last_known_internet_path'),
+			no_gateway: I18n.t('no_gateway')
 		};
 
 		if (error !== null) {
-			return (<p style={style.textError}>Error: {errorMessages[error.msg]}</p>);
+			return (<p style={style.textError}>{errorMessages[error.msg]}</p>);
 		}
 		return;
 	}

@@ -8,7 +8,8 @@ import {
 	LOAD_GATEWAY_NOT_FOUND,
 	LOAD_METRICS_GATEWAY,
 	LOAD_METRICS_GATEWAY_SUCCESS,
-	LOAD_METRICS_ALL
+	LOAD_METRICS_ALL,
+	FAST_PATH_CHECK
 } from './metricsConstants';
 
 
@@ -69,8 +70,10 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 				}),
 				loading: false
 			});
+		case FAST_PATH_CHECK:
+			return { ...state, loading: false, status: '' };
 		case LOAD_METRICS_ALL:
-			return Object.assign({}, state, { metrics: state.metrics.map(x => Object.assign({},x, { loading: true })), loading: true });
+			return Object.assign({}, state, { metrics: state.metrics.map(x => Object.assign({},x, { loading: true })), loading: true, status: 'metrics_status_stations' });
 		default:
 			return state;
 	}

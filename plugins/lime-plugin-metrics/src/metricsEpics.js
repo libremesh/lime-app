@@ -10,7 +10,8 @@ import {
 	LOAD_METRICS_SUCCESS,
 	LOAD_METRICS_GATEWAY_SUCCESS,
 	LOAD_METRICS_ALL,
-	LOAD_METRICS_GATEWAY
+	LOAD_METRICS_GATEWAY,
+	FAST_PATH_CHECK
 } from './metricsConstants';
 
 import { Observable } from 'rxjs/Observable';
@@ -25,7 +26,7 @@ const loadGateway = ( action$, store, { wsAPI }) =>
 		.mergeMap(() => getGateway(wsAPI,store.value.meta.sid,))
 		.map(payload => {
 			if (!payload.error) return { type: LOAD_GATEWAY_SUCCESS, payload };
-			return { type: LOAD_GATEWAY_NOT_FOUND, payload };
+			return { type: LOAD_GATEWAY_NOT_FOUND, payload: { error: { msg: 'no_gateway' } } } ;
 		})
 		.catch([({ type: LOAD_GATEWAY_ERROR })]);
 
@@ -58,8 +59,12 @@ const loadMetrics = ( action$, store, { wsAPI }) =>
 const loadGatewayMetrics = ( action$, store, { wsAPI }) =>
 	action$.ofType(...[LOAD_PATH_SUCCESS,LOAD_METRICS_GATEWAY])
 		.map(action => action.payload)
-		.mergeMap(payload => getMetrics(wsAPI,store.value.meta.sid,{ target: store.value.metrics.gateway })
-			.map(payload => ({ type: LOAD_METRICS_GATEWAY_SUCCESS, payload })));
-
+		.mergeMap(payload => {
+			if (store.value.metrics.gateway) {
+				return getMetrics(wsAPI,store.value.meta.sid,{ target: store.value.metrics.gateway })
+					.map(payload => ({ type: LOAD_METRICS_GATEWAY_SUCCESS, payload }));
+			}
+			return [{ type: FAST_PATH_CHECK, payload }];
+		});
 
 export default { loadGateway, loadPath, loadMetrics, loadLastPath, loadGatewayMetrics };
