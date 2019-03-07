@@ -50,7 +50,7 @@
     "preact-compat": "^3.17.0",
     "preact-i18nline": "^2.0.0",
     "preact-redux": "^2.0.3",
-    "preact-router": "^2.6.0",
+    "preact-router": "^3.0.0",
     "preact-router-redux": "^4.1.0",
     "react-load-script": "0.0.6",
     "redux": "^4.0.0",
