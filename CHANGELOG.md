@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0-alpha.6"></a>
+# [0.2.0-alpha.6](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.5...v0.2.0-alpha.6) (2019-03-09)
+
+
+### Bug Fixes
+
+* change api error message ([033c5d9](https://github.com/libremesh/lime-app/commit/033c5d9)), closes [#113](https://github.com/libremesh/lime-app/issues/113)
+* first boot wizard screen ([46069ef](https://github.com/libremesh/lime-app/commit/46069ef))
+* metrics on gateway node ([3fead9f](https://github.com/libremesh/lime-app/commit/3fead9f)), closes [#112](https://github.com/libremesh/lime-app/issues/112)
+
+
+
 <a name="0.2.0-alpha.5"></a>
 # [0.2.0-alpha.5](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.3...v0.2.0-alpha.5) (2019-02-25)
 
