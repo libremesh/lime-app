@@ -198,7 +198,7 @@ class Locate extends Component {
 		return (
 			<div>
 				<Script
-					url="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet-src.js"
+					url="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.0/leaflet.js"
 					onCreate={this.handleScriptCreate}
 					onError={this.handleScriptError}
 					onLoad={this.handleScriptLoad}
