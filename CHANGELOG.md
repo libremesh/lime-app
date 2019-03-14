@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.2.0-alpha.7](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.6...v0.2.0-alpha.7) (2019-03-14)
+
+
+### Bug Fixes
+
+* **leaflet:** update leaflet version ([53e4992](https://github.com/libremesh/lime-app/commit/53e4992))
+* **package:** update leaflet.gridlayer.googlemutant to version 0.8.0 ([342d9b3](https://github.com/libremesh/lime-app/commit/342d9b3))
+
+
+
 <a name="0.2.0-alpha.6"></a>
 # [0.2.0-alpha.6](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.5...v0.2.0-alpha.6) (2019-03-09)
 
