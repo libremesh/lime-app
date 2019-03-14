@@ -2,17 +2,18 @@ import axios from 'axios';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromPromise';
 
-function ab2str(buf) {
-	return String.fromCharCode.apply(null, new Uint16Array(buf));
-}
-function str2ab(str) {
-	let buf = new ArrayBuffer(str.length*2); // 2 bytes for each char
-	let bufView = new Uint16Array(buf);
-	for (let i=0, strLen=str.length; i < strLen; i++) {
-	  bufView[i] = str.charCodeAt(i);
+String.prototype.hashCode = function() {
+	let hash = 0, i, chr;
+	if (this.length === 0) return hash;
+	for (i = 0; i < this.length; i++) {
+	  chr   = this.charCodeAt(i);
+	  hash  = ((hash << 5) - hash) + chr;
+	  hash |= 0; // Convert to 32bit integer
 	}
-	return buf;
-}
+	return hash.toString();
+};
+
+const getHash = (text = '') => Promise.resolve(text.hashCode());
 
 export class UhttpdService {
 	constructor(url){
@@ -43,8 +44,7 @@ export class UhttpdService {
 
 	request(payload) {
 		return new Promise((res, rej) => {
-			window.crypto.subtle.digest('SHA-1',str2ab(JSON.stringify(payload))).then(result => {
-				const hash = ab2str(result);
+			getHash(JSON.stringify(payload)).then(hash => {
 				if (this.requestList.filter(x => x.hash === hash).length > 0) {
 					this.requestList.filter(x => x.hash === hash)[0].callbacks = [...this.requestList.filter(x => x.hash === hash)[0].callbacks, { res,rej }];
 					return;
