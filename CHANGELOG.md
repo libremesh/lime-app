@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.2.0-alpha.9](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.8...v0.2.0-alpha.9) (2019-03-21)
+
+
+### Bug Fixes
+
+* **api:** remove window.crypto ([bf2c989](https://github.com/libremesh/lime-app/commit/bf2c989))
+
+
+
 # [0.2.0-alpha.8](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.7...v0.2.0-alpha.8) (2019-03-21)
 
 
