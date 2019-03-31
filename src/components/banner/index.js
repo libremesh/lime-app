@@ -33,7 +33,8 @@ class Banner extends Component {
 				textAlign: 'center'
 			}}
 			>
-				<h3>{this.props.banner.text}</h3>
+				<h3>{this.props.banner.title}</h3>
+				{this.props.banner.description? <p style={{ maxWidth: '400px', margin: '20px auto' }}>{this.props.banner.description}</p>: false}
 				<button onClick={this.onOk}>Ok</button>
 				<button onClick={this.onCancel}>Cancel</button>
 			</div>
