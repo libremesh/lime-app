@@ -28,19 +28,29 @@ const style = {
 		borderRadius: '11px',
 		padding: '15px',
 		boxShadow: '1px 1px 6px rgba(0,0,0,0.5)'
+	},
+	configBox: {
+		marginBottom: '3rem',
+		borderRadius: '5px',
+		border: '1px solid #ccc',
+		padding: '15px 15px 0 15px'
 	}
 };
 
+const Input = ({ name, label, value, onChange }) =>
+	(<div>
+		<label>{I18n.t(label)}</label>
+		<input type="text" value={value} onChange={onChange} class="u-full-width" />
+	</div>
+	);
+
 export class Admin extends Component {
 
-	handleHostname(e) {
-		this.setState({ hostname: e.target.value });
-		return this.state.hostname;
-	}
-
-	handleIp(e) {
-		this.setState({ ip: e.target.value });
-		return this.state.ip;
+	handleInput(field) {
+		return e => {
+			this.setState({ data: { ...this.state.data, [field]: e.target.value } });
+			return this.state.data[field];
+		};
 	}
 
 	handlePassword(e) {
@@ -74,12 +84,15 @@ export class Admin extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			hostname: this.props.selectedHost,
-			ip: this.props.nodeData.ips.filter(ip => ip.version === '4')[0].address
+			data: {
+				hostname: this.props.selectedHost,
+				ipv4: this.props.nodeData.ips.filter(ip => ip.version === '4')[0].address,
+				ipv6: this.props.nodeData.ips.filter(ip => ip.version === '6')[0].address
+			},
+			isAdv: false
 		};
 		this.changeConfig = this.changeConfig.bind(this);
-		this.handleHostname = this.handleHostname.bind(this);
-		this.handleIp = this.handleIp.bind(this);
+		this.handleInput = this.handleInput.bind(this);
 		this.handlePassword = this.handlePassword.bind(this);
 		this.adminLogin = this.adminLogin.bind(this);
 	}
@@ -97,14 +110,24 @@ export class Admin extends Component {
 					<button class="button green block" type="submit">{I18n.t('Login')}</button>
 				</form>
 				<form onSubmit={this.changeConfig} style={{ display: (this.props.authStatus)? 'block': 'none' }}>
-					<p>
-						<label>{I18n.t('Station name')}</label>
-						<input type="text" value={this.state.hostname} onChange={this.handleHostname} class="u-full-width" />
-					</p>
-					<p>
-						<label>{I18n.t('Station IP v4')}</label>
-						<input type="text" value={this.state.ip} onChange={this.handleIp} class="u-full-width" />
-					</p>
+					<div style={style.configBox}>
+						<h4>{I18n.t('System')}</h4>
+						<Input name={'hostname'} label={'Station name'} value={this.state.data.hostname} onChange={this.handleInput('hostname')} />
+					</div>
+					<div style={style.configBox}>
+						<h4>{I18n.t('Network')}</h4>
+						<Input name={'ipv4'} label={'Sation IP v4'} value={this.state.data.ipv4} onChange={this.handleInput('ipv4')} />
+						<Input name={'ipv6'} label={'Sation IP v6'} value={this.state.data.ipv6} onChange={this.handleInput('ipv6')} />
+					</div>
+					<div style={style.configBox}>
+						<h4>{I18n.t('Wireless')}</h4>
+						<Input name={'ap_ssid'} label={'Access Point ESSID'} value={this.state.data.ap_ssid} onChange={this.handleInput('ap_ssid')} />
+						<Input name={'channel_2ghz'} label={'Channel used for 2.4 GHz radios'} value={this.state.data.channel_2ghz} onChange={this.handleInput('channel_2ghz')} />
+						<Input name={'channel_5ghz'} label={'Channel used for 5 GHz radios'} value={this.state.data.channel_5ghz} onChange={this.handleInput('channel_5ghz')} />
+						<Input name={'country'} label={'Country code'} value={this.state.data.country} onChange={this.handleInput('country')} />
+						<Input name={'distance'} label={'Max distance for the links in meters'} value={this.state.data.distance} onChange={this.handleInput('distance')} />
+						<Input name={'mesh_bssid'} label={'WiFi mesh 	network identifier'} value={this.state.data.mesh_bssid} onChange={this.handleInput('mesh_bssid')} />
+					</div>
 					<button class="button green block" type="submit">{I18n.t('Change')}</button>
 				</form>
 			</div>
