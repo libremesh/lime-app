@@ -73,47 +73,61 @@ class Page extends Component {
 
 	renderScan() {
 		return (
-			<div class="container" style={{ paddingTop: '100px' }}>
-				<h4><span>{I18n.t('Configure your network')}</span></h4>
-				{
+			<div>
+				<div class="container" style={{ paddingTop: '100px' }}>
+					<h4><span>{I18n.t('Configure your network')}</span></h4>
+					<p>{I18n.t('You can search for mesh networks around you to add or to create a new one.')}</p>
+					{
 					 this.props.status !== 'scanning'
-					 ? (<button disabled={this.props.status === 'scanning'} onClick={this.searchNetworks} style={{ width: '100%' }}>
-							{ this.props.status === 'scanned' ? I18n.t('Rescan for existent networks') : I18n.t('Scan for existent networks') }
-						</button>)
+					 ? (
+								<div class="row">
+									<div class="six columns">
+										<button disabled={this.props.status === 'scanning'} onClick={this.searchNetworks} class="u-full-width">
+											{ this.props.status === 'scanned' ? I18n.t('Rescan for existent networks') : I18n.t('Scan for existing networks') }
+										</button>
+									</div>
+									<div class="six columns">
+										<button onClick={this.toggleForm} class="u-full-width">
+											{I18n.t('Create new network')}
+										</button>
+									</div>
+								</div>
+							)
 					 : false
-				}
-				<br />
-				{ this.props.networks && this.props.status === 'scanned' ? (
-					<div>
-						<select onChange={this.selectNetwork}  style={{ width: '100%' }}>
-							<option disabled selected >{I18n.t('Select one')}</option>
-							{this.props.networks.map(network => (<option value={network.file}>{network.ap}</option>))}
-						</select>
-						<button
-							style={{ width: '48%', margin: '0 4% 0 0' }}
-							disabled={typeof this.state.selectedNetwork === 'undefined'}
-							onClick={this.setNetwork}
-						>
-							{I18n.t('Set network')}
-						</button>
-						<button
-							style={{ width: '48%' }}
-							onClick={this.toggleForm}
-						>
-							{I18n.t('Create new network')}
-						</button>
-					</div>
-				): false}
-				{
-					this.state.createForm? (
-						<div />
-					)
-						:false
-				}
-				{ this.props.status === 'scanning'? (
-					<Loading />
-				): false }
-				{(this.props.status === 'scanning' && <Alert text={I18n.t('Scan for existent networks')} />)}
+					}
+					<br />
+					{ this.props.networks && this.props.status === 'scanned' ? (
+						<div>
+							{this.props.networks.length === 0
+								? <p>:( {I18n.t('No network found, try realigning your node and rescanning.')}</p>
+								:<div>
+									<h4>{I18n.t('Networks found:')}</h4>
+									<select onChange={this.selectNetwork}  class="u-full-width">
+										<option disabled selected >{I18n.t('Select one')}</option>
+										{this.props.networks.map(network => (<option value={network.file}>{network.ap}</option>))}
+									</select>
+									<button
+										disabled={typeof this.state.selectedNetwork === 'undefined'}
+										onClick={this.setNetwork}
+										class="u-full-width"
+									>
+										{I18n.t('Set network')}
+									</button>
+								</div>
+							}
+						</div>
+					): false}
+					{
+						this.state.createForm? (
+							<div />
+						)
+							:false
+					}
+					{ this.props.status === 'scanning'? (
+						<Loading />
+					): false }
+				</div>
+				{(this.props.status === 'scanning' && <Alert text={I18n.t('Scanning for existing networks')} />)}
 			</div>
 		);
 	}
@@ -122,19 +136,25 @@ class Page extends Component {
 		return (<div class="container" style={{ paddingTop: '100px' }}>
 			<h4><span>{I18n.t('Configure your new community network')}</span></h4>
 			<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onChange={this._changeName} />
-			<button
-				style={{ width: '48%', margin: '0 4% 0 0' }}
-				disabled={!this.state.communityName || this.state.communityName === ''}
-				onClick={this.createNetwork}
-			>
-				{I18n.t('Create network')}
-			</button>
-			<button
-				style={{ width: '48%' }}
-				onClick={this.toggleForm}
-			>
-				{I18n.t('Cancel')}
-			</button>
+			<div class="row">
+				<div class="six columns">
+					<button
+						class="u-full-width"
+						disabled={!this.state.communityName || this.state.communityName === ''}
+						onClick={this.createNetwork}
+					>
+						{I18n.t('Create network')}
+					</button>
+				</div>
+				<div class="six-columns">
+					<button
+						class="u-full-width"
+						onClick={this.toggleForm}
+					>
+						{I18n.t('Cancel')}
+					</button>
+				</div>
+			</div>
 		</div>);
 	}
 
