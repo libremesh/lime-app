@@ -64,7 +64,7 @@ export class Admin extends Component {
 	handleInput = (field, subPath ) => e => {
 		!subPath
 			? this.setState({ [field]: e.target.value })
-			: this.setState({ [subPath]: { [field]: e.target.value } });
+			: this.setState({ [subPath]: { ...this.state[subPath], [field]: e.target.value } });
 
 	}
 
@@ -96,7 +96,7 @@ export class Admin extends Component {
 		const { wireless, selectedHost, nodeData } = nextProps;
 		const isEmpty = Object.entries(wireless).length === 0 && wireless.constructor === Object;
 		if (nextProps !== this.props) {
-			if (nodeData.ips) {
+			if (nodeData.ips && !this.state.data.hostname) {
 				this.setState({
 					data: {
 						hostname: selectedHost,
@@ -105,7 +105,7 @@ export class Admin extends Component {
 					}
 				});
 			}
-			if (!isEmpty) {
+			if (!isEmpty && !this.state.wireless.ap_ssid) {
 				const { ap_ssid, channel_2ghz, channel_5ghz, distance_2ghz, distance_5ghz, mesh_id, country } = wireless;
 				this.setState({
 					wireless: {
@@ -156,15 +156,22 @@ export class Admin extends Component {
 								name={`channel_${i.type}`}
 								label={`Channel used for ${i.type} radios`}
 								value={this.state.wireless[`channel_${i.type.indexOf('2') !== -1 ? '2ghz' : i.type}`]}
-								onChange={this.handleInput(`channel_${i.channel}`, 'wireless')}
+								onChange={this.handleInput(`channel_${i.type.indexOf('2') !== -1 ? '2ghz' : i.type}`, 'wireless')}
 							>
 								{i.channel.map(e => <option key={e}>{e}</option>)}
 							</Select>))}
 						<Select name={'country'} onChange={this.handleInput('country', 'wireless')} label={'Country code'} value={country}>
 							{Object.keys(countryList).map(k => <option key={k} value={k}>{countryList[k]} ({k})</option>)}
 						</Select>
-						<Input name={'distance'} label={'Max distance for the links in meters'} value={distance_2ghz} onChange={this.handleInput('distance_2ghz', 'wireless')} />
-						<Input name={'distance'} label={'Max distance for the links in meters'} value={distance_5ghz} onChange={this.handleInput('distance_5ghz',  'wireless')} />
+						{channels.map(i => (
+							<Input
+								key={'distance'+i.type}
+								name={`distance_${i.type}`}
+								label={`Max distance for the links in meters for ${i.type} radios`}
+								value={this.state.wireless[`distance_${i.type.indexOf('2') !== -1 ? '2ghz' : i.type}`]}
+								onChange={this.handleInput(`distance_${i.type.indexOf('2') !== -1 ? '2ghz' : i.type}`, 'wireless')}
+							/>
+						))}
 						<Input name={'mesh_bssid'} label={'WiFi mesh 	network identifier'} value={mesh_id} onChange={this.handleInput('mesh_id', 'wireless')} />
 					</div>
 					<button class="button green block" type="submit">{I18n.t('Change')}</button>
