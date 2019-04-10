@@ -16,7 +16,7 @@ export const login = (sid, api, auth) =>
 		});
 
 export const changeConfig = (api, sid, config) =>
-	api.call(sid, 'lime-utils', 'change_config', { name: config.hostname, ip: config.ip });
+	api.call(sid, 'lime-utils', 'change_config', { ...config });
 
 export const getConfig = (api, sid) =>
 	api.call(sid, 'lime-utils', 'get_config', {});
