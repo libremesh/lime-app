@@ -4,14 +4,18 @@ import {
 	SET_CONFIG_SUCCESS,
 	SET_CONFIG_ERROR,
 	AUTH_LOGIN,
-	AUTH_LOGIN_SUCCESS
+	AUTH_LOGIN_SUCCESS,
+	GET_CONFIG,
+	GET_CONFIG_SUCCESS,
+	GET_CONFIG_ERROR
 } from './adminConstants';
 
 import { CONECTION_CHANGE_URL } from '../../lime-plugin-core/src/metaConstants';
 
 import {
 	login,
-	changeConfig
+	changeConfig,
+	getConfig
 } from './adminApi';
 
 import { Observable } from 'rxjs/Observable';
@@ -36,6 +40,12 @@ const setConfig = (action$, store, { wsAPI }) =>
 			.map( payload => ({ type: SET_CONFIG_SUCCESS, payload }))
 			.catch( error => ([{ type: SET_CONFIG_ERROR, payload: error }]) ));
 
+const loadConfig = (action$, store, { wsAPI }) =>
+	action$.ofType(GET_CONFIG, AUTH_LOGIN_SUCCESS)
+		.mergeMap((action) => getConfig(wsAPI, store.value.admin.sid)
+			.map( payload => ({ type: GET_CONFIG_SUCCESS, payload }))
+			.catch( error => ([{ type: GET_CONFIG_ERROR, payload: error }]) ));
+
 
 const whaitAndReload = (action$, store, { wsAPI }) =>
 	action$.ofType(SET_CONFIG_SUCCESS)
@@ -50,5 +60,6 @@ const whaitAndReload = (action$, store, { wsAPI }) =>
 export default {
 	loginAction,
 	setConfig,
+	loadConfig,
 	whaitAndReload
 };

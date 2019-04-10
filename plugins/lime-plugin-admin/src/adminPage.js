@@ -4,11 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
 import { changeConfig, adminLogin } from './adminActions';
-import { authStatus, loading } from './adminSelectors';
+import { authStatus, wireless, channels, loading } from './adminSelectors';
 import { getSelectedHost } from '../../lime-plugin-core/src/metaSelectors';
 import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
+import countryList from './countryList';
 
 import I18n from 'i18n-js';
 
@@ -37,40 +38,51 @@ const style = {
 	}
 };
 
-const Input = ({ name, label, value, onChange }) =>
-	(<div>
+const Input = ({ name, label, value, onChange }) => (
+	<div>
 		<label>{I18n.t(label)}</label>
 		<input type="text" value={value} onChange={onChange} class="u-full-width" />
 	</div>
-	);
+);
+
+const Select = ({ name, label, value, onChange, children }) => (
+	<div>
+		<label>{I18n.t(label)}</label>
+		<select value={value} onChange={onChange} class="u-full-width">
+			{children}
+		</select>
+	</div>
+);
 
 export class Admin extends Component {
-
-	handleInput(field) {
-		return e => {
-			this.setState({ data: { ...this.state.data, [field]: e.target.value } });
-			return this.state.data[field];
-		};
+	state = {
+		data: {
+			hostname: '',
+			ipv4: '',
+			ipv6: ''
+		},
+		isAdv: false
 	}
 
-	handlePassword(e) {
-		this.setState({ adminPassword: e.target.value });
-		return this.state.adminPassword;
+	handleInput = field => e => {
+		console.log('field', field, e.target.value);
+		this.setState({ [field]: e.target.value });
 	}
 
-	adminLogin(e) {
+	adminLogin = (e) => {
 		e.preventDefault();
-		this.props.adminLogin({ username: 'root', password: this.state.adminPassword });
+		this.props.adminLogin({ username: 'root', password: this.state.password });
 	}
 
-	changeConfig(e) {
+	changeConfig = (e) => {
+		const { hostname, ip } = this.state;
 		e.preventDefault();
-		if (typeof this.state.hostname !== 'undefined') {
-			return this.props.changeConfig({ hostname: this.state.hostname, ip: this.state.ip });
+		if (typeof hostname !== 'undefined') {
+			this.props.changeConfig({ hostname, ip });
 		}
 	}
 
-	showLoading(show) {
+	showLoading = (show) => {
 		if (show) {
 			return (
 				<div style={style.loadingBox}>
@@ -80,53 +92,79 @@ export class Admin extends Component {
 			);
 		}
 	}
-
-	constructor(props) {
-		super(props);
-		this.state = {
-			data: {
-				hostname: this.props.selectedHost,
-				ipv4: this.props.nodeData.ips.filter(ip => ip.version === '4')[0].address,
-				ipv6: this.props.nodeData.ips.filter(ip => ip.version === '6')[0].address
-			},
-			isAdv: false
-		};
-		this.changeConfig = this.changeConfig.bind(this);
-		this.handleInput = this.handleInput.bind(this);
-		this.handlePassword = this.handlePassword.bind(this);
-		this.adminLogin = this.adminLogin.bind(this);
+	componentWillReceiveProps(nextProps) {
+		// console.log('new', nextProps, nextProps === this.props)
+		const { wireless, selectedHost, nodeData } = nextProps;
+		const isEmpty = Object.entries(wireless).length === 0 && wireless.constructor === Object;
+		if (nextProps !== this.props) {
+			if (nodeData.ips) {
+				this.setState({
+					data: {
+						hostname: selectedHost,
+						ipv4: nodeData.ips.filter(ip => ip.version === '4')[0].address,
+						ipv6: nodeData.ips.filter(ip => ip.version === '6')[0].address
+					}
+				});
+			}
+			if (!isEmpty) {
+				const { ap_ssid, channel_2ghz, channel_5ghz, distance_2ghz, distance_5ghz, mesh_id, country } = wireless;
+				this.setState({
+					ap_ssid,
+					channel_2ghz,
+					channel_5ghz,
+					distance_2ghz,
+					distance_5ghz,
+					mesh_id,
+					country
+				});
+			}
+		}
 	}
 
 	render() {
+		console.log(this.props)
+		const { password, ap_ssid, distance_2ghz, distance_5ghz, mesh_id, country } = this.state;
+		const { hostname, ipv4, ipv6 } = this.state.data;
+		const { channels } = this.props;
 		return (
 			<div class="container" style={{ paddingTop: '100px' }}>
 				{this.showLoading(this.props.loading)}
 				<form onSubmit={this.adminLogin} style={{ display: (!this.props.authStatus)? 'block': 'none' }}>
 					<p>
 						<label>{I18n.t('Admin password')}</label>
-						<input type="password" onChange={this.handlePassword} class="u-full-width" />
-
+						<input type="password" onChange={this.handleInput('password')} value={password} class="u-full-width" />
 					</p>
 					<button class="button green block" type="submit">{I18n.t('Login')}</button>
 				</form>
 				<form onSubmit={this.changeConfig} style={{ display: (this.props.authStatus)? 'block': 'none' }}>
 					<div style={style.configBox}>
 						<h4>{I18n.t('System')}</h4>
-						<Input name={'hostname'} label={'Station name'} value={this.state.data.hostname} onChange={this.handleInput('hostname')} />
+						<Input name={'hostname'} label={'Station name'} value={hostname} onChange={this.handleInput('hostname')} />
 					</div>
 					<div style={style.configBox}>
 						<h4>{I18n.t('Network')}</h4>
-						<Input name={'ipv4'} label={'Sation IP v4'} value={this.state.data.ipv4} onChange={this.handleInput('ipv4')} />
-						<Input name={'ipv6'} label={'Sation IP v6'} value={this.state.data.ipv6} onChange={this.handleInput('ipv6')} />
+						<Input name={'ipv4'} label={'Sation IP v4'} value={ipv4} onChange={this.handleInput('ipv4')} />
+						<Input name={'ipv6'} label={'Sation IP v6'} value={ipv6} onChange={this.handleInput('ipv6')} />
 					</div>
 					<div style={style.configBox}>
 						<h4>{I18n.t('Wireless')}</h4>
-						<Input name={'ap_ssid'} label={'Access Point ESSID'} value={this.state.data.ap_ssid} onChange={this.handleInput('ap_ssid')} />
-						<Input name={'channel_2ghz'} label={'Channel used for 2.4 GHz radios'} value={this.state.data.channel_2ghz} onChange={this.handleInput('channel_2ghz')} />
-						<Input name={'channel_5ghz'} label={'Channel used for 5 GHz radios'} value={this.state.data.channel_5ghz} onChange={this.handleInput('channel_5ghz')} />
-						<Input name={'country'} label={'Country code'} value={this.state.data.country} onChange={this.handleInput('country')} />
-						<Input name={'distance'} label={'Max distance for the links in meters'} value={this.state.data.distance} onChange={this.handleInput('distance')} />
-						<Input name={'mesh_bssid'} label={'WiFi mesh 	network identifier'} value={this.state.data.mesh_bssid} onChange={this.handleInput('mesh_bssid')} />
+						<Input name={'ap_ssid'} label={'Access Point ESSID'} value={ap_ssid} onChange={this.handleInput('ap_ssid')} />
+						{channels.map(i => (
+							<Select
+								key={i.type}
+								name={`channel_${i.type}`}
+								label={`Channel used for ${i.type} radios`}
+								value={this.state[`channel_${i.type.indexOf('2') !== -1 ? '2ghz' : i.type}`]}
+								onChange={this.handleInput(`channel_${i.channel}`)}
+							>
+								{i.channel.map(e => <option key={e}>{e}</option>)}
+							</Select>))}
+						<Select name={'country'} onChange={this.handleInput('country')} label={'Country code'} value={country}>
+							{Object.keys(countryList).map(k => <option key={k} value={k}>{countryList[k]} ({k})</option>)}
+						</Select>
+						<Input name={'distance'} label={'Max distance for the links in meters'} value={distance_2ghz} onChange={this.handleInput('distance_2ghz')} />
+						<Input name={'distance'} label={'Max distance for the links in meters'} value={distance_5ghz} onChange={this.handleInput('distance_5ghz')} />
+						<Input name={'mesh_bssid'} label={'WiFi mesh 	network identifier'} value={mesh_id} onChange={this.handleInput('mesh_id')} />
 					</div>
 					<button class="button green block" type="submit">{I18n.t('Change')}</button>
 				</form>
@@ -140,6 +178,8 @@ export const mapStateToProps = (state) => ({
 	selectedHost: getSelectedHost(state),
 	nodeData: getNodeData(state),
 	authStatus: authStatus(state),
+	wireless: wireless(state),
+	channels: channels(state),
 	loading: loading(state)
 });
 

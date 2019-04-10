@@ -32,7 +32,7 @@ Read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentatio
 **Start a live-reload development server:**
 
 ```
-npm run dev
+WEB_PATH=/ npm run dev
 ```
 
 **Generate a production build in `./build`:**

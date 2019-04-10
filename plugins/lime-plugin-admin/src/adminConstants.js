@@ -4,6 +4,10 @@ export const SET_CONFIG = 'admin/SET_CONFIG';
 export const SET_CONFIG_SUCCESS = 'admin/SET_CONFIG_SUCCESS';
 export const SET_CONFIG_ERROR = 'admin/SET_CONFIG_ERROR';
 
+export const GET_CONFIG = 'admin/GET_CONFIG';
+export const GET_CONFIG_SUCCESS = 'admin/GET_CONFIG_SUCCESS';
+export const GET_CONFIG_ERROR = 'admin/GET_CONFIG_ERROR';
+
 export const AUTH_LOGIN = 'admin/AUTH_LOGIN';
 export const AUTH_LOGIN_SUCCESS = 'admin/AUTH_LOGIN_SUCCESS';
 export const AUTH_LOGIN_ERROR = 'admin/AUTH_LOGIN_ERROR';

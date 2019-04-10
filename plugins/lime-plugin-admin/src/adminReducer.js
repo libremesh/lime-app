@@ -2,7 +2,10 @@ import {
 	RELOAD_CONFIG,
 	AUTH_LOGIN_SUCCESS,
 	SET_CONFIG,
-	SET_CONFIG_ERROR
+	SET_CONFIG_ERROR,
+	GET_CONFIG,
+	GET_CONFIG_ERROR,
+	GET_CONFIG_SUCCESS
 } from './adminConstants';
 
 export const initialState = {
@@ -20,6 +23,12 @@ export const reducer = (state = initialState, { type, payload }) => {
 			return Object.assign({}, state, { sid: payload, auth: true });
 		case SET_CONFIG:
 			return Object.assign({}, state, { hostname: payload.hostname, loading: true });
+		case GET_CONFIG:
+			return Object.assign({}, state, { loading: true });
+		case GET_CONFIG_SUCCESS:
+			return Object.assign({}, state, { configs: payload, loading: false });
+		case GET_CONFIG_ERROR:
+			return Object.assign({}, state, { loading: false });
 		case SET_CONFIG_ERROR:
 			return Object.assign({}, state, { loading: false });
 		default:
