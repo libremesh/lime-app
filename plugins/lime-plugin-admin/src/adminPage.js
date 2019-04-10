@@ -65,7 +65,6 @@ export class Admin extends Component {
 	}
 
 	handleInput = field => e => {
-		console.log('field', field, e.target.value);
 		this.setState({ [field]: e.target.value });
 	}
 
@@ -93,7 +92,6 @@ export class Admin extends Component {
 		}
 	}
 	componentWillReceiveProps(nextProps) {
-		// console.log('new', nextProps, nextProps === this.props)
 		const { wireless, selectedHost, nodeData } = nextProps;
 		const isEmpty = Object.entries(wireless).length === 0 && wireless.constructor === Object;
 		if (nextProps !== this.props) {
@@ -122,7 +120,6 @@ export class Admin extends Component {
 	}
 
 	render() {
-		console.log(this.props)
 		const { password, ap_ssid, distance_2ghz, distance_5ghz, mesh_id, country } = this.state;
 		const { hostname, ipv4, ipv6 } = this.state.data;
 		const { channels } = this.props;
