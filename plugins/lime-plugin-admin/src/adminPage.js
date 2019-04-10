@@ -56,16 +56,16 @@ const Select = ({ name, label, value, onChange, children }) => (
 
 export class Admin extends Component {
 	state = {
-		data: {
-			hostname: '',
-			ipv4: '',
-			ipv6: ''
-		},
+		data: {},
+		wireless: {},
 		isAdv: false
 	}
 
-	handleInput = field => e => {
-		this.setState({ [field]: e.target.value });
+	handleInput = (field, subPath ) => e => {
+		!subPath
+			? this.setState({ [field]: e.target.value })
+			: this.setState({ [subPath]: { [field]: e.target.value } });
+
 	}
 
 	adminLogin = (e) => {
@@ -74,11 +74,12 @@ export class Admin extends Component {
 	}
 
 	changeConfig = (e) => {
-		const { hostname, ip } = this.state;
 		e.preventDefault();
-		if (typeof hostname !== 'undefined') {
-			this.props.changeConfig({ hostname, ip });
-		}
+		const { hostname } = this.state.data;
+		const { ipv4, ipv6 } = this.state.data;
+		const wireless = this.state.wireless;
+		const ip = { ipv4, ipv6 };
+		this.props.changeConfig({ hostname,  ip, wireless });
 	}
 
 	showLoading = (show) => {
@@ -107,20 +108,23 @@ export class Admin extends Component {
 			if (!isEmpty) {
 				const { ap_ssid, channel_2ghz, channel_5ghz, distance_2ghz, distance_5ghz, mesh_id, country } = wireless;
 				this.setState({
-					ap_ssid,
-					channel_2ghz,
-					channel_5ghz,
-					distance_2ghz,
-					distance_5ghz,
-					mesh_id,
-					country
+					wireless: {
+						ap_ssid,
+						channel_2ghz,
+						channel_5ghz,
+						distance_2ghz,
+						distance_5ghz,
+						mesh_id,
+						country
+					}
 				});
 			}
 		}
 	}
 
 	render() {
-		const { password, ap_ssid, distance_2ghz, distance_5ghz, mesh_id, country } = this.state;
+		const { password } = this.state;
+		const { ap_ssid, distance_2ghz, distance_5ghz, mesh_id, country } = this.state.wireless;
 		const { hostname, ipv4, ipv6 } = this.state.data;
 		const { channels } = this.props;
 		return (
@@ -136,32 +140,32 @@ export class Admin extends Component {
 				<form onSubmit={this.changeConfig} style={{ display: (this.props.authStatus)? 'block': 'none' }}>
 					<div style={style.configBox}>
 						<h4>{I18n.t('System')}</h4>
-						<Input name={'hostname'} label={'Station name'} value={hostname} onChange={this.handleInput('hostname')} />
+						<Input name={'hostname'} label={'Station name'} value={hostname} onChange={this.handleInput('hostname','data')} />
 					</div>
 					<div style={style.configBox}>
 						<h4>{I18n.t('Network')}</h4>
-						<Input name={'ipv4'} label={'Sation IP v4'} value={ipv4} onChange={this.handleInput('ipv4')} />
-						<Input name={'ipv6'} label={'Sation IP v6'} value={ipv6} onChange={this.handleInput('ipv6')} />
+						<Input name={'ipv4'} label={'Sation IP v4'} value={ipv4} onChange={this.handleInput('ipv4','data')} />
+						<Input name={'ipv6'} label={'Sation IP v6'} value={ipv6} onChange={this.handleInput('ipv6','data')} />
 					</div>
 					<div style={style.configBox}>
 						<h4>{I18n.t('Wireless')}</h4>
-						<Input name={'ap_ssid'} label={'Access Point ESSID'} value={ap_ssid} onChange={this.handleInput('ap_ssid')} />
+						<Input name={'ap_ssid'} label={'Access Point ESSID'} value={ap_ssid} onChange={this.handleInput('ap_ssid', 'wireless')} />
 						{channels.map(i => (
 							<Select
 								key={i.type}
 								name={`channel_${i.type}`}
 								label={`Channel used for ${i.type} radios`}
-								value={this.state[`channel_${i.type.indexOf('2') !== -1 ? '2ghz' : i.type}`]}
-								onChange={this.handleInput(`channel_${i.channel}`)}
+								value={this.state.wireless[`channel_${i.type.indexOf('2') !== -1 ? '2ghz' : i.type}`]}
+								onChange={this.handleInput(`channel_${i.channel}`, 'wireless')}
 							>
 								{i.channel.map(e => <option key={e}>{e}</option>)}
 							</Select>))}
-						<Select name={'country'} onChange={this.handleInput('country')} label={'Country code'} value={country}>
+						<Select name={'country'} onChange={this.handleInput('country', 'wireless')} label={'Country code'} value={country}>
 							{Object.keys(countryList).map(k => <option key={k} value={k}>{countryList[k]} ({k})</option>)}
 						</Select>
-						<Input name={'distance'} label={'Max distance for the links in meters'} value={distance_2ghz} onChange={this.handleInput('distance_2ghz')} />
-						<Input name={'distance'} label={'Max distance for the links in meters'} value={distance_5ghz} onChange={this.handleInput('distance_5ghz')} />
-						<Input name={'mesh_bssid'} label={'WiFi mesh 	network identifier'} value={mesh_id} onChange={this.handleInput('mesh_id')} />
+						<Input name={'distance'} label={'Max distance for the links in meters'} value={distance_2ghz} onChange={this.handleInput('distance_2ghz', 'wireless')} />
+						<Input name={'distance'} label={'Max distance for the links in meters'} value={distance_5ghz} onChange={this.handleInput('distance_5ghz',  'wireless')} />
+						<Input name={'mesh_bssid'} label={'WiFi mesh 	network identifier'} value={mesh_id} onChange={this.handleInput('mesh_id', 'wireless')} />
 					</div>
 					<button class="button green block" type="submit">{I18n.t('Change')}</button>
 				</form>
