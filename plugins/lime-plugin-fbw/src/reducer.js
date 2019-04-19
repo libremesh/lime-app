@@ -9,9 +9,15 @@ export const initialState = {
 };
 
 const getApName = ({ ap = '', file = '' }) => {
-	let getHostname = /(?:__ssid__)(.+)(?:__host)/;
-	return '' + (ap && ap !== '')? '('+ap+') ': '' + getHostname.exec(file)[1];
+	let getHostname = /(?:host__)(.+)/;
+	let hostname = getHostname.exec(file)[1];
+	return '' + (ap && ap !== '')? '('+ap+') '+ hostname : hostname;
 };
+
+// const getApName = ({ ap = '', file = '' }) => {
+// 	let getHostname = /(?:__ssid__)(.+)(?:__host__)/;
+// 	return '' + (ap && ap !== '')? '('+ap+') ': '' + getHostname.exec(file)[1];
+// };
 
 export const reducer = (state = initialState, { type, payload, meta }) => {
 	switch (type) {
