@@ -1,11 +1,13 @@
 import {
-	FBW_SEARCH_NETWORKS, FBW_SEARCH_NETWORKS_SUCCESS, FBW_SEARCH_NETWORKS_ERROR, FBW_CREATE_NETWORK_SUCCESS, FBW_CREATE_NETWORK_ERROR, FBW_SET_NETWORK_SUCCESS, FBW_SET_NETWORK_ERROR, FBW_STATUS_SUCCESS
+	FBW_SEARCH_NETWORKS, FBW_SEARCH_NETWORKS_SUCCESS, FBW_SEARCH_NETWORKS_ERROR, FBW_CREATE_NETWORK, FBW_CREATE_NETWORK_ERROR, FBW_SET_NETWORK, FBW_SET_NETWORK_ERROR, FBW_STATUS_SUCCESS
 } from './constants';
 
 export const initialState = {
 	first_boot: false,
 	networks: [],
-	status: null
+	status: null,
+	expectedHost: null,
+	expectedNetwork: null
 };
 
 const getApName = ({ ap = '', file = '' }) => {
@@ -46,25 +48,23 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 				...state,
 				status: 'error'
 			};
-		case FBW_CREATE_NETWORK_SUCCESS:
-			return {
-				...initialState
-			};
 		case FBW_CREATE_NETWORK_ERROR:
 			return {
 				...state,
 				status: 'error'
-			};
-		case FBW_SET_NETWORK_SUCCESS:
-			return {
-				...initialState
 			};
 		case FBW_SET_NETWORK_ERROR:
 			return {
 				...state,
 				status: 'error'
 			};
-
+		case FBW_CREATE_NETWORK:
+		case FBW_SET_NETWORK:
+			return {
+				...state,
+				expectedHost: payload.hostname,
+				expectedNetwork: payload.network
+			};
 		default:
 			return state;
 	}

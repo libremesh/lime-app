@@ -26,14 +26,21 @@ class Scan extends Component {
 	}
 
 	selectNetwork(e) {
-		this.setState({ selectedNetwork: e.target.value });
+		const selectedNetwork = e.target.value.split(':::')[0];
+		const reg = /\(([^()]+)\)/g;
+		const network = reg.exec(e.target.value.split(':::')[1])[1];
+		this.setState({
+			selectedNetwork,
+			network
+		});
 	}
 
 	setNetwork() {
 		if (this.state.selectedNetwork && this.state.hostName && this.state.hostName !== '') {
 			this.props.setNetwork({
 				file: this.state.selectedNetwork,
-				hostname: this.state.hostName
+				hostname: this.state.hostName,
+				network: this.state.network
 			});
 			this.props.toggleForm('setting')();
 		}
@@ -93,8 +100,8 @@ class Scan extends Component {
 										<h4>{I18n.t('Join the mesh')}</h4>
 										<label>{I18n.t('Select a network to join')}</label>
 										<select onChange={this.selectNetwork}  class="u-full-width">
-											<option disabled selected >{I18n.t('Select one')}</option>
-											{this.props.networks.map(network => (<option value={network.file}>{network.ap}</option>))}
+											<option disabled selected>{I18n.t('Select one')}</option>
+											{this.props.networks.map(network => (<option value={network.file+':::'+network.ap}>{network.ap}</option>))}
 										</select>
 										<label>{I18n.t('Choose a name for this node')}</label>
 										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostName} onChange={this._changeName} />
