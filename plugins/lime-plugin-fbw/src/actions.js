@@ -14,10 +14,13 @@ export const searchNetworks = ( rescan ) => ( dispatch ) => {
 	});
 };
 
-export const setNetwork = ( file ) => ( dispatch ) => {
+export const setNetwork = ({ file, hostname }) => ( dispatch ) => {
 	dispatch({
 		type: FBW_SET_NETWORK,
-		payload: file
+		payload: {
+			file,
+			hostname
+		}
 	});
 };
 

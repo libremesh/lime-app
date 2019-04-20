@@ -1,5 +1,5 @@
 import {
-	FBW_SEARCH_NETWORKS_SUCCESS, FBW_SEARCH_NETWORKS_ERROR, FBW_CREATE_NETWORK_SUCCESS, FBW_CREATE_NETWORK_ERROR, FBW_SET_NETWORK_SUCCESS, FBW_SET_NETWORK_ERROR, FBW_STATUS_SUCCESS
+	FBW_SEARCH_NETWORKS, FBW_SEARCH_NETWORKS_SUCCESS, FBW_SEARCH_NETWORKS_ERROR, FBW_CREATE_NETWORK_SUCCESS, FBW_CREATE_NETWORK_ERROR, FBW_SET_NETWORK_SUCCESS, FBW_SET_NETWORK_ERROR, FBW_STATUS_SUCCESS
 } from './constants';
 
 export const initialState = {
@@ -9,9 +9,15 @@ export const initialState = {
 };
 
 const getApName = ({ ap = '', file = '' }) => {
-	let getHostname = /(?:__ssid__)(.+)(?:__host)/;
-	return '' + (ap && ap !== '')? '('+ap+') ': '' + getHostname.exec(file)[1];
+	let getHostname = /(?:host__)(.+)/;
+	let hostname = getHostname.exec(file)[1];
+	return '' + (ap && ap !== '')? '('+ap+') '+ hostname : hostname;
 };
+
+// const getApName = ({ ap = '', file = '' }) => {
+// 	let getHostname = /(?:__ssid__)(.+)(?:__host__)/;
+// 	return '' + (ap && ap !== '')? '('+ap+') ': '' + getHostname.exec(file)[1];
+// };
 
 export const reducer = (state = initialState, { type, payload, meta }) => {
 	switch (type) {
@@ -19,6 +25,11 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 			return {
 				...state,
 				first_boot: payload.lock
+			};
+		case FBW_SEARCH_NETWORKS:
+			return {
+				...state,
+				status: 'scanning'
 			};
 		case FBW_SEARCH_NETWORKS_SUCCESS:
 			return {
