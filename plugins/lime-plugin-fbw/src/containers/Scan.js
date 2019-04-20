@@ -55,12 +55,17 @@ class Scan extends Component {
 		this.setState({ hostName: e.target.value || '' });
 	}
 
+	_changePassword (e){
+		this.setState({ password: e.target.value || '' });
+	}
+
 	constructor(props){
 		super(props);
 		this.searchNetworks = this.searchNetworks.bind(this);
 		this.selectNetwork = this.selectNetwork.bind(this);
 		this.setNetwork = this.setNetwork.bind(this);
 		this._changeName = this._changeName.bind(this);
+		this._changePassword = this._changePassword.bind(this);
 
 		this.state = {
 			createForm: false,
@@ -105,6 +110,8 @@ class Scan extends Component {
 										</select>
 										<label>{I18n.t('Choose a name for this node')}</label>
 										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostName} onChange={this._changeName} />
+										<label>{I18n.t('Choose a password for this node')}</label>
+										<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={this.state.password} onChange={this._changePassword} />
 									</div>}
 									<div class="row">
 										{this.props.networks.length > 0 && <div class="six columns">
