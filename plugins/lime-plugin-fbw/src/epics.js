@@ -2,6 +2,8 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+import I18n from 'i18n-js';
+
 import {
 	searchNetworks,
 	getStatus,
@@ -50,10 +52,10 @@ const _showBanner = ( action$, state$, { wsAPI } ) =>
 	action$.ofType(...[FBW_STATUS_SUCCESS])
 		.map(action => (action.payload.lock && state$.value.firstbootwizard.status === null)?
 			{ type: BANNER_SET, payload: {
-				title: 'Please configure your network',
-				description: `Your router has not yet been configured, 
+				title: I18n.t('Please configure your network'),
+				description: I18n.t(`Your router has not yet been configured, 
 					you can use our wizard to incorporate it into an existing network or create a new one.
-					If you ignore this message it will continue to work with the default configuration.`,
+					If you ignore this message it will continue to work with the default configuration.`),
 				onOk: { type: 'GO_FBW' },
 				onCancel: { type: BANNER_HIDE }
 			} }: { type: '_' }
