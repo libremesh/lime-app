@@ -110,8 +110,8 @@ class Scan extends Component {
 										</select>
 										<label>{I18n.t('Choose a name for this node')}</label>
 										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostName} onChange={this._changeName} />
-										<label>{I18n.t('Choose a password for this node')}</label>
-										<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={this.state.password} onChange={this._changePassword} />
+										{/* <label>{I18n.t('Choose a password for this node')}</label>
+										<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={this.state.password} onChange={this._changePassword} /> */}
 									</div>}
 									<div class="row">
 										{this.props.networks.length > 0 && <div class="six columns">
