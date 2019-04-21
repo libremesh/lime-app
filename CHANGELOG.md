@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.2.0-alpha.10](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.9...v0.2.0-alpha.10) (2019-04-21)
+
+
+### Bug Fixes
+
+* **firstbootwizard:** removed password box ([5232241](https://github.com/libremesh/lime-app/commit/5232241))
+
+
+### Features
+
+* **fbw:** add new options and alert messages ([766ba76](https://github.com/libremesh/lime-app/commit/766ba76))
+* **fbw:** add new options and alert messages ([818b2a6](https://github.com/libremesh/lime-app/commit/818b2a6))
+* **fbw:** add new options and alert messages ([6d030de](https://github.com/libremesh/lime-app/commit/6d030de))
+* **firstbootwizard:** full create network flow ([d966150](https://github.com/libremesh/lime-app/commit/d966150))
+* **firstbootwizard:** full user flow ([c7806cd](https://github.com/libremesh/lime-app/commit/c7806cd))
+* **intrl:** add new spanish translations ([95d1da1](https://github.com/libremesh/lime-app/commit/95d1da1))
+
+
+
 # [0.2.0-alpha.9](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.8...v0.2.0-alpha.9) (2019-03-21)
 
 
