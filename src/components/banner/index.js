@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import style from './style';
-
+import I18n from 'i18n-js';
 class Banner extends Component {
 
 	onOk(){
@@ -35,8 +35,8 @@ class Banner extends Component {
 			>
 				<h3>{this.props.banner.title}</h3>
 				{this.props.banner.description? <p style={{ maxWidth: '400px', margin: '20px auto' }}>{this.props.banner.description}</p>: false}
-				<button onClick={this.onOk}>Ok</button>
-				<button onClick={this.onCancel}>Cancel</button>
+				<button onClick={this.onOk}>{I18n.t('Ok')}</button>
+				<button onClick={this.onCancel}>{I18n.t('Cancel')}</button>
 			</div>
 		): false;
 	}
