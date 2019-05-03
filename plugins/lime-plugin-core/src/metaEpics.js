@@ -87,7 +87,11 @@ const loginAction = ( action$, store, { wsAPI } ) =>
 
 const redirectOnConnection = ( action$, store ) =>
 	action$.ofType(AUTH_LOGIN_SUCCESS)
-		.mapTo(push(store.value.meta.home));
+		.mergeMap(() =>
+			window.location.href.split('#')[1] === '/'
+				? [push(store.value.meta.home)]
+				: []
+		);
 
 const communitySettings = (action$, store, { wsAPI } ) =>
 	action$.ofType(AUTH_LOGIN_SUCCESS)
