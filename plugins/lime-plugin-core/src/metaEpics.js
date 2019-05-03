@@ -106,7 +106,7 @@ export default {
 	loadHostname,
 	defaultLoginAction,
 	loginAction,
-	redirectOnConnection,
+	//redirectOnConnection,
 	communitySettings,
 	closeNotificatins
 };
