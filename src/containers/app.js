@@ -58,7 +58,7 @@ class App extends Component {
 		return (
 			<div style={isBase(this.props.meta)}>
 				<Banner />
-				<Header hostname={this.props.meta.selectedHost} goHome={this.props.goBase} />
+				<Header hostname={this.props.meta.selectedHost} goHome={this.props.goBase} menuHidden={this.props.meta.menuHidden} />
 				{ /*<Navigator hostname={this.props.meta} goHome={this.props.goBase} /> */ }
 				{!this.props.isBanner && isConnected(this.props.meta)}
 				<Alert text={this.props.meta.alert} hide={this.props.hideAlert} />
