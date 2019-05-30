@@ -8,8 +8,9 @@ export const changeBase = ( hostname ) => (dispatch, getState) => {
 	}
 };
 
-export const toggleMenuButton = () => (dispatch) => {
+export const toggleMenuButton = (option) => (dispatch) => {
 	dispatch({
-		type: TOGGLE_MENU_BUTTON
+		type: TOGGLE_MENU_BUTTON,
+		payload: option
 	});
 };

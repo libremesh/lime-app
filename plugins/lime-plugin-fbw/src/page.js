@@ -26,11 +26,11 @@ class Page extends Component {
 	}
 
 	componentWillMount() {
-		this.props.toggleMenuButton();
+		this.props.toggleMenuButton(true);
 	}
 
 	componentWillUnmount() {
-		this.props.toggleMenuButton();
+		this.props.toggleMenuButton(false);
 	}
 
 	render (){

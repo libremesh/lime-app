@@ -71,7 +71,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case BANNER_HIDE:
 			return { ...state, banner: false };
 		case TOGGLE_MENU_BUTTON:
-			return { ...state, menuHidden: !state.menuHidden };
+			return { ...state, menuHidden: (typeof payload !== 'undefined')? payload: !state.menuHidden };
 		default:
 			return state;
 	}
