@@ -18,3 +18,5 @@ export const AUTH_LOGIN_SUCCESS = 'meta/AUTH_LOGIN_SUCCESS';
 
 export const BANNER_SET = 'meta/BANNER_SET';
 export const BANNER_HIDE = 'meta/BANNER_HIDE';
+
+export const TOGGLE_MENU_BUTTON = 'meta/TOGGLE_MENU_BUTTON';
