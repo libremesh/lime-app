@@ -18,7 +18,6 @@ class Scan extends Component {
 		this.props.searchNetworks(true);
 		this.loop = setInterval(() => {
 			if (this.props.status === 'scanned'){
-				console.log('scanned!!!');
 				clearInterval(this.loop);
 			}
 			else {
@@ -93,7 +92,6 @@ class Scan extends Component {
 
 	componentWillUnmount(){
 		if (this.loop) {
-			console.log('clena loop');
 			clearInterval(this.loop);
 		}
 	}
