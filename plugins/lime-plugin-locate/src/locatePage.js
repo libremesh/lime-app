@@ -6,7 +6,7 @@ import Script from 'react-load-script';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
-import { loadLocation, changeLocation, setUserLocation } from './locateActions';
+import { loadLocation, loadLocationLinks, changeLocation, setUserLocation } from './locateActions';
 import { getLocation, getUserLocation, getSelectedHost, isCommunityLocation } from './locateSelectors';
 
 import I18n from 'i18n-js';
@@ -51,20 +51,20 @@ class Locate extends Component {
 	handleScriptCreate() {
 		this.setState({ scriptLoaded: false });
 	}
-  
+
 	handleScriptError() {
 		this.setState({ scriptError: true });
 	}
-  
+
 	handleScriptLoad() {
 		L = window.L;
 		this.setState({ scriptLoaded: true });
-		
+
 		if (typeof this.state.map === 'undefined') {
 			const initMap = L.map('map').setView([this.props.stationLocation.lat, this.props.stationLocation.lon], 13);
 			this.setState({ map: initMap });
 		}
-		
+
 		const map = this.state.map;
 
 
@@ -91,7 +91,7 @@ class Locate extends Component {
 			iconUrl: require('leaflet/dist/images/marker-icon.png'),
 			shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 		});
-    
+
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		}).addTo(map);
@@ -110,6 +110,45 @@ class Locate extends Component {
 			.on('click', (x) => map.setView(x.target._latlng))
 			.bindPopup(popup);
 		this.setState({ marker });
+
+
+function appendAll (a, b) {
+  Array.prototype.push.apply(a, b);
+  return a
+}
+
+function render(map, nodeshash) {
+  var nodes = [];
+  for (var key in nodeshash) {
+    nodes.push(nodeshash[key]);
+  }
+
+  debugger;
+
+  var geomac = nodes.map(
+    node => node.macs
+    .map(function (mac) { return [mac, [node.coordinates.lat + 1, node.coordinates.lon]];})
+  )
+    .reduce((all, macs) => appendAll(all, macs), [])
+    .reduce(function(hash, mac) { hash[mac[0]] = mac[1]; return hash;}, {});
+
+  // TODO remove redundant links
+  var links = nodes.reduce((links, node) => appendAll(links, node.links.map(mac => [node.macs[0], mac])), []).map(macpair => [geomac[macpair[0]], geomac[macpair[1]]]);
+
+  var nodefeatures = nodes.map(node => { return {type: "Point", coordinates: node.coordinates}});
+  var linksfeatures = links.map(link => { return {type: "LineString", coordinates: link}});
+
+  var features = appendAll(appendAll([], nodefeatures), linksfeatures);
+
+  var geojsonFeature = {
+    "type": "FeatureCollection",
+    "features": features
+  };
+
+  L.geoJSON(geojsonFeature).addTo(map);
+}
+
+render(map, this.props.nodeshash);
 	}
 
 	isLoaded(exist) {
@@ -191,6 +230,7 @@ class Locate extends Component {
 
 	componentWillMount() {
 		this.props.loadLocation();
+		this.props.loadLocationLinks();
 		this.requestCurrentPosition();
 	}
 
@@ -204,7 +244,7 @@ class Locate extends Component {
 					onLoad={this.handleScriptLoad}
 				/>
 				<Script url={'https://maps.googleapis.com/maps/api/js?key='+key} />
-          
+
 				<div id="map" />
 				{this.isLoaded(this.state.scriptLoaded)}
 				{this.rerenderMap(this.props.stationLocation)}
@@ -218,11 +258,13 @@ const mapStateToProps = (state) => ({
 	stationLocation: getLocation(state),
 	userLocation: getUserLocation(state),
 	stationHostname: getSelectedHost(state),
-	isCommunityLocation: isCommunityLocation(state)
+	isCommunityLocation: isCommunityLocation(state),
+  nodeshash: state.locate.nodeshash
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	loadLocation: bindActionCreators(loadLocation, dispatch),
+	loadLocationLinks: bindActionCreators(loadLocationLinks, dispatch),
 	changeLocation: bindActionCreators(changeLocation, dispatch),
 	setUserLocation: bindActionCreators(setUserLocation, dispatch)
 });
