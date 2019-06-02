@@ -27,6 +27,10 @@ const key = 'AIzaSyBS0M7H7Ltk1ipjwqi8r9_WQJOzWfav4Ok';
 
 let L;
 
+const appendAll = (a, b) => {
+	Array.prototype.push.apply(a, b);
+	return a;
+};
 class Locate extends Component {
 
 	updatePosition() {
@@ -110,45 +114,47 @@ class Locate extends Component {
 			.on('click', (x) => map.setView(x.target._latlng))
 			.bindPopup(popup);
 		this.setState({ marker });
+	}
 
+	showLinks(nodeshash) {
+		//Run only if leaflet is loaded
+		if (L){
+			let nodes = [];
+			for (let key in nodeshash) {
+				if (nodeshash[key]) {
+					nodes.push(nodeshash[key]);
+				}
+			}
+			let geomac = nodes
+				.map(
+					node => node.macs
+						.filter(mac => mac !== '')
+						.map((mac) => [mac, [Number(node.coordinates.lat + 1), Number(node.coordinates.lon)]])
+				)
+				.reduce((all, macs) => appendAll(all, macs), [])
+				.reduce((hash, mac) => { hash[mac[0]] = mac[1]; return hash;}, {});
 
-function appendAll (a, b) {
-  Array.prototype.push.apply(a, b);
-  return a
-}
+			let links = nodes
+				.reduce((links, node) =>
+					appendAll(links, node.links
+						.map(mac => [node.macs[0], mac])), [])
+				.map(macpair => [geomac[macpair[0]], geomac[macpair[1]]]
+				)
+				//.filter(link => link[1] !== undefined) // enable to production -> hide locations not founds
+				.map(link => [link[0], [0,0]]); // hide in production -> set custom cordiantes if link location not found
 
-function render(map, nodeshash) {
-  var nodes = [];
-  for (var key in nodeshash) {
-    nodes.push(nodeshash[key]);
-  }
+			let nodefeatures = nodes.map(node => ({ type: 'Feature', geometry: { type: 'Point', coordinates: [Number(node.coordinates.lat), Number(node.coordinates.lon)] } }));
+			let linksfeatures = links.map(link => ({ type: 'Feature', geometry: { type: 'LineString', coordinates: link } }));
 
-  debugger;
+			let features = appendAll(appendAll([], nodefeatures), linksfeatures);
 
-  var geomac = nodes.map(
-    node => node.macs
-    .map(function (mac) { return [mac, [node.coordinates.lat + 1, node.coordinates.lon]];})
-  )
-    .reduce((all, macs) => appendAll(all, macs), [])
-    .reduce(function(hash, mac) { hash[mac[0]] = mac[1]; return hash;}, {});
-
-  // TODO remove redundant links
-  var links = nodes.reduce((links, node) => appendAll(links, node.links.map(mac => [node.macs[0], mac])), []).map(macpair => [geomac[macpair[0]], geomac[macpair[1]]]);
-
-  var nodefeatures = nodes.map(node => { return {type: "Point", coordinates: node.coordinates}});
-  var linksfeatures = links.map(link => { return {type: "LineString", coordinates: link}});
-
-  var features = appendAll(appendAll([], nodefeatures), linksfeatures);
-
-  var geojsonFeature = {
-    "type": "FeatureCollection",
-    "features": features
-  };
-
-  L.geoJSON(geojsonFeature).addTo(map);
-}
-
-render(map, this.props.nodeshash);
+			let geojsonFeature = {
+				type: 'FeatureCollection',
+				features
+			};
+			L.geoJSON(geojsonFeature).addTo(this.state.map);
+			console.log('geojsonFeature', geojsonFeature); // remove console.log in production
+		}
 	}
 
 	isLoaded(exist) {
@@ -224,6 +230,7 @@ render(map, this.props.nodeshash);
 		this.toogleEdit = this.toogleEdit.bind(this);
 		this.addCoord = this.addCoord.bind(this);
 		this.showMsg = this.showMsg.bind(this);
+		this.showLinks = this.showLinks.bind(this);
 
 		window.toggleEdit = this.toogleEdit;
 	}
@@ -248,6 +255,7 @@ render(map, this.props.nodeshash);
 				<div id="map" />
 				{this.isLoaded(this.state.scriptLoaded)}
 				{this.rerenderMap(this.props.stationLocation)}
+				{this.showLinks(this.props.nodeshash)}
 				{this.showButton(this.state.change)}
 			</div>
 		);
@@ -259,7 +267,7 @@ const mapStateToProps = (state) => ({
 	userLocation: getUserLocation(state),
 	stationHostname: getSelectedHost(state),
 	isCommunityLocation: isCommunityLocation(state),
-  nodeshash: state.locate.nodeshash
+	nodeshash: state.locate.nodeshash
 });
 
 const mapDispatchToProps = (dispatch) => ({
