@@ -163,7 +163,7 @@ top: -6px;
 left: 1px;
 content: "";
 }</style>`;
-    let homeIcon = L.divIcon({html: homeCss + `<div class="icon icon-home"><span class="name">Nodename</span></div>`});
+    let homeIcon = L.divIcon({html: homeCss + `<div class="icon icon-home"><span class="name">${this.props.stationHostname}</span></div>`});
 
 		const marker = L.marker([this.props.stationLocation.lat, this.props.stationLocation.lon],{ draggable: false, icon: homeIcon })
 			.addTo(map)
