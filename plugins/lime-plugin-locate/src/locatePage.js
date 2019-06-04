@@ -109,7 +109,63 @@ class Locate extends Component {
 			.openOn(map);
 		this.setState({ popup });
 
-		const marker = L.marker([this.props.stationLocation.lat, this.props.stationLocation.lon],{ draggable: false })
+    let homeCss = `<style>
+.icon {
+position: relative;
+width:16px;
+height:16px;
+margin: 16px;
+}
+
+.icon .name {
+width: 32px;
+position: absolute;
+text-align: center;
+top: 18px;
+left: -8px;
+}
+
+.icon-home:after{
+border: 8px solid #000;
+border-left-color: transparent;
+border-right-color: transparent;
+border-top-color: transparent;
+height: 16px;
+width: 0;
+position: absolute;
+top: -31px;
+left: 0;
+ content: "";
+}
+.icon-home {
+background-color: #000;
+width: 15px;
+height: 10px;
+border-bottom-left-radius: 1px;
+border-bottom-right-radius: 1px;
+-webkit-border-bottom-left-radius: 1px;
+-webkit-border-bottom-right-radius: 1px;
+-moz-border-radius-bottomleft: 1px;
+-moz-border-radius-bottomright: 1px;
+position: relative;
+bottom: 15px;
+left: -18px;
+}
+.icon-home:before {
+background-color: #000;
+width: 2px;
+height: 5px;
+border-radius: 1px;
+-webkit-border-radius: 1px;
+-moz-border-radius: 1px;
+position: absolute;
+top: -6px;
+left: 1px;
+content: "";
+}</style>`;
+    let homeIcon = L.divIcon({html: homeCss + `<div class="icon icon-home"><span class="name">Nodename</span></div>`});
+
+		const marker = L.marker([this.props.stationLocation.lat, this.props.stationLocation.lon],{ draggable: false, icon: homeIcon })
 			.addTo(map)
 			.on('click', (x) => map.setView(x.target._latlng))
 			.bindPopup(popup);
