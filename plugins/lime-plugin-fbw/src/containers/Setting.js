@@ -26,7 +26,8 @@ class Setting extends Component {
 						this.setState({
 							hostname: res,
 							time: 0,
-							action: 'finish'
+							action: 'finish',
+							notOnNetwork: false
 						});
 					}
 					else {

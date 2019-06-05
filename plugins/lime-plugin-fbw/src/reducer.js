@@ -38,7 +38,7 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 				...state,
 				networks: payload.networks.map(net => ({
 					...net,
-					...{ ap: getApName(net) }
+					ap: getApName(net)
 				})) || [],
 				status: payload.status || null
 			};

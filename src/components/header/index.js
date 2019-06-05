@@ -10,7 +10,8 @@ class Header extends Component {
 		this.setState({ open: !this.state.open });
 	}
 
-	menuStatus(open){
+	menuStatus(open, hide){
+		if (hide) return [style.hamburger, style.isHidden].join(' ');
 		return (open)? [style.hamburger, style.isActive].join(' ') : style.hamburger;
 	}
 
@@ -24,7 +25,7 @@ class Header extends Component {
 		return (
 			<header class={style.header}>
 				<h1>{(this.props.hostname !== '')?this.props.hostname:'LiMe'}</h1>
-				<div class={this.menuStatus(this.state.open)} onClick={this.toggle}>
+				<div class={this.menuStatus(this.state.open, this.props.menuHidden)} onClick={this.toggle} >
 					<span>toggle menu</span>
 				</div>
 				<Drawer status={this.state.open} toggle={this.toggle}>
