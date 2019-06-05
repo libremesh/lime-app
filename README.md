@@ -32,13 +32,13 @@ Read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentatio
 **Start a live-reload development server:**
 
 ```
-npm run dev
+WEB_PATH="/" npm run dev
 ```
 
 **Generate a production build in `./build`:**
 
 ```
-npm run build
+WEB_PATH="/" npm run build --production
 ```
 
 > You can now deploy the contents of the `build` directory to production on github pages!
@@ -46,19 +46,8 @@ npm run build
 > Fork and `npm run deploy`
 
 
-**Start local production server:**
-
-```
-npm start
-```
-
 ## Router Installation
 
-In order to install the softwarae in the node, the node must have the lime-webui-ng-luci package installed (can be found in the flavor lime_newui_test available through https://github.com/libremesh/lime-sdk).
+In order to install the software in the node, the node must have several ubus packages installed ( see https://github.com/libremesh/lime-packages).
 
-To generate the image for a wdr-4310 for example, you do this:
-```
-./cooker -c ar71xx/generic --flavor=lime_newui_test --profile=tl-wdr4310-v1
-```
-
-For develop you can run npm run build and then copy the build folder to the /www directory of the node and go.
+For develop you can run `WEB_PATH='/app' npm run build --production` and then copy the build folder to the /www/app directory of the node and go.
