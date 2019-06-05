@@ -13,6 +13,7 @@ import Alert from '../../../../src/components/alert';
 
 class Scan extends Component {
 
+	/* Load scan results */
 	searchNetworks() {
 		this.props.searchNetworks(true);
 		this.loop = setInterval(() => {
@@ -25,22 +26,23 @@ class Scan extends Component {
 		}, 5000);
 	}
 
-	selectNetwork(e) {
-		const selectedNetwork = e.target.value.split(':::')[0];
-		const reg = /\(([^()]+)\)/g;
-		const network = reg.exec(e.target.value.split(':::')[1])[1];
+	/* Change state after selectbox change event */
+	selectNetwork(event) {
+		const { config, file } = this.props.networks[event.target.value];
 		this.setState({
-			selectedNetwork,
-			network
+			file,
+			apname: config.wifi.apname_ssid.split('/%H')[0],
+			community: config.wifi.ap_ssid
 		});
 	}
 
+	/* Validate state and set network in the router */
 	setNetwork() {
-		if (this.state.selectedNetwork && this.state.hostName && this.state.hostName !== '') {
+		if (this.state.apname && this.state.hostname && this.state.hostname !== '') {
 			this.props.setNetwork({
-				file: this.state.selectedNetwork,
-				hostname: this.state.hostName,
-				network: this.state.network
+				file: this.state.file,
+				hostname: this.state.hostname,
+				network: this.state.community
 			});
 			this.props.toggleForm('setting')();
 		}
@@ -51,10 +53,12 @@ class Scan extends Component {
 		}
 	}
 
+	/* Input to state function*/
 	_changeName (e){
-		this.setState({ hostName: e.target.value || '' });
+		this.setState({ hostname: e.target.value || '' });
 	}
 
+	/* Input to state function*/
 	_changePassword (e){
 		this.setState({ password: e.target.value || '' });
 	}
@@ -70,7 +74,7 @@ class Scan extends Component {
 		this.state = {
 			createForm: false,
 			error: null,
-			hostName: null
+			hostname: null
 		};
 	}
 	
@@ -81,7 +85,7 @@ class Scan extends Component {
 	componentWillReceiveProps(nextProps) {
 		if (!this.state.hostname) {
 			this.setState({
-				hostName: nextProps.hostname
+				hostname: nextProps.hostname
 			});
 		}
 	}
@@ -106,10 +110,10 @@ class Scan extends Component {
 										<label>{I18n.t('Select a network to join')}</label>
 										<select onChange={this.selectNetwork}  class="u-full-width">
 											<option disabled selected>{I18n.t('Select one')}</option>
-											{this.props.networks.map(network => (<option value={network.file+':::'+network.ap}>{network.ap}</option>))}
+											{this.props.networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
 										</select>
 										<label>{I18n.t('Choose a name for this node')}</label>
-										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostName} onChange={this._changeName} />
+										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostname} onChange={this._changeName} />
 										{/* <label>{I18n.t('Choose a password for this node')}</label>
 										<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={this.state.password} onChange={this._changePassword} /> */}
 									</div>}

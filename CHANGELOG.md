@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+# [0.2.0-alpha.11](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.10...v0.2.0-alpha.11) (2019-05-30)
+
+
+### Bug Fixes
+
+* **fbw:** get full config from networks found ([5304a69](https://github.com/libremesh/lime-app/commit/5304a69))
+* **gui:** add option to toggleMenuButton ([725e5e9](https://github.com/libremesh/lime-app/commit/725e5e9))
+* **typo:** fix most active hostname ([dc48770](https://github.com/libremesh/lime-app/commit/dc48770))
+* **url:** disable redirect after connection ([3e1802a](https://github.com/libremesh/lime-app/commit/3e1802a))
+* **url:** redirect if path is empty ([274d7dd](https://github.com/libremesh/lime-app/commit/274d7dd))
+
+
+### Features
+
+* **fbw:** hide menu button in FBW page ([2efa7c8](https://github.com/libremesh/lime-app/commit/2efa7c8))
+* **gui:** handle menu button form redux ([276847a](https://github.com/libremesh/lime-app/commit/276847a))
+* **gui:** hide menu button ([1fbc472](https://github.com/libremesh/lime-app/commit/1fbc472))
+
+
+
 # [0.2.0-alpha.10](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.9...v0.2.0-alpha.10) (2019-04-21)
 
 
