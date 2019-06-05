@@ -24,7 +24,7 @@
     "build/*"
   ],
   "devDependencies": {
-    "@commitlint/cli": "^7.1.0",
+    "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^7.1.2",
     "commitizen": "^3.0.0",
     "commitlint": "^8.0.0",
