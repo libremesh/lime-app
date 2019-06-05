@@ -35,7 +35,7 @@
     "husky": "^2.0.0",
     "if-env": "^1.0.0",
     "less": "^3.0.4",
-    "less-loader": "^4.1.0",
+    "less-loader": "^5.0.0",
     "preact-cli": "^2.0.0",
     "standard-version": "^5.0.0"
   },
