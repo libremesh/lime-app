@@ -1,7 +1,10 @@
 import { h, Component } from 'preact';
+import { bindActionCreators } from 'redux';
+import { connect } from 'preact-redux';
 
 import './style';
 
+import { toggleMenuButton } from '../../lime-plugin-core/src/metaActions';
 import SelectAction from './containers/SelectAction';
 import NetworkForm from './containers/NetworkForm';
 import Scan from './containers/Scan';
@@ -22,6 +25,14 @@ class Page extends Component {
 		};
 	}
 
+	componentWillMount() {
+		this.props.toggleMenuButton(true);
+	}
+
+	componentWillUnmount() {
+		this.props.toggleMenuButton(false);
+	}
+
 	render (){
 		const { form } = this.state;
 		return (
@@ -35,4 +46,9 @@ class Page extends Component {
 	}
 }
 
-export default Page;
+export default connect(
+	() => ({}),
+	(dispatch) => ({
+		toggleMenuButton: bindActionCreators(toggleMenuButton, dispatch)
+	})
+)(Page);

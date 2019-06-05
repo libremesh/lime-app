@@ -9,7 +9,8 @@ import {
 	AUTH_LOGIN_SUCCESS,
 	COMMUNITY_SETTINGS_LOAD_SUCCESS,
 	BANNER_SET,
-	BANNER_HIDE
+	BANNER_HIDE,
+	TOGGLE_MENU_BUTTON
 } from './metaConstants';
 
 const defaultSettings = {
@@ -34,7 +35,8 @@ export const initialState = {
 	home: '/rx',
 	selectedHost: '',
 	settings: defaultSettings,
-	banner: false
+	banner: false,
+	menuHidden: false
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -68,6 +70,8 @@ export const reducer = (state = initialState, { type, payload }) => {
 			return { ...state, banner: payload };
 		case BANNER_HIDE:
 			return { ...state, banner: false };
+		case TOGGLE_MENU_BUTTON:
+			return { ...state, menuHidden: (typeof payload !== 'undefined')? payload: !state.menuHidden };
 		default:
 			return state;
 	}
