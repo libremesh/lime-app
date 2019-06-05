@@ -28,7 +28,7 @@
     "@commitlint/config-conventional": "^8.0.0",
     "commitizen": "^3.0.0",
     "commitlint": "^8.0.0",
-    "dotenv": "^7.0.0",
+    "dotenv": "^8.0.0",
     "eslint": "^5.0.0",
     "eslint-config-synacor": "^3.0.2",
     "gh-pages": "^2.0.1",
