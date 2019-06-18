@@ -1,7 +1,7 @@
 
 export const isObject = (obj) => typeof obj === 'object' && obj !== null;
 
-export const sameLocation = (coord1, coord2) => coord1.lon === coord2.lon && coord1.lat === coord2.lat;
+export const sameLocation = (coord1, coord2) => Number(coord1.lon) === Number(coord2.lon) && Number(coord1.lat) === Number(coord2.lat);
 
 export const sameTuple = (t1, t2) => {
 	if (t1.length !== t2.length) return false;
@@ -29,4 +29,3 @@ export const removeDuplicates = (collection, getIdentifier) => {
 export const coordsToPoint = (coordinates) => ({ type: 'Feature', geometry: { type: 'Point', coordinates: [Number(coordinates.lon), Number(coordinates.lat)] } });
 
 export const coordspairToLineString = (coordinates) => ({ type: 'Feature', geometry: { type: 'LineString', coordinates } });
-
