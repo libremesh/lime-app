@@ -1,11 +1,14 @@
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 
-import { changeLocation, getLocation } from './locateApi';
+import { changeLocation, getLocation, getNodesandlinks } from './locateApi';
 
 import {
 	LOCATION_LOAD,
 	LOCATION_LOAD_SUCCESS,
+	LOCATION_LOAD_LINKS,
+	LOCATION_LOAD_LINKS_SUCCESS,
+	LOCATION_LOAD_LINKS_ERROR,
 	LOCATION_CHANGE,
 	LOCATION_CHANGE_SUCCESS
 } from './locateConstants';
@@ -22,4 +25,11 @@ const locateChange = ( action$, state$, { wsAPI } ) =>
 		.mergeMap((action) => changeLocation(wsAPI, state$.value.meta.sid, action.payload))
 		.map((payload) => ({ type: LOCATION_CHANGE_SUCCESS }));
 
-export default { locateLoad, locateChange };
+const locateLoadlinks = ( action$, state$, { wsAPI } ) =>
+	action$.ofType(...[LOCATION_LOAD_LINKS])
+		.mergeMap(() => getNodesandlinks(wsAPI, state$.value.meta.sid))
+		.map((payload = {}) => payload.result
+			? { type: LOCATION_LOAD_LINKS_SUCCESS, payload: payload.result }
+			: { type: LOCATION_LOAD_LINKS_ERROR });
+
+export default { locateLoad, locateChange, locateLoadlinks };
