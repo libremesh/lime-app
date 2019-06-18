@@ -23,7 +23,6 @@ const rootEpics =  combineEpics(...loadEpics(plugins));
 const store = createStore({},rootEpics,rootReducers, new UhttpdService());
 
 // Init websocket
-//store.dispatch({ type: 'meta/CONECTION_START', payload: window.location.href.split('/').slice(0, 3).join('/').concat('/ubus' ) });
-store.dispatch({ type: 'meta/CONECTION_START', payload: "http://10.5.0.94/ubus"});
+store.dispatch({ type: 'meta/CONECTION_START', payload: window.location.href.split('/').slice(0, 3).join('/').concat('/ubus' ) });
 
 export default store;
