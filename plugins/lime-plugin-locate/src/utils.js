@@ -26,6 +26,6 @@ export const removeDuplicates = (collection, getIdentifier) => {
 	});
 };
 
-export const coordsToPoint = (coordinates) => ({ type: 'Feature', geometry: { type: 'Point', coordinates: [Number(coordinates.lon), Number(coordinates.lat)] } });
+export const coordsToPoint = ({ coordinates, hostname }) => ({ type: 'Feature', geometry: { type: 'Point', coordinates: [Number(coordinates.lon), Number(coordinates.lat)] },  properties: { name: hostname } });
 
 export const coordspairToLineString = (coordinates) => ({ type: 'Feature', geometry: { type: 'LineString', coordinates } });
