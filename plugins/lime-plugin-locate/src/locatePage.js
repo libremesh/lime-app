@@ -11,6 +11,8 @@ import { getLocation, getUserLocation, getSelectedHost, isCommunityLocation } fr
 
 import I18n from 'i18n-js';
 
+import { isObject, sameLocation, removeDuplicates, coordsToPoint, coordspairToLineString } from './utils';
+
 const style = {
 	buttonOver: {
 		position: 'absolute',
@@ -109,61 +111,7 @@ class Locate extends Component {
 			.openOn(map);
 		this.setState({ popup });
 
-    let homeCss = `<style>
-.icon {
-position: relative;
-width:16px;
-height:16px;
-margin: 16px;
-}
-
-.icon .name {
-width: 32px;
-position: absolute;
-text-align: center;
-top: 18px;
-left: -8px;
-}
-
-.icon-home:after{
-border: 8px solid #000;
-border-left-color: transparent;
-border-right-color: transparent;
-border-top-color: transparent;
-height: 16px;
-width: 0;
-position: absolute;
-top: -31px;
-left: 0;
- content: "";
-}
-.icon-home {
-background-color: #000;
-width: 15px;
-height: 10px;
-border-bottom-left-radius: 1px;
-border-bottom-right-radius: 1px;
--webkit-border-bottom-left-radius: 1px;
--webkit-border-bottom-right-radius: 1px;
--moz-border-radius-bottomleft: 1px;
--moz-border-radius-bottomright: 1px;
-position: relative;
-bottom: 15px;
-left: -18px;
-}
-.icon-home:before {
-background-color: #000;
-width: 2px;
-height: 5px;
-border-radius: 1px;
--webkit-border-radius: 1px;
--moz-border-radius: 1px;
-position: absolute;
-top: -6px;
-left: 1px;
-content: "";
-}</style>`;
-    let homeIcon = L.divIcon({html: homeCss + `<div class="icon icon-home"><span class="name">${this.props.stationHostname}</span></div>`});
+		let homeIcon = L.divIcon({ html: `<div class="icon icon-home"><span class="name">${this.props.stationHostname}</span></div>` });
 
 		const marker = L.marker([this.props.stationLocation.lat, this.props.stationLocation.lon],{ draggable: false, icon: homeIcon })
 			.addTo(map)
@@ -172,94 +120,54 @@ content: "";
 		this.setState({ marker });
 	}
 
-  function isObject(obj) {
-    return typeof obj === 'object' && obj !== null
-  }
+	showLinks(nodeshash) {
 
-  function sameLocation(coord1, coord2) {
-    return coord1.lon == coord2.lon && coord1.lat == coord2.lat
-  }
+		//Run only if leaflet is loaded
+		if (L) {
+			let nodes = Object.values(nodeshash).filter(node => isObject(node));
 
-  function sameTuple(t1, t2) {
-    if (t1.length != t2.length) return false;
-    let i = 0;
-    for (i in t1) {
-      if (t1[i] != t2[i]) return false
-    };
-    return true;
-  }
+			// geomac being the hash of locations of nodes indexed by mac
+			let geomac = nodes     // to those nodes
+				.filter(n => n.macs) // that actually have a macs list
+				.map(
+					node => node.macs.filter(mac => mac) // only if value exists
+						.map((mac) => [mac, [Number(node.coordinates.lon), Number(node.coordinates.lat)]])
+				)                    // get their locations
+				.reduce((all, macs) => [...all, ...macs], [])
+				.reduce((hash, mac) => { hash[mac[0]] = mac[1]; return hash; }, {}); // and add it to a hash
 
-  function tupleInList(tuple, list) {
-    return list && list.reduce((ret, el) => ret || sameTuple(el, tuple), false)
-  }
+			// geolinks is the list of pair of locations between nodes that are connected to each other
+			let links = nodes
+				.reduce((links, node) =>
+					[
+						...links,
+						...(node.links.filter(mac => mac in geomac)     // for the links to macs that have geolocation
+							.map(mac => [node.macs[0], mac].sort())       // add the sorted tuple of that link
+						)
+					], []);
+			// TODO build map with links macs not in geomac
+			links = removeDuplicates(links, l => l[0] + ',' + l[1]);
 
-  function removeDuplicates(collection, getIdentifier) {
-    const identifierState = {};
+			let geolinks = links
+				.map(macpair => [geomac[macpair[0]], geomac[macpair[1]]]); // turn the links mac list into a links geolocation list
 
-    return collection.filter((value) => {
-      const identifier = String(getIdentifier(value));
+			let nodefeatures = (nodes
+				.filter(n => ! sameLocation(n.coordinates, this.props.stationLocation))
+				.map(node => (coordsToPoint(node.coordinates)))
+			);
 
-      if (identifierState[identifier]) {
-        return false;
-      }
+			let linksfeatures = geolinks.map(link => coordspairToLineString(link));
 
-      identifierState[identifier] = true;
+			let features = [...nodefeatures, ...linksfeatures];
 
-      return true;
-    });
-  }
+			let geojsonFeature = {
+				type: 'FeatureCollection',
+				features
+			};
 
-  let coordsToPoint = (coordinates) => { type: 'Feature', geometry: { type: 'Point', coordinates: [Number(coordinates.lon), Number(coordinates.lat)] } };
-  let coordspairToLineString = (coordinates) => { type: 'Feature', geometry: { type: 'LineString', coordinates: coordinates } };
-
-  showLinks(nodeshash) {
-
-    //Run only if leaflet is loaded
-    if (L) {
-      let nodes = Object.values(nodeshash).filter(node => isObject(node));
-
-      // geomac being the hash of locations of nodes indexed by mac
-      let geomac = nodes     // to those nodes
-        .filter(n => n.macs) // that actually have a macs list
-        .map(
-          node => node.macs.filter(mac => mac) // only if value exists
-          .map((mac) => [mac, [Number(node.coordinates.lon), Number(node.coordinates.lat)]])
-        )                    // get their locations
-        .reduce((all, macs) => [...all, ...macs], [])
-        .reduce((hash, mac) => { hash[mac[0]] = mac[1]; return hash }, {}); // and add it to a hash
-
-      // geolinks is the list of pair of locations between nodes that are connected to each other
-      let links = nodes
-        .reduce((links, node) =>
-          [
-            ...links,
-            ...(node.links.filter(mac => mac in geomac)     // for the links to macs that have geolocation
-              .map(mac => [node.macs[0], mac].sort())       // add the sorted tuple of that link
-            )
-          ], []);
-      // TODO build map with links macs not in geomac
-      links = removeDuplicates(links, l => l[0] + "," + l[1]);
-
-      let geolinks = links
-          .map(macpair => [geomac[macpair[0]], geomac[macpair[1]]]); // turn the links mac list into a links geolocation list
-
-      let nodefeatures = (nodes
-        .filter(n => ! sameLocation(n.coordinates, this.props.stationLocation))
-        .map(node => (coordsToPoint(node.coordinates)))
-      );
-
-      let linksfeatures = geolinks.map(link => coordspairToLineString(link));
-
-      let features = [...nodefeatures, ...linksfeatures];
-
-      let geojsonFeature = {
-        type: 'FeatureCollection',
-        features
-      };
-
-      L.geoJSON(geojsonFeature).addTo(this.state.map);
-    }
-  }
+			L.geoJSON(geojsonFeature).addTo(this.state.map);
+		}
+	}
 
 	isLoaded(exist) {
 		if (exist === true) {
