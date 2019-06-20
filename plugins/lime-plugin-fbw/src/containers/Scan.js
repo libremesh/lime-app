@@ -14,8 +14,8 @@ import Alert from '../../../../src/components/alert';
 class Scan extends Component {
 
 	/* Load scan results */
-	searchNetworks() {
-		this.props.searchNetworks(true);
+	searchNetworks(rescan) {
+		this.props.searchNetworks(rescan);
 		this.loop = setInterval(() => {
 			if (this.props.status === 'scanned'){
 				clearInterval(this.loop);
@@ -24,6 +24,10 @@ class Scan extends Component {
 				this.props.searchNetworks(false);
 			}
 		}, 5000);
+	}
+
+	rescan() {
+		this.searchNetworks(true);
 	}
 
 	/* Change state after selectbox change event */
@@ -67,6 +71,7 @@ class Scan extends Component {
 		super(props);
 		this.searchNetworks = this.searchNetworks.bind(this);
 		this.selectNetwork = this.selectNetwork.bind(this);
+		this.rescan = this.rescan.bind(this);
 		this.setNetwork = this.setNetwork.bind(this);
 		this._changeName = this._changeName.bind(this);
 		this._changePassword = this._changePassword.bind(this);
@@ -79,7 +84,7 @@ class Scan extends Component {
 	}
 	
 	componentDidMount() {
-		if (this.props.status !== 'scanned') this.props.searchNetworks(false);
+		if (this.props.status !== 'scanned') this.searchNetworks(false);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -128,7 +133,7 @@ class Scan extends Component {
 										</div>}
 										<div class="six columns">
 											<button
-												onClick={this.searchNetworks}
+												onClick={this.rescan}
 												class="u-full-width"
 											>
 												{I18n.t('Rescan')}
