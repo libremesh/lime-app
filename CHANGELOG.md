@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0-alpha.13"></a>
+# [0.2.0-alpha.13](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.12...v0.2.0-alpha.13) (2019-06-25)
+
+
+### Bug Fixes
+
+* **metrics:** fix error messages on gateway error ([858bf02](https://github.com/libremesh/lime-app/commit/858bf02))
+
+
+### Features
+
+* **metrics:** change to new lime-metrics response ([7131d02](https://github.com/libremesh/lime-app/commit/7131d02))
+
+
+
 <a name="0.2.0-alpha.12"></a>
 # [0.2.0-alpha.12](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.11...v0.2.0-alpha.12) (2019-06-25)
 
