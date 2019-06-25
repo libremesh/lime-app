@@ -2,65 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-# [0.2.0-alpha.11](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.10...v0.2.0-alpha.11) (2019-05-30)
+<a name="0.2.0-alpha.12"></a>
+# [0.2.0-alpha.12](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.11...v0.2.0-alpha.12) (2019-06-25)
 
 
 ### Bug Fixes
 
-* **fbw:** get full config from networks found ([5304a69](https://github.com/libremesh/lime-app/commit/5304a69))
-* **gui:** add option to toggleMenuButton ([725e5e9](https://github.com/libremesh/lime-app/commit/725e5e9))
-* **typo:** fix most active hostname ([dc48770](https://github.com/libremesh/lime-app/commit/dc48770))
-* **url:** disable redirect after connection ([3e1802a](https://github.com/libremesh/lime-app/commit/3e1802a))
-* **url:** redirect if path is empty ([274d7dd](https://github.com/libremesh/lime-app/commit/274d7dd))
+* **location:** catch error loading nodes links ([a255d9c](https://github.com/libremesh/lime-app/commit/a255d9c))
+* **location:** fix comparation. Convert all values to number ([f47da3a](https://github.com/libremesh/lime-app/commit/f47da3a))
+* **location:** fix geojson render ([6b90dc6](https://github.com/libremesh/lime-app/commit/6b90dc6))
+* **location:** remove develop ip in meta/CONECTION_START event ([12c3a92](https://github.com/libremesh/lime-app/commit/12c3a92))
+* **package:** update axios to version 0.19.0 ([27401f9](https://github.com/libremesh/lime-app/commit/27401f9))
 
 
 ### Features
 
-* **fbw:** hide menu button in FBW page ([2efa7c8](https://github.com/libremesh/lime-app/commit/2efa7c8))
-* **gui:** handle menu button form redux ([276847a](https://github.com/libremesh/lime-app/commit/276847a))
-* **gui:** hide menu button ([1fbc472](https://github.com/libremesh/lime-app/commit/1fbc472))
-
-
-
-# [0.2.0-alpha.10](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.9...v0.2.0-alpha.10) (2019-04-21)
-
-
-### Bug Fixes
-
-* **firstbootwizard:** removed password box ([5232241](https://github.com/libremesh/lime-app/commit/5232241))
-
-
-### Features
-
-* **fbw:** add new options and alert messages ([766ba76](https://github.com/libremesh/lime-app/commit/766ba76))
-* **fbw:** add new options and alert messages ([818b2a6](https://github.com/libremesh/lime-app/commit/818b2a6))
-* **fbw:** add new options and alert messages ([6d030de](https://github.com/libremesh/lime-app/commit/6d030de))
-* **firstbootwizard:** full create network flow ([d966150](https://github.com/libremesh/lime-app/commit/d966150))
-* **firstbootwizard:** full user flow ([c7806cd](https://github.com/libremesh/lime-app/commit/c7806cd))
-* **intrl:** add new spanish translations ([95d1da1](https://github.com/libremesh/lime-app/commit/95d1da1))
-
-
-
-# [0.2.0-alpha.9](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.8...v0.2.0-alpha.9) (2019-03-21)
-
-
-### Bug Fixes
-
-* **api:** remove window.crypto ([bf2c989](https://github.com/libremesh/lime-app/commit/bf2c989))
-
-
-
-# [0.2.0-alpha.8](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.7...v0.2.0-alpha.8) (2019-03-21)
-
-
-
-# [0.2.0-alpha.7](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.6...v0.2.0-alpha.7) (2019-03-14)
-
-
-### Bug Fixes
-
-* **leaflet:** update leaflet version ([53e4992](https://github.com/libremesh/lime-app/commit/53e4992))
-* **package:** update leaflet.gridlayer.googlemutant to version 0.8.0 ([342d9b3](https://github.com/libremesh/lime-app/commit/342d9b3))
+* **location:** include hostname in point data ([f3c4ead](https://github.com/libremesh/lime-app/commit/f3c4ead))
 
 
 
