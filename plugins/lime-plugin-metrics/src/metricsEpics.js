@@ -32,18 +32,18 @@ const loadGateway = ( action$, store, { wsAPI }) =>
 const loadPath = ( action$, store, { wsAPI }) =>
 	action$.ofType(LOAD_GATEWAY_SUCCESS)
 		.mergeMap((action) => getPath(wsAPI,store.value.meta.sid,{ target: store.value.metrics.gateway }))
-		.map(payload => {
-			if (!payload.error) return { type: LOAD_PATH_SUCCESS, payload: payload.path };
-			return { type: LOAD_PATH_NOT_FOUND, payload };
+		.mergeMap(payload => {
+			if (!payload.error) return [{ type: LOAD_PATH_SUCCESS, payload: payload.path }, { type: LOAD_METRICS_GATEWAY }];
+			return [{ type: LOAD_PATH_NOT_FOUND, payload }];
 		})
 		.catch([({ type: LOAD_PATH_ERROR })]);
 
 const loadLastPath = ( action$, store, { wsAPI }) =>
 	action$.ofType(LOAD_GATEWAY_NOT_FOUND)
 		.mergeMap((action) => getLastKnownPath(wsAPI,store.value.meta.sid,{}))
-		.map(payload => {
-			if (!payload.error) return { type: LOAD_PATH_SUCCESS, payload };
-			return { type: LOAD_PATH_NOT_FOUND, payload };
+		.mergeMap(payload => {
+			if (!payload.error) return [{ type: LOAD_PATH_SUCCESS, payload: payload.path }, { type: LOAD_METRICS_ALL }];
+			return [{ type: LOAD_PATH_NOT_FOUND, payload }];
 		})
 		.catch([({ type: LOAD_PATH_ERROR })]);
 
@@ -56,7 +56,7 @@ const loadMetrics = ( action$, store, { wsAPI }) =>
 		.map(payload => ({ type: LOAD_METRICS_SUCCESS, payload })); // Output one result for each observable/promise consumed
 
 const loadGatewayMetrics = ( action$, store, { wsAPI }) =>
-	action$.ofType(...[LOAD_PATH_SUCCESS,LOAD_METRICS_GATEWAY])
+	action$.ofType(LOAD_METRICS_GATEWAY)
 		.map(action => action.payload)
 		.mergeMap(payload => {
 			if (store.value.metrics.gateway !== store.value.meta.selectedHost) {

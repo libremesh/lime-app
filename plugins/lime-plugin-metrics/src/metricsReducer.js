@@ -36,7 +36,7 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 		case LOAD_GATEWAY_SUCCESS:
 			return Object.assign({}, state, { gateway: payload.gateway, status: 'metrics_status_path' });
 		case LOAD_GATEWAY_NOT_FOUND:
-			return Object.assign({}, state, { error: state.error.concat(payload.error), status: 'load_last_known_internet_path' });
+			return Object.assign({}, state, { error: state.error.concat('last_known_internet_path'), status: 'load_last_known_internet_path' });
 		case LOAD_PATH_SUCCESS:
 			return Object.assign({}, state, {
 				metrics: payload.map(node => ({ host: {
@@ -56,7 +56,7 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 		case LOAD_METRICS_GATEWAY:
 			return Object.assign({}, state, {
 				metrics: state.metrics.map(x => {
-					if (x.host.hostname !== payload.target) { return x; }
+					if (x.host.hostname !== state.gateway) { return x; }
 					x.loading = true;
 					return Object.assign({}, x, payload);
 				}),
