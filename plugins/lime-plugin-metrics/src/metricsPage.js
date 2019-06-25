@@ -165,7 +165,7 @@ class Metrics extends Component {
 				{this.props.metrics.error.map(x => this.showError(x))}
 				<div style={style.box}>{I18n.t('From')+' '+this.props.meta.selectedHost}</div>
 				{this.props.metrics.metrics.map(station => (
-					<MetricsBox settings={this.props.settings} station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.hostname,this.props.metrics.gateway)} />
+					<MetricsBox settings={this.props.settings} station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.host.hostname,this.props.metrics.gateway)} />
 				))}
 				<div style={style.box}>{I18n.t('To Internet')}</div>
 				{this.showInternetStatus(this.props.metrics.loading, this.props.node)}
