@@ -86,5 +86,6 @@
     "you_have_successfuly_connected_to_ddb8c613": "La conexión fué exitosa, está conectado a ",
     "please_configure_your_network_d6eb8b76": "Por favor configure su conexión de red",
     "your_router_has_not_yet_been_configured_you_can_us_2b40cea3": "Su router aún no ha sido configurado, puede utilizar nuestro asistente para incorporarlo a una red existente o crear una nueva. Si ignora este mensaje, continuará funcionando con la configuración predeterminada.",
-    "ok_ff1b646a": "Ok"
+    "ok_ff1b646a": "Ok",
+    "last_known_internet_path_45f31c9a": "Este es el último recorrido hasta Internet que funcionó"
 }

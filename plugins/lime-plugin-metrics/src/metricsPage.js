@@ -94,7 +94,8 @@ class Metrics extends Component {
 		const loadingMessages = {
 			metrics_status_gateway: I18n.t('metrics_status_gateway'),
 			metrics_status_path: I18n.t('metrics_status_path'),
-			metrics_status_stations: I18n.t('metrics_status_stations')
+			metrics_status_stations: I18n.t('metrics_status_stations'),
+			load_last_known_internet_path: I18n.t('load_last_known_internet_path')
 		};
 
 		return (
@@ -123,12 +124,14 @@ class Metrics extends Component {
 	}
 
 	showError(error){
+		console.log(error);
 		const errorMessages = {
-			load_last_known_internet_path: I18n.t('load_last_known_internet_path')
+			last_known_internet_path: I18n.t('last_known_internet_path')
 		};
+		console.log(errorMessages);
 
 		if (error !== null) {
-			return (<p style={style.textError}>Error: {errorMessages[error.msg]}</p>);
+			return (<p style={style.textError}>{errorMessages[error]}</p>);
 		}
 		return;
 	}
@@ -139,7 +142,7 @@ class Metrics extends Component {
   
 	wrapperChangeNode (station) {
 		return () => {
-			this.props.changeNode(station.hostname.split('_')[0]);
+			this.props.changeNode(station.host.hostname);
 		};
 	}
 
@@ -165,7 +168,7 @@ class Metrics extends Component {
 				{this.props.metrics.error.map(x => this.showError(x))}
 				<div style={style.box}>{I18n.t('From')+' '+this.props.meta.selectedHost}</div>
 				{this.props.metrics.metrics.map(station => (
-					<MetricsBox settings={this.props.settings} station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.hostname,this.props.metrics.gateway)} />
+					<MetricsBox settings={this.props.settings} station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.host.hostname,this.props.metrics.gateway)} />
 				))}
 				<div style={style.box}>{I18n.t('To Internet')}</div>
 				{this.showInternetStatus(this.props.metrics.loading, this.props.node)}

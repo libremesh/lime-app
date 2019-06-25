@@ -5,7 +5,6 @@ import colorScale from 'simple-color-scale';
 import I18n from 'i18n-js';
 
 
-
 const style = {
 	box: {
 		margin: '3px',
@@ -42,7 +41,7 @@ const style = {
 class Box extends Component {
 	barStyle(loss) {
 		return Object.assign({},style.line,{
-			width: (this.props.station.bandwidth*100/this.props.settings.good_bandwidth).toString()+'%',
+			width: ((this.props.station.bandwidth*100/this.props.settings.good_bandwidth) || 3).toString()+'%',
 			maxWidth: '100%',
 			backgroundColor: colorScale.getColor(loss)
 		});
@@ -59,8 +58,12 @@ class Box extends Component {
 		});
 		return (
 			<div style={(this.props.station.loading)? style.loading: style.box} onClick={this.props.click} >
-				<span><b>{this.isGateway(this.props.gateway, this.props.station.hostname)}</b><br /></span>
-				{this.props.station.bandwidth} Mbps / <span>{I18n.t('Packet loss')}</span> {this.props.station.loss}%<br />
+				<span><b>{this.isGateway(this.props.gateway, this.props.station.host.hostname)}
+					{ Number(this.props.station.bandwidth || '0') === 0 && this.props.station.loss
+						? <b> ({I18n.t('Error')})</b>
+						:false}
+				</b><br /></span>
+				{this.props.station.bandwidth || 0} Mbps / <span>{I18n.t('Packet loss')}</span> {this.props.station.loss}%<br />
 				<div style={this.barStyle(this.props.station.loss)} />
 			</div>
 		);

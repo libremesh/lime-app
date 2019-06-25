@@ -36,5 +36,6 @@
   "trying_to_connect_ff82bf9f" :"Trying to connect to %{meta_ws}",
   "try_thisnode_info_1ee1bfe2" :"Try thisnode.info",
   "uptime_c1d2415d" :"Uptime",
-  "interfaces_44f8a99c": "Interfaces"
+  "interfaces_44f8a99c": "Interfaces",
+  "last_known_internet_path_45f31c9a": "This your last working path to the Internet"
 }

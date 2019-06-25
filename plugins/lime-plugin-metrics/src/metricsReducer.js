@@ -22,7 +22,7 @@ const initialState = {
 const getMetrics = (data, payload) => data.map(x => {
 	if (x.bandwidth < payload.bandwidth) { x.bandwidth = payload.bandwidth; }
 	if (x.loss > payload.loss) { x.loss = payload.loss; }
-	if (x.hostname !== payload.hostname) { return x; }
+	if (x.host.ip !== payload.target) { return x; }
 	x.loading = false;
 	return Object.assign({}, x, payload);
 });
@@ -36,10 +36,13 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 		case LOAD_GATEWAY_SUCCESS:
 			return Object.assign({}, state, { gateway: payload.gateway, status: 'metrics_status_path' });
 		case LOAD_GATEWAY_NOT_FOUND:
-			return Object.assign({}, state, { error: state.error.concat(payload.error), status: 'load_last_known_internet_path' });
+			return Object.assign({}, state, { error: state.error.concat('last_known_internet_path'), status: 'load_last_known_internet_path' });
 		case LOAD_PATH_SUCCESS:
 			return Object.assign({}, state, {
-				metrics: payload.map(x => ({ hostname: x, loading: true, error: false })),
+				metrics: payload.map(node => ({ host: {
+					ip: node.ip,
+					hostname: node.hostname !== ''? node.hostname: node.ip
+				}, loading: true, error: false })),
 				loading: true, status: 'metrics_status_stations'
 			});
 		case LOAD_PATH_NOT_FOUND:
@@ -53,7 +56,7 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 		case LOAD_METRICS_GATEWAY:
 			return Object.assign({}, state, {
 				metrics: state.metrics.map(x => {
-					if (x.hostname !== payload.hostname) { return x; }
+					if (x.host.hostname !== state.gateway) { return x; }
 					x.loading = true;
 					return Object.assign({}, x, payload);
 				}),
@@ -63,7 +66,7 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 		case LOAD_METRICS_GATEWAY_SUCCESS:
 			return Object.assign({}, state, {
 				metrics: state.metrics.map(x => {
-					if (x.hostname !== payload.hostname) { return x; }
+					if (x.host.hostname !== payload.target) { return x; }
 					x.loading = false;
 					return Object.assign({}, x, payload);
 				}),
