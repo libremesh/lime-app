@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
-import { getMetrics, getMetricsAll, getMetricsGateway, changeNode } from './metricsActions';
+import { getMetrics, getMetricsAll, getMetricsGateway } from './metricsActions';
 import { getNodeData, getSettings } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
@@ -139,17 +139,9 @@ class Metrics extends Component {
 	isGateway(hostname, gateway) {
 		return (hostname === gateway);
 	}
-  
-	wrapperChangeNode (station) {
-		return () => {
-			this.props.changeNode(station.host.hostname);
-		};
-	}
-
- 
+   
 	constructor(props) {
 		super(props);
-		this.wrapperChangeNode = this.wrapperChangeNode.bind(this);
 		this.clickGateway = this.clickGateway.bind(this);
 	}
   
@@ -168,7 +160,7 @@ class Metrics extends Component {
 				{this.props.metrics.error.map(x => this.showError(x))}
 				<div style={style.box}>{I18n.t('From')+' '+this.props.meta.selectedHost}</div>
 				{this.props.metrics.metrics.map(station => (
-					<MetricsBox settings={this.props.settings} station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.host.hostname,this.props.metrics.gateway)} />
+					<MetricsBox settings={this.props.settings} station={station} gateway={this.isGateway(station.host.hostname,this.props.metrics.gateway)} />
 				))}
 				<div style={style.box}>{I18n.t('To Internet')}</div>
 				{this.showInternetStatus(this.props.metrics.loading, this.props.node)}
@@ -190,8 +182,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	getMetrics: bindActionCreators(getMetrics,dispatch),
 	getMetricsGateway: bindActionCreators(getMetricsGateway,dispatch),
-	getMetricsAll: bindActionCreators(getMetricsAll,dispatch),
-	changeNode: bindActionCreators(changeNode,dispatch)
+	getMetricsAll: bindActionCreators(getMetricsAll,dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Metrics);

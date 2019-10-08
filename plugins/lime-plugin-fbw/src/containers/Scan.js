@@ -55,7 +55,12 @@ class Scan extends Component {
 
 	/* Input to state function*/
 	_changeName (e){
-		this.setState({ hostname: e.target.value || '' });
+		if(!/[^a-zA-Z0-9_]/.test(e.target.value)) {
+			this.setState({ hostname: e.target.value || '' });
+		} else {
+			e.target.value = this.state.hostname || '';
+			this.props.showNotification(I18n.t('Only letters, numbers and underscores are allowed'))
+		}
 	}
 
 	/* Input to state function*/
@@ -113,7 +118,7 @@ class Scan extends Component {
 											{this.props.networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
 										</select>
 										<label>{I18n.t('Choose a name for this node')}</label>
-										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostname} onChange={this._changeName} />
+										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostname} onInput={this._changeName} />
 										{/* <label>{I18n.t('Choose a password for this node')}</label>
 										<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={this.state.password} onChange={this._changePassword} /> */}
 									</div>}
@@ -156,6 +161,12 @@ class Scan extends Component {
 	}
 }
 
+const showNotification = (msg) => (dispatch) => {
+	dispatch({
+		type: 'NOTIFICATION',
+		payload: { msg }
+	})
+}
 
 const mapStateToProps = (state) => ({
 	logs: state.firstbootwizard.logs,
@@ -167,7 +178,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	getStatus: bindActionCreators(getStatus, dispatch),
 	searchNetworks: bindActionCreators(searchNetworks ,dispatch),
-	setNetwork: bindActionCreators(setNetwork ,dispatch)
+	setNetwork: bindActionCreators(setNetwork ,dispatch),
+	showNotification: bindActionCreators(showNotification, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Scan);
