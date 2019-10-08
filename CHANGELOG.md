@@ -1,6 +1,16 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [0.2.0](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.13...v0.2.0) (2019-10-08)
+
+
+### Bug Fixes
+
+* **config:** remove duplicated hostname ([0cd3ac9](https://github.com/libremesh/lime-app/commit/0cd3ac9)), closes [#207](https://github.com/libremesh/lime-app/issues/207)
+* **redirect:** full redirect instead of change the api endopint ([5dd520e](https://github.com/libremesh/lime-app/commit/5dd520e))
+* **redirect:** remove redirect on metrics page ([6639b64](https://github.com/libremesh/lime-app/commit/6639b64))
+* **validation:** network and host name validation in FBW ([85755ef](https://github.com/libremesh/lime-app/commit/85755ef))
 
 <a name="0.2.0-alpha.13"></a>
 # [0.2.0-alpha.13](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.12...v0.2.0-alpha.13) (2019-06-25)
