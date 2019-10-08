@@ -87,14 +87,7 @@ const hideAlert = () => (dispatch) => {
 };
 
 const changeNode = (hostname) => (dispatch) => {
-	dispatch({
-		type: 'meta/CONECTION_CHANGE_URL',
-		payload: 'http://'+ hostname +'/ubus'
-	});
-	dispatch({
-		type: 'meta/CONECTION_CHANGE_CURRENT_BASE',
-		payload: hostname
-	});
+	window.location.href = 'http://'+hostname;
 };
 
 const mapDispatchToProps = (dispatch) => ({
