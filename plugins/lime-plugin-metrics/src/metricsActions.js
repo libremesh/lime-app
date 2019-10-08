@@ -32,7 +32,3 @@ export const getMetricsGateway = ( hostname ) => (dispatch) => {
 		type: GET_INTERNET_STATUS
 	});
 };
-
-export const changeNode = (hostname) => (dispatch) => {
-	dispatch(push('changeNode/'+hostname));
-};
