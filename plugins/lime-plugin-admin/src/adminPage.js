@@ -11,6 +11,8 @@ import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 import Loading from '../../../src/components/loading';
 
 import I18n from 'i18n-js';
+import { isValidHostname, slugify } from '../../../src/utils/isValidHostname';
+import { showNotification } from '../../../src/store/actions';
 
 const style = {
 	textLoading: {
@@ -34,18 +36,20 @@ const style = {
 export class Admin extends Component {
 
 	handleHostname(e) {
+		const end = e.type === 'change';
+		e.target.value = slugify(e.target.value, end);
 		this.setState({ hostname: e.target.value });
-		return this.state.hostname;
+		return e;
 	}
 
 	handleIp(e) {
 		this.setState({ ip: e.target.value });
-		return this.state.ip;
+		return e;
 	}
 
 	handlePassword(e) {
 		this.setState({ adminPassword: e.target.value });
-		return this.state.adminPassword;
+		return e;
 	}
 
 	adminLogin(e) {
@@ -55,9 +59,10 @@ export class Admin extends Component {
 
 	changeConfig(e) {
 		e.preventDefault();
-		if (typeof this.state.hostname !== 'undefined') {
+		if (isValidHostname(this.state.hostname, true)) {
 			return this.props.changeConfig({ hostname: this.state.hostname, ip: this.state.ip });
 		}
+		this.props.showNotification('Invalid hostname, needs to be at least three characters long.');
 	}
 
 	showLoading(show) {
@@ -91,7 +96,7 @@ export class Admin extends Component {
 				<form onSubmit={this.adminLogin} style={{ display: (!this.props.authStatus)? 'block': 'none' }}>
 					<p>
 						<label>{I18n.t('Admin password')}</label>
-						<input type="password" onChange={this.handlePassword} class="u-full-width" />
+						<input type="password" onInput={this.handlePassword} class="u-full-width" />
 
 					</p>
 					<button class="button green block" type="submit">{I18n.t('Login')}</button>
@@ -99,11 +104,11 @@ export class Admin extends Component {
 				<form onSubmit={this.changeConfig} style={{ display: (this.props.authStatus)? 'block': 'none' }}>
 					<p>
 						<label>{I18n.t('Station name')}</label>
-						<input type="text" value={this.state.hostname} onChange={this.handleHostname} class="u-full-width" />
+						<input type="text" value={this.state.hostname} onInput={this.handleHostname} onChange={this.handleHostname} class="u-full-width" />
 					</p>
 					<p>
 						<label>{I18n.t('Station IP v4')}</label>
-						<input type="text" value={this.state.ip} onChange={this.handleIp} class="u-full-width" />
+						<input type="text" value={this.state.ip} onInput={this.handleIp} class="u-full-width" />
 					</p>
 					<button class="button green block" type="submit">{I18n.t('Change')}</button>
 				</form>
@@ -122,7 +127,8 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = (dispatch) => ({
 	changeConfig: bindActionCreators(changeConfig, dispatch),
-	adminLogin: bindActionCreators(adminLogin, dispatch)
+	adminLogin: bindActionCreators(adminLogin, dispatch),
+	showNotification: bindActionCreators(showNotification, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);
