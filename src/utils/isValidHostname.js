@@ -1,8 +1,9 @@
-export const isValidHostname = (text, length = false) => {
+export const isValidHostname = (text = '', length = false) => {
+	const reg = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$/;
 	if (length) {
-		return /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/.test(text) && text.length > 2;
+		return reg.test(text) && text.length > 2;
 	}
-	return /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/.test(text);
+	return reg.test(text);
 };
 
 export const slugify = (string, end, domain) => {
