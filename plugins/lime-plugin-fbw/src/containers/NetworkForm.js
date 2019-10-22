@@ -14,7 +14,7 @@ import { showNotification } from '../../../../src/store/actions';
 class NetworkForm extends Component {
 	_changeName (e){
 		const end = e.type === 'change';
-		e.target.value = slugify(e.target.value, end, true);
+		e.target.value = slugify(e.target.value.toLocaleLowerCase(), end, true);
 		this.setState({ communityName: e.target.value || '' });
 		return e;
 	}
