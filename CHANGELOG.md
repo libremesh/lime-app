@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/libremesh/lime-app/compare/v0.2.0...v0.2.1) (2019-10-22)
+
+
+### Bug Fixes
+
+* **fbw:** community name in lowercase ([73d464e](https://github.com/libremesh/lime-app/commit/73d464e))
+* **slugify:** improves domain usage ([0237be9](https://github.com/libremesh/lime-app/commit/0237be9))
+* **validation:** fix hostname and communiy name validation in fbw ([436a258](https://github.com/libremesh/lime-app/commit/436a258))
+* **validation:** fix hostname validation in adminPage ([13afd8c](https://github.com/libremesh/lime-app/commit/13afd8c))
+
+
+### Features
+
+* **redux:** add generic actions file ([fb4f173](https://github.com/libremesh/lime-app/commit/fb4f173))
+* **validation:** hostname validation and slugify ([48cdd4e](https://github.com/libremesh/lime-app/commit/48cdd4e))
+
 ## [0.2.0](https://github.com/libremesh/lime-app/compare/v0.2.0-alpha.13...v0.2.0) (2019-10-08)
 
 
