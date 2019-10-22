@@ -10,6 +10,8 @@ import { searchNetworks, setNetwork, getStatus } from '../actions';
 import I18n from 'i18n-js';
 import { Loading } from '../../../../src/components/loading';
 import Alert from '../../../../src/components/alert';
+import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
+import { showNotification } from '../../../../src/store/actions';
 
 class Scan extends Component {
 
@@ -38,7 +40,7 @@ class Scan extends Component {
 
 	/* Validate state and set network in the router */
 	setNetwork() {
-		if (this.state.apname && this.state.hostname && this.state.hostname !== '') {
+		if (this.state.apname && isValidHostname(this.state.hostname, true)) {
 			this.props.setNetwork({
 				file: this.state.file,
 				hostname: this.state.hostname,
@@ -55,12 +57,10 @@ class Scan extends Component {
 
 	/* Input to state function*/
 	_changeName (e){
-		if(!/[^a-zA-Z0-9_]/.test(e.target.value)) {
-			this.setState({ hostname: e.target.value || '' });
-		} else {
-			e.target.value = this.state.hostname || '';
-			this.props.showNotification(I18n.t('Only letters, numbers and underscores are allowed'))
-		}
+		const end = e.type === 'change'
+		e.target.value = slugify(e.target.value, end);
+		this.setState({ hostname: e.target.value });
+		return e;
 	}
 
 	/* Input to state function*/
@@ -118,7 +118,7 @@ class Scan extends Component {
 											{this.props.networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
 										</select>
 										<label>{I18n.t('Choose a name for this node')}</label>
-										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostname} onInput={this._changeName} />
+										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostname} onInput={this._changeName}  onChange={this._changeName} />
 										{/* <label>{I18n.t('Choose a password for this node')}</label>
 										<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={this.state.password} onChange={this._changePassword} /> */}
 									</div>}
@@ -126,6 +126,7 @@ class Scan extends Component {
 										{this.props.networks.length > 0 && <div class="six columns">
 											<button
 												onClick={this.setNetwork}
+												disabled={!isValidHostname(this.state.hostname)}
 												class="u-full-width"
 											>
 												{I18n.t('Set network')}
@@ -154,18 +155,11 @@ class Scan extends Component {
 						): false }
 					</div>
 				</div>
-				{this.state.error && <Alert text={I18n.t('Must select a network and a name')} />}
+				{this.state.error && <Alert text={I18n.t('Must select a network and a valid hostname')} />}
 				{(this.props.status === 'scanning' && <Alert text={I18n.t('Scanning for existing networks')} />)}
 			</div>
 		);
 	}
-}
-
-const showNotification = (msg) => (dispatch) => {
-	dispatch({
-		type: 'NOTIFICATION',
-		payload: { msg }
-	})
 }
 
 const mapStateToProps = (state) => ({

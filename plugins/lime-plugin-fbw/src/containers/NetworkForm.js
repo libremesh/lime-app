@@ -8,24 +8,22 @@ import { connect } from 'preact-redux';
 import { createNetwork } from '../actions';
 
 import I18n from 'i18n-js';
+import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
+import { showNotification } from '../../../../src/store/actions';
 
 class NetworkForm extends Component {
 	_changeName (e){
-		if(!/[^a-zA-Z.]/.test(e.target.value)) {
-			this.setState({ communityName: e.target.value || '' });
-		} else {
-			e.target.value = this.state.communityName || '';
-			this.props.showNotification(I18n.t('Only letters and dots are allowed'))
-		}
+		const end = e.type === 'change';
+		e.target.value = slugify(e.target.value.toLocaleLowerCase(), end, true);
+		this.setState({ communityName: e.target.value || '' });
+		return e;
 	}
 
 	_changeHostName (e){
-		if(!/[^a-zA-Z0-9_]/.test(e.target.value)) {
-			this.setState({ hostName: e.target.value || '' });
-		} else {
-			e.target.value = this.state.hostName || '';
-			this.props.showNotification(I18n.t('Only letters, numbers and underscores are allowed'))
-		}
+		const end = e.type === 'change';
+		e.target.value = slugify(e.target.value, end);
+		this.setState({ hostName: e.target.value || '' });
+		return e;
 	}
 
 	_changePassword (e){
@@ -49,16 +47,16 @@ class NetworkForm extends Component {
 		return (<div class="container" style={{ paddingTop: '100px' }}>
 			<h4><span>{I18n.t('Configure your new community network')}</span></h4>
 			<label>{I18n.t('Choose a name for your network')}</label>
-			<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onInput={this._changeName}/>
+			<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onChange={this._changeName} onInput={this._changeName} />
 			<label>{I18n.t('Choose a name for this node')}</label>
-			<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostName} onInput={this._changeHostName} />
+			<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostName} onChange={this._changeHostName} onInput={this._changeHostName} />
 			{/* <label>{I18n.t('Choose a password for this node')}</label>
 			<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={this.state.password} onChange={this._changePassword} /> */}
 			<div class="row">
 				<div class="six columns">
 					<button
 						class="u-full-width"
-						disabled={!this.state.communityName || this.state.communityName === ''}
+						disabled={!isValidHostname(this.state.communityName,true) || !isValidHostname(this.state.hostName, true)}
 						onClick={this.createNetwork}
 					>
 						{I18n.t('Create network')}
@@ -75,14 +73,6 @@ class NetworkForm extends Component {
 			</div>
 		</div>);
 	}
-}
-
-
-const showNotification = (msg) => (dispatch) => {
-	dispatch({
-		type: 'NOTIFICATION',
-		payload: { msg }
-	})
 }
 
 const mapStateToProps = (state) => ({});
