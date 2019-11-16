@@ -16,10 +16,12 @@ import './i18nline-glue';
 
 // in development, set up HMR:
 if (module.hot) {
-	module.hot.accept(App, () => requestAnimationFrame() );
+	module.hot.accept(App, () => requestAnimationFrame());
 }
 
 render(
 	<Provider store={store}>
 		<App history={history} />
-	</Provider>, document.body);
+	</Provider>,
+	document.body
+);
