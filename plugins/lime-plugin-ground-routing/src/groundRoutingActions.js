@@ -3,15 +3,12 @@ import {
 	GROUNDROUTING_SET
 } from './groundRoutingConstants';
 
-export const getGroundRouting = () => (dispatch) => {
-	dispatch({
-		type: GROUNDROUTING_GET
-	});
-};
+export const getGroundRouting = () => ({
+	type: GROUNDROUTING_GET
+});
 
-export const setGroundRouting = (config) => (dispatch) => {
-	dispatch({
-		type: GROUNDROUTING_SET,
-		payload: { config }
-	});
-};
+
+export const setGroundRouting = (config) => ({
+	type: GROUNDROUTING_SET,
+	payload: { config }
+});
