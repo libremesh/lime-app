@@ -73,21 +73,22 @@ const mapStateToProps = (state) => ({
 	isBanner: isBanner(state)
 });
 
-const goBase = (hostname) => (dispatch) => {
-	dispatch({
-		type: 'meta/CONECTION_CHANGE_URL',
-		payload: 'http://thisnode.info/ubus'
-	});
-};
+const goBase = (hostname) => ({
+	type: 'meta/CONECTION_CHANGE_URL',
+	payload: 'http://thisnode.info/ubus'
+});
 
-const hideAlert = () => (dispatch) => {
-	dispatch({
-		type: 'NOTIFICATION_HIDE'
-	});
-};
 
-const changeNode = (hostname) => (dispatch) => {
+const hideAlert = () => ({
+	type: 'NOTIFICATION_HIDE'
+});
+
+const changeNode = (hostname) => {
 	window.location.href = 'http://'+hostname;
+	return {
+		type: '__CHANGE_NODE',
+		payload: hostname
+	};
 };
 
 const mapDispatchToProps = (dispatch) => ({
