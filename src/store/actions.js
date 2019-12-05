@@ -1,7 +1,4 @@
-export const showNotification = (msg) => (dispatch) => {
-	dispatch({
-		type: 'NOTIFICATION',
-		payload: { msg }
-	});
-};
-
+export const showNotification = (msg) => ({
+	type: 'NOTIFICATION',
+	payload: { msg }
+});

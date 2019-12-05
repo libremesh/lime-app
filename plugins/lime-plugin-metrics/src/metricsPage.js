@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'preact-redux';
 
-import { getMetrics, getMetricsAll, getMetricsGateway } from './metricsActions';
+import { getInternetStatus, getMetrics, getMetricsAll, getMetricsGateway } from './metricsActions';
 import { getNodeData, getSettings } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
@@ -56,6 +56,7 @@ class Metrics extends Component {
 	clickGateway(gateway) {
 		return () => {
 			this.props.getMetricsGateway(gateway);
+			this.props.getInternetStatus();
 		};
 	}
 
@@ -147,6 +148,7 @@ class Metrics extends Component {
   
 	componentWillMount() {
 		this.props.getMetrics();
+		this.props.getInternetStatus();
 		colorScale.setConfig({
 			outputStart: 1,
 			outputEnd: 100,
@@ -182,7 +184,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	getMetrics: bindActionCreators(getMetrics,dispatch),
 	getMetricsGateway: bindActionCreators(getMetricsGateway,dispatch),
-	getMetricsAll: bindActionCreators(getMetricsAll,dispatch)
+	getMetricsAll: bindActionCreators(getMetricsAll,dispatch),
+	getInternetStatus: bindActionCreators(getInternetStatus, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Metrics);

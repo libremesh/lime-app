@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 import style from './style';
 import I18n from 'i18n-js';
+import { bindActionCreators } from 'redux';
 class Banner extends Component {
 
 	onOk(){
@@ -47,6 +48,6 @@ export default connect(
 		banner: state.meta.banner || false
 	}),
 	(dispatch) => ({
-		send: (action) => dispatch(action)
+		send: bindActionCreators((action) => action, dispatch)
 	})
 )(Banner);

@@ -1,5 +1,3 @@
-import { push } from 'preact-router-redux';
-
 import {
 	LOAD_METRICS,
 	LOAD_METRICS_ALL
@@ -9,26 +7,19 @@ import {
 	GET_INTERNET_STATUS
 } from '../../lime-plugin-rx/src/rxConstants';
 
-export const getMetrics = ( ) => (dispatch) => {
-	dispatch({
-		type: LOAD_METRICS
-	});
-	dispatch({
-		type: GET_INTERNET_STATUS
-	});
-};
+export const getMetrics = ( ) => ({
+	type: LOAD_METRICS
+});
 
-export const getMetricsAll = ( ) => (dispatch) => {
-	dispatch({
-		type: LOAD_METRICS_ALL
-	});
-};
 
-export const getMetricsGateway = ( hostname ) => (dispatch) => {
-	dispatch({
-		type: LOAD_METRICS
-	});
-	dispatch({
-		type: GET_INTERNET_STATUS
-	});
-};
+export const getMetricsAll = ( ) => ({
+	type: LOAD_METRICS_ALL
+});
+
+export const getInternetStatus = () => ({
+	type: GET_INTERNET_STATUS
+});
+
+export const getMetricsGateway = ( ) => ({
+	type: LOAD_METRICS
+});
