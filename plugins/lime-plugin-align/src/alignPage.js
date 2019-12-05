@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 import { changeInterface, changeStation, startAlign, stopTimer } from './alignActions';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';

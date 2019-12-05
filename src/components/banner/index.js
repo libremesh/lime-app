@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 import style from './style';
 import I18n from 'i18n-js';
 import { bindActionCreators } from 'redux';

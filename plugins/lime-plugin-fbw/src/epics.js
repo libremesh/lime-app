@@ -26,7 +26,7 @@ import {
 	FBW_CREATE_NETWORK_ERROR
 } from './constants';
 
-import { push } from 'preact-router-redux';
+import { push } from 'react-router-redux';
 
 import { AUTH_LOGIN_SUCCESS, BANNER_SET, BANNER_HIDE } from '../../lime-plugin-core/src/metaConstants';
 

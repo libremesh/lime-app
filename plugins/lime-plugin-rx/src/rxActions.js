@@ -4,7 +4,7 @@ import {
 	TIMER_START
 } from './rxConstants';
 
-import { push } from 'preact-router-redux';
+import { push } from 'react-router-redux';
 
 export const getNodeStatus = () => ({
 	type: GET_NODE_STATUS,

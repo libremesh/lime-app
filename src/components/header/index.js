@@ -4,7 +4,7 @@ import style from './style';
 import { Navs } from '../../routes';
 import { Drawer } from '../drawer';
 
-class Header extends Component {
+export class Header extends Component {
 
 	toggle(){
 		this.setState({ open: !this.state.open });
@@ -35,5 +35,3 @@ class Header extends Component {
 		);
 	}
 }
-
-export default Header;

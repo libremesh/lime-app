@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import './style';
 
