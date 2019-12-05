@@ -1,17 +1,22 @@
 import { h, Component } from 'preact';
 import Router from 'preact-router';
 
+import { Provider, connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import store, { initStore } from '../store';
+import { history } from '../store/history';
+
 import style from './style';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
 
-import Header from '../components/header';
-import Alert from '../components/alert';
-import Status from '../components/status';
+import { Header } from './header';
+import Alert from './alert';
+import Status from './status';
 import { plugins } from '../config';
-import Banner from '../components/banner';
+import Banner from './banner';
 import { isBanner } from '../../plugins/lime-plugin-rx/src/rxSelectors';
+
+initStore();
 
 class ChangeNode extends Component {
 	componentWillMount () {
@@ -98,4 +103,10 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+const AppConnected = connect(mapStateToProps, mapDispatchToProps)(App);
+
+export const AppDefault = () => (
+	<Provider store={store}>
+		<AppConnected history={history} />
+	</Provider>
+);
