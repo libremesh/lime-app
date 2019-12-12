@@ -4,7 +4,7 @@ import './style.less';
 import Script from 'react-load-script';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import { loadLocation, loadLocationLinks, changeLocation, setUserLocation } from './locateActions';
 import { getLocation, getUserLocation, getSelectedHost, isCommunityLocation } from './locateSelectors';

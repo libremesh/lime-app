@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import I18n from 'i18n-js';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import '../style';
 

@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import { getNodeStatusTimer, stopTimer, changeNode, getNodeStatus } from './rxActions';
 import { getNodeData, isLoading } from './rxSelectors';

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'preact-router-redux';
+import { routerReducer } from 'react-router-redux';
 
 import { combineEpics } from 'redux-observable';
 

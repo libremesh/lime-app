@@ -3,7 +3,7 @@ import { h, Component } from 'preact';
 import './style';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import { getGroundRouting } from './groundRoutingActions';
 
