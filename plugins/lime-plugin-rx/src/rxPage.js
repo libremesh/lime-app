@@ -1,4 +1,5 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useEffect, useState } from 'preact/hooks';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -50,11 +51,14 @@ const MostActiveBox = ({ node, changeNode }) => {
 	return (<span />);
 };
 
-export class Page extends Component {
-  
-	loading(option, nodeData){
+export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData, signal }) => {
+	
+	const [ state, setState ] = useState({ plusTime: 0 });
+	const [ count, setCount ] = useState(undefined);
+
+	function loading(option, nodeData) {
 		if (!option) {
-			return this.nodeStatus(nodeData);
+			return nodeStatus(nodeData);
 		}
 		return (
 			<h4 style={{ textAlign: 'center' }} >
@@ -64,43 +68,43 @@ export class Page extends Component {
 	}
 
 
-	startCount() {
-		if (typeof this.count === 'undefined') {
-			this.setState({ plusTime: 0 });
-			this.count = setInterval(() => {
-				let newTime = this.state.plusTime + 1;
-				this.setState({ plusTime: newTime });
-			},1000);
+	function startCount() {
+		if (typeof count === 'undefined') {
+			setState({ ...state, plusTime: 0 });
+			setCount(setInterval(() => {
+				let newTime = state.plusTime + 1;
+				setState({ plusTime: newTime });
+			},1000));
 		}
 	}
 
-	stopCount() {
-		clearInterval(this.count);
-		this.setState({ plusTime: 0 });
-		delete this.count;
+	function stopCount() {
+		clearInterval(count);
+		setState({ ...state, plusTime: 0 });
+		setCount(undefined);
 	}
 
-	changeNode(node) {
+	function _changeNode(node) {
 		return () => {
-			this.props.changeNode(node.most_active.hostname.split('_')[0]);
+			changeNode(node.most_active.hostname.split('_')[0]);
 		};
 	}
 
-	nodeStatus(node){
+	function nodeStatus(node){
 		if (node.hostname) {
-			this.startCount();
+			startCount();
 			return (
 				<div>
 
-					<MostActiveBox node={node} changeNode={this.changeNode} />
+					<MostActiveBox node={node} changeNode={_changeNode} />
 					
-					<SystemBox node={node} count={this.state.plusTime} update={this.startCount} />
+					<SystemBox node={node} count={state.plusTime} update={startCount} />
 
 					<Box title={I18n.t('Internet connection')}>
 						<span>
-							<b> {(node.internet.IPv4.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv4 </b>
-							<b> {(node.internet.IPv6.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv6 </b>
-							<b> {(node.internet.DNS.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} DNS </b>
+							<b> {(node.internet.IPv4.working === true)? (<span style={{ color: '#38927f' }}>✔</span>): (<span style={{ color: '#b11' }}>✘</span>)} IPv4 </b>
+							<b> {(node.internet.IPv6.working === true)? (<span style={{ color: '#38927f' }}>✔</span>): (<span style={{ color: '#b11' }}>✘</span>)} IPv6 </b>
+							<b> {(node.internet.DNS.working === true)? (<span style={{ color: '#38927f' }}>✔</span>): (<span style={{ color: '#b11' }}>✘</span>)} DNS </b>
 						</span>
 					</Box>
             
@@ -116,32 +120,22 @@ export class Page extends Component {
 			);
 		}
 	}
-  
-	constructor(props) {
-		super(props);
-		this.startCount = this.startCount.bind(this);
-		this.changeNode = this.changeNode.bind(this);
-	}
 
-	componentDidMount() {
-		this.props.getNodeStatusTimer();
-		this.props.getNodeStatus();
-	}
+	useEffect(() => {
+		getNodeStatusTimer();
+		getNodeStatus();
+		return () => {
+			stopTimer();
+			stopCount();
+		};
+	},[]);
 
-	componentWillUnmount() {
-		this.props.stopTimer();
-		this.stopCount();
-	}
-
-	render() {
-		return (
-			<div class="container" style={{ paddingTop: '80px' }}>
-				{ this.loading(this.props.isLoading, this.props.nodeData,this.props.signal) }
-			</div>
-		);
-	}
-}
-
+	return (
+		<div class="container" style={{ paddingTop: '80px' }}>
+			{ loading(isLoading, nodeData, signal) }
+		</div>
+	);
+};
 
 export const mapStateToProps = (state) => ({
 	nodeData: getNodeData(state),

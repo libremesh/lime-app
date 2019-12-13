@@ -53,7 +53,7 @@ const getTraffic = ( action$, state$, { wsAPI } ) =>
 		.map( signal => ({ type: GET_TRAFFIC_SUCCESS, payload: signal }));
 
 const getInternet = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(...[GET_NODE_STATUS_SUCCESS, GET_INTERNET_STATUS])
+	action$.ofType(...[GET_NODE_STATUS_SUCCESS, GET_INTERNET_STATUS, INTERVAL_GET])
 		.switchMap(() => getInternetStatus(wsAPI, state$.value.meta.sid))
 		.map( status => ({ type: GET_INTERNET_STATUS_SUCCESS, payload: status }));
 
