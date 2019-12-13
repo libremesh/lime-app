@@ -1,47 +1,45 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import style from './style';
 
 import I18n from 'i18n-js';
 
-class Status extends Component {
-	goBack () {
-		this.props.back(this.props.meta.base);
+
+const Status = ({ back, meta }) => {
+	function goBack() {
+		back(meta.base);
 	}
   
-	goGeneric () {
-		this.props.back('thisnode.info');
+	function goGeneric() {
+		back('thisnode.info');
 	}
 
-	constructor() {
-		super();
-		this.goBack = this.goBack.bind(this);
-		this.goGeneric = this.goGeneric.bind(this);
+
+	function isBase(base,current) {
+		if (base !== current) {
+			return (<button class="button green" onClick={goBack}>{I18n.t('Back to base')}</button>);
+		}
+		return;
 	}
-	render() {
-		let isBase = (base,current) => {
-			if (base !== current) {
-				return (<button class="button green" onClick={this.goBack}>{I18n.t('Back to base')}</button>);
-			}
-			return;
-		};
-		let isError = (ws, error) => {
-			if (typeof error !== 'undefined') {
-				return (
-					<span>
-						<p>{I18n.t('Connection fail',{ meta_ws: this.props.meta.ws.split('/')[2] })}</p>
-						<button class="button green" onClick={this.goGeneric}>{I18n.t('Try thisnode.info')}</button>
-					</span>
-				);
-			}
-			return (<p>{I18n.t('Trying to connect',{ meta_ws: this.props.meta.ws.split('/')[2] })}</p>);
-		};
-		return (
-			<div class={style.center}>
-				{isError(this.props.meta.ws.split('/')[2], this.props.meta.error) }
-				{isBase(this.props.meta.base,this.props.meta.selectedHost)}
-			</div>
-		);
+
+	function isError (ws, error) {
+		if (typeof error !== 'undefined') {
+			return (
+				<span>
+					<p>{I18n.t('Connection fail',{ meta_ws: meta.ws.split('/')[2] })}</p>
+					<button class="button green" onClick={goGeneric}>{I18n.t('Try thisnode.info')}</button>
+				</span>
+			);
+		}
+		return (<p>{I18n.t('Trying to connect',{ meta_ws: meta.ws.split('/')[2] })}</p>);
 	}
-}
+
+	return (
+		<div class={style.center}>
+			{isError(meta.ws.split('/')[2], meta.error) }
+			{isBase(meta.base,meta.selectedHost)}
+		</div>
+	);
+
+};
 
 export default Status;

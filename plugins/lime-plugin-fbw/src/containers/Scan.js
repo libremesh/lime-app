@@ -57,7 +57,7 @@ class Scan extends Component {
 
 	/* Input to state function*/
 	_changeName (e){
-		const end = e.type === 'change'
+		const end = e.type === 'change';
 		e.target.value = slugify(e.target.value, end);
 		this.setState({ hostname: e.target.value });
 		return e;

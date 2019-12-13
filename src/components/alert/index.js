@@ -1,22 +1,14 @@
-import { h, Component } from 'preact';
-
+import { h } from 'preact';
 import style from './style';
 
-class Alert extends Component {
-	
-	getStyle(status) {
-		return status? {}: { bottom: '-50px', opacity: '0' };
-	}
+const getStyle = (status) => status? {}: { bottom: '-50px', opacity: '0' };
 
-	render() {
-		return (
-			<div style={this.getStyle(this.props.text)} class={style.toast} onClick={this.props.hide}>
-				<div style={{ padding: '10px',color: '#fff' }}>
-					{this.props.text}
-				</div>
-			</div>
-		);
-	}
-}
+const Alert = ({ hide, text }) => (
+	<div style={getStyle(text)} class={style.toast} onClick={hide}>
+		<div style={{ padding: '10px',color: '#fff' }}>
+			{text}
+		</div>
+	</div>
+);
 
 export default Alert;
