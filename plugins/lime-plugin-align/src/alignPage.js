@@ -1,13 +1,9 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useEffect } from 'preact/hooks';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { changeInterface, changeStation, startAlign, stopTimer } from './alignActions';
-
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounce';
-import 'rxjs/add/observable/timer';
+import { changeInterface, changeStation, startAlign, getSignal } from './alignActions';
 
 import { getAll, getSelectedHost, getSettings } from './alignSelectors';
 
@@ -26,7 +22,6 @@ const speech = (text, lang, voices, synth) => {
 	utterThis.voice = voices.filter(x => x.name === lang)[0];
 	synth.speak(utterThis);
 };
-
 
 const style = {
 	signal: {
@@ -48,113 +43,98 @@ const style = {
 	}
 };
 
-class Align extends Component {
+const Align = ({ startAlign, changeInterface, changeStation, alignData, selectedHost }) => {
 
-	changeInterface(e) {
-		this.props.changeInterface(e.target.value);
+	function _changeInterface(e) {
+		changeInterface(e.target.value);
 	}
 
-	changeStation(e) {
-		this.props.changeStation(e.target.value);
+	function _changeStation(e) {
+		changeStation(e.target.value);
 	}
 
-	startSpeech() {
-		this.speechSubscription = this.alignValue
-			.debounce(() => Observable.timer(1000))
-			.subscribe((value) => {
-				if ( (Math.floor(this.lastSpeech/10) !== Math.floor(value/10)) || Number(value.toString()[value.toString().length -1 ]) === 0 || this.resumedTimes === 5 ) {
-					speech(value || 0, 'es-ES', voices, synth);
-					this.resumedTimes = 0;
-				}
-				else {
-					speech(value.toString()[value.toString().length - 1] || 0, 'es-ES', voices, synth);
-					this.resumedTimes++;
-				}
-				this.lastSpeech = value;
-			});
-	}
-
-	stopSpeech() {
-		this.speechSubscription.unsubscribe();
-	}
-
-	colorBar(signal) {
+	function colorBar(signal) {
 		return Object.assign({}, style.bar,{ backgroundColor: colorScale.getColor(signal) });
 	}
 
-	constructor() {
-		super();
-		this.alignValue = new BehaviorSubject();
-		this.speechSubscription = null;
-		this.lastSpeech = 0;
-		this.resumedTimes = 0;
-		this.changeInterface = this.changeInterface.bind(this);
-		this.changeStation = this.changeStation.bind(this);
-	}
+	useEffect(() => {
+		startAlign();
+		const interval = setInterval(() => {
+			getSignal();
+		},2000);
 
-	componentWillMount() {
-		this.props.startAlign();
-		this.startSpeech();
-		colorScale.setConfig({
-			outputStart: 1,
-			outputEnd: Number(this.props.settings.bad_signal)* -1,
-			inputStart: Number(this.props.settings.good_signal)* -1,
-			inputEnd: Number(this.props.settings.bad_signal)* -1 + 10
-		});
-	}
+		return () => {
+			clearInterval(interval);
+		};
+	},[]);
 
-	componentWillUnmount() {
-		this.props.stopAlign();
-		this.stopSpeech();
-	}
+	useEffect(() => {
+		let lastSpeech = 0;
+		let resumedTimes = 0;
+		const interval = setInterval(() => {
+			if (typeof alignData.currentReading !== 'undefined') {
+				const value = alignData.currentReading.signal * -1;
+				
+				if ( (Math.floor(lastSpeech/10) !== Math.floor(value/10)) || Number(value.toString()[value.toString().length -1 ]) === 0 || resumedTimes === 5 ) {
+					speech(value || 0, 'es-ES', voices, synth);
+					resumedTimes = 0;
+				}
+				
+				else {
+					speech(value.toString()[value.toString().length - 1] || 0, 'es-ES', voices, synth);
+					resumedTimes++;
+				}
+				lastSpeech = value;
+				
+			}
+		}, 2000);
+		return () => {
+			clearInterval(interval);
+		};
+	},[alignData]);
 
-	render(state) {
-		if (typeof state.alignData.currentReading !== 'undefined') {
-			this.alignValue.next(state.alignData.currentReading.signal * -1);
-		}
-		return (
-			<div className="container" style={{ paddingTop: '100px' }}>
-				{ typeof state.alignData.currentReading !== 'undefined'? (
-					<div className="row">
-						<div className="six columns">
-							<span style={style.hostname}>
-								{this.props.selectedHost || ''}
-							</span>
-							<h1 style={style.signal}>
-								{state.alignData.currentReading.signal || 0}
-								<span style={this.colorBar(this.props.alignData.currentReading.signal * -1)} />
-							</h1>
-							<span style={style.hostname}>
-								{state.alignData.currentReading.hostname || ''}
-							</span>
-						</div>
-						<div className="six columns">
-							<label>{I18n.t('Interfaces')}</label>
-							<select style={style.block} onChange={this.changeInterface} value={state.alignData.currentReading.iface ? state.alignData.currentReading.iface : null}>
-								{state.alignData.ifaces.map((iface) => <option value={iface.name}>{iface.name}</option>)}
-							</select>
-							<label>{I18n.t('Stations')}</label>
-							<select  style={style.block} onChange={this.changeStation} value={state.alignData.currentReading.mac ? state.alignData.currentReading.mac : null}>
-								{state.alignData.stations.map((station) => <option value={station.mac}>{station.hostname}</option>)}
-							</select>
-						</div>
+	return (
+		<div className="container" style={{ paddingTop: '100px' }}>
+			{ typeof alignData.currentReading !== 'undefined'? (
+				<div className="row">
+					<div className="six columns">
+						<span style={style.hostname}>
+							{selectedHost || ''}
+						</span>
+						<h1 style={style.signal}>
+							{alignData.currentReading.signal || 0}
+							<span style={colorBar(alignData.currentReading.signal * -1)} />
+						</h1>
+						<span style={style.hostname}>
+							{alignData.currentReading.hostname || ''}
+						</span>
 					</div>
-				): (
-					<div className="row">
-						<div className="six columns">
-							<span style={style.hostname}>
-								{I18n.t('This node does not see other nodes in the network.')}
-							</span>
-							<h1 style={style.signal}>
-								:(
-							</h1>
-						</div>
+					<div className="six columns">
+						<label>{I18n.t('Interfaces')}</label>
+						<select style={style.block} onChange={_changeInterface} value={alignData.currentReading.iface ? alignData.currentReading.iface : null}>
+							{alignData.ifaces.map((iface) => <option value={iface.name}>{iface.name}</option>)}
+						</select>
+						<label>{I18n.t('Stations')}</label>
+						<select  style={style.block} onChange={_changeStation} value={alignData.currentReading.mac ? alignData.currentReading.mac : null}>
+							{alignData.stations.map((station) => <option value={station.mac}>{station.hostname}</option>)}
+						</select>
 					</div>
-				)}
-			</div>
-		);
-	}
-}
+				</div>
+			): (
+				<div className="row">
+					<div className="six columns">
+						<span style={style.hostname}>
+							{I18n.t('This node does not see other nodes in the network.')}
+						</span>
+						<h1 style={style.signal}>
+							:(
+						</h1>
+					</div>
+				</div>
+			)}
+		</div>
+	);
+};
 
 
 const mapStateToProps = (state) => ({
@@ -167,7 +147,7 @@ const mapDispatchToProps = (dispatch) => ({
 	changeInterface: bindActionCreators(changeInterface, dispatch),
 	changeStation: bindActionCreators(changeStation, dispatch),
 	startAlign: bindActionCreators(startAlign, dispatch),
-	stopAlign: bindActionCreators(stopTimer,dispatch)
+	getSignal: bindActionCreators(getSignal, dispatch)
 });
 
 

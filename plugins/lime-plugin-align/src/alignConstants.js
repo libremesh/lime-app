@@ -11,8 +11,4 @@ export const SIGNAL_GET = 'align/SIGNAL_GET';
 export const SIGNAL_GET_SUCCESS = 'align/SIGNAL_GET_SUCCESS';
 export const SIGNAL_GET_FAILD = 'align/SIGNAL_GET_FAILD';
 
-export const TIMER_START = 'align/TIMER_START';
-export const TIMER_STOP = 'align/TIMER_STOP';
-
-export const INIT_ALIGN = 'align/INIT_ALIGN';
 
