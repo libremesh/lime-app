@@ -1,4 +1,5 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useState, useEffect } from 'preact/hooks';
 
 import './style';
 
@@ -10,40 +11,38 @@ import { getNotesState } from './notesSelectors';
 
 import I18n from 'i18n-js';
 
-class Page extends Component {
+const Page = ({ setNotes, getNotes, notes, hostname }) => {
 
-	handleChange(event) {
-		this.setState({ value: event.target.value });
+	const [ value, setValue] = useState(notes || '');
+
+	function handleChange(event) {
+		setValue(event.target.value);
 	}
 
-	saveNotes() {
-		this.props.setNotes(this.state.value);
+	function saveNotes() {
+		setNotes(value);
 	}
 
-	constructor(props) {
-		super(props);
-		this.state = { value: this.props.notes };
-		this.handleChange = this.handleChange.bind(this);
-		this.saveNotes = this.saveNotes.bind(this);
-	}
+	//Only once
+	useEffect(() => {
+		getNotes();
+		return () => {};
+	}, []);
 
-	componentWillMount() {
-		this.props.getNotes();
-	}
+	//After notes reload
+	useEffect(() => {
+		setValue(notes);
+		return () => {};
+	}, [notes]);
 
-	render() {
-		let getNotes = (notes) => notes;
-
-		return (
-			<div class="container" style={{ paddingTop: '100px' }}>
-				<h4><span>{I18n.t('Notes of')}</span> {this.props.hostname}</h4>
-				<textarea onChange={this.handleChange} class="notes" value={getNotes(this.props.notes)} />
-				<button onClick={this.saveNotes}>{I18n.t('Save notes')}</button>
-			</div>
-		);
-	}
-}
-
+	return (
+		<div class="container" style={{ paddingTop: '100px' }}>
+			<h4><span>{I18n.t('Notes of')}</span> {hostname}</h4>
+			<textarea onChange={handleChange} class="notes" value={value} />
+			<button onClick={saveNotes}>{I18n.t('Save notes')}</button>
+		</div>
+	);
+};
 
 const mapStateToProps = (state) => ({
 	notes: getNotesState(state),
