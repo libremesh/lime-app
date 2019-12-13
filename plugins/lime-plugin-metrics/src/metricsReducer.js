@@ -1,6 +1,7 @@
 import {
 	LOAD_METRICS,
 	LOAD_METRICS_SUCCESS,
+	LOAD_HOST_METRICS,
 	LOAD_PATH,
 	LOAD_PATH_SUCCESS,
 	LOAD_PATH_NOT_FOUND,
@@ -31,6 +32,19 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 	switch (type) {
 		case LOAD_METRICS:
 			return Object.assign({}, initialState, { loading: true, status: 'metrics_status_gateway' });
+		case LOAD_HOST_METRICS:
+			return Object.assign({}, state, {
+				metrics: state.metrics.map(node => {
+					if (node.host.ip !== payload) return node;
+					return {
+						host: node.host,
+						loading: true,
+						error: false
+					};
+				}),
+				loading: true,
+				status: 'metrics_status_stations'
+			});
 		case LOAD_PATH:
 			return Object.assign({}, state, { loading: true, metrics: [], status: 'metrics_status_path' });
 		case LOAD_GATEWAY_SUCCESS:
