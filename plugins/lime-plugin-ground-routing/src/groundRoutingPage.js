@@ -1,4 +1,5 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useEffect } from 'preact/hooks';
 
 import './style';
 
@@ -9,40 +10,30 @@ import { getGroundRouting } from './groundRoutingActions';
 
 import I18n from 'i18n-js';
 
-class Page extends Component {
+const Page = ({ getGroundRouting, loading, configuration }) => {
+	
+	useEffect(() => {
+		getGroundRouting();
+	}, []);
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			config: {}
-		};
-	}
+	const preStyle = {
+		backgroundColor: '#f5f5f5',
+		borderRadius: '4px',
+		padding: '15px',
+		border: '1px solid #ccc'
+	};
 
-	componentWillMount() {
-		this.props.getGroundRouting();
-	}
-
-	render() {
-		const preStyle = {
-			backgroundColor: '#f5f5f5',
-			borderRadius: '4px',
-			padding: '15px',
-			border: '1px solid #ccc'
-		};
-
-		return (
-			<div class="container" style={{ paddingTop: '100px' }}>
-				<h4>{I18n.t('Ground Routing configuration')}</h4>
-				<pre style={preStyle}>
-					{(this.props.loading)? 'Loading...' : JSON.stringify(this.props.configuration, null, '  ')}
-				</pre>
-				<button onClick={this.props.getGroundRouting}>{I18n.t('Reload')}</button>
-				
-			</div>
-		);
-	}
-}
-
+	return (
+		<div class="container" style={{ paddingTop: '100px' }}>
+			<h4>{I18n.t('Ground Routing configuration')}</h4>
+			<pre style={preStyle}>
+				{(loading)? 'Loading...' : JSON.stringify(configuration, null, '  ')}
+			</pre>
+			<button onClick={getGroundRouting}>{I18n.t('Reload')}</button>
+			
+		</div>
+	);
+};
 
 const mapStateToProps = (state) => ({
 	configuration: state.groundrouting.configuration,
