@@ -1,4 +1,5 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useState, useEffect } from 'preact/hooks';
 
 import '../style';
 
@@ -13,25 +14,24 @@ import Alert from '../../../../src/components/alert';
 import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
 import { showNotification } from '../../../../src/store/actions';
 
-class Scan extends Component {
+const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks, hostname }) => {
+	
+	const [state, setState] = useState({
+		createForm: false,
+		error: null,
+		hostname: null
+	});
 
 	/* Load scan results */
-	searchNetworks() {
-		this.props.searchNetworks(true);
-		this.loop = setInterval(() => {
-			if (this.props.status === 'scanned'){
-				clearInterval(this.loop);
-			}
-			else {
-				this.props.searchNetworks(false);
-			}
-		}, 5000);
+	function _searchNetworks() {
+		searchNetworks(true);
 	}
 
 	/* Change state after selectbox change event */
-	selectNetwork(event) {
-		const { config, file } = this.props.networks[event.target.value];
-		this.setState({
+	function selectNetwork(event) {
+		const { config, file } = networks[event.target.value];
+		setState({
+			...state,
 			file,
 			apname: config.wifi.apname_ssid.split('/%H')[0],
 			community: config.wifi.ap_ssid
@@ -39,128 +39,126 @@ class Scan extends Component {
 	}
 
 	/* Validate state and set network in the router */
-	setNetwork() {
-		if (this.state.apname && isValidHostname(this.state.hostname, true)) {
-			this.props.setNetwork({
-				file: this.state.file,
-				hostname: this.state.hostname,
-				network: this.state.community
+	function _setNetwork() {
+		if (state.apname && isValidHostname(state.hostname, true)) {
+			setNetwork({
+				file: state.file,
+				hostname: state.hostname,
+				network: state.community
 			});
-			this.props.toggleForm('setting')();
+			toggleForm('setting')();
 		}
 		else {
-			this.setState({
+			setState({
+				...state,
 				error: true
 			});
 		}
 	}
 
 	/* Input to state function*/
-	_changeName (e){
+	function _changeName (e) {
 		const end = e.type === 'change';
 		e.target.value = slugify(e.target.value, end);
-		this.setState({ hostname: e.target.value });
+		setState({
+			...state,
+			hostname: e.target.value
+		});
 		return e;
 	}
 
 	/* Input to state function*/
-	_changePassword (e){
-		this.setState({ password: e.target.value || '' });
-	}
+	/* function _changePassword (e) {
+		setState({
+			...state,
+			password: e.target.value || ''
+		});
+	} */
 
-	constructor(props){
-		super(props);
-		this.searchNetworks = this.searchNetworks.bind(this);
-		this.selectNetwork = this.selectNetwork.bind(this);
-		this.setNetwork = this.setNetwork.bind(this);
-		this._changeName = this._changeName.bind(this);
-		this._changePassword = this._changePassword.bind(this);
-
-		this.state = {
-			createForm: false,
-			error: null,
-			hostname: null
-		};
-	}
-	
-	componentDidMount() {
-		if (this.props.status !== 'scanned') this.props.searchNetworks(false);
-	}
-
-	componentWillReceiveProps(nextProps) {
-		if (!this.state.hostname) {
-			this.setState({
-				hostname: nextProps.hostname
+	useEffect(() => {
+		if (!state.hostname) {
+			setState({
+				...state,
+				hostname
 			});
 		}
-	}
+	}, [hostname]);
 
-	componentWillUnmount(){
-		if (this.loop) {
-			clearInterval(this.loop);
+	useEffect(() => {
+		let interval;
+		if (status === 'scanned') return;
+		else if (status === 'scanning') {
+			interval = setInterval(() => {
+				console.log('Key pulling the new status', status);
+				searchNetworks(false);
+			}, 2000);
 		}
-	}
+		else if (!status) {
+			searchNetworks(false);
+		}
+		return () => {
+			if (interval) clearInterval(interval);
+		};
+	}, [status]);
 
-	render () {
-		return (
-			<div>
-				<div class="container" style={{ paddingTop: '100px' }}>
-					<div>
-						{ this.props.networks && this.props.status === 'scanned' ? (
-							<div>
-								<div class="container">
-									{this.props.networks.length === 0 && <p>:( {I18n.t('No network found, try realigning your node and rescanning.')}</p>}
-									{this.props.networks.length > 0 && <div>
-										<h4>{I18n.t('Join the mesh')}</h4>
-										<label>{I18n.t('Select a network to join')}</label>
-										<select onChange={this.selectNetwork}  class="u-full-width">
-											<option disabled selected>{I18n.t('Select one')}</option>
-											{this.props.networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
-										</select>
-										<label>{I18n.t('Choose a name for this node')}</label>
-										<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={this.state.hostname} onInput={this._changeName}  onChange={this._changeName} />
-										{/* <label>{I18n.t('Choose a password for this node')}</label>
-										<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={this.state.password} onChange={this._changePassword} /> */}
-									</div>}
-									<div class="row">
-										{this.props.networks.length > 0 && <div class="six columns">
-											<button
-												onClick={this.setNetwork}
-												disabled={!isValidHostname(this.state.hostname)}
-												class="u-full-width"
-											>
-												{I18n.t('Set network')}
-											</button>
-										</div>}
-										<div class="six columns">
-											<button
-												onClick={this.searchNetworks}
-												class="u-full-width"
-											>
-												{I18n.t('Rescan')}
-											</button>
-										</div>
+	return (
+		<div>
+			<div class="container" style={{ paddingTop: '100px' }}>
+				<div>
+					{ networks && status === 'scanned' ? (
+						<div>
+							<div class="container">
+								{networks.length === 0 && <p>:( {I18n.t('No network found, try realigning your node and rescanning.')}</p>}
+								{networks.length > 0 && <div>
+									<h4>{I18n.t('Join the mesh')}</h4>
+									<label>{I18n.t('Select a network to join')}</label>
+									<select onChange={selectNetwork}  class="u-full-width">
+										<option disabled selected>{I18n.t('Select one')}</option>
+										{networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
+									</select>
+									<label>{I18n.t('Choose a name for this node')}</label>
+									<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostname} onInput={_changeName}  onChange={_changeName} />
+									{/* <label>{I18n.t('Choose a password for this node')}</label>
+									<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onChange={_changePassword} /> */}
+								</div>}
+								<div class="row">
+									{networks.length > 0 && <div class="six columns">
 										<button
-											onClick={this.props.toggleForm(null)}
+											onClick={_setNetwork}
+											disabled={!isValidHostname(state.hostname)}
 											class="u-full-width"
 										>
-											{I18n.t('Cancel')}
+											{I18n.t('Set network')}
+										</button>
+									</div>}
+									<div class="six columns">
+										<button
+											onClick={_searchNetworks}
+											class="u-full-width"
+										>
+											{I18n.t('Rescan')}
 										</button>
 									</div>
+									<button
+										onClick={toggleForm(null)}
+										class="u-full-width"
+									>
+										{I18n.t('Cancel')}
+									</button>
 								</div>
 							</div>
-						): this.props.status === 'scanning' ? false : <Loading />}
-						{ this.props.status === 'scanning'? (
-							<Loading />
-						): false }
-					</div>
+						</div>
+					): status === 'scanning' ? false : <Loading />}
+					{ status === 'scanning'? (
+						<Loading />
+					): false }
 				</div>
-				{this.state.error && <Alert text={I18n.t('Must select a network and a valid hostname')} />}
-				{(this.props.status === 'scanning' && <Alert text={I18n.t('Scanning for existing networks')} />)}
 			</div>
-		);
-	}
-}
+			{state.error && <Alert text={I18n.t('Must select a network and a valid hostname')} />}
+			{(status === 'scanning' && <Alert text={I18n.t('Scanning for existing networks')} />)}
+		</div>
+	);
+};
 
 const mapStateToProps = (state) => ({
 	logs: state.firstbootwizard.logs,

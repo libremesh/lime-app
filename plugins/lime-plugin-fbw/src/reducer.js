@@ -1,5 +1,11 @@
 import {
-	FBW_SEARCH_NETWORKS, FBW_SEARCH_NETWORKS_SUCCESS, FBW_SEARCH_NETWORKS_ERROR, FBW_CREATE_NETWORK, FBW_CREATE_NETWORK_ERROR, FBW_SET_NETWORK, FBW_SET_NETWORK_ERROR, FBW_STATUS_SUCCESS
+	FBW_SEARCH_NETWORKS_SUCCESS,
+	FBW_SEARCH_NETWORKS_ERROR,
+	FBW_CREATE_NETWORK,
+	FBW_CREATE_NETWORK_ERROR,
+	FBW_SET_NETWORK,
+	FBW_SET_NETWORK_ERROR,
+	FBW_STATUS_SUCCESS
 } from './constants';
 
 export const initialState = {
@@ -27,11 +33,6 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 			return {
 				...state,
 				first_boot: payload.lock
-			};
-		case FBW_SEARCH_NETWORKS:
-			return {
-				...state,
-				status: 'scanning'
 			};
 		case FBW_SEARCH_NETWORKS_SUCCESS:
 			return {
