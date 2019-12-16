@@ -85,6 +85,7 @@
     "you_don_t_go_through_any_paths_to_get_here_25203ed3": "You don't go through any paths to get here.",
     "you_don_t_have_a_location_please_select_one_2d10649": "You don't have a location, please select one",
     "you_have_successfuly_connected_to_ddb8c613": "You have successfuly connected to",
+    "you_should_try_to_connect_to_the_network_network_8d7f515e": "You should try to connect to the network %{network}.",
     "your_router_has_not_yet_been_configured_you_can_us_2b40cea3": "Your router has not yet been configured, \n\t\t\t\t\tyou can use our wizard to incorporate it into an existing network or create a new one.\n\t\t\t\t\tIf you ignore this message it will continue to work with the default configuration."
   }
 }

@@ -35,7 +35,7 @@ const Status = ({ back, meta }) => {
 
 	return (
 		<div class={style.center}>
-			{isError(meta.ws.split('/')[2], meta.error) }
+			{isError(meta.ws.split('/')[2], meta.error)}
 			{isBase(meta.base,meta.selectedHost)}
 		</div>
 	);
