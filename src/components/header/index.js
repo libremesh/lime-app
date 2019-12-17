@@ -2,12 +2,8 @@ import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import style from './style';
 
-import { Navs } from '../../routes';
-import { Drawer } from '../drawer';
-
-export const Header = ({ hostname, menuHidden }) => {
+export const Header = ({ hostname, menuHidden, Drawer, Navs }) => {
 	const [open, setState ] = useState(false);
-
 	function toggle() {
 		setState(!open);
 	}
@@ -20,7 +16,7 @@ export const Header = ({ hostname, menuHidden }) => {
 	return (
 		<header class={style.header}>
 			<h1>{(hostname !== '')?hostname:'LiMe'}</h1>
-			<div class={menuStatus(open, menuHidden)} onClick={toggle} >
+			<div className={menuStatus(open, menuHidden)} onClick={toggle} >
 				<span>toggle menu</span>
 			</div>
 			<Drawer status={open} toggle={toggle}>
