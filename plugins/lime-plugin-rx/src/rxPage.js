@@ -114,7 +114,7 @@ export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer,
 	},[]);
 
 	return (
-		<div class="container" style={{ paddingTop: '80px' }}>
+		<div className="container" style={{ paddingTop: '80px' }}>
 			{ loading(isLoading, nodeData, signal) }
 		</div>
 	);
