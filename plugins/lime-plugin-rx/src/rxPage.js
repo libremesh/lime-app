@@ -22,13 +22,21 @@ const toHHMMSS = (secs, plus) => {
 		.join(':');
 };
 
-const SystemBox = ({ node, update, count }) => {
-	if (typeof node.uptime !== 'undefined') {
-		update();
+const SystemBox = ({ uptime }) => {
+	const [ count, setCount ] = useState(0);
+
+	useEffect(() => {
+		const interval = setInterval(async () => {
+			setCount(prevCount => prevCount + 1);
+		}, 1000);
+		return () => clearInterval(interval);
+	}, []);
+
+	if (typeof uptime !== 'undefined') {
 		return (
 			<Box title={I18n.t('System')}>
 				<span>
-					<b>{I18n.t('Uptime')} </b>{toHHMMSS(node.uptime, count)}<br />
+					<b>{I18n.t('Uptime')} </b>{toHHMMSS(uptime, count)}<br />
 				</span>
 			</Box>
 		);
@@ -52,9 +60,6 @@ const MostActiveBox = ({ node, changeNode }) => {
 };
 
 export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData, signal }) => {
-	
-	const [ state, setState ] = useState({ plusTime: 0 });
-	const [ count, setCount ] = useState(undefined);
 
 	function loading(option, nodeData) {
 		if (!option) {
@@ -67,23 +72,6 @@ export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer,
 		);
 	}
 
-
-	function startCount() {
-		if (typeof count === 'undefined') {
-			setState({ ...state, plusTime: 0 });
-			setCount(setInterval(() => {
-				let newTime = state.plusTime + 1;
-				setState({ plusTime: newTime });
-			},1000));
-		}
-	}
-
-	function stopCount() {
-		clearInterval(count);
-		setState({ ...state, plusTime: 0 });
-		setCount(undefined);
-	}
-
 	function _changeNode(node) {
 		return () => {
 			changeNode(node.most_active.hostname.split('_')[0]);
@@ -92,13 +80,12 @@ export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer,
 
 	function nodeStatus(node){
 		if (node.hostname) {
-			startCount();
 			return (
 				<div>
 
 					<MostActiveBox node={node} changeNode={_changeNode} />
 					
-					<SystemBox node={node} count={state.plusTime} update={startCount} />
+					<SystemBox uptime={node.uptime} />
 
 					<Box title={I18n.t('Internet connection')}>
 						<span>
@@ -124,10 +111,6 @@ export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer,
 	useEffect(() => {
 		getNodeStatusTimer();
 		getNodeStatus();
-		return () => {
-			stopTimer();
-			stopCount();
-		};
 	},[]);
 
 	return (
