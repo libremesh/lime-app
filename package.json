@@ -17,7 +17,8 @@
     "translations": "node ./node_modules/i18nline/bin/i18nline.js export",
     "posttranslations": "node ./i18n-diff.js",
     "cz": "git-cz",
-    "release": "standard-version"
+    "release": "standard-version",
+    "storybook": "start-storybook"
   },
   "eslintConfig": {
     "extends": "eslint-config-synacor"
@@ -28,6 +29,10 @@
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-knobs": "^5.2.8",
+    "@storybook/preact": "^5.2.8",
+    "@storybook/react": "^5.2.8",
     "colors": "^1.4.0",
     "commitizen": "^4.0.0",
     "commitlint": "^8.0.0",
