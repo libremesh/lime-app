@@ -44,7 +44,7 @@ const style = {
 	}
 };
 
-const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getInternetStatus, meta, metrics, settings, node }) => {
+export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getInternetStatus, meta, metrics, settings, node }) => {
 	
 	function clickGateway(gateway) {
 		return () => {
