@@ -1,20 +1,17 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import style from './style';
 
-export class Drawer extends Component {
-
-	status(open) {
+export const Drawer = ({ status, toggle, children }) => {
+	function statusStyle (open) {
 		if (open) {
 			return 'transform: translate(0,0)';
 		}
 		return 'transform: translate(-100vw,0)';
 	}
 
-	render() {
-		return (
-			<div class={style.drawer} style={this.status(this.props.status)} onClick={this.props.toggle}>
-				{(this.props.children)}
-			</div>
-		);
-	}
-}
+	return (
+		<div class={style.drawer} style={statusStyle(status)} onClick={toggle}>
+			{(children)}
+		</div>
+	);
+};

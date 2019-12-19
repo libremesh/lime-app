@@ -10,7 +10,8 @@ import {
 	LOAD_METRICS_SUCCESS,
 	LOAD_METRICS_GATEWAY_SUCCESS,
 	LOAD_METRICS_ALL,
-	LOAD_METRICS_GATEWAY
+	LOAD_METRICS_GATEWAY,
+	LOAD_HOST_METRICS
 } from './metricsConstants';
 
 import { Observable } from 'rxjs/Observable';
@@ -65,6 +66,11 @@ const loadGatewayMetrics = ( action$, store, { wsAPI }) =>
 			}
 			return [{ type: LOAD_METRICS_GATEWAY_SUCCESS, payload: {} }];
 		});
+	
+const loadHostMetrics =  ( action$, store, { wsAPI }) =>
+	action$.ofType(LOAD_HOST_METRICS)
+		.mergeMap(({ payload }) => getMetrics(wsAPI,store.value.meta.sid,{ target: payload }))
+		.map(payload => ({ type: LOAD_METRICS_SUCCESS, payload }));
+		
 
-
-export default { loadGateway, loadPath, loadMetrics, loadLastPath, loadGatewayMetrics };
+export default { loadGateway, loadPath, loadMetrics, loadLastPath, loadGatewayMetrics, loadHostMetrics };

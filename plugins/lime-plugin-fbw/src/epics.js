@@ -56,8 +56,8 @@ const _showBanner = ( action$, state$, { wsAPI } ) =>
 				description: I18n.t(`Your router has not yet been configured, 
 					you can use our wizard to incorporate it into an existing network or create a new one.
 					If you ignore this message it will continue to work with the default configuration.`),
-				onOk: { type: 'GO_FBW' },
-				onCancel: { type: BANNER_HIDE }
+				onOk: 'GO_FBW',
+				onCancel: BANNER_HIDE
 			} }: { type: '_' }
 		);
 

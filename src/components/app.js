@@ -1,4 +1,4 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import Router from 'preact-router';
 
 import { Provider, connect } from 'react-redux';
@@ -15,63 +15,60 @@ import Status from './status';
 import { plugins } from '../config';
 import Banner from './banner';
 import { isBanner } from '../../plugins/lime-plugin-rx/src/rxSelectors';
+import { useEffect } from 'preact/hooks';
 
 initStore();
 
-class ChangeNode extends Component {
-	componentWillMount () {
-		this.props.change(this.props.hostname);
-	}
-}
+const ChangeNode = ({ change, hostname }) => {
+	useEffect(() => {
+		change(hostname);
+	}, []);
+};
 
 
-class App extends Component {
-	bannerOk = function() { this.props.sendAction(this.props.meta.banner.onOK); }.bind(this);
-	bannerCancel = function() { this.props.sendAction(this.props.meta.banner.onCancel); }.bind(this);
+//class App extends Component {
+const App = ({ meta, history, changeNode, goBase, isBanner }) => {
 
-	render({ store,history }) {
-		const isConnected = (meta) => {
-			if (meta.sid !== '00000000000000000000000000000000' && meta.stauts !== 'start' ) {
-				return (
-					<div class={style.wraper}>
-						<Router history={history}>
-							<ChangeNode path="/changeNode/:hostname" change={this.props.changeNode} />
-							{plugins
-								.filter(plugin => plugin.page !== false)
-								.map(Component => (<Component.page path={Component.name.toLowerCase()} />))
-							}
-						</Router>
-					</div>
-				);
-			}
+	function isConnected(meta) {
+		if (meta.sid !== '00000000000000000000000000000000' && meta.stauts !== 'start' ) {
 			return (
 				<div class={style.wraper}>
-					<Router history={history} />
-					<Status meta={meta} back={this.props.goBase} />
+					<Router history={history}>
+						<ChangeNode path="/changeNode/:hostname" change={changeNode} />
+						{plugins
+							.filter(plugin => plugin.page !== false)
+							.map(Component => (<Component.page path={Component.name.toLowerCase()} />))
+						}
+					</Router>
 				</div>
 			);
-		};
-    
-		/* Ignore for now */
-		const isBase = (meta) => {
-			if (meta.selectedHost !== meta.base && meta.sid !== 'no_user' && meta.stauts !== 'start') {
-				return { minWidth: '100%' };
-			}
-			return { minWidth: '100%' };
-		};
-    
+		}
 		return (
-			<div style={isBase(this.props.meta)}>
-				<Banner />
-				<Header hostname={this.props.meta.selectedHost} goHome={this.props.goBase} menuHidden={this.props.meta.menuHidden} />
-				{ /*<Navigator hostname={this.props.meta} goHome={this.props.goBase} /> */ }
-				{!this.props.isBanner && isConnected(this.props.meta)}
-				<Alert text={this.props.meta.alert} hide={this.props.hideAlert} />
+			<div class={style.wraper}>
+				<Router history={history} />
+				<Status meta={meta} back={goBase} />
 			</div>
 		);
 	}
-}
-
+    
+	/* Ignore for now */
+	function isBase(meta) {
+		if (meta.selectedHost !== meta.base && meta.sid !== 'no_user' && meta.stauts !== 'start') {
+			return { minWidth: '100%' };
+		}
+		return { minWidth: '100%' };
+	}
+    
+	return (
+		<div style={isBase(meta)}>
+			<Banner />
+			<Header hostname={meta.selectedHost} goHome={goBase} menuHidden={meta.menuHidden} />
+			{ /*<Navigator hostname={meta} goHome={goBase} /> */ }
+			{!isBanner && isConnected(meta)}
+			<Alert text={meta.alert} hide={hideAlert} />
+		</div>
+	);
+};
 
 const mapStateToProps = (state) => ({
 	meta: state.meta,

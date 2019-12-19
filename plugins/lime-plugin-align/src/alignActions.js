@@ -2,7 +2,7 @@ import {
 	IFACE_CHANGE,
 	STATION_SET,
 	IFACES_LOAD,
-	TIMER_STOP
+	SIGNAL_GET
 } from './alignConstants';
 import { store } from '../../../src/store';
 
@@ -32,6 +32,6 @@ export const startAlign = () => ({
 	type: IFACES_LOAD
 });
 
-export const stopTimer = () => ({
-	type: TIMER_STOP
+export const getSignal = () => ({
+	type: SIGNAL_GET
 });
