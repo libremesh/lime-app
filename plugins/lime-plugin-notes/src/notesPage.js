@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-import './style';
+import style from './style';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -11,7 +11,7 @@ import { getNotesState } from './notesSelectors';
 
 import I18n from 'i18n-js';
 
-const Page = ({ setNotes, getNotes, notes, hostname }) => {
+export const Page = ({ setNotes, getNotes, notes, hostname, loading }) => {
 
 	const [ value, setValue] = useState(notes || '');
 
@@ -36,10 +36,10 @@ const Page = ({ setNotes, getNotes, notes, hostname }) => {
 	}, [notes]);
 
 	return (
-		<div class="container" style={{ paddingTop: '100px' }}>
+		<div className="container" style={{ paddingTop: '100px' }}>
 			<h4><span>{I18n.t('Notes of')}</span> {hostname}</h4>
-			<textarea onChange={handleChange} class="notes" value={value} />
-			<button onClick={saveNotes}>{I18n.t('Save notes')}</button>
+			<textarea onChange={handleChange} className={style.notes} value={value} />
+			<button disabled={loading} onClick={saveNotes}>{I18n.t('Save notes')}</button>
 		</div>
 	);
 };
