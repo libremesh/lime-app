@@ -14,7 +14,7 @@ import Alert from '../../../../src/components/alert';
 import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
 import { showNotification } from '../../../../src/store/actions';
 
-const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks, hostname }) => {
+export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks, hostname }) => {
 	
 	const [state, setState] = useState({
 		createForm: false,
@@ -53,6 +53,12 @@ const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks, hostna
 				...state,
 				error: true
 			});
+			setTimeout(() => {
+				setState({
+					...state,
+					error: false
+				})
+			}, 2000)
 		}
 	}
 
@@ -161,7 +167,6 @@ const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks, hostna
 };
 
 const mapStateToProps = (state) => ({
-	logs: state.firstbootwizard.logs,
 	networks: state.firstbootwizard.networks,
 	status: state.firstbootwizard.status,
 	hostname: state.meta.selectedHost
