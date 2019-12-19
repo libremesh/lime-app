@@ -6,7 +6,7 @@ import 'skeleton-less/less/skeleton';
 
 export const frameDecorator = storyFn => (
     <div>
-        <Header hostname={'ql-anaymarcos'} />
+        <Header hostname={'LiMe'} />
         <div style={{width: '85%', margin: '0 auto'}}>
             {storyFn()}
         </div>
