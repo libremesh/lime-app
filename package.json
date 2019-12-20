@@ -13,11 +13,13 @@
     "serve": "preact build && serve build --single",
     "dev": "preact watch",
     "lint": "eslint src",
-    "deploy": "gh-pages -d build",
     "translations": "node ./node_modules/i18nline/bin/i18nline.js export",
     "posttranslations": "node ./i18n-diff.js",
     "cz": "git-cz",
-    "release": "standard-version"
+    "release": "standard-version",
+    "storybook": "start-storybook",
+    "storybook:build": "build-storybook -c .storybook",
+    "storybook:deploy": "gh-pages -d storybook-static"
   },
   "eslintConfig": {
     "extends": "eslint-config-synacor"
@@ -28,6 +30,10 @@
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
+    "@storybook/addon-actions": "^5.2.8",
+    "@storybook/addon-knobs": "^5.2.8",
+    "@storybook/preact": "^5.2.8",
+    "@storybook/react": "^5.2.8",
     "colors": "^1.4.0",
     "commitizen": "^4.0.0",
     "commitlint": "^8.0.0",
@@ -36,6 +42,7 @@
     "enzyme-adapter-preact-pure": "^2.0.0",
     "eslint": "^6.0.0",
     "eslint-config-synacor": "^3.0.2",
+    "fetch-mock": "^8.2.0-beta.2",
     "gh-pages": "^2.0.1",
     "husky": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",

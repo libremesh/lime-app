@@ -10,9 +10,8 @@ import { createNetwork } from '../actions';
 
 import I18n from 'i18n-js';
 import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
-import { showNotification } from '../../../../src/store/actions';
 
-const NetworkForm = ({ createNetwork, toggleForm }) => {
+export const NetworkForm = ({ createNetwork, toggleForm }) => {
 	const [ state, setState ] = useState({
 		communityName: '',
 		hostName: '',
@@ -75,7 +74,6 @@ const NetworkForm = ({ createNetwork, toggleForm }) => {
 const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = (dispatch) => ({
-	showNotification: bindActionCreators(showNotification, dispatch),
 	createNetwork: bindActionCreators(createNetwork ,dispatch)
 });
 

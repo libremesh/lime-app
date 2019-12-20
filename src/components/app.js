@@ -25,6 +25,8 @@ const ChangeNode = ({ change, hostname }) => {
 	}, []);
 };
 
+import { Navs } from '../routes';
+import { Drawer } from './drawer';
 
 //class App extends Component {
 const App = ({ meta, history, changeNode, goBase, isBanner }) => {
@@ -62,7 +64,13 @@ const App = ({ meta, history, changeNode, goBase, isBanner }) => {
 	return (
 		<div style={isBase(meta)}>
 			<Banner />
-			<Header hostname={meta.selectedHost} goHome={goBase} menuHidden={meta.menuHidden} />
+			<Header
+				hostname={meta.selectedHost}
+				goHome={goBase}
+				menuHidden={meta.menuHidden}
+				Drawer={Drawer}
+				Navs={Navs}
+			/>
 			{ /*<Navigator hostname={meta} goHome={goBase} /> */ }
 			{!isBanner && isConnected(meta)}
 			<Alert text={meta.alert} hide={hideAlert} />

@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useEffect } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -43,7 +43,29 @@ const style = {
 	}
 };
 
-const Align = ({ startAlign, changeInterface, changeStation, alignData, selectedHost }) => {
+function useInterval (callback, delay, off) {
+	const savedCallback = useRef();
+
+	useEffect(() => {
+		savedCallback.current = callback;
+	}, [callback]);
+
+	useEffect(() => {
+		function tick() {
+			savedCallback.current();
+		}
+		if (delay !== null) {
+			let id = setInterval(tick, delay);
+			return () => clearInterval(id);
+		}
+	}, [delay]);
+
+}
+
+export const Align = ({ startAlign, changeInterface, changeStation, alignData, selectedHost, settings, getSignal }) => {
+
+	const [ lastSpeech, setLastSpeech ] = useState(0);
+	const [ resumedTimes, setResumedTimes ] = useState(0);
 
 	function _changeInterface(e) {
 		changeInterface(e.target.value);
@@ -59,39 +81,34 @@ const Align = ({ startAlign, changeInterface, changeStation, alignData, selected
 
 	useEffect(() => {
 		startAlign();
-		const interval = setInterval(() => {
-			getSignal();
-		},2000);
-
-		return () => {
-			clearInterval(interval);
-		};
+		colorScale.setConfig({
+			outputStart: 1,
+			outputEnd: Number(settings.bad_signal)* -1,
+			inputStart: Number(settings.good_signal)* -1,
+			inputEnd: Number(settings.bad_signal)* -1 + 10
+		});
 	},[]);
 
 	useEffect(() => {
-		let lastSpeech = 0;
-		let resumedTimes = 0;
-		const interval = setInterval(() => {
-			if (typeof alignData.currentReading !== 'undefined') {
-				const value = alignData.currentReading.signal * -1;
-				
-				if ( (Math.floor(lastSpeech/10) !== Math.floor(value/10)) || Number(value.toString()[value.toString().length -1 ]) === 0 || resumedTimes === 5 ) {
-					speech(value || 0, 'es-ES', voices, synth);
-					resumedTimes = 0;
-				}
-				
-				else {
-					speech(value.toString()[value.toString().length - 1] || 0, 'es-ES', voices, synth);
-					resumedTimes++;
-				}
-				lastSpeech = value;
-				
+		if (typeof alignData.currentReading !== 'undefined') {
+			const value = alignData.currentReading.signal * -1;
+			
+			if ( (Math.floor(lastSpeech/10) !== Math.floor(value/10)) || Number(value.toString()[value.toString().length -1 ]) === 0 || resumedTimes === 5 ) {
+				speech(value || 0, 'es-ES', voices, synth);
+				setResumedTimes(() => 0);
 			}
-		}, 2000);
-		return () => {
-			clearInterval(interval);
-		};
-	},[alignData]);
+			
+			else {
+				speech(value.toString()[value.toString().length - 1] || 0, 'es-ES', voices, synth);
+				setResumedTimes(() => resumedTimes + 1);
+			}
+			setLastSpeech(() => value);
+		}
+	}, [alignData]);
+
+	useInterval(() => {
+		getSignal();
+	},[2000]);
 
 	return (
 		<div className="container" style={{ paddingTop: '100px' }}>

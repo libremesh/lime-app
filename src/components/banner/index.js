@@ -4,7 +4,7 @@ import style from './style';
 import I18n from 'i18n-js';
 import { bindActionCreators } from 'redux';
 
-const Banner = ({ send, banner }) => {
+export const Banner = ({ send, banner }) => {
 
 	function onOk(){
 		send(banner.onOk);

@@ -10,7 +10,7 @@ export const Drawer = ({ status, toggle, children }) => {
 	}
 
 	return (
-		<div class={style.drawer} style={statusStyle(status)} onClick={toggle}>
+		<div className={style.drawer} style={statusStyle(status)} onClick={toggle}>
 			{(children)}
 		</div>
 	);

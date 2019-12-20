@@ -8,8 +8,6 @@ import '../style';
 import ProgressBar from '../../../../src/components/progressbar';
 import Loading from '../../../../src/components/loading';
 
-import axios from 'axios';
-
 function useInterval (callback, delay, off) {
 	const savedCallback = useRef();
 
@@ -29,7 +27,7 @@ function useInterval (callback, delay, off) {
 
 }
 
-const Setting = ({ expectedHost, expectedNetwork }) => {
+export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 	const [ progress, setProgress ] = useState(0);
 	const [ time, setTime ] = useState(120);
 
@@ -47,9 +45,10 @@ const Setting = ({ expectedHost, expectedNetwork }) => {
 			});
 		}
 
-		axios.get('http://thisnode.info/cgi-bin/hostname')
-			.then(res => res.data.split('\n')[0])
+		fetch('http://thisnode.info/cgi-bin/hostname')
+			.then(res => res.text())
 			.then(res => {
+				res = res.split('\n')[0];
 				if (res === expectedHost) {
 					setState({
 						...state,
@@ -86,7 +85,7 @@ const Setting = ({ expectedHost, expectedNetwork }) => {
 
 	useInterval(() => {
 		runProgress(120, fetchHost);
-	}, 1000);
+	}, delay);
 
 
 	return (
