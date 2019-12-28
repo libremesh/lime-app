@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import { adminLogin } from './piraniaActions';
 import { authStatus, loading } from './piraniaSelectors';
@@ -107,15 +107,15 @@ export class PiraniaPage extends Component {
 				{this.showLoading(this.props.loading)}
 				{!logged && (
 					<Home
-	logged={logged}
-	submit={this.adminLogin}
-	handlePassword={this.handleHostname}
+						logged={logged}
+						submit={this.adminLogin}
+						handlePassword={this.handleHostname}
 					/>
 				)}
 				{page === 1 && (
 					<Admin
-	list={() => this.setState({ page: 3 })}
-	submit={() => this.setState({ page: 2 })}
+						list={() => this.setState({ page: 3 })}
+						submit={() => this.setState({ page: 2 })}
 						renew={() => this.setState({ page: 4 })}
 						elect={() => this.setState({ page: 5 })}
 						logged={logged}
