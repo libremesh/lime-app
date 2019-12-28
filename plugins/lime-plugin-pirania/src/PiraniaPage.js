@@ -48,20 +48,21 @@ export class PiraniaPage extends Component {
 	}
 
 	handlePassword (e) {
+    console.log('E', e.target.value)
 		this.setState({ adminPassword: e.target.value });
 		return this.state.adminPassword;
 	}
 
 	adminLogin (e) {
 		e.preventDefault();
-		this.setState({
-			logged: true,
-			page: 1
-		});
-		// this.props.adminLogin({
-		//   username: 'root',
-		//   password: this.state.adminPassword
-		// })
+		// this.setState({
+		// 	logged: true,
+		// 	page: 1
+		// });
+		this.props.adminLogin({
+		  username: 'root',
+		  password: this.state.adminPassword
+		})
 	}
 
 	changeConfig (e) {
