@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'preact-router-redux';
+import { routerReducer } from 'react-router-redux';
 
 import { combineEpics } from 'redux-observable';
 
@@ -20,9 +20,9 @@ const rootReducers = combineReducers(reducers);
 const rootEpics =  combineEpics(...loadEpics(plugins));
 
 //CREATE STORE
-const store = createStore({},rootEpics,rootReducers, new UhttpdService());
+export const store = createStore({},rootEpics,rootReducers, new UhttpdService());
 
 // Init websocket
-store.dispatch({ type: 'meta/CONECTION_START', payload: window.location.href.split('/').slice(0, 3).join('/').concat('/ubus' ) });
+export const initStore = () => store.dispatch({ type: 'meta/CONECTION_START', payload: 'http://10.5.0.1/ubus' });
 
 export default store;

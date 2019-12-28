@@ -19,8 +19,6 @@ import {
 	STATIONS_LOAD,
 	STATIONS_LOAD_SUCCESS,
 	STATION_SET,
-	TIMER_START,
-	TIMER_STOP,
 	SIGNAL_GET,
 	SIGNAL_GET_SUCCESS,
 	SIGNAL_GET_FAILD
@@ -73,8 +71,8 @@ const initAlign = (action$, state$ ) =>
 		})
 		.mergeMap((res) => Observable.from([
 			({ type: STATION_SET, payload: res }),
-			({ type: IFACE_SET, payload: res? res.iface: undefined }),
-			({ type: TIMER_START })]));
+			({ type: IFACE_SET, payload: res? res.iface: undefined })
+		]));
 
 // GET_SIGNAL -> Update current signal and nodes
 const getSignal = ( action$, state$, { wsAPI } ) =>
@@ -83,11 +81,4 @@ const getSignal = ( action$, state$, { wsAPI } ) =>
 		.map( signal => ({ type: SIGNAL_GET_SUCCESS, payload: signal }))
 		.catch(e => [{ type: SIGNAL_GET_FAILD }]);
 
-// TIMER MANAGER
-const runTimer = ( action$, state$ ) =>
-	action$.ofType(TIMER_START)
-		.mergeMap((actions) => Observable.interval(state$.value.meta.interval/2)
-			.takeUntil(action$.ofType(TIMER_STOP))
-			.map(() => ({ type: SIGNAL_GET })));
-
-export default { ifaceLoad, allStationsLoad, ifaceChange, initAlign, getSignal, runTimer };
+export default { ifaceLoad, allStationsLoad, ifaceChange, initAlign, getSignal };

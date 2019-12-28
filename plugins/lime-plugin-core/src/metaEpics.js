@@ -30,7 +30,7 @@ import 'rxjs/add/operator/delay';
 
 import I18n from 'i18n-js';
 
-import { push } from 'preact-router-redux';
+import { push } from 'react-router-redux';
 
 const conectionOff = ( action$ ) =>
 	action$.ofType(CONECTION_START)
@@ -87,10 +87,10 @@ const loginAction = ( action$, store, { wsAPI } ) =>
 
 const redirectOnConnection = ( action$, store ) =>
 	action$.ofType(AUTH_LOGIN_SUCCESS)
-		.mergeMap(() =>
-			window.location.href.split('#')[1] === '/'
-				? [push(store.value.meta.home)]
-				: []
+		.map(() => window.location.href.split('#')[1] === '/'
+			|| window.location.href.split('#').length === 1
+			? push(store.value.meta.home)
+			: { type: '_no_redirect' }
 		);
 
 const communitySettings = (action$, store, { wsAPI } ) =>

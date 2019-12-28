@@ -1,9 +1,10 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 
 import colorScale from 'simple-color-scale';
 
 import I18n from 'i18n-js';
 
+import Loading from '../../../../../src/components/loading';
 
 const style = {
 	box: {
@@ -13,7 +14,8 @@ const style = {
 		textAalign: 'center',
 		transition: 'height 04s ease',
 		overflow: 'hidden',
-		height: 'auto'
+		height: 'auto',
+		cursor: 'pointer'
 	},
 	loading: {
 		margin: '3px',
@@ -38,36 +40,46 @@ const style = {
 };
 
 
-class Box extends Component {
-	barStyle(loss) {
+const Box = ({ station, settings, loading, click, gateway }) => {
+	function barStyle(loss) {
 		return Object.assign({},style.line,{
-			width: ((this.props.station.bandwidth*100/this.props.settings.good_bandwidth) || 3).toString()+'%',
+			width: ((station.bandwidth*100/settings.good_bandwidth) || 3).toString()+'%',
 			maxWidth: '100%',
 			backgroundColor: colorScale.getColor(loss)
 		});
 	}
-	isGateway(gateway, hostname){
+
+	function isGateway(gateway, hostname){
 		return (gateway === true)? hostname + ' (Gateway)' : hostname;
 	}
-	render() {
-		colorScale.setConfig({
-			outputStart: 1,
-			outputEnd: 100,
-			inputStart: 0,
-			inputEnd: this.props.settings.acceptable_loss
-		});
-		return (
-			<div style={(this.props.station.loading)? style.loading: style.box} onClick={this.props.click} >
-				<span><b>{this.isGateway(this.props.gateway, this.props.station.host.hostname)}
-					{ Number(this.props.station.bandwidth || '0') === 0 && this.props.station.loss
+
+	function onClick() {
+		click(station.host.ip);
+	}
+
+	colorScale.setConfig({
+		outputStart: 1,
+		outputEnd: 100,
+		inputStart: 0,
+		inputEnd: settings.acceptable_loss
+	});
+	return (
+		<div style={(station.loading && !loading)? style.loading: style.box} onClick={onClick} >
+			<span>
+				<b>{isGateway(gateway, station.host.hostname)}
+					{ Number(station.bandwidth || '0') === 0 && station.loss
 						? <b> ({I18n.t('Error')})</b>
 						:false}
 				</b><br /></span>
-				{this.props.station.bandwidth || 0} Mbps / <span>{I18n.t('Packet loss')}</span> {this.props.station.loss}%<br />
-				<div style={this.barStyle(this.props.station.loss)} />
-			</div>
-		);
-	}
-}
+			{loading
+				? (<Loading />)
+				: (<div>
+					{station.bandwidth || 0} Mbps / <span>{I18n.t('Packet loss')}</span> {station.loss}%<br />
+					<div style={barStyle(station.loss)} />
+				</div>)
+			}
+		</div>
+	);
+};
 
 export default Box;

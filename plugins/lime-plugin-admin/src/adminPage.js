@@ -1,7 +1,8 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useState } from 'preact/hooks';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import { changeConfig, adminLogin } from './adminActions';
 import { authStatus, loading } from './adminSelectors';
@@ -11,6 +12,8 @@ import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 import Loading from '../../../src/components/loading';
 
 import I18n from 'i18n-js';
+import { isValidHostname, slugify } from '../../../src/utils/isValidHostname';
+import { showNotification } from '../../../src/store/actions';
 
 const style = {
 	textLoading: {
@@ -31,36 +34,44 @@ const style = {
 	}
 };
 
-export class Admin extends Component {
 
-	handleHostname(e) {
-		this.setState({ hostname: e.target.value });
-		return this.state.hostname;
+export const Admin = ({ adminLogin, changeConfig, showNotification, selectedHost, nodeData, loading, authStatus }) => {
+	const [ state, setState ] = useState({
+		hostname: selectedHost,
+		ip: nodeData.ips.filter(ip => ip.version === '4')[0].address
+	});
+
+	function handleHostname(e) {
+		const end = e.type === 'change';
+		e.target.value = slugify(e.target.value, end);
+		setState({ ...state, hostname: e.target.value });
+		return e;
 	}
 
-	handleIp(e) {
-		this.setState({ ip: e.target.value });
-		return this.state.ip;
+	function handleIp(e) {
+		setState({ ...state, ip: e.target.value });
+		return e;
 	}
 
-	handlePassword(e) {
-		this.setState({ adminPassword: e.target.value });
-		return this.state.adminPassword;
+	function handlePassword(e) {
+		setState({ ...state, adminPassword: e.target.value });
+		return e;
 	}
 
-	adminLogin(e) {
+	function _adminLogin(e) {
 		e.preventDefault();
-		this.props.adminLogin({ username: 'root', password: this.state.adminPassword });
+		adminLogin({ username: 'root', password: state.adminPassword });
 	}
 
-	changeConfig(e) {
+	function _changeConfig(e) {
 		e.preventDefault();
-		if (typeof this.state.hostname !== 'undefined') {
-			return this.props.changeConfig({ hostname: this.state.hostname, ip: this.state.ip });
+		if (isValidHostname(state.hostname, true)) {
+			return changeConfig({ hostname: state.hostname, ip: state.ip });
 		}
+		showNotification('Invalid hostname, needs to be at least three characters long.');
 	}
 
-	showLoading(show) {
+	function showLoading(show) {
 		if (show) {
 			return (
 				<div style={style.loadingBox}>
@@ -71,46 +82,31 @@ export class Admin extends Component {
 		}
 	}
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			hostname: this.props.selectedHost,
-			ip: this.props.nodeData.ips.filter(ip => ip.version === '4')[0].address
-		};
-		this.changeConfig = this.changeConfig.bind(this);
-		this.handleHostname = this.handleHostname.bind(this);
-		this.handleIp = this.handleIp.bind(this);
-		this.handlePassword = this.handlePassword.bind(this);
-		this.adminLogin = this.adminLogin.bind(this);
-	}
+	return (
+		<div class="container" style={{ paddingTop: '100px' }}>
+			{showLoading(loading)}
+			<form onSubmit={_adminLogin} style={{ display: (!authStatus)? 'block': 'none' }}>
+				<p>
+					<label>{I18n.t('Admin password')}</label>
+					<input type="password" onInput={handlePassword} class="u-full-width" />
 
-	render() {
-		return (
-			<div class="container" style={{ paddingTop: '100px' }}>
-				{this.showLoading(this.props.loading)}
-				<form onSubmit={this.adminLogin} style={{ display: (!this.props.authStatus)? 'block': 'none' }}>
-					<p>
-						<label>{I18n.t('Admin password')}</label>
-						<input type="password" onChange={this.handlePassword} class="u-full-width" />
-
-					</p>
-					<button class="button green block" type="submit">{I18n.t('Login')}</button>
-				</form>
-				<form onSubmit={this.changeConfig} style={{ display: (this.props.authStatus)? 'block': 'none' }}>
-					<p>
-						<label>{I18n.t('Station name')}</label>
-						<input type="text" value={this.state.hostname} onChange={this.handleHostname} class="u-full-width" />
-					</p>
-					<p>
-						<label>{I18n.t('Station IP v4')}</label>
-						<input type="text" value={this.state.ip} onChange={this.handleIp} class="u-full-width" />
-					</p>
-					<button class="button green block" type="submit">{I18n.t('Change')}</button>
-				</form>
-			</div>
-		);
-	}
-}
+				</p>
+				<button class="button green block" type="submit">{I18n.t('Login')}</button>
+			</form>
+			<form onSubmit={_changeConfig} style={{ display: (authStatus)? 'block': 'none' }}>
+				<p>
+					<label>{I18n.t('Station name')}</label>
+					<input type="text" value={state.hostname} onInput={handleHostname} onChange={handleHostname} class="u-full-width" />
+				</p>
+				<p>
+					<label>{I18n.t('Station IP v4')}</label>
+					<input type="text" value={state.ip} onInput={handleIp} class="u-full-width" />
+				</p>
+				<button class="button green block" type="submit">{I18n.t('Change')}</button>
+			</form>
+		</div>
+	);
+};
 
 
 export const mapStateToProps = (state) => ({
@@ -122,8 +118,8 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = (dispatch) => ({
 	changeConfig: bindActionCreators(changeConfig, dispatch),
-	adminLogin: bindActionCreators(adminLogin, dispatch)
+	adminLogin: bindActionCreators(adminLogin, dispatch),
+	showNotification: bindActionCreators(showNotification, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);
-

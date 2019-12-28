@@ -37,5 +37,6 @@
   "try_thisnode_info_1ee1bfe2" :"Try thisnode.info",
   "uptime_c1d2415d" :"Uptime",
   "interfaces_44f8a99c": "Interfaces",
-  "last_known_internet_path_45f31c9a": "This your last working path to the Internet"
+  "last_known_internet_path_45f31c9a": "This your last working path to the Internet",
+  "you_should_try_to_connect_to_the_network_network_8d7f515e": "You should try to connect to the wifi network %{network}."
 }

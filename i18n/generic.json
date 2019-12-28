@@ -21,6 +21,7 @@
     "create_network_d229d642": "Create network",
     "create_new_network_28805f92": "Create new network",
     "current_status_830c5a75": "Current status",
+    "error_98e81528": "Error",
     "from_fdd4956d": "From",
     "full_path_metrics_2859608f": "Full path metrics",
     "ground_routing_12ab04c9": "Ground Routing",
@@ -47,6 +48,8 @@
     "notes_of_a44a4158": "Notes of",
     "ok_ff1b646a": "Ok",
     "only_gateway_727b1656": "Only gateway",
+    "only_letters_and_dots_are_allowed_8c45f013": "Only letters and dots are allowed",
+    "only_letters_numbers_and_underscores_are_allowed_ea6180da": "Only letters, numbers and underscores are allowed",
     "packet_loss_1afe48a8": "Packet loss",
     "please_configure_your_network_d6eb8b76": "Please configure your network",
     "please_wait_62914c7c": "Please wait",
@@ -82,6 +85,7 @@
     "you_don_t_go_through_any_paths_to_get_here_25203ed3": "You don't go through any paths to get here.",
     "you_don_t_have_a_location_please_select_one_2d10649": "You don't have a location, please select one",
     "you_have_successfuly_connected_to_ddb8c613": "You have successfuly connected to",
+    "you_should_try_to_connect_to_the_network_network_8d7f515e": "You should try to connect to the network %{network}.",
     "your_router_has_not_yet_been_configured_you_can_us_2b40cea3": "Your router has not yet been configured, \n\t\t\t\t\tyou can use our wizard to incorporate it into an existing network or create a new one.\n\t\t\t\t\tIf you ignore this message it will continue to work with the default configuration."
   }
 }

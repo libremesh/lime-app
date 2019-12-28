@@ -1,8 +1,6 @@
 import { compose, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-
 import { createEpicMiddleware } from 'redux-observable';
-import { routerMiddleware } from 'preact-router-redux';
+import { routerMiddleware } from 'react-router-redux';
 
 import { history } from './history';
 
@@ -18,7 +16,7 @@ export default (initialState,rootEpics,rootReducers, wsAPI) => {
 	});
 
 	const enhancer = composeEnhancers(
-		applyMiddleware(...[reduxRouterMiddleware,epicMiddleware,thunk.withExtraArgument()]),
+		applyMiddleware(...[reduxRouterMiddleware,epicMiddleware]),
 	);
 
 	const store = createStore(rootReducers, initialState, enhancer);

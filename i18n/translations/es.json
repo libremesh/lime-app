@@ -87,5 +87,9 @@
     "please_configure_your_network_d6eb8b76": "Por favor configure su conexión de red",
     "your_router_has_not_yet_been_configured_you_can_us_2b40cea3": "Su router aún no ha sido configurado, puede utilizar nuestro asistente para incorporarlo a una red existente o crear una nueva. Si ignora este mensaje, continuará funcionando con la configuración predeterminada.",
     "ok_ff1b646a": "Ok",
-    "last_known_internet_path_45f31c9a": "Este es el último recorrido hasta Internet que funcionó"
+    "last_known_internet_path_45f31c9a": "Este es el último recorrido hasta Internet que funcionó",
+    "only_letters_and_dots_are_allowed_8c45f013": "Solo letras y puntos son permitidos",
+    "only_letters_numbers_and_underscores_are_allowed_ea6180da": "Solo letras, números y guiones bajos son permitidos",
+    "you_should_try_to_connect_to_the_network_network_8d7f515e": "Intente conectarce a la red wifi %{network} para completar la instalación."
+
 }

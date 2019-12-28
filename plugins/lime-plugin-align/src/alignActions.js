@@ -2,39 +2,36 @@ import {
 	IFACE_CHANGE,
 	STATION_SET,
 	IFACES_LOAD,
-	TIMER_STOP
+	SIGNAL_GET
 } from './alignConstants';
+import { store } from '../../../src/store';
 
-export const changeInterface = (iface) => (dispatch, getState) => {
-	if (iface === getState().align.currentReading.iface) {
-		return;
+export const changeInterface = (iface) => {
+	if (iface === store.getState().align.currentReading.iface) {
+		return { type: 'no_iface' };
 	}
-	dispatch({
+	return {
 		type: IFACE_CHANGE,
 		payload: {
 			iface
 		}
-	});
+	};
 };
 
-export const changeStation = (mac) => (dispatch, getState) => {
-	if (mac === getState().align.currentReading.mac) {
-		return;
+export const changeStation = (mac) => {
+	if (mac === store.getState().align.currentReading.mac) {
+		return { type: 'no_change' };
 	}
-	dispatch({
+	return {
 		type: STATION_SET,
-		payload: getState().align.stations.filter(x => x.mac === mac)[0]
-	});
+		payload: store.getState().align.stations.filter(x => x.mac === mac)[0]
+	};
 };
 
-export const startAlign = () => (dispatch) => {
-	dispatch({
-		type: IFACES_LOAD
-	});
-};
+export const startAlign = () => ({
+	type: IFACES_LOAD
+});
 
-export const stopTimer = () => (dispatch) => {
-	dispatch({
-		type: TIMER_STOP
-	});
-};
+export const getSignal = () => ({
+	type: SIGNAL_GET
+});

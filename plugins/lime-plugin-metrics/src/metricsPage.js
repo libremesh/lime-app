@@ -1,12 +1,12 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useEffect } from 'preact/hooks';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
-import { getMetrics, getMetricsAll, getMetricsGateway, changeNode } from './metricsActions';
+import { getInternetStatus, getMetrics, getMetricsAll, getMetricsGateway, getNodeMetrics } from './metricsActions';
 import { getNodeData, getSettings } from '../../lime-plugin-rx/src/rxSelectors';
 
-import Loading from '../../../src/components/loading';
 import MetricsBox from './components/box';
 import { Box } from '../../../src/components/box';
 
@@ -17,7 +17,12 @@ import colorScale from 'simple-color-scale';
 const style = {
 	textLoading: {
 		textAlign: 'center',
-		display: 'block'
+		display: 'block',
+		background: '#3bc1a5',
+		color: '#fff',
+		padding: '5px',
+		borderRadius: '4px',
+		fontWeight: 'bold'
 	},
 	textError: {
 		textAlign: 'center',
@@ -36,39 +41,28 @@ const style = {
 		textAalign: 'center',
 		overflow: 'hidden',
 		height: 'auto'
-	},
-	loadingBox: {
-		position: 'fixed',
-		marginTop: '30vh',
-		zIndex: '5555',
-		background: 'rgb(255, 255, 255)',
-		width: '200px',
-		top: '0px',
-		left: 'calc(50% - 100px)',
-		borderRadius: '11px',
-		padding: '15px',
-		boxShadow: '1px 1px 6px rgba(0,0,0,0.5)'
 	}
 };
 
-class Metrics extends Component {
-  
-	clickGateway(gateway) {
+export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getInternetStatus, meta, metrics, settings, node }) => {
+	
+	function clickGateway(gateway) {
 		return () => {
-			this.props.getMetricsGateway(gateway);
+			getMetricsGateway(gateway);
+			getInternetStatus();
 		};
 	}
 
-	showButton(loading) {
+	function showButton(loading) {
 		if (!loading) {
-			return !this.isGateway(this.props.meta.selectedHost,this.props.metrics.gateway)
+			return !isGateway(meta.selectedHost, metrics.gateway)
 				? (
 					<div class="row">
 						<br />
-						<button class="button green block u-full-width" type="submit" onClick={this.clickGateway(this.props.metrics.gateway)}>
+						<button class="button green block u-full-width" type="submit" onClick={clickGateway(metrics.gateway)}>
 							{I18n.t('Only gateway')}
 						</button>
-						<button class="button green block u-full-width"  type="submit" onClick={this.props.getMetricsAll}>
+						<button class="button green block u-full-width"  type="submit" onClick={getMetricsAll}>
 							{I18n.t('Full path metrics')}
 						</button>
 					</div>
@@ -86,7 +80,7 @@ class Metrics extends Component {
 		);
 	}
 
-	showLoading(loading) {
+	function showLoading(loading) {
 		if (!loading) {
 			return;
 		}
@@ -99,14 +93,11 @@ class Metrics extends Component {
 		};
 
 		return (
-			<div style={style.loadingBox}>
-				<Loading />
-				<span style={style.textLoading}>{loadingMessages[this.props.metrics.status]}</span>
-			</div>
+			<p style={style.textLoading}>{loadingMessages[metrics.status]}</p>
 		);
 	}
 
-	showInternetStatus(loading,node) {
+	function showInternetStatus(loading, node) {
 		if (!loading) {
 			return (
 				<Box title={I18n.t('Internet connection')} style={{ marginTop: '15px' }}>
@@ -123,12 +114,10 @@ class Metrics extends Component {
 		);
 	}
 
-	showError(error){
-		console.log(error);
+	function showError(error){
 		const errorMessages = {
 			last_known_internet_path: I18n.t('last_known_internet_path')
 		};
-		console.log(errorMessages);
 
 		if (error !== null) {
 			return (<p style={style.textError}>{errorMessages[error]}</p>);
@@ -136,48 +125,41 @@ class Metrics extends Component {
 		return;
 	}
 
-	isGateway(hostname, gateway) {
+	function isGateway(hostname, gateway) {
 		return (hostname === gateway);
 	}
-  
-	wrapperChangeNode (station) {
-		return () => {
-			this.props.changeNode(station.host.hostname);
-		};
-	}
-
- 
-	constructor(props) {
-		super(props);
-		this.wrapperChangeNode = this.wrapperChangeNode.bind(this);
-		this.clickGateway = this.clickGateway.bind(this);
-	}
-  
-	componentWillMount() {
-		this.props.getMetrics();
+	 
+	useEffect(() => {
+		getMetricsGateway();
+		getInternetStatus();
 		colorScale.setConfig({
 			outputStart: 1,
 			outputEnd: 100,
 			inputStart: 0,
 			inputEnd: 30
 		});
-	}
-	render() {
-		return (
-			<div class="container" style={{ paddingTop: '80px', textAlign: 'center' }}>
-				{this.props.metrics.error.map(x => this.showError(x))}
-				<div style={style.box}>{I18n.t('From')+' '+this.props.meta.selectedHost}</div>
-				{this.props.metrics.metrics.map(station => (
-					<MetricsBox settings={this.props.settings} station={station} click={this.wrapperChangeNode(station)} gateway={this.isGateway(station.host.hostname,this.props.metrics.gateway)} />
-				))}
-				<div style={style.box}>{I18n.t('To Internet')}</div>
-				{this.showInternetStatus(this.props.metrics.loading, this.props.node)}
-				{this.showLoading(this.props.metrics.loading)}
-				{this.showButton(this.props.metrics.loading)}<br />
-			</div>
-		);
-	}
-}
+		return () => {};
+	},[]);
+
+	return (
+		<div class="container" style={{ paddingTop: '80px', textAlign: 'center' }}>
+			{metrics.loading? showLoading(metrics.loading) : metrics.error.map(x => showError(x))}
+			<div style={style.box}>{I18n.t('From')+' '+meta.selectedHost}</div>
+			{metrics.metrics.map((station, key) => (
+				<MetricsBox
+					settings={settings}
+					station={station}
+					gateway={isGateway(station.host.hostname,metrics.gateway)}
+					loading={metrics.loading && station.loading && (key === 0 || metrics.metrics[key - 1].loading === false)}
+					click={getNodeMetrics}
+				/>
+			))}
+			<div style={style.box}>{I18n.t('To Internet')}</div>
+			{showInternetStatus(metrics.loading, node)}
+			{showButton(metrics.loading)}<br />
+		</div>
+	);
+};
 
 
 const mapStateToProps = (state) => ({
@@ -191,7 +173,8 @@ const mapDispatchToProps = (dispatch) => ({
 	getMetrics: bindActionCreators(getMetrics,dispatch),
 	getMetricsGateway: bindActionCreators(getMetricsGateway,dispatch),
 	getMetricsAll: bindActionCreators(getMetricsAll,dispatch),
-	changeNode: bindActionCreators(changeNode,dispatch)
+	getInternetStatus: bindActionCreators(getInternetStatus, dispatch),
+	getNodeMetrics: bindActionCreators(getNodeMetrics, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Metrics);

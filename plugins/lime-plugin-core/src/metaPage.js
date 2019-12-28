@@ -1,69 +1,66 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useState, useEffect } from 'preact/hooks';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import { changeBase } from './metaActions';
 import { getBase, getStations, getSelectedHost } from './metaSelectors';
 
 import I18n from 'i18n-js';
 
-export class Meta extends Component {
+export const Meta = ({ selectedHost, changeBase, stations, base }) => {
+	
+	const [ state, setState ] = useState({
+		station: selectedHost
+	});
 
-	handleChange(e) {
-		this.setState({ station: e.target.value });
-		return this.state.station;
+	function handleChange(e) {
+		setState({ station: e.target.value });
+		e.target.value;
 	}
 
-	nextStation(e) {
+	function nextStation(e) {
 		e.preventDefault();
-		if (typeof this.state.station !== 'undefined') {
-			return this.props.changeBase(this.state.station);
+		if (typeof state.station !== 'undefined') {
+			return changeBase(state.station);
 		}
 	}
 
-	isSelected(target) {
-		return target === this.props.selectedHost;
-	}
+	useEffect(() => {
+		setState({
+			station: selectedHost
+		});
+		return () => {};
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			station: this.props.selectedHost
-		};
-		this.nextStation = this.nextStation.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.isSelected = this.isSelected.bind(this);
-	}
+	},[selectedHost]);
 
-	render() {
-		return (
-			<div class="container" style={{ paddingTop: '100px' }}>
-				<form onSubmit={this.nextStation}>
-					<div class="row">
-						<div class="six columns">
-							<p>
-								<label>{I18n.t('Current status')}</label>
-								<span>{I18n.t('Connected Host')}</span>: {this.props.selectedHost}<br />
-								<span>{I18n.t('Base Host')}</span>: {this.props.base}
-							</p>
-						</div>
-						<div class="six columns">
-							<p>
-								<label>{I18n.t('Select new base station')}</label>
-								<select class="u-full-width" onChange={this.handleChange} value={this.state.station} >
-									{this.props.stations.map(x => (<option value={x}>{x}</option>))}
-								</select>
-							</p>
-						</div>
+	return (
+		<div class="container" style={{ paddingTop: '100px' }}>
+			<form onSubmit={nextStation}>
+				<div class="row">
+					<div class="six columns">
+						<p>
+							<label>{I18n.t('Current status')}</label>
+							<span>{I18n.t('Connected Host')}</span>: {selectedHost}<br />
+							<span>{I18n.t('Base Host')}</span>: {base}
+						</p>
 					</div>
-            
-					<button class="button green block" type="submit">{I18n.t('Change')}</button>
-				</form>
-			</div>
-		);
-	}
-}
+					<div class="six columns">
+						<p>
+							<label>{I18n.t('Select new base station')}</label>
+							<select class="u-full-width" onChange={handleChange} value={state.station} >
+								{stations.map(x => (<option value={x}>{x}</option>))}
+							</select>
+						</p>
+					</div>
+				</div>
+		
+				<button class="button green block" type="submit">{I18n.t('Change')}</button>
+			</form>
+		</div>
+	);
+};
 
 
 export const mapStateToProps = (state) => ({

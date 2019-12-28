@@ -39,6 +39,11 @@ export const initialState = {
 	menuHidden: false
 };
 
+const formatHostList = (hostList, {selectedHost = ''}) => hostList
+	.filter(node => node !== selectedHost)
+	.concat([selectedHost])
+	.sort();
+
 export const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 		case CONECTION_START:
@@ -59,7 +64,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case CONECTION_CHANGE_CURRENT_BASE:
 			return Object.assign({}, state, { selectedHost: '' });
 		case CONECTION_LOAD_NEIGHBORS_SUCCESS:
-			return Object.assign({}, state, { stations: payload.concat([state.selectedHost]).sort(),status: 'ready' });
+			return Object.assign({}, state, { stations: formatHostList(payload, state), status: 'ready' });
 		case COMMUNITY_SETTINGS_LOAD_SUCCESS:
 			return Object.assign({}, state, { settings: Object.assign({},defaultSettings, payload) });
 		case 'NOTIFICATION':

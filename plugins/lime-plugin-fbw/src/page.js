@@ -1,6 +1,7 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
+import { useState, useEffect } from 'preact/hooks';
 import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 
 import './style';
 
@@ -10,41 +11,29 @@ import NetworkForm from './containers/NetworkForm';
 import Scan from './containers/Scan';
 import Setting from './containers/Setting';
 
-class Page extends Component {
-	toggleForm(form) {
-		return () => this.setState({ form });
+const Page = ({ toggleMenuButton }) => {
+	const [form, setForm] = useState(null);
+
+	function toggleForm(form) {
+		return () => setForm(form);
 	}
 
-	constructor(props){
-		super(props);
-		this.toggleForm = this.toggleForm.bind(this);
-
-		this.state = {
-			form: null,
-			setting: false
+	useEffect(() => {
+		toggleMenuButton(true);
+		return () => {
+			toggleMenuButton(false);
 		};
-	}
+	}, []);
 
-	componentWillMount() {
-		this.props.toggleMenuButton(true);
-	}
-
-	componentWillUnmount() {
-		this.props.toggleMenuButton(false);
-	}
-
-	render (){
-		const { form } = this.state;
-		return (
-			<div>
-				{form === 'create' && <NetworkForm toggleForm={this.toggleForm} />}
-				{form === 'scan' && <Scan toggleForm={this.toggleForm} />}
-				{form === 'setting' && <Setting toggleForm={this.toggleForm} />}
-				{!form && <SelectAction toggleForm={this.toggleForm} />}
-			</div>
-		);
-	}
-}
+	return (
+		<div>
+			{form === 'create' && <NetworkForm toggleForm={toggleForm} />}
+			{form === 'scan' && <Scan toggleForm={toggleForm} />}
+			{form === 'setting' && <Setting toggleForm={toggleForm} />}
+			{!form && <SelectAction toggleForm={toggleForm} />}
+		</div>
+	);
+};
 
 export default connect(
 	() => ({}),
