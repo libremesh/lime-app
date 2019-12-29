@@ -1,14 +1,7 @@
 import { Box } from '../../../../src/components/box';
 
-export default function HomePiraniaPage ({ logged, handlePassword, submit, provider, community, member }) {
-  const now = new Date()
-  const date = now.getDate()
-  const hasPassed = date > community.payday
-  const nextPayday = hasPassed ? new Date(now.getFullYear(), now.getMonth()+1, community.payday) : now
-  const month = nextPayday.getMonth() + 1
-  const year = nextPayday.getFullYear()
-  const daysLeft = Math.floor((Date.UTC(nextPayday.getFullYear(), nextPayday.getMonth(), nextPayday.getDate()) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) ) /(1000 * 60 * 60 * 24))
-  const payday = community.payday === date ? 'Today' : `${community.payday}/${month}/${year}`
+export default function HomePiraniaPage ({ logged, handlePassword, submit, provider, community, member, payday, daysLeft }) {
+
   return (
     <div>
       <Box title={I18n.t('Users')}>
