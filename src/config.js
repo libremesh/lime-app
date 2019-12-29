@@ -10,13 +10,14 @@ import Fbw from '../plugins/lime-plugin-fbw';
 
 // REGISTER PLUGINS
 export const plugins = [
-	Rx,
-	Align,
-	Locate,
-	Metrics,
-	Notes,
-	Meta,
-	//GroundRouting,
-	Fbw,
-	Admin
-];
+  Rx,
+  Align,
+  Locate,
+  Metrics,
+  Notes,
+  Meta,
+  // GroundRouting,
+  Fbw,
+  Admin,
+  Pirania
+]
