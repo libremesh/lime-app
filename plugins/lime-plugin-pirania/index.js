@@ -10,7 +10,7 @@ export default {
 	page: Pirania,
 	menu: PiraniaMenu,
 	store: {
-		name: 'Acceso',
+		name: 'pirania',
 		epics,
 		reducer,
 		selector,

@@ -1,10 +1,7 @@
 import {
-	SET_CONFIG,
-	AUTH_LOGIN
+	LOAD_GOVERNANCE,
 } from './piraniaConstants';
 
-
-export const adminLogin = (credentials) => ({
-	type: AUTH_LOGIN,
-	payload: credentials
+export const getPiraniaGovernance = () => ({
+	type: LOAD_GOVERNANCE
 });

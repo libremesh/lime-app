@@ -23,7 +23,8 @@ const Admin = ({ submit, list, renew, elect }) => (
 					{I18n.t('Ver todos')}
 				</button>
 			</Box>
-			<Box title={I18n.t('Admins elegidos')}>
+			{/* WIP: Node election */}
+			{/* <Box title={I18n.t('Admins elegidos')}>
 				<div class="info">
 					<span>
 						<b>Nodo-1, Nodo-2</b>
@@ -37,7 +38,7 @@ const Admin = ({ submit, list, renew, elect }) => (
 				>
 					{I18n.t('Elegir')}
 				</button>
-			</Box>
+			</Box> */}
 			<button class="button green block" type="submit">
 				{I18n.t('Criar')}
 			</button>
