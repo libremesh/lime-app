@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { useState, useEffect } from 'preact/hooks';
 
 import { adminLogin } from '../../lime-plugin-admin/src/adminActions';
-import { getPiraniaGovernance, getVoucherList } from './piraniaActions';
-import { governance, vouchers, loading } from './piraniaSelectors';
+import { getPiraniaGovernance } from './piraniaActions';
+import { governance, loading } from './piraniaSelectors';
 import { authStatus } from '../../lime-plugin-admin/src/adminSelectors';
 
 import Loading from '../../../src/components/loading';

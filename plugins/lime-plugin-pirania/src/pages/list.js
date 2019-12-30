@@ -10,6 +10,16 @@ import { Box } from '../../../../src/components/box';
 import style from '../style';
 import I18n from 'i18n-js';
 
+function mergeTypes (voucher, flatList) {
+	const { type, node } = voucher;
+	if (flatList[type][node]) {
+		flatList[type][node].push(voucher);
+	}
+	else {
+		flatList[type][node] = [voucher];
+	}
+}
+
 const boxStyle = {
 	margin: '3px',
 	padding: '10px',
