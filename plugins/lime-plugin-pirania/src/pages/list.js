@@ -19,6 +19,19 @@ function mergeTypes (voucher, flatList) {
 	}
 }
 
+function getTitletype (type) {
+  switch(type) {
+    case 'member':
+      return I18n.t('Members')
+    case 'visitor':
+      return I18n.t('Visitors')
+    case 'invalid':
+      return I18n.t('Invalid vouchers')
+    default:
+      return ''
+  }
+}
+
 const boxStyle = {
 	margin: '3px',
 	padding: '10px',
@@ -63,7 +76,7 @@ const VoucherNodeBox = ({ node, list }) => (
 );
 
 const VoucherTypeBox = ({ type, list }) => (
-	<Box title={type} collapse>
+	<Box title={getTitletype(type)} collapse>
 		{Object.keys(list).map(node => (
 			<VoucherNodeBox key={node} node={node} list={list[node]} />
 		))}
