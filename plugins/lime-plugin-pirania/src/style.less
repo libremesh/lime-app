@@ -7,11 +7,32 @@
 	flex-flow: row nowrap;
 }
 
+.switchContainer {
+  text-align: center;
+}
+
 .switch {
   position: relative;
   display: inline-block;
   width: 150px;
   height: 34px;
+  text-align: left;
+}
+
+.createSelect {
+  display: flex;
+  flex-flow: row no-wrap;
+  justify-content: space-around;
+  padding: 2vh 0;
+}
+
+.createInput {
+  text-align: center;
+  width: 120px;
+  font-weight: 200;
+  font-size: 1.2em;
+  padding: 20px 0;
+  border: none;
 }
 
 /* Hide default HTML checkbox */
@@ -79,4 +100,13 @@ input:checked + .slider:before {
   align-items: center;
   justify-content: space-around;
 
+}
+
+.nameInput {
+  padding: 2vh 0;
+  width: 80%;
+}
+
+.createButton {
+  margin-right: 5vw;
 }
