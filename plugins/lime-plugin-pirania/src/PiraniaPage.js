@@ -57,18 +57,18 @@ export const Pirania = ({
     })
   }
 
-  function showLoading (show) {
-    if (show) {
-      return (
-        <div style={style.loadingBox}>
-          <Loading />
-          <span style={style.textLoading}>
-            {I18n.t('Loading governance data.')}
-          </span>
-        </div>
-      )
-    }
-  }
+	function showLoading (show) {
+		if (show) {
+			return (
+				<div style={style.loadingBox}>
+					<Loading />
+					<span style={style.textLoading}>
+						{I18n.t('Loading')}
+					</span>
+				</div>
+			);
+		}
+	}
 
   function handleRedirect () {
     console.log('Should redirect to download')

@@ -7,7 +7,6 @@ import { vouchers, loading } from '../piraniaSelectors';
 import Loading from '../../../../src/components/loading';
 import { Box } from '../../../../src/components/box';
 
-import style from '../style';
 import I18n from 'i18n-js';
 
 function mergeTypes (voucher, flatList) {
@@ -40,7 +39,7 @@ const daysBetween = (date1, date2) => {
 	return Math.round(differenceMs / oneDay);
 };
 
-const VoucherNodeBox = ({node, list}) => (
+const VoucherNodeBox = ({ node, list }) => (
 	<div style={{ marginBottom: 50 }}>
 		<h4 style={boxStyle}>{node}</h4>
 		{list.map(voucher => {
@@ -51,7 +50,11 @@ const VoucherNodeBox = ({node, list}) => (
 				<div key={voucher.voucher} className="voucher">
 					<span>{voucher.name}</span>
 					<span>{voucher.voucher}</span>
-					{!invalid && <span>{dateDiff} {I18n.t('days left')}</span>}
+					{!invalid && (
+						<span>
+							{dateDiff} {I18n.t('days left')}
+						</span>
+					)}
 					{invalid && <span>{I18n.t('expired')}</span>}
 				</div>
 			);

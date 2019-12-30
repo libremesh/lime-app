@@ -1,4 +1,5 @@
 import { Box } from '../../../../src/components/box';
+import I18n from 'i18n-js';
 
 export default function HomePiraniaPage ({ logged, handlePassword, submit, provider, community, member, payday, daysLeft }) {
 
