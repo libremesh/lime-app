@@ -57,7 +57,7 @@ onClick={elect}
 				{I18n.t('Elegir')}
 			</button>
 		</Box> */}
-		<button class="button green block" onClick={create}>
+		<button class="button green block button-one" onClick={create}>
 			{I18n.t('Criar')}
 		</button>
 		<button class="button green block" onClick={renew}>
