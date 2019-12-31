@@ -25,7 +25,10 @@ const loadGovernance = (action$, store, { wsAPI }) =>
 			}
 			return [{ type: LOAD_GOVERNANCE_SUCCESS, payload }];
 		})
-		.catch([{ type: LOAD_GOVERNANCE_ERROR }]);
+		.catch([
+			{ type: LOAD_GOVERNANCE_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
 
 const loadVoucherList = (action$, store, { wsAPI }) =>
 	action$
@@ -40,7 +43,10 @@ const loadVoucherList = (action$, store, { wsAPI }) =>
 			}
 			return [{ type: LOAD_VOUCHERS_SUCCESS, payload }];
 		})
-		.catch([{ type: LOAD_VOUCHERS_ERROR }]);
+		.catch([
+			{ type: LOAD_VOUCHERS_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
 
 const createMemberVoucher = (action$, store, { wsAPI }) =>
 	action$
@@ -55,7 +61,10 @@ const createMemberVoucher = (action$, store, { wsAPI }) =>
 			}
 			return [{ type: CREATE_MEMBER_VOUCHER_SUCCESS, payload }];
 		})
-		.catch([{ type: CREATE_MEMBER_VOUCHER_ERROR }]);
+		.catch([
+			{ type: CREATE_MEMBER_VOUCHER_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
 
 const createVisitorVoucher = (action$, store, { wsAPI }) =>
 	action$
@@ -70,7 +79,10 @@ const createVisitorVoucher = (action$, store, { wsAPI }) =>
 			}
 			return [{ type: CREATE_VISITOR_VOUCHER_SUCCESS, payload }];
 		})
-		.catch([{ type: CREATE_VISITOR_VOUCHER_ERROR }]);
+		.catch([
+			{ type: CREATE_VISITOR_VOUCHER_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
 
 
 export default { loadGovernance, loadVoucherList, createMemberVoucher, createVisitorVoucher };
