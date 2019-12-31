@@ -6,7 +6,7 @@ import Pirania from './src/PiraniaPage';
 import { PiraniaMenu } from './src/piraniaMenu';
 
 export default {
-	name: 'Acceso',
+	name: 'Access',
 	page: Pirania,
 	menu: PiraniaMenu,
 	store: {
