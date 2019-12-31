@@ -16,6 +16,7 @@ import Create from './pages/create';
 import List from './pages/list';
 
 import I18n from 'i18n-js';
+import './style'
 
 const style = {
 	textLoading: {
