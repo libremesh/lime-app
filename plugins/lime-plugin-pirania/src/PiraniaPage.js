@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -36,102 +37,105 @@ const style = {
 };
 
 export const Pirania = ({
-  authStatus,
-  adminLogin,
-  loading,
-  getPiraniaGovernance,
-  governance,
-  vouchers
+	authStatus,
+	adminLogin,
+	loading,
+	getPiraniaGovernance,
+	governance,
+	vouchers
 }) => {
-  const [page, setPage] = useState(0)
-  const [password, changePassword] = useState('')
-  function handlePassword (e) {
-    changePassword(e.target.value)
-  }
+	const [page, setPage] = useState(0);
+	const [password, changePassword] = useState('');
+	function handlePassword(e) {
+		changePassword(e.target.value);
+	}
 
-  function login (e) {
-    e.preventDefault()
-    adminLogin({
-      username: 'root',
-      password
-    })
-  }
+	function login(e) {
+		e.preventDefault();
+		adminLogin({
+			username: 'root',
+			password
+		});
+	}
 
-	function showLoading (show) {
+	function showLoading(show) {
 		if (show) {
 			return (
 				<div style={style.loadingBox}>
 					<Loading />
-					<span style={style.textLoading}>
-						{I18n.t('Loading')}
-					</span>
+					<span style={style.textLoading}>{I18n.t('Loading')}</span>
 				</div>
 			);
 		}
 	}
 
-  function handleRedirect () {
-    console.log('Should redirect to download')
-  }
+	function handleRedirect() {
+		console.log('Should redirect to download');
+	}
 
-  useEffect(() => {
-    getPiraniaGovernance()
-    return () => {}
-  }, [])
+	useEffect(() => {
+		getPiraniaGovernance();
+		return () => { };
+	}, []);
 
-  if (governance) {
-    const { provider, community, member } = governance
-    const now = new Date()
-    const date = now.getDate()
-    const hasPassed = date > community.payday
-    const nextPayday = hasPassed
-      ? new Date(now.getFullYear(), now.getMonth() + 1, community.payday)
-      : now
-    const month = nextPayday.getMonth() + 1
-    const year = nextPayday.getFullYear()
-    const daysLeft = Math.floor(
-      (Date.UTC(
-        nextPayday.getFullYear(),
-        nextPayday.getMonth(),
-        nextPayday.getDate()
-      ) -
-        Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) /
-        (1000 * 60 * 60 * 24)
-    )
-    const payday =
-      community.payday === date
-        ? 'Today'
-        : `${community.payday}/${month}/${year}`
+	if (governance) {
+		const { community } = governance;
+		const now = new Date();
+		const date = now.getDate();
+		const hasPassed = date > community.payday;
+		const nextPayday = hasPassed
+			? new Date(now.getFullYear(), now.getMonth() + 1, community.payday)
+			: now;
+		const month = nextPayday.getMonth() + 1;
+		const year = nextPayday.getFullYear();
+		const daysLeft = Math.floor(
+			(Date.UTC(
+				nextPayday.getFullYear(),
+				nextPayday.getMonth(),
+				nextPayday.getDate()
+			) -
+				Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) /
+			(1000 * 60 * 60 * 24)
+		);
+		const payday =
+			community.payday === date
+				? 'Today'
+				: `${community.payday}/${month}/${year}`;
 
-    return (
-      <div class='container' style={{ paddingTop: '100px' }}>
-        {!authStatus && (
-          <Home
-            logged={authStatus}
-            submit={login}
-            handlePassword={handlePassword}
-            payday={payday}
-            daysLeft={daysLeft}
-            {...governance}
-          />
-        )}
-        {authStatus && page === 0 && (
-          <Admin
-            list={() => setPage(1)}
-            create={() => setPage(2)}
-            renew={() => setPage(3)}
-            download={handleRedirect}
-            daysLeft={daysLeft}
-            {...governance}
-          />
-        )}
-        {page === 1 && <List goBack={() => setPage(0)} />}
-        {page === 2 && (
-          <Create goBack={() => setPage(0)} list={() => setPage(1)} />
-        )}
-      </div>
-    )
-  } return showLoading(loading)
+		return (
+			<div class="container" style={{ paddingTop: '100px' }}>
+				{!authStatus && (
+					<Home
+						logged={authStatus}
+						submit={login}
+						handlePassword={handlePassword}
+						payday={payday}
+						daysLeft={daysLeft}
+						{...governance}
+					/>
+				)}
+				{authStatus && page === 0 && (
+					<Admin
+						list={() => setPage(1)}
+						create={() => setPage(2)}
+						renew={() => setPage(3)}
+						download={handleRedirect}
+						daysLeft={daysLeft}
+						{...governance}
+					/>
+				)}
+				{page === 1 && <List goBack={() => setPage(0)} />}
+				{page === 2 && (
+					<Create
+						goBack={() => setPage(0)}
+						list={() => setPage(1)}
+						daysLeft={daysLeft}
+					/>
+				)}
+			</div>
+		);
+	}
+	return showLoading(loading);
 };
 
 export const mapStateToProps = state => ({
@@ -143,10 +147,6 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
 	getPiraniaGovernance: bindActionCreators(getPiraniaGovernance, dispatch),
 	adminLogin: bindActionCreators(adminLogin, dispatch)
-	// createMemberVoucher: bindActionCreators(createMemberVoucher, dispatch),
-	// createVisitorVoucher: bindActionCreators(createVisitorVoucher, dispatch),
-	// deleteVoucher: bindActionCreators(deleteVoucher, dispatch),
-	// renewMemberVouchers: bindActionCreators(renewMemberVouchers, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pirania);
