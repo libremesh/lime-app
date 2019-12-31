@@ -1,73 +1,73 @@
+/* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
-import { useEffect } from 'preact/hooks';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { createMemberVoucher, createVisitorVoucher } from '../piraniaActions';
 import { loading, createVoucher } from '../piraniaSelectors';
 
-import style from '../style';
 import I18n from 'i18n-js';
 import { Box } from '../../../../src/components/box';
 import Loading from '../../../../src/components/loading';
 
-import daysFromNow from '../../../../src/utils/daysFromNow'
-import makeid from '../../../../src/utils/makeid'
+import daysFromNow from '../../../../src/utils/daysFromNow';
+import makeid from '../../../../src/utils/makeid';
 
-function Create ({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, createVoucher, loading }) {
-	const [ voucherQuantity, setVoucherQuantity] = useState(1)
-	const [ daysQuantity, setDaysQuantity] = useState(1)
-	const [ note, setNote] = useState('marcos android');
-	const [ confirm, setConfirm ] = useState(false);
-	const [ member, setMember ] = useState(false);
+function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, createVoucher, loading }) {
+	const [voucherQuantity, setVoucherQuantity] = useState(1);
+	const [daysQuantity, setDaysQuantity] = useState(1);
+	const [note, setNote] = useState('marcos android');
+	const [confirm, setConfirm] = useState(false);
+	const [member, setMember] = useState(false);
 
-	function handleInput (e, input) {
-		setVoucherQuantity
+	function handleInput(e, input) {
+		setVoucherQuantity;
 		if (input === 'voucherQuantity' || input === 'daysQuantity') {
-			const number = parseInt(e.target.value)
+			const number = parseInt(e.target.value, 10);
 			if (number > 0) {
-				if (input === 'voucherQuantity') setVoucherQuantity(number)
-				if (input === 'daysQuantity') setDaysQuantity(number)
+				if (input === 'voucherQuantity') setVoucherQuantity(number);
+				if (input === 'daysQuantity') setDaysQuantity(number);
 			}
-		} else {
+		}
+		else {
 			setNote(e.target.value);
 		}
 	}
-	function addMember () {
+	function addMember() {
 		return createMemberVoucher({
 			secret: makeid(8),
 			note,
 			epoc: daysFromNow(daysLeft + 1)
 		});
 	}
-	function addVisitor () {
-		const vouchers = []
+	function addVisitor() {
+		const vouchers = [];
 		for (let index = 0; index < voucherQuantity; index++) {
 			vouchers.push({
 				key: makeid(3),
 				voucher: makeid(8),
-				epoc: daysFromNow(daysQuantity),
-			})
+				epoc: daysFromNow(daysQuantity)
+			});
 		}
 		return createVisitorVoucher({
 			note,
-			vouchers,
+			vouchers
 		});
 	}
-	function submitForm (e) {
-		e.preventDefault()
+	function submitForm(e) {
+		e.preventDefault();
 		if (voucherQuantity > 2 && !confirm) {
 			setConfirm(true);
 		}
-		else if(member) {
-			addMember()
+		else if (member) {
+			addMember();
 		}
 		else {
-			addVisitor()
+			addVisitor();
 		}
 	}
-	function toggleMember () {
+	function toggleMember() {
 		setMember(!member);
 	}
 	return (
@@ -95,8 +95,8 @@ function Create ({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, 
 							</div>
 							<hr />
 							{!member && (
-								<div className='createSelect'>
-									<div className='box'>
+								<div className="createSelect">
+									<div className="box">
 										<label>{I18n.t('Number of vouchers')}</label>
 										<input
 											className="createInput"
@@ -126,7 +126,7 @@ function Create ({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, 
 									className="nameInput"
 								/>
 							</p>
-							<button className="button green block" className="button-one" type="submit">
+							<button className="button green block button-one" type="submit">
 								{I18n.t('Create')}
 							</button>
 							<button className="button green block" onClick={goBack}>

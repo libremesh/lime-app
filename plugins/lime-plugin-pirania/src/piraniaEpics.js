@@ -62,7 +62,6 @@ const createVisitorVoucher = (action$, store, { wsAPI }) =>
 		.ofType(CREATE_VISITOR_VOUCHER)
 		.mergeMap(action => addVisitorVoucher(wsAPI, store.value.admin.sid, action.payload))
 		.mergeMap(payload => {
-			console.log('payload', payload)
 			if (payload.code) {
 				return [
 					{ type: CREATE_VISITOR_VOUCHER_ERROR, payload },

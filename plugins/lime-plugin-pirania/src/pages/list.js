@@ -9,7 +9,7 @@ import { Box } from '../../../../src/components/box';
 
 import I18n from 'i18n-js';
 
-function mergeTypes (voucher, flatList) {
+function mergeTypes(voucher, flatList) {
 	const { type, node } = voucher;
 	if (flatList[type][node]) {
 		flatList[type][node].push(voucher);
@@ -19,17 +19,17 @@ function mergeTypes (voucher, flatList) {
 	}
 }
 
-function getTitletype (type) {
-  switch(type) {
-    case 'member':
-      return I18n.t('Members')
-    case 'visitor':
-      return I18n.t('Visitors')
-    case 'invalid':
-      return I18n.t('Invalid vouchers')
-    default:
-      return ''
-  }
+function getTitletype(type) {
+	switch (type) {
+		case 'member':
+			return I18n.t('Members');
+		case 'visitor':
+			return I18n.t('Visitors');
+		case 'invalid':
+			return I18n.t('Invalid vouchers');
+		default:
+			return '';
+	}
 }
 
 const boxStyle = {
@@ -56,7 +56,7 @@ const VoucherNodeBox = ({ node, list }) => (
 	<div style={{ marginBottom: 50 }}>
 		<h4 style={boxStyle}>{node}</h4>
 		{list.map(voucher => {
-			const date = new Date(parseInt(voucher.expires));
+			const date = new Date(parseInt(voucher.expires, 10));
 			const dateDiff = daysBetween(new Date(), date);
 			const invalid = voucher.type === 'invalid';
 			return (
@@ -86,7 +86,7 @@ const VoucherTypeBox = ({ type, list }) => (
 const List = ({ goBack, getVoucherList, vouchers, loading }) => {
 	useEffect(() => {
 		getVoucherList();
-		return () => {};
+		return () => { };
 	}, []);
 	if (loading) return <Loading />;
 	else if (vouchers) {
@@ -107,7 +107,7 @@ const List = ({ goBack, getVoucherList, vouchers, loading }) => {
 					{I18n.t('Go back')}
 				</button>
 			</div>
-		);	
+		);
 	}
 };
 export const mapStateToProps = state => ({
