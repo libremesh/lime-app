@@ -9,7 +9,7 @@ import { Box } from '../../../../src/components/box';
 
 import I18n from 'i18n-js';
 
-function mergeTypes(voucher, flatList) {
+export function mergeTypes(voucher, flatList) {
 	const { type, node } = voucher;
 	if (flatList[type][node]) {
 		flatList[type][node].push(voucher);
@@ -61,7 +61,7 @@ const VoucherNodeBox = ({ node, list }) => (
 			const invalid = voucher.type === 'invalid';
 			return (
 				<div key={voucher.voucher} className="voucher">
-					<span>{voucher.name}</span>
+					<span>{voucher.note}</span>
 					<span>{voucher.voucher}</span>
 					{!invalid && (
 						<span>

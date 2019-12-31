@@ -14,6 +14,7 @@ import Home from './pages/home';
 import Admin from './pages/admin';
 import Create from './pages/create';
 import List from './pages/list';
+import Renew from './pages/renew';
 
 import I18n from 'i18n-js';
 import './style';
@@ -129,7 +130,12 @@ export const Pirania = ({
 				{page === 2 && (
 					<Create
 						goBack={() => setPage(0)}
-						list={() => setPage(1)}
+						daysLeft={daysLeft}
+					/>
+				)}
+				{page === 3 && (
+					<Renew
+						goBack={() => setPage(0)}
 						daysLeft={daysLeft}
 					/>
 				)}
