@@ -15,24 +15,24 @@ const Admin = ({ list, create, renew, download, daysLeft }) => (
 					<br />
 				</span>
 				<span>
-					<b>{I18n.t('De una vez')}: </b>
+					<b>{I18n.t('Visitors')}: </b>
 					<span>18</span>
 					<br />
 				</span>
 			</div>
 			<button class="button green block" onClick={list}>
-				{I18n.t('Ver todos')}
+				{I18n.t('Show all vouchers')}
 			</button>
 		</Box>
 		<Box title={I18n.t('Last month')}>
 			<div class="info">
 				<span>
-					<b>{I18n.t('Mensuales')}: </b>
+					<b>{I18n.t('Members')}: </b>
 					<span>30</span>
 					<br />
 				</span>
 				<span>
-					<b>{I18n.t('De una vez')}: </b>
+					<b>{I18n.t('Visitors')}: </b>
 					<span>18</span>
 					<br />
 				</span>
@@ -58,10 +58,10 @@ onClick={elect}
 			</button>
 		</Box> */}
 		<button class="button green block button-one" onClick={create}>
-			{I18n.t('Criar')}
+			{I18n.t('Create')}
 		</button>
 		<button class="button green block" onClick={renew}>
-			{I18n.t('Renovar vouchers de miembros')}
+			{I18n.t('Renew member vouchers')}
 		</button>
 	</div>
 );
