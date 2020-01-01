@@ -12,14 +12,14 @@ import Pirania from '../plugins/lime-plugin-pirania';
 
 // REGISTER PLUGINS
 export const plugins = [
-  Rx,
-  Align,
-  Locate,
-  Metrics,
-  Notes,
-  Meta,
-  // GroundRouting,
-  Fbw,
-  Admin,
-  Pirania
-]
+	Rx,
+	Align,
+	Locate,
+	Metrics,
+	Notes,
+	Meta,
+	// GroundRouting,
+	Fbw,
+	Admin,
+	Pirania
+];

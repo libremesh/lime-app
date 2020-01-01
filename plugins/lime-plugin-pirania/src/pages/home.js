@@ -1,7 +1,7 @@
 import { Box } from '../../../../src/components/box';
 import I18n from 'i18n-js';
 
-export default function HomePiraniaPage ({ logged, handlePassword, submit, provider, community, member, payday, daysLeft }) {
+export default function HomePiraniaPage({ logged, handlePassword, submit, provider, community, member, payday, daysLeft }) {
 
 	return (
 		<div>
@@ -34,11 +34,10 @@ export default function HomePiraniaPage ({ logged, handlePassword, submit, provi
 					<b>{I18n.t('Speed test')}: </b>
 					<span>
 						{' '}
-						{navigator.connection ? (
-							navigator.connection.downlink + 'Mbs'
-						) : (
-							<i>{I18n.t('please use Chrome browser')}</i>
-						)}
+						{navigator.connection
+							? navigator.connection.downlink + 'Mbs'
+							: <i>{I18n.t('Speed test not supported in this browser')}</i>
+						}
 					</span>
 					<br />
 					<span>
@@ -69,16 +68,6 @@ export default function HomePiraniaPage ({ logged, handlePassword, submit, provi
 					<span>{community.currency} {community.maintenance}</span>
 					<br />
 				</span>
-				{/* <span>
-          <b>{I18n.t('Node admins')}: </b>
-          <span>Juca Urubu</span>, <span>Vó Naquinha</span>
-          <br />
-        </span> */}
-				{/* <span>
-          <b>{I18n.t('Payment admins')}: </b>
-          <span>Joana Pé Sujo</span>, <span>Juca do Leite</span>
-        </span>
-        <br /> */}
 				<span>
 					<b>{I18n.t('Amount in reserve')}: </b>
 					<span>{community.currency} {community.reserve}</span>
