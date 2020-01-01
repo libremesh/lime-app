@@ -22,7 +22,6 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case CREATE_MEMBER_VOUCHER:
 			return Object.assign({}, state, { loading: true });
 		case LOAD_ACTIVE_VOUCHERS_SUCCESS:
-			console.log('payload', payload)
 			return Object.assign({}, state, { activeVouchers: payload.vouchers, loading: false });
 		case LOAD_ACTIVE_VOUCHERS_ERROR:
 			return Object.assign({}, state, { activeVouchers: { error: payload.message }, loading: false });

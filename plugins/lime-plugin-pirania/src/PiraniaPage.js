@@ -88,25 +88,22 @@ export const Pirania = ({
 		const now = new Date();
 		const date = now.getDate();
 		const hasPassed = date > community.payday;
-		const nextPayday = hasPassed
-			? new Date(now.getFullYear(), now.getMonth() + 1, community.payday)
-			: now;
+		const nextPayday = new Date(now.getFullYear(), now.getMonth(), community.payday);
 		const month = nextPayday.getMonth() + 1;
 		const year = nextPayday.getFullYear();
+		const payday =
+			community.payday === date
+				? 'Today'
+				: `${community.payday}/${month > 9 ? month : '0'+month }/${year}`;
 		const daysLeft = Math.floor(
 			(Date.UTC(
 				nextPayday.getFullYear(),
-				nextPayday.getMonth(),
+				hasPassed ? nextPayday.getMonth() + 1 : nextPayday.getMonth(),
 				nextPayday.getDate()
 			) -
 				Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) /
 			(1000 * 60 * 60 * 24)
 		);
-		const payday =
-			community.payday === date
-				? 'Today'
-				: `${community.payday}/${month}/${year}`;
-
 		return (
 			<div class="container" style={{ paddingTop: '100px' }}>
 				{!authStatus && (
