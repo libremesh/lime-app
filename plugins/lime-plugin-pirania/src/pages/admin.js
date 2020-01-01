@@ -1,13 +1,13 @@
 import { Box } from '../../../../src/components/box';
 import I18n from 'i18n-js';
 
-const Admin = ({ list, create, renew, download, daysLeft }) => (
+const Admin = ({ visitors, members, list, create, renew, download, daysLeft }) => (
 	<div>
 		<Box title={I18n.t('Next month')}>
 			<div class="info">
 				<span>
 					<b>{I18n.t('Members')}: </b>
-					<span>30</span>
+					<span>{members}</span>
 					<b style={{ marginLeft: 30, marginRight: 10 }}>
 						<span>{daysLeft} </span>
 						<span>{I18n.t('days left')} </span>
@@ -16,7 +16,7 @@ const Admin = ({ list, create, renew, download, daysLeft }) => (
 				</span>
 				<span>
 					<b>{I18n.t('Visitors')}: </b>
-					<span>18</span>
+					<span>{visitors}</span>
 					<br />
 				</span>
 			</div>

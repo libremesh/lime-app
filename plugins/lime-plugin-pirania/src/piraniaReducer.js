@@ -1,4 +1,5 @@
 import {
+	LOAD_ACTIVE_VOUCHERS, LOAD_ACTIVE_VOUCHERS_SUCCESS, LOAD_ACTIVE_VOUCHERS_ERROR,
 	LOAD_GOVERNANCE, LOAD_GOVERNANCE_SUCCESS, LOAD_GOVERNANCE_ERROR,
 	LOAD_VOUCHERS, LOAD_VOUCHERS_SUCCESS, LOAD_VOUCHERS_ERROR,
 	CREATE_MEMBER_VOUCHER, CREATE_MEMBER_VOUCHER_SUCCESS, CREATE_MEMBER_VOUCHER_ERROR,
@@ -14,11 +15,17 @@ export const initialState = {
 
 export const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
+		case LOAD_ACTIVE_VOUCHERS:
 		case LOAD_GOVERNANCE:
 		case LOAD_VOUCHERS:
 		case CREATE_VISITOR_VOUCHER:
 		case CREATE_MEMBER_VOUCHER:
 			return Object.assign({}, state, { loading: true });
+		case LOAD_ACTIVE_VOUCHERS_SUCCESS:
+			console.log('payload', payload)
+			return Object.assign({}, state, { activeVouchers: payload.vouchers, loading: false });
+		case LOAD_ACTIVE_VOUCHERS_ERROR:
+			return Object.assign({}, state, { activeVouchers: { error: payload.message }, loading: false });
 		case LOAD_GOVERNANCE_SUCCESS:
 			return Object.assign({}, state, { governance: payload, loading: false });
 		case LOAD_GOVERNANCE_ERROR:

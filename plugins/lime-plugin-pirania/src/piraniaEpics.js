@@ -1,5 +1,6 @@
-import { getGovernance, getVoucherList, addMemberVoucher, addVisitorVoucher } from './piraniaApi';
+import { getActiveVouchers, getGovernance, getVoucherList, addMemberVoucher, addVisitorVoucher } from './piraniaApi';
 import {
+	LOAD_ACTIVE_VOUCHERS, LOAD_ACTIVE_VOUCHERS_SUCCESS, LOAD_ACTIVE_VOUCHERS_ERROR,
 	LOAD_GOVERNANCE, LOAD_GOVERNANCE_SUCCESS, LOAD_GOVERNANCE_ERROR,
 	LOAD_VOUCHERS, LOAD_VOUCHERS_SUCCESS, LOAD_VOUCHERS_ERROR,
 	CREATE_MEMBER_VOUCHER, CREATE_MEMBER_VOUCHER_SUCCESS, CREATE_MEMBER_VOUCHER_ERROR,
@@ -11,6 +12,25 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/concatMap';
 import 'rxjs/add/operator/concatAll';
 import 'rxjs/add/operator/mergeMap';
+
+const loadActiveVouchers = (action$, store, { wsAPI }) =>
+	action$
+		.ofType(LOAD_ACTIVE_VOUCHERS)
+		.mergeMap(action => getActiveVouchers(wsAPI, store.value.meta.sid, {}))
+		.mergeMap(payload => {
+			if (payload.code) {
+				return [
+					{ type: LOAD_ACTIVE_VOUCHERS_ERROR, payload },
+					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
+				];
+			}
+			return [{ type: LOAD_ACTIVE_VOUCHERS_SUCCESS, payload }];
+		})
+		.catch([
+			{ type: LOAD_ACTIVE_VOUCHERS_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
+
 
 const loadGovernance = (action$, store, { wsAPI }) =>
 	action$
@@ -85,4 +105,4 @@ const createVisitorVoucher = (action$, store, { wsAPI }) =>
 		]);
 
 
-export default { loadGovernance, loadVoucherList, createMemberVoucher, createVisitorVoucher };
+export default { loadActiveVouchers, loadGovernance, loadVoucherList, createMemberVoucher, createVisitorVoucher };

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { useState, useEffect } from 'preact/hooks';
 
 import { adminLogin } from '../../lime-plugin-admin/src/adminActions';
-import { getPiraniaGovernance } from './piraniaActions';
-import { governance, loading } from './piraniaSelectors';
+import { getPiraniaGovernance, getActiveVouchers } from './piraniaActions';
+import { activeVouchers, governance, loading } from './piraniaSelectors';
 import { authStatus } from '../../lime-plugin-admin/src/adminSelectors';
 
 import Loading from '../../../src/components/loading';
@@ -39,9 +39,11 @@ const style = {
 };
 
 export const Pirania = ({
+	activeVouchers,
 	authStatus,
 	adminLogin,
 	loading,
+	getActiveVouchers,
 	getPiraniaGovernance,
 	governance,
 	vouchers
@@ -76,6 +78,7 @@ export const Pirania = ({
 	}
 
 	useEffect(() => {
+		getActiveVouchers();
 		getPiraniaGovernance();
 		return () => { };
 	}, []);
@@ -113,6 +116,7 @@ export const Pirania = ({
 						handlePassword={handlePassword}
 						payday={payday}
 						daysLeft={daysLeft}
+						{...activeVouchers}
 						{...governance}
 					/>
 				)}
@@ -123,6 +127,7 @@ export const Pirania = ({
 						renew={() => setPage(3)}
 						download={handleRedirect}
 						daysLeft={daysLeft}
+						{...activeVouchers}
 						{...governance}
 					/>
 				)}
@@ -146,12 +151,14 @@ export const Pirania = ({
 };
 
 export const mapStateToProps = state => ({
+	activeVouchers: activeVouchers(state),
 	authStatus: authStatus(state),
 	loading: loading(state),
 	governance: governance(state)
 });
 
 export const mapDispatchToProps = dispatch => ({
+	getActiveVouchers: bindActionCreators(getActiveVouchers, dispatch),
 	getPiraniaGovernance: bindActionCreators(getPiraniaGovernance, dispatch),
 	adminLogin: bindActionCreators(adminLogin, dispatch)
 });

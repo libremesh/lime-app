@@ -1,7 +1,7 @@
 import { Box } from '../../../../src/components/box';
 import I18n from 'i18n-js';
 
-export default function HomePiraniaPage({ logged, handlePassword, submit, provider, community, member, payday, daysLeft }) {
+export default function HomePiraniaPage({ members, visitors, logged, handlePassword, submit, provider, community, member, payday, daysLeft }) {
 
 	return (
 		<div>
@@ -14,12 +14,12 @@ export default function HomePiraniaPage({ logged, handlePassword, submit, provid
 					</span>
 					<span>
 						<b>{I18n.t('Active member vouchers')}: </b>
-						<span>30</span>
+						<span>{members}</span>
 						<br />
 					</span>
 					<span>
 						<b>{I18n.t('Active visitor vouchers')}: </b>
-						<span>18</span>
+						<span>{visitors}</span>
 						<br />
 					</span>
 				</div>
