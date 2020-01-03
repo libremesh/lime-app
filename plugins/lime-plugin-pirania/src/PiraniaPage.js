@@ -133,12 +133,14 @@ export const Pirania = ({
 					<Create
 						goBack={() => setPage(0)}
 						daysLeft={daysLeft}
+						date={payday}
 					/>
 				)}
 				{page === 3 && (
 					<Renew
 						goBack={() => setPage(0)}
 						daysLeft={daysLeft}
+						renewDate={payday}
 					/>
 				)}
 			</div>

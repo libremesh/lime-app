@@ -3,7 +3,7 @@ import I18n from 'i18n-js';
 
 const Admin = ({ visitors, members, list, create, renew, download, daysLeft }) => (
 	<div>
-		<Box title={I18n.t('Next month')}>
+		<Box title={I18n.t('Current month')}>
 			<div class="info">
 				<span>
 					<b>{I18n.t('Members')}: </b>
@@ -24,7 +24,7 @@ const Admin = ({ visitors, members, list, create, renew, download, daysLeft }) =
 				{I18n.t('Show all vouchers')}
 			</button>
 		</Box>
-		<Box title={I18n.t('Last month')}>
+		{/* <Box title={I18n.t('Last month')}>
 			<div class="info">
 				<span>
 					<b>{I18n.t('Members')}: </b>
@@ -40,7 +40,7 @@ const Admin = ({ visitors, members, list, create, renew, download, daysLeft }) =
 			<button class="button green block" onClick={download}>
 				{I18n.t('Download CSV')}
 			</button>
-		</Box>
+		</Box> */}
 		{/* WIP: Node election */}
 		{/* <Box title={I18n.t('Admins elegidos')}>
 			<div class="info">
@@ -50,9 +50,9 @@ const Admin = ({ visitors, members, list, create, renew, download, daysLeft }) =
 				<br />
 			</div>
 			<button
-style={{ marginTop: 15 }}
-				class="button green block"
-onClick={elect}
+				style={{ marginTop: 15 }}
+								class="button green block"
+				onClick={elect}
 			>
 				{I18n.t('Elegir')}
 			</button>

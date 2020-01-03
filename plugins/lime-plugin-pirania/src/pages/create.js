@@ -14,12 +14,17 @@ import Loading from '../../../../src/components/loading';
 import daysFromNow from '../../../../src/utils/daysFromNow';
 import makeid from '../../../../src/utils/makeid';
 
-function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, createVoucher, loading }) {
+function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, createVoucher, loading, date }) {
 	const [voucherQuantity, setVoucherQuantity] = useState(1);
 	const [daysQuantity, setDaysQuantity] = useState(1);
 	const [note, setNote] = useState('marcos android');
 	const [confirm, setConfirm] = useState(false);
 	const [member, setMember] = useState(false);
+	const splitDate = date.split('/');
+	const day = parseInt(splitDate[0]);
+	const month = parseInt(splitDate[1] - 1);
+	const year = parseInt(splitDate[2]);
+	const epoc = new Date(year, month, day + 1).valueOf();
 
 	function handleInput(e, input) {
 		setVoucherQuantity;
@@ -38,7 +43,7 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 		return createMemberVoucher({
 			secret: makeid(8),
 			note,
-			epoc: daysFromNow(daysLeft + 1)
+			epoc
 		});
 	}
 	function addVisitor() {
