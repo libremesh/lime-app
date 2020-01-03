@@ -155,9 +155,14 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 					)}
 				</form>}
 				{loading && <Loading />}
-				{createVoucher && <div className="createResult">
+				{(createVoucher && !createVoucher.vouchers) && <div className="createResult">
 					<h3>{I18n.t('Success')}</h3>
 					<p><b>{I18n.t('New voucher')}: </b> {createVoucher.secret}</p>
+				</div>}
+				{(createVoucher && createVoucher.vouchers) && <div className="createResult">
+					<h3>{I18n.t('Success')}</h3>
+					<p><b>{I18n.t('New vouchers')}:</b></p>
+					{createVoucher.vouchers.map(v => <p key={v}>{v}</p>)}
 				</div>}
 			</Box>
 		</div>
