@@ -24,7 +24,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case RENEW_MEMBER_VOUCHERS:
 			return Object.assign({}, state, { loading: true });
 		case LOAD_ACTIVE_VOUCHERS_SUCCESS:
-			return Object.assign({}, state, { activeVouchers: payload.vouchers, loading: false });
+			return Object.assign({}, state, { activeVouchers: payload, loading: false });
 		case LOAD_ACTIVE_VOUCHERS_ERROR:
 			return Object.assign({}, state, { activeVouchers: { error: payload.message }, loading: false });
 		case LOAD_GOVERNANCE_SUCCESS:
@@ -32,7 +32,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case LOAD_GOVERNANCE_ERROR:
 			return Object.assign({}, state, { governance: { error: payload.message }, loading: false });
 		case LOAD_VOUCHERS_SUCCESS:
-			return Object.assign({}, state, { vouchers: payload.vouchers, loading: false });
+			return Object.assign({}, state, { vouchers: payload, loading: false });
 		case LOAD_VOUCHERS_ERROR:
 			return Object.assign({}, state, { vouchers: { error: payload.message }, loading: false });
 		case CREATE_MEMBER_VOUCHER_SUCCESS:
