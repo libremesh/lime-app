@@ -3,8 +3,8 @@ import {
 	LOAD_GOVERNANCE,
 	LOAD_VOUCHERS,
 	CREATE_MEMBER_VOUCHER,
-	CREATE_VISITOR_VOUCHER
-	// RENEW_MEMBER_VOUCHERS,
+	CREATE_VISITOR_VOUCHER,
+	RENEW_MEMBER_VOUCHERS
 	// DELETE_VOUCHER
 } from './piraniaConstants';
 
@@ -27,5 +27,10 @@ export const createMemberVoucher = (payload) => ({
 
 export const createVisitorVoucher = (payload) => ({
 	type: CREATE_VISITOR_VOUCHER,
+	payload
+});
+
+export const renewVouchers = (payload) => ({
+	type: RENEW_MEMBER_VOUCHERS,
 	payload
 });
