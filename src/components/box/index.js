@@ -2,8 +2,9 @@ import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import style from './style';
 
-export const Box = ({ title, children, collapse }) => {
-  const [open, setState ] = useState(false);
+export const Box = ({ title, children, collapse, collapsed }) => {
+  const initialState = collapsed ? true : false
+  const [open, setState ] = useState(initialState);
 	function toggle() {
 		setState(!open);
 	}

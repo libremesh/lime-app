@@ -55,28 +55,31 @@ const daysBetween = (date1, date2) => {
 const VoucherNodeBox = ({ node, list }) => (
 	<div style={{ marginBottom: 50 }}>
 		<h4 style={boxStyle}>{node}</h4>
-		{list.map(voucher => {
-			const date = new Date(parseInt(voucher.expires, 10));
-			const dateDiff = daysBetween(new Date(), date);
-			const invalid = voucher.type === 'invalid';
-			return (
-				<div key={voucher.voucher} className="voucher">
-					<span>{voucher.note}</span>
-					<span>{voucher.voucher}</span>
-					{!invalid && (
-						<span>
-							{dateDiff} {I18n.t('days left')}
-						</span>
-					)}
-					{invalid && <span>{I18n.t('expired')}</span>}
-				</div>
-			);
-		})}
+		{list
+			.sort((a, b) => b.macs.length - a.macs.length)
+			.map(voucher => {
+				const date = new Date(parseInt(voucher.expires, 10));
+				const dateDiff = daysBetween(new Date(), date);
+				const invalid = voucher.type === 'invalid';
+				const used = voucher.macs.length > 0
+				return (
+					<div key={voucher.voucher} className="voucher">
+						<span>{voucher.note}</span>
+						<span style={{ textDecoration: used ? 'line-through' : 'none' }}>{voucher.voucher}</span>
+						{!invalid && (
+							<span>
+								{dateDiff} {I18n.t('days left')}
+							</span>
+						)}
+						{invalid && <span>{I18n.t('expired')}</span>}
+					</div>
+				);
+			})}
 	</div>
 );
 
 const VoucherTypeBox = ({ type, list }) => (
-	<Box title={getTitletype(type)} collapse>
+	<Box title={getTitletype(type)} collapse collapsed={type === 'invalid'}>
 		{Object.keys(list).map(node => (
 			<VoucherNodeBox key={node} node={node} list={list[node]} />
 		))}
@@ -98,6 +101,9 @@ const List = ({ goBack, getVoucherList, vouchers, loading }) => {
 		vouchers.forEach(voucher => mergeTypes(voucher, flatList));
 		return (
 			<div>
+				<button class="button green block" onClick={goBack}>
+					{I18n.t('Go back')}
+				</button>
 				<div>
 					{Object.keys(flatList).map(type => (
 						<VoucherTypeBox key={type} type={type} list={flatList[type]} />
