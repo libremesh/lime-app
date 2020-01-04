@@ -14,6 +14,10 @@ export const LOAD_VOUCHERS = 'pirania/LOAD_VOUCHERS';
 export const LOAD_VOUCHERS_SUCCESS = 'pirania/LOAD_VOUCHERS_SUCCESS';
 export const LOAD_VOUCHERS_ERROR = 'pirania/LOAD_VOUCHERS_ERROR';
 
+export const LOAD_CONTENT = 'pirania/LOAD_CONTENT';
+export const LOAD_CONTENT_SUCCESS = 'pirania/LOAD_CONTENT_SUCCESS';
+export const LOAD_CONTENT_ERROR = 'pirania/LOAD_CONTENT_ERROR';
+
 export const ENABLE = 'pirania/ENABLE';
 export const ENABLE_SUCCESS = 'pirania/ENABLE_SUCCESS';
 export const ENABLE_ERROR = 'pirania/ENABLE_ERROR';
@@ -37,6 +41,10 @@ export const RENEW_MEMBER_VOUCHERS_ERROR = 'pirania/RENEW_MEMBER_VOUCHERS_ERROR'
 export const WRITE_GOVERNANCE = 'pirania/WRITE_GOVERNANCE';
 export const WRITE_GOVERNANCE_SUCCESS = 'pirania/WRITE_GOVERNANCE_SUCCESS';
 export const WRITE_GOVERNANCE_ERROR = 'pirania/WRITE_GOVERNANCE_ERROR';
+
+export const WRITE_CONTENT = 'pirania/WRITE_CONTENT';
+export const WRITE_CONTENT_SUCCESS = 'pirania/WRITE_CONTENT_SUCCESS';
+export const WRITE_CONTENT_ERROR = 'pirania/WRITE_CONTENT_ERROR';
 
 export const DELETE_VOUCHER = 'pirania/DELETE_VOUCHER';
 export const DELETE_VOUCHER_SUCCESS = 'pirania/DELETE_VOUCHER_SUCCESS';

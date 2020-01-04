@@ -3,12 +3,14 @@ import {
 	LOAD_GOVERNANCE, LOAD_GOVERNANCE_SUCCESS, LOAD_GOVERNANCE_ERROR,
 	LOAD_STATUS, LOAD_STATUS_SUCCESS, LOAD_STATUS_ERROR,
 	LOAD_VOUCHERS, LOAD_VOUCHERS_SUCCESS, LOAD_VOUCHERS_ERROR,
+	LOAD_CONTENT, LOAD_CONTENT_SUCCESS, LOAD_CONTENT_ERROR,
 	ENABLE, ENABLE_SUCCESS, ENABLE_ERROR,
 	DISABLE, DISABLE_SUCCESS, DISABLE_ERROR,
 	CREATE_MEMBER_VOUCHER, CREATE_MEMBER_VOUCHER_SUCCESS, CREATE_MEMBER_VOUCHER_ERROR,
 	CREATE_VISITOR_VOUCHER, CREATE_VISITOR_VOUCHER_SUCCESS, CREATE_VISITOR_VOUCHER_ERROR,
 	RENEW_MEMBER_VOUCHERS, RENEW_MEMBER_VOUCHERS_SUCCESS, RENEW_MEMBER_VOUCHERS_ERROR,
-	WRITE_GOVERNANCE, WRITE_GOVERNANCE_SUCCESS, WRITE_GOVERNANCE_ERROR
+	WRITE_GOVERNANCE, WRITE_GOVERNANCE_SUCCESS, WRITE_GOVERNANCE_ERROR,
+	WRITE_CONTENT, WRITE_CONTENT_SUCCESS, WRITE_CONTENT_ERROR
 } from './piraniaConstants';
 
 export const initialState = {
@@ -16,7 +18,8 @@ export const initialState = {
 	loading: false,
 	vouchers: null,
 	createVoucher: null,
-	status: false
+	status: false,
+	content: null
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
@@ -25,12 +28,14 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case LOAD_GOVERNANCE:
 		case LOAD_STATUS:
 		case LOAD_VOUCHERS:
+		case LOAD_CONTENT:
 		case ENABLE:
 		case DISABLE:
 		case CREATE_VISITOR_VOUCHER:
 		case CREATE_MEMBER_VOUCHER:
 		case RENEW_MEMBER_VOUCHERS:
 		case WRITE_GOVERNANCE:
+		case WRITE_CONTENT:
 			return Object.assign({}, state, { loading: true });
 		case LOAD_ACTIVE_VOUCHERS_SUCCESS:
 			return Object.assign({}, state, { activeVouchers: payload, loading: false });
@@ -40,6 +45,10 @@ export const reducer = (state = initialState, { type, payload }) => {
 			return Object.assign({}, state, { governance: payload, loading: false });
 		case LOAD_GOVERNANCE_ERROR:
 			return Object.assign({}, state, { governance: { error: payload.message }, loading: false });
+		case LOAD_CONTENT_SUCCESS:
+			return Object.assign({}, state, { content: payload, loading: false });
+		case LOAD_CONTENT_ERROR:
+			return Object.assign({}, state, { content: { error: payload.message }, loading: false });
 		case LOAD_VOUCHERS_SUCCESS:
 			return Object.assign({}, state, { vouchers: payload.vouchers, loading: false });
 		case LOAD_VOUCHERS_ERROR:
@@ -56,7 +65,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case RENEW_MEMBER_VOUCHERS_SUCCESS:
 			return Object.assign({}, state, { renewed: payload, loading: false });
 		case WRITE_GOVERNANCE_SUCCESS:
-			return Object.assign({}, state, { governanceWritten: payload.success, loading: false });
+		case WRITE_CONTENT_SUCCESS:
 		case LOAD_STATUS_ERROR:
 		case ENABLE_ERROR:
 		case DISABLE_ERROR:
@@ -64,6 +73,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case CREATE_VISITOR_VOUCHER_ERROR:
 		case RENEW_MEMBER_VOUCHERS_ERROR:
 		case WRITE_GOVERNANCE_ERROR:
+		case WRITE_CONTENT_ERROR:
 			return Object.assign({}, state, { loading: false });
 		default:
 			return state;

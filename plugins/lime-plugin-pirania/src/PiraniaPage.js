@@ -16,6 +16,7 @@ import Create from './pages/create';
 import List from './pages/list';
 import Renew from './pages/renew';
 import Governance from './pages/governance';
+import Content from './pages/content';
 
 import I18n from 'i18n-js';
 import './style';
@@ -74,6 +75,10 @@ export const Pirania = ({
 		}
 	}
 
+	function goBack() {
+		setPage(0);
+	}
+
 	useEffect(() => {
 		getActiveVouchers();
 		getPiraniaGovernance();
@@ -119,7 +124,6 @@ export const Pirania = ({
 						list={() => setPage(1)}
 						create={() => setPage(2)}
 						renew={() => setPage(3)}
-						renew={() => setPage(3)}
 						editGovernance={() => setPage(4)}
 						editContent={() => setPage(5)}
 						payday={payday}
@@ -128,25 +132,30 @@ export const Pirania = ({
 						{...governance}
 					/>
 				)}
-				{page === 1 && <List goBack={() => setPage(0)} />}
+				{page === 1 && <List goBack={goBack} />}
 				{page === 2 && (
 					<Create
-						goBack={() => setPage(0)}
+						goBack={goBack}
 						daysLeft={daysLeft}
 						date={payday}
 					/>
 				)}
 				{page === 3 && (
 					<Renew
-						goBack={() => setPage(0)}
+						goBack={goBack}
 						daysLeft={daysLeft}
 						renewDate={payday}
 					/>
 				)}
 				{page === 4 && (
 					<Governance
-						goBack={() => setPage(0)}
+						goBack={goBack}
 						{...governance}
+					/>
+				)}
+				{page === 5 && (
+					<Content
+						goBack={goBack}
 					/>
 				)}
 			</div>

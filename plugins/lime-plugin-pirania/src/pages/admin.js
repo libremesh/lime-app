@@ -166,10 +166,9 @@ const Admin = ({ provider,
 					<button class="button green block button-one" onClick={editGovernance}>
 						{I18n.t('Edit governance information')}
 					</button>
-					{/* TODO: Change pirania-app content */}
-					{/* <button class="button green block" onClick={editContent}>
+					<button class="button green block" onClick={editContent}>
 						{I18n.t('Edit captive-portal page content')}
-					</button> */}
+					</button>
 				</div>
 			</Box>
 		</div>

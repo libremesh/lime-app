@@ -2,24 +2,28 @@ import { getActiveVouchers,
 	getStatus,
 	getGovernance,
 	getVoucherList,
+	getContent,
 	runEnable,
 	runDisable,
 	addMemberVoucher,
 	addVisitorVoucher,
 	runRenewVouchers,
-	runWriteGovernance
+	runWriteGovernance,
+	runWriteContent
 } from './piraniaApi';
 import {
 	LOAD_ACTIVE_VOUCHERS, LOAD_ACTIVE_VOUCHERS_SUCCESS, LOAD_ACTIVE_VOUCHERS_ERROR,
 	LOAD_STATUS, LOAD_STATUS_SUCCESS, LOAD_STATUS_ERROR,
 	LOAD_GOVERNANCE, LOAD_GOVERNANCE_SUCCESS, LOAD_GOVERNANCE_ERROR,
 	LOAD_VOUCHERS, LOAD_VOUCHERS_SUCCESS, LOAD_VOUCHERS_ERROR,
+	LOAD_CONTENT, LOAD_CONTENT_SUCCESS, LOAD_CONTENT_ERROR,
 	ENABLE, ENABLE_SUCCESS, ENABLE_ERROR,
 	DISABLE, DISABLE_SUCCESS, DISABLE_ERROR,
 	CREATE_MEMBER_VOUCHER, CREATE_MEMBER_VOUCHER_SUCCESS, CREATE_MEMBER_VOUCHER_ERROR,
 	CREATE_VISITOR_VOUCHER, CREATE_VISITOR_VOUCHER_SUCCESS, CREATE_VISITOR_VOUCHER_ERROR,
 	RENEW_MEMBER_VOUCHERS, RENEW_MEMBER_VOUCHERS_SUCCESS, RENEW_MEMBER_VOUCHERS_ERROR,
-	WRITE_GOVERNANCE, WRITE_GOVERNANCE_SUCCESS, WRITE_GOVERNANCE_ERROR
+	WRITE_GOVERNANCE, WRITE_GOVERNANCE_SUCCESS, WRITE_GOVERNANCE_ERROR,
+	WRITE_CONTENT, WRITE_CONTENT_SUCCESS, WRITE_CONTENT_ERROR
 } from './piraniaConstants';
 
 import 'rxjs/add/operator/map';
@@ -119,6 +123,24 @@ const loadGovernance = (action$, store, { wsAPI }) =>
 			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
 		]);
 
+const loadContent = (action$, store, { wsAPI }) =>
+	action$
+		.ofType(LOAD_CONTENT)
+		.mergeMap(action => getContent(wsAPI, store.value.meta.sid, {}))
+		.mergeMap(payload => {
+			if (payload.code) {
+				return [
+					{ type: LOAD_CONTENT_ERROR, payload },
+					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
+				];
+			}
+			return [{ type: LOAD_CONTENT_SUCCESS, payload }];
+		})
+		.catch([
+			{ type: LOAD_CONTENT_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
+
 const loadVoucherList = (action$, store, { wsAPI }) =>
 	action$
 		.ofType(LOAD_VOUCHERS)
@@ -209,4 +231,35 @@ const writeGovernance = (action$, store, { wsAPI }) =>
 			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
 		]);
 
-export default { loadActiveVouchers, loadGovernance, loadVoucherList, createMemberVoucher, createVisitorVoucher, renewVouchers, loadStatus, enable, disable, writeGovernance };
+const writeContent = (action$, store, { wsAPI }) =>
+	action$
+		.ofType(WRITE_CONTENT)
+		.mergeMap(action => runWriteContent(wsAPI, store.value.admin.sid, action.payload))
+		.mergeMap(payload => {
+			if (payload.code) {
+				return [
+					{ type: WRITE_CONTENT_ERROR, payload },
+					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
+				];
+			}
+			return [{ type: WRITE_CONTENT_SUCCESS, payload }];
+		})
+		.catch([
+			{ type: WRITE_CONTENT_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
+
+export default {
+	loadActiveVouchers,
+	loadGovernance,
+	loadVoucherList,
+	loadContent,
+	createMemberVoucher,
+	createVisitorVoucher,
+	renewVouchers,
+	loadStatus,
+	enable,
+	disable,
+	writeGovernance,
+	writeContent
+};

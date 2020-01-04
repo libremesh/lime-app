@@ -1,5 +1,6 @@
 export const activeVouchers = state => state.pirania.activeVouchers;
 export const governance = state => state.pirania.governance;
+export const content = state => state.pirania.content;
 export const vouchers = state => state.pirania.vouchers;
 export const loading = state => state.pirania.loading;
 export const createVoucher = state => state.pirania.createVoucher;

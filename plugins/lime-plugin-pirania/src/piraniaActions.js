@@ -1,6 +1,7 @@
 import {
 	LOAD_ACTIVE_VOUCHERS,
 	LOAD_GOVERNANCE,
+	LOAD_CONTENT,
 	LOAD_VOUCHERS,
 	LOAD_STATUS,
 	ENABLE,
@@ -8,7 +9,8 @@ import {
 	CREATE_MEMBER_VOUCHER,
 	CREATE_VISITOR_VOUCHER,
 	RENEW_MEMBER_VOUCHERS,
-	WRITE_GOVERNANCE
+	WRITE_GOVERNANCE,
+	WRITE_CONTENT
 	// DELETE_VOUCHER
 } from './piraniaConstants';
 
@@ -22,6 +24,10 @@ export const getStatus = () => ({
 
 export const getPiraniaGovernance = () => ({
 	type: LOAD_GOVERNANCE
+});
+
+export const getPiraniaContent = () => ({
+	type: LOAD_CONTENT
 });
 
 export const getVoucherList = () => ({
@@ -53,5 +59,10 @@ export const renewVouchers = (payload) => ({
 
 export const writeGovernance = (payload) => ({
 	type: WRITE_GOVERNANCE,
+	payload
+});
+
+export const writeContent = (payload) => ({
+	type: WRITE_CONTENT,
 	payload
 });
