@@ -1,5 +1,14 @@
-.box {
-	flex-flow: row nowrap;
+@media screen and (min-width: 640px) {
+  .box {
+    display: flex;
+    flex-flow: row no-wrap;
+    justify-content: space-around;
+    padding: 2vh 0;
+  }
+}
+
+.info span {
+  line-height: 2.5;
 }
 
 .switchContainer {
@@ -12,13 +21,6 @@
   width: 150px;
   height: 34px;
   text-align: left;
-}
-
-.createSelect {
-  display: flex;
-  flex-flow: row no-wrap;
-  justify-content: space-around;
-  padding: 2vh 0;
 }
 
 .createInput {

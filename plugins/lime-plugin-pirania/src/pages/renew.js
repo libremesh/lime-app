@@ -69,7 +69,7 @@ function Renew({ goBack, loading, vouchers, getVoucherList, daysLeft, renewDate,
 						vouchers={vouchers}
 						handleCheck={handleCheck}
 						selected={selected}
-					/>
+					  />
 					: <Loading />
 				}
 			</Box>

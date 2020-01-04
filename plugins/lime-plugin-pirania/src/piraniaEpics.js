@@ -101,7 +101,6 @@ const disable = (action$, store, { wsAPI }) =>
 		]);
 
 
-
 const loadGovernance = (action$, store, { wsAPI }) =>
 	action$
 		.ofType(LOAD_GOVERNANCE)

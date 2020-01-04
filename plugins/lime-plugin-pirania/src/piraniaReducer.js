@@ -16,7 +16,7 @@ export const initialState = {
 	loading: false,
 	vouchers: null,
 	createVoucher: null,
-	status: false,
+	status: false
 };
 
 export const reducer = (state = initialState, { type, payload }) => {

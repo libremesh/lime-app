@@ -61,7 +61,7 @@ const VoucherNodeBox = ({ node, list }) => (
 				const date = new Date(parseInt(voucher.expires, 10));
 				const dateDiff = daysBetween(new Date(), date);
 				const invalid = voucher.type === 'invalid';
-				const used = voucher.macs.length > 0
+				const used = voucher.macs.length > 0;
 				return (
 					<div key={voucher.voucher} className="voucher">
 						<span>{voucher.note}</span>

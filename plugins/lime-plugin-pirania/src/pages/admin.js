@@ -27,13 +27,14 @@ const Admin = ({ provider,
 	status,
 	enable,
 	disable,
-	loading,
+	loading
 }) => {
 	function handleSwitch (e) {
 		e.preventDefault();
 		if (status) {
 			disable();
-		} else enable();
+		}
+		else enable();
 		getStatus();
 	}
 	useEffect(() => {
@@ -173,7 +174,7 @@ const Admin = ({ provider,
 			</Box>
 		</div>
 	);
-}
+};
 
 export const mapStateToProps = state => ({
 	loading: loading(state),
@@ -183,6 +184,6 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
 	getStatus: bindActionCreators(getStatus, dispatch),
 	enable: bindActionCreators(enable, dispatch),
-	disable: bindActionCreators(disable, dispatch),
+	disable: bindActionCreators(disable, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Admin);

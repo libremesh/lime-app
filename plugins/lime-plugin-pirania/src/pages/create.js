@@ -100,7 +100,7 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 							</div>
 							<hr />
 							{!member && (
-								<div className="createSelect">
+								<div className="box">
 									<div className="box">
 										<label>{I18n.t('Number of vouchers')}</label>
 										<input

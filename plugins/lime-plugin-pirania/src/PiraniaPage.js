@@ -74,10 +74,6 @@ export const Pirania = ({
 		}
 	}
 
-	function handleRedirect() {
-		console.log('Should redirect to download');
-	}
-
 	useEffect(() => {
 		getActiveVouchers();
 		getPiraniaGovernance();
