@@ -1,4 +1,14 @@
-import { getActiveVouchers, getStatus, getGovernance, getVoucherList, runEnable, runDisable, addMemberVoucher, addVisitorVoucher, runRenewVouchers } from './piraniaApi';
+import { getActiveVouchers,
+	getStatus,
+	getGovernance,
+	getVoucherList,
+	runEnable,
+	runDisable,
+	addMemberVoucher,
+	addVisitorVoucher,
+	runRenewVouchers,
+	runWriteGovernance
+} from './piraniaApi';
 import {
 	LOAD_ACTIVE_VOUCHERS, LOAD_ACTIVE_VOUCHERS_SUCCESS, LOAD_ACTIVE_VOUCHERS_ERROR,
 	LOAD_STATUS, LOAD_STATUS_SUCCESS, LOAD_STATUS_ERROR,
@@ -8,7 +18,8 @@ import {
 	DISABLE, DISABLE_SUCCESS, DISABLE_ERROR,
 	CREATE_MEMBER_VOUCHER, CREATE_MEMBER_VOUCHER_SUCCESS, CREATE_MEMBER_VOUCHER_ERROR,
 	CREATE_VISITOR_VOUCHER, CREATE_VISITOR_VOUCHER_SUCCESS, CREATE_VISITOR_VOUCHER_ERROR,
-	RENEW_MEMBER_VOUCHERS, RENEW_MEMBER_VOUCHERS_SUCCESS, RENEW_MEMBER_VOUCHERS_ERROR
+	RENEW_MEMBER_VOUCHERS, RENEW_MEMBER_VOUCHERS_SUCCESS, RENEW_MEMBER_VOUCHERS_ERROR,
+	WRITE_GOVERNANCE, WRITE_GOVERNANCE_SUCCESS, WRITE_GOVERNANCE_ERROR
 } from './piraniaConstants';
 
 import 'rxjs/add/operator/map';
@@ -181,4 +192,22 @@ const renewVouchers = (action$, store, { wsAPI }) =>
 			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
 		]);
 
-export default { loadActiveVouchers, loadGovernance, loadVoucherList, createMemberVoucher, createVisitorVoucher, renewVouchers, loadStatus, enable, disable };
+const writeGovernance = (action$, store, { wsAPI }) =>
+	action$
+		.ofType(WRITE_GOVERNANCE)
+		.mergeMap(action => runWriteGovernance(wsAPI, store.value.admin.sid, action.payload))
+		.mergeMap(payload => {
+			if (payload.code) {
+				return [
+					{ type: WRITE_GOVERNANCE_ERROR, payload },
+					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
+				];
+			}
+			return [{ type: WRITE_GOVERNANCE_SUCCESS, payload }];
+		})
+		.catch([
+			{ type: WRITE_GOVERNANCE_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
+
+export default { loadActiveVouchers, loadGovernance, loadVoucherList, createMemberVoucher, createVisitorVoucher, renewVouchers, loadStatus, enable, disable, writeGovernance };

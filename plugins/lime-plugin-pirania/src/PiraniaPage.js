@@ -15,6 +15,7 @@ import Admin from './pages/admin';
 import Create from './pages/create';
 import List from './pages/list';
 import Renew from './pages/renew';
+import Governance from './pages/governance';
 
 import I18n from 'i18n-js';
 import './style';
@@ -122,7 +123,10 @@ export const Pirania = ({
 						list={() => setPage(1)}
 						create={() => setPage(2)}
 						renew={() => setPage(3)}
-						download={handleRedirect}
+						renew={() => setPage(3)}
+						editGovernance={() => setPage(4)}
+						editContent={() => setPage(5)}
+						payday={payday}
 						daysLeft={daysLeft}
 						{...activeVouchers}
 						{...governance}
@@ -141,6 +145,12 @@ export const Pirania = ({
 						goBack={() => setPage(0)}
 						daysLeft={daysLeft}
 						renewDate={payday}
+					/>
+				)}
+				{page === 4 && (
+					<Governance
+						goBack={() => setPage(0)}
+						{...governance}
 					/>
 				)}
 			</div>

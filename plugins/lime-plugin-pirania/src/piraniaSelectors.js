@@ -5,3 +5,4 @@ export const loading = state => state.pirania.loading;
 export const createVoucher = state => state.pirania.createVoucher;
 export const renewed = state => state.pirania.renewed;
 export const status = state => state.pirania.status;
+export const governanceWritten = state => state.pirania.governanceWritten;
