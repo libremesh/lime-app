@@ -6,9 +6,21 @@ export const LOAD_GOVERNANCE = 'pirania/LOAD_GOVERNANCE';
 export const LOAD_GOVERNANCE_SUCCESS = 'pirania/LOAD_GOVERNANCE_SUCCESS';
 export const LOAD_GOVERNANCE_ERROR = 'pirania/LOAD_GOVERNANCE_ERROR';
 
+export const LOAD_STATUS = 'pirania/LOAD_STATUS';
+export const LOAD_STATUS_SUCCESS = 'pirania/LOAD_STATUS_SUCCESS';
+export const LOAD_STATUS_ERROR = 'pirania/LOAD_STATUS_ERROR';
+
 export const LOAD_VOUCHERS = 'pirania/LOAD_VOUCHERS';
 export const LOAD_VOUCHERS_SUCCESS = 'pirania/LOAD_VOUCHERS_SUCCESS';
 export const LOAD_VOUCHERS_ERROR = 'pirania/LOAD_VOUCHERS_ERROR';
+
+export const ENABLE = 'pirania/ENABLE';
+export const ENABLE_SUCCESS = 'pirania/ENABLE_SUCCESS';
+export const ENABLE_ERROR = 'pirania/ENABLE_ERROR';
+
+export const DISABLE = 'pirania/DISABLE';
+export const DISABLE_SUCCESS = 'pirania/DISABLE_SUCCESS';
+export const DISABLE_ERROR = 'pirania/DISABLE_ERROR';
 
 export const CREATE_MEMBER_VOUCHER = 'pirania/CREATE_MEMBER_VOUCHER';
 export const CREATE_MEMBER_VOUCHER_SUCCESS = 'pirania/CREATE_MEMBER_VOUCHER_SUCCESS';

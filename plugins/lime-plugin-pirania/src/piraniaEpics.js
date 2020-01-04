@@ -1,8 +1,11 @@
-import { getActiveVouchers, getGovernance, getVoucherList, addMemberVoucher, addVisitorVoucher, runRenewVouchers } from './piraniaApi';
+import { getActiveVouchers, getStatus, getGovernance, getVoucherList, runEnable, runDisable, addMemberVoucher, addVisitorVoucher, runRenewVouchers } from './piraniaApi';
 import {
 	LOAD_ACTIVE_VOUCHERS, LOAD_ACTIVE_VOUCHERS_SUCCESS, LOAD_ACTIVE_VOUCHERS_ERROR,
+	LOAD_STATUS, LOAD_STATUS_SUCCESS, LOAD_STATUS_ERROR,
 	LOAD_GOVERNANCE, LOAD_GOVERNANCE_SUCCESS, LOAD_GOVERNANCE_ERROR,
 	LOAD_VOUCHERS, LOAD_VOUCHERS_SUCCESS, LOAD_VOUCHERS_ERROR,
+	ENABLE, ENABLE_SUCCESS, ENABLE_ERROR,
+	DISABLE, DISABLE_SUCCESS, DISABLE_ERROR,
 	CREATE_MEMBER_VOUCHER, CREATE_MEMBER_VOUCHER_SUCCESS, CREATE_MEMBER_VOUCHER_ERROR,
 	CREATE_VISITOR_VOUCHER, CREATE_VISITOR_VOUCHER_SUCCESS, CREATE_VISITOR_VOUCHER_ERROR,
 	RENEW_MEMBER_VOUCHERS, RENEW_MEMBER_VOUCHERS_SUCCESS, RENEW_MEMBER_VOUCHERS_ERROR
@@ -31,6 +34,61 @@ const loadActiveVouchers = (action$, store, { wsAPI }) =>
 			{ type: LOAD_ACTIVE_VOUCHERS_ERROR },
 			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
 		]);
+
+const loadStatus = (action$, store, { wsAPI }) =>
+	action$
+		.ofType(LOAD_STATUS)
+		.mergeMap(action => getStatus(wsAPI, store.value.admin.sid, {}))
+		.mergeMap(payload => {
+			if (payload.code) {
+				return [
+					{ type: LOAD_STATUS_ERROR, payload },
+					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
+				];
+			}
+			return [{ type: LOAD_STATUS_SUCCESS, payload }];
+		})
+		.catch([
+			{ type: LOAD_STATUS_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
+
+const enable = (action$, store, { wsAPI }) =>
+	action$
+		.ofType(ENABLE)
+		.mergeMap(action => runEnable(wsAPI, store.value.admin.sid, {}))
+		.mergeMap(payload => {
+			if (payload.code) {
+				return [
+					{ type: ENABLE_ERROR, payload },
+					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
+				];
+			}
+			return [{ type: ENABLE_SUCCESS, payload }];
+		})
+		.catch([
+			{ type: ENABLE_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
+
+const disable = (action$, store, { wsAPI }) =>
+	action$
+		.ofType(DISABLE)
+		.mergeMap(action => runDisable(wsAPI, store.value.admin.sid, {}))
+		.mergeMap(payload => {
+			if (payload.code) {
+				return [
+					{ type: DISABLE_ERROR, payload },
+					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
+				];
+			}
+			return [{ type: DISABLE_SUCCESS, payload }];
+		})
+		.catch([
+			{ type: DISABLE_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
+
 
 
 const loadGovernance = (action$, store, { wsAPI }) =>
@@ -123,4 +181,4 @@ const renewVouchers = (action$, store, { wsAPI }) =>
 			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
 		]);
 
-export default { loadActiveVouchers, loadGovernance, loadVoucherList, createMemberVoucher, createVisitorVoucher, renewVouchers };
+export default { loadActiveVouchers, loadGovernance, loadVoucherList, createMemberVoucher, createVisitorVoucher, renewVouchers, loadStatus, enable, disable };
