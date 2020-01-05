@@ -38,7 +38,9 @@ const Admin = ({ provider,
 		getStatus();
 	}
 	useEffect(() => {
-		getStatus();
+		if (status === undefined) {
+			getStatus();
+		}
 		return () => { };
 	}, []);
 	return (

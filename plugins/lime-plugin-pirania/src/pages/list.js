@@ -1,11 +1,13 @@
+/* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getVoucherList } from '../piraniaActions';
+import { getVoucherList, removeVoucher } from '../piraniaActions';
 import { vouchers, loading } from '../piraniaSelectors';
 import Loading from '../../../../src/components/loading';
 import { Box } from '../../../../src/components/box';
+import { Trash } from '../../../../src/components/icons';
 
 import I18n from 'i18n-js';
 
@@ -52,7 +54,7 @@ const daysBetween = (date1, date2) => {
 	return Math.round(differenceMs / oneDay);
 };
 
-const VoucherNodeBox = ({ node, list }) => (
+const VoucherNodeBox = ({ node, list, removeVoucher }) => (
 	<div style={{ marginBottom: 50 }}>
 		<h4 style={boxStyle}>{node}</h4>
 		{list
@@ -64,11 +66,14 @@ const VoucherNodeBox = ({ node, list }) => (
 				const used = voucher.macs.length > 0;
 				return (
 					<div key={voucher.voucher} className="voucher">
-						<span>{voucher.note}</span>
-						<span style={{ textDecoration: used ? 'line-through' : 'none' }}>{voucher.voucher}</span>
+						<span style={{ width: '30%' }}>{voucher.note}</span>
+						<span style={{ width: '30%', textDecoration: used ? 'line-through' : 'none' }}>{voucher.voucher}</span>
 						{!invalid && (
-							<span>
-								{dateDiff} {I18n.t('days left')}
+							<span style={{ width: '30%' }}>
+								<span style={{ paddingRight: 15 }}>
+									{dateDiff} {I18n.t('days left')}
+								</span>
+								<Trash size={15} onClick={() => removeVoucher(voucher.voucher)} />
 							</span>
 						)}
 						{invalid && <span>{I18n.t('expired')}</span>}
@@ -78,19 +83,26 @@ const VoucherNodeBox = ({ node, list }) => (
 	</div>
 );
 
-const VoucherTypeBox = ({ type, list }) => (
+const VoucherTypeBox = ({ type, list, removeVoucher }) => (
 	<Box title={getTitletype(type)} collapse collapsed={type === 'invalid'}>
 		{Object.keys(list).map(node => (
-			<VoucherNodeBox key={node} node={node} list={list[node]} />
+			<VoucherNodeBox key={node} node={node} list={list[node]} removeVoucher={removeVoucher} />
 		))}
 	</Box>
 );
 
-const List = ({ goBack, getVoucherList, vouchers, loading }) => {
+const List = ({ goBack, getVoucherList, removeVoucher, vouchers, loading }) => {
 	useEffect(() => {
-		getVoucherList();
+		if (!vouchers) {
+			getVoucherList();
+		}
 		return () => { };
 	}, []);
+	function handleRemoveVoucher (voucher) {
+		removeVoucher({
+			voucher
+		});
+	}
 	if (loading) return <Loading />;
 	else if (vouchers) {
 		let flatList = {
@@ -101,12 +113,15 @@ const List = ({ goBack, getVoucherList, vouchers, loading }) => {
 		vouchers.forEach(voucher => mergeTypes(voucher, flatList));
 		return (
 			<div>
-				<button class="button green block" onClick={goBack}>
+				<button class="button green block button-one" onClick={goBack}>
 					{I18n.t('Go back')}
+				</button>
+				<button class="button green block" onClick={getVoucherList}>
+					{I18n.t('Refresh')}
 				</button>
 				<div>
 					{Object.keys(flatList).map(type => (
-						<VoucherTypeBox key={type} type={type} list={flatList[type]} />
+						<VoucherTypeBox key={type} type={type} list={flatList[type]} removeVoucher={handleRemoveVoucher} />
 					))}
 				</div>
 				<button class="button green block" onClick={goBack}>
@@ -122,6 +137,7 @@ export const mapStateToProps = state => ({
 });
 
 export const mapDispatchToProps = dispatch => ({
-	getVoucherList: bindActionCreators(getVoucherList, dispatch)
+	getVoucherList: bindActionCreators(getVoucherList, dispatch),
+	removeVoucher: bindActionCreators(removeVoucher, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(List);

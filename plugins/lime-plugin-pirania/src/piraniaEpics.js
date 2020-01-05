@@ -8,6 +8,7 @@ import { getActiveVouchers,
 	addMemberVoucher,
 	addVisitorVoucher,
 	runRenewVouchers,
+	runRemoveVoucher,
 	runWriteGovernance,
 	runWriteContent
 } from './piraniaApi';
@@ -22,6 +23,7 @@ import {
 	CREATE_MEMBER_VOUCHER, CREATE_MEMBER_VOUCHER_SUCCESS, CREATE_MEMBER_VOUCHER_ERROR,
 	CREATE_VISITOR_VOUCHER, CREATE_VISITOR_VOUCHER_SUCCESS, CREATE_VISITOR_VOUCHER_ERROR,
 	RENEW_MEMBER_VOUCHERS, RENEW_MEMBER_VOUCHERS_SUCCESS, RENEW_MEMBER_VOUCHERS_ERROR,
+	REMOVE_VOUCHER, REMOVE_VOUCHER_SUCCESS, REMOVE_VOUCHER_ERROR,
 	WRITE_GOVERNANCE, WRITE_GOVERNANCE_SUCCESS, WRITE_GOVERNANCE_ERROR,
 	WRITE_CONTENT, WRITE_CONTENT_SUCCESS, WRITE_CONTENT_ERROR
 } from './piraniaConstants';
@@ -213,6 +215,27 @@ const renewVouchers = (action$, store, { wsAPI }) =>
 			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
 		]);
 
+const removeVoucher = (action$, store, { wsAPI }) =>
+	action$
+		.ofType(REMOVE_VOUCHER)
+		.mergeMap(action => runRemoveVoucher(wsAPI, store.value.admin.sid, action.payload))
+		.mergeMap(payload => {
+			if (payload.code) {
+				return [
+					{ type: REMOVE_VOUCHER_ERROR, payload },
+					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
+				];
+			}
+			return [
+				{ type: REMOVE_VOUCHER_SUCCESS, payload },
+				{ type: LOAD_VOUCHERS }
+			];
+		})
+		.catch([
+			{ type: REMOVE_VOUCHER_ERROR },
+			{ type: 'NOTIFICATION', payload: { msg: 'Error' } }
+		]);
+
 const writeGovernance = (action$, store, { wsAPI }) =>
 	action$
 		.ofType(WRITE_GOVERNANCE)
@@ -257,6 +280,7 @@ export default {
 	createMemberVoucher,
 	createVisitorVoucher,
 	renewVouchers,
+	removeVoucher,
 	loadStatus,
 	enable,
 	disable,

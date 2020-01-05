@@ -10,8 +10,8 @@ import {
 	CREATE_VISITOR_VOUCHER,
 	RENEW_MEMBER_VOUCHERS,
 	WRITE_GOVERNANCE,
-	WRITE_CONTENT
-	// DELETE_VOUCHER
+	WRITE_CONTENT,
+	REMOVE_VOUCHER
 } from './piraniaConstants';
 
 export const getActiveVouchers = () => ({
@@ -54,6 +54,11 @@ export const createVisitorVoucher = (payload) => ({
 
 export const renewVouchers = (payload) => ({
 	type: RENEW_MEMBER_VOUCHERS,
+	payload
+});
+
+export const removeVoucher = (payload) => ({
+	type: REMOVE_VOUCHER,
 	payload
 });
 

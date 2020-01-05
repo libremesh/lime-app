@@ -9,6 +9,7 @@ import {
 	CREATE_MEMBER_VOUCHER, CREATE_MEMBER_VOUCHER_SUCCESS, CREATE_MEMBER_VOUCHER_ERROR,
 	CREATE_VISITOR_VOUCHER, CREATE_VISITOR_VOUCHER_SUCCESS, CREATE_VISITOR_VOUCHER_ERROR,
 	RENEW_MEMBER_VOUCHERS, RENEW_MEMBER_VOUCHERS_SUCCESS, RENEW_MEMBER_VOUCHERS_ERROR,
+	REMOVE_VOUCHER, REMOVE_VOUCHER_SUCCESS, REMOVE_VOUCHER_ERROR,
 	WRITE_GOVERNANCE, WRITE_GOVERNANCE_SUCCESS, WRITE_GOVERNANCE_ERROR,
 	WRITE_CONTENT, WRITE_CONTENT_SUCCESS, WRITE_CONTENT_ERROR
 } from './piraniaConstants';
@@ -18,7 +19,7 @@ export const initialState = {
 	loading: false,
 	vouchers: null,
 	createVoucher: null,
-	status: false,
+	status: undefined,
 	content: null
 };
 
@@ -34,6 +35,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case CREATE_VISITOR_VOUCHER:
 		case CREATE_MEMBER_VOUCHER:
 		case RENEW_MEMBER_VOUCHERS:
+		case REMOVE_VOUCHER:
 		case WRITE_GOVERNANCE:
 		case WRITE_CONTENT:
 			return Object.assign({}, state, { loading: true });
@@ -59,6 +61,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 			return Object.assign({}, state, { status: true, loading: false });
 		case DISABLE_SUCCESS:
 			return Object.assign({}, state, { status: false, loading: false });
+		case REMOVE_VOUCHER_SUCCESS:
 		case CREATE_MEMBER_VOUCHER_SUCCESS:
 		case CREATE_VISITOR_VOUCHER_SUCCESS:
 			return Object.assign({}, state, { createVoucher: payload, loading: false });
@@ -72,6 +75,7 @@ export const reducer = (state = initialState, { type, payload }) => {
 		case CREATE_MEMBER_VOUCHER_ERROR:
 		case CREATE_VISITOR_VOUCHER_ERROR:
 		case RENEW_MEMBER_VOUCHERS_ERROR:
+		case REMOVE_VOUCHER_ERROR:
 		case WRITE_GOVERNANCE_ERROR:
 		case WRITE_CONTENT_ERROR:
 			return Object.assign({}, state, { loading: false });
