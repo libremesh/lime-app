@@ -74,6 +74,9 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 	}
 	return (
 		<div>
+			<button className="button green block" onClick={goBack}>
+				{I18n.t('Go back')}
+			</button>
 			<Box title={I18n.t('Create new voucher')}>
 				<form onSubmit={submitForm}>
 					{!confirm && (
