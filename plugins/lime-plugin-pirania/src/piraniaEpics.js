@@ -172,7 +172,10 @@ const createMemberVoucher = (action$, store, { wsAPI }) =>
 					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
 				];
 			}
-			return [{ type: CREATE_MEMBER_VOUCHER_SUCCESS, payload }];
+			return [
+				{ type: CREATE_MEMBER_VOUCHER_SUCCESS, payload },
+				{ type: LOAD_VOUCHERS }
+			];
 		})
 		.catch([
 			{ type: CREATE_MEMBER_VOUCHER_ERROR },
@@ -190,7 +193,10 @@ const createVisitorVoucher = (action$, store, { wsAPI }) =>
 					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
 				];
 			}
-			return [{ type: CREATE_VISITOR_VOUCHER_SUCCESS, payload }];
+			return [
+				{ type: CREATE_VISITOR_VOUCHER_SUCCESS, payload },
+				{ type: LOAD_VOUCHERS }
+			];
 		})
 		.catch([
 			{ type: CREATE_VISITOR_VOUCHER_ERROR },
@@ -208,7 +214,10 @@ const renewVouchers = (action$, store, { wsAPI }) =>
 					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
 				];
 			}
-			return [{ type: RENEW_MEMBER_VOUCHERS_SUCCESS, payload }];
+			return [
+				{ type: RENEW_MEMBER_VOUCHERS_SUCCESS, payload },
+				{ type: LOAD_VOUCHERS }
+			];
 		})
 		.catch([
 			{ type: RENEW_MEMBER_VOUCHERS_ERROR },

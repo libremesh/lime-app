@@ -14,17 +14,12 @@ import Loading from '../../../../src/components/loading';
 import daysFromNow from '../../../../src/utils/daysFromNow';
 import makeid from '../../../../src/utils/makeid';
 
-function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, createVoucher, loading, date }) {
+function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, createVoucher, loading, createEpoc, list }) {
 	const [voucherQuantity, setVoucherQuantity] = useState(1);
 	const [daysQuantity, setDaysQuantity] = useState(1);
 	const [note, setNote] = useState('marcos android');
 	const [confirm, setConfirm] = useState(false);
 	const [member, setMember] = useState(false);
-	const splitDate = date.split('/');
-	const day = parseInt(splitDate[0]);
-	const month = parseInt(splitDate[1] - 1);
-	const year = parseInt(splitDate[2]);
-	const epoc = new Date(year, month, day + 1).valueOf();
 
 	function handleInput(e, input) {
 		setVoucherQuantity;
@@ -40,13 +35,15 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 		}
 	}
 	function addMember() {
+		setConfirm(false);
 		return createMemberVoucher({
 			secret: makeid(8),
 			note,
-			epoc
+			epoc: `${createEpoc}`
 		});
 	}
 	function addVisitor() {
+		setConfirm(false);
 		const vouchers = [];
 		for (let index = 0; index < voucherQuantity; index++) {
 			vouchers.push({
@@ -78,7 +75,7 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 	return (
 		<div>
 			<Box title={I18n.t('Create new voucher')}>
-				{!loading && <form onSubmit={submitForm}>
+				<form onSubmit={submitForm}>
 					{!confirm && (
 						<div className="switchContainer">
 							<h5>{I18n.t('Voucher type')}</h5>
@@ -101,7 +98,7 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 							<hr />
 							{!member && (
 								<div className="box">
-									<div className="box">
+									<div>
 										<label>{I18n.t('Number of vouchers')}</label>
 										<input
 											className="createInput"
@@ -110,7 +107,7 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 											onChange={e => handleInput(e, 'voucherQuantity')}
 										/>
 									</div>
-									<div className="box">
+									<div>
 										<label>{I18n.t('Voucher validity in days')}</label>
 										<input
 											className="createInput"
@@ -153,18 +150,19 @@ function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, c
 							</button>
 						</div>
 					)}
-				</form>}
+				</form>
 				{loading && <Loading />}
-				{(createVoucher && !createVoucher.vouchers) && <div className="createResult">
-					<h3>{I18n.t('Success')}</h3>
+			</Box>
+			{createVoucher && <button onClick={list}>{I18n.t('Show all vouchers')}</button>}
+			{createVoucher && <Box title={I18n.t('Last created')}>
+				{!createVoucher.vouchers && <div className="createResult">
 					<p><b>{I18n.t('New voucher')}: </b> {createVoucher.secret}</p>
 				</div>}
-				{(createVoucher && createVoucher.vouchers) && <div className="createResult">
-					<h3>{I18n.t('Success')}</h3>
+				{createVoucher.vouchers && <div className="createResult">
 					<p><b>{I18n.t('New vouchers')}:</b></p>
 					{createVoucher.vouchers.map(v => <p key={v}>{v}</p>)}
 				</div>}
-			</Box>
+			</Box>}
 		</div>
 	);
 }

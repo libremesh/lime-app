@@ -8,6 +8,7 @@ import Loading from '../../../../src/components/loading';
 import { Box } from '../../../../src/components/box';
 import { Select } from '../../../../src/components/select';
 import { mergeTypes } from './list';
+import getDaysLeft from '../../../../src/utils/daysLeft';
 
 import I18n from 'i18n-js';
 
@@ -24,43 +25,44 @@ function RenewContent({ vouchers, handleCheck, selected }) {
 			{flatList.member[node].map(voucher => {
 				const isChecked = selected.find(s => s === voucher.voucher);
 				return (
-					<Select key={voucher.voucher} text={voucher.note} checked={isChecked} onChange={handleCheck} value={voucher.voucher} />
+					<div className="box">
+						<Select key={voucher.voucher} text={voucher.note} checked={isChecked} onChange={handleCheck} value={voucher.voucher} />
+						<span>{getDaysLeft(voucher.expires)} {I18n.t('days left')}</span>
+					</div>
 				);
 			})}
 		</div>
 	));
 }
 
-function Renew({ goBack, loading, vouchers, getVoucherList, daysLeft, renewDate, renewVouchers, renewed }) {
+function Renew({ goBack, loading, vouchers, getVoucherList, daysLeft, renewDate, renewVouchers, renewed, renewEpoc }) {
 	const [selected, setSelected] = useState([]);
 	function handleCheck(e) {
 		const newList = selected.filter(i => i !== e.target.value);
 		setSelected(newList);
 	}
 	function handleRenew() {
-		const splitDate = renewDate.split('/');
-		const day = parseInt(splitDate[0]);
-		const month = parseInt(splitDate[1]);
-		const year = parseInt(splitDate[2]);
-		console.log(day + 1, month, year);
-		const epoc = new Date(year, month, day + 1).valueOf();
-		console.log('epoc', epoc);
 		renewVouchers({
-			date: epoc,
+			date: `${renewEpoc}`,
 			vouchers: selected
 		});
 	}
 	useEffect(() => {
-		getVoucherList();
+		if (!vouchers) {
+			getVoucherList();
+		}
 		return () => { };
 	}, []);
-	if (!loading && vouchers && selected.length === 0) {
-		const firstSelected = vouchers
-			.filter(v => v.type === 'member')
-			.map(v => v.voucher);
-		setSelected(firstSelected);
+	let allVouchersRenewed = true;
+	if (vouchers) {
+		const memberVouchers = vouchers.filter(v => v.type === 'member');
+		if (selected.length === 0 && !loading) {
+			const firstSelected = memberVouchers.map(v => v.voucher);
+			setSelected(firstSelected);
+		}
+		allVouchersRenewed = memberVouchers.filter(v => daysLeft < getDaysLeft(v.expres) - 1).length > 0;
 	}
-	console.log('renewed', renewed);
+	const disabled = loading || renewed || allVouchersRenewed;
 	return (
 		<div>
 			<Box title={daysLeft + ' ' + I18n.t('days left')}>
@@ -75,7 +77,7 @@ function Renew({ goBack, loading, vouchers, getVoucherList, daysLeft, renewDate,
 			</Box>
 			<div>
 				<h4>{I18n.t('Renew vouchers until')} {renewDate}</h4>
-				<button class="button green block button-one" disabled={loading} onClick={handleRenew}>
+				<button class="button green block button-one" disabled={disabled} onClick={handleRenew}>
 					{I18n.t('Renew')}
 				</button>
 				<button class="button green block" onClick={goBack}>

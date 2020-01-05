@@ -91,12 +91,18 @@ export const Pirania = ({
 		const date = now.getDate();
 		const hasPassed = date > community.payday;
 		const nextPayday = new Date(now.getFullYear(), now.getMonth(), community.payday);
+		const createEpoc = new Date(now.getFullYear(), now.getMonth(), community.payday + 1).valueOf();
+		const nextNextRenewday = new Date(now.getFullYear(), now.getMonth() + 1, community.payday + 1);
+		const renewMonth = nextNextRenewday.getMonth() + 1;
+		const renewYear = nextNextRenewday.getFullYear();
+		const renewEpoc = nextNextRenewday.valueOf();
+		const renewDate = `${community.payday + 1}/${ renewMonth > 9 ? renewMonth : '0' + renewMonth}/${renewYear}`;
 		const month = nextPayday.getMonth() + 1;
 		const year = nextPayday.getFullYear();
 		const payday =
 			community.payday === date
 				? 'Today'
-				: `${community.payday}/${month > 9 ? month : '0'+month }/${year}`;
+				: `${community.payday}/${month > 9 ? month : '0' + month}/${year}`;
 		const daysLeft = Math.floor(
 			(Date.UTC(
 				nextPayday.getFullYear(),
@@ -137,14 +143,16 @@ export const Pirania = ({
 					<Create
 						goBack={goBack}
 						daysLeft={daysLeft}
-						date={payday}
+						createEpoc={createEpoc}
+						list={() => setPage(1)}
 					/>
 				)}
 				{page === 3 && (
 					<Renew
-						goBack={goBack}
 						daysLeft={daysLeft}
-						renewDate={payday}
+						goBack={goBack}
+						renewDate={renewDate}
+						renewEpoc={renewEpoc}
 					/>
 				)}
 				{page === 4 && (

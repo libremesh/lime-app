@@ -8,6 +8,7 @@ import { vouchers, loading } from '../piraniaSelectors';
 import Loading from '../../../../src/components/loading';
 import { Box } from '../../../../src/components/box';
 import { Trash } from '../../../../src/components/icons';
+import daysLeft from '../../../../src/utils/daysLeft';
 
 import I18n from 'i18n-js';
 
@@ -45,23 +46,13 @@ const boxStyle = {
 	marginBottom: 50
 };
 
-const daysBetween = (date1, date2) => {
-	//Get 1 day in milliseconds
-	let oneDay = 1000 * 60 * 60 * 24; // Convert both dates to milliseconds
-	let date1Ms = date1.getTime();
-	let date2Ms = date2.getTime(); // Calculate the difference in milliseconds
-	let differenceMs = date2Ms - date1Ms; // Convert back to days and return
-	return Math.round(differenceMs / oneDay);
-};
-
 const VoucherNodeBox = ({ node, list, removeVoucher }) => (
 	<div style={{ marginBottom: 50 }}>
 		<h4 style={boxStyle}>{node}</h4>
 		{list
+			.sort((a, b) => daysLeft(b.expires) - daysLeft(a.expires))
 			.sort((a, b) => b.macs.length - a.macs.length)
 			.map(voucher => {
-				const date = new Date(parseInt(voucher.expires, 10));
-				const dateDiff = daysBetween(new Date(), date);
 				const invalid = voucher.type === 'invalid';
 				const used = voucher.macs.length > 0;
 				return (
@@ -71,7 +62,7 @@ const VoucherNodeBox = ({ node, list, removeVoucher }) => (
 						{!invalid && (
 							<span style={{ width: '30%' }}>
 								<span style={{ paddingRight: 15 }}>
-									{dateDiff} {I18n.t('days left')}
+									{daysLeft(voucher.expires)} {I18n.t('days left')}
 								</span>
 								<Trash size={15} onClick={() => removeVoucher(voucher.voucher)} />
 							</span>
@@ -103,33 +94,33 @@ const List = ({ goBack, getVoucherList, removeVoucher, vouchers, loading }) => {
 			voucher
 		});
 	}
-	if (loading) return <Loading />;
-	else if (vouchers) {
-		let flatList = {
-			member: {},
-			visitor: {},
-			invalid: {}
-		};
+	let flatList = {
+		member: {},
+		visitor: {},
+		invalid: {}
+	};
+	if (vouchers && !loading) {
 		vouchers.forEach(voucher => mergeTypes(voucher, flatList));
-		return (
-			<div>
-				<button class="button green block button-one" onClick={goBack}>
-					{I18n.t('Go back')}
-				</button>
-				<button class="button green block" onClick={getVoucherList}>
-					{I18n.t('Refresh')}
-				</button>
-				<div>
-					{Object.keys(flatList).map(type => (
-						<VoucherTypeBox key={type} type={type} list={flatList[type]} removeVoucher={handleRemoveVoucher} />
-					))}
-				</div>
-				<button class="button green block" onClick={goBack}>
-					{I18n.t('Go back')}
-				</button>
-			</div>
-		);
 	}
+	return (
+		<div>
+			<button class="button green block button-one" onClick={goBack}>
+				{I18n.t('Go back')}
+			</button>
+			<button disabled={loading} class="button green block" onClick={getVoucherList}>
+				{I18n.t('Refresh')}
+			</button>
+			<div>
+				{Object.keys(flatList).map(type => (
+					<VoucherTypeBox key={type} type={type} list={flatList[type]} removeVoucher={handleRemoveVoucher} />
+				))}
+				{loading && <Loading />}
+			</div>
+			<button class="button green block" onClick={goBack}>
+				{I18n.t('Go back')}
+			</button>
+		</div>
+	);
 };
 export const mapStateToProps = state => ({
 	loading: loading(state),
