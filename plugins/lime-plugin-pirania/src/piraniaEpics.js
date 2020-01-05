@@ -1,4 +1,5 @@
-import { getActiveVouchers,
+import {
+	getActiveVouchers,
 	getStatus,
 	getGovernance,
 	getVoucherList,
@@ -237,7 +238,8 @@ const removeVoucher = (action$, store, { wsAPI }) =>
 			}
 			return [
 				{ type: REMOVE_VOUCHER_SUCCESS, payload },
-				{ type: LOAD_VOUCHERS }
+				{ type: LOAD_VOUCHERS },
+				{ type: LOAD_ACTIVE_VOUCHERS }
 			];
 		})
 		.catch([
@@ -256,7 +258,10 @@ const writeGovernance = (action$, store, { wsAPI }) =>
 					{ type: 'NOTIFICATION', payload: { msg: payload.message } }
 				];
 			}
-			return [{ type: WRITE_GOVERNANCE_SUCCESS, payload }];
+			return [
+				{ type: WRITE_GOVERNANCE_SUCCESS, payload },
+				{ type: LOAD_GOVERNANCE }
+			];
 		})
 		.catch([
 			{ type: WRITE_GOVERNANCE_ERROR },
