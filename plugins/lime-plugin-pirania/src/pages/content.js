@@ -71,16 +71,16 @@ function Content({ goBack, content, loading, writeContent, getPiraniaContent }) 
 					{I18n.t('Go back')}
 				</button>
 				<Box title={I18n.t('Edit captive portal content')}>
-					<Input width={'100%'}  {...bindTitle} label="Portal title" type="text" value={title} />
+					<Input width={'100%'}  {...bindTitle} label={I18n.t('Portal title')} type="text" value={title} />
 					{<img src={uploadedImage || content.logo} />}
 					<Input onChange={handleImage} type="file" accept="image/*" />
-					<Input width={'200px'}  {...bindBackgroundColor} label="Portal background color" type="color" value={backgroundColor} />
-					<Input width={'100%'} {...bindWelcome} label="Portal welcome message" type="textarea" value={welcome} />
-					<Input width={'100%'} {...bindBody} label="Portal welcome message" type="textarea" value={body} />
-					<Input width={'100%'} {...bindMediaUrl} label="Media url for portal information page" type="text" value={mediaUrl} />
-					<Input width={'100%'} {...bindRules} label="Rules displayed on portal information page" type="textarea" value={rules} />
+					<Input width={'200px'}  {...bindBackgroundColor} label={I18n.t('Portal background color')} type="color" value={backgroundColor} />
+					<Input width={'100%'} {...bindWelcome} label={I18n.t('Portal welcome message')} type="textarea" value={welcome} />
+					<Input width={'100%'} {...bindBody} label={I18n.t('Portal welcome message')} type="textarea" value={body} />
+					<Input width={'100%'} {...bindMediaUrl} label={I18n.t('Media url for portal information page')} type="text" value={mediaUrl} />
+					<Input width={'100%'} {...bindRules} label={I18n.t('Rules displayed on portal information page')} type="textarea" value={rules} />
 				</Box>
-				{!loading && <Input type={'submit'} label="Save" onClick={submitForm} />}
+				{!loading && <Input type={'submit'} label={I18n.t('Save')} onClick={submitForm} />}
 			</div>
 		);
 	} return <Loading />;

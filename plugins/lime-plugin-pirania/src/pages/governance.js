@@ -49,37 +49,37 @@ function Governance({ provider, community, member, goBack, loading, writeGoverna
 			</button>
 			<Box title={I18n.t('Membership informantion')}>
 				<div class="box">
-					<Input width={'200px'}  {...bindMemberCost} label="Cost per member" type="number" value={memberCost} />
-					<Input width={'200px'}  {...bindMemberVouchers} label="Vouchers per member" type="number" value={memberVouchers} />
+					<Input width={'200px'}  {...bindMemberCost} label={I18n.t('Cost per member')} type="number" value={memberCost} />
+					<Input width={'200px'}  {...bindMemberVouchers} label={I18n.t('Vouchers per member')} type="number" value={memberVouchers} />
 				</div>
 			</Box>
-			{!loading && <Input type={'submit'} label="Save" onClick={submitForm} />}
+			{!loading && <Input type={'submit'} label={I18n.t('Save')} onClick={submitForm} />}
 			{loading && <Loading />}
 			<Box title={I18n.t('Edit payment informantion')}>
 				<div class="box">
-					<Input width={'200px'} {...bindCommunityCurrency} label="Community currency" type="text" value={communityCurrency} />
-					<Input width={'200px'}  {...bindCommunityPayday} label="Last day of the month for payment" type="number" value={communityPayday} />
+					<Input width={'200px'} {...bindCommunityCurrency} label={I18n.t('Community currency')} type="text" value={communityCurrency} />
+					<Input width={'200px'}  {...bindCommunityPayday} label={I18n.t('Last day of the month for payment')} type="number" value={communityPayday} />
 				</div>
 				<br />
 				<div class="box">
-					<Input width={'200px'} {...bindCommunityReserve} label="Community reserve" type="number" value={communityReserve} />
-					<Input width={'200px'}  {...bindCommunityMaintenance} label="Community maintenance" type="number" value={communityMaintenance} />
+					<Input width={'200px'} {...bindCommunityReserve} label={I18n.t('Community reserve')} type="number" value={communityReserve} />
+					<Input width={'200px'}  {...bindCommunityMaintenance} label={I18n.t('Community maintenance')} type="number" value={communityMaintenance} />
 				</div>
 			</Box>
-			{!loading && <Input type={'submit'} label="Save" onClick={submitForm} />}
+			{!loading && <Input type={'submit'} label={I18n.t('Save')} onClick={submitForm} />}
 			{loading && <Loading />}
 			<Box title={I18n.t('Edit provider information')}>
 				<div class="box">
-					<Input width={'300px'} {...bindProviderName} label="Provider name" type="text" value={providerName} />
-					<Input width={'200px'}  {...bindProviderCost} label="Provider monthly cost" type="number" value={providerCost} />
+					<Input width={'300px'} {...bindProviderName} label={I18n.t('Provider name')} type="text" value={providerName} />
+					<Input width={'200px'}  {...bindProviderCost} label={I18n.t('Provider monthly cost')} type="number" value={providerCost} />
 				</div>
 				<div class="box">
-					<Input width={'200px'} {...bindProviderSpeed} label="Provider speed" type="text" value={providerSpeed} />
-					<Input width={'200px'}  {...bindProviderPayday} label="Last day of the month for to pay the provider" type="number" value={providerPayday} />
+					<Input width={'200px'} {...bindProviderSpeed} label={I18n.t('Provider speed')} type="text" value={providerSpeed} />
+					<Input width={'200px'}  {...bindProviderPayday} label={I18n.t('Last day of the month for to pay the provider')} type="number" value={providerPayday} />
 				</div>
 				<br />
 			</Box>
-			{!loading && <Input type={'submit'} label="Save" onClick={submitForm} />
+			{!loading && <Input type={'submit'} label={I18n.t('Save')} onClick={submitForm} />
 			}
 			{loading && <Loading />}</div>
 	);
