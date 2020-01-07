@@ -14,10 +14,11 @@ import Loading from '../../../../src/components/loading';
 import daysFromNow from '../../../../src/utils/daysFromNow';
 import makeid from '../../../../src/utils/makeid';
 
-function Create({ goBack, createMemberVoucher, createVisitorVoucher, daysLeft, createVoucher, loading, createEpoc, list }) {
+function Create({ goBack, createMemberVoucher, createVisitorVoucher, createVoucher, loading, createEpoc, list }) {
+	const initialNote = 'marcos android';
 	const [voucherQuantity, setVoucherQuantity] = useState(1);
 	const [daysQuantity, setDaysQuantity] = useState(1);
-	const [note, setNote] = useState('marcos android');
+	const [note, setNote] = useState(initialNote);
 	const [confirm, setConfirm] = useState(false);
 	const [member, setMember] = useState(false);
 

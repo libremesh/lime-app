@@ -37,7 +37,7 @@
     "create_voucher_a13ff426": "Create voucher",
     "current_month_7b261fc1": "Current month",
     "current_status_830c5a75": "Current status",
-    "days_left_341b5bee": "days left",
+    "daysleft_days_left_4cf90b66": "%{daysLeft} days left",
     "edit_captive_portal_content_7f0f349b": "Edit captive portal content",
     "edit_captive_portal_page_content_54b29aa6": "Edit captive-portal page content",
     "edit_governance_information_830af8d5": "Edit governance information",

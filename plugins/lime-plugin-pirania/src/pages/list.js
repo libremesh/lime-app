@@ -62,7 +62,7 @@ const VoucherNodeBox = ({ node, list, removeVoucher }) => (
 						{!invalid && (
 							<span style={{ width: '30%' }}>
 								<span style={{ paddingRight: 15 }}>
-									{daysLeft(voucher.expires)} {I18n.t('days left')}
+									{I18n.t('%{daysLeft} days left', { daysLeft: daysLeft(voucher.expires) })}
 								</span>
 								<Trash size={15} onClick={() => removeVoucher(voucher.voucher)} />
 							</span>
@@ -89,7 +89,7 @@ const List = ({ goBack, getVoucherList, removeVoucher, vouchers, loading }) => {
 		}
 		return () => { };
 	}, []);
-	function handleRemoveVoucher (voucher) {
+	function handleRemoveVoucher(voucher) {
 		removeVoucher({
 			voucher
 		});

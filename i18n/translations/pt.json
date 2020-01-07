@@ -20,7 +20,7 @@
   "create_new_voucher_5b967df6": "Criar novo código",
   "create_voucher_a13ff426": "Criar código",
   "current_month_7b261fc1": "Mês atual",
-  "days_left_341b5bee": "dias restantes",
+	"daysleft_days_left_4cf90b66": "%{daysLeft} dias restantes",
   "edit_captive_portal_content_7f0f349b": "Editar conteúdo do portal captivo",
   "edit_captive_portal_page_content_54b29aa6": "Editar conteúdo da página do portal captivo",
   "edit_governance_information_830af8d5": "Editar informações de administração",

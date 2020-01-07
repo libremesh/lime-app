@@ -58,8 +58,7 @@ export default function HomePiraniaPage({ members, visitors, logged, handlePassw
 				>
 					<h5>{I18n.t('Next payday')}: {payday}</h5>
 					<div style={{ height: 35 }}>
-						<span>{daysLeft} </span>
-						<span>{I18n.t('days left')} </span>
+						<span>{I18n.t('%{daysLeft} days left', { daysLeft })}</span>
 					</div>
 					<br />
 				</span>

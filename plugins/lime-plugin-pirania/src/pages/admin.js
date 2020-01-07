@@ -29,7 +29,7 @@ const Admin = ({ provider,
 	disable,
 	loading
 }) => {
-	function handleSwitch (e) {
+	function handleSwitch(e) {
 		e.preventDefault();
 		if (status) {
 			disable();
@@ -69,8 +69,7 @@ const Admin = ({ provider,
 						<b>{I18n.t('Members')}: </b>
 						<span>{members}</span>
 						<b style={{ marginLeft: 30, marginRight: 10 }}>
-							<span>{daysLeft} </span>
-							<span>{I18n.t('days left')} </span>
+							{I18n.t('%{daysLeft} days left', { daysLeft })}
 						</b>
 						<br />
 					</span>
@@ -84,40 +83,6 @@ const Admin = ({ provider,
 					{I18n.t('Show all vouchers')}
 				</button>
 			</Box>
-			{/* TODO: Last month info */}
-			{/* <Box title={I18n.t('Last month')}>
-				<div class="info">
-					<span>
-						<b>{I18n.t('Members')}: </b>
-						<span>30</span>
-						<br />
-					</span>
-					<span>
-						<b>{I18n.t('Visitors')}: </b>
-						<span>18</span>
-						<br />
-					</span>
-				</div>
-				<button class="button green block" onClick={download}>
-					{I18n.t('Download CSV')}
-				</button>
-			</Box> */}
-			{/* WIP: Node election */}
-			{/* <Box title={I18n.t('Admins elegidos')}>
-				<div class="info">
-					<span>
-						<b>Nodo-1, Nodo-2</b>
-					</span>
-					<br />
-				</div>
-				<button
-					style={{ marginTop: 15 }}
-									class="button green block"
-					onClick={elect}
-				>
-					{I18n.t('Elegir')}
-				</button>
-			</Box> */}
 			<button class="button green block button-one" onClick={create}>
 				{I18n.t('Create voucher')}
 			</button>

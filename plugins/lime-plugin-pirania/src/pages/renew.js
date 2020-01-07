@@ -27,7 +27,9 @@ function RenewContent({ vouchers, handleCheck, selected }) {
 				return (
 					<div className="box">
 						<Select key={voucher.voucher} text={voucher.note} checked={isChecked} onChange={handleCheck} value={voucher.voucher} />
-						<span>{getDaysLeft(voucher.expires)} {I18n.t('days left')}</span>
+						<span>
+							{I18n.t('%{daysLeft} days left', { daysLeft: getDaysLeft(voucher.expires) })}
+						</span>
 					</div>
 				);
 			})}
@@ -65,13 +67,13 @@ function Renew({ goBack, loading, vouchers, getVoucherList, daysLeft, renewDate,
 	const disabled = loading || renewed || allVouchersRenewed;
 	return (
 		<div>
-			<Box title={daysLeft + ' ' + I18n.t('days left')}>
+			<Box title={I18n.t('%{daysLeft} days left', { daysLeft })}>
 				{!loading && vouchers
 					? <RenewContent
 						vouchers={vouchers}
 						handleCheck={handleCheck}
 						selected={selected}
-					  />
+					/>
 					: <Loading />
 				}
 			</Box>
