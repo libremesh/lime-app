@@ -1,6 +1,6 @@
 import { WebSocketService } from '../utils/webSockets.observable';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/fromPromise';
 
 String.prototype.hashCode = function() {
