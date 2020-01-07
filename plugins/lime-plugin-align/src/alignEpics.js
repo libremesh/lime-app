@@ -1,6 +1,6 @@
 import { getInterfaces, getStations, getIfaceStation, getStationSignal } from './alignApi';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/interval';

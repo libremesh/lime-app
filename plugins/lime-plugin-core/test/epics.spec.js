@@ -3,7 +3,7 @@ import limeCorePlugin from '../src/index';
 import { assert } from 'chai';
 
 import { ActionsObservable } from 'redux-observable';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/observable/of';
