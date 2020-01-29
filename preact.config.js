@@ -10,5 +10,5 @@ require('dotenv').config();
  **/
 export default function (config, env, helpers) {
 	// Basepath of lime-app in the router: http://thisnode.info/app/
-	config.output.publicPath = process.env.WEB_PATH || '/';
+	config.output.publicPath = process.env.WEB_PATH || '';
 }
