@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - 12.13.1
-script: npm run build
+script: npm run build:production
 before_deploy: tar -zcvf $TRAVIS_BUILD_DIR/lime-app-$TRAVIS_BRANCH.tar.gz build
 deploy:
   provider: releases
