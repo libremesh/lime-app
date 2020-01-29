@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/libremesh/lime-app/compare/v0.2.1...v0.2.2) (2020-01-29)
+
+
+### Features
+
+* **rxjs:** update to new api in epics and api files ([8500cc5](https://github.com/libremesh/lime-app/commit/8500cc5664834c73eb539d0b1ee8f3b1eb22b4d5))
+
+
+### Bug Fixes
+
+* **align:** fix setInterval and redux state ([a430c69](https://github.com/libremesh/lime-app/commit/a430c69152728dba60c324cea47dfc3225496f3c))
+* **bug:** 10.5.0.1 as home address ([58f581d](https://github.com/libremesh/lime-app/commit/58f581da78a1479bc160c40cfeb5793fe138c34d))
+* **intl:** fix int18n errors and add new translations ([c3dc4bb](https://github.com/libremesh/lime-app/commit/c3dc4bb425c5f49a4cfeb52c39416d56028e7268))
+* **navigation:** avoid undefined elements ([1814c39](https://github.com/libremesh/lime-app/commit/1814c39ebe49edd3e1f817d7d9836632709772af))
+* **timer:** fix uptime timer ([214f83a](https://github.com/libremesh/lime-app/commit/214f83a1a53eea704ddfed4f28eb87166d5c651e))
+* **timer:** fix uptime timer ([21b3e2e](https://github.com/libremesh/lime-app/commit/21b3e2ed6a7b38b37a02e2b3f3db730c670bf73c))
+
 ### [0.2.1](https://github.com/libremesh/lime-app/compare/v0.2.0...v0.2.1) (2019-10-22)
 
 
