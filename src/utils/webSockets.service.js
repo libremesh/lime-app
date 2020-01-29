@@ -1,8 +1,7 @@
 import { WebSocketService } from '../utils/webSockets.observable';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
+import { Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 
 class WebsocketAPI {
 		responses = [];
@@ -70,9 +69,9 @@ class WebsocketAPI {
 				};
     
 			});
-			return observable
-				.filter((x) => x.id === id)
-				.map(x => x.result);
+			return observable.pipe(
+				filter((x) => x.id === id),
+				map(x => x.result));
 		}
 
 }

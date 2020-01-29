@@ -1,5 +1,5 @@
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/map';
+import { ofType } from 'redux-observable';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { changeLocation, getLocation, getNodesandlinks } from './locateApi';
 
@@ -16,20 +16,26 @@ import {
 
 // LOAD INTERFACES -> Dispatch success and stations loads
 const locateLoad = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(...[LOCATION_LOAD,LOCATION_CHANGE_SUCCESS])
-		.mergeMap(() => getLocation(wsAPI, state$.value.meta.sid))
-		.map((payload) => ({ type: LOCATION_LOAD_SUCCESS, payload }));
+	action$.pipe(
+		ofType(...[LOCATION_LOAD,LOCATION_CHANGE_SUCCESS]),
+		mergeMap(() => getLocation(wsAPI, state$.value.meta.sid)),
+		map((payload) => ({ type: LOCATION_LOAD_SUCCESS, payload }))
+	);
 
 const locateChange = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(LOCATION_CHANGE)
-		.mergeMap((action) => changeLocation(wsAPI, state$.value.meta.sid, action.payload))
-		.map((payload) => ({ type: LOCATION_CHANGE_SUCCESS }));
+	action$.pipe(
+		ofType(LOCATION_CHANGE),
+		mergeMap((action) => changeLocation(wsAPI, state$.value.meta.sid, action.payload)),
+		map((payload) => ({ type: LOCATION_CHANGE_SUCCESS }))
+	);
 
 const locateLoadlinks = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(...[LOCATION_LOAD_LINKS])
-		.mergeMap(() => getNodesandlinks(wsAPI, state$.value.meta.sid))
-		.map((payload = {}) => payload.result
+	action$.pipe(
+		ofType(...[LOCATION_LOAD_LINKS]),
+		mergeMap(() => getNodesandlinks(wsAPI, state$.value.meta.sid)),
+		map((payload = {}) => payload.result
 			? { type: LOCATION_LOAD_LINKS_SUCCESS, payload: payload.result }
-			: { type: LOCATION_LOAD_LINKS_ERROR });
+			: { type: LOCATION_LOAD_LINKS_ERROR })
+	);
 
 export default { locateLoad, locateChange, locateLoadlinks };

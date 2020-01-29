@@ -1,8 +1,7 @@
 import { getNotes, setNotes } from './notesApi';
 
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { ofType } from 'redux-observable';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 import {
 	NOTES_GET,
@@ -14,17 +13,21 @@ import {
 } from './notesConstants';
 
 const getNotesEpic = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(...[NOTES_GET,NOTES_SET_SUCCESS])
-		.mergeMap(() => getNotes(wsAPI, state$.value.meta.sid))
-		.map( notes => ({ type: NOTES_GET_SUCCESS, payload: notes }))
-		.catch( error => [({ type: NOTES_GET_ERROR, payload: error })]);
+	action$.pipe(
+		ofType(...[NOTES_GET,NOTES_SET_SUCCESS]),
+		mergeMap(() => getNotes(wsAPI, state$.value.meta.sid)),
+		map( notes => ({ type: NOTES_GET_SUCCESS, payload: notes })),
+		catchError( error => [({ type: NOTES_GET_ERROR, payload: error })])
+	);
 
 const setNotesEpic = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(NOTES_SET)
-		.map(action => action.payload.notes)
-		.mergeMap((notes) => setNotes(wsAPI, state$.value.meta.sid, { text: notes })
-			.map( notes => ({ type: NOTES_SET_SUCCESS, payload: notes }))
-			.catch( error => [({ type: NOTES_SET_ERROR, payload: error })])
-		);
+	action$.pipe(
+		ofType(NOTES_SET),
+		map(action => action.payload.notes),
+		mergeMap((notes) => setNotes(wsAPI, state$.value.meta.sid, { text: notes }).pipe(
+			map( notes => ({ type: NOTES_SET_SUCCESS, payload: notes })),
+			catchError( error => [({ type: NOTES_SET_ERROR, payload: error })])
+		))
+	);
 
 export default { getNotesEpic, setNotesEpic };

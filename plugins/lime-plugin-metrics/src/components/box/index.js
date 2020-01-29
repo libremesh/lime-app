@@ -73,10 +73,12 @@ const Box = ({ station, settings, loading, click, gateway }) => {
 				</b><br /></span>
 			{loading
 				? (<Loading />)
-				: (<div>
-					{station.bandwidth || 0} Mbps / <span>{I18n.t('Packet loss')}</span> {station.loss}%<br />
-					<div style={barStyle(station.loss)} />
-				</div>)
+				: station.bandwidth
+					? (<div>
+						{station.bandwidth || 0} Mbps / <span>{I18n.t('Packet loss')}</span> {station.loss}%<br />
+						<div style={barStyle(station.loss)} />
+					</div>)
+					:false
 			}
 		</div>
 	);

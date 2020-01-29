@@ -56,7 +56,8 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 				metrics: payload.map(node => ({ host: {
 					ip: node.ip,
 					hostname: node.hostname !== ''? node.hostname: node.ip
-				}, loading: true, error: false })),
+				}, loading: false, error: false })),
+				gateway: payload.length > 0 ? payload[payload.length - 1].ip: state.gateway,
 				loading: true, status: 'metrics_status_stations'
 			});
 		case LOAD_PATH_NOT_FOUND:
@@ -70,9 +71,9 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 		case LOAD_METRICS_GATEWAY:
 			return Object.assign({}, state, {
 				metrics: state.metrics.map(x => {
-					if (x.host.hostname !== state.gateway) { return x; }
+					if (x.host.ip !== state.gateway) { return x; }
 					x.loading = true;
-					return Object.assign({}, x, payload);
+					return x;
 				}),
 				loading: true,
 				status: 'metrics_status_stations'
@@ -80,7 +81,7 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 		case LOAD_METRICS_GATEWAY_SUCCESS:
 			return Object.assign({}, state, {
 				metrics: state.metrics.map(x => {
-					if (x.host.hostname !== payload.target) { return x; }
+					if (x.host.ip !== payload.target) { return x; }
 					x.loading = false;
 					return Object.assign({}, x, payload);
 				}),
