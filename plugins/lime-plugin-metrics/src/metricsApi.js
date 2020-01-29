@@ -6,9 +6,7 @@ export const getMetrics = (api, sid,params) => api.call(sid, 'lime-metrics', 'ge
 
 export const getAllMetrics = (api, sid, params) => params.targets.map(x => getMetrics(api,sid, { target: x }));
 
-export const getGateway = (api, sid) => api.call(sid, 'lime-metrics', 'get_gateway', {}).pipe(
-	map(result => result)
-);
+export const getGateway = (api, sid) => api.call(sid, 'lime-metrics', 'get_gateway', {})
 
 export const getPath = (api, sid, params) => api.call(sid, 'lime-metrics', 'get_path', params);
 
