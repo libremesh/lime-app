@@ -111,6 +111,7 @@ export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer,
 	useEffect(() => {
 		getNodeStatusTimer();
 		getNodeStatus();
+		return stopTimer;
 	},[]);
 
 	return (

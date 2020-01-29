@@ -1,7 +1,9 @@
+import { from } from 'rxjs';
+
 export const getNodeStauts = (api, sid) => api.call(sid, 'lime-utils', 'get_node_status', {});
 
 export const getStationTraffic = (api, sid, node) => {
-	if (typeof node === 'undefined') return [];
+	if (typeof node === 'undefined') return from([]);
 	return api.call(sid, 'lime-metrics', 'get_station_traffic', { station_mac: node.station_mac, iface: node.iface });
 };
 

@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromPromise';
+import { from } from 'rxjs';
 
 String.prototype.hashCode = function() {
 	let hash = 0;
@@ -84,12 +83,12 @@ export class UhttpdService {
 	
 
 	call(sid,action, method, data) {
-		return Observable.fromPromise(this.request([sid, action, method, data]));
+		return from(this.request([sid, action, method, data]));
 	}
 
 	connect(newUrl) {
 		this.url = newUrl;
-		return Observable.fromPromise( new Promise((res,rej) => {
+		return from( new Promise((res,rej) => {
 			axios.post(this.url)
 				.then(response => ( typeof response.data.jsonrpc !== 'undefined')? res(): rej())
 				.catch(

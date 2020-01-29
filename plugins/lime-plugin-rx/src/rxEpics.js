@@ -21,42 +21,47 @@ import {
 	getInternetStatus
 } from './rxApi';
 
-import { Observable } from 'rxjs/Observable';
-
-import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/takeUntil';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
+import { interval, from } from 'rxjs';
+import { ofType } from 'redux-observable';
+import { map, takeUntil, mergeMap, catchError,switchMap } from 'rxjs/operators';
 
 export const nodeStatus = ( action$, store, { wsAPI } ) =>
-	action$.ofType(GET_NODE_STATUS)
-		.mergeMap(() => getNodeStauts(wsAPI, store.value.meta.sid))
-		.map( payload => ({ type: GET_NODE_STATUS_SUCCESS, payload }))
-		.catch(([{ type: GET_NODE_STATUS_ERROR }]));
+	action$.pipe(
+		ofType(GET_NODE_STATUS),
+		mergeMap(() => from(getNodeStauts(wsAPI, store.value.meta.sid))),
+		map( payload => ({ type: GET_NODE_STATUS_SUCCESS, payload })),
+		catchError(([{ type: GET_NODE_STATUS_ERROR }]))
+	);
 
-  
 const runTimer = ( action$, store ) =>
-	action$.ofType(...[TIMER_START])
-		.mergeMap(() => Observable.interval(store.value.rx.interval)
-			.takeUntil(action$.ofType(TIMER_STOP))
-			.map(() => ({ type: INTERVAL_GET })));
+	action$.pipe(
+		ofType(...[TIMER_START]),
+		mergeMap(() => interval(store.value.rx.interval).pipe(
+			takeUntil(action$.pipe(ofType(TIMER_STOP))),
+			map(() => ({ type: INTERVAL_GET }))
+		))
+	);
 
 const getSignal = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(...[GET_SIGNAL,INTERVAL_GET])
-		.switchMap(() => getStationSignal(wsAPI, state$.value.meta.sid, state$.value.rx.data.most_active))
-		.map( signal => ({ type: GET_SIGNAL_SUCCESS, payload: signal }));
+	action$.pipe(
+		ofType(...[GET_SIGNAL,INTERVAL_GET]),
+		switchMap(() => from(getStationSignal(wsAPI, state$.value.meta.sid, state$.value.rx.data.most_active))),
+		map( signal => ({ type: GET_SIGNAL_SUCCESS, payload: signal }))
+	);
 
 const getTraffic = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(...[GET_TRAFFIC,INTERVAL_GET])
-		.switchMap(() => getStationTraffic(wsAPI, state$.value.meta.sid, state$.value.rx.data.most_active))
-		.map( signal => ({ type: GET_TRAFFIC_SUCCESS, payload: signal }));
+	action$.pipe(
+		ofType(...[GET_TRAFFIC,INTERVAL_GET]),
+		switchMap(() => from(getStationTraffic(wsAPI, state$.value.meta.sid, state$.value.rx.data.most_active))),
+		map( signal => ({ type: GET_TRAFFIC_SUCCESS, payload: signal }))
+	);
 
 const getInternet = ( action$, state$, { wsAPI } ) =>
-	action$.ofType(...[GET_NODE_STATUS_SUCCESS, GET_INTERNET_STATUS, INTERVAL_GET])
-		.switchMap(() => getInternetStatus(wsAPI, state$.value.meta.sid))
-		.map( status => ({ type: GET_INTERNET_STATUS_SUCCESS, payload: status }));
-
+	action$.pipe(
+		ofType(...[GET_NODE_STATUS_SUCCESS, GET_INTERNET_STATUS, INTERVAL_GET]),
+		switchMap(() => from(getInternetStatus(wsAPI, state$.value.meta.sid))),
+		map( status => ({ type: GET_INTERNET_STATUS_SUCCESS, payload: status }))
+	);
 
 export default {
 	nodeStatus, runTimer, getSignal, getTraffic, getInternet
