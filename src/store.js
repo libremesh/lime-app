@@ -23,6 +23,9 @@ const rootEpics =  combineEpics(...loadEpics(plugins));
 export const store = createStore({},rootEpics,rootReducers, new UhttpdService());
 
 // Init websocket
-export const initStore = () => store.dispatch({ type: 'meta/CONECTION_START', payload: 'http://thisnode.info/ubus' });
+export const initStore = () => store.dispatch({
+	type: 'meta/CONECTION_START',
+	payload: window.location.href.split('/').slice(0, 3).join('/').concat('/ubus')
+});
 
 export default store;
