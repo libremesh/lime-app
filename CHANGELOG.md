@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/libremesh/lime-app/compare/v0.2.2...v0.2.3) (2020-02-11)
+
+
+### Bug Fixes
+
+* **bug:** fix access from different node ([956b337](https://github.com/libremesh/lime-app/commit/956b337048b640062fdc975b74a74f605bbe0b52))
+
 ### [0.2.2](https://github.com/libremesh/lime-app/compare/v0.2.1...v0.2.2) (2020-01-29)
 
 
