@@ -1,9 +1,8 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
+import { map } from 'rxjs/operators';
 
 export const login = (sid, api, auth) =>
-	api.call(sid, 'session', 'login', Object.assign({}, auth, { timeout: 5000 }))
-		.map(result => {
+	api.call(sid, 'session', 'login', Object.assign({}, auth, { timeout: 5000 })).pipe(
+		map(result => {
 			try {
 				if (typeof result.ubus_rpc_session === 'undefined') {
 					throw new Error('Login error');
@@ -13,7 +12,8 @@ export const login = (sid, api, auth) =>
 				// do nothing
 			}
 			return result.ubus_rpc_session;
-		});
+		})
+	);
 
 export const changeConfig = (api, sid, config) =>
 	api.call(sid, 'lime-utils', 'change_config', { name: config.hostname, ip: config.ip });

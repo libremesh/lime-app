@@ -8,6 +8,6 @@ const daysBetween = (date1, date2) => {
 };
 
 export default (epocString) => {
-    const date = new Date(parseInt(epocString, 10));
-	return daysBetween(new Date(), date)
-}
+	const date = new Date(parseInt(epocString, 10));
+	return daysBetween(new Date(), date);
+};

@@ -56,7 +56,7 @@ const metaState = {
 	status: 'ready',
 	url: '/',
 	conection: true,
-	ws: 'http://10.5.0.1/ubus',
+	ws: 'http://thisnode.info/ubus',
 	interval: 15000,
 	stations: [
 		'lapraviana',
