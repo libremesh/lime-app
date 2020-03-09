@@ -14,38 +14,42 @@ import {
 	changeConfig
 } from './adminApi';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/mapTo';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/mergeMap';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/delay';
+import { from } from 'rxjs';
+import { ofType } from 'redux-observable';
+import { mergeMap, map, catchError, delay } from 'rxjs/operators';
 
-const loginAction = ( action$, store, { wsAPI } ) =>
-	action$.ofType(AUTH_LOGIN)
-		.mergeMap( action => login(store.value.admin.sid, wsAPI,action.payload)
-			.map((sid) => ({ type: AUTH_LOGIN_SUCCESS, payload: sid }))
-			.catch(error => ([{
+const loginAction = (action$, store, { wsAPI }) =>
+	action$.pipe(
+		ofType(AUTH_LOGIN),
+		mergeMap(action => login(store.value.admin.sid, wsAPI, action.payload).pipe(
+			map((sid) => ({ type: AUTH_LOGIN_SUCCESS, payload: sid })),
+			catchError(error => ([{
 				type: 'NOTIFICATION',
 				payload: { msg: 'Wrong password, try again.', error }
-			}])));
+			}]))
+		))
+	);
 
 const setConfig = (action$, store, { wsAPI }) =>
-	action$.ofType(SET_CONFIG)
-		.mergeMap((action) => changeConfig(wsAPI, store.value.admin.sid, action.payload)
-			.map( payload => ({ type: SET_CONFIG_SUCCESS, payload }))
-			.catch( error => ([{ type: SET_CONFIG_ERROR, payload: error }]) ));
+	action$.pipe(
+		ofType(SET_CONFIG),
+		mergeMap((action) => changeConfig(wsAPI, store.value.admin.sid, action.payload).pipe(
+			map(payload => ({ type: SET_CONFIG_SUCCESS, payload })),
+			catchError(error => ([{ type: SET_CONFIG_ERROR, payload: error }]))
+		))
+	);
 
 
 const whaitAndReload = (action$, store, { wsAPI }) =>
-	action$.ofType(SET_CONFIG_SUCCESS)
-		.mergeMap((payload) => Observable.from(
+	action$.pipe(
+		ofType(SET_CONFIG_SUCCESS),
+		mergeMap((payload) => from(
 			[
 				{ type: CONECTION_CHANGE_URL, payload: 'http://' + store.value.admin.hostname + '/ubus' },
 				{ type: RELOAD_CONFIG }
-			]
-		).delay(60000));
-		
+			]).pipe(delay(60000)
+			))
+	);
 
 export default {
 	loginAction,

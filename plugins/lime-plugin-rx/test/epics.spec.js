@@ -5,7 +5,7 @@ import { assert } from 'chai';
 import { ActionsObservable } from 'redux-observable';
 
 import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/toArray';
 import 'rxjs/add/observable/of';

@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-import style from './style';
+import './style';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -36,9 +36,9 @@ export const Page = ({ setNotes, getNotes, notes, hostname, loading }) => {
 	}, [notes]);
 
 	return (
-		<div className="container" style={{ paddingTop: '100px' }}>
+		<div class="container" style={{ paddingTop: '100px' }}>
 			<h4><span>{I18n.t('Notes of')}</span> {hostname}</h4>
-			<textarea onChange={handleChange} className={style.notes} value={value} />
+			<textarea onChange={handleChange} class={'notes'} value={value} />
 			<button disabled={loading} onClick={saveNotes}>{I18n.t('Save notes')}</button>
 		</div>
 	);

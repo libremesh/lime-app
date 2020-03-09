@@ -11,7 +11,7 @@ const style = {
 		margin: '3px',
 		padding: '10px',
 		background: '#f5f5f5',
-		textAalign: 'center',
+		textAlign: 'center',
 		transition: 'height 04s ease',
 		overflow: 'hidden',
 		height: 'auto',
@@ -21,7 +21,7 @@ const style = {
 		margin: '3px',
 		padding: '10px',
 		background: '#f5f5f5',
-		textAalign: 'center',
+		textAlign: 'center',
 		overflow: 'hidden',
 		height: '34px',
 		transition: 'height 04s ease'
@@ -73,10 +73,12 @@ const Box = ({ station, settings, loading, click, gateway }) => {
 				</b><br /></span>
 			{loading
 				? (<Loading />)
-				: (<div>
-					{station.bandwidth || 0} Mbps / <span>{I18n.t('Packet loss')}</span> {station.loss}%<br />
-					<div style={barStyle(station.loss)} />
-				</div>)
+				: station.bandwidth
+					? (<div>
+						{station.bandwidth} Mbps / <span>{I18n.t('Packet loss')}</span> {station.loss}%<br />
+						<div style={barStyle(station.loss)} />
+					</div>)
+					:false
 			}
 		</div>
 	);

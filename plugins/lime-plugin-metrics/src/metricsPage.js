@@ -38,7 +38,7 @@ const style = {
 		padding: '10px',
 		fontSize: '1.4em',
 		background: '#f5f5f5',
-		textAalign: 'center',
+		textAlign: 'center',
 		overflow: 'hidden',
 		height: 'auto'
 	}

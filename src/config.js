@@ -6,6 +6,8 @@ import Notes from '../plugins/lime-plugin-notes';
 import Rx from '../plugins/lime-plugin-rx';
 import Admin from '../plugins/lime-plugin-admin';
 import Fbw from '../plugins/lime-plugin-fbw';
+import Pirania from '../plugins/lime-plugin-pirania';
+
 // import GroundRouting from '../plugins/lime-plugin-ground-routing';
 
 // REGISTER PLUGINS
@@ -16,7 +18,8 @@ export const plugins = [
 	Metrics,
 	Notes,
 	Meta,
-	//GroundRouting,
+	// GroundRouting,
 	Fbw,
-	Admin
+	Admin,
+	Pirania
 ];

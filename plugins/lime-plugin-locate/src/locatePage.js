@@ -221,17 +221,18 @@ const Locate = ({ nodeshash, changeLocation, setUserLocation, stationLocation, s
 	}
 
 	function toogleEdit() {
-		setState({ ...state, change: !state.change });
+		let newState = { ...state, change: !state.change };
 		window.limemap.closePopup();
 		let pointer = document.getElementsByClassName('leaflet-control-mapcentercoord-icon');
 		if (pointer.length > 0) {
-			setState({ ...state, buttonText: (state.change)? 'Close edit mode' : 'Edit location' });
+			newState = { ...newState, buttonText: newState.change? 'Close edit mode' : 'Edit location' };
 			window.popup.setContent(`<h4 style="margin-bottom:-11px; ">${I18n.t('Station')} </strong> ${stationHostname}</h4>
 					<br/>
-					<button onClick='window.toggleEdit()' style="width: 100%">${state.buttonText}</button>
+					<button onClick='window.toggleEdit()' style="width: 100%">${newState.buttonText}</button>
 					</span>`);
-			pointer[0].style.opacity = (state.change)? 1 : 0;
+			pointer[0].style.opacity = (newState.change)? 1 : 0;
 		}
+		setState(newState);
 	}
 
 	function showMsg() {
