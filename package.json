@@ -43,7 +43,7 @@
     "enzyme-adapter-preact-pure": "^2.0.0",
     "eslint": "^6.0.0",
     "eslint-config-synacor": "^3.0.2",
-    "fetch-mock": "^8.2.0-beta.2",
+    "fetch-mock": "^9.2.1",
     "gh-pages": "^2.0.1",
     "husky": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
