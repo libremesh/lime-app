@@ -1,23 +1,23 @@
 import axios from 'axios';
 import { from } from 'rxjs';
 
-String.prototype.hashCode = function() {
+String.prototype.hashCode = function () {
 	let hash = 0;
 	if (this.length === 0) {
 		return hash;
 	}
 	for (let i = 0; i < this.length; i++) {
 		let char = this.charCodeAt(i);
-		hash = ((hash<<5)-hash)+char;
+		hash = ((hash << 5) - hash) + char;
 		hash = hash & hash;
 	}
 	return hash.toString();
 };
 
-const getHash = (json ) => Promise.resolve(json.hashCode());
+const getHash = (json) => Promise.resolve(json.hashCode());
 
 export class UhttpdService {
-	constructor(url){
+	constructor(url) {
 		this.url = url;
 		this.sid = '00000000000000000000000000000000';
 		this.jsonrpc = '2.0';
@@ -25,12 +25,12 @@ export class UhttpdService {
 		this.requestList = [];
 	}
 
-	addId(){
+	addId() {
 		this.sec += 1;
 		return Number(this.sec);
 	}
-	
-	pullRequest(){
+
+	pullRequest() {
 		if (this.requestList.length > 0) {
 			this.requestList[0].callRequest();
 		}
@@ -38,7 +38,7 @@ export class UhttpdService {
 
 	runCallbacks(result, callbacks) {
 		callbacks.map(({ res, rej }) => {
-			if (result.error) { return res(result.error);}
+			if (result.error) { return res(result.error); }
 			res(result.result[1]);
 		});
 	}
@@ -47,14 +47,14 @@ export class UhttpdService {
 		return new Promise((res, rej) => {
 			getHash(JSON.stringify(payload)).then(hash => {
 				if (this.requestList.filter(x => x.hash === hash).length > 0) {
-					this.requestList.filter(x => x.hash === hash)[0].callbacks = [...this.requestList.filter(x => x.hash === hash)[0].callbacks, { res,rej }];
+					this.requestList.filter(x => x.hash === hash)[0].callbacks = [...this.requestList.filter(x => x.hash === hash)[0].callbacks, { res, rej }];
 					return;
 				}
 				const id = this.addId();
 				this.requestList = [...this.requestList, {
 					hash,
 					id,
-					callbacks: [{ res,rej }],
+					callbacks: [{ res, rej }],
 					callRequest: () => axios.post(this.url, {
 						id,
 						jsonrpc: this.jsonrpc,
@@ -66,7 +66,7 @@ export class UhttpdService {
 							this.runCallbacks(x.data, callbacks);
 							this.requestList = this.requestList.filter(x => x.id !== id);
 							this.pullRequest();
-							
+
 						})
 						.catch(e => {
 							rej(e);
@@ -80,7 +80,6 @@ export class UhttpdService {
 			});
 		});
 	}
-	
 
 	call(sid,action, method, data) {
 		return from(this.request([sid, action, method, data]));
@@ -90,11 +89,11 @@ export class UhttpdService {
 		this.url = newUrl;
 		return from( new Promise((res,rej) => {
 			axios.post(this.url)
-				.then(response => ( typeof response.data.jsonrpc !== 'undefined')? res(): rej())
+				.then(response => (typeof response.data.jsonrpc !== 'undefined') ? res() : rej())
 				.catch(
 					(err) => {
 						try {
-							( err.response.status === 400)? res(): rej();
+							(err.response.status === 400) ? res() : rej();
 						}
 						catch (error) {
 							rej();
