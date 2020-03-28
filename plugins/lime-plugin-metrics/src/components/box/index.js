@@ -11,7 +11,7 @@ const style = {
 		margin: '3px',
 		padding: '10px',
 		background: '#f5f5f5',
-		textAalign: 'center',
+		textAlign: 'center',
 		transition: 'height 04s ease',
 		overflow: 'hidden',
 		height: 'auto',
@@ -21,7 +21,7 @@ const style = {
 		margin: '3px',
 		padding: '10px',
 		background: '#f5f5f5',
-		textAalign: 'center',
+		textAlign: 'center',
 		overflow: 'hidden',
 		height: '34px',
 		transition: 'height 04s ease'
