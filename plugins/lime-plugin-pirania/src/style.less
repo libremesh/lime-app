@@ -1,0 +1,114 @@
+@media screen and (min-width: 640px) {
+  .box {
+    display: flex;
+    flex-flow: row no-wrap;
+    justify-content: space-around;
+    padding: 2vh 0;
+  }
+}
+
+.info span {
+  line-height: 2.5;
+}
+
+.switchContainer {
+  text-align: center;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 150px;
+  height: 34px;
+  text-align: left;
+}
+
+.createInput {
+  text-align: center;
+  width: 120px;
+  font-weight: 200;
+  font-size: 1.2em;
+  padding: 20px 0;
+  border: none;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 30px;
+  width: 50px;
+  left: 4px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(85px);
+  -ms-transform: translateX(85px);
+  transform: translateX(85px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.voucher {
+  margin: 5px auto;
+  padding: 2vh 0;
+  border-top: 1px solid #f5f5ff;
+  border-bottom: 1px solid #f5f5ff;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+
+}
+
+.nameInput {
+  padding: 2vh 0;
+  width: 80%;
+}
+
+.button-one {
+  margin-right: 5vw;
+}
+
+.createResult {
+  text-align: center;
+  padding-top: 5vh;
+}
