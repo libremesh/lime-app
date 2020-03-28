@@ -2,7 +2,7 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object } from '@storybook/addon-knobs/react';
+import { withKnobs, object } from '@storybook/addon-knobs';
 import '../../src/i18nline-glue';
 
 import { Banner } from '../../src/components/banner';

@@ -2,7 +2,7 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, array } from '@storybook/addon-knobs/react';
+import { withKnobs, array } from '@storybook/addon-knobs';
 
 import { frameDecorator } from '../../.storybook/frameDecorator';
 import { Scan } from './src/containers/Scan';
