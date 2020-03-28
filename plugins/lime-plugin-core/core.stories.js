@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, array, text } from '@storybook/addon-knobs/react';
+import { withKnobs, array, text } from '@storybook/addon-knobs';
 
 import { frameDecorator } from '../../.storybook/frameDecorator';
 import { Meta } from './src/metaPage';
