@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
-import { withKnobs, text } from '@storybook/addon-knobs/react';
+import { withKnobs, text, boolean } from '@storybook/addon-knobs';
 
 import { Box } from '../../src/components/box';
 import 'skeleton-less/less/skeleton';
@@ -32,7 +32,7 @@ const FakeTimer = () => {
 
 export const basicBox = () =>
 	(<div style={{ padding: '20px' }}>
-		<Box title={text('Title', 'Some title')}>
+		<Box title={text('Title', 'Some title')} collapse={boolean('Collapse', false)} collapsed={boolean('Collapsed', false)}>
 			{text('Childern content','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.') }
 		</Box>
 	</div>);
