@@ -63,16 +63,16 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 	return (<div class="container" style={{ paddingTop: '100px' }}>
 		<h4><span>{I18n.t('Configure your new community network')}</span></h4>
 		<label>{I18n.t('Choose a name for your network')}</label>
-		<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onChange={_changeName} onInput={_changeName} />
+		<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onInput={_changeName} />
 		<label>{I18n.t('Choose a shared password for network adminitration')}</label>
-		<input type="password" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onChange={_changePassword} onInput={_changePassword} />
+		<input type="password" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onInput={_changePassword} />
 		<label>{I18n.t('Re-enter the shared password')}</label>
-		<input type="password" placeholder={I18n.t('Re-enter Password')} class="u-full-width" value={state.passwordConfirmation} onChange={_changePasswordConfirmation} onInput={_changePasswordConfirmation} />
+		<input type="password" placeholder={I18n.t('Re-enter Password')} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
 		{_passwordMissMatch() &&
 			<label>{I18n.t('The passwords do not match!')}</label>
 		}
 		<label>{I18n.t('Choose a name for this node')}</label>
-		<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostName} onChange={_changeHostName} onInput={_changeHostName} />
+		<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostName} onInput={_changeHostName} />
 		<div class="row">
 			<div class="six columns">
 				<button
