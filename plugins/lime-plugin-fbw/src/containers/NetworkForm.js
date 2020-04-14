@@ -56,8 +56,17 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		return state.password.length > 0;
 	}
 
-	function _passwordMissMatch() {
-		return state.password && state.passwordConfirmation && state.password !== state.passwordConfirmation;
+	function _passwordMatch() {
+		return state.password === state.passwordConfirmation;
+	}
+
+	function _isValidForm() {
+		return (
+			_isValidPassword() &&
+			_passwordMatch() &&
+			isValidHostname(state.communityName, true) &&
+			isValidHostname(state.hostName, true)
+		)
 	}
 
 	return (<div class="container" style={{ paddingTop: '100px' }}>
@@ -68,7 +77,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		<input type="password" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onInput={_changePassword} />
 		<label>{I18n.t('Re-enter the shared password')}</label>
 		<input type="password" placeholder={I18n.t('Re-enter Password')} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
-		{_passwordMissMatch() &&
+		{state.passwordConfirmation && !_passwordMatch() &&
 			<label>{I18n.t('The passwords do not match!')}</label>
 		}
 		<label>{I18n.t('Choose a name for this node')}</label>
@@ -77,7 +86,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 			<div class="six columns">
 				<button
 					class="u-full-width"
-					disabled={!_isValidPassword() || _passwordMissMatch() || !isValidHostname(state.communityName, true) || !isValidHostname(state.hostName, true)}
+					disabled={!_isValidForm()}
 					onClick={_createNetwork}
 				>
 					{I18n.t('Create network')}
