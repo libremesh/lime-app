@@ -7,5 +7,5 @@ export const searchNetworks = (api, sid, rescan) =>
 export const setNetwork = (api, sid, { file, hostname }) =>
     api.call(sid, 'lime-fbw', 'set_network', { file, hostname });
 
-export const createNetwork = (api, sid, { network, hostname, password }) =>
-    api.call(sid, 'lime-fbw', 'create_network', { network, hostname, password });
+export const createNetwork = (api, sid, { network, hostname, adminPassword }) =>
+    api.call(sid, 'lime-fbw', 'create_network', { network, hostname, adminPassword });

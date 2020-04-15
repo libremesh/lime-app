@@ -57,7 +57,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		createNetwork({
 			network: state.communityName,
 			hostname: state.hostName,
-			password: state.password,
+			adminPassword: state.password,
 		});
 		toggleForm('setting')();
 	}
