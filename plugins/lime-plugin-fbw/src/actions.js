@@ -21,11 +21,12 @@ export const setNetwork = ({ file, network, hostname }) => ({
 	}
 });
 
-export const createNetwork = ({ network, hostname }) => ({
+export const createNetwork = ({ network, hostname, adminPassword }) => ({
 	type: FBW_CREATE_NETWORK,
 	payload: {
 		network,
-		hostname
+		hostname,
+		adminPassword
 	}
 });
 
