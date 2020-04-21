@@ -16,72 +16,11 @@ import { plugins } from '../config';
 import Banner from './banner';
 import { isBanner } from '../../plugins/lime-plugin-rx/src/rxSelectors';
 import { useEffect } from 'preact/hooks';
-
-initStore();
-
-const ChangeNode = ({ change, hostname }) => {
-	useEffect(() => {
-		change(hostname);
-	}, []);
-};
-
 import { Navs } from '../routes';
 import { Drawer } from './drawer';
 
-//class App extends Component {
-const App = ({ meta, history, changeNode, goBase, isBanner }) => {
+initStore();
 
-	function isConnected(meta) {
-		if (meta.sid !== '00000000000000000000000000000000' && meta.stauts !== 'start' ) {
-			return (
-				<div class={style.wraper}>
-					<Router history={history}>
-						<ChangeNode path="/changeNode/:hostname" change={changeNode} />
-						{plugins
-							.filter(plugin => plugin.page !== false)
-							.map(Component => (<Component.page path={Component.name.toLowerCase()} />))
-						}
-					</Router>
-				</div>
-			);
-		}
-		return (
-			<div class={style.wraper}>
-				<Router history={history} />
-				<Status meta={meta} back={goBase} />
-			</div>
-		);
-	}
-    
-	/* Ignore for now */
-	function isBase(meta) {
-		if (meta.selectedHost !== meta.base && meta.sid !== 'no_user' && meta.stauts !== 'start') {
-			return { minWidth: '100%' };
-		}
-		return { minWidth: '100%' };
-	}
-    
-	return (
-		<div style={isBase(meta)}>
-			<Banner />
-			<Header
-				hostname={meta.selectedHost}
-				goHome={goBase}
-				menuHidden={meta.menuHidden}
-				Drawer={Drawer}
-				Navs={Navs}
-			/>
-			{ /*<Navigator hostname={meta} goHome={goBase} /> */ }
-			{!isBanner && isConnected(meta)}
-			<Alert text={meta.alert} hide={hideAlert} />
-		</div>
-	);
-};
-
-const mapStateToProps = (state) => ({
-	meta: state.meta,
-	isBanner: isBanner(state)
-});
 
 const goBase = (hostname) => ({
 	type: 'meta/CONECTION_CHANGE_URL',
@@ -94,12 +33,62 @@ const hideAlert = () => ({
 });
 
 const changeNode = (hostname) => {
-	window.location.href = 'http://'+hostname;
+	window.location.href = 'http://' + hostname;
 	return {
 		type: '__CHANGE_NODE',
 		payload: hostname
 	};
 };
+
+function appIsConnected(meta) {
+	/** Return true if the LimeApp is connected to a LibreMesh node */
+	return (meta.sid !== '00000000000000000000000000000000' && meta.stauts !== 'start')
+}
+
+const ChangeNode = ({ change, hostname }) => {
+	/** Utility Element to setup changeNode/:hostname url route */
+	useEffect(() => {
+		change(hostname);
+	}, []);
+};
+
+const App = ({ meta, history, changeNode, goBase, isBanner }) => {
+	if (isBanner) {
+		return <Banner />
+	}
+	return (
+		<div>
+			<Header
+				hostname={meta.selectedHost}
+				goHome={goBase}
+				menuHidden={meta.menuHidden}
+				Drawer={Drawer}
+				Navs={Navs}
+			/>
+			<div class={style.wraper}>
+				{appIsConnected(meta) ?
+					(
+						<Router history={history}>
+							<ChangeNode path="/changeNode/:hostname" change={changeNode} />
+							{plugins
+								.filter(plugin => plugin.page !== false)
+								.map(Component => (<Component.page path={Component.name.toLowerCase()} />))
+							}
+						</Router>
+					) : (
+						<Status meta={meta} back={goBase} />
+					)
+				}
+			</div>
+			<Alert text={meta.alert} hide={hideAlert} />
+		</div>
+	);
+};
+
+const mapStateToProps = (state) => ({
+	meta: state.meta,
+	isBanner: isBanner(state)
+});
 
 const mapDispatchToProps = (dispatch) => ({
 	goBase: bindActionCreators(goBase, dispatch),
