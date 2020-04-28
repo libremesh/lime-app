@@ -10,13 +10,15 @@ import { createNetwork } from '../actions';
 
 import I18n from 'i18n-js';
 import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
-import SharedPasswordForm from '../../../../src/containers/SharedPasswordForm';
+import { isvalidPassword, ValidationMessages } from '../../../../src/containers/SharedPasswordForm';
+import { isValidPassword } from '../../../../src/containers/SharedPasswordForm/sharedPasswordForm';
 
 export const NetworkForm = ({ createNetwork, toggleForm }) => {
 	const [state, setState] = useState({
 		communityName: '',
 		hostName: '',
-		password: ''
+		password: '',
+		passwordConfirmation: '',
 	});
 
 	function _changeName(e) {
@@ -26,8 +28,12 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		return e;
 	}
 
-	function setPassword(password) {
-		setState({ ...state, password: password });
+	function _changePassword(e) {
+		setState({ ...state, password: e.target.value || '' });
+	}
+
+	function _changePasswordConfirmation(e) {
+		setState({ ...state, passwordConfirmation: e.target.value || '' });
 	}
 
 	function _changeHostName(e) {
@@ -48,7 +54,8 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 
 	function _isValidForm() {
 		return (
-			state.password !== '' &&
+			isValidPassword(state.password) &&
+			state.password === state.passwordConfirmation && 
 			isValidHostname(state.communityName, true) &&
 			isValidHostname(state.hostName, true)
 		)
@@ -58,7 +65,14 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		<h4><span>{I18n.t('Configure your new community network')}</span></h4>
 		<label>{I18n.t('Choose a name for your network')}</label>
 		<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onInput={_changeName} />
-		<SharedPasswordForm onOk={password => setPassword(password)} onBackToError={() => setPassword('')} />
+		<label>{I18n.t('Choose a shared password for network adminitration')}</label>
+		<input type="password" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onInput={_changePassword} />
+		<ValidationMessages password={state.password}></ValidationMessages>
+		<label>{I18n.t('Re-enter the shared password')}</label>
+		<input type="password" placeholder={I18n.t('Re-enter Password')} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
+		{state.passwordConfirmation && state.password !== state.passwordConfirmation &&
+			<p>{I18n.t('The passwords do not match!')}</p>
+		}
 		<label>{I18n.t('Choose a name for this node')}</label>
 		<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostName} onInput={_changeHostName} />
 		<div class="row">

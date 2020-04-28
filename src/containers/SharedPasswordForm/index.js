@@ -1,3 +1,1 @@
-import SharedPasswordForm from './sharedPasswordForm';
-
-export default SharedPasswordForm;
+export {isValidPassword, ValidationMessages} from './sharedPasswordForm';
