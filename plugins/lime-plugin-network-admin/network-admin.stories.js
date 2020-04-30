@@ -23,7 +23,6 @@ storiesOf('Containers|Network Configuration screen', module)
     .add('Logged Screen', () => (
         <_NetAdminLogged
             submitting={boolean('submitting', false)}
-            error={boolean('error', false)}
             success={boolean('succees', false)}
             submitSharedPassword={submitSharedPassword} />
     ))

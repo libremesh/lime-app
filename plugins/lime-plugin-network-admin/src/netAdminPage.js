@@ -1,15 +1,12 @@
 import { h } from 'preact';
+import I18n from 'i18n-js';
+
 import { useState, useEffect } from 'preact/hooks';
 
-import { connect } from 'react-redux';
-
-import { initNetAdmin } from './netAdminActions';
-import { bindActionCreators } from 'redux';
+import { api } from '../../../src/store';
 import { setSharedPassword, login } from './netAdminApi';
-import { getApi } from './netAdminSelectors';
 
-import I18n from 'i18n-js';
-import {isValidPassword, ValidationMessages} from '../../../src/containers/SharedPasswordForm';
+import { isValidPassword, ValidationMessages } from '../../../src/containers/SharedPasswordForm';
 import Loading from '../../../src/components/loading';
 
 const loadingBoxStyle = {
@@ -42,7 +39,7 @@ export const _NetAdminLogged = ({ submitting, success, submitSharedPassword }) =
 		setPassword(e.target.value || '');
 	}
 
-	function changePasswordConfirmation(e){
+	function changePasswordConfirmation(e) {
 		setPasswordConfirmation(e.target.value || '');
 	}
 
@@ -93,14 +90,17 @@ export const _NetAdminLogged = ({ submitting, success, submitSharedPassword }) =
 }
 
 const NetAdminLogged = ({ submitSharedPassword }) => {
-	[submitting, setSubmitting] = useState(false);
+	const [submitting, setSubmitting] = useState(false);
+	const [success, setSuccess] = useState(false);
 
-	function _submitSharedPassword() {
+	function _submitSharedPassword(password) {
 		setSubmitting(true);
-		submitSharedPassword(password)
+		return submitSharedPassword(password)
+			.then(() => setSuccess(true))
 			.finally(() => setSubmitting(false))
 	}
-	return <_NetAdminLogged submitting={submitting}
+
+	return <_NetAdminLogged submitting={submitting} success={success}
 		submitSharedPassword={_submitSharedPassword}></_NetAdminLogged>
 }
 
@@ -158,7 +158,7 @@ const NetAdminLogin = ({ submitLogin }) => {
 	return <_NetAdminLogin submitting={submitting} error={error} submitLogin={_submitLogin}></_NetAdminLogin>
 }
 
-const NetAdmin = ({ api, initNetAdmin, showNotification }) => {
+const NetAdmin = () => {
 	const [sessionId, setSessionId] = useState(NOT_LOGGED_SESSION_ID);
 
 	useEffect(() => {
@@ -167,12 +167,11 @@ const NetAdmin = ({ api, initNetAdmin, showNotification }) => {
 
 	const submitLogin = (password) => {
 		return login(api, sessionId, password).toPromise()
-			.then(result => setSessionId(result.sid))
+			.then(sid => setSessionId(sid))
 	}
 
 	const submitSharedPassword = (password) => {
 		return setSharedPassword(api, sessionId, password).toPromise()
-			.error(() => showNotification(I18n.t('An unexpected error occured')))
 	}
 
 	if (sessionId !== NOT_LOGGED_SESSION_ID) {
@@ -182,12 +181,4 @@ const NetAdmin = ({ api, initNetAdmin, showNotification }) => {
 	}
 }
 
-export default connect(
-	(state) => ({
-		api: getApi(state),
-	}),
-	(dispatch) => ({
-		initNetAdmin: bindActionCreators(initNetAdmin, dispatch),
-		showNotification: bindActionCreators(showNotification, dispatch),
-	})
-)(NetAdmin);
+export default NetAdmin;
