@@ -10,8 +10,7 @@ import { createNetwork } from '../actions';
 
 import I18n from 'i18n-js';
 import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
-import { isvalidPassword, ValidationMessages } from '../../../../src/containers/SharedPasswordForm';
-import { isValidPassword } from '../../../../src/containers/SharedPasswordForm/sharedPasswordForm';
+import { isValidPassword, ValidationMessages } from '../../../../src/containers/SharedPasswordForm';
 
 export const NetworkForm = ({ createNetwork, toggleForm }) => {
 	const [state, setState] = useState({
