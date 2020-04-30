@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import I18n from 'i18n-js';
 
-import { useState, useEffect } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 
 import { api } from '../../../src/store';
 import { setSharedPassword, login } from './netAdminApi';
@@ -160,10 +160,6 @@ const NetAdminLogin = ({ submitLogin }) => {
 
 const NetAdmin = () => {
 	const [sessionId, setSessionId] = useState(NOT_LOGGED_SESSION_ID);
-
-	useEffect(() => {
-		initNetAdmin();
-	}, [])
 
 	const submitLogin = (password) => {
 		return login(api, sessionId, password).toPromise()
