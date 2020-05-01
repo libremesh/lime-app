@@ -10,16 +10,7 @@ import { createNetwork } from '../actions';
 
 import I18n from 'i18n-js';
 import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
-
-const StatusBox = ({value}) => (
-	<b>
-		{value ?
-			(<span style={{ color: 'green' }}>✔</span>)
-			:
-			(<span style={{ color: 'red' }}>✘</span>)
-		}
-	</b>
-)
+import { isValidPassword, ValidationMessages } from '../../../../src/containers/SharedPasswordForm';
 
 export const NetworkForm = ({ createNetwork, toggleForm }) => {
 	const [state, setState] = useState({
@@ -53,6 +44,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		return e;
 	}
 
+
 	function _createNetwork() {
 		createNetwork({
 			network: state.communityName,
@@ -62,36 +54,10 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		toggleForm('setting')();
 	}
 
-	function _PasswordHasLength() {
-		// Check there is at least 10 characters in the string
-		return state.password.match("^(?=.{10,}$).*$")
-	}
-
-	function _PasswordHasNumber() {
-		// Check there is at least one number in the string
-		return state.password.match("^(?=.*[0-9]).*$")
-	}
-
-	function _PasswordHasAlphanumeric() {
-		// Check there is at least one alphanumeric in the string
-		return state.password.match("^(?=.*[a-zA-z]).*$")
-	}
-	function _isValidPassword() {
-		return (
-			_PasswordHasLength() &&
-			_PasswordHasAlphanumeric() &&
-			_PasswordHasNumber()
-		);
-	}
-
-	function _passwordMatch() {
-		return state.password === state.passwordConfirmation;
-	}
-
 	function _isValidForm() {
 		return (
-			_isValidPassword() &&
-			_passwordMatch() &&
+			isValidPassword(state.password) &&
+			state.password === state.passwordConfirmation &&
 			isValidHostname(state.communityName, true) &&
 			isValidHostname(state.hostName, true)
 		)
@@ -103,14 +69,10 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onInput={_changeName} />
 		<label>{I18n.t('Choose a shared password for network adminitration')}</label>
 		<input type="password" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onInput={_changePassword} />
-		<p>{I18n.t('The password should have:')}<br />
-			<StatusBox value={_PasswordHasLength()} /> {I18n.t('More than 10 characters')}<br />
-			<StatusBox value={_PasswordHasNumber()} /> {I18n.t('At least one number')}<br />
-			<StatusBox value={_PasswordHasAlphanumeric()} /> {I18n.t('At least one alphanumeric character')}<br />
-		</p>
+		<ValidationMessages password={state.password}></ValidationMessages>
 		<label>{I18n.t('Re-enter the shared password')}</label>
 		<input type="password" placeholder={I18n.t('Re-enter Password')} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
-		{state.passwordConfirmation && !_passwordMatch() &&
+		{state.passwordConfirmation && state.password !== state.passwordConfirmation &&
 			<p>{I18n.t('The passwords do not match!')}</p>
 		}
 		<label>{I18n.t('Choose a name for this node')}</label>

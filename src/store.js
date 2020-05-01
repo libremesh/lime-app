@@ -18,9 +18,9 @@ const rootReducers = combineReducers(reducers);
 
 //GENERATE EPICS
 const rootEpics =  combineEpics(...loadEpics(plugins));
-
+export const api = new UhttpdService()
 //CREATE STORE
-export const store = createStore({},rootEpics,rootReducers, new UhttpdService());
+export const store = createStore({},rootEpics,rootReducers, api);
 
 // Init websocket
 export const initStore = () => store.dispatch({

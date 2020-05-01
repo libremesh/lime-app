@@ -6,6 +6,7 @@ import Notes from '../plugins/lime-plugin-notes';
 import Rx from '../plugins/lime-plugin-rx';
 import Admin from '../plugins/lime-plugin-admin';
 import Fbw from '../plugins/lime-plugin-fbw';
+import NetworkAdmin from '../plugins/lime-plugin-network-admin';
 
 // REGISTER PLUGINS
 export const plugins = [
@@ -16,5 +17,6 @@ export const plugins = [
 	Notes,
 	Admin,
 	Meta,
+	NetworkAdmin,
 	Fbw,  // fbw does not have menu item
 ];
