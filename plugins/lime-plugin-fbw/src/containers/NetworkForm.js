@@ -27,20 +27,23 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		return e;
 	}
 
-	function _changePassword(e) {
-		setState({ ...state, password: e.target.value || '' });
-	}
-
-	function _changePasswordConfirmation(e) {
-		setState({ ...state, passwordConfirmation: e.target.value || '' });
-	}
-
 	function _changeHostName(e) {
 		const end = e.type === 'change';
 		e.target.value = slugify(e.target.value, end);
 		setState({ ...state, hostName: e.target.value || '' });
 		return e;
 	}
+
+	function _changePassword(e) {
+		setState({ ...state, password: e.target.value || '' });
+		return e;
+	}
+
+	function _changePasswordConfirmation(e) {
+		setState({ ...state, passwordConfirmation: e.target.value || '' });
+		return e;
+	}
+
 
 	function _createNetwork() {
 		createNetwork({
@@ -54,7 +57,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 	function _isValidForm() {
 		return (
 			isValidPassword(state.password) &&
-			state.password === state.passwordConfirmation && 
+			state.password === state.passwordConfirmation &&
 			isValidHostname(state.communityName, true) &&
 			isValidHostname(state.hostName, true)
 		)
