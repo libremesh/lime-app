@@ -83,9 +83,9 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
     }
 
     function onConfirmLocation() {
-        const { lat, lng, lat_neg, lng_neg } = map.getCenter();
-        const lat = lat_neg ? lat * -1 : lat;
-        const lon = lng_neg ? lng * -1 : lng;
+        const { _lat, _lng, _lat_neg, _lng_neg } = map.getCenter();
+        const lat = _lat_neg ? _lat * -1 : _lat;
+        const lon = _lng_neg ? _lng * -1 : _lng;
         changeLocation({ lat, lon });
         if (communityLayer) {
             // Hide the community view, to avoid outdated links
