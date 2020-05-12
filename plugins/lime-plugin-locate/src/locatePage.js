@@ -16,8 +16,8 @@ const openStreetMapAttribution = '&copy; <a href="http://osm.org/copyright">\
                                   OpenStreetMap</a> contributors'
 
 function setupMap() {
-    /** Initialize the leaflet map centered in the middle of the ocean*/
-    const map = L.map('map-container').setView([0, 0], 13);
+    /** Initialize the leaflet map centered in Latin America*/
+    const map = L.map('map-container').setView([-30, -60], 3);
     window.map = map;
     // Load layers
     require('leaflet.gridlayer.googlemutant');
@@ -76,7 +76,7 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
     // Center the map on node location when node location gets updated
     useEffect(() => {
         if (stationLat) {
-            map.setView([stationLat, stationLon]);
+            map.setView([stationLat, stationLon], 13);
             updateNodeMarker(stationLat, stationLon);
         }
     }, [stationLat, stationLon])
@@ -84,7 +84,7 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
     // Center the map on the node also when editting is turned on
     useEffect(() => {
         if (stationLat){
-            editting && map.setView([Number(stationLat), Number(stationLon)]);
+            editting && map.setView([stationLat, stationLon], 13);
         }
     }, [editting])
 
