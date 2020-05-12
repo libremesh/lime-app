@@ -33,7 +33,7 @@
     "@commitlint/config-conventional": "^8.0.0",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
-    "@storybook/preact": "^5.2.8",
+    "@storybook/preact": "^5.3.18",
     "colors": "^1.4.0",
     "commitizen": "^4.0.0",
     "commitlint": "^8.0.0",
