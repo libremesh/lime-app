@@ -5,7 +5,7 @@ import { useState, useEffect } from 'preact/hooks';
 
 import { loadLocation, changeLocation, loadLocationLinks, toogleEdit } from './locateActions';
 import { getSelectedHost, getLat, getLon, isCommunityLocation } from './locateSelectors';
-import { getCommunityLayer } from './communityLayer';
+import { getCommunityGeoJSON } from './communityGeoJSON';
 import { loadLeafLet, loadGoogleMapsApi, homeIcon } from './assetsUtils';
 
 import { Loading } from '../../../src/components/loading';
@@ -35,7 +35,26 @@ function setupMap() {
     return map
 }
 
-const LocatePage = ({ editting, submitting, stationHostname, stationLat, stationLon, nodeshash, isCommunityLocation, loadLocation, loadLocationLinks, changeLocation, toogleEdit }) => {
+function getCommunityLayer(stationHostname, stationLat, stationLon, nodesData) {
+    /** Create a Leaflet layer with community nodes and links to be added to the map*/
+    if (stationHostname in nodesData) {
+        // Override station coordinates in nodesData
+        nodesData[stationHostname].data.coordinates = { lat: stationLat, lon: stationLon };
+    }
+    // Get community GeoJSON, filter out nodes in same location as station host.
+    let geoJSON = getCommunityGeoJSON(nodesData, [stationLon, stationLat]);
+    const layer = L.geoJSON(geoJSON, {
+        onEachFeature: (feature, layer) => {
+            if (feature.properties && feature.properties.name) {
+                layer.bindTooltip(feature.properties.name).openTooltip();
+            }
+        }
+    })
+    return layer;
+}
+
+const LocatePage = ({ editting, submitting, stationHostname, stationLat, stationLon, nodesData,
+    isCommunityLocation, loadLocation, loadLocationLinks, changeLocation, toogleEdit }) => {
     const [loading, setLoading] = useState(true);
     const [assetError, setAssetError] = useState(false);
     const [map, setMap] = useState(null);
@@ -48,10 +67,10 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
             loadLeafLet(),
             loadGoogleMapsApi()
         ])
-            .then(onAssetsLoad) // Setup the map
-            .catch(onAssetsError)
-            .then(loadLocation) // Load node location
-            .then(loadLocationLinks) // Load community locations
+        .then(onAssetsLoad) // Setup the map
+        .catch(onAssetsError)
+        .then(loadLocation) // Load node location
+        .then(loadLocationLinks) // Load community locations
     }, []);
 
     // Center the map on node location when node location gets updated
@@ -64,7 +83,9 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
 
     // Center the map on the node also when editting is turned on
     useEffect(() => {
-        editting && map.setView([stationLat, stationLon]);
+        if (stationLat){
+            editting && map.setView([Number(stationLat), Number(stationLon)]);
+        }
     }, [editting])
 
     function onAssetsLoad() {
@@ -83,13 +104,13 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
     }
 
     function onConfirmLocation() {
-        const { _lat, _lng, _lat_neg, _lng_neg } = map.getCenter();
-        const lat = _lat_neg ? _lat * -1 : _lat;
-        const lon = _lng_neg ? _lng * -1 : _lng;
+        const position = map.getCenter();
+        const lat = position.lat_neg ? position.lat * -1 : position.lat;
+        const lon = position.lng_neg ? position.lng * -1 : position.lng;
         changeLocation({ lat, lon });
         if (communityLayer) {
             // Hide the community view, to avoid outdated links
-            toogleCommunity()
+            toogleCommunityLayer()
         }
     }
 
@@ -107,8 +128,7 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
             map.removeLayer(communityLayer);
             setCommunityLayer(null);
         } else {
-            const latlong = { lat: stationLat, lon: stationLon }
-            const layer = getCommunityLayer(stationHostname, latlong, nodeshash, map);
+            const layer = getCommunityLayer(stationHostname, stationLat, stationLon, nodesData);
             layer.addTo(map);
             setCommunityLayer(layer);
         }
@@ -119,7 +139,7 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
     }
 
     const hasLocation = stationLat && !isCommunityLocation;
- 
+
     return (
         <div>
             <div id='map-container'>
@@ -163,7 +183,7 @@ const mapStateToProps = (state) => ({
     stationLon: getLon(state),
     stationHostname: getSelectedHost(state),
     isCommunityLocation: isCommunityLocation(state),
-    nodeshash: state.locate.nodeshash,
+    nodesData: state.locate.nodesData,
     submitting: state.locate.submitting,
     editting: state.locate.editting,
 });

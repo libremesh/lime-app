@@ -16,7 +16,7 @@ export const initialState = {
 	},
 	submitting: false,
 	isCommunity: false,
-	nodeshash: []
+	nodesData: {}
 };
 
 
@@ -33,7 +33,7 @@ export const reducer = (state = initialState, { type, payload, meta }) => {
 			return Object.assign({}, state, { station: payload.location || payload, isCommunity: payload.default || false });
 
 		case LOCATION_LOAD_LINKS_SUCCESS:
-			return Object.assign({}, state, { nodeshash: Object.values(payload || {}).map(x => x.data) });
+			return Object.assign({}, state, { nodesData: payload });
 
 		case LOCATION_USER_SET:
 			return Object.assign({}, state, { user: payload });

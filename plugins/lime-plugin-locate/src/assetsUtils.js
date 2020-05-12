@@ -2,13 +2,14 @@ function loadLeafletScript() {
     return new Promise((res, rej) => {
         if (document.getElementById('leaflet-script')) {
             res();
+        } else {
+            const script = document.createElement('script');
+            script.onload = res;
+            script.onerror = rej;
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.0/leaflet.js';
+            script.id = 'leaflet-script';
+            document.body.appendChild(script);
         }
-        const script = document.createElement('script');
-        script.onload = res;
-        script.onerror = rej;
-        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.0/leaflet.js';
-        script.id = 'leaflet-script';
-        document.body.appendChild(script);
     })
 };
 
@@ -16,14 +17,15 @@ function loadLeafletStylesheet() {
     return new Promise((res, rej) => {
         if (document.getElementById('leaflet-style')) {
             res();
+        } else {
+            const style = document.createElement('link');
+            style.onload = res;
+            style.onerror = rej;
+            style.rel = 'stylesheet';
+            style.href = 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.css';
+            style.id = 'leaflet-style';
+            document.head.appendChild(style);
         }
-        const style = document.createElement('link');
-        style.onload = res;
-        style.onerror = rej;
-        style.rel = 'stylesheet';
-        style.href = 'https://unpkg.com/leaflet@1.6.0/dist/leaflet.css';
-        style.id = 'leaflet-style';
-        document.head.appendChild(style);
     })
 };
 
@@ -37,14 +39,15 @@ export function loadGoogleMapsApi() {
     return new Promise((res, rej) => {
         if (document.getElementById('googlemaps-script')) {
             res();
+        } else {
+            const key = 'AIzaSyBS0M7H7Ltk1ipjwqi8r9_WQJOzWfav4Ok';
+            const script = document.createElement('script');
+            script.onload = res;
+            script.onerror = rej;
+            script.src = 'https://maps.googleapis.com/maps/api/js?key='+key;
+            script.id = 'googlemaps-script';
+            document.body.appendChild(script);
         }
-        const key = 'AIzaSyBS0M7H7Ltk1ipjwqi8r9_WQJOzWfav4Ok';
-        const script = document.createElement('script');
-        script.onload = res;
-        script.onerror = rej;
-        script.src = 'https://maps.googleapis.com/maps/api/js?key='+key;
-        script.id = 'googlemaps-script';
-        document.body.appendChild(script);
     })
 }
 
