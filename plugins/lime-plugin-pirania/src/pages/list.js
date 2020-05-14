@@ -82,7 +82,7 @@ const VoucherTypeBox = ({ type, list, removeVoucher }) => (
 	</Box>
 );
 
-const List = ({ goBack, getVoucherList, removeVoucher, vouchers, loading }) => {
+export const ListPiraniaPage = ({ goBack, getVoucherList, removeVoucher, vouchers, loading }) => {
 	useEffect(() => {
 		if (!vouchers) {
 			getVoucherList();
@@ -131,4 +131,4 @@ export const mapDispatchToProps = dispatch => ({
 	getVoucherList: bindActionCreators(getVoucherList, dispatch),
 	removeVoucher: bindActionCreators(removeVoucher, dispatch)
 });
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default connect(mapStateToProps, mapDispatchToProps)(ListPiraniaPage);

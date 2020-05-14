@@ -1,3 +1,5 @@
+import { h } from 'preact';
+
 {/* https://github.com/danklammer/bytesize-icons */}
 export const Trash = ({ size, onClick }) => (
 	<svg onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'inherit' }} id="i-trash" xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 32 32`} width={size || 32}

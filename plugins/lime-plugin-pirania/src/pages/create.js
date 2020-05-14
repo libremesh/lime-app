@@ -14,7 +14,7 @@ import Loading from '../../../../src/components/loading';
 import daysFromNow from '../../../../src/utils/daysFromNow';
 import makeid from '../../../../src/utils/makeid';
 
-function Create({ goBack, createMemberVoucher, createVisitorVoucher, createVoucher, loading, createEpoc, list }) {
+export function CreatePiraniaPage({ goBack, createMemberVoucher, createVisitorVoucher, createVoucher, loading, createEpoc, list }) {
 	const initialNote = 'marcos android';
 	const [voucherQuantity, setVoucherQuantity] = useState(1);
 	const [daysQuantity, setDaysQuantity] = useState(1);
@@ -181,4 +181,4 @@ export const mapDispatchToProps = dispatch => ({
 	createVisitorVoucher: bindActionCreators(createVisitorVoucher, dispatch)
 
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePiraniaPage);
