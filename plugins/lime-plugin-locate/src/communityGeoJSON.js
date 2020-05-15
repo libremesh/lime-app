@@ -1,12 +1,12 @@
 const isObject = (obj) => typeof obj === 'object' && obj !== null;
-const coordsToPoint = ({ coordinates, hostname }) => (
+const coordsToPoint = (coordinates, properties = {}) => (
     {
         type: 'Feature',
         geometry: {
             type: 'Point',
             coordinates: [Number(coordinates.lon), Number(coordinates.lat)]
         },
-        properties: { name: hostname }
+        properties
     });
 
 const coordspairToLineString = (coordinates) => ({
@@ -35,12 +35,14 @@ const removeDuplicates = (collection, getIdentifier) => {
     });
 }
 
-export function getCommunityGeoJSON(nodesData, keepClean=null) {
+export function getCommunityGeoJSON(nodesData, keepClean = null) {
     // nodes: {..., {hostname, coordinates, macs, links}} Nodes with potential links
     let nodes = Object.values(nodesData)
         .map(nodeData => nodeData.data)
         .filter(n => isObject(n)) // Filter completely corrupted nodes
-        .filter(n => !isNaN(Number(n.coordinates.lat))) // Filter nodes without coordinates
+        .filter(n => (
+            !isNaN(Number(n.coordinates.lat) ||
+            !isNaN(Number(n.coordinates.lon))))) // Filter nodes without coordinates
         .filter(n => n.macs.length); // Filter nodes without a macs list
 
     // geomac: {mac: [lat, lon]} Coordinates for each mac address
@@ -59,7 +61,10 @@ export function getCommunityGeoJSON(nodesData, keepClean=null) {
     geolinks = removeDuplicates(geolinks, l => l[0] + ',' + l[1]);
 
     // nodefeatures: [..., GeoJSONFeature:Point] All nodes to be shown
-    let nodefeatures = nodes.map(coordsToPoint);
+    let nodefeatures = nodes.map(node => coordsToPoint(
+        node.coordinates,
+        { name: node.hostname }
+    ));
     if (keepClean) {
         const [lon, lat] = keepClean;
         nodefeatures = nodefeatures.filter(point => !pointIsIn(lat, lon, point))
