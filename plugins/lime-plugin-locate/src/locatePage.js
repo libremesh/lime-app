@@ -64,10 +64,10 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
             loadLeafLet(),
             loadGoogleMapsApi()
         ])
-        .then(onAssetsLoad) // Setup the map
-        .catch(onAssetsError)
-        .then(loadLocation) // Load node location
-        .then(loadLocationLinks) // Load community locations
+            .then(onAssetsLoad) // Setup the map
+            .catch(onAssetsError)
+            .then(loadLocation) // Load node location
+            .then(loadLocationLinks) // Load community locations
     }, []);
 
     // Set map position when map is available or location gets updated
@@ -75,14 +75,14 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
         if (map && stationLat) {
             map.setView([stationLat, stationLon], 13);
             updateNodeMarker(stationLat, stationLon);
-        } else if (map){
+        } else if (map) {
             map.setView([-30, -60], 3)
         }
     }, [stationLat, stationLon, map])
 
     // Center the map on the node also when editting is turned on
     useEffect(() => {
-        if (map && stationLat){
+        if (map && stationLat) {
             editting && map.setView([stationLat, stationLon], 13);
         }
     }, [editting])
@@ -117,7 +117,7 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
         if (nodeMarker) {
             nodeMarker.setLatLng([lat, lon]);
         } else {
-            const marker = L.marker([lat, lon], { icon: L.icon(homeIcon), alt:"node marker"}).addTo(map);
+            const marker = L.marker([lat, lon], { icon: L.icon(homeIcon), alt: "node marker" }).addTo(map);
             setNodeMarker(marker);
         }
     }
@@ -139,6 +139,14 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
 
     const hasLocation = stationLat && !isCommunityLocation;
 
+    if (assetError) {
+        return (
+            <div id='map-container' className='has-asset-error'>
+                Cannot load map, check your internet connection
+            </div>
+        )
+    }
+
     return (
         <div>
             <div id='map-container'>
@@ -147,7 +155,6 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
                         <Loading></Loading>
                     </div>
                 }
-                {assetError && 'Cannot load map, check your internet connection'}
                 {editting && <div id="location-marker"></div>}
             </div>
             {isReady() &&
