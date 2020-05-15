@@ -16,8 +16,8 @@ const openStreetMapAttribution = '&copy; <a href="http://osm.org/copyright">\
                                   OpenStreetMap</a> contributors'
 
 function setupMap() {
-    /** Initialize the leaflet map centered in Latin America*/
-    const map = L.map('map-container').setView([-30, -60], 3);
+    /** Initialize the leaflet map */
+    const map = L.map('map-container');
     window.map = map;
     // Load layers
     require('leaflet.gridlayer.googlemutant');
@@ -73,17 +73,19 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
         .then(loadLocationLinks) // Load community locations
     }, []);
 
-    // Center the map on node location when node location gets updated
+    // Set map position when map is available or location gets updated
     useEffect(() => {
-        if (stationLat) {
+        if (map && stationLat) {
             map.setView([stationLat, stationLon], 13);
             updateNodeMarker(stationLat, stationLon);
+        } else if (map){
+            map.setView([-30, -60], 3)
         }
-    }, [stationLat, stationLon])
+    }, [stationLat, stationLon, map])
 
     // Center the map on the node also when editting is turned on
     useEffect(() => {
-        if (stationLat){
+        if (map && stationLat){
             editting && map.setView([stationLat, stationLon], 13);
         }
     }, [editting])
@@ -118,7 +120,7 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
         if (nodeMarker) {
             nodeMarker.setLatLng([lat, lon]);
         } else {
-            const marker = L.marker([lat, lon], { icon: L.icon(homeIcon) }).addTo(map);
+            const marker = L.marker([lat, lon], { icon: L.icon(homeIcon), alt:"node marker"}).addTo(map);
             setNodeMarker(marker);
         }
     }
@@ -149,27 +151,27 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
                     </div>
                 }
                 {assetError && 'Cannot load map, check your internet connection'}
-                {editting && <div id="node-marker"></div>}
+                {editting && <div id="location-marker"></div>}
             </div>
             {isReady() &&
                 <div id="edit-action">
                     {/* Actions while editting */}
                     {editting &&
-                        <button onClick={onConfirmLocation}>Confirm Location</button>
+                        <button onClick={onConfirmLocation}>confirm location</button>
                     }
                     {editting &&
-                        <button onClick={() => toogleEdit(false)}>Cancel</button>
+                        <button onClick={() => toogleEdit(false)}>cancel</button>
                     }
                     {/* Actions while not editting */}
                     {!editting && hasLocation &&
-                        <button onClick={() => toogleEdit(true)}>Edit Location</button>
+                        <button onClick={() => toogleEdit(true)}>edit location</button>
                     }
                     {!editting && !hasLocation &&
-                        <button onClick={() => toogleEdit(true)}>Locate my node</button>
+                        <button onClick={() => toogleEdit(true)}>locate my node</button>
                     }
                     {!editting &&
                         <button onClick={() => toogleCommunityLayer()}>
-                            {communityLayer ? 'Hide Community' : 'Show Community'}
+                            {communityLayer ? 'hide community' : 'show community'}
                         </button>
                     }
                 </div>

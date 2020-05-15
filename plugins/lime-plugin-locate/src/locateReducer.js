@@ -15,6 +15,7 @@ export const initialState = {
 		lat: 0
 	},
 	submitting: false,
+	editting: false,
 	isCommunity: false,
 	nodesData: {}
 };
