@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { useState, useEffect } from 'preact/hooks';
+import I18n from 'i18n-js';
 
 import { loadLocation, changeLocation, loadLocationLinks, toogleEdit } from './locateActions';
 import { getSelectedHost, getLat, getLon, isCommunityLocation } from './locateSelectors';
@@ -142,7 +143,7 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
     if (assetError) {
         return (
             <div id='map-container' className='has-asset-error'>
-                Cannot load map, check your internet connection
+                {I18n.t('Cannot load map, check your internet connection')}
             </div>
         )
     }
@@ -161,21 +162,22 @@ const LocatePage = ({ editting, submitting, stationHostname, stationLat, station
                 <div id="edit-action">
                     {/* Actions while editting */}
                     {editting &&
-                        <button onClick={onConfirmLocation}>confirm location</button>
+                        <button onClick={onConfirmLocation}>{I18n.t('confirm location')}</button>
                     }
                     {editting &&
-                        <button onClick={() => toogleEdit(false)}>cancel</button>
+                        <button onClick={() => toogleEdit(false)}>{I18n.t('cancel')}</button>
                     }
                     {/* Actions while not editting */}
                     {!editting && hasLocation &&
-                        <button onClick={() => toogleEdit(true)}>edit location</button>
+                        <button onClick={() => toogleEdit(true)}>{I18n.t('edit location')}</button>
                     }
                     {!editting && !hasLocation &&
-                        <button onClick={() => toogleEdit(true)}>locate my node</button>
+                        <button onClick={() => toogleEdit(true)}>{I18n.t('locate my node')}</button>
                     }
                     {!editting &&
                         <button onClick={() => toogleCommunityLayer()}>
-                            {communityLayer ? 'hide community' : 'show community'}
+                            {communityLayer ? 
+                                I18n.t('hide community') : I18n.t('show community')}
                         </button>
                     }
                 </div>
