@@ -41,8 +41,9 @@ export function getCommunityGeoJSON(nodesData, keepClean = null) {
         .map(nodeData => nodeData.data)
         .filter(n => isObject(n)) // Filter completely corrupted nodes
         .filter(n => (
-            !isNaN(Number(n.coordinates.lat) ||
-            !isNaN(Number(n.coordinates.lon))))) // Filter nodes without coordinates
+            !isNaN(Number(n.coordinates.lat)) ||
+            !isNaN(Number(n.coordinates.lon))
+        )) // Filter nodes without coordinates
         .filter(n => n.macs.length); // Filter nodes without a macs list
 
     // geomac: {mac: [lat, lon]} Coordinates for each mac address
