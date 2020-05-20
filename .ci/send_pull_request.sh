@@ -17,9 +17,8 @@ get_repo(){
 
 create_file() {
     export SHASUM=$(sha256sum $TRAVIS_BUILD_DIR/lime-app-$TRAVIS_BRANCH.tar.gz | awk '{ print $1 }')
-    cat ../Makefile.temp | sed -e "s/\${i}/1/" \
-        | sed -e "s/\${version}/$TRAVIS_BRANCH/" \
-        | sed -e "s/\${hash}/$SHASUM/"  > packages/lime-app/Makefile
+    sed -i -re "s/(PKG_VERSION:=).*/\1$TRAVIS_BRANCH/" packages/lime-app/Makefile
+    sed -i -re "s/(PKG_HASH:=).*/\1$SHASUM/" packages/lime-app/Makefile
 }
 
 commit_file() {
