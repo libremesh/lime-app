@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.4](https://github.com/germanferrero/lime-app/compare/v0.2.2...v0.2.4) (2020-05-20)
+
+
+### Features
+
+* **fbw:** add shared password to network creation form ([0e90457](https://github.com/germanferrero/lime-app/commit/0e90457f828e84264ded5568205925d57ef82918)), closes [#237](https://github.com/germanferrero/lime-app/issues/237)
+* **plugin-network-admin:** add network admin plugin ([b40604c](https://github.com/germanferrero/lime-app/commit/b40604c1bae0ed8d65d1c01ddd63e8b791390d94))
+
+
+### Bug Fixes
+
+* **locate:** fix ui bugs related to undefined coordinates of nodes ([d6e90d5](https://github.com/germanferrero/lime-app/commit/d6e90d5f0bd2e205731836daf3312e29c9d391bc)), closes [#250](https://github.com/germanferrero/lime-app/issues/250)
+
 ### [0.2.3](https://github.com/libremesh/lime-app/compare/v0.2.2...v0.2.3) (2020-02-11)
 
 
