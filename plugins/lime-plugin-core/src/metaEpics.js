@@ -3,7 +3,6 @@ import {
 	CONECTION_SUCCESS,
 	CONECTION_ERROR,
 	CONECTION_CHANGE_URL,
-	CONECTION_SETTINGS,
 	CONECTION_LOAD_NEIGHBORS,
 	CONECTION_LOAD_NEIGHBORS_SUCCESS,
 	CONECTION_LOAD_HOSTNAME,
@@ -28,12 +27,6 @@ import { map, mergeMap, mapTo, catchError, delay } from 'rxjs/operators';
 import I18n from 'i18n-js';
 
 import { push } from 'react-router-redux';
-
-const conectionOff = ( action$ ) =>
-	action$.pipe(
-		ofType(CONECTION_START),
-		map((action) => ({ type: CONECTION_SETTINGS, payload: { conection: false, ws: action.payload } }))
-	);
 
 const conectionAction = ( action$, store, { wsAPI } ) =>
 	action$.pipe(
@@ -120,7 +113,6 @@ const closeNotificatins = (action$, store, { wsAPI } ) =>
 	);
 
 export default {
-	conectionOff,
 	conectionAction,
 	changeUrlAction,
 	loadNetwork,
