@@ -96,6 +96,9 @@ const NetAdminLogged = ({ submitSharedPassword }) => {
 	function _submitSharedPassword(password) {
 		setSubmitting(true);
 		return submitSharedPassword(password)
+			.then(result => new Promise((res, rej) => {
+				result.ubus_rpc_session ? res() : rej()
+			}))
 			.then(() => setSuccess(true))
 			.finally(() => setSubmitting(false))
 	}
