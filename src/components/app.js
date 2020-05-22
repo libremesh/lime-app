@@ -6,9 +6,6 @@ import { bindActionCreators } from 'redux';
 import store, { initStore } from '../store';
 import { history } from '../store/history';
 
-import style from './style';
-
-
 import { Header } from './header';
 import Alert from './alert';
 import Status from './status';
@@ -65,7 +62,7 @@ const App = ({ meta, history, changeNode, goBase, isBanner }) => {
 				Drawer={Drawer}
 				Navs={Navs}
 			/>
-			<div class={style.wraper}>
+			<div>
 				{appIsConnected(meta) ?
 					(
 						<Router history={history}>
