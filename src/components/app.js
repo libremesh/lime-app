@@ -49,10 +49,25 @@ const ChangeNode = ({ change, hostname }) => {
 	}, []);
 };
 
-const App = ({ meta, history, changeNode, goBase, isBanner }) => {
+const Content = ({ history, plugins, isBanner, meta, goBase, changeNode }) => {
 	if (isBanner) {
-		return <Banner />
+		return <Banner></Banner>
 	}
+	if (!appIsConnected(meta)) {
+		return <Status meta={meta} back={goBase} />
+	}
+	return (
+		<Router history={history}>
+			<ChangeNode path="/changeNode/:hostname" change={changeNode} />
+			{plugins
+				.filter(plugin => plugin.page !== false)
+				.map(Component => (<Component.page path={Component.name.toLowerCase()} />))
+			}
+		</Router>
+	)
+}
+
+const App = ({ meta, history, changeNode, goBase, isBanner }) => {
 	return (
 		<div>
 			<Header
@@ -62,21 +77,8 @@ const App = ({ meta, history, changeNode, goBase, isBanner }) => {
 				Drawer={Drawer}
 				Navs={Navs}
 			/>
-			<div>
-				{appIsConnected(meta) ?
-					(
-						<Router history={history}>
-							<ChangeNode path="/changeNode/:hostname" change={changeNode} />
-							{plugins
-								.filter(plugin => plugin.page !== false)
-								.map(Component => (<Component.page path={Component.name.toLowerCase()} />))
-							}
-						</Router>
-					) : (
-						<Status meta={meta} back={goBase} />
-					)
-				}
-			</div>
+			<Content history={history} plugins={plugins} isBanner={isBanner} meta={meta}
+				goBase={goBase} changeNode={changeNode} />
 			<Alert text={meta.alert} hide={hideAlert} />
 		</div>
 	);
