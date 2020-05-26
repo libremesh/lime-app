@@ -1,9 +1,9 @@
 import { h } from 'preact';
 import Router from 'preact-router';
-
 import { Provider, connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import store, { initStore } from '../store';
+
+import store from '../store';
 import { history } from '../store/history';
 
 import { Header } from './header';
@@ -15,9 +15,6 @@ import { isBanner } from '../../plugins/lime-plugin-rx/src/rxSelectors';
 import { useEffect } from 'preact/hooks';
 import { Navs } from '../routes';
 import { Drawer } from './drawer';
-
-initStore();
-
 
 const goBase = (hostname) => ({
 	type: 'meta/CONECTION_CHANGE_URL',
