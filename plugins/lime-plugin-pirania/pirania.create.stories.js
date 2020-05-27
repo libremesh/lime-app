@@ -2,7 +2,7 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-
+import { withKnobs, object } from '@storybook/addon-knobs';
 import { frameDecorator } from '../../.storybook/frameDecorator';
 import Home from './src/pages/home';
 import Admin from './src/pages/admin';
@@ -11,38 +11,54 @@ import Renew from './src/pages/renew';
 import Governance from './src/pages/governance';
 import Content from './src/pages/content';
 
-var payday = 1;
 var daysLeft = 1;
 var activeVouchers = {};
-var governance = {};
+var governance = {
+    provider: {
+      payday: 24,
+      cost: 150,
+      name: "Internet Service Provider Name",
+      speed: "10Mbs"
+    },
+    community: {
+      payday: 20,
+      maintenance: 200,
+      reserve: 0,
+      currency: "USD"
+    },
+    member: {
+      cost: 50,
+      vouchers: 5
+    }
+};
+
+export const actions = {
+	submit: action('Submit')
+};
+
 var goBack = function() {};
 var createEpoc = function() {};
 var renewDate = function() {};
 var renewEpoc = function() {};
+function setPage () {
+    return false;
+}
 
 storiesOf('Containers|Pirania', module)
+    .addDecorator(withKnobs)
 	.addDecorator(frameDecorator)
 	.add('Home screen', () => (
 					<Home
 						logged={false}
-						submit={false}
 						handlePassword={false}
-						payday={1}
-						daysLeft={1}
+                        daysLeft={daysLeft}
+                        provider={object('Governance provider state', governance.provider)}
+                        community={object('Governance community state', governance.community)}
+                        member={object('Governance member state', governance.member)}
+                        submit={action('Submit')}
 					/>
 	))
-	.add('Home screen logged', () => (
-					<Home
-						logged={true}
-						submit={false}
-						handlePassword={false}
-						payday={payday}
-						daysLeft={daysLeft}
-						{...activeVouchers}
-						{...governance}
-					/>
-	))
-	.add('Admin', () => (
+	.add('Logged admin screen', () => (
 					<Admin
 						list={() => setPage(1)}
 						create={() => setPage(2)}

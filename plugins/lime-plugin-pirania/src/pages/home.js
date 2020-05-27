@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import { Box } from '../../../../src/components/box';
 import I18n from 'i18n-js';
 
