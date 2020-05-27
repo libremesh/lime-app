@@ -4,12 +4,12 @@ import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
 
 import { frameDecorator } from '../../.storybook/frameDecorator';
-import { Home } from './src/pages/home';
-import { Admin } from './src/pages/admin';
-import { Create } from './src/pages/create';
-import { Renew } from './src/pages/renew';
-import { Governance } from './src/pages/governance';
-import { Content } from './src/pages/content';
+import Home from './src/pages/home';
+import Admin from './src/pages/admin';
+import Create from './src/pages/create';
+import Renew from './src/pages/renew';
+import Governance from './src/pages/governance';
+import Content from './src/pages/content';
 
 var payday = 1;
 var daysLeft = 1;
