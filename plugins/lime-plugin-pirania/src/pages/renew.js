@@ -73,7 +73,7 @@ export function RenewPiraniaPage({ goBack, loading, vouchers, getVoucherList, da
 						vouchers={vouchers}
 						handleCheck={handleCheck}
 						selected={selected}
-					/>
+					  />
 					: <Loading />
 				}
 			</Box>

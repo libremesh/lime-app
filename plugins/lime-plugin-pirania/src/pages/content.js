@@ -35,13 +35,14 @@ export function ContentPiraniaPage({ goBack, content, loading, writeContent, get
 				const ctx = elem.getContext('2d');
 				ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
 				ctx.canvas.toBlob((blob) => {
-					const file = new File([blob], fileName, {
+					new File([blob], fileName, {
 						type: 'image/jpeg',
 						lastModified: Date.now()
 					});
 				}, 'image/jpeg', 1);
 				setUploadedImage(ctx.canvas.toDataURL('image/jpeg'));
 			},
+			// eslint-disable-next-line no-console
 			reader.onerror = error => console.log(error);
 		};
 	}
@@ -52,6 +53,7 @@ export function ContentPiraniaPage({ goBack, content, loading, writeContent, get
 		const { value: body , bind: bindBody } = useInput(content.body);
 		const { value: mediaUrl , bind: bindMediaUrl } = useInput(content.mediaUrl);
 		const { value: rules , bind: bindRules } = useInput(content.rules);
+		// eslint-disable-next-line no-inner-declarations
 		function submitForm(e) {
 			e.preventDefault();
 			const data = {
