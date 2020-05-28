@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, object } from '@storybook/addon-knobs';
 import { frameDecorator } from '../../.storybook/frameDecorator';
 import Home from './src/pages/home';
-import Admin from './src/pages/admin';
+import { AdminPiraniaPage } from './src/pages/admin';
 import Create from './src/pages/create';
 import Renew from './src/pages/renew';
 import Governance from './src/pages/governance';
@@ -33,16 +33,22 @@ var governance = {
 };
 
 export const actions = {
-	submit: action('Submit')
+    submit: (e) => {
+        action('Submit');
+        e.preventDefault();
+    },
+    list: action('List vouchers'),
+    create: action('Create vouchers'),
+    renew: action('Renew vouchers'),
+    editGovernance: action('Edit governance information'),
+    editContent: action('Edit captive-portal page content')
 };
 
 var goBack = function() {};
 var createEpoc = function() {};
 var renewDate = function() {};
 var renewEpoc = function() {};
-function setPage () {
-    return false;
-}
+var getStatus = () => false;
 
 storiesOf('Containers|Pirania', module)
     .addDecorator(withKnobs)
@@ -55,20 +61,17 @@ storiesOf('Containers|Pirania', module)
                         provider={object('Governance provider state', governance.provider)}
                         community={object('Governance community state', governance.community)}
                         member={object('Governance member state', governance.member)}
-                        submit={action('Submit')}
+                        submit={e => actions.submit(e)}
 					/>
 	))
 	.add('Logged admin screen', () => (
-					<Admin
-						list={() => setPage(1)}
-						create={() => setPage(2)}
-						renew={() => setPage(3)}
-						editGovernance={() => setPage(4)}
-						editContent={() => setPage(5)}
-						payday={payday}
-						daysLeft={daysLeft}
-						{...activeVouchers}
-						{...governance}
+					<AdminPiraniaPage
+                        provider={object('Governance provider state', governance.provider)}
+                        community={object('Governance community state', governance.community)}
+                        member={object('Governance member state', governance.member)}
+                        daysLeft={daysLeft}
+                        getStatus={getStatus}
+                        {...actions}
 					/>
 	))
 	.add('Create', () => (

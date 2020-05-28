@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -10,7 +11,7 @@ import { Loading } from '../../../../src/components/loading';
 
 import I18n from 'i18n-js';
 
-const Admin = ({ provider,
+export const AdminPiraniaPage = ({ provider,
 	community,
 	member,
 	payday,
@@ -152,4 +153,4 @@ export const mapDispatchToProps = dispatch => ({
 	enable: bindActionCreators(enable, dispatch),
 	disable: bindActionCreators(disable, dispatch)
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Admin);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPiraniaPage);
