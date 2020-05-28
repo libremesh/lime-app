@@ -2,7 +2,7 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object, boolean } from '@storybook/addon-knobs';
+import { withKnobs, object, boolean, number, text } from '@storybook/addon-knobs';
 import { frameDecorator } from '../../.storybook/frameDecorator';
 import Home from './src/pages/home';
 import { AdminPiraniaPage } from './src/pages/admin';
@@ -32,7 +32,10 @@ let governance = {
 	}
 };
 const now = new Date();
-let renewDate = new Date(now.getFullYear(), now.getMonth() + 1, governance.community.payday + 1);
+const nextNextRenewday = new Date(now.getFullYear(), now.getMonth() + 1, governance.community.payday + 1);
+const renewMonth = nextNextRenewday.getMonth() + 1;
+const renewYear = nextNextRenewday.getFullYear();
+const renewDate = `${governance.community.payday + 1}/${ renewMonth > 9 ? renewMonth : '0' + renewMonth}/${renewYear}`;
 let vouchers = [
 	{
 		expires: new Date(now.getFullYear(), now.getMonth(), governance.community.payday + 1).valueOf(),
@@ -113,7 +116,7 @@ storiesOf('Containers|Pirania', module)
 		<Home
 			logged={false}
 			handlePassword={false}
-			daysLeft={daysLeft}
+			daysLeft={number('Days left until pay day', daysLeft)}
 			provider={object('Governance provider state', governance.provider)}
 			community={object('Governance community state', governance.community)}
 			member={object('Governance member state', governance.member)}
@@ -126,7 +129,7 @@ storiesOf('Containers|Pirania', module)
 			provider={object('Governance provider state', governance.provider)}
 			community={object('Governance community state', governance.community)}
 			member={object('Governance member state', governance.member)}
-			daysLeft={daysLeft}
+			daysLeft={number('Days left until pay day', daysLeft)}
 			getStatus={getStatus}
 			{...actions}
 		/>
@@ -140,7 +143,7 @@ storiesOf('Containers|Pirania', module)
 	))
 	.add('Create new voucher screen', () => (
 		<CreatePiraniaPage
-			daysLeft={daysLeft}
+			daysLeft={number('Days left until pay day', daysLeft)}
 			createEpoc={createEpoc}
 			loading={boolean('Is loading', false)}
 			{...actions}
@@ -148,10 +151,11 @@ storiesOf('Containers|Pirania', module)
 	))
 	.add('Renew vouchers screen', () => (
 		<RenewPiraniaPage
-			daysLeft={daysLeft}
-			renewDate={renewDate}
+			daysLeft={number('Days left until pay day', daysLeft)}
+			renewDate={text('Renew date', renewDate)}
 			loading={boolean('Is loading', false)}
 			getVoucherList={getVoucherList}
+			vouchers={object('Voucher list', vouchers)}
 			{...actions}
 		/>
 	))
