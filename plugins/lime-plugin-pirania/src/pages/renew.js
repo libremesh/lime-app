@@ -37,7 +37,7 @@ function RenewContent({ vouchers, handleCheck, selected }) {
 	));
 }
 
-function Renew({ goBack, loading, vouchers, getVoucherList, daysLeft, renewDate, renewVouchers, renewed, renewEpoc }) {
+export function RenewPiraniaPage({ goBack, loading, vouchers, getVoucherList, daysLeft, renewDate, renewVouchers, renewed, renewEpoc }) {
 	const [selected, setSelected] = useState([]);
 	function handleCheck(e) {
 		const newList = selected.filter(i => i !== e.target.value);
@@ -100,4 +100,4 @@ export const mapDispatchToProps = dispatch => ({
 	getVoucherList: bindActionCreators(getVoucherList, dispatch),
 	renewVouchers: bindActionCreators(renewVouchers, dispatch)
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Renew);
+export default connect(mapStateToProps, mapDispatchToProps)(RenewPiraniaPage);

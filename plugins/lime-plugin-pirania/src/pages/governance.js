@@ -12,7 +12,7 @@ import Loading from '../../../../src/components/loading';
 import { Input } from '../../../../src/components/input';
 import { useInput } from '../../../../src/utils/hooks';
 
-function Governance({ provider, community, member, goBack, loading, writeGovernance }) {
+export function GovernancePiraniaPage({ provider, community, member, goBack, loading, writeGovernance }) {
 	const { value: communityCurrency, bind: bindCommunityCurrency } = useInput(community.currency);
 	const { value: communityMaintenance, bind: bindCommunityMaintenance } = useInput(parseInt(community.maintenance, 10));
 	const { value: communityReserve, bind: bindCommunityReserve } = useInput(parseInt(community.reserve, 10));
@@ -92,4 +92,4 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => ({
 	writeGovernance: bindActionCreators(writeGovernance, dispatch)
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Governance);
+export default connect(mapStateToProps, mapDispatchToProps)(GovernancePiraniaPage);

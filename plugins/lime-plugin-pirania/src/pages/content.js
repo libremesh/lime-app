@@ -13,7 +13,7 @@ import Loading from '../../../../src/components/loading';
 import { Input } from '../../../../src/components/input';
 import { useInput } from '../../../../src/utils/hooks';
 
-function Content({ goBack, content, loading, writeContent, getPiraniaContent }) {
+export function ContentPiraniaPage({ goBack, content, loading, writeContent, getPiraniaContent }) {
 	const [ uploadedImage, setUploadedImage ] = useState(null);
 	useEffect(() => {
 		getPiraniaContent();
@@ -95,4 +95,4 @@ export const mapDispatchToProps = dispatch => ({
 	writeContent: bindActionCreators(writeContent, dispatch),
 	getPiraniaContent: bindActionCreators(getPiraniaContent, dispatch)
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Content);
+export default connect(mapStateToProps, mapDispatchToProps)(ContentPiraniaPage);

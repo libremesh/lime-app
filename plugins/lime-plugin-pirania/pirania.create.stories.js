@@ -2,17 +2,20 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object } from '@storybook/addon-knobs';
+import { withKnobs, object, boolean } from '@storybook/addon-knobs';
 import { frameDecorator } from '../../.storybook/frameDecorator';
 import Home from './src/pages/home';
 import { AdminPiraniaPage } from './src/pages/admin';
-import Create from './src/pages/create';
-import Renew from './src/pages/renew';
-import Governance from './src/pages/governance';
-import Content from './src/pages/content';
+import { ListPiraniaPage } from './src/pages/list';
+import { CreatePiraniaPage } from './src/pages/create';
+import { RenewPiraniaPage } from './src/pages/renew';
+import { GovernancePiraniaPage } from './src/pages/governance';
+import { ContentPiraniaPage } from './src/pages/content';
 
 var daysLeft = 1;
 var activeVouchers = {};
+var renewDate = new Date();
+var vouchers = [];
 var governance = {
     provider: {
       payday: 24,
@@ -41,14 +44,20 @@ export const actions = {
     create: action('Create vouchers'),
     renew: action('Renew vouchers'),
     editGovernance: action('Edit governance information'),
-    editContent: action('Edit captive-portal page content')
+    editContent: action('Edit captive-portal page content'),
+    goBack: action('Go back'),
+    removeVoucher: action('Remove voucher'),
+    createVisitorVoucher: action('Create visitor voucher'),
+    createMemberVoucher: action('Create member voucher'),
+    renewEpoc: action('Renew voucher date'),
+    writeGovernance: action('Save governance information')
 };
 
-var goBack = function() {};
 var createEpoc = function() {};
 var renewDate = function() {};
-var renewEpoc = function() {};
 var getStatus = () => false;
+var getVoucherList = () => []
+var getPiraniaContent = () => []
 
 storiesOf('Containers|Pirania', module)
     .addDecorator(withKnobs)
@@ -66,6 +75,7 @@ storiesOf('Containers|Pirania', module)
 	))
 	.add('Logged admin screen', () => (
 					<AdminPiraniaPage
+                        loading={boolean("Is loading enabled information", false)}
                         provider={object('Governance provider state', governance.provider)}
                         community={object('Governance community state', governance.community)}
                         member={object('Governance member state', governance.member)}
@@ -73,32 +83,45 @@ storiesOf('Containers|Pirania', module)
                         getStatus={getStatus}
                         {...actions}
 					/>
-	))
-	.add('Create', () => (
-					<Create
-						goBack={goBack}
+    ))
+    .add('List vouchers screen', () => (
+        <ListPiraniaPage
+            vouchers={vouchers}
+            loading={boolean("Is loading", false)}
+            {...actions}
+        />
+    ))
+	.add('Create new voucher screen', () => (
+					<CreatePiraniaPage
 						daysLeft={daysLeft}
 						createEpoc={createEpoc}
-						list={() => setPage(1)}
+                        loading={boolean("Is loading", false)}
+                        {...actions}
 					/>
 	))
-	.add('Renew', () => (
-					<Renew
-						daysLeft={daysLeft}
-						goBack={goBack}
-						renewDate={renewDate}
-						renewEpoc={renewEpoc}
+	.add('Renew vouchers screen', () => (
+					<RenewPiraniaPage
+                        daysLeft={daysLeft}
+                        renewDate={renewDate}
+                        loading={boolean("Is loading", false)}
+                        getVoucherList={getVoucherList}
+                        {...actions}
 					/>
 	))
-	.add('Governance', () => (
-					<Governance
-						goBack={goBack}
-						{...governance}
+	.add('Edit governance information screen', () => (
+					<GovernancePiraniaPage
+                        loading={boolean("Is loading", false)}
+                        provider={object('Governance provider state', governance.provider)}
+                        community={object('Governance community state', governance.community)}
+                        member={object('Governance member state', governance.member)}
+                        {...actions}
 					/>
 	))
-	.add('Content', () => (
-					<Content
-						goBack={goBack}
+	.add('Edit content screen', () => (
+					<ContentPiraniaPage
+                        loading={boolean("Is loading", false)}
+                        getPiraniaContent={getPiraniaContent}
+                        {...actions}
 					/>
-	))
+	));
 
