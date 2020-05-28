@@ -110,7 +110,8 @@ export const actions = {
 	createVisitorVoucher: action('Create visitor voucher'),
 	createMemberVoucher: action('Create member voucher'),
 	renewEpoc: action('Renew voucher date'),
-	writeGovernance: action('Save governance information')
+	writeGovernance: action('Save governance information'),
+	writeContent: action('Save content information')
 };
 
 let getStatus = () => false;
@@ -181,7 +182,7 @@ storiesOf('Containers|Pirania', module)
 		<ContentPiraniaPage
 			loading={boolean('Is loading', false)}
 			getPiraniaContent={getPiraniaContent}
-			content={piraniaContent}
+			content={object('Pirania captive-portal content', piraniaContent)}
 			{...actions}
 		/>
 	));

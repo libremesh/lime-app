@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 
 export const useInput = initialValue => {
 	const [value, setValue] = useState(initialValue);
