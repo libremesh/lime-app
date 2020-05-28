@@ -14,8 +14,6 @@ import { ContentPiraniaPage } from './src/pages/content';
 
 var daysLeft = 1;
 var activeVouchers = {};
-var renewDate = new Date();
-var vouchers = [];
 var governance = {
     provider: {
       payday: 24,
@@ -34,6 +32,57 @@ var governance = {
       vouchers: 5
     }
 };
+const now = new Date();
+var renewDate = new Date(now.getFullYear(), now.getMonth() + 1, governance.community.payday + 1);
+var vouchers = [
+    {
+      expires: new Date(now.getFullYear(), now.getMonth(), governance.community.payday + 1).valueOf(),
+      note: 'wesley-coputador',
+      name: 'delvaearidi-m-wesley-computador',
+      macs: [
+        '2c:6f:c9:66:4c:2'
+      ],
+      voucher: 'fx97sphu',
+      macsAllowed: '1',
+      node: 'delvaearidi',
+      type: 'member'
+    },
+    {
+      expires: new Date(now.getFullYear(), now.getMonth(), governance.community.payday + 1).valueOf(),
+      type: 'invalid',
+      name: 'aridi-mnf',
+      macs: [
+        '2c:6f:c9:66:4c:2b'
+      ],
+      macsAllowed: '1',
+      node: 'aridi',
+      voucher: '7b7i95yn'
+    },
+    {
+      expires: new Date(now.getFullYear(), now.getMonth(), governance.community.payday + 1).valueOf(),
+      note: 'jpcel',
+      name: 'flordeouro-m-jpcel-',
+      macs: [
+        '2e:fc:84:93:85:45'
+      ],
+      voucher: 'f22slkrs',
+      macsAllowed: '1',
+      node: 'flordeouro',
+      type: 'member'
+    },
+    {
+      expires: new Date(now.getFullYear(), now.getMonth(), governance.community.payday + 1).valueOf(),
+      note: 'yan-ttp',
+      name: 'flordeouro-v-yan-ttp',
+      macs: [
+        'ac:f6:f7:ca:87:43'
+      ],
+      voucher: 'f92uzvwf',
+      macsAllowed: '1',
+      node: 'flordeouro',
+      type: 'visitor'
+    }
+  ];
 
 export const actions = {
     submit: (e) => {
@@ -86,7 +135,7 @@ storiesOf('Containers|Pirania', module)
     ))
     .add('List vouchers screen', () => (
         <ListPiraniaPage
-            vouchers={vouchers}
+            vouchers={object('Voucher list', vouchers)}
             loading={boolean("Is loading", false)}
             {...actions}
         />
