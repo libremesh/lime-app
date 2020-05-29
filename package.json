@@ -45,7 +45,7 @@
     "eslint": "^6.0.0",
     "eslint-config-synacor": "^3.0.2",
     "fetch-mock": "^8.2.0-beta.2",
-    "gh-pages": "^2.0.1",
+    "gh-pages": "^3.0.0",
     "husky": "^3.0.0",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
