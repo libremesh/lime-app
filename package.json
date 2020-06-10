@@ -14,7 +14,7 @@
     "serve": "preact build && serve build --single",
     "dev": "preact watch",
     "lint": "eslint src",
-    "translations": "node ./node_modules/i18nline/bin/i18nline.js export",
+    "translations": "i18nline export",
     "posttranslations": "node ./i18n-diff.js",
     "cz": "git-cz",
     "release": "standard-version",
