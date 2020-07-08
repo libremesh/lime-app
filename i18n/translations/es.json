@@ -41,8 +41,6 @@
     "interfaces_44f8a99c": "Interfaces",
     "admin_password_6b9d0812": "Contraseña",
     "applying_changes_the_system_takes_a_minute_to_get__189a700d": "Aplicando cambios, el equipo puede no responder por un minuto.",
-    "ground_routing_12ab04c9": "Ground Routing",
-    "ground_routing_configuration_3f4fa9c1": "Configuración de Ground Routing",
     "login_6f3d6249": "Ingresar",
     "reload_3e45154f": "Recargar",
     "station_ip_v4_3158a957": "IP v4",
@@ -79,7 +77,7 @@
     "you_don_t_go_through_any_paths_to_get_here_25203ed3": "No necesitas pasar por ningún nodo para llega hasta aquí",
     "you_have_successfuly_connected_to_ddb8c613": "La conexión fué exitosa, está conectado a ",
     "please_configure_your_network_d6eb8b76": "Por favor configure su conexión de red",
-    "your_router_has_not_yet_been_configured_you_can_us_2b40cea3": "Su router aún no ha sido configurado, puede utilizar nuestro asistente para incorporarlo a una red existente o crear una nueva. Si ignora este mensaje, continuará funcionando con la configuración predeterminada.",
+    "your_router_has_not_yet_been_configured_you_can_us_27c91373": "Su router aún no ha sido configurado, puede utilizar nuestro asistente para incorporarlo a una red existente o crear una nueva. Si ignora este mensaje, continuará funcionando con la configuración predeterminada.",
     "ok_ff1b646a": "Ok",
     "last_known_internet_path_45f31c9a": "Este es el último recorrido hasta Internet que funcionó",
     "you_should_try_to_connect_to_the_network_network_8d7f515e": "Intente conectarce a la red wifi %{network} para completar la instalación.",
@@ -113,6 +111,8 @@
     "hide_community_773b3f33": "Esconder comunidad",
     "locate_my_node_b91489b": "Ubicar mi nodo",
     "must_select_a_network_and_a_valid_hostname_ea82e72c": "Debes elegir una red y un nombre de host valido",
-    "show_community_42f3833": "Mostrar comunidad"
+    "show_community_42f3833": "Mostrar comunidad",
+    "you_need_to_know_the_shared_password_to_enter_this_4b0c4ec1": "Debes ingresar la contraseña compartida para seguir",
+    "shared_password_dac7c19d": "Contraseña Compartida"
 }
 
