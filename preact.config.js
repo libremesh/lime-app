@@ -1,5 +1,4 @@
 require('dotenv').config();
-const path = require('path');
 
 /**
  * Function that mutates original webpack config.
@@ -13,15 +12,16 @@ export default function (config, env, helpers) {
 	// Basepath of lime-app in the router: http://thisnode.info/app/
 	config.output.publicPath = process.env.WEB_PATH || '';
 	// This hack let us use less-modules at plugins/containers directories too
-	const loaderRules = helpers.getLoadersByName(config, 'style-loader');
+	const { source } = env;
+	const loaderRules = helpers.getLoadersByName(config, 'css-loader');
 	loaderRules.forEach(({ rule }) => {
 		if (rule.include) {
-			rule.include.push(path.resolve(__dirname, 'plugins'));
-			rule.include.push(path.resolve(__dirname, 'src/containers'));
+			rule.include.push(source('../plugins'));
+			rule.include.push(source('containers'));
 		}
 		if (rule.exclude) {
-			rule.exclude.push(path.resolve(__dirname, 'plugins'));
-			rule.exclude.push(path.resolve(__dirname, 'src/containers'));
+			rule.exclude.push(source('../plugins'));
+			rule.exclude.push(source('containers'));
 		}
 	});
 }
