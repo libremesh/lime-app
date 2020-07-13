@@ -17,12 +17,24 @@ String.prototype.hashCode = function() {
 const getHash = (json ) => Promise.resolve(json.hashCode());
 
 export class UhttpdService {
-	constructor(url){
-		this.url = url;
+	constructor(){
+		this.url = null;
 		this.sid = '00000000000000000000000000000000';
 		this.jsonrpc = '2.0';
 		this.sec = 0;
 		this.requestList = [];
+	}
+
+	setSid(sessionId){
+		this.sid = sessionId;
+	}
+
+	getSid() {
+		return this.sid;
+	}
+
+	setUrl(url) {
+		this.url = url + '/ubus';
 	}
 
 	addId(){
@@ -38,14 +50,15 @@ export class UhttpdService {
 
 	runCallbacks(result, callbacks) {
 		callbacks.map(({ res, rej }) => {
-			if (result.error) { return res(result.error);}
+			if (result.error) { return rej(result.error);}
+			if (result.result[0] !== 0) { return rej(result);}
 			res(result.result[1]);
 		});
 	}
 
-	request(payload) {
+	request(payload, customSid=null) {
 		return new Promise((res, rej) => {
-			getHash(JSON.stringify(payload)).then(hash => {
+			getHash(JSON.stringify([customSid || this.sid, ...payload])).then(hash => {
 				if (this.requestList.filter(x => x.hash === hash).length > 0) {
 					this.requestList.filter(x => x.hash === hash)[0].callbacks = [...this.requestList.filter(x => x.hash === hash)[0].callbacks, { res,rej }];
 					return;
@@ -59,8 +72,8 @@ export class UhttpdService {
 						id,
 						jsonrpc: this.jsonrpc,
 						method: 'call',
-						params: payload
-					})
+						params: [customSid || this.sid, ...payload]
+					}, { timeout: 15000 })
 						.then(x => {
 							const callbacks = this.requestList.filter(x => x.id === id)[0].callbacks;
 							this.runCallbacks(x.data, callbacks);
@@ -82,8 +95,8 @@ export class UhttpdService {
 	}
 	
 
-	call(sid,action, method, data) {
-		return from(this.request([sid, action, method, data]));
+	call(action, method, data, customSid=null) {
+		return from(this.request([action, method, data], customSid));
 	}
 
 	connect(newUrl) {
@@ -106,3 +119,6 @@ export class UhttpdService {
 	}
 
 }
+
+const uhttpdService = new UhttpdService();
+export default uhttpdService;

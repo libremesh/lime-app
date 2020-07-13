@@ -5,11 +5,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { changeInterface, changeStation, startAlign, getSignal } from './alignActions';
 
-import { getAll, getSelectedHost, getSettings } from './alignSelectors';
+import { getAll } from './alignSelectors';
 
 import I18n from 'i18n-js';
 
 import colorScale from 'simple-color-scale';
+import { useAppContext } from '../../../src/utils/app.context';
 
 //Eperimental text-to-speech
 let synth = window.speechSynthesis;
@@ -62,7 +63,9 @@ function useInterval (callback, delay, off) {
 
 }
 
-export const Align = ({ startAlign, changeInterface, changeStation, alignData, selectedHost, settings, getSignal }) => {
+export const Align = ({ startAlign, changeInterface, changeStation, alignData, getSignal }) => {
+
+	const { nodeHostname, communitySettings } = useAppContext();
 
 	const [ lastSpeech, setLastSpeech ] = useState(0);
 	const [ resumedTimes, setResumedTimes ] = useState(0);
@@ -83,9 +86,9 @@ export const Align = ({ startAlign, changeInterface, changeStation, alignData, s
 		startAlign();
 		colorScale.setConfig({
 			outputStart: 1,
-			outputEnd: Number(settings.bad_signal)* -1,
-			inputStart: Number(settings.good_signal)* -1,
-			inputEnd: Number(settings.bad_signal)* -1 + 10
+			outputEnd: Number(communitySettings.bad_signal)* -1,
+			inputStart: Number(communitySettings.good_signal)* -1,
+			inputEnd: Number(communitySettings.bad_signal)* -1 + 10
 		});
 	},[]);
 
@@ -111,12 +114,12 @@ export const Align = ({ startAlign, changeInterface, changeStation, alignData, s
 	},[2000]);
 
 	return (
-		<div className="container" style={{ paddingTop: '100px' }}>
+		<div className="container container-padded">
 			{ typeof alignData.currentReading !== 'undefined'? (
 				<div className="row">
 					<div className="six columns">
 						<span style={style.hostname}>
-							{selectedHost || ''}
+							{nodeHostname || ''}
 						</span>
 						<h1 style={style.signal}>
 							{alignData.currentReading.signal || 0}
@@ -155,9 +158,7 @@ export const Align = ({ startAlign, changeInterface, changeStation, alignData, s
 
 
 const mapStateToProps = (state) => ({
-	alignData: getAll(state),
-	selectedHost: getSelectedHost(state),
-	settings: getSettings(state)
+	alignData: getAll(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -39,10 +39,8 @@
     "try_thisnode_info_1ee1bfe2": "Intentar con thisnode.info",
     "uptime_c1d2415d": "Tiempo en actividad",
     "interfaces_44f8a99c": "Interfaces",
-    "admin_password_6b9d0812": "Contraseña",
     "applying_changes_the_system_takes_a_minute_to_get__189a700d": "Aplicando cambios, el equipo puede no responder por un minuto.",
     "login_6f3d6249": "Ingresar",
-    "reload_3e45154f": "Recargar",
     "station_ip_v4_3158a957": "IP v4",
     "station_name_7d67417c": "Nombre del nodo",
     "this_node_does_not_see_other_nodes_in_the_network_f281b047": "Este nodo no ve a ningún otro nodo la red",
@@ -69,7 +67,6 @@
     "select_one_b647b384": "Seleccionar una",
     "set_network_bcd0ea96": "Sumarse a la red",
     "setting_network_21ebac51": "Configurando red",
-    "this_node_is_not_compatible_with_limeapp_f241477d": "No se puede utilizar LiMeApp en este nodo",
     "this_node_is_the_gateway_1e20aaff": "Este nodo es el gateway",
     "you_are_connected_to_another_node_in_the_network_t_a423710a": "Está conectado a otro nodo de la red, intente conectarse a",
     "you_are_now_part_of_90f2585a": "Usted es ahora parte de",
@@ -89,7 +86,6 @@
     "error_98e81528": "Error",
     "i_don_t_know_the_shared_password_336b198": "No sé la contraseña compartida",
     "logging_in_1164a773": "Iniciando Sesión",
-    "login_with_the_shared_password_to_start_configurin_cc2ddabd": "Inicia sesión con la contraseña compartida para empezar a configurar la red",
     "map_eb9418c7": "Mapa",
     "more_than_10_characters_15a6e3bf": "Más de 10 caracteres",
     "network_configuration_ea7f4215": "Configuración de la Red",
@@ -102,7 +98,6 @@
     "the_password_should_have_b9f88155": "La contraseña debe incluir",
     "the_passwords_do_not_match_62d77c67": "Las contraseñas no coinciden",
     "the_shared_password_has_been_chosen_by_the_communi_f9d30a92": "La contraseña compartida fue elegida por la comunidad al iniciar la red. Pregúntale a otros miembros cuál es.",
-    "wellcome_to_the_network_configuration_adac353": "Bienvenide a la configuración de la red",
     "wrong_password_try_again_3100aecf": "Contraseña incorrecta, intenta nuevamente",
     "cancel_cd471b5e": "Cancelar",
     "cannot_load_map_check_your_internet_connection_d24f5daf": "El mapa no puede cargarse, verifica la conexión a internet",
@@ -113,6 +108,10 @@
     "must_select_a_network_and_a_valid_hostname_ea82e72c": "Debes elegir una red y un nombre de host valido",
     "show_community_42f3833": "Mostrar comunidad",
     "you_need_to_know_the_shared_password_to_enter_this_4b0c4ec1": "Debes ingresar la contraseña compartida para seguir",
-    "shared_password_dac7c19d": "Contraseña Compartida"
+    "shared_password_dac7c19d": "Contraseña Compartida",
+    "an_error_occurred_a4e1cda4": "Ocurrió un error",
+    "this_node_is_not_compatible_with_this_limeapp_vers_20ec9462": "Este nodo no es compatible con esta versión de LimeApp",
+    "try_navigating_to_directly_78b56477": "Intenta navegar directamente a %{url}",
+    "un_unexpected_error_occurred_please_contact_the_de_b9eb7c49": "Un error inesperado ocurrió, porfavor contactá al equipo de desarrollo"
 }
 

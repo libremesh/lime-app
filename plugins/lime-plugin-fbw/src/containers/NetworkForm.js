@@ -49,7 +49,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		createNetwork({
 			network: state.communityName,
 			hostname: state.hostName,
-			adminPassword: state.password,
+			adminPassword: state.password
 		});
 		toggleForm('setting')();
 	}
@@ -60,16 +60,16 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 			state.password === state.passwordConfirmation &&
 			isValidHostname(state.communityName, true) &&
 			isValidHostname(state.hostName, true)
-		)
+		);
 	}
 
-	return (<div class="container" style={{ paddingTop: '100px' }}>
+	return (<div class="container container-padded">
 		<h4><span>{I18n.t('Configure your new community network')}</span></h4>
 		<label>{I18n.t('Choose a name for your network')}</label>
 		<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onInput={_changeName} />
 		<label>{I18n.t('Choose a shared password for network adminitration')}</label>
 		<input type="password" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onInput={_changePassword} />
-		<ValidationMessages password={state.password}></ValidationMessages>
+		<ValidationMessages password={state.password} />
 		<label>{I18n.t('Re-enter the shared password')}</label>
 		<input type="password" placeholder={I18n.t('Re-enter Password')} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
 		{state.passwordConfirmation && state.password !== state.passwordConfirmation &&

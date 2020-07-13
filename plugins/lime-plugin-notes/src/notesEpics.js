@@ -12,19 +12,19 @@ import {
 	NOTES_SET_ERROR
 } from './notesConstants';
 
-const getNotesEpic = ( action$, state$, { wsAPI } ) =>
+const getNotesEpic = ( action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(...[NOTES_GET,NOTES_SET_SUCCESS]),
-		mergeMap(() => getNotes(wsAPI, state$.value.meta.sid)),
+		mergeMap(() => getNotes(wsAPI)),
 		map( notes => ({ type: NOTES_GET_SUCCESS, payload: notes })),
 		catchError( error => [({ type: NOTES_GET_ERROR, payload: error })])
 	);
 
-const setNotesEpic = ( action$, state$, { wsAPI } ) =>
+const setNotesEpic = ( action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(NOTES_SET),
 		map(action => action.payload.notes),
-		mergeMap((notes) => setNotes(wsAPI, state$.value.meta.sid, { text: notes }).pipe(
+		mergeMap((notes) => setNotes(wsAPI, { text: notes }).pipe(
 			map( notes => ({ type: NOTES_SET_SUCCESS, payload: notes })),
 			catchError( error => [({ type: NOTES_SET_ERROR, payload: error })])
 		))

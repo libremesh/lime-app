@@ -25,10 +25,10 @@ import { interval, from } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { map, takeUntil, mergeMap, catchError,switchMap } from 'rxjs/operators';
 
-export const nodeStatus = ( action$, store, { wsAPI } ) =>
+export const nodeStatus = ( action$, _store, { wsAPI } ) =>
 	action$.pipe(
 		ofType(GET_NODE_STATUS),
-		mergeMap(() => from(getNodeStauts(wsAPI, store.value.meta.sid))),
+		mergeMap(() => from(getNodeStauts(wsAPI))),
 		map( payload => ({ type: GET_NODE_STATUS_SUCCESS, payload })),
 		catchError(([{ type: GET_NODE_STATUS_ERROR }]))
 	);
@@ -45,21 +45,21 @@ const runTimer = ( action$, store ) =>
 const getSignal = ( action$, state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(...[GET_SIGNAL,INTERVAL_GET]),
-		switchMap(() => from(getStationSignal(wsAPI, state$.value.meta.sid, state$.value.rx.data.most_active))),
+		switchMap(() => from(getStationSignal(wsAPI, state$.value.rx.data.most_active))),
 		map( signal => ({ type: GET_SIGNAL_SUCCESS, payload: signal }))
 	);
 
 const getTraffic = ( action$, state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(...[GET_TRAFFIC,INTERVAL_GET]),
-		switchMap(() => from(getStationTraffic(wsAPI, state$.value.meta.sid, state$.value.rx.data.most_active))),
+		switchMap(() => from(getStationTraffic(wsAPI, state$.value.rx.data.most_active))),
 		map( signal => ({ type: GET_TRAFFIC_SUCCESS, payload: signal }))
 	);
 
-const getInternet = ( action$, state$, { wsAPI } ) =>
+const getInternet = ( action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(...[GET_NODE_STATUS_SUCCESS, GET_INTERNET_STATUS, INTERVAL_GET]),
-		switchMap(() => from(getInternetStatus(wsAPI, state$.value.meta.sid))),
+		switchMap(() => from(getInternetStatus(wsAPI))),
 		map( status => ({ type: GET_INTERNET_STATUS_SUCCESS, payload: status }))
 	);
 

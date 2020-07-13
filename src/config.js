@@ -18,5 +18,5 @@ export const plugins = [
 	Admin,
 	Meta,
 	NetworkAdmin,
-	Fbw,  // fbw does not have menu item
+	Fbw // fbw does not have menu item
 ];

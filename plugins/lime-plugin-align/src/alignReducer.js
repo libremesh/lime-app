@@ -12,7 +12,7 @@ export const initialState = {
 	currentReading: {}
 };
 
-export const reducer = (state = initialState, { type, payload, meta }) => {
+export const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 
 		case IFACES_LOAD_SUCCESS:

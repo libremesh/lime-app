@@ -1,12 +1,11 @@
 import { h } from 'preact';
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { changeConfig, adminLogin } from './adminActions';
-import { authStatus, loading } from './adminSelectors';
-import { getSelectedHost } from '../../lime-plugin-core/src/metaSelectors';
+import { changeConfig } from './adminActions';
+import { loading, redirect, error } from './adminSelectors';
 import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
@@ -14,6 +13,7 @@ import Loading from '../../../src/components/loading';
 import I18n from 'i18n-js';
 import { isValidHostname, slugify } from '../../../src/utils/isValidHostname';
 import { showNotification } from '../../../src/store/actions';
+import { useAppContext } from '../../../src/utils/app.context';
 
 const style = {
 	textLoading: {
@@ -35,11 +35,20 @@ const style = {
 };
 
 
-export const Admin = ({ adminLogin, changeConfig, showNotification, selectedHost, nodeData, loading, authStatus }) => {
+export const Admin = ({ adminLogin, changeConfig, showNotification, nodeData, loading, redirect, error }) => {
+	const { nodeHostname, changeNode } = useAppContext();
 	const [ state, setState ] = useState({
-		hostname: selectedHost,
+		hostname: nodeHostname,
 		ip: nodeData.ips.filter(ip => ip.version === '4')[0].address
 	});
+
+	useEffect(() => {
+		if (redirect) {
+			setTimeout(() => {
+				changeNode(state.hostname);
+			}, 60000);
+		}
+	}, [state.hostname, redirect, changeNode]);
 
 	function handleHostname(e) {
 		const end = e.type === 'change';
@@ -51,16 +60,6 @@ export const Admin = ({ adminLogin, changeConfig, showNotification, selectedHost
 	function handleIp(e) {
 		setState({ ...state, ip: e.target.value });
 		return e;
-	}
-
-	function handlePassword(e) {
-		setState({ ...state, adminPassword: e.target.value });
-		return e;
-	}
-
-	function _adminLogin(e) {
-		e.preventDefault();
-		adminLogin({ username: 'root', password: state.adminPassword });
 	}
 
 	function _changeConfig(e) {
@@ -85,15 +84,7 @@ export const Admin = ({ adminLogin, changeConfig, showNotification, selectedHost
 	return (
 		<div class="container" style={{ paddingTop: '100px' }}>
 			{showLoading(loading)}
-			<form onSubmit={_adminLogin} style={{ display: (!authStatus)? 'block': 'none' }}>
-				<p>
-					<label>{I18n.t('Admin password')}</label>
-					<input type="password" onInput={handlePassword} class="u-full-width" />
-
-				</p>
-				<button class="button green block" type="submit">{I18n.t('Login')}</button>
-			</form>
-			<form onSubmit={_changeConfig} style={{ display: (authStatus)? 'block': 'none' }}>
+			<form onSubmit={_changeConfig}>
 				<p>
 					<label>{I18n.t('Station name')}</label>
 					<input type="text" value={state.hostname} onInput={handleHostname} onChange={handleHostname} class="u-full-width" />
@@ -104,21 +95,21 @@ export const Admin = ({ adminLogin, changeConfig, showNotification, selectedHost
 				</p>
 				<button class="button green block" type="submit">{I18n.t('Change')}</button>
 			</form>
+			{error && I18n.t('An error occurred')}
 		</div>
 	);
 };
 
 
 export const mapStateToProps = (state) => ({
-	selectedHost: getSelectedHost(state),
 	nodeData: getNodeData(state),
-	authStatus: authStatus(state),
-	loading: loading(state)
+	loading: loading(state),
+	redirect: redirect(state),
+	error: error(state)
 });
 
 export const mapDispatchToProps = (dispatch) => ({
 	changeConfig: bindActionCreators(changeConfig, dispatch),
-	adminLogin: bindActionCreators(adminLogin, dispatch),
 	showNotification: bindActionCreators(showNotification, dispatch)
 });
 

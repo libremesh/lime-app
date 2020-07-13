@@ -8,7 +8,6 @@ export const Drawer = ({ status, toggle, children }) => {
 		}
 		return 'transform: translate(-100vw,0)';
 	}
-
 	return (
 		<div className={style.drawer} style={statusStyle(status)} onClick={toggle}>
 			{(children)}

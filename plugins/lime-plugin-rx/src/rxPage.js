@@ -4,12 +4,12 @@ import { useEffect, useState } from 'preact/hooks';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getNodeStatusTimer, stopTimer, changeNode, getNodeStatus } from './rxActions';
+import { getNodeStatusTimer, stopTimer, getNodeStatus } from './rxActions';
 import { getNodeData, isLoading } from './rxSelectors';
 
 import { Box } from '../../../src/components/box';
-
 import I18n from 'i18n-js';
+import { useAppContext } from '../../../src/utils/app.context';
 
 const toHHMMSS = (secs, plus) => {
 	let secNum = parseInt(secs, 10) + plus;
@@ -59,7 +59,8 @@ const MostActiveBox = ({ node, changeNode }) => {
 	return (<span />);
 };
 
-export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData, signal }) => {
+export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData }) => {
+	const { changeNode } = useAppContext();
 
 	function loading(option, nodeData) {
 		if (!option) {
@@ -115,8 +116,8 @@ export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer,
 	},[]);
 
 	return (
-		<div className="container" style={{ paddingTop: '80px' }}>
-			{ loading(isLoading, nodeData, signal) }
+		<div className="container container-padded" >
+			{loading(isLoading, nodeData)}
 		</div>
 	);
 };
@@ -130,7 +131,6 @@ export const mapDispatchToProps = (dispatch) => ({
 	getNodeStatusTimer: bindActionCreators(getNodeStatusTimer,dispatch),
 	getNodeStatus: bindActionCreators(getNodeStatus,dispatch),
 	stopTimer: bindActionCreators(stopTimer,dispatch),
-	changeNode: bindActionCreators(changeNode,dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page);

@@ -21,14 +21,14 @@ export const initialState = {
 };
 
 
-export const reducer = (state = initialState, { type, payload, meta }) => {
+export const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 
 		case LOCATION_CHANGE:
-			return Object.assign({}, state, { submitting: true, editting: false })
+			return Object.assign({}, state, { submitting: true, editting: false });
 
 		case LOCATION_CHANGE_SUCCESS:
-			return Object.assign({}, state, { submitting: false })
+			return Object.assign({}, state, { submitting: false });
 
 		case LOCATION_LOAD_SUCCESS:
 			return Object.assign({}, state, { station: payload.location || payload, isCommunity: payload.default || false });

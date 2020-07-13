@@ -5,7 +5,5 @@ export default {
 	name: 'NetAdmin',
 	page: NetAdmin,
 	menu: NetAdminMenu,
-	store: {
-		name: 'netAdmin',
-	}
+	isCommunityProtected: true
 };

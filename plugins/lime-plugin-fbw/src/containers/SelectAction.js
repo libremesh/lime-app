@@ -2,7 +2,7 @@ import { h } from 'preact';
 import I18n from 'i18n-js';
 
 export const SelectAction = ({ toggleForm }) => (
-	<div class="container" style={{ paddingTop: '100px' }}>
+	<div class="container container-padded">
 		<h4><span>{I18n.t('Configure your network')}</span></h4>
 		<p>{I18n.t('You can search for mesh networks around you to add or to create a new one.')}</p>
 		<br />

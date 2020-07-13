@@ -1,43 +1,51 @@
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import './style';
 
-import { toggleMenuButton } from '../../lime-plugin-core/src/metaActions';
 import SelectAction from './containers/SelectAction';
 import NetworkForm from './containers/NetworkForm';
 import Scan from './containers/Scan';
 import Setting from './containers/Setting';
+import { useAppContext } from '../../../src/utils/app.context';
+import { FbwBanner } from './containers/FbwBanner';
 
-const Page = ({ toggleMenuButton }) => {
+const Page = ({ }) => {
+	const { setMenuEnabled, cancelFbw } = useAppContext();
 	const [form, setForm] = useState(null);
+	const [banner, setBanner] = useState(true);
 
 	function toggleForm(form) {
 		return () => setForm(form);
 	}
 
+	function bannerCancel() {
+		cancelFbw();
+	}
+
+	function bannerOk() {
+		setBanner(false);
+	}
+
 	useEffect(() => {
-		toggleMenuButton(true);
+		setMenuEnabled(false);
 		return () => {
-			toggleMenuButton(false);
+			setMenuEnabled(true);
 		};
 	}, []);
 
+	if (banner) {
+		return <FbwBanner onOk={bannerOk} onCancel={bannerCancel} />
+	}
+
 	return (
-		<div>
+		<Fragment>
 			{form === 'create' && <NetworkForm toggleForm={toggleForm} />}
 			{form === 'scan' && <Scan toggleForm={toggleForm} />}
 			{form === 'setting' && <Setting toggleForm={toggleForm} />}
 			{!form && <SelectAction toggleForm={toggleForm} />}
-		</div>
+		</Fragment>
 	);
 };
 
-export default connect(
-	() => ({}),
-	(dispatch) => ({
-		toggleMenuButton: bindActionCreators(toggleMenuButton, dispatch)
-	})
-)(Page);
+export default Page;

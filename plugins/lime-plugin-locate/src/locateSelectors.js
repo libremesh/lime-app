@@ -14,5 +14,4 @@ const getCoordinate = (coord) => (state) => {
 export const getLat = getCoordinate('lat');
 export const getLon = getCoordinate('lon');
 export const getUserLocation = (state) => state.locate.user;
-export const getSelectedHost = (state) => state.meta.selectedHost;
 export const isCommunityLocation = (state) => state.locate.isCommunity;

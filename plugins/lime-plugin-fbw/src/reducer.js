@@ -4,8 +4,7 @@ import {
 	FBW_CREATE_NETWORK,
 	FBW_CREATE_NETWORK_ERROR,
 	FBW_SET_NETWORK,
-	FBW_SET_NETWORK_ERROR,
-	FBW_STATUS_SUCCESS
+	FBW_SET_NETWORK_ERROR
 } from './constants';
 
 export const initialState = {
@@ -27,13 +26,8 @@ const getApName = ({ ap = '', file = '' }) => {
 // 	return '' + (ap && ap !== '')? '('+ap+') ': '' + getHostname.exec(file)[1];
 // };
 
-export const reducer = (state = initialState, { type, payload, meta }) => {
+export const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
-		case FBW_STATUS_SUCCESS:
-			return {
-				...state,
-				first_boot: payload.lock
-			};
 		case FBW_SEARCH_NETWORKS_SUCCESS:
 			return {
 				...state,

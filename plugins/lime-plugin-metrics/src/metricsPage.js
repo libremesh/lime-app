@@ -4,8 +4,9 @@ import { useEffect } from 'preact/hooks';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getInternetStatus, getMetrics, getMetricsAll, getMetricsGateway, getNodeMetrics } from './metricsActions';
-import { getNodeData, getSettings } from '../../lime-plugin-rx/src/rxSelectors';
+import { getInternetStatus, getMetrics, getMetricsAll, getMetricsGateway,
+	getNodeMetrics } from './metricsActions';
+import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 
 import MetricsBox from './components/box';
 import { Box } from '../../../src/components/box';
@@ -13,6 +14,7 @@ import { Box } from '../../../src/components/box';
 import I18n from 'i18n-js';
 
 import colorScale from 'simple-color-scale';
+import { useAppContext } from '../../../src/utils/app.context';
 
 const style = {
 	textLoading: {
@@ -44,8 +46,8 @@ const style = {
 	}
 };
 
-export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getInternetStatus, meta, metrics, settings, node }) => {
-	
+export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getInternetStatus, metrics, node }) => {
+	const { nodeHostname, communitySettings } = useAppContext();
 	function clickGateway(gateway) {
 		return () => {
 			getMetricsGateway(gateway);
@@ -55,7 +57,7 @@ export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getI
 
 	function showButton(loading) {
 		if (!loading) {
-			return !isGateway(meta.selectedHost, metrics.gateway)
+			return !isGateway(nodeHostname, metrics.gateway)
 				? (
 					<div class="row">
 						<br />
@@ -128,9 +130,10 @@ export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getI
 	function isGateway(hostname, gateway) {
 		return (hostname === gateway);
 	}
-	 
+
 	useEffect(() => {
-		getMetricsGateway();
+		if (!nodeHostname) return;
+		getMetricsGateway(nodeHostname);
 		getInternetStatus();
 		colorScale.setConfig({
 			outputStart: 1,
@@ -139,15 +142,15 @@ export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getI
 			inputEnd: 30
 		});
 		return () => {};
-	},[]);
+	},[nodeHostname]);
 
 	return (
-		<div class="container" style={{ paddingTop: '80px', textAlign: 'center' }}>
+		<div class="container container-padded" style={{ textAlign: 'center' }}>
 			{metrics.loading? showLoading(metrics.loading) : metrics.error.map(x => showError(x))}
-			<div style={style.box}>{I18n.t('From')+' '+meta.selectedHost}</div>
+			<div style={style.box}>{I18n.t('From')+' '+nodeHostname}</div>
 			{metrics.metrics.map((station, key) => (
 				<MetricsBox
-					settings={settings}
+					settings={communitySettings}
 					station={station}
 					gateway={isGateway(station.host.hostname,metrics.gateway)}
 					loading={metrics.loading && station.loading && (key === 0 || metrics.metrics[key - 1].loading === false)}
@@ -164,9 +167,7 @@ export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getI
 
 const mapStateToProps = (state) => ({
 	metrics: state.metrics,
-	meta: state.meta,
-	node: getNodeData(state),
-	settings: getSettings(state)
+	node: getNodeData(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

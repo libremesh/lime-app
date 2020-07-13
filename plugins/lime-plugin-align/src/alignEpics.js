@@ -19,10 +19,10 @@ import {
 
 
 // LOAD INTERFACES -> Dispatch success and stations loads
-const ifaceLoad = ( action$, state$, { wsAPI } ) =>
+const ifaceLoad = ( action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(...[IFACES_LOAD]),
-		mergeMap((action) => getInterfaces(wsAPI, state$.value.meta.sid)),
+		mergeMap((action) => getInterfaces(wsAPI)),
 		mergeMap((payload) => from([
 			({ type: IFACES_LOAD_SUCCESS, payload }),
 			({ type: STATIONS_LOAD })
@@ -31,10 +31,10 @@ const ifaceLoad = ( action$, state$, { wsAPI } ) =>
 
 
 // LOAD ALL STATIONS -> Dispatch success and Init Align
-const allStationsLoad = (action$, state$, { wsAPI }  ) =>
+const allStationsLoad = (action$, state$, { wsAPI }) =>
 	action$.pipe(
 		ofType(STATIONS_LOAD),
-		mergeMap(() => getStations(wsAPI, state$.value.meta.sid, state$.value.align.ifaces)),
+		mergeMap(() => getStations(wsAPI, state$.value.align.ifaces)),
 		map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload })),
 		catchError(error => ([{
 			type: 'NOTIFICATION',
@@ -43,10 +43,10 @@ const allStationsLoad = (action$, state$, { wsAPI }  ) =>
 	);
 
 // CHANGE INTEFACE -> DIspatch get station by interface and select best signal
-const ifaceChange = (action$, state$, { wsAPI } ) =>
+const ifaceChange = (action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(IFACE_CHANGE),
-		mergeMap((action) => getIfaceStation(wsAPI, state$.value.meta.sid, action.payload.iface).pipe(
+		mergeMap((action) => getIfaceStation(wsAPI, action.payload.iface).pipe(
 			map((payload) => ({ type: STATIONS_LOAD_SUCCESS, payload: payload.nodes })),
 			catchError(error => ([{
 				type: 'NOTIFICATION',
@@ -80,7 +80,7 @@ const initAlign = (action$, state$ ) =>
 const getSignal = ( action$, state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(SIGNAL_GET),
-		switchMap(() => from(getStationSignal(wsAPI, state$.value.meta.sid, state$.value.align.currentReading))),
+		switchMap(() => from(getStationSignal(wsAPI, state$.value.align.currentReading))),
 		map( signal => ({ type: SIGNAL_GET_SUCCESS, payload: signal })),
 		catchError(e => [{ type: SIGNAL_GET_FAILD }])
 	);
