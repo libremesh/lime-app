@@ -10,7 +10,7 @@
     "start:production": "npm run -s serve",
     "start:development": "npm run -s dev",
     "build": "preact build --no-prerender",
-    "build:production": "preact build --no-prerender --production --no-esm",
+    "build:production": "preact build --no-prerender --production --no-esm && rm build/*.map",
     "serve": "preact build && serve build --single",
     "dev": "preact watch",
     "lint": "eslint src",
