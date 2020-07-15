@@ -3,12 +3,14 @@ import { render, fireEvent, cleanup } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import FirmwarePage from './src/firmwarePage';
 import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware } from './src/firmwareApi';
+import { useAppContext } from '../../src/utils/app.context';
 
 jest.mock('i18n-js', () => ({
 	t: jest.fn(x => x)
 }));
 
 jest.mock('./src/firmwareApi');
+jest.mock('../../src/utils/app.context');
 
 const secureRollbackText =
 	/this device supports secure rollback to previous version if something goes wrong/i;
@@ -32,6 +34,9 @@ describe('firmware page', () => {
 		uploadFile.mockImplementation(jest.fn(async () => true));
 		validateFirmware.mockImplementation(jest.fn(async () => true));
 		upgradeFirmware.mockImplementation(jest.fn(async () => true));
+		useAppContext.mockImplementation(jest.fn(() => ({
+			uhttpdService: jest.fn()
+		})))
 	});
 
 	afterEach(() => {

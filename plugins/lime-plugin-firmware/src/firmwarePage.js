@@ -4,6 +4,7 @@ import './style.less';
 import { useState, useEffect } from 'preact/hooks';
 
 import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware } from './firmwareApi';
+import { useAppContext } from '../../../src/utils/app.context';
 
 const secureRollbackText = I18n.t(
 	'This device supports secure rollback to previous version if something goes wrong');
@@ -55,25 +56,26 @@ const FirmwarePage = ({
 );
 
 const FirmwarePageHOC = ({}) => {
+	const { uhttpdService } = useAppContext();
 	const [upgradeConfirmAvailable, setUpgradeConfirmAvailable] = useState(undefined);
 	const [firmwareIsValid, setFirmwareIsValid] = useState(undefined);
 	const fileInputRef = createRef();
 
 	useEffect(() => {
-		upgradeConfirmIsAvailable()
+		upgradeConfirmIsAvailable(uhttpdService)
 			.then((isAvailable) => setUpgradeConfirmAvailable(isAvailable));
-	}, []);
+	}, [uhttpdService]);
 
 	function onSubmitFileForm(e) {
 		e.preventDefault();
 		const file = fileInputRef.current.files[0];
 		uploadFile(file)
-			.then(() => validateFirmware())
+			.then(() => validateFirmware(uhttpdService))
 			.then(isValid => setFirmwareIsValid(isValid))
 	}
 
 	function onUpgradeNow() {
-		upgradeFirmware()
+		upgradeFirmware(uhttpdService)
 	}
 
 	return <FirmwarePage {...{upgradeConfirmAvailable, firmwareIsValid,
