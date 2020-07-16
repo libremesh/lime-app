@@ -6,7 +6,6 @@ import { Connecting, ConnectionFailed } from '../containers/Disconnected';
 import { CompatibilityError, UnexpectedError } from '../containers/Error';
 import Fbw from '../../plugins/lime-plugin-fbw';
 
-window.route = route;
 
 export const Route = ({ path, children }) => {
 	const { connectionFail, connected, fbwConfigured, unexpectedError,
@@ -44,7 +43,7 @@ export const Route = ({ path, children }) => {
 export const CommunityProtectedRoute = ({ children }) => {
 	const { isRoot } = useAppContext();
 	if (!isRoot) {
-		return <SharedPasswordLogin />;
+		return <Route><SharedPasswordLogin /></Route>;
 	}
 	return children;
 };
