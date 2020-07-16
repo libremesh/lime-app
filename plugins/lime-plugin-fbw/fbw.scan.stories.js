@@ -1,30 +1,35 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
-import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, array } from '@storybook/addon-knobs/react';
+import { withKnobs, array, text } from '@storybook/addon-knobs/react';
 
-import { frameDecorator } from '../../.storybook/frameDecorator';
 import { Scan } from './src/containers/Scan';
+import { AppContext } from '../../src/utils/app.context';
 
-storiesOf('Containers|First boot wizard', module)
-	.addDecorator(withKnobs)
-	.addDecorator(frameDecorator)
-	.add('Scanning for networks', () => (
+const nodeHostname = text('nodeHostname', 'new-node');
+
+export default {
+	title: 'Containers|First boot wizard',
+	component: Scan,
+	decorators: [withKnobs]
+};
+
+export const scanningForNetworks = () => (
+	<AppContext.Provider value={{ nodeHostname }}>
 		<Scan
 			networks={[{ config: {
 				wifi: {}
 			}, file: '' }]}
 			status={'scanning'}
-			hostname={'newnode'}
-			getStatus={action('getStatus')}
 			searchNetworks={action('searchNetworks')}
 			setNetwork={action('setNetwork')}
-			showNotification={action('showNotification')}
 			toggleForm={() => action('toggleForm')}
 		/>
-	))
-	.add('Select networks', () => (
+	</AppContext.Provider>
+);
+
+export const selectNetworks = () => (
+	<AppContext.Provider value={{ nodeHostname }}>
 		<Scan
 			networks={array('Hosts founded',[{
 				ap: 'ql-graciela',
@@ -47,11 +52,9 @@ storiesOf('Containers|First boot wizard', module)
 				file: 'lime_default-ql-oncelotes'
 			}])}
 			status={'scanned'}
-			hostname={''}
-			getStatus={action('getStatus')}
 			searchNetworks={action('searchNetworks')}
 			setNetwork={action('setNetwork')}
-			showNotification={action('showNotification')}
 			toggleForm={(data) => () => action('toggleForm')(data)}
 		/>
-	));
+	</AppContext.Provider>
+);

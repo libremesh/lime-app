@@ -1,11 +1,10 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
-import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, object, boolean } from '@storybook/addon-knobs/react';
 
 import { Page } from '../lime-plugin-rx/src/rxPage';
-import { frameDecorator } from '../../.storybook/frameDecorator';
+import { AppContext } from '../../src/utils/app.context';
 
 
 const nodeData =  {
@@ -54,27 +53,41 @@ const nodeData =  {
 	}
 };
 
-export const actions = {
+const actions = {
 	getNodeStatusTimer: action('getNodeStatusTimer'),
 	getNodeStatus: action('getNodeStatus'),
 	stopTimer: action('stopTimer'),
 	changeNode: action('changeNod')
 };
 
-storiesOf('Containers|Home screen (Rx)', module)
-	.addDecorator(withKnobs)
-	.addDecorator(frameDecorator)
-	.add('with data', () => (
-		<Page
-			nodeData={object('Node data', nodeData)}
-			isLoading={boolean('Is loading', false)}
-			{...actions}
-		/>
-	))
-	.add('loading node data', () => (
-		<Page
-			nodeData={object('Node data', nodeData)}
-			isLoading={boolean('Is loading', true)}
-			{...actions}
-		/>
-	));
+export default {
+	title: 'Containers|Home Screen (Rx)',
+	component: Page,
+	decorators: [withKnobs]
+};
+
+export const withData = () => {
+	const changeNode = action('changeNode');
+	return (
+		<AppContext.Provider value={{ changeNode }}>
+			<Page
+				nodeData={object('Node data', nodeData)}
+				isLoading={boolean('Is loading', false)}
+				{...actions}
+			/>
+		</AppContext.Provider>
+	);
+};
+
+export const loadingNodeData = () => {
+	const changeNode = action('changeNode');
+	return (
+		<AppContext.Provider value={changeNode}>
+			<Page
+				nodeData={object('Node data', nodeData)}
+				isLoading={boolean('Is loading', true)}
+				{...actions}
+			/>
+		</AppContext.Provider>
+	);
+};

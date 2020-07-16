@@ -1,13 +1,11 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
-import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs/react';
+import { withKnobs, boolean, text, object } from '@storybook/addon-knobs/react';
 
 import { Metrics } from './src/metricsPage';
 import Box from './src/components/box';
-import { frameDecorator } from '../../.storybook/frameDecorator';
-import { object } from '@storybook/addon-knobs';
+import { AppContext } from '../../src/utils/app.context';
 
 const metricState = {
 	metrics: [
@@ -50,76 +48,14 @@ const metricState = {
 	gateway: '16:cc:20:ff:fe:ad:ae:c8 lapraviana si-vale lpl-ravelocasa'
 };
 
-const metaState = {
-	title: 'LimeApp',
-	sid: '0f08f63219cd7cf4bc9d275da851e2ce',
-	status: 'ready',
-	url: '/',
-	conection: true,
-	ws: 'http://thisnode.info/ubus',
-	interval: 15000,
-	stations: [
-		'lapraviana',
-		'lpl-ravelocasa',
-		'paravachasca-tres',
-		'ql-ale',
-		'ql-anaymarcos',
-		'ql-anaymarcos',
-		'ql-angelina',
-		'ql-bety',
-		'ql-cesarylucia',
-		'ql-coqui',
-		'ql-czuk',
-		'ql-czuk-bbone',
-		'ql-espacioabierto',
-		'ql-esteban',
-		'ql-gioiajesinico',
-		'ql-graciela',
-		'ql-graciela-bbone',
-		'ql-guilleolsina',
-		'ql-guillermina',
-		'ql-irene',
-		'ql-lauraymario',
-		'ql-male',
-		'ql-margayorlando',
-		'ql-nicojesigioia',
-		'ql-oncelotes',
-		'ql-quinteros',
-		'ql-silviak',
-		'ql-vale',
-		'ql-yani',
-		'si-andrea',
-		'si-bel-mar',
-		'si-cantor',
-		'si-claudio',
-		'si-frigo-bbone',
-		'si-frigorifico',
-		'si-giordano',
-		'si-manu',
-		'si-marcelo',
-		'si-mario',
-		'si-monica',
-		'si-nestor',
-		'si-pablo',
-		'si-radio',
-		'si-sonia',
-		'si-soniam',
-		'si-tato',
-		'si-vale'
-	],
-	base: 'ql-anaymarcos',
-	home: '/rx',
-	selectedHost: 'ql-anaymarcos',
-	settings: {
-		bad_signal: '-82',
-		acceptable_loss: '20',
-		bad_bandwidth: '1',
-		good_signal: '-65',
-		good_bandwidth: '5'
-	},
-	banner: false,
-	menuHidden: false
-};
+const nodeHostname = text('nodeHostname', 'ql-anaymarcos');
+const communitySettings = object('communitySettings', {
+	bad_signal: '-82',
+	acceptable_loss: '20',
+	bad_bandwidth: '1',
+	good_signal: '-65',
+	good_bandwidth: '5'
+});
 
 const nodeState = {
 	internet: {
@@ -179,7 +115,7 @@ const addMetrics = (metricState) => ({
 	loading: true
 });
 
-export const actions = {
+const actions = {
 	getMetrics: action('getMetrics'),
 	getMetricsGateway: action('getMetricsGateway'),
 	getMetricsAll: action('getMetricsAll'),
@@ -189,44 +125,48 @@ export const actions = {
 
 const metricsInProcess = addMetrics(metricState);
 
-storiesOf('Containers|Metrics', module)
-	.addDecorator(withKnobs)
-	.addDecorator(frameDecorator)
-	.add('Full path', () => (
+export default {
+	title: 'Containers|Metrics',
+	component: Metrics,
+	decorators: [withKnobs]
+};
+
+export const fullPath = () => (
+	<AppContext.Provider value={{ nodeHostname, communitySettings }}>
 		<Metrics
 			metrics={object('Metrics state', metricState)}
-			meta={object('Meta state', metaState)}
 			node={object('Node status', nodeState)}
-			settings={object('Metrics settings', metaState.settings)}
 			{...actions}
 		/>
-	))
-	.add('Running metrics', () => (
+	</AppContext.Provider>
+);
+
+export const runningMetrics = () => (
+	<AppContext.Provider value={{ nodeHostname, communitySettings }}>
 		<Metrics
 			metrics={object('Metrics state', metricsInProcess)}
-			meta={object('Meta state', metaState)}
 			node={object('Node status', nodeState)}
-			settings={object('Metrics settings', metaState.settings)}
 			{...actions}
 		/>
-	));
+	</AppContext.Provider>
+);
 
-storiesOf('Containers|Metrics', module)
-	.add('Metric box', () => (
-		<Box
-			station={metricsInProcess.metrics[1]}
-			settings={metaState.settings}
-			loading={false}
-			click={action('box click')}
-			gateway={false}
-		/>
-	))
-	.add('Metric box loading', () => (
-		<Box
-			station={object('Station data', metricsInProcess.metrics[1])}
-			settings={object('Metrics settings', metaState.settings)}
-			loading={boolean('Is loading', true)}
-			click={action('box click')}
-			gateway={false}
-		/>
-	));
+export const metricsBox = () => (
+	<Box
+		station={metricsInProcess.metrics[1]}
+		settings={communitySettings}
+		loading={false}
+		click={action('box click')}
+		gateway={false}
+	/>
+);
+
+export const metricsBoxLoading = () => (
+	<Box
+		station={object('Station data', metricsInProcess.metrics[1])}
+		settings={communitySettings}
+		loading={boolean('Is loading', true)}
+		click={action('box click')}
+		gateway={false}
+	/>
+);

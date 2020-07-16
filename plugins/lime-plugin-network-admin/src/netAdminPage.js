@@ -10,7 +10,7 @@ import Loading from '../../../src/components/loading';
 
 import style from './style';
 
-const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
+export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
 	const [password, setPassword] = useState('');
 	const [passwordConfirmation, setPasswordConfirmation] = useState('');
 

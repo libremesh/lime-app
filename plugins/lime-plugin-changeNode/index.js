@@ -1,4 +1,4 @@
-import  epics from './src/changeNodeEpics';
+import epics from './src/changeNodeEpics';
 import { reducer } from './src/changeNodeReducer';
 import * as selector from './src/changeNodeSelectors';
 import * as constants from './src/changeNodeConstants';

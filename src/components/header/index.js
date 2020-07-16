@@ -4,7 +4,7 @@ import { useAppContext } from '../../utils/app.context';
 import style from './style';
 
 export const Header = ({ Menu }) => {
-	const { nodeHostname, menuDisabled } = useAppContext();
+	const { nodeHostname, menuEnabled } = useAppContext();
 	const [ menuOpened, setMenuOpened ] = useState(false);
 	
 	function toggleMenu() {
@@ -15,7 +15,7 @@ export const Header = ({ Menu }) => {
 		<Fragment>
 			<header class={style.header}>
 				<h1>{nodeHostname || 'LiMe'}</h1>
-				{!menuDisabled &&
+				{menuEnabled &&
 				<div className={`${style.hamburger} ${menuOpened ? style.isActive : ''}`}
 					onClick={toggleMenu}
 				>

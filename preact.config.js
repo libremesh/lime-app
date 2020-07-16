@@ -24,4 +24,9 @@ export default function (config, env, helpers) {
 			rule.exclude.push(source('containers'));
 		}
 	});
+	// Fix a preact-cli issue where LESS loader is passed an Array<Array<String>>
+	// when it expects an Array<String>
+	// This allows to import less file from another less file;
+	const lessRules = helpers.getRulesByMatchingFile(config, '.less');
+	lessRules[0].rule.use[0].options.options.paths = lessRules[0].rule.use[0].options.options.paths[0];
 }

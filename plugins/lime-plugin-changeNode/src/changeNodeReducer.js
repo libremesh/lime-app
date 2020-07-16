@@ -1,6 +1,6 @@
 import {
 	LOAD_NEIGHBORS_SUCCESS
-} from './metaConstants';
+} from './changeNodeConstants';
 
 
 export const initialState = {

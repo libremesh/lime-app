@@ -4,14 +4,13 @@ import { useState, useEffect } from 'preact/hooks';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getStations } from './metaSelectors';
-import { loadStations } from './metaActions';
+import { getStations } from './changeNodeSelectors';
+import { loadStations } from './changeNodeActions';
 
 import I18n from 'i18n-js';
 import { useAppContext } from '../../../src/utils/app.context';
 
-export const Meta = ({ stations, loadStations }) => {
-	
+export const ChangeNode = ({ stations, loadStations }) => {
 	const { nodeHostname, baseNodeHostname, changeNode } = useAppContext();
 
 	const [ state, setState ] = useState({
@@ -79,12 +78,13 @@ export const Meta = ({ stations, loadStations }) => {
 };
 
 
-export const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
 	stations: getStations(state)
 });
 
-export const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch) => ({
 	loadStations: bindActionCreators(loadStations, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Meta);
+const changeNodeConnected = connect(mapStateToProps, mapDispatchToProps)(ChangeNode);
+export default changeNodeConnected;

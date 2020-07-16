@@ -1,11 +1,11 @@
 import {
 	LOAD_NEIGHBORS,
 	LOAD_NEIGHBORS_SUCCESS
-} from './metaConstants';
+} from './changeNodeConstants';
 
 import {
 	getCloudNodes
-} from './metaApi';
+} from './changeNodeApi';
 
 import { ofType } from 'redux-observable';
 import { map, mergeMap } from 'rxjs/operators';

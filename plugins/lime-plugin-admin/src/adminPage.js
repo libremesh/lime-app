@@ -35,7 +35,7 @@ const style = {
 };
 
 
-export const Admin = ({ adminLogin, changeConfig, showNotification, nodeData, loading, redirect, error }) => {
+export const Admin = ({ changeConfig, showNotification, nodeData, loading, redirect, error }) => {
 	const { nodeHostname, changeNode } = useAppContext();
 	const [ state, setState ] = useState({
 		hostname: nodeHostname,
@@ -82,18 +82,18 @@ export const Admin = ({ adminLogin, changeConfig, showNotification, nodeData, lo
 	}
 
 	return (
-		<div class="container" style={{ paddingTop: '100px' }}>
+		<div className="container container-padded">
 			{showLoading(loading)}
 			<form onSubmit={_changeConfig}>
 				<p>
 					<label>{I18n.t('Station name')}</label>
-					<input type="text" value={state.hostname} onInput={handleHostname} onChange={handleHostname} class="u-full-width" />
+					<input type="text" value={state.hostname} onInput={handleHostname} onChange={handleHostname} className="u-full-width" />
 				</p>
 				<p>
 					<label>{I18n.t('Station IP v4')}</label>
-					<input type="text" value={state.ip} onInput={handleIp} class="u-full-width" />
+					<input type="text" value={state.ip} onInput={handleIp} className="u-full-width" />
 				</p>
-				<button class="button green block" type="submit">{I18n.t('Change')}</button>
+				<button className="button green block" type="submit">{I18n.t('Change')}</button>
 			</form>
 			{error && I18n.t('An error occurred')}
 		</div>
