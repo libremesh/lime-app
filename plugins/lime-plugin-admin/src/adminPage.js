@@ -93,7 +93,7 @@ export const Admin = ({ changeConfig, showNotification, nodeData, loading, redir
 					<label>{I18n.t('Station IP v4')}</label>
 					<input type="text" value={state.ip} onInput={handleIp} className="u-full-width" />
 				</p>
-				<button className="button green block" type="submit">{I18n.t('Change')}</button>
+				<button className="button block" type="submit">{I18n.t('Change')}</button>
 			</form>
 			{error && I18n.t('An error occurred')}
 		</div>

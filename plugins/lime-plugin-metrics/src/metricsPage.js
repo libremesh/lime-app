@@ -61,10 +61,10 @@ export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getI
 				? (
 					<div class="row">
 						<br />
-						<button class="button green block u-full-width" type="submit" onClick={clickGateway(metrics.gateway)}>
+						<button class="button block u-full-width" type="submit" onClick={clickGateway(metrics.gateway)}>
 							{I18n.t('Only gateway')}
 						</button>
-						<button class="button green block u-full-width"  type="submit" onClick={getMetricsAll}>
+						<button class="button block u-full-width"  type="submit" onClick={getMetricsAll}>
 							{I18n.t('Full path metrics')}
 						</button>
 					</div>

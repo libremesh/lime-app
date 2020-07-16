@@ -71,7 +71,7 @@ export const ChangeNode = ({ stations, loadStations }) => {
 					</div>
 				</div>
 		
-				<button class="button green block" type="submit">{I18n.t('Change')}</button>
+				<button class="button block" type="submit">{I18n.t('Change')}</button>
 			</form>
 		</div>
 	);

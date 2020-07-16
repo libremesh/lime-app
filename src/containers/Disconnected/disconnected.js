@@ -23,10 +23,10 @@ export const ConnectionFailed = () => {
 			<span>
 				<p>{I18n.t('Connection fail', { meta_ws: _getDomain(apiUrl) })}</p>
 				{ (baseNodeHostname === nodeHostname) && _getDomain(apiUrl) !== 'thisnode.info' &&
-					<button class="button green" onClick={goGeneric}>{I18n.t('Try thisnode.info')}</button>
+					<button class="button" onClick={goGeneric}>{I18n.t('Try thisnode.info')}</button>
 				}
 				{ (baseNodeHostname !== nodeHostname) &&
-					<button class="button green" onClick={goBack}>{I18n.t('Back to base')}</button>
+					<button class="button" onClick={goBack}>{I18n.t('Back to base')}</button>
 				}
 			</span>
 		</div>

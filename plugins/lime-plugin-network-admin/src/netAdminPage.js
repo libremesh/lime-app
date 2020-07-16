@@ -50,7 +50,7 @@ export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
 				<p>{I18n.t('The passwords do not match!')}</p>
 			}
 			<div>
-				<button className="button green block"
+				<button className="button block"
 					onClick={_submitSharedPassword} disabled={!isValidForm()}
 				>
 					{I18n.t('Change')}
