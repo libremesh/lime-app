@@ -14,7 +14,7 @@ const DEFAULT_COMMUNITY_SETTINGS = {
 };
 
 /** Context used to pass application wise data and services to nested components */
-const AppContext = createContext();
+export const AppContext = createContext();
 
 class DisconnectedError extends Error {}
 
