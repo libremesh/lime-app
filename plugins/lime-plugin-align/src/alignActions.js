@@ -4,13 +4,12 @@ import {
 	IFACES_LOAD,
 	SIGNAL_GET
 } from './alignConstants';
-// import { store } from '../../../src/store';
+import { store } from '../../../src/store';
 
 export const changeInterface = (iface) => {
-	// TODO: FIX This store usage
-	// if (iface === store.getState().align.currentReading.iface) {
-	// 	return { type: 'no_iface' };
-	// }
+	if (iface === store.getState().align.currentReading.iface) {
+		return { type: 'no_iface' };
+	}
 	return {
 		type: IFACE_CHANGE,
 		payload: {
@@ -20,10 +19,9 @@ export const changeInterface = (iface) => {
 };
 
 export const changeStation = (mac) => {
-	// TODO: FIX This store usage
-	// if (mac === store.getState().align.currentReading.mac) {
-	// 	return { type: 'no_change' };
-	// }
+	if (mac === store.getState().align.currentReading.mac) {
+		return { type: 'no_change' };
+	}
 	return {
 		type: STATION_SET,
 		payload: store.getState().align.stations.filter(x => x.mac === mac)[0]
