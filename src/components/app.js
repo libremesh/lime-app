@@ -50,7 +50,6 @@ const App = () => (
 
 const AppDefault = () => (
 	<AppContextProvider>
-		{/* TODO: Remove the dependency on redux store in the plugins */}
 		<Provider store={store}>
 			<App />
 		</Provider>
