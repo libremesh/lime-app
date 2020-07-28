@@ -16,25 +16,17 @@ const DEFAULT_COMMUNITY_SETTINGS = {
 /** Context used to pass application wise data and services to nested components */
 export const AppContext = createContext();
 
-class DisconnectedError extends Error {}
-
 export class AppContextProvider extends Component {
 
 	constructor(props) {
 		super(props);
-		const apiUrl = window.origin;
 		this.loginAsRoot = this.loginAsRoot.bind(this);
-		this.changeNode = this.changeNode.bind(this);
 		this.cancelFbw = this.cancelFbw.bind(this);
 		this.setMenuEnabled = this.setMenuEnabled.bind(this);
 		this.state = {
 			uhttpdService,
-			apiUrl,
 			nodeHostname: null,
-			baseNodeHostname: null,
-			connected: false,
-			connectionFail: false,
-			compatibilityError: false,
+			loading: true,
 			unexpectedError: false,
 			fbwConfigured: true,
 			fbwCanceled: false,
@@ -42,33 +34,16 @@ export class AppContextProvider extends Component {
 			communitySettings: {},
 			menuEnabled: true,
 			loginAsRoot: this.loginAsRoot,
-			changeNode: this.changeNode,
 			cancelFbw: this.cancelFbw,
 			setMenuEnabled: this.setMenuEnabled
 		};
 		this.initialState = this.state;
-		uhttpdService.setUrl(apiUrl);
 	}
 
 	componentDidMount(){
-		this._bootstrapContext();
-	}
-
-	componentDidUpdate(_prevProps, prevState){
-		if (this.state.apiUrl !== prevState.apiUrl){
-			this._bootstrapContext(true);
-		}
-	}
-
-	_bootstrapContext(isNodeChange=false) {
-		this.state.uhttpdService.setUrl(this.state.apiUrl);
 		this._login('lime-app', 'generic')
 			.then(response => {
-				this.setState({ connected: true, connectionFail: false });
-			})
-			.catch(error => {
-				this.setState({ connected: false, connectionFail: true });
-				throw new DisconnectedError();
+				this.setState({ loading: false });
 			})
 			.then(() => Promise.all([
 				this._fetchNodeData(),
@@ -77,24 +52,13 @@ export class AppContextProvider extends Component {
 			.then(([nodeData, communitySettings, fbwStatus]) => {
 				this.setState({
 					nodeHostname: nodeData.hostname,
-					// If it is the first visited node, set it as base node
-					baseNodeHostname: this.state.baseNodeHostname || nodeData.hostname,
 					communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
 					fbwConfigured: !fbwStatus.lock
 				});
 			})
 			.catch(error => {
-				if (error instanceof DisconnectedError) return;
-				if (isNodeChange){
-					// It may be a compatibility error
-					this.setState({ compatibilityError: true });
-				}
-				else {
-					console.error(error);
-					this.setState({ unexpectedError: true });
-				}
+				this.setState({ unexpectedError: true });
 			});
-
 	}
 
 	_fetchNodeData() {
@@ -131,16 +95,6 @@ export class AppContextProvider extends Component {
 	loginAsRoot(password) {
 		return this._login('root', password)
 			.then(res => this.setState({ isRoot: true }));
-	}
-
-	/** Passed down throw app context to allow components to change current node */
-	changeNode(hostname) {
-		const apiUrl = 'http://' + hostname;
-		this.setState(prevState => ({
-			...this.initialState,
-			baseNodeHostname: prevState.baseNodeHostname,
-			apiUrl
-		}));
 	}
 
 	cancelFbw() {

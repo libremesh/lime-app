@@ -11,7 +11,7 @@ import I18n from 'i18n-js';
 import { useAppContext } from '../../../src/utils/app.context';
 
 export const ChangeNode = ({ stations, loadStations }) => {
-	const { nodeHostname, baseNodeHostname, changeNode } = useAppContext();
+	const { nodeHostname } = useAppContext();
 
 	const [ state, setState ] = useState({
 		station: nodeHostname
@@ -38,7 +38,7 @@ export const ChangeNode = ({ stations, loadStations }) => {
 	function nextStation(e) {
 		e.preventDefault();
 		if (typeof state.station !== 'undefined') {
-			return changeNode(state.station);
+			window.location.href = 'http://' + state.station;
 		}
 	}
 
@@ -58,7 +58,6 @@ export const ChangeNode = ({ stations, loadStations }) => {
 						<p>
 							<label>{I18n.t('Current status')}</label>
 							<span>{I18n.t('Connected Host')}</span>: {nodeHostname}<br />
-							<span>{I18n.t('Base Host')}</span>: {baseNodeHostname}
 						</p>
 					</div>
 					<div class="six columns">

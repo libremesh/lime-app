@@ -2,32 +2,28 @@ import { useAppContext } from './app.context';
 import { SharedPasswordLogin } from '../containers/SharedPasswordLogin';
 import { route } from 'preact-router';
 import { useEffect } from 'preact/hooks';
-import { Connecting, ConnectionFailed } from '../containers/Disconnected';
-import { CompatibilityError, UnexpectedError } from '../containers/Error';
+import { Loading } from '../components/loading';
 import Fbw from '../../plugins/lime-plugin-fbw';
+import I18n from 'i18n-js';
 
 
 export const Route = ({ path, children }) => {
-	const { connectionFail, connected, fbwConfigured, unexpectedError,
-		fbwCanceled, compatibilityError, apiUrl } = useAppContext();
+	const { loading, fbwConfigured, fbwCanceled, unexpectedError } = useAppContext();
 
 	if (unexpectedError) {
-		return <UnexpectedError />;
-	}
-	
-	if (compatibilityError) {
-		// The visited node is not be compatible with this LimeApp version
-		return <CompatibilityError apiUrl={apiUrl} />;
-	}
-
-	if (connectionFail) {
-		// The node is unreachable
-		return <ConnectionFailed />;
+		return (
+			<div class="container container-center">
+				{I18n.t('Un unexpected error occurred, please contact the developer team')}
+			</div>
+		);
 	}
 
-	if (!connected) {
-		// Connecting to the node API
-		return <Connecting />;
+	if (loading) {
+		return (
+			<div class="container container-center">
+				<Loading />;
+			</div>
+		);
 	}
 
 	if (!fbwConfigured && !fbwCanceled) {

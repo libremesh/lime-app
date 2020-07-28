@@ -18,7 +18,7 @@ const getHash = (json ) => Promise.resolve(json.hashCode());
 
 export class UhttpdService {
 	constructor(){
-		this.url = null;
+		this.url = window.origin + '/ubus';
 		this.sid = '00000000000000000000000000000000';
 		this.jsonrpc = '2.0';
 		this.sec = 0;
@@ -31,10 +31,6 @@ export class UhttpdService {
 
 	getSid() {
 		return this.sid;
-	}
-
-	setUrl(url) {
-		this.url = url + '/ubus';
 	}
 
 	addId(){
@@ -97,25 +93,6 @@ export class UhttpdService {
 
 	call(action, method, data, customSid=null) {
 		return from(this.request([action, method, data], customSid));
-	}
-
-	connect(newUrl) {
-		this.url = newUrl;
-		return from( new Promise((res,rej) => {
-			axios.post(this.url)
-				.then(response => ( typeof response.data.jsonrpc !== 'undefined')? res(): rej())
-				.catch(
-					(err) => {
-						try {
-							( err.response.status === 400)? res(): rej();
-						}
-						catch (error) {
-							rej();
-						}
-
-					}
-				);
-		}));
 	}
 
 }
