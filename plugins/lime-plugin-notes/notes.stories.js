@@ -1,25 +1,30 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
-import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text, boolean } from '@storybook/addon-knobs/react';
 
 import { Page } from './src/notesPage';
-import { frameDecorator } from '../../.storybook/frameDecorator';
+import { AppContext } from '../../src/utils/app.context';
 
-export const actions = {
+const actions = {
 	getNotes: action('getNotes'),
 	setNotes: action('setNotes')
 };
 
-storiesOf('Containers|Notes', module)
-	.addDecorator(withKnobs)
-	.addDecorator(frameDecorator)
-	.add('manage note', () => (
+const nodeHostname = text('Hostname', 'ql-anaymarcos');
+
+export default {
+	title: 'Containers|Notes',
+	component: Page,
+	decorators: [withKnobs]
+};
+
+export const manageNote = () => (
+	<AppContext.Provider value={{ nodeHostname }}>
 		<Page
-			hostname={text('Hostname', 'ql-anaymarcos')}
 			notes={text('Note','This node works great')}
 			loading={boolean('Loading', false)}
 			{...actions}
 		/>
-	));
+	</AppContext.Provider>
+);

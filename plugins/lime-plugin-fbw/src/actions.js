@@ -1,8 +1,7 @@
 import {
 	FBW_SEARCH_NETWORKS,
 	FBW_SET_NETWORK,
-	FBW_CREATE_NETWORK,
-	FBW_STATUS
+	FBW_CREATE_NETWORK
 } from './constants';
 
 export const searchNetworks = ( rescan ) => ({
@@ -28,8 +27,4 @@ export const createNetwork = ({ network, hostname, adminPassword }) => ({
 		hostname,
 		adminPassword
 	}
-});
-
-export const getStatus = () => ({
-	type: FBW_STATUS
 });

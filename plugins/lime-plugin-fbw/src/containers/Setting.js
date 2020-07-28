@@ -53,6 +53,7 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 					setState({
 						...state,
 						action: 'finish',
+						hostname: res,
 						notOnNetwork: false
 					});
 				}
@@ -89,7 +90,7 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 
 
 	return (
-		<div class="container" style={{ textAlign: 'center', paddingTop: '100px' }}>
+		<div class="container container-padded">
 			{state.action !== 'finish'
 				? (
 					<div>

@@ -15,24 +15,24 @@ import {
 
 
 // LOAD INTERFACES -> Dispatch success and stations loads
-const locateLoad = ( action$, state$, { wsAPI } ) =>
+const locateLoad = ( action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(...[LOCATION_LOAD,LOCATION_CHANGE_SUCCESS]),
-		mergeMap(() => getLocation(wsAPI, state$.value.meta.sid)),
+		mergeMap(() => getLocation(wsAPI)),
 		map((payload) => ({ type: LOCATION_LOAD_SUCCESS, payload }))
 	);
 
-const locateChange = ( action$, state$, { wsAPI } ) =>
+const locateChange = ( action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(LOCATION_CHANGE),
-		mergeMap((action) => changeLocation(wsAPI, state$.value.meta.sid, action.payload)),
+		mergeMap((action) => changeLocation(wsAPI, action.payload)),
 		map((payload) => ({ type: LOCATION_CHANGE_SUCCESS }))
 	);
 
-const locateLoadlinks = ( action$, state$, { wsAPI } ) =>
+const locateLoadlinks = ( action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(...[LOCATION_LOAD_LINKS]),
-		mergeMap(() => getNodesandlinks(wsAPI, state$.value.meta.sid)),
+		mergeMap(() => getNodesandlinks(wsAPI)),
 		map((payload = {}) => payload.result
 			? { type: LOCATION_LOAD_LINKS_SUCCESS, payload: payload.result }
 			: { type: LOCATION_LOAD_LINKS_ERROR })

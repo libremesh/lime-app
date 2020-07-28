@@ -4,12 +4,16 @@ import { useEffect, useState } from 'preact/hooks';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getNodeStatusTimer, stopTimer, changeNode, getNodeStatus } from './rxActions';
+import { getNodeStatusTimer, stopTimer, getNodeStatus } from './rxActions';
 import { getNodeData, isLoading } from './rxSelectors';
 
 import { Box } from '../../../src/components/box';
-
 import I18n from 'i18n-js';
+import { useAppContext } from '../../../src/utils/app.context';
+
+function stripIface (hostIface) {
+	return hostIface.split('_wlan')[0].replace('_','-');
+}
 
 const toHHMMSS = (secs, plus) => {
 	let secNum = parseInt(secs, 10) + plus;
@@ -49,7 +53,7 @@ const MostActiveBox = ({ node, changeNode }) => {
 		return (
 			<Box title={I18n.t('Most Active')}>
 				<span style={{ float: 'right',fontSize: '2.7em' }}>{node.most_active.signal}</span>
-				<span style={{ fontSize: '1.4em' }} onClick={changeNode(node)}><b>{node.most_active.station_hostname.split('_wlan')[0].replace('_','-')}</b></span><br />
+				<a style={{ fontSize: '1.4em' }} onClick={changeNode}><b>{stripIface(node.most_active.station_hostname)}</b></a><br />
 				<b>{I18n.t('Interface')} </b>{node.most_active.iface.split('-')[0]}<br />
 				<b>{I18n.t('Traffic')} </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
 				<div style={{ clear: 'both' }} />
@@ -59,7 +63,8 @@ const MostActiveBox = ({ node, changeNode }) => {
 	return (<span />);
 };
 
-export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData, signal }) => {
+export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData }) => {
+	const { changeNode } = useAppContext();
 
 	function loading(option, nodeData) {
 		if (!option) {
@@ -72,10 +77,8 @@ export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer,
 		);
 	}
 
-	function _changeNode(node) {
-		return () => {
-			changeNode(node.most_active.hostname.split('_')[0]);
-		};
+	function _changeNode() {
+		changeNode(stripIface(nodeData.most_active.station_hostname));
 	}
 
 	function nodeStatus(node){
@@ -115,8 +118,8 @@ export const Page = ({ changeNode, getNodeStatusTimer, getNodeStatus, stopTimer,
 	},[]);
 
 	return (
-		<div className="container" style={{ paddingTop: '80px' }}>
-			{ loading(isLoading, nodeData, signal) }
+		<div className="container container-padded" >
+			{loading(isLoading, nodeData)}
 		</div>
 	);
 };
@@ -129,8 +132,7 @@ export const mapStateToProps = (state) => ({
 export const mapDispatchToProps = (dispatch) => ({
 	getNodeStatusTimer: bindActionCreators(getNodeStatusTimer,dispatch),
 	getNodeStatus: bindActionCreators(getNodeStatus,dispatch),
-	stopTimer: bindActionCreators(stopTimer,dispatch),
-	changeNode: bindActionCreators(changeNode,dispatch)
+	stopTimer: bindActionCreators(stopTimer,dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page);

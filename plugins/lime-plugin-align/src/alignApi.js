@@ -1,6 +1,6 @@
 import { map } from 'rxjs/operators';
 
-export const getIfaceStation = (api, sid, iface) => api.call(sid, 'lime-openairview', 'get_iface_stations', { iface }).pipe(
+export const getIfaceStation = (api, iface) => api.call('lime-openairview', 'get_iface_stations', { iface }).pipe(
 	map(x => x.stations),
 	map(data => Object.keys(data).map((key, index) => data[key]).reduce((x,y) => x.concat(y), [])),
 	map((nodes) => nodes.map(node => {
@@ -16,15 +16,15 @@ export const getIfaceStation = (api, sid, iface) => api.call(sid, 'lime-openairv
 	})
 );
 
-export const getStationSignal = (api, sid, node) => api.call(sid, 'lime-openairview', 'get_station_signal', { station_mac: node.mac, iface: node.iface });
+export const getStationSignal = (api, node) => api.call('lime-openairview', 'get_station_signal', { station_mac: node.mac, iface: node.iface });
 
-export const getInterfaces = (api, sid) => api.call(sid, 'lime-openairview', 'get_interfaces', {}).pipe(
+export const getInterfaces = (api) => api.call('lime-openairview', 'get_interfaces', {}).pipe(
 	map(res => res.interfaces)
 );
 
-export const getStations = (api,sid,ifaces) => new Promise((res,rej) => {
+export const getStations = (api, ifaces) => new Promise((res,rej) => {
 	const result = ifaces.map((iface) => new Promise((resIface, rejIface) => {
-		api.call(sid, 'lime-openairview', 'get_stations', { device: iface.name }).pipe(
+		api.call('lime-openairview', 'get_stations', { device: iface.name }).pipe(
 			map(x => x.stations),
 			map(data => Object.keys(data).map((key, index) => data[key]).reduce((x,y) => x.concat(y), [])),
 			map((y) => y.reduce((a, b) => a.concat(b), [])),

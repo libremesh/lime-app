@@ -1,6 +1,8 @@
 @import 'mixins';
+@import 'skeleton-less/less/skeleton';
 
 html, body {
+	height: 100%;
 	width: 100%;
 	padding: 0;
 	margin: 0;
@@ -18,9 +20,24 @@ html, body {
 
 #app {
 	height: 100%;
+	flex:auto;
+	display: flex;
+	flex-direction: column;
 }
 
-.green {
-	background-color: #38927f;
-	color: #fff;
+#content {
+	flex:auto;
+	display: flex;
+}
+
+.container-padded {
+	padding: 1em;
+}
+
+.container-center {
+	flex: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 }

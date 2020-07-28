@@ -17,7 +17,8 @@ const initialState = {
 	metrics: [],
 	error: [],
 	loading: false,
-	status: ''
+	status: '',
+	nodeHostname: null
 };
 
 const getMetrics = (data, payload) => data.map(x => {
@@ -28,10 +29,14 @@ const getMetrics = (data, payload) => data.map(x => {
 	return Object.assign({}, x, payload);
 });
 
-export const reducer = (state = initialState, { type, payload, meta }) => {
+export const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 		case LOAD_METRICS:
-			return Object.assign({}, initialState, { loading: true, status: 'metrics_status_gateway' });
+			return Object.assign({}, initialState, {
+				loading: true,
+				status: 'metrics_status_gateway',
+				nodeHostname: payload
+			});
 		case LOAD_HOST_METRICS:
 			return Object.assign({}, state, {
 				metrics: state.metrics.map(node => {

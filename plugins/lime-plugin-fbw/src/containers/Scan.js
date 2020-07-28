@@ -6,20 +6,21 @@ import '../style';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { searchNetworks, setNetwork, getStatus } from '../actions';
+import { searchNetworks, setNetwork } from '../actions';
 
 import I18n from 'i18n-js';
 import { Loading } from '../../../../src/components/loading';
 import Alert from '../../../../src/components/alert';
 import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
 import { showNotification } from '../../../../src/store/actions';
+import { useAppContext } from '../../../../src/utils/app.context';
 
-export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks, hostname }) => {
-	
+export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks }) => {
+	const { nodeHostname } = useAppContext();
 	const [state, setState] = useState({
 		createForm: false,
 		error: null,
-		hostname: null
+		hostname: nodeHostname
 	});
 
 	/* Load scan results */
@@ -57,8 +58,8 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks,
 				setState({
 					...state,
 					error: false
-				})
-			}, 2000)
+				});
+			}, 2000);
 		}
 	}
 
@@ -82,15 +83,6 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks,
 	} */
 
 	useEffect(() => {
-		if (!state.hostname) {
-			setState({
-				...state,
-				hostname
-			});
-		}
-	}, [hostname]);
-
-	useEffect(() => {
 		let interval;
 		if (status === 'scanned') return;
 		else if (status === 'scanning') {
@@ -105,11 +97,11 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks,
 		return () => {
 			if (interval) clearInterval(interval);
 		};
-	}, [status]);
+	}, [status, searchNetworks]);
 
 	return (
-		<div>
-			<div class="container" style={{ paddingTop: '100px' }}>
+		<div class="container container-padded">
+			<div>
 				<div>
 					{ networks && status === 'scanned' ? (
 						<div>
@@ -123,7 +115,7 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks,
 										{networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
 									</select>
 									<label>{I18n.t('Choose a name for this node')}</label>
-									<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostname} onInput={_changeName}  onChange={_changeName} />
+									<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostname} onInput={_changeName} />
 									{/* <label>{I18n.t('Choose a password for this node')}</label>
 									<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onChange={_changePassword} /> */}
 								</div>}
@@ -168,12 +160,10 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks,
 
 const mapStateToProps = (state) => ({
 	networks: state.firstbootwizard.networks,
-	status: state.firstbootwizard.status,
-	hostname: state.meta.selectedHost
+	status: state.firstbootwizard.status
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	getStatus: bindActionCreators(getStatus, dispatch),
 	searchNetworks: bindActionCreators(searchNetworks ,dispatch),
 	setNetwork: bindActionCreators(setNetwork ,dispatch),
 	showNotification: bindActionCreators(showNotification, dispatch)

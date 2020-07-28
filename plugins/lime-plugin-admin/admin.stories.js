@@ -1,59 +1,56 @@
+/* eslint-disable react/display-name */
 import { h } from 'preact';
-import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object, text, boolean } from '@storybook/addon-knobs/react';
+import { withKnobs, object, text } from '@storybook/addon-knobs/react';
 
-import { frameDecorator } from '../../.storybook/frameDecorator';
 import { Admin } from './src/adminPage';
+import { AppContext } from '../../src/utils/app.context';
 
-export const actions = {
-	changeConfig: action('changeConfig'),
-	adminLogin: action('adminLogin'),
-	showNotification: action('showNotificatio')
+const actions = {
+	changeConfig: action('changeConfig')
 };
 
-storiesOf('Containers|Admin screen', module)
-	.addDecorator(withKnobs)
-	.addDecorator(frameDecorator)
-	.add('Ask for password', () => (
-		<Admin
-			selectedHost={text('Selected host', 'ql-anaymarcos')}
-			nodeData={object('Node data', {
-				ips: [{
-					version: '4',
-					address: '10.5.0.4'
-				}]
-			})}
-			authStatus={boolean('Auth status',false)}
-			loading={false}
-			{...actions}
-		/>
-	))
-	.add('Config form', () => (
-		<Admin
-			selectedHost={text('Selected host', 'ql-anaymarcos')}
-			nodeData={object('Node data', {
-				ips: [{
-					version: '4',
-					address: '10.5.0.4'
-				}]
-			})}
-			authStatus={boolean('Auth status',true)}
-			loading={false}
-			{...actions}
-		/>
-	))
-	.add('Waiting for changes', () => (
-		<Admin
-			selectedHost={text('Selected host', 'ql-anaymarcos')}
-			nodeData={object('Node data', {
-				ips: [{
-					version: '4',
-					address: '10.5.0.4'
-				}]
-			})}
-			authStatus={boolean('Auth status',true)}
-			loading
-			{...actions}
-		/>
-	));
+export default {
+	title: 'Containers|Admin',
+	component: Admin,
+	decorators: [withKnobs]
+};
+
+const nodeHostname = text('nodeHostname', 'ql-anaymarcos');
+const changeNode = action('changeNode');
+
+export const configForm = () => {
+	const appContext = { nodeHostname, changeNode };
+	return (
+		<AppContext.Provider value={appContext}>
+			<Admin
+				nodeData={object('Node data', {
+					ips: [{
+						version: '4',
+						address: '10.5.0.4'
+					}]
+				})}
+				loading={false}
+				{...actions}
+			/>
+		</AppContext.Provider>);
+};
+
+export const waitingForChanges = () => {
+	const appContext = { nodeHostname, changeNode };
+	return (
+		<AppContext.Provider value={appContext}>
+			<Admin
+				nodeData={object('Node data', {
+					ips: [{
+						version: '4',
+						address: '10.5.0.4'
+					}]
+				})}
+				loading
+				{...actions}
+			/>
+		</AppContext.Provider>
+	);
+};
+

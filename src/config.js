@@ -1,4 +1,4 @@
-import Meta from '../plugins/lime-plugin-core';
+import ChangeNode from '../plugins/lime-plugin-changeNode';
 import Align from '../plugins/lime-plugin-align';
 import Locate from '../plugins/lime-plugin-locate';
 import Metrics from '../plugins/lime-plugin-metrics';
@@ -16,7 +16,7 @@ export const plugins = [
 	Metrics,
 	Notes,
 	Admin,
-	Meta,
 	NetworkAdmin,
-	Fbw,  // fbw does not have menu item
+	ChangeNode,
+	Fbw // fbw does not have menu item
 ];

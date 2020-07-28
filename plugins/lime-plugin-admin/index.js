@@ -15,5 +15,6 @@ export default {
 		reducer,
 		selector,
 		constants
-	}
+	},
+	isCommunityProtected: true
 };

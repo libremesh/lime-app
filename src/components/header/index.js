@@ -1,27 +1,30 @@
-import { h } from 'preact';
+import { h, Fragment } from 'preact';
 import { useState } from 'preact/hooks';
+import { useAppContext } from '../../utils/app.context';
 import style from './style';
 
-export const Header = ({ hostname, menuHidden, Drawer, Navs }) => {
-	const [open, setState ] = useState(false);
-	function toggle() {
-		setState(!open);
-	}
-
-	function menuStatus(open, hide) {
-		if (hide) return [style.hamburger, style.isHidden].join(' ');
-		return (open)? [style.hamburger, style.isActive].join(' ') : style.hamburger;
+export const Header = ({ Menu }) => {
+	const { nodeHostname, menuEnabled } = useAppContext();
+	const [ menuOpened, setMenuOpened ] = useState(false);
+	
+	function toggleMenu() {
+		setMenuOpened(prevValue => !prevValue);
 	}
 
 	return (
-		<header class={style.header}>
-			<h1>{(hostname !== '')?hostname:'LiMe'}</h1>
-			<div className={menuStatus(open, menuHidden)} onClick={toggle} >
-				<span>toggle menu</span>
-			</div>
-			<Drawer status={open} toggle={toggle}>
-				<Navs />
-			</Drawer>
-		</header>
+		<Fragment>
+			<header class={style.header}>
+				<h1>{nodeHostname || 'LiMe'}</h1>
+				{menuEnabled &&
+				<div className={`${style.hamburger} ${menuOpened ? style.isActive : ''}`}
+					onClick={toggleMenu}
+				>
+					<span>toogle menu</span>
+				</div>
+				}
+			</header>
+			<Menu opened={menuOpened} toggle={toggleMenu} />
+		</Fragment>
+		
 	);
 };

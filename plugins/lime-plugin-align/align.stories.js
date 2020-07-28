@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
-import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, object, text } from '@storybook/addon-knobs/react';
 
-import { frameDecorator } from '../../.storybook/frameDecorator';
+import { store } from '../../src/store';
 import { Align } from './src/alignPage';
 import { useState } from 'preact/hooks';
+import { AppContext } from '../../src/utils/app.context';
 
-export const actions = {
+const actions = {
 	changeInterface: action('changeInterface'),
 	changeStation: action('changeStation'),
 	startAlign: action('startAlign'),
@@ -47,20 +47,20 @@ const alignData = {
 		iface: 'wlan1-adhoc'
 	}
 };
-const selectedHost = 'ql-anaymarcos';
-const settings = {
+const nodeHostname = text('nodeHostname', 'ql-anaymarcos');
+const communitySettings = object('communitySettings', {
 	bad_signal: '-82',
 	acceptable_loss: '20',
 	bad_bandwidth: '1',
 	good_signal: '-65',
 	good_bandwidth: '5'
-};
+});
 
-const AlignWithState = ({ selectedHost, settings, getSignal }) => {
+const AlignWithState = ({ getSignal }) => {
 	const [ align, setAlign ] = useState(alignData);
-
-	function changeStation(stationMac) {
-		const newSelected = { ...align.stations.find(x => x.mac === stationMac) };
+ 
+	function changeStation(station) {
+		const newSelected = { ...align.stations.find(x => x.mac === station.mac) };
 		setAlign({ ...align, currentReading: newSelected });
 	}
 
@@ -71,7 +71,6 @@ const AlignWithState = ({ selectedHost, settings, getSignal }) => {
 	}
 
 	function setRandom() {
-		console.log( Math.floor(Math.random() * 10) + 60);
 		getSignal();
 		setAlign(() => ({
 			...align,
@@ -86,8 +85,6 @@ const AlignWithState = ({ selectedHost, settings, getSignal }) => {
 	return (
 		<Align
 			alignData={align}
-			selectedHost={selectedHost}
-			settings={settings}
 			changeStation={changeStation}
 			changeInterface={changeInterface}
 			startAlign={actions.startAlign}
@@ -96,21 +93,23 @@ const AlignWithState = ({ selectedHost, settings, getSignal }) => {
 	);
 };
 
-storiesOf('Containers|Align screen', module)
-	.addDecorator(withKnobs)
-	.addDecorator(frameDecorator)
-	.add('without align data', () => (
+export default {
+	title: 'Containers|Align screen',
+	component: Align,
+	decorators: [withKnobs]
+};
+
+export const withoutAlignData = () => (
+	<AppContext.Provider value={{ nodeHostname, communitySettings }}>
 		<Align
 			alignData={object('Align data', {})}
-			selectedHost={text('Selected host', selectedHost)}
-			settings={object('Settings', settings)}
 			{...actions}
 		/>
-	))
-	.add('with align data', () => (
-		<AlignWithState
-			selectedHost={object('Selected host', selectedHost)}
-			settings={object('Settings', settings)}
-			{...actions}
-		/>)
-	);
+	</AppContext.Provider>
+);
+
+export const withAlignData = () => (
+	<AppContext.Provider value={{ nodeHostname, communitySettings }}>
+		<AlignWithState {...actions} />
+	</AppContext.Provider>
+);

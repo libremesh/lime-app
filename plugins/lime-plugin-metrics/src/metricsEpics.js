@@ -18,10 +18,10 @@ import { from } from 'rxjs';
 import { ofType } from 'redux-observable';
 import { map, concatMap, concatAll, mergeMap, catchError } from 'rxjs/operators';
 
-const loadGateway = ( action$, store, { wsAPI }) =>
+const loadGateway = ( action$, _store, { wsAPI }) =>
 	action$.pipe(
 		ofType(LOAD_METRICS),
-		mergeMap(() => getGateway(wsAPI,store.value.meta.sid)),
+		mergeMap(() => getGateway(wsAPI)),
 		map(payload => {
 			if (!payload.error) return { type: LOAD_GATEWAY_SUCCESS, payload };
 			return { type: LOAD_GATEWAY_NOT_FOUND, payload };
@@ -32,7 +32,7 @@ const loadGateway = ( action$, store, { wsAPI }) =>
 const loadPath = ( action$, store, { wsAPI }) =>
 	action$.pipe(
 		ofType(LOAD_GATEWAY_SUCCESS),
-		mergeMap((action) => getPath(wsAPI,store.value.meta.sid,{ target: store.value.metrics.gateway })),
+		mergeMap((action) => getPath(wsAPI, { target: store.value.metrics.gateway })),
 		mergeMap(payload => {
 			if (!payload.error) return [{ type: LOAD_PATH_SUCCESS, payload: payload.path }, { type: LOAD_METRICS_GATEWAY }];
 			return [{ type: LOAD_PATH_NOT_FOUND, payload }];
@@ -40,10 +40,10 @@ const loadPath = ( action$, store, { wsAPI }) =>
 		catchError(() => [({ type: LOAD_PATH_ERROR })])
 	);
 
-const loadLastPath = ( action$, store, { wsAPI }) =>
+const loadLastPath = ( action$, _store, { wsAPI }) =>
 	action$.pipe(
 		ofType(LOAD_GATEWAY_NOT_FOUND),
-		mergeMap((action) => getLastKnownPath(wsAPI,store.value.meta.sid,{})),
+		mergeMap((action) => getLastKnownPath(wsAPI, {})),
 		mergeMap(payload => {
 			if (!payload.error) return [{ type: LOAD_PATH_SUCCESS, payload: payload.path }, { type: LOAD_METRICS_ALL }];
 			return [{ type: LOAD_PATH_NOT_FOUND, payload }];
@@ -56,7 +56,7 @@ const loadMetrics = ( action$, store, { wsAPI }) =>
 		ofType(LOAD_METRICS_ALL),
 		map(action => store.value.metrics.metrics), // Get array of paths
 		map(paths => from(paths).pipe(
-			concatMap((path) => getMetrics(wsAPI,store.value.meta.sid,{ target: path.host.ip })) // Change array of paths for array of observables
+			concatMap((path) => getMetrics(wsAPI, { target: path.host.ip })) // Change array of paths for array of observables
 		)),
 		concatAll(), // Consume one observable at a time
 		map(payload => ({ type: LOAD_METRICS_SUCCESS, payload })) // Output one result for each observable/promise consumed
@@ -67,18 +67,18 @@ const loadGatewayMetrics = ( action$, store, { wsAPI }) =>
 		ofType(LOAD_METRICS_GATEWAY),
 		map(action => action.payload),
 		mergeMap(payload => {
-			if (store.value.metrics.gateway !== store.value.meta.selectedHost) {
-				return getMetrics(wsAPI,store.value.meta.sid,{ target: store.value.metrics.gateway }).pipe(
+			if (store.value.metrics.gateway !== store.value.metrics.nodeHostname) {
+				return getMetrics(wsAPI, { target: store.value.metrics.gateway }).pipe(
 					map(payload => ({ type: LOAD_METRICS_GATEWAY_SUCCESS, payload })));
 			}
 			return [{ type: LOAD_METRICS_GATEWAY_SUCCESS, payload: {} }];
 		})
 	);
 	
-const loadHostMetrics =  ( action$, store, { wsAPI }) =>
+const loadHostMetrics =  ( action$, _store, { wsAPI }) =>
 	action$.pipe(
 		ofType(LOAD_HOST_METRICS),
-		mergeMap(({ payload }) => getMetrics(wsAPI,store.value.meta.sid,{ target: payload })),
+		mergeMap(({ payload }) => getMetrics(wsAPI, { target: payload })),
 		map(payload => ({ type: LOAD_METRICS_SUCCESS, payload }))
 	);
 

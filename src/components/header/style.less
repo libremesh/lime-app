@@ -1,27 +1,25 @@
 header {
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
+  flex: 0 1 auto;
+  display: flex;
 	height: 56px;
 	padding: 0;
 	background: #38927f	;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-	z-index: 9999;
 
 	h1 {
-		float: left;
+    flex: auto;
 		margin: 0;
 		padding: 0 15px;
 		font-size: 24px;
 		line-height: 56px;
 		font-weight: 400;
 		color: #FFF;
-	}
+  }
+
 	.menuIcon {
+    flex: 0 1 auto;
 		display: block;
-		float: right;
-		padding: 10px;
+		margin-left: auto;
 		cursor: pointer;
 		padding: 15px;
 		color: #fff;
@@ -69,10 +67,6 @@ header {
   border-radius: none;
   border: none;
   cursor: pointer;
-}
-
-.isHidden {
-  display: none
 }
 
 .hamburger:focus {

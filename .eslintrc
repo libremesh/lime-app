@@ -1,3 +1,6 @@
 {
-  "extends": "eslint-config-synacor"
+  "extends": [
+    "eslint-config-synacor",
+    "plugin:react-hooks/recommended"
+  ]
 }

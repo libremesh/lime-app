@@ -1,13 +1,6 @@
 import {
-	SET_CONFIG,
-	AUTH_LOGIN
+	SET_CONFIG
 } from './adminConstants';
-
-export const adminLogin = (credentials) => ({
-	type: AUTH_LOGIN,
-	payload: credentials
-});
-
 
 export const changeConfig = (config) => ({
 	type: SET_CONFIG,
