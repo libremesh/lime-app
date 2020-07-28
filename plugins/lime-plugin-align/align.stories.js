@@ -3,6 +3,7 @@ import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, object, text } from '@storybook/addon-knobs/react';
 
+import { store } from '../../src/store';
 import { Align } from './src/alignPage';
 import { useState } from 'preact/hooks';
 import { AppContext } from '../../src/utils/app.context';
@@ -58,8 +59,8 @@ const communitySettings = object('communitySettings', {
 const AlignWithState = ({ getSignal }) => {
 	const [ align, setAlign ] = useState(alignData);
  
-	function changeStation(stationMac) {
-		const newSelected = { ...align.stations.find(x => x.mac === stationMac) };
+	function changeStation(station) {
+		const newSelected = { ...align.stations.find(x => x.mac === station.mac) };
 		setAlign({ ...align, currentReading: newSelected });
 	}
 

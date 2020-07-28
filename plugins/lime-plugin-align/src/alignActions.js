@@ -4,29 +4,18 @@ import {
 	IFACES_LOAD,
 	SIGNAL_GET
 } from './alignConstants';
-import { store } from '../../../src/store';
 
-export const changeInterface = (iface) => {
-	if (iface === store.getState().align.currentReading.iface) {
-		return { type: 'no_iface' };
+export const changeInterface = (iface) => ({
+	type: IFACE_CHANGE,
+	payload: {
+		iface
 	}
-	return {
-		type: IFACE_CHANGE,
-		payload: {
-			iface
-		}
-	};
-};
+});
 
-export const changeStation = (mac) => {
-	if (mac === store.getState().align.currentReading.mac) {
-		return { type: 'no_change' };
-	}
-	return {
-		type: STATION_SET,
-		payload: store.getState().align.stations.filter(x => x.mac === mac)[0]
-	};
-};
+export const changeStation = (station) => ({
+	type: STATION_SET,
+	payload: station
+});
 
 export const startAlign = () => ({
 	type: IFACES_LOAD

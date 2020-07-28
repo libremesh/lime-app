@@ -75,7 +75,9 @@ export const Align = ({ startAlign, changeInterface, changeStation, alignData, g
 	}
 
 	function _changeStation(e) {
-		changeStation(e.target.value);
+		const mac = e.target.value;
+		const station = alignData.stations.filter(x => x.mac === mac)[0];
+		changeStation(station);
 	}
 
 	function colorBar(signal) {
