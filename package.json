@@ -46,8 +46,8 @@
     "eslint": "^6.0.0",
     "eslint-config-preact": "^1.1.1",
     "eslint-config-synacor": "^3.0.2",
-    "eslint-plugin-react-hooks": "^4.0.5",
     "eslint-plugin-jest": "^23.13.2",
+    "eslint-plugin-react-hooks": "^4.0.5",
     "eslint-plugin-testing-library": "^3.1.4",
     "fetch-mock": "^8.3.2",
     "gh-pages": "^2.0.1",
@@ -61,7 +61,9 @@
     "preact-cli": "^3.0.0-rc.6",
     "preact-render-spy": "^1.2.1",
     "serve": "^11.1.0",
-    "standard-version": "^8.0.1"
+    "standard-version": "^8.0.1",
+    "wait-for-expect": "^3.0.2",
+    "xhr-mock": "^2.5.1"
   },
   "dependencies": {
     "axios": "^0.19.0",
