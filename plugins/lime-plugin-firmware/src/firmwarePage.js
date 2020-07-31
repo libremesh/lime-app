@@ -1,6 +1,6 @@
 import { h, createRef } from 'preact';
 import I18n from 'i18n-js';
-import './style.less';
+import style from './style.less';
 import { useState, useEffect } from 'preact/hooks';
 
 import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware } from './firmwareApi';
@@ -15,41 +15,53 @@ const pleaseVerifyImageText = I18n.t(
 const validationErrorText = I18n.t(
 	'The selected image is not a valid for the target device'
 );
+const upgradeErrorText = I18n.t(
+	'Something wrong happened, not upgrading'
+);
 
-const FirmwarePage = ({
+const upgradeSuccessTextSameConfig = I18n.t(
+	'Wait while the device reboot'
+);
+
+
+export const FirmwarePage = ({
 	upgradeConfirmAvailable,
 	firmwareIsValid,
-	onSubmitFileForm,
-	onUpgradeNow,
+	upgradeSuccess,
+	onSubmitForm,
 	fileInputRef
 }) => (
-	<div class="container">
+	<div class="container container-padded">
 		{upgradeConfirmAvailable === true &&
-			<div className="note note-positive">
+			<div class={`${style.note} ${style.notePositive}`}>
 				{secureRollbackText}
 			</div>
 		}
 		{upgradeConfirmAvailable === false &&
-			<div className="note note-warning">
+			<div class={`${style.note} ${style.noteWarning}`}>
 				{noSecureRollbackText}
 			</div>
 		}
-		<span class="section-title">{I18n.t('Upload firmware image from your device')}</span>
-		<form id="file-upload-form" onSubmit={onSubmitFileForm}>
-			<label>{I18n.t('Select file')}
-				<input name="select-file" type="file" ref={fileInputRef} />
-			</label>
-			<span className="input-note">{pleaseVerifyImageText}</span>
-			<button type="submit">{I18n.t('Upload File')}</button>
+		<h5>{I18n.t('Upload firmware image from your device')}</h5>
+		<form id="file-upload-form" onSubmit={onSubmitForm}>
+			<label htmlFor="select-file">{I18n.t('Select file')}</label>
+			<input name="select-file" id="select-file" type="file" ref={fileInputRef} />
+			<div class={`${style.inputNote} ${style.note}`}>{pleaseVerifyImageText}</div>
+			<button type="submit">{I18n.t('Upgrade')}</button>
 		</form>
-		{firmwareIsValid === false &&
-			<div className="note note-error">
+		{ firmwareIsValid === false &&
+			<div class={`${style.note} ${style.noteError}`}>
 				{validationErrorText}
 			</div>
 		}
-		{firmwareIsValid === true &&
-			<div>
-				<button onClick={onUpgradeNow}>{I18n.t('Upgrade Now')}</button>
+		{ upgradeSuccess === false &&
+			<div class={`${style.note} ${style.noteError}`}>
+				{upgradeErrorText}
+			</div>
+		}
+		{ upgradeSuccess === true &&
+			<div class={`${style.note} ${style.notePositive}`}>
+				{upgradeSuccessTextSameConfig}
 			</div>
 		}
 	</div>
@@ -59,6 +71,7 @@ const FirmwarePageHOC = ({}) => {
 	const { uhttpdService } = useAppContext();
 	const [upgradeConfirmAvailable, setUpgradeConfirmAvailable] = useState(undefined);
 	const [firmwareIsValid, setFirmwareIsValid] = useState(undefined);
+	const [upgradeSuccess, setUpgradeSuccess] = useState(undefined);
 	const fileInputRef = createRef();
 
 	useEffect(() => {
@@ -66,20 +79,35 @@ const FirmwarePageHOC = ({}) => {
 			.then((isAvailable) => setUpgradeConfirmAvailable(isAvailable));
 	}, [uhttpdService]);
 
-	function onSubmitFileForm(e) {
+	function _validateFirmware() {
+		return validateFirmware(uhttpdService)
+			.catch(() => Promise.reject('validation'));
+	}
+
+	function onSubmitForm(e) {
 		e.preventDefault();
 		const file = fileInputRef.current.files[0];
 		uploadFile(file)
-			.then(() => validateFirmware(uhttpdService))
-			.then(isValid => setFirmwareIsValid(isValid))
+			.then(_validateFirmware)
+			.then(() => upgradeFirmware(uhttpdService, false))
+			.then(() => setUpgradeSuccess(true))
+			.catch(error => {
+				switch (error) {
+					case 'validation':
+						setFirmwareIsValid(false);
+						break;
+					default:
+						setUpgradeSuccess(false);
+				}
+			})
 	}
 
 	function onUpgradeNow() {
 		upgradeFirmware(uhttpdService)
 	}
 
-	return <FirmwarePage {...{upgradeConfirmAvailable, firmwareIsValid,
-		onSubmitFileForm, onUpgradeNow, fileInputRef}} />
+	return <FirmwarePage {...{upgradeConfirmAvailable, firmwareIsValid, upgradeSuccess,
+		onSubmitForm, onUpgradeNow, fileInputRef}} />
 }
 
 export default FirmwarePageHOC;
