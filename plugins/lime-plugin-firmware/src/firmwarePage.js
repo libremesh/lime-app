@@ -19,59 +19,94 @@ const upgradeErrorText = I18n.t(
 	'Something wrong happened, not upgrading'
 );
 
-const upgradeSuccessTextSameConfig = I18n.t(
-	'Wait while the device reboot'
+const upgradeSuccessTextPreserveConfig = I18n.t(
+	'Please wait while the device reboot and reload the app'
 );
 
+const upgradeSuccessTextNotPreserveConfig = I18n.t(
+	'The device will reboot, you may need to connect to the new wireless network and reload the app'
+);
+
+
+const FirmwareUpgradeSuccess = ({preserveConfig}) => (
+	<div class={`container container-padded ${style.upgradeSuccess}`}>
+		<h3>
+			{I18n.t('The upgrade is done')}
+		</h3>
+		{ preserveConfig &&
+			<span>{upgradeSuccessTextPreserveConfig}</span>
+		}
+		{!(preserveConfig) &&
+			<span>{upgradeSuccessTextNotPreserveConfig}</span>
+		}
+	</div>
+)
 
 export const FirmwarePage = ({
 	upgradeConfirmAvailable,
 	firmwareIsValid,
 	upgradeSuccess,
-	onSubmitForm,
-	fileInputRef
-}) => (
-	<div class="container container-padded">
-		{upgradeConfirmAvailable === true &&
-			<div class={`${style.note} ${style.notePositive}`}>
-				{secureRollbackText}
-			</div>
-		}
-		{upgradeConfirmAvailable === false &&
-			<div class={`${style.note} ${style.noteWarning}`}>
-				{noSecureRollbackText}
-			</div>
-		}
-		<h5>{I18n.t('Upload firmware image from your device')}</h5>
-		<form id="file-upload-form" onSubmit={onSubmitForm}>
-			<label htmlFor="select-file">{I18n.t('Select file')}</label>
-			<input name="select-file" id="select-file" type="file" ref={fileInputRef} />
-			<div class={`${style.inputNote} ${style.note}`}>{pleaseVerifyImageText}</div>
-			<button type="submit">{I18n.t('Upgrade')}</button>
-		</form>
-		{ firmwareIsValid === false &&
-			<div class={`${style.note} ${style.noteError}`}>
-				{validationErrorText}
-			</div>
-		}
-		{ upgradeSuccess === false &&
-			<div class={`${style.note} ${style.noteError}`}>
-				{upgradeErrorText}
-			</div>
-		}
-		{ upgradeSuccess === true &&
-			<div class={`${style.note} ${style.notePositive}`}>
-				{upgradeSuccessTextSameConfig}
-			</div>
-		}
-	</div>
-);
+	preserveConfig,
+	tooglePreserveConfig,
+	fileInputRef,
+	onUpgrade
+}) => {
+	
+	function onSubmitForm(e) {
+		e.preventDefault();
+		onUpgrade()
+	}
+
+	if (upgradeSuccess) {
+		return <FirmwareUpgradeSuccess preserveConfig={preserveConfig} />
+	}
+
+	return (
+		<div class="container container-padded">
+			{upgradeConfirmAvailable === true &&
+				<div class={`${style.note} ${style.notePositive}`}>
+					{secureRollbackText}
+				</div>
+			}
+			{upgradeConfirmAvailable === false &&
+				<div class={`${style.note} ${style.noteWarning}`}>
+					{noSecureRollbackText}
+				</div>
+			}
+			<h5>{I18n.t('Upload firmware image from your device')}</h5>
+			<form id="file-upload-form" onSubmit={onSubmitForm}>
+				<label htmlFor="select-file">{I18n.t('Select file')}</label>
+				<input name="select-file" id="select-file" type="file" ref={fileInputRef} />
+				<div class={`${style.inputNote} ${style.note}`}>
+					<span class={`${style.warningSymbol}`}>⚠</span>
+					{pleaseVerifyImageText}
+				</div>
+				<label>
+					<input name="preserve-config" id="preserve-config" type="checkbox" checked={preserveConfig} onChange={tooglePreserveConfig} />
+					{I18n.t('Preserve config')}
+				</label>
+				<button type="submit">{I18n.t('Upgrade')}</button>
+			</form>
+			{ firmwareIsValid === false &&
+				<div class={`${style.note} ${style.noteError}`}>
+					{validationErrorText}
+				</div>
+			}
+			{ upgradeSuccess === false &&
+				<div class={`${style.note} ${style.noteError}`}>
+					{upgradeErrorText}
+				</div>
+			}
+		</div>
+	);
+}
 
 const FirmwarePageHOC = ({}) => {
 	const { uhttpdService } = useAppContext();
 	const [upgradeConfirmAvailable, setUpgradeConfirmAvailable] = useState(undefined);
 	const [firmwareIsValid, setFirmwareIsValid] = useState(undefined);
 	const [upgradeSuccess, setUpgradeSuccess] = useState(undefined);
+	const [preserveConfig, setpreserveConfig] = useState(false);
 	const fileInputRef = createRef();
 
 	useEffect(() => {
@@ -84,12 +119,15 @@ const FirmwarePageHOC = ({}) => {
 			.catch(() => Promise.reject('validation'));
 	}
 
-	function onSubmitForm(e) {
-		e.preventDefault();
+	function tooglePreserveConfig() {
+		setpreserveConfig(prevVal => !prevVal);
+	}
+
+	function onUpgrade() {
 		const file = fileInputRef.current.files[0];
 		uploadFile(file)
 			.then(_validateFirmware)
-			.then(() => upgradeFirmware(uhttpdService, false))
+			.then(() => upgradeFirmware(uhttpdService, preserveConfig))
 			.then(() => setUpgradeSuccess(true))
 			.catch(error => {
 				switch (error) {
@@ -102,12 +140,8 @@ const FirmwarePageHOC = ({}) => {
 			})
 	}
 
-	function onUpgradeNow() {
-		upgradeFirmware(uhttpdService)
-	}
-
 	return <FirmwarePage {...{upgradeConfirmAvailable, firmwareIsValid, upgradeSuccess,
-		onSubmitForm, onUpgradeNow, fileInputRef}} />
+		preserveConfig, fileInputRef, onUpgrade, tooglePreserveConfig}} />
 }
 
 export default FirmwarePageHOC;

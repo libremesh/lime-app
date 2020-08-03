@@ -23,12 +23,16 @@ const secureRollbackText =
 const noSecureRollbackText =
 	/this device does not support secure rollback to previous version if something goes wrong/i;
 
-function triggerUpgrade(getByLabelText, getByRole) {
+function triggerUpgrade(getByLabelText, getByRole, preserveConfig=false) {
 	const fileInput = getByLabelText(/select file/i);
 	const file = new File(['(⌐□_□)'], 'test.bin');
 	Object.defineProperty(fileInput, 'files', {
 		value: [file]
 	});
+	if (preserveConfig) {
+		const preserveConfigCheckbox = getByLabelText(/preserve config/i);
+		fireEvent.click(preserveConfigCheckbox);
+	}
 	const submitButton = getByRole('button', /upgrade/i);
 	fireEvent.click(submitButton);
 	return file
@@ -125,5 +129,40 @@ describe('firmware page', () => {
 			expect(upgradeFirmware).toHaveBeenCalledWith(uhttpdService, false);
 			expect(upgradeFirmware).toHaveBeenCalledAfter(validateFirmware);
 		})
+	});
+
+	it('calls the firmware upgrade endpoint with preserve config when requested', async () => {
+		uploadFile.mockImplementation(async () => true);
+		validateFirmware.mockImplementation(async () => true);
+		const { uhttpdService } = useAppContext();
+		const { getByLabelText, getByRole} = render(<FirmwarePage />);
+		const preserveConfig = true;
+		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
+		await waitForExpect(() => {
+			expect(upgradeFirmware).toHaveBeenCalledWith(uhttpdService, true);
+		})
+	});
+
+	it('shows up a legend asking the user to wait for reboot after upgrade, preserve config', async () => {
+		uploadFile.mockImplementation(async () => true);
+		validateFirmware.mockImplementation(async () => true);
+		upgradeFirmware.mockImplementation(async () => true);
+		const { findByText, getByLabelText, getByRole} = render(<FirmwarePage />);
+		const preserveConfig = true;
+		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
+		const noteText = new RegExp('Please wait while the device reboot and reload the app', 'i');
+		expect(await findByText(noteText)).toBeInTheDocument();
+	});
+
+	it('shows up a legend asking the user to wait for reboot after upgrade, not preserve config', async () => {
+		uploadFile.mockImplementation(async () => true);
+		validateFirmware.mockImplementation(async () => true);
+		upgradeFirmware.mockImplementation(async () => true);
+		const { findByText, getByLabelText, getByRole} = render(<FirmwarePage />);
+		const preserveConfig = false;
+		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
+		const noteText = new RegExp(
+			'The device will reboot, you may need to connect to the new wireless network', 'i');
+		expect(await findByText(noteText)).toBeInTheDocument();
 	});
 });
