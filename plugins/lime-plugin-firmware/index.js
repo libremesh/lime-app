@@ -8,3 +8,5 @@ export default {
 	menu: () => <a href={'#/firmware'}>{I18n.t('Firmware')}</a>,
 	isCommunityProtected: true
 }
+
+export { SafeUpgradeCountdown } from './src/upgradeCountdown';

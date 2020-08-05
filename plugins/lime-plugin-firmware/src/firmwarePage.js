@@ -15,9 +15,6 @@ const pleaseVerifyImageText = I18n.t(
 const validationErrorText = I18n.t(
 	'The selected image is not a valid for the target device'
 );
-const upgradeErrorText = I18n.t(
-	'Something wrong happened, not upgrading'
-);
 
 const upgradeSuccessTextPreserveConfig = I18n.t(
 	'Please wait while the device reboot and reload the app'
@@ -28,8 +25,17 @@ const upgradeSuccessTextNotPreserveConfig = I18n.t(
 );
 
 
-const FirmwareUpgradeSuccess = ({preserveConfig}) => (
-	<div class={`container container-padded ${style.upgradeSuccess}`}>
+export const UpgradeConfirm = ({onConfirm, onRevert}) => (
+	<div class={`container container-padded container-center`}>
+		<button onClick={onConfirm}>{I18n.t('Confirm')}</button>
+		<p>{I18n.t('to keep the current configuration. Or ...')}</p>
+		<button onClick={onRevert}>{I18n.t('Revert')}</button>
+		<p>{I18n.t('to the previous configuration')}</p>
+	</div>
+);
+
+export const UpgradeSuccess = ({preserveConfig}) => (
+	<div class={`container container-padded container-center`}>
 		<h3>
 			{I18n.t('The upgrade is done')}
 		</h3>
@@ -40,25 +46,36 @@ const FirmwareUpgradeSuccess = ({preserveConfig}) => (
 			<span>{upgradeSuccessTextNotPreserveConfig}</span>
 		}
 	</div>
-)
+);
 
-export const FirmwarePage = ({
+export const UpgradeForm = ({
 	upgradeConfirmAvailable,
 	firmwareIsValid,
-	upgradeSuccess,
 	preserveConfig,
 	tooglePreserveConfig,
 	fileInputRef,
 	onUpgrade
 }) => {
 	
+	const [filename, setfilename] = useState('');
+	const [filesize, setfilesize] = useState(null);
+
 	function onSubmitForm(e) {
 		e.preventDefault();
 		onUpgrade()
 	}
 
-	if (upgradeSuccess) {
-		return <FirmwareUpgradeSuccess preserveConfig={preserveConfig} />
+	function onFileChange(e) {
+		const files = e.target.files;
+		if (files.length > 0) {
+			setfilename(files[0].name);
+			setfilesize(
+				((files[0].size) / 1048576).toFixed(1).toString().concat(' MB')
+			)
+		}
+		else {
+			setfilename('');
+		}
 	}
 
 	return (
@@ -75,8 +92,17 @@ export const FirmwarePage = ({
 			}
 			<h5>{I18n.t('Upload firmware image from your device')}</h5>
 			<form id="file-upload-form" onSubmit={onSubmitForm}>
-				<label htmlFor="select-file">{I18n.t('Select file')}</label>
-				<input name="select-file" id="select-file" type="file" ref={fileInputRef} />
+				<label class="button" htmlFor="select-file">{I18n.t('Select file')}</label>
+				<input style={{width: 0}} // Hide the ugly builtin input
+					name="select-file" id="select-file" type="file" ref={fileInputRef}
+					onChange={onFileChange}
+				/>
+				{filename &&
+					<div>
+						<div><b>{I18n.t('Filename')}</b>: {filename}</div>
+						<div><b>{I18n.t('Size')}</b>: {filesize}</div>
+					</div>
+				}
 				<div class={`${style.inputNote} ${style.note}`}>
 					<span class={`${style.warningSymbol}`}>⚠</span>
 					{pleaseVerifyImageText}
@@ -92,21 +118,17 @@ export const FirmwarePage = ({
 					{validationErrorText}
 				</div>
 			}
-			{ upgradeSuccess === false &&
-				<div class={`${style.note} ${style.noteError}`}>
-					{upgradeErrorText}
-				</div>
-			}
 		</div>
 	);
 }
 
-const FirmwarePageHOC = ({}) => {
-	const { uhttpdService } = useAppContext();
+const FirmwarePage = ({}) => {
+	const { suCounter, uhttpdService } = useAppContext();
 	const [upgradeConfirmAvailable, setUpgradeConfirmAvailable] = useState(undefined);
 	const [firmwareIsValid, setFirmwareIsValid] = useState(undefined);
 	const [upgradeSuccess, setUpgradeSuccess] = useState(undefined);
 	const [preserveConfig, setpreserveConfig] = useState(false);
+	const [fileName, setFilename] = useState('');
 	const fileInputRef = createRef();
 
 	useEffect(() => {
@@ -125,6 +147,7 @@ const FirmwarePageHOC = ({}) => {
 
 	function onUpgrade() {
 		const file = fileInputRef.current.files[0];
+		setFilename(file.filename);
 		uploadFile(file)
 			.then(_validateFirmware)
 			.then(() => upgradeFirmware(uhttpdService, preserveConfig))
@@ -135,13 +158,21 @@ const FirmwarePageHOC = ({}) => {
 						setFirmwareIsValid(false);
 						break;
 					default:
-						setUpgradeSuccess(false);
+						throw new Error(error);
 				}
 			})
 	}
 
-	return <FirmwarePage {...{upgradeConfirmAvailable, firmwareIsValid, upgradeSuccess,
-		preserveConfig, fileInputRef, onUpgrade, tooglePreserveConfig}} />
+	if (suCounter) {
+		return <UpgradeConfirm />
+	}
+
+	if (upgradeSuccess) {
+		return <UpgradeSuccess preserveConfig={preserveConfig} />
+	}
+
+	return <UpgradeForm {...{upgradeConfirmAvailable, firmwareIsValid, upgradeSuccess, suCounter,
+		preserveConfig, fileInputRef, fileName, onUpgrade, tooglePreserveConfig}} />
 }
 
-export default FirmwarePageHOC;
+export default FirmwarePage;

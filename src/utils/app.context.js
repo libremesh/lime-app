@@ -32,6 +32,7 @@ export class AppContextProvider extends Component {
 			fbwCanceled: false,
 			isRoot: false,
 			communitySettings: {},
+			suCounter: null,
 			menuEnabled: true,
 			loginAsRoot: this.loginAsRoot,
 			cancelFbw: this.cancelFbw,
@@ -42,24 +43,29 @@ export class AppContextProvider extends Component {
 
 	componentDidMount(){
 		this._login('lime-app', 'generic')
-			.then(response => {
+			.then(() => {
 				this.setState({ loading: false });
 			})
-			.then(() => Promise.all([
-				this._fetchNodeData(),
-				this._fetchCommunitySettings(),
-				this._fetchFBWStatus()]))
-			.then(([nodeData, communitySettings, fbwStatus]) => {
-				this.setState({
-					nodeHostname: nodeData.hostname,
-					communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
-					fbwConfigured: !fbwStatus.lock
-				});
+			.then(() => Promise.all(
+				[this._fetchNodeData(),
+					this._fetchCommunitySettings(),
+					this._fetchFBWStatus(),
+					this._fetchSafeUpgradeCounter()]
+			))
+			.then(([nodeData, communitySettings, fbwStatus, suCounter]) => {
+				this.setState(
+					{nodeHostname: nodeData.hostname,
+						communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
+						fbwConfigured: !fbwStatus.lock,
+						suCounter}
+				);
 			})
-			.catch(error => {
+			.catch((error) => {
+				console.error(error);
 				this.setState({ unexpectedError: true });
 			});
 	}
+
 
 	_fetchNodeData() {
 		return this.state.uhttpdService.call('system', 'board', {}).toPromise();
@@ -67,11 +73,16 @@ export class AppContextProvider extends Component {
 
 	_fetchCommunitySettings() {
 		return this.state.uhttpdService.call('lime-utils', 'get_community_settings', {}).toPromise()
-			.catch(error => Promise.resolve(DEFAULT_COMMUNITY_SETTINGS));
+			.catch(() => Promise.resolve(DEFAULT_COMMUNITY_SETTINGS));
 	}
 
 	_fetchFBWStatus() {
 		return this.state.uhttpdService.call('lime-fbw', 'status', {}).toPromise();
+	}
+
+	_fetchSafeUpgradeCounter() {
+		return Promise.resolve(630);
+		// return this.state.uhttpdService.call('lime-utils-admin', 'XXG', {}).toPromise();
 	}
 
 	_login(username, password) {
@@ -94,7 +105,7 @@ export class AppContextProvider extends Component {
 	/** Passed down throw app context to allow components to login as root */
 	loginAsRoot(password) {
 		return this._login('root', password)
-			.then(res => this.setState({ isRoot: true }));
+			.then(() => this.setState({ isRoot: true }));
 	}
 
 	cancelFbw() {

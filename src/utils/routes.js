@@ -8,7 +8,7 @@ import I18n from 'i18n-js';
 
 
 export const Route = ({ path, children }) => {
-	const { loading, fbwConfigured, fbwCanceled, unexpectedError } = useAppContext();
+	const { suCounter, loading, fbwConfigured, fbwCanceled, unexpectedError } = useAppContext();
 
 	if (unexpectedError) {
 		return (
@@ -26,7 +26,7 @@ export const Route = ({ path, children }) => {
 		);
 	}
 
-	if (!fbwConfigured && !fbwCanceled) {
+	if (!fbwConfigured && !fbwCanceled && !suCounter) {
 		if (path === 'firstbootwizard') {
 			return children;
 		}

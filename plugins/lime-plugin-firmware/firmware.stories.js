@@ -1,33 +1,46 @@
-import { FirmwarePage } from './src/firmwarePage';
-import { withKnobs } from '@storybook/addon-knobs';
+import { UpgradeConfirm, UpgradeForm, UpgradeSuccess } from './src/firmwarePage';
+import { SafeUpgradeCountdown } from './src/upgradeCountdown';
 import { action } from '@storybook/addon-actions';
 
-const actions = {
+const formActions = {
 	onUpgrade: action('onUpgrade'),
 	tooglePreserveConfig: action('tooglePreserveConfig')
 };
 
+
 export default {
-	title: 'Containers|Firmware Upgrade',
-	decorators: [withKnobs]
+	title: 'Containers|Firmware Upgrade'
 };
 
 export const SafeUpgradeIsAvailable = () => (
-	<FirmwarePage upgradeConfirmAvailable={true} {...actions} />
+	<UpgradeForm upgradeConfirmAvailable={true} {...formActions} />
 );
 
 export const SafeUpgradeIsNotAvailable = () => (
-	<FirmwarePage upgradeConfirmAvailable={false} {...actions} />
+	<UpgradeForm upgradeConfirmAvailable={false} {...formActions} />
 );
 
 export const AnInvalidFirmwareWasUploaded = () => (
-	<FirmwarePage upgradeConfirmAvailable={false} firmwareIsValid={false} {...actions} />
+	<UpgradeForm upgradeConfirmAvailable={false} firmwareIsValid={false} {...formActions} />
 );
 
 export const SuccessfullUpgradePreservingConfig = () => (
-	<FirmwarePage upgradeConfirmAvailable={false} upgradeSuccess={true} preserveConfig={true} {...actions} />
+	<UpgradeSuccess preserveConfig={true} />
 );
 
 export const SuccessfullUpgradeNotPreservingConfig = () => (
-	<FirmwarePage upgradeConfirmAvailable={false} upgradeSuccess={true} preserveConfig={false} {...actions} />
+	<UpgradeSuccess preserveConfig={false} />
 );
+
+export const safeUpgradeCountdown = () => (
+	<SafeUpgradeCountdown counter={600} />
+)
+
+const confirmActions = {
+	onConfirm: action('onConfirm'),
+	onRevert: action('onRevert')
+}
+
+export const upgradeConfirm = () => (
+	<UpgradeConfirm {...confirmActions} />
+)
