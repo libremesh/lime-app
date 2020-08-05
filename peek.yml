@@ -2,4 +2,4 @@ version: 2
 main:
   type: static
   path: /storybook-static
-  spa: false
+  spa: true
