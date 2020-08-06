@@ -1,6 +1,6 @@
 const FW_PATH = '/tmp/firmware.bin';
 
-export async function upgradeConfirmIsAvailable(api) {
+export function upgradeConfirmIsAvailable(api) {
 	return api.call('lime-utils-admin', 'is_upgrade_confirm_supported', {})
 		.toPromise()
 		.then(res => res.supported);
@@ -43,11 +43,15 @@ export function validateFirmware(api) {
 
 export function upgradeFirmware(api, preserveConfig) {
 	return api.call('lime-utils-admin', 'firmware_upgrade',
-		{fw_path: FW_PATH, preserve_config: preserveConfig})
+		{
+			fw_path: FW_PATH,
+			preserve_config: preserveConfig,
+			metadata: { upgrade_timestamp: (Date.now() / 1000).toFixed(1) } // in seconds;
+		})
 		.toPromise()
 		.then(response => new Promise((res, rej) => {
 			if (response.status === 'ok') {
-				res(response.upgrade_id);
+				res(true);
 			}
 			else {
 				rej(response.message);
@@ -55,9 +59,19 @@ export function upgradeFirmware(api, preserveConfig) {
 		}));
 }
 
-export default {
-	upgradeConfirmIsAvailable,
-	uploadFile,
-	validateFirmware,
-	upgradeFirmware
-};
+export function upgradeConfirm(api) {
+	return api.call('lime-utils-admin', 'firmware-confirm', {})
+		.toPromise()
+		.then(response => new Promise((res, rej) => {
+			if (response.status === 'ok') {
+				res(true);
+			}
+			else {
+				rej(false);
+			}
+		}))
+}
+
+export function upgradeRevert(api) {
+	return api.call('system', 'reboot', {}).toPromise().then(() => true);
+}

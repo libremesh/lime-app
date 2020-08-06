@@ -1,4 +1,4 @@
-import { UpgradeConfirm, UpgradeForm, UpgradeSuccess } from './src/firmwarePage';
+import { UpgradeConfirm, UpgradeForm, UpgradeSuccess, UpgradeReverted } from './src/firmwarePage';
 import { SafeUpgradeCountdown } from './src/upgradeCountdown';
 import { action } from '@storybook/addon-actions';
 
@@ -43,4 +43,8 @@ const confirmActions = {
 
 export const upgradeConfirm = () => (
 	<UpgradeConfirm {...confirmActions} />
+)
+
+export const upgradeReverted = () => (
+	<UpgradeReverted />
 )

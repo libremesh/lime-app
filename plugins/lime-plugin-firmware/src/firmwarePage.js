@@ -3,8 +3,11 @@ import I18n from 'i18n-js';
 import style from './style.less';
 import { useState, useEffect } from 'preact/hooks';
 
-import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware } from './firmwareApi';
+import { upgradeConfirmIsAvailable, uploadFile, validateFirmware,
+	upgradeFirmware, upgradeConfirm, upgradeRevert} from './firmwareApi';
 import { useAppContext } from '../../../src/utils/app.context';
+import { route } from 'preact-router';
+
 
 const secureRollbackText = I18n.t(
 	'This device supports secure rollback to previous version if something goes wrong');
@@ -17,13 +20,12 @@ const validationErrorText = I18n.t(
 );
 
 const upgradeSuccessTextPreserveConfig = I18n.t(
-	'Please wait while the device reboot and reload the app'
+	'Please wait while the device reboots and reload the app'
 );
 
 const upgradeSuccessTextNotPreserveConfig = I18n.t(
 	'The device will reboot, you may need to connect to the new wireless network and reload the app'
 );
-
 
 export const UpgradeConfirm = ({onConfirm, onRevert}) => (
 	<div class={`container container-padded container-center`}>
@@ -33,6 +35,34 @@ export const UpgradeConfirm = ({onConfirm, onRevert}) => (
 		<p>{I18n.t('to the previous configuration')}</p>
 	</div>
 );
+
+export const UpgradeReverted = () => (
+	<div class={`container container-padded container-center`}>
+		<h3>{I18n.t('Reverting to previous version')}</h3>
+		<span>{upgradeSuccessTextPreserveConfig}</span>
+	</div>
+);
+
+const _UpgradeConfirm = () => {
+	const { uhttpdService } = useAppContext();
+	const [reverted, setReverted] = useState(false);
+
+	function onConfirm() {
+		upgradeConfirm(uhttpdService).then(() => {
+			route('/');
+		})
+	}
+
+	function onRevert() {
+		upgradeRevert(uhttpdService).then(() => setReverted(true))
+	}
+
+	if (reverted) {
+		return <UpgradeReverted />
+	}
+
+	return <UpgradeConfirm onConfirm={onConfirm} onRevert={onRevert} />
+}
 
 export const UpgradeSuccess = ({preserveConfig}) => (
 	<div class={`container container-padded container-center`}>
@@ -47,6 +77,7 @@ export const UpgradeSuccess = ({preserveConfig}) => (
 		}
 	</div>
 );
+
 
 export const UpgradeForm = ({
 	upgradeConfirmAvailable,
@@ -122,8 +153,8 @@ export const UpgradeForm = ({
 	);
 }
 
-const FirmwarePage = ({}) => {
-	const { suCounter, uhttpdService } = useAppContext();
+const _UpgradeForm = () => {
+	const { uhttpdService } = useAppContext();
 	const [upgradeConfirmAvailable, setUpgradeConfirmAvailable] = useState(undefined);
 	const [firmwareIsValid, setFirmwareIsValid] = useState(undefined);
 	const [upgradeSuccess, setUpgradeSuccess] = useState(undefined);
@@ -163,16 +194,22 @@ const FirmwarePage = ({}) => {
 			})
 	}
 
-	if (suCounter) {
-		return <UpgradeConfirm />
-	}
-
 	if (upgradeSuccess) {
 		return <UpgradeSuccess preserveConfig={preserveConfig} />
 	}
 
-	return <UpgradeForm {...{upgradeConfirmAvailable, firmwareIsValid, upgradeSuccess, suCounter,
+	return <UpgradeForm {...{upgradeConfirmAvailable, firmwareIsValid,
 		preserveConfig, fileInputRef, fileName, onUpgrade, tooglePreserveConfig}} />
+}
+
+const FirmwarePage = ({}) => {
+	const { suCounter } = useAppContext();
+	
+	if (suCounter) {
+		return <_UpgradeConfirm />
+	}
+
+	return <_UpgradeForm />
 }
 
 export default FirmwarePage;

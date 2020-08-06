@@ -18,7 +18,7 @@ export const SafeUpgradeCountdown = ({ counter }) => {
 
 	return (
 		<div class="su-counter">
-			<div>{I18n.t(`Cofirm upgrade before ${_counter} seconds or it will be reverted`)}</div>
+			<div>{I18n.t('Cofirm upgrade before %{seconds} seconds or it will be reverted', {seconds: _counter})}</div>
 			<button onClick={() => route('firmware')}>{I18n.t('Go!')}</button>
 		</div>
 	);

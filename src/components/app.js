@@ -36,7 +36,7 @@ const Routes = () => (
 					<Component.page />
 				</CommunityProtectedRoute>))
 		}
-		<Redirect path={'/'} to={'rx'} />
+		<Redirect default path={'/'} to={'rx'} />
 	</Router>
 );
 

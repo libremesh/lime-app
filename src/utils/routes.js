@@ -26,22 +26,20 @@ export const Route = ({ path, children }) => {
 		);
 	}
 
-	if (!fbwConfigured && !fbwCanceled && !suCounter) {
-		if (path === 'firstbootwizard') {
-			return children;
-		}
+	const tryingToConfirmUpgrade = (path === 'firmware') && suCounter;
+	if (!fbwConfigured && !fbwCanceled && !tryingToConfirmUpgrade) {
 		return <Fbw.page />;
 	}
 
 	return children;
 };
 
-export const CommunityProtectedRoute = ({ children }) => {
+export const CommunityProtectedRoute = ({ path, children }) => {
 	const { isRoot } = useAppContext();
 	if (!isRoot) {
-		return <Route><SharedPasswordLogin /></Route>;
+		return <Route path={path}><SharedPasswordLogin /></Route>;
 	}
-	return children;
+	return <Route path={path}>{children}</Route>;
 };
 
 export const Redirect = ({ to }) => {

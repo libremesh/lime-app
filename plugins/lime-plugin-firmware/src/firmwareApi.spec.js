@@ -1,7 +1,8 @@
 import xhrMock from 'xhr-mock';
 import { of } from 'rxjs';
 
-import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware } from './firmwareApi';
+import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware,
+	upgradeConfirm, upgradeRevert } from './firmwareApi';
 
 const FW_PATH = '/tmp/firmware.bin';
 
@@ -105,7 +106,9 @@ describe('upgradeFirmware', () => {
 			call: jest.fn(() => of({}))
 		};
 		upgradeFirmware(uhttpService, true);
-		expect(uhttpService.call).toBeCalledWith('lime-utils-admin', 'firmware_upgrade', {fw_path: FW_PATH, preserve_config: true});
+		const timestamp = (Date.now() / 1000).toFixed(1);
+		expect(uhttpService.call).toBeCalledWith('lime-utils-admin', 'firmware_upgrade',
+			{fw_path: FW_PATH, preserve_config: true, metadata: {upgrade_timestamp: timestamp}});
 	});
 
 	it('sends the appropiate request to not to preserve config', () => {
@@ -113,16 +116,18 @@ describe('upgradeFirmware', () => {
 			call: jest.fn(() => of({}))
 		};
 		upgradeFirmware(uhttpService, false);
-		expect(uhttpService.call).toBeCalledWith('lime-utils-admin', 'firmware_upgrade', {fw_path: FW_PATH, preserve_config: false});
+		const timestamp = (Date.now() / 1000).toFixed(1);
+		expect(uhttpService.call).toBeCalledWith('lime-utils-admin', 'firmware_upgrade',
+			{fw_path: FW_PATH, preserve_config: false, metadata: {upgrade_timestamp: timestamp}});
 	});
 
-	it('resolves to firmware upgrade id when upgrade is successfull', async () => {
+	it('resolves to true when upgrade is successfull', async () => {
 		const upgradeId = 'random_id';
 		const uhttpService = {
 			call: jest.fn(() => of({status: 'ok', upgrade_id: upgradeId}))
 		};
 		const res = await upgradeFirmware(uhttpService, false);
-		expect(res).toEqual(upgradeId);
+		expect(res).toBe(true);
 	})
 
 	it('rejects with backend error message when upgrade fails', async () => {
@@ -134,3 +139,48 @@ describe('upgradeFirmware', () => {
 		return expect(upgradeFirmware(uhttpService, false)).rejects.toEqual(backendMessage)
 	});
 });
+
+
+describe('upgradeConfirm', () => {
+	it('sends the appropiate request', () => {
+		const uhttpService = {
+			call: jest.fn(() => of({}))
+		};
+		upgradeConfirm(uhttpService);
+		expect(uhttpService.call).toBeCalledWith('lime-utils-admin', 'firmware_confirm', {});
+	})
+
+	it('resolves to true on status ok', async () => {
+		const uhttpService = {
+			call: jest.fn(() => of({status: 'ok'}))
+		};
+		const res = await upgradeConfirm(uhttpService);
+		expect(res).toBe(true);
+	})
+
+	it('rejects to false on status error', () => {
+		const uhttpService = {
+			call: jest.fn(() => of({status: 'error'}))
+		};
+		expect.assertions(1);
+		return expect(upgradeConfirm(uhttpService)).rejects.toEqual(false);
+	})
+})
+
+describe('upgradeRevert', () => {
+	it('sends the appropiate request', () => {
+		const uhttpService = {
+			call: jest.fn(() => of(null))
+		};
+		upgradeRevert(uhttpService);
+		expect(uhttpService.call).toBeCalledWith('system', 'reboot', {});
+	})
+
+	it('resolves to true on success', async () => {
+		const uhttpService = {
+			call: jest.fn(() => of(null))
+		};
+		const res = await upgradeRevert(uhttpService);
+		expect(res).toBe(true);
+	})
+})

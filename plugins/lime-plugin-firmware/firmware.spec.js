@@ -4,8 +4,10 @@ import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 
 import FirmwarePage from './src/firmwarePage';
-import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware } from './src/firmwareApi';
+import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware,
+	upgradeConfirm, upgradeRevert } from './src/firmwareApi';
 import { useAppContext } from '../../src/utils/app.context';
+import { route } from 'preact-router';
 
 jest.mock('i18n-js', () => ({
 	t: jest.fn(x => x)
@@ -38,7 +40,7 @@ function triggerUpgrade(getByLabelText, getByRole, preserveConfig=false) {
 	return file
 }
 
-describe('firmware page', () => {
+describe('firmware form', () => {
 	beforeEach(() => {
 		// Reset default mock implementations
 		upgradeConfirmIsAvailable.mockImplementation(jest.fn(async () => true));
@@ -166,3 +168,44 @@ describe('firmware page', () => {
 		expect(await findByText(noteText)).toBeInTheDocument();
 	});
 });
+
+
+describe('firmware confirm', () => {
+	beforeEach(() => {
+		// Reset default mock implementations
+		upgradeConfirm.mockImplementation(jest.fn(async () => true));
+		upgradeRevert.mockImplementation(jest.fn(async () => true));
+		useAppContext.mockImplementation(() => (
+			{uhttpdService: mockUhttpdService, suCounter: 630})
+		);
+	});
+
+	afterEach(() => {
+		cleanup();
+	});
+
+	it('shows two buttons, one for confirm, one for revert', () => {
+		const { getByRole } = render(<FirmwarePage />);
+		expect(getByRole('button', {name: /confirm/i})).toBeEnabled();
+		expect(getByRole('button', {name: /revert/i})).toBeEnabled();
+	})
+
+	it('routes to home page when clicking on confirm', async () => {
+		const { getByRole } = render(<FirmwarePage />);
+		const button = getByRole('button', {name: /confirm/i});
+		fireEvent.click(button);
+		await waitForExpect(() => {
+			expect(route).toHaveBeenCalledWith('/')
+		})
+	})
+
+	it('shows a legend saying device will reboot when reverting', async () => {
+		const { getByRole, findByText } = render(<FirmwarePage />);
+		const button = getByRole('button', {name: /revert/i});
+		fireEvent.click(button);
+		expect(await findByText(
+			new RegExp('Reverting to previous version', 'i'))).toBeInTheDocument();
+		const noteText = new RegExp('Please wait while the device reboot and reload the app', 'i');
+		expect(await findByText(noteText)).toBeInTheDocument();
+	})
+})
