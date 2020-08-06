@@ -111,16 +111,24 @@
     "reload_3e45154f": "Recargar",
     "firmware_6a098a0d": "Firmware",
     "please_verify_that_the_image_is_for_the_target_dev_7200f22e": "Por favor, verificá que la imagen sea para este dispositivo y que confiás en su origen",
-    "please_wait_while_the_device_reboot_and_reload_the_83305d1d": "Por favor, esperá a que el equipo se reinicie y recargá la aplicación",
+    "please_wait_while_the_device_reboot_and_reload_the_a6d06bb4": "Por favor, esperá a que el equipo se reinicie y recargá la aplicación",
     "preserve_config_94b340cf": "Preservar configuración",
     "select_file_71aa4113": "Seleccioná el archivo",
-    "something_wrong_happened_not_upgrading_3cae47a2": "Algo salió mal, no se realizará la actualización",
     "the_device_will_reboot_you_may_need_to_connect_to__8285b1a3": "El equipo se reiniciará, es posible que debas conectarte a la nueva red wifi y recargar la aplicación",
     "the_selected_image_is_not_a_valid_for_the_target_d_c5edf208": "La imagen seleccionada no es válida para este dispositivo",
     "the_upgrade_is_done_232faea7": "La actualización se realizó",
     "this_device_does_not_support_secure_rollback_to_pr_1c167a2c": "En este dispositivo no se puede revertir la actualización en caso de errores",
     "this_device_supports_secure_rollback_to_previous_v_a60ddbcb": "En este dispositivo se puede revertir la actualización en caso de errores",
     "upgrade_5de364f8": "Actualizar",
-    "upload_firmware_image_from_your_device_57327bee": "Subí una imagen de firmware desde tu dispositivo"
+    "upload_firmware_image_from_your_device_57327bee": "Subí una imagen de firmware desde tu dispositivo",
+    "cofirm_upgrade_before_seconds_seconds_or_it_will_b_48b600b6": "Confirmá la actualización en los próximos %{seconds} segundos o será revertida",
+    "confirm_6556b3a6": "Confirmar",
+    "filename_83eeb4ac": "Nombre",
+    "go_64ecd1fd": "Ir!",
+    "revert_702e7694": "Revertir",
+    "reverting_to_previous_version_e6e43529": "Volviendo a la versión anterior",
+    "size_b30e1077": "Tamaño",
+    "to_keep_the_current_configuration_or_ab76f6d1":"La actualización, o...",
+    "to_the_previous_configuration_bf087867":"a la versión anterior"
 }
 
