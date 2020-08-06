@@ -64,13 +64,10 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 	}
 
 	/* Input to state function*/
-	function _changeName (e) {
+	function _changeHostName (e) {
 		const end = e.type === 'change';
-		e.target.value = slugify(e.target.value, end);
-		setState({
-			...state,
-			hostname: e.target.value
-		});
+		e.target.value = slugify(e.target.value.toLocaleLowerCase(), end);
+		setState({...state, hostname: e.target.value || ''});
 		return e;
 	}
 
@@ -115,7 +112,7 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 										{networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
 									</select>
 									<label>{I18n.t('Choose a name for this node')}</label>
-									<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostname} onInput={_changeName} />
+									<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
 									{/* <label>{I18n.t('Choose a password for this node')}</label>
 									<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onChange={_changePassword} /> */}
 								</div>}

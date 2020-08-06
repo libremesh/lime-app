@@ -22,14 +22,14 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 
 	function _changeName(e) {
 		const end = e.type === 'change';
-		e.target.value = slugify(e.target.value.toLocaleLowerCase(), end, true);
+		e.target.value = slugify(e.target.value, end, true);
 		setState({ ...state, communityName: e.target.value || '' });
 		return e;
 	}
 
 	function _changeHostName(e) {
 		const end = e.type === 'change';
-		e.target.value = slugify(e.target.value, end);
+		e.target.value = slugify(e.target.value.toLocaleLowerCase(), end);
 		setState({ ...state, hostName: e.target.value || '' });
 		return e;
 	}
