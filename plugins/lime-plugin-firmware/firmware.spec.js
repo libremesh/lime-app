@@ -92,10 +92,11 @@ describe('firmware form', () => {
 	});
 
 	it('calls the cgi-io endpoint to upload the file', async () => {
+		const { uhttpdService } = useAppContext();
 		const { getByLabelText, getByRole} = render(<FirmwarePage />);
 		const file = triggerUpgrade(getByLabelText, getByRole);
 		await waitForExpect(() => {
-			expect(uploadFile).toBeCalledWith(file);
+			expect(uploadFile).toBeCalledWith(uhttpdService, file);
 		})
 	});
 
@@ -152,7 +153,7 @@ describe('firmware form', () => {
 		const { findByText, getByLabelText, getByRole} = render(<FirmwarePage />);
 		const preserveConfig = true;
 		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
-		const noteText = new RegExp('Please wait while the device reboot and reload the app', 'i');
+		const noteText = new RegExp('Please wait while the device reboots and reload the app', 'i');
 		expect(await findByText(noteText)).toBeInTheDocument();
 	});
 
@@ -205,7 +206,7 @@ describe('firmware confirm', () => {
 		fireEvent.click(button);
 		expect(await findByText(
 			new RegExp('Reverting to previous version', 'i'))).toBeInTheDocument();
-		const noteText = new RegExp('Please wait while the device reboot and reload the app', 'i');
+		const noteText = new RegExp('Please wait while the device reboots and reload the app', 'i');
 		expect(await findByText(noteText)).toBeInTheDocument();
 	})
 })

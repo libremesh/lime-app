@@ -60,7 +60,7 @@ export function upgradeFirmware(api, preserveConfig) {
 }
 
 export function upgradeConfirm(api) {
-	return api.call('lime-utils-admin', 'firmware-confirm', {})
+	return api.call('lime-utils-admin', 'firmware_confirm', {})
 		.toPromise()
 		.then(response => new Promise((res, rej) => {
 			if (response.status === 'ok') {

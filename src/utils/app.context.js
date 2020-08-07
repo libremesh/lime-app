@@ -81,7 +81,7 @@ export class AppContextProvider extends Component {
 	}
 
 	_fetchSafeUpgradeCounter() {
-		return Promise.resolve(630);
+		return Promise.resolve(false);
 		// return this.state.uhttpdService.call('lime-utils-admin', 'XXG', {}).toPromise();
 	}
 

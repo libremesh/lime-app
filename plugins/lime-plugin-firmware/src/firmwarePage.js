@@ -179,7 +179,7 @@ const _UpgradeForm = () => {
 	function onUpgrade() {
 		const file = fileInputRef.current.files[0];
 		setFilename(file.filename);
-		uploadFile(file)
+		uploadFile(uhttpdService, file)
 			.then(_validateFirmware)
 			.then(() => upgradeFirmware(uhttpdService, preserveConfig))
 			.then(() => setUpgradeSuccess(true))
