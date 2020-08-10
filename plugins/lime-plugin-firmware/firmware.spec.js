@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { render, fireEvent, cleanup, act, screen } from '@testing-library/preact';
+import { render, fireEvent, cleanup, act } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 
@@ -25,13 +25,13 @@ const secureRollbackText =
 const noSecureRollbackText =
 	/this device does not support secure rollback to previous version if something goes wrong/i;
 
-function triggerUpgrade(getByLabelText, getByRole, preserveConfig=false) {
+function triggerUpgrade(getByLabelText, getByRole, preserveConfig=true) {
 	const fileInput = getByLabelText(/select file/i);
 	const file = new File(['(⌐□_□)'], 'test.bin');
 	Object.defineProperty(fileInput, 'files', {
 		value: [file]
 	});
-	if (preserveConfig) {
+	if (!preserveConfig) {
 		const preserveConfigCheckbox = getByLabelText(/preserve config/i);
 		fireEvent.click(preserveConfigCheckbox);
 	}
@@ -134,7 +134,7 @@ describe('firmware form', () => {
 		const { uhttpdService } = useAppContext();
 		triggerUpgrade(getByLabelText, getByRole);
 		await waitForExpect(() => {
-			expect(upgradeFirmware).toHaveBeenCalledWith(uhttpdService, false);
+			expect(upgradeFirmware).toHaveBeenCalledWith(uhttpdService, true);
 			expect(upgradeFirmware).toHaveBeenCalledAfter(validateFirmware);
 		})
 	});
@@ -152,7 +152,7 @@ describe('firmware form', () => {
 	});
 
 	it.each`preserveConfig ${true} ${false}
-	`('shows up a legend asking the user to wait for the upgrade to finish preserveCongif: $preserveConfig', async ({preserveConfig}) => {
+	`('shows up a legend asking the user to wait for the upgrade to finish preserveConfig: $preserveConfig', async ({preserveConfig}) => {
 		uploadFile.mockImplementation(async () => true);
 		validateFirmware.mockImplementation(async () => true);
 		upgradeFirmware.mockImplementation(async () => true);
@@ -162,7 +162,7 @@ describe('firmware form', () => {
 			'The firmware is being upgraded...', 'i');
 		expect(await findByText(noteText1)).toBeInTheDocument();
 		const noteText2 = new RegExp(
-			'Please wait patienly for .* seconds and do not disconnect the device', 'i');
+			'Please wait patiently for .* seconds and do not disconnect the device', 'i');
 		expect(await findByText(noteText2)).toBeInTheDocument();
 	});
 
