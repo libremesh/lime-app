@@ -187,7 +187,7 @@ const _UpgradeForm = () => {
 	const [upgradeConfirmAvailable, setUpgradeConfirmAvailable] = useState(undefined);
 	const [firmwareIsValid, setFirmwareIsValid] = useState(undefined);
 	const [submitSuccess, setSubmitSucces] = useState(undefined);
-	const [preserveConfig, setpreserveConfig] = useState(false);
+	const [preserveConfig, setpreserveConfig] = useState(true);
 	const [fileName, setFilename] = useState('');
 	const fileInputRef = createRef();
 

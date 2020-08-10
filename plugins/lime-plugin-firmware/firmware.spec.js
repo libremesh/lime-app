@@ -93,6 +93,11 @@ describe('firmware form', () => {
 		expect(getByLabelText(/select file/i)).toBeInTheDocument();
 	});
 
+	it('shows up checked checkbox to preserve config', () => {
+		const { getByLabelText } = render(<FirmwarePage />);
+		expect(getByLabelText(/preserve config/i)).toBeChecked();
+	});
+
 	it('shows up a button to perform the firmware upgrade', () => {
 		const { getByRole } = render(<FirmwarePage />);
 		expect(getByRole('button', {name: /upgrade/i})).toBeEnabled();
