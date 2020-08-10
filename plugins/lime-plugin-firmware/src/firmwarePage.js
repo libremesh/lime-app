@@ -14,8 +14,6 @@ const secureRollbackText = I18n.t(
 	'This device supports secure rollback to previous version if something goes wrong');
 const noSecureRollbackText = I18n.t(
 	'This device does not support secure rollback to previous version if something goes wrong');
-const pleaseVerifyImageText = I18n.t(
-	'Please verify that the image is for the target device and that you trust its origin');
 const validationErrorText = I18n.t(
 	'The selected image is not a valid for the target device'
 );
@@ -163,10 +161,6 @@ export const UpgradeForm = ({
 						<div><b>{I18n.t('Size')}</b>: {filesize}</div>
 					</div>
 				}
-				<div class={`${style.inputNote} ${style.note}`}>
-					<span class={`${style.warningSymbol}`}>⚠</span>
-					{pleaseVerifyImageText}
-				</div>
 				<label>
 					<input name="preserve-config" id="preserve-config" type="checkbox" checked={preserveConfig} onChange={tooglePreserveConfig} />
 					{I18n.t('Preserve config')}

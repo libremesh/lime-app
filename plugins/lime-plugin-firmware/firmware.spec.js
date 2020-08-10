@@ -81,13 +81,6 @@ describe('firmware form', () => {
 		expect(getByText(/upload firmware image from your device/i)).toBeInTheDocument();
 	});
 
-	it('shows up a note reminding the user to verify the firmware image by their own', () => {
-		const { getByText } = render(<FirmwarePage />);
-		const noteText = new RegExp('please verify that the image is for the target device' +
-			' and that you trust its origin', 'i');
-		expect(getByText(noteText)).toBeInTheDocument();
-	});
-
 	it('shows up a file input to select a firmware image', () => {
 		const { getByLabelText } = render(<FirmwarePage />);
 		expect(getByLabelText(/select file/i)).toBeInTheDocument();
