@@ -15,15 +15,15 @@ export default {
 };
 
 export const SafeUpgradeIsAvailable = () => (
-	<UpgradeForm upgradeConfirmAvailable={true} {...formActions} />
+	<UpgradeForm preserveConfig={true} upgradeConfirmAvailable={true} {...formActions} />
 );
 
 export const SafeUpgradeIsNotAvailable = () => (
-	<UpgradeForm upgradeConfirmAvailable={false} {...formActions} />
+	<UpgradeForm preserveConfig={true} upgradeConfirmAvailable={false} {...formActions} />
 );
 
 export const AnInvalidFirmwareWasUploaded = () => (
-	<UpgradeForm upgradeConfirmAvailable={false} firmwareIsValid={false} {...formActions} />
+	<UpgradeForm preserveConfig={true} upgradeConfirmAvailable={false} firmwareIsValid={false} {...formActions} />
 );
 
 export const SuccessfullUpgradePreservingConfig = () => (
