@@ -6,8 +6,9 @@ import { useState, useEffect } from 'preact/hooks';
 import { upgradeConfirmIsAvailable, uploadFile, validateFirmware,
 	upgradeFirmware, upgradeConfirm, upgradeRevert} from './firmwareApi';
 import { useAppContext } from '../../../src/utils/app.context';
-import { route } from 'preact-router';
+import ProgressBar from '../../../src/components/progressbar';
 
+import { route } from 'preact-router';
 
 const secureRollbackText = I18n.t(
 	'This device supports secure rollback to previous version if something goes wrong');
@@ -19,13 +20,11 @@ const validationErrorText = I18n.t(
 	'The selected image is not a valid for the target device'
 );
 
-const upgradeSuccessTextPreserveConfig = I18n.t(
-	'Please wait while the device reboots and reload the app'
+const isUpgradingText = seconds => I18n.t(
+	'Please wait patiently for %{seconds} seconds and do not disconnect the device.', {seconds}
 );
 
-const upgradeSuccessTextNotPreserveConfig = I18n.t(
-	'The device will reboot, you may need to connect to the new wireless network and reload the app'
-);
+const afterUpgradeNotPreserveConfigText = I18n.t('You may need to connect to the new wireless network and reload the app');
 
 export const UpgradeConfirm = ({onConfirm, onRevert}) => (
 	<div class={`container container-padded container-center`}>
@@ -39,7 +38,7 @@ export const UpgradeConfirm = ({onConfirm, onRevert}) => (
 export const UpgradeReverted = () => (
 	<div class={`container container-padded container-center`}>
 		<h3>{I18n.t('Reverting to previous version')}</h3>
-		<span>{upgradeSuccessTextPreserveConfig}</span>
+		<span>{I18n.t('Please wait while the device reboots, and reload the app')}</span>
 	</div>
 );
 
@@ -64,20 +63,50 @@ const _UpgradeConfirm = () => {
 	return <UpgradeConfirm onConfirm={onConfirm} onRevert={onRevert} />
 }
 
-export const UpgradeSuccess = ({preserveConfig}) => (
-	<div class={`container container-padded container-center`}>
+export const UpgradeSuccess = ({ preserveConfig, onReload } ) => (
+	<div class="container container-padded container-center">
 		<h3>
-			{I18n.t('The upgrade is done')}
+			{I18n.t('The upgrade should be done')}
 		</h3>
-		{ preserveConfig &&
-			<span>{upgradeSuccessTextPreserveConfig}</span>
+		{preserveConfig &&
+			<button onClick={onReload}>{I18n.t('Try reloading the app')}</button>
 		}
 		{!(preserveConfig) &&
-			<span>{upgradeSuccessTextNotPreserveConfig}</span>
+			<span>{afterUpgradeNotPreserveConfigText}</span>
 		}
 	</div>
-);
+)
+export const UpgradeProgress = ({elapsedTime, totalTime}) => {
+	const remainingTime = totalTime - elapsedTime;
+	const progress = elapsedTime / totalTime * 100;
+	return (
+		<div class="container container-padded container-center">
+			<h3>
+				{I18n.t('The firmware is being upgraded...')}
+			</h3>
+			<ProgressBar progress={progress} />
+			<span>{isUpgradingText(remainingTime)}</span>
+		</div>
+	)
+};
 
+const _UpgradeSubmitted = ({ preserveConfig }) => {
+	const totalTime = 180;
+	const [elapsedTime, setElapsedTime] = useState(0);
+
+	useEffect(() => {
+		const id = setInterval(() => setElapsedTime(elapsedTime => elapsedTime + 1), 1000)
+		return () => {
+			clearInterval(id);
+		}
+	}, [elapsedTime, setElapsedTime])
+
+
+	if (elapsedTime < totalTime) {
+		return <UpgradeProgress elapsedTime={elapsedTime} totalTime={totalTime} />
+	}
+	return <UpgradeSuccess preserveConfig={preserveConfig} />
+}
 
 export const UpgradeForm = ({
 	upgradeConfirmAvailable,
@@ -157,7 +186,7 @@ const _UpgradeForm = () => {
 	const { uhttpdService } = useAppContext();
 	const [upgradeConfirmAvailable, setUpgradeConfirmAvailable] = useState(undefined);
 	const [firmwareIsValid, setFirmwareIsValid] = useState(undefined);
-	const [upgradeSuccess, setUpgradeSuccess] = useState(undefined);
+	const [submitSuccess, setSubmitSucces] = useState(undefined);
 	const [preserveConfig, setpreserveConfig] = useState(false);
 	const [fileName, setFilename] = useState('');
 	const fileInputRef = createRef();
@@ -182,7 +211,7 @@ const _UpgradeForm = () => {
 		uploadFile(uhttpdService, file)
 			.then(_validateFirmware)
 			.then(() => upgradeFirmware(uhttpdService, preserveConfig))
-			.then(() => setUpgradeSuccess(true))
+			.then(() => setSubmitSucces(true))
 			.catch(error => {
 				switch (error) {
 					case 'validation':
@@ -194,8 +223,8 @@ const _UpgradeForm = () => {
 			})
 	}
 
-	if (upgradeSuccess) {
-		return <UpgradeSuccess preserveConfig={preserveConfig} />
+	if (submitSuccess) {
+		return <_UpgradeSubmitted preserveConfig={preserveConfig} />
 	}
 
 	return <UpgradeForm {...{upgradeConfirmAvailable, firmwareIsValid,

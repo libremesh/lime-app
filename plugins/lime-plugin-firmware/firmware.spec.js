@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { render, fireEvent, cleanup } from '@testing-library/preact';
+import { render, fireEvent, cleanup, act, screen } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 
@@ -41,8 +41,11 @@ function triggerUpgrade(getByLabelText, getByRole, preserveConfig=false) {
 }
 
 describe('firmware form', () => {
+	beforeAll(() => {
+		jest.useFakeTimers();
+	})
+
 	beforeEach(() => {
-		// Reset default mock implementations
 		upgradeConfirmIsAvailable.mockImplementation(jest.fn(async () => true));
 		uploadFile.mockImplementation(jest.fn(async () => true));
 		validateFirmware.mockImplementation(jest.fn(async () => true));
@@ -53,6 +56,10 @@ describe('firmware form', () => {
 	afterEach(() => {
 		cleanup();
 	});
+	
+	afterAll(() => {
+		jest.useRealTimers();
+	})
 
 	it('shows up a legend telling confirm-mechanism is available when it is', async () => {
 		upgradeConfirmIsAvailable.mockImplementation(async () => true);
@@ -146,27 +153,51 @@ describe('firmware form', () => {
 		})
 	});
 
-	it('shows up a legend asking the user to wait for reboot after upgrade, preserve config', async () => {
+	it.each`preserveConfig ${true} ${false}
+	`('shows up a legend asking the user to wait for the upgrade to finish preserveCongif: $preserveConfig', async ({preserveConfig}) => {
 		uploadFile.mockImplementation(async () => true);
 		validateFirmware.mockImplementation(async () => true);
 		upgradeFirmware.mockImplementation(async () => true);
 		const { findByText, getByLabelText, getByRole} = render(<FirmwarePage />);
-		const preserveConfig = true;
 		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
-		const noteText = new RegExp('Please wait while the device reboots and reload the app', 'i');
-		expect(await findByText(noteText)).toBeInTheDocument();
+		const noteText1 = new RegExp(
+			'The firmware is being upgraded...', 'i');
+		expect(await findByText(noteText1)).toBeInTheDocument();
+		const noteText2 = new RegExp(
+			'Please wait patienly for .* seconds and do not disconnect the device', 'i');
+		expect(await findByText(noteText2)).toBeInTheDocument();
 	});
 
-	it('shows up a legend asking the user to wait for reboot after upgrade, not preserve config', async () => {
+	it('shows a button to reload app after upgrade countdown when preserving config', async () => {
 		uploadFile.mockImplementation(async () => true);
 		validateFirmware.mockImplementation(async () => true);
 		upgradeFirmware.mockImplementation(async () => true);
-		const { findByText, getByLabelText, getByRole} = render(<FirmwarePage />);
+		const { getByLabelText, getByRole, findByRole, findByText} = render(<FirmwarePage />);
+		const preserveConfig = true;
+		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
+		const noteText1 = new RegExp(
+			'The firmware is being upgraded...', 'i');
+		await findByText(noteText1);
+		act(() => {
+			jest.advanceTimersByTime(181 * 1000)
+		})
+		expect(await findByRole('button', {name: /try reloading the app/i})).toBeEnabled()
+	});
+
+	it('shows a legend saying the user may switch network after upgrade when not preserving config', async () => {
+		uploadFile.mockImplementation(async () => true);
+		validateFirmware.mockImplementation(async () => true);
+		upgradeFirmware.mockImplementation(async () => true);
+		const { getByLabelText, getByRole, findByText} = render(<FirmwarePage />);
 		const preserveConfig = false;
 		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
-		const noteText = new RegExp(
-			'The device will reboot, you may need to connect to the new wireless network', 'i');
-		expect(await findByText(noteText)).toBeInTheDocument();
+		const noteText1 = new RegExp(
+			'The firmware is being upgraded...', 'i');
+		await findByText(noteText1);
+		act(() => {
+			jest.advanceTimersByTime(181 * 1000)
+		})
+		expect(await findByText('You may need to connect to the new wireless network and reload the app')).toBeInTheDocument()
 	});
 });
 

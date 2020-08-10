@@ -1,6 +1,7 @@
-import { UpgradeConfirm, UpgradeForm, UpgradeSuccess, UpgradeReverted } from './src/firmwarePage';
+import { UpgradeConfirm, UpgradeForm, UpgradeSuccess, UpgradeProgress, UpgradeReverted } from './src/firmwarePage';
 import { SafeUpgradeCountdown } from './src/upgradeCountdown';
 import { action } from '@storybook/addon-actions';
+import { withKnobs, number } from '@storybook/addon-knobs';
 
 const formActions = {
 	onUpgrade: action('onUpgrade'),
@@ -9,7 +10,8 @@ const formActions = {
 
 
 export default {
-	title: 'Containers|Firmware Upgrade'
+	title: 'Containers|Firmware Upgrade',
+	decorators: [withKnobs]
 };
 
 export const SafeUpgradeIsAvailable = () => (
@@ -31,6 +33,10 @@ export const SuccessfullUpgradePreservingConfig = () => (
 export const SuccessfullUpgradeNotPreservingConfig = () => (
 	<UpgradeSuccess preserveConfig={false} />
 );
+
+export const upgradeProgress = () => (
+	<UpgradeProgress elapsedTime={number('elapsedTime', 60)} totalTime={number('totalTime', 180)} />
+)
 
 export const safeUpgradeCountdown = () => (
 	<SafeUpgradeCountdown counter={600} />
