@@ -26,7 +26,7 @@ export const Route = ({ path, children }) => {
 		);
 	}
 
-	const tryingToConfirmUpgrade = (path === 'firmware') && suCounter;
+	const tryingToConfirmUpgrade = (path === 'firmware') && (suCounter > 0);
 	if (!fbwConfigured && !fbwCanceled && !tryingToConfirmUpgrade) {
 		return <Fbw.page />;
 	}

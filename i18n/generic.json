@@ -67,7 +67,6 @@
     "packet_loss_1afe48a8": "Packet loss",
     "password_8a271b1c": "Password",
     "please_configure_your_network_d6eb8b76": "Please configure your network",
-    "please_verify_that_the_image_is_for_the_target_dev_7200f22e": "Please verify that the image is for the target device and that you trust its origin",
     "please_wait_62914c7c": "Please wait",
     "please_wait_patiently_for_seconds_seconds_and_do_n_b98cfb66": "Please wait patiently for %{seconds} seconds and do not disconnect the device.",
     "please_wait_while_the_device_reboots_and_reload_th_67bd290d": "Please wait while the device reboots, and reload the app",

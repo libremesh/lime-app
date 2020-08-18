@@ -45,7 +45,7 @@ const App = () => {
 	return (
 		<div id="app">
 			<Header Menu={Menu} />
-			{suCounter && <SafeUpgradeCountdown counter={suCounter} />}
+			{(suCounter > 0) && <SafeUpgradeCountdown counter={suCounter} />}
 			<div id="content">
 				<Routes />
 			</div>

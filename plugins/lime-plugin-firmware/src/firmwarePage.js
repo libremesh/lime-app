@@ -7,20 +7,8 @@ import { upgradeConfirmIsAvailable, uploadFile, validateFirmware,
 	upgradeFirmware, upgradeConfirm, upgradeRevert} from './firmwareApi';
 import { useAppContext } from '../../../src/utils/app.context';
 import ProgressBar from '../../../src/components/progressbar';
-
+import Loading from '../../../src/components/loading';
 import { route } from 'preact-router';
-
-const secureRollbackText = I18n.t(
-	'This device supports secure rollback to previous version if something goes wrong');
-const noSecureRollbackText = I18n.t(
-	'This device does not support secure rollback to previous version if something goes wrong');
-const validationErrorText = I18n.t(
-	'The selected image is not a valid for the target device'
-);
-
-const isUpgradingText = seconds => I18n.t(
-	'Please wait patiently for %{seconds} seconds and do not disconnect the device.', {seconds}
-);
 
 const afterUpgradeNotPreserveConfigText = I18n.t('You may need to connect to the new wireless network and reload the app');
 
@@ -83,7 +71,7 @@ export const UpgradeProgress = ({elapsedTime, totalTime}) => {
 				{I18n.t('The firmware is being upgraded...')}
 			</h3>
 			<ProgressBar progress={progress} />
-			<span>{isUpgradingText(remainingTime)}</span>
+			<span>{I18n.t('Please wait patiently for %{seconds} seconds and do not disconnect the device.', {seconds: remainingTime})}</span>
 		</div>
 	)
 };
@@ -100,19 +88,25 @@ const _UpgradeSubmitted = ({ preserveConfig }) => {
 	}, [elapsedTime, setElapsedTime])
 
 
+	function onReload() {
+		window.location = window.origin;
+	}
+
 	if (elapsedTime < totalTime) {
 		return <UpgradeProgress elapsedTime={elapsedTime} totalTime={totalTime} />
 	}
-	return <UpgradeSuccess preserveConfig={preserveConfig} />
+
+	return <UpgradeSuccess preserveConfig={preserveConfig} onReload={onReload} />
 }
 
 export const UpgradeForm = ({
-	upgradeConfirmAvailable,
+	upgradeConfirmAvailable=true,
 	firmwareIsValid,
-	preserveConfig,
+	preserveConfig=true,
 	tooglePreserveConfig,
 	fileInputRef,
-	onUpgrade
+	onUpgrade,
+	submitting
 }) => {
 	
 	const [filename, setfilename] = useState('');
@@ -127,9 +121,7 @@ export const UpgradeForm = ({
 		const files = e.target.files;
 		if (files.length > 0) {
 			setfilename(files[0].name);
-			setfilesize(
-				((files[0].size) / 1048576).toFixed(1).toString().concat(' MB')
-			)
+			setfilesize(files[0].size);
 		}
 		else {
 			setfilename('');
@@ -140,12 +132,12 @@ export const UpgradeForm = ({
 		<div class="container container-padded">
 			{upgradeConfirmAvailable === true &&
 				<div class={`${style.note} ${style.notePositive}`}>
-					{secureRollbackText}
+					{I18n.t('This device supports secure rollback to previous version if something goes wrong')}
 				</div>
 			}
 			{upgradeConfirmAvailable === false &&
 				<div class={`${style.note} ${style.noteWarning}`}>
-					{noSecureRollbackText}
+					{I18n.t('This device does not support secure rollback to previous version if something goes wrong')}
 				</div>
 			}
 			<h5>{I18n.t('Upload firmware image from your device')}</h5>
@@ -158,7 +150,7 @@ export const UpgradeForm = ({
 				{filename &&
 					<div>
 						<div><b>{I18n.t('Filename')}</b>: {filename}</div>
-						<div><b>{I18n.t('Size')}</b>: {filesize}</div>
+						<div><b>{I18n.t('Size')}</b>: {(filesize / 1048576).toFixed(1)} MB</div>
 					</div>
 				}
 				<label>
@@ -167,9 +159,14 @@ export const UpgradeForm = ({
 				</label>
 				<button type="submit">{I18n.t('Upgrade')}</button>
 			</form>
+			{submitting &&
+				<div>
+					<Loading />
+				</div>
+			}
 			{ firmwareIsValid === false &&
 				<div class={`${style.note} ${style.noteError}`}>
-					{validationErrorText}
+					{I18n.t('The selected image is not a valid for the target device')}
 				</div>
 			}
 		</div>
@@ -182,6 +179,7 @@ const _UpgradeForm = () => {
 	const [firmwareIsValid, setFirmwareIsValid] = useState(undefined);
 	const [submitSuccess, setSubmitSucces] = useState(undefined);
 	const [preserveConfig, setpreserveConfig] = useState(true);
+	const [submitting, setSubmitting] = useState(false);
 	const [fileName, setFilename] = useState('');
 	const fileInputRef = createRef();
 
@@ -200,6 +198,7 @@ const _UpgradeForm = () => {
 	}
 
 	function onUpgrade() {
+		setSubmitting(true);
 		const file = fileInputRef.current.files[0];
 		setFilename(file.filename);
 		uploadFile(uhttpdService, file)
@@ -215,6 +214,7 @@ const _UpgradeForm = () => {
 						throw new Error(error);
 				}
 			})
+			.finally(setSubmitting(false))
 	}
 
 	if (submitSuccess) {
@@ -222,13 +222,13 @@ const _UpgradeForm = () => {
 	}
 
 	return <UpgradeForm {...{upgradeConfirmAvailable, firmwareIsValid,
-		preserveConfig, fileInputRef, fileName, onUpgrade, tooglePreserveConfig}} />
+		preserveConfig, fileInputRef, fileName, onUpgrade, tooglePreserveConfig, submitting}} />
 }
 
 const FirmwarePage = ({}) => {
 	const { suCounter } = useAppContext();
 	
-	if (suCounter) {
+	if (suCounter > 0) {
 		return <_UpgradeConfirm />
 	}
 

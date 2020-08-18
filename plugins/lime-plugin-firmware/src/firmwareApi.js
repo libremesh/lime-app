@@ -10,7 +10,7 @@ export function uploadFile(api, file) {
 	return new Promise((res, rej) => {
 		const request = new XMLHttpRequest();
 		const formData = new FormData();
-	
+
 		formData.append("sessionid", api.sid);
 		formData.append("filename", FW_PATH);
 		formData.append("filedata", file)
@@ -22,7 +22,7 @@ export function uploadFile(api, file) {
 		request.addEventListener('error', (error) => {
 			rej(error)
 		});
-	
+
 		request.open('POST', '/cgi-bin/cgi-upload');
 		request.send(formData);
 	})

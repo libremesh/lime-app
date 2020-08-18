@@ -50,14 +50,14 @@ export class AppContextProvider extends Component {
 				[this._fetchNodeData(),
 					this._fetchCommunitySettings(),
 					this._fetchFBWStatus(),
-					this._fetchSafeUpgradeCounter()]
+					this._fetchSafeUpgradeStatus()]
 			))
-			.then(([nodeData, communitySettings, fbwStatus, suCounter]) => {
+			.then(([nodeData, communitySettings, fbwStatus, suStatus]) => {
 				this.setState(
 					{nodeHostname: nodeData.hostname,
 						communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
 						fbwConfigured: !fbwStatus.lock,
-						suCounter}
+						suCounter: Number(suStatus.remaining_s)}
 				);
 			})
 			.catch((error) => {
@@ -80,9 +80,8 @@ export class AppContextProvider extends Component {
 		return this.state.uhttpdService.call('lime-fbw', 'status', {}).toPromise();
 	}
 
-	_fetchSafeUpgradeCounter() {
-		return Promise.resolve(false);
-		// return this.state.uhttpdService.call('lime-utils-admin', 'XXG', {}).toPromise();
+	_fetchSafeUpgradeStatus() {
+		return this.state.uhttpdService.call('lime-utils', 'safe_upgrade_confirm_remaining_s', {}).toPromise();
 	}
 
 	_login(username, password) {
