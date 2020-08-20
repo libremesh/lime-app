@@ -23,6 +23,7 @@ export class AppContextProvider extends Component {
 		this.loginAsRoot = this.loginAsRoot.bind(this);
 		this.cancelFbw = this.cancelFbw.bind(this);
 		this.setMenuEnabled = this.setMenuEnabled.bind(this);
+		this.stopSuCounter = this.stopSuCounter.bind(this);
 		this.state = {
 			uhttpdService,
 			nodeHostname: null,
@@ -36,7 +37,8 @@ export class AppContextProvider extends Component {
 			menuEnabled: true,
 			loginAsRoot: this.loginAsRoot,
 			cancelFbw: this.cancelFbw,
-			setMenuEnabled: this.setMenuEnabled
+			setMenuEnabled: this.setMenuEnabled,
+			stopSuCounter: this.stopSuCounter
 		};
 		this.initialState = this.state;
 	}
@@ -50,14 +52,14 @@ export class AppContextProvider extends Component {
 				[this._fetchNodeData(),
 					this._fetchCommunitySettings(),
 					this._fetchFBWStatus(),
-					this._fetchSafeUpgradeStatus()]
+					this._fetchUpgradeInfo()]
 			))
-			.then(([nodeData, communitySettings, fbwStatus, suStatus]) => {
+			.then(([nodeData, communitySettings, fbwStatus, upgradeInfo]) => {
 				this.setState(
 					{nodeHostname: nodeData.hostname,
 						communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
 						fbwConfigured: !fbwStatus.lock,
-						suCounter: Number(suStatus.remaining_s)}
+						suCounter: Number(upgradeInfo.safe_upgrade_confirm_remaining_s)}
 				);
 			})
 			.catch((error) => {
@@ -80,8 +82,8 @@ export class AppContextProvider extends Component {
 		return this.state.uhttpdService.call('lime-fbw', 'status', {}).toPromise();
 	}
 
-	_fetchSafeUpgradeStatus() {
-		return this.state.uhttpdService.call('lime-utils', 'safe_upgrade_confirm_remaining_s', {}).toPromise();
+	_fetchUpgradeInfo() {
+		return this.state.uhttpdService.call('lime-utils', 'get_upgrade_info', {}).toPromise();
 	}
 
 	_login(username, password) {
@@ -113,6 +115,10 @@ export class AppContextProvider extends Component {
 
 	setMenuEnabled(value) {
 		this.setState({ menuEnabled: value });
+	}
+
+	stopSuCounter() {
+		this.setState({ suCounter: -1 })
 	}
 
 	render () {

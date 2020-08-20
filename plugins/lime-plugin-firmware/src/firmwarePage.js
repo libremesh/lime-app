@@ -29,11 +29,12 @@ export const UpgradeReverted = () => (
 );
 
 const _UpgradeConfirm = () => {
-	const { uhttpdService } = useAppContext();
+	const { uhttpdService, stopSuCounter } = useAppContext();
 	const [reverted, setReverted] = useState(false);
 
 	function onConfirm() {
 		upgradeConfirm(uhttpdService).then(() => {
+			stopSuCounter();
 			route('/');
 		})
 	}
