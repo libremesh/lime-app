@@ -12,12 +12,12 @@ describe('upgradeConfirmIsAvailable', () => {
 			call: jest.fn(() => of({}))
 		};
 		await upgradeConfirmIsAvailable(uhttpService);
-		expect(uhttpService.call).toBeCalledWith('lime-utils-admin', 'is_upgrade_confirm_supported', {});
+		expect(uhttpService.call).toBeCalledWith('lime-utils', 'get_upgrade_info', {});
 	})
 
 	it('resolves to true when it is available', async () => {
 		const uhttpService = {
-			call: jest.fn(() => of({status: 'ok', supported: true}))
+			call: jest.fn(() => of({status: 'ok', is_upgrade_confirm_supported: true}))
 		};
 		const isAvailable = await upgradeConfirmIsAvailable(uhttpService);
 		expect(isAvailable).toBeTrue();
@@ -25,7 +25,7 @@ describe('upgradeConfirmIsAvailable', () => {
 
 	it('resolves to false when it is not', async () => {
 		const uhttpService = {
-			call: jest.fn(() => of({status: 'ok', supported: false}))
+			call: jest.fn(() => of({status: 'ok', is_upgrade_confirm_supported: false}))
 		};
 		const isAvailable = await upgradeConfirmIsAvailable(uhttpService);
 		expect(isAvailable).toBeFalse();

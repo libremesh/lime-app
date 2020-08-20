@@ -1,9 +1,9 @@
 const FW_PATH = '/tmp/firmware.bin';
 
 export function upgradeConfirmIsAvailable(api) {
-	return api.call('lime-utils-admin', 'is_upgrade_confirm_supported', {})
+	return api.call('lime-utils', 'get_upgrade_info', {})
 		.toPromise()
-		.then(res => res.supported);
+		.then(res => res["is_upgrade_confirm_supported"]);
 }
 
 export function uploadFile(api, file) {
