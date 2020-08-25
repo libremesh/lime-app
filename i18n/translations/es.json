@@ -110,7 +110,6 @@
     "un_unexpected_error_occurred_please_contact_the_de_b9eb7c49": "Un error inesperado ocurrió, porfavor contactá al equipo de desarrollo",
     "reload_3e45154f": "Recargar",
     "firmware_6a098a0d": "Firmware",
-    "please_verify_that_the_image_is_for_the_target_dev_7200f22e": "Por favor, verificá que la imagen sea para este dispositivo y que confiás en su origen",
     "preserve_config_94b340cf": "Preservar configuración",
     "select_file_71aa4113": "Seleccioná el archivo",
     "you_may_need_to_connect_to_the_new_wireless_networ_e931e438": "Es posible que debas conectarte a la nueva red wifi y recargar la aplicación",
@@ -132,6 +131,8 @@
     "please_wait_while_the_device_reboots_and_reload_th_67bd290d": "Por favor esperá a que el dispositivo se reinicie y recargá la app",
     "the_firmware_is_being_upgraded_f3881802": "La actualización se está realizando",
     "the_upgrade_should_be_done_d66854": "La actualización debiera estar lista",
-    "try_reloading_the_app_4e4c3a66": "Intentar recargar la app"
+    "try_reloading_the_app_4e4c3a66": "Intentar recargar la app",
+    "when_reloading_the_app_you_will_be_asked_to_confir_f9ecb33e": "Al recargar la aplicación, se te pedirá que confirmes la actualización, si no lo haces se revertirá",
+    "please_select_a_file_b49d6bf4": "Porfavor, elige un archivo"
 }
 

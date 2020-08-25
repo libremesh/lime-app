@@ -15,7 +15,7 @@ export function uploadFile(api, file) {
 		formData.append("filename", FW_PATH);
 		formData.append("filedata", file)
 	
-		request.addEventListener('load', () => {
+		request.addEventListener('loadend', () => {
 			res(request.responseText);
 		});
 	

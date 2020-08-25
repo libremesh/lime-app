@@ -22,6 +22,10 @@ export const SafeUpgradeIsNotAvailable = () => (
 	<UpgradeForm upgradeConfirmAvailable={false} {...formActions} />
 );
 
+export const SubmittedWithoutFile = () => (
+	<UpgradeForm fileIsRequiredError={true} {...formActions} />
+);
+
 export const AnInvalidFirmwareWasUploaded = () => (
 	<UpgradeForm firmwareIsValid={false} {...formActions} />
 );
@@ -36,6 +40,10 @@ export const SuccessfullUpgradePreservingConfig = () => (
 
 export const SuccessfullUpgradeNotPreservingConfig = () => (
 	<UpgradeSuccess preserveConfig={false} />
+);
+
+export const SuccessfullUpgradeHasToConfirm = () => (
+	<UpgradeSuccess preserveConfig={false} upgradeConfirmAvailable={true} />
 );
 
 export const upgradeProgress = () => (
@@ -53,6 +61,10 @@ const confirmActions = {
 
 export const upgradeConfirm = () => (
 	<UpgradeConfirm {...confirmActions} />
+)
+
+export const upgradeConfirmSubmitting = () => (
+	<UpgradeConfirm {...confirmActions} submitting={true} />
 )
 
 export const upgradeReverted = () => (

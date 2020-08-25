@@ -25,19 +25,28 @@ const secureRollbackText =
 const noSecureRollbackText =
 	/this device does not support secure rollback to previous version if something goes wrong/i;
 
-function triggerUpgrade(getByLabelText, getByRole, preserveConfig=true) {
+function stepSelectFile(getByLabelText) {
 	const fileInput = getByLabelText(/select file/i);
 	const file = new File(['(⌐□_□)'], 'test.bin');
 	Object.defineProperty(fileInput, 'files', {
 		value: [file]
 	});
+	return file
+}
+
+function stepSubmit(getByLabelText, getByRole, preserveConfig=true) {
 	if (!preserveConfig) {
 		const preserveConfigCheckbox = getByLabelText(/preserve config/i);
 		fireEvent.click(preserveConfigCheckbox);
 	}
 	const submitButton = getByRole('button', /upgrade/i);
 	fireEvent.click(submitButton);
-	return file
+}
+
+function triggerUpgrade(getByLabelText, getByRole, preserveConfig=true) {
+	const file = stepSelectFile(getByLabelText);
+	stepSubmit(getByLabelText, getByRole, preserveConfig)
+	return file;
 }
 
 describe('firmware form', () => {
@@ -96,6 +105,13 @@ describe('firmware form', () => {
 		expect(getByRole('button', {name: /upgrade/i})).toBeEnabled();
 	});
 
+	it('shows error if upgrading without selecting a file', async () => {
+		const { getByLabelText, getByRole, queryByText, getByText} = render(<FirmwarePage />);
+		expect(queryByText('Please select a file', 'i')).toBeNull()
+		stepSubmit(getByLabelText, getByRole)
+		expect(getByText('Please select a file', 'i')).toBeInTheDocument();
+	});
+
 	it('calls the cgi-io endpoint to upload the file', async () => {
 		const { uhttpdService } = useAppContext();
 		const { getByLabelText, getByRole} = render(<FirmwarePage />);
@@ -123,9 +139,7 @@ describe('firmware form', () => {
 		expect(queryByText(noteText)).not.toBeInTheDocument();
 		triggerUpgrade(getByLabelText, getByRole);
 		expect(await findByText(noteText)).toBeInTheDocument();
-
 	});
-
 
 	it('calls the firmware upgrade endpoint if validation success', async () => {
 		uploadFile.mockImplementation(async () => true);
@@ -206,7 +220,7 @@ describe('firmware confirm', () => {
 		upgradeConfirm.mockImplementation(jest.fn(async () => true));
 		upgradeRevert.mockImplementation(jest.fn(async () => true));
 		useAppContext.mockImplementation(() => (
-			{uhttpdService: mockUhttpdService, suCounter: 630})
+			{uhttpdService: mockUhttpdService, suCounter: 630, stopSuCounter: jest.fn()})
 		);
 	});
 
@@ -235,7 +249,7 @@ describe('firmware confirm', () => {
 		fireEvent.click(button);
 		expect(await findByText(
 			new RegExp('Reverting to previous version', 'i'))).toBeInTheDocument();
-		const noteText = new RegExp('Please wait while the device reboots and reload the app', 'i');
+		const noteText = new RegExp('Please wait while the device reboots, and reload the app', 'i');
 		expect(await findByText(noteText)).toBeInTheDocument();
 	})
 })

@@ -10,14 +10,17 @@ import ProgressBar from '../../../src/components/progressbar';
 import Loading from '../../../src/components/loading';
 import { route } from 'preact-router';
 
-const afterUpgradeNotPreserveConfigText = I18n.t('You may need to connect to the new wireless network and reload the app');
-
-export const UpgradeConfirm = ({onConfirm, onRevert}) => (
+export const UpgradeConfirm = ({onConfirm, onRevert, submitting}) => (
 	<div class={`container container-padded container-center`}>
 		<button onClick={onConfirm}>{I18n.t('Confirm')}</button>
 		<p>{I18n.t('to keep the current configuration. Or ...')}</p>
 		<button onClick={onRevert}>{I18n.t('Revert')}</button>
 		<p>{I18n.t('to the previous configuration')}</p>
+		{submitting &&
+			<div>
+				<Loading />
+			</div>
+		}
 	</div>
 );
 
@@ -31,8 +34,10 @@ export const UpgradeReverted = () => (
 const _UpgradeConfirm = () => {
 	const { uhttpdService, stopSuCounter } = useAppContext();
 	const [reverted, setReverted] = useState(false);
+	const [submitting, setSubmitting] = useState(false);
 
 	function onConfirm() {
+		setSubmitting(true);
 		upgradeConfirm(uhttpdService).then(() => {
 			stopSuCounter();
 			route('/');
@@ -40,17 +45,21 @@ const _UpgradeConfirm = () => {
 	}
 
 	function onRevert() {
-		upgradeRevert(uhttpdService).then(() => setReverted(true))
+		setSubmitting(true);
+		upgradeRevert(uhttpdService).then(() => {
+			stopSuCounter();
+			setReverted(true);
+		})
 	}
 
 	if (reverted) {
 		return <UpgradeReverted />
 	}
 
-	return <UpgradeConfirm onConfirm={onConfirm} onRevert={onRevert} />
+	return <UpgradeConfirm onConfirm={onConfirm} onRevert={onRevert} submitting={submitting} />
 }
 
-export const UpgradeSuccess = ({ preserveConfig, onReload } ) => (
+export const UpgradeSuccess = ({ preserveConfig, onReload, upgradeConfirmAvailable} ) => (
 	<div class="container container-padded container-center">
 		<h3>
 			{I18n.t('The upgrade should be done')}
@@ -59,7 +68,12 @@ export const UpgradeSuccess = ({ preserveConfig, onReload } ) => (
 			<button onClick={onReload}>{I18n.t('Try reloading the app')}</button>
 		}
 		{!(preserveConfig) &&
-			<span>{afterUpgradeNotPreserveConfigText}</span>
+			<span>{I18n.t('You may need to connect to the new wireless network and reload the app')}</span>
+		}
+		{ upgradeConfirmAvailable &&
+			<span>
+				<b>{I18n.t('When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted')}</b>
+			</span>
 		}
 	</div>
 )
@@ -77,7 +91,7 @@ export const UpgradeProgress = ({elapsedTime, totalTime}) => {
 	)
 };
 
-const _UpgradeSubmitted = ({ preserveConfig }) => {
+const _UpgradeSubmitted = ({ preserveConfig, upgradeConfirmAvailable }) => {
 	const totalTime = 180;
 	const [elapsedTime, setElapsedTime] = useState(0);
 
@@ -97,7 +111,7 @@ const _UpgradeSubmitted = ({ preserveConfig }) => {
 		return <UpgradeProgress elapsedTime={elapsedTime} totalTime={totalTime} />
 	}
 
-	return <UpgradeSuccess preserveConfig={preserveConfig} onReload={onReload} />
+	return <UpgradeSuccess {...{preserveConfig, onReload, upgradeConfirmAvailable}} />
 }
 
 export const UpgradeForm = ({
@@ -107,7 +121,8 @@ export const UpgradeForm = ({
 	tooglePreserveConfig,
 	fileInputRef,
 	onUpgrade,
-	submitting
+	submitting,
+	fileIsRequiredError
 }) => {
 	
 	const [filename, setfilename] = useState('');
@@ -154,6 +169,9 @@ export const UpgradeForm = ({
 						<div><b>{I18n.t('Size')}</b>: {(filesize / 1048576).toFixed(1)} MB</div>
 					</div>
 				}
+				{fileIsRequiredError &&
+					<div><span style={{color: "#923838"}}>{I18n.t('Please select a file')}</span></div>
+				}
 				<label>
 					<input name="preserve-config" id="preserve-config" type="checkbox" checked={preserveConfig} onChange={tooglePreserveConfig} />
 					{I18n.t('Preserve config')}
@@ -182,6 +200,7 @@ const _UpgradeForm = () => {
 	const [preserveConfig, setpreserveConfig] = useState(true);
 	const [submitting, setSubmitting] = useState(false);
 	const [fileName, setFilename] = useState('');
+	const [fileIsRequiredError, setFileIsRequiredError] = useState(false);
 	const fileInputRef = createRef();
 
 	useEffect(() => {
@@ -200,6 +219,11 @@ const _UpgradeForm = () => {
 
 	function onUpgrade() {
 		setSubmitting(true);
+		setFirmwareIsValid(undefined);
+		if (fileInputRef.current.files.length < 1) {
+			setFileIsRequiredError(true);
+			return;
+		}
 		const file = fileInputRef.current.files[0];
 		setFilename(file.filename);
 		uploadFile(uhttpdService, file)
@@ -215,15 +239,15 @@ const _UpgradeForm = () => {
 						throw new Error(error);
 				}
 			})
-			.finally(setSubmitting(false))
+			.finally(() => setSubmitting(false))
 	}
 
 	if (submitSuccess) {
-		return <_UpgradeSubmitted preserveConfig={preserveConfig} />
+		return <_UpgradeSubmitted {...{preserveConfig, upgradeConfirmAvailable}} />
 	}
 
 	return <UpgradeForm {...{upgradeConfirmAvailable, firmwareIsValid,
-		preserveConfig, fileInputRef, fileName, onUpgrade, tooglePreserveConfig, submitting}} />
+		preserveConfig, fileInputRef, fileName, onUpgrade, tooglePreserveConfig, submitting, fileIsRequiredError}} />
 }
 
 const FirmwarePage = ({}) => {
