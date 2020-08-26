@@ -218,13 +218,14 @@ const _UpgradeForm = () => {
 	}
 
 	function onUpgrade() {
-		setSubmitting(true);
+		setFileIsRequiredError(false);
 		setFirmwareIsValid(undefined);
-		if (fileInputRef.current.files.length < 1) {
+		const file = fileInputRef.current.files[0];
+		if (file === undefined) {
 			setFileIsRequiredError(true);
 			return;
 		}
-		const file = fileInputRef.current.files[0];
+		setSubmitting(true);
 		setFilename(file.filename);
 		uploadFile(uhttpdService, file)
 			.then(_validateFirmware)
