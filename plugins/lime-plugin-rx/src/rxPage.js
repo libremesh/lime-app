@@ -86,7 +86,7 @@ export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, 
 	}
 
 	function _changeNode() {
-		changeNode(stripIface(nodeData.most_active.station_hostname));
+		window.location.href = 'http://' + stripIface(nodeData.most_active.station_hostname);
 	}
 
 	function nodeStatus(node){
