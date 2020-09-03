@@ -1,6 +1,6 @@
 import { h } from 'preact';
 
-import style from './style';
+import style from './style.less';
 
 export const Loading = () => (
 	<div className={style.spinner}>

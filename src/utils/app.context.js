@@ -23,6 +23,7 @@ export class AppContextProvider extends Component {
 		this.loginAsRoot = this.loginAsRoot.bind(this);
 		this.cancelFbw = this.cancelFbw.bind(this);
 		this.setMenuEnabled = this.setMenuEnabled.bind(this);
+		this.stopSuCounter = this.stopSuCounter.bind(this);
 		this.state = {
 			uhttpdService,
 			nodeHostname: null,
@@ -32,34 +33,41 @@ export class AppContextProvider extends Component {
 			fbwCanceled: false,
 			isRoot: false,
 			communitySettings: {},
+			suCounter: null,
 			menuEnabled: true,
 			loginAsRoot: this.loginAsRoot,
 			cancelFbw: this.cancelFbw,
-			setMenuEnabled: this.setMenuEnabled
+			setMenuEnabled: this.setMenuEnabled,
+			stopSuCounter: this.stopSuCounter
 		};
 		this.initialState = this.state;
 	}
 
 	componentDidMount(){
 		this._login('lime-app', 'generic')
-			.then(response => {
+			.then(() => {
 				this.setState({ loading: false });
 			})
-			.then(() => Promise.all([
-				this._fetchNodeData(),
-				this._fetchCommunitySettings(),
-				this._fetchFBWStatus()]))
-			.then(([nodeData, communitySettings, fbwStatus]) => {
-				this.setState({
-					nodeHostname: nodeData.hostname,
-					communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
-					fbwConfigured: !fbwStatus.lock
-				});
+			.then(() => Promise.all(
+				[this._fetchNodeData(),
+					this._fetchCommunitySettings(),
+					this._fetchFBWStatus(),
+					this._fetchUpgradeInfo()]
+			))
+			.then(([nodeData, communitySettings, fbwStatus, upgradeInfo]) => {
+				this.setState(
+					{nodeHostname: nodeData.hostname,
+						communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
+						fbwConfigured: !fbwStatus.lock,
+						suCounter: Number(upgradeInfo.safe_upgrade_confirm_remaining_s)}
+				);
 			})
-			.catch(error => {
+			.catch((error) => {
+				console.error(error);
 				this.setState({ unexpectedError: true });
 			});
 	}
+
 
 	_fetchNodeData() {
 		return this.state.uhttpdService.call('system', 'board', {}).toPromise();
@@ -67,11 +75,15 @@ export class AppContextProvider extends Component {
 
 	_fetchCommunitySettings() {
 		return this.state.uhttpdService.call('lime-utils', 'get_community_settings', {}).toPromise()
-			.catch(error => Promise.resolve(DEFAULT_COMMUNITY_SETTINGS));
+			.catch(() => Promise.resolve(DEFAULT_COMMUNITY_SETTINGS));
 	}
 
 	_fetchFBWStatus() {
 		return this.state.uhttpdService.call('lime-fbw', 'status', {}).toPromise();
+	}
+
+	_fetchUpgradeInfo() {
+		return this.state.uhttpdService.call('lime-utils', 'get_upgrade_info', {}).toPromise();
 	}
 
 	_login(username, password) {
@@ -94,7 +106,7 @@ export class AppContextProvider extends Component {
 	/** Passed down throw app context to allow components to login as root */
 	loginAsRoot(password) {
 		return this._login('root', password)
-			.then(res => this.setState({ isRoot: true }));
+			.then(() => this.setState({ isRoot: true }));
 	}
 
 	cancelFbw() {
@@ -103,6 +115,10 @@ export class AppContextProvider extends Component {
 
 	setMenuEnabled(value) {
 		this.setState({ menuEnabled: value });
+	}
+
+	stopSuCounter() {
+		this.setState({ suCounter: -1 })
 	}
 
 	render () {

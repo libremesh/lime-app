@@ -8,7 +8,7 @@ import I18n from 'i18n-js';
 
 
 export const Route = ({ path, children }) => {
-	const { loading, fbwConfigured, fbwCanceled, unexpectedError } = useAppContext();
+	const { suCounter, loading, fbwConfigured, fbwCanceled, unexpectedError } = useAppContext();
 
 	if (unexpectedError) {
 		return (
@@ -26,22 +26,20 @@ export const Route = ({ path, children }) => {
 		);
 	}
 
-	if (!fbwConfigured && !fbwCanceled) {
-		if (path === 'firstbootwizard') {
-			return children;
-		}
+	const tryingToConfirmUpgrade = (path === 'firmware') && (suCounter > 0);
+	if (!fbwConfigured && !fbwCanceled && !tryingToConfirmUpgrade) {
 		return <Fbw.page />;
 	}
 
 	return children;
 };
 
-export const CommunityProtectedRoute = ({ children }) => {
+export const CommunityProtectedRoute = ({ path, children }) => {
 	const { isRoot } = useAppContext();
 	if (!isRoot) {
-		return <Route><SharedPasswordLogin /></Route>;
+		return <Route path={path}><SharedPasswordLogin /></Route>;
 	}
-	return children;
+	return <Route path={path}>{children}</Route>;
 };
 
 export const Redirect = ({ to }) => {
