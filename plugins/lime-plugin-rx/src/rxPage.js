@@ -26,7 +26,7 @@ const toHHMMSS = (secs, plus) => {
 		.join(':');
 };
 
-const SystemBox = ({ uptime }) => {
+const SystemBox = ({ uptime, firmwareVersion, boardModel }) => {
 	const [ count, setCount ] = useState(0);
 
 	useEffect(() => {
@@ -36,16 +36,24 @@ const SystemBox = ({ uptime }) => {
 		return () => clearInterval(interval);
 	}, []);
 
+	let actualUptime = '?'
 	if (typeof uptime !== 'undefined') {
-		return (
-			<Box title={I18n.t('System')}>
-				<span>
-					<b>{I18n.t('Uptime')} </b>{toHHMMSS(uptime, count)}<br />
-				</span>
-			</Box>
-		);
+		actualUptime = toHHMMSS(uptime, count);
 	}
-	return (<span />);
+	actualUptime = toHHMMSS(uptime, count);
+	return (
+		<Box title={I18n.t('System')}>
+			<span>
+				<b>{I18n.t('Uptime')} </b>{actualUptime} <br />
+			</span>
+			<span>
+				<b>{I18n.t('Board')} </b>{boardModel}<br />
+			</span>
+			<span>
+				<b>{I18n.t('Firmware')} </b>{firmwareVersion}<br />
+			</span>
+		</Box>
+	);
 };
 
 const MostActiveBox = ({ node, changeNode }) => {
@@ -64,7 +72,7 @@ const MostActiveBox = ({ node, changeNode }) => {
 };
 
 export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData }) => {
-	const { changeNode } = useAppContext();
+	const { boardData } = useAppContext();
 
 	function loading(option, nodeData) {
 		if (!option) {
@@ -87,8 +95,8 @@ export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, 
 				<div>
 
 					<MostActiveBox node={node} changeNode={_changeNode} />
-					
-					<SystemBox uptime={node.uptime} />
+
+					<SystemBox uptime={node.uptime} firmwareVersion={boardData.release.description} boardModel={boardData.model} />
 
 					<Box title={I18n.t('Internet connection')}>
 						<span>
