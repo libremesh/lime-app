@@ -47,9 +47,9 @@ const SystemBox = ({ uptime, firmwareVersion, boardModel }) => {
 				<b>{I18n.t('Uptime')} </b>{actualUptime} <br />
 			</span>
 			<span>
-				<b>{I18n.t('Board')} </b>{boardModel}<br />
+				<b>{I18n.t('Device')} </b>{boardModel}<br />
 			</span>
-			<span>
+			<span style={{whiteSpace: 'nowrap'}}>
 				<b>{I18n.t('Firmware')} </b>{firmwareVersion}<br />
 			</span>
 		</Box>
