@@ -15,15 +15,18 @@ function stripIface (hostIface) {
 	return hostIface.split('_wlan')[0].replace('_','-');
 }
 
-const toHHMMSS = (secs, plus) => {
-	let secNum = parseInt(secs, 10) + plus;
-	let days    = Math.floor(secNum / 86400) % 24;
-	let hours   = Math.floor(secNum / 3600) % 24;
-	let minutes = Math.floor(secNum / 60) % 60;
-	let seconds = secNum % 60;
-	return [days,hours,minutes,seconds]
-		.map(v => v < 10 ? '0' + v : v)
-		.join(':');
+const toHHMMSS = (seconds, plus) => {
+	let secNum = parseInt(seconds, 10) + plus;
+	let days = Math.floor(secNum / 86400) % 24;
+	let hours = Math.floor(secNum / 3600) % 24;
+	let mins = Math.floor(secNum / 60) % 60;
+	let secs = secNum % 60;
+	const daysText = days ? [days, I18n.t('days', { count: days })].join(' ') : null;
+	const hoursText = hours ? [hours, I18n.t('hours', { count: hours })].join(' ') : null;
+	const minsText = mins ? [mins, I18n.t('minutes', { count: mins })].join(' ') : null;
+	const secsText = secs ? [secs, I18n.t('seconds', { count: secs })].join(' ') : null;
+	const allTexts = [daysText, hoursText, minsText, secsText];
+	return allTexts.filter(x => x !== null).join(', ');
 };
 
 const SystemBox = ({ uptime, firmwareVersion, boardModel }) => {

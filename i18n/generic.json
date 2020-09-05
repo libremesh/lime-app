@@ -23,6 +23,22 @@
     "confirm_location_2fe5ae11": "confirm location",
     "congratulations_ffe43bf9": "Congratulations",
     "connected_host_91e11459": "Connected Host",
+    "count_days_de0c6a32": {
+      "one": "1 days",
+      "other": "%{count} days"
+    },
+    "count_hours_1bd03883": {
+      "one": "1 hours",
+      "other": "%{count} hours"
+    },
+    "count_minutes_a6eeeacb": {
+      "one": "1 minutes",
+      "other": "%{count} minutes"
+    },
+    "count_seconds_2953a98e": {
+      "one": "1 seconds",
+      "other": "%{count} seconds"
+    },
     "create_network_d229d642": "Create network",
     "create_new_network_28805f92": "Create new network",
     "current_status_830c5a75": "Current status",

@@ -134,6 +134,22 @@
     "try_reloading_the_app_4e4c3a66": "Intentar recargar la app",
     "when_reloading_the_app_you_will_be_asked_to_confir_f9ecb33e": "Al recargar la aplicación, se te pedirá que confirmes la actualización, si no lo haces se revertirá",
     "please_select_a_file_b49d6bf4": "Porfavor, elige un archivo",
-    "device_95d26d94": "Equipo"
+    "device_95d26d94": "Equipo",
+    "count_days_de0c6a32": {
+        "one": "día",
+        "other": "días"
+    },
+    "count_hours_1bd03883": {
+        "one": "hora",
+        "other": "horas"
+    },
+    "count_minutes_a6eeeacb": {
+        "one": "minuto",
+        "other": "minutos"
+    },
+    "count_seconds_2953a98e": {
+        "one": "segundo",
+        "other": "segundos"
+    }
 }
 

@@ -36,7 +36,7 @@ const nodeData =  {
 	],
 	hostname: 'ql-anaymarcos',
 	status: 'ok',
-	uptime: '6655.80\n',
+	uptime: '93055.80\n',
 	most_active: {
 	  rx_bytes: 82509781,
 	  station_mac: 'A8:40:41:1C:84:05',
