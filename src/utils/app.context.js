@@ -27,6 +27,7 @@ export class AppContextProvider extends Component {
 		this.state = {
 			uhttpdService,
 			nodeHostname: null,
+			boardData: null,
 			loading: true,
 			unexpectedError: false,
 			fbwConfigured: true,
@@ -49,18 +50,19 @@ export class AppContextProvider extends Component {
 				this.setState({ loading: false });
 			})
 			.then(() => Promise.all(
-				[this._fetchNodeData(),
+				[this._fetchBoardData(),
 					this._fetchCommunitySettings(),
 					this._fetchFBWStatus(),
 					this._fetchUpgradeInfo()]
 			))
-			.then(([nodeData, communitySettings, fbwStatus, upgradeInfo]) => {
-				this.setState(
-					{nodeHostname: nodeData.hostname,
-						communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
-						fbwConfigured: !fbwStatus.lock,
-						suCounter: Number(upgradeInfo.safe_upgrade_confirm_remaining_s)}
-				);
+			.then(([boardData, communitySettings, fbwStatus, upgradeInfo]) => {
+				this.setState({
+					nodeHostname: boardData.hostname,
+					boardData: boardData,
+					communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
+					fbwConfigured: !fbwStatus.lock,
+					suCounter: Number(upgradeInfo.safe_upgrade_confirm_remaining_s)
+				});
 			})
 			.catch((error) => {
 				console.error(error);
@@ -69,7 +71,7 @@ export class AppContextProvider extends Component {
 	}
 
 
-	_fetchNodeData() {
+	_fetchBoardData() {
 		return this.state.uhttpdService.call('system', 'board', {}).toPromise();
 	}
 

@@ -53,11 +53,18 @@ const nodeData =  {
 	}
 };
 
+const boardData = object('board data', {
+	release: {
+		description: 'LibreRouterOs 1.2-SNAPSHOT r0-21f7665'
+	},
+	model: 'LibreRouter v1'
+});
+
 const actions = {
 	getNodeStatusTimer: action('getNodeStatusTimer'),
 	getNodeStatus: action('getNodeStatus'),
 	stopTimer: action('stopTimer'),
-	changeNode: action('changeNod')
+	changeNode: action('changeNode')
 };
 
 export default {
@@ -67,9 +74,8 @@ export default {
 };
 
 export const withData = () => {
-	const changeNode = action('changeNode');
 	return (
-		<AppContext.Provider value={{ changeNode }}>
+		<AppContext.Provider value={{ boardData }}>
 			<Page
 				nodeData={object('Node data', nodeData)}
 				isLoading={boolean('Is loading', false)}
@@ -80,9 +86,8 @@ export const withData = () => {
 };
 
 export const loadingNodeData = () => {
-	const changeNode = action('changeNode');
 	return (
-		<AppContext.Provider value={changeNode}>
+		<AppContext.Provider value={{boardData}}>
 			<Page
 				nodeData={object('Node data', nodeData)}
 				isLoading={boolean('Is loading', true)}
