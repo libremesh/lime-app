@@ -17,7 +17,7 @@ function stripIface (hostIface) {
 
 const toHHMMSS = (seconds, plus) => {
 	let secNum = parseInt(seconds, 10) + plus;
-	let days = Math.floor(secNum / 86400) % 24;
+	let days = Math.floor(secNum / 86400);
 	let hours = Math.floor(secNum / 3600) % 24;
 	let mins = Math.floor(secNum / 60) % 60;
 	let secs = secNum % 60;
