@@ -38,5 +38,21 @@
   "uptime_c1d2415d" :"Uptime",
   "interfaces_44f8a99c": "Interfaces",
   "last_known_internet_path_45f31c9a": "This your last working path to the Internet",
-  "you_should_try_to_connect_to_the_network_network_8d7f515e": "You should try to connect to the wifi network %{network}."
+  "you_should_try_to_connect_to_the_network_network_8d7f515e": "You should try to connect to the wifi network %{network}.",
+  "count_days_de0c6a32": {
+    "one": "day",
+    "other": "days"
+  },
+  "count_hours_1bd03883": {
+      "one": "hour",
+      "other": "hours"
+  },
+  "count_minutes_a6eeeacb": {
+      "one": "minute",
+      "other": "minutes"
+  },
+  "count_seconds_2953a98e": {
+      "one": "second",
+      "other": "seconds"
+  }
 }
