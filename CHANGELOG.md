@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.6](https://github.com/germanferrero/lime-app/compare/v0.2.5...v0.2.6) (2020-09-15)
+
+
+### Features
+
+* **firmware upgrade:** basic implementation of firmware upgrade ([175ec82](https://github.com/germanferrero/lime-app/commit/175ec820aab261463c13318b30bc1ff687467bf4))
+
+
+### Bug Fixes
+
+* **fbw:** allow uppercase letters in network name ([987c458](https://github.com/germanferrero/lime-app/commit/987c4581d350e3cc75b2e467e1559748e870f2fc))
+* **rx:** fix most_active change node functionality ([acc2617](https://github.com/germanferrero/lime-app/commit/acc26176da225501c6d02c8403bede54d270cefb))
+* **rxpage:** fix uptime days field ([85e6b55](https://github.com/germanferrero/lime-app/commit/85e6b5562585c69652a08f2e828e57181cc543e1))
+* **shared-password:** do not show success message on error ([3866041](https://github.com/germanferrero/lime-app/commit/38660416dbb6391b0e338c0f128e52dd57828bcd))
+
 ### [0.2.5](https://github.com/germanferrero/lime-app/compare/v0.2.4...v0.2.5) (2020-05-20)
 
 
