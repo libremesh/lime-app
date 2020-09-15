@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { changeHostname } from './adminActions';
-import { loading, redirect, error } from './adminSelectors';
+import { loading, redirect, error, ipv4 } from './adminSelectors';
 import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
@@ -14,6 +14,7 @@ import I18n from 'i18n-js';
 import { isValidHostname, slugify } from '../../../src/utils/isValidHostname';
 import { showNotification } from '../../../src/store/actions';
 import { useAppContext } from '../../../src/utils/app.context';
+import axios from 'axios';
 
 const style = {
 	textLoading: {
@@ -35,15 +36,15 @@ const style = {
 };
 
 
-export const Admin = ({ changeHostname, showNotification, loading, redirect, error }) => {
+export const Admin = ({ ipv4, changeHostname, showNotification, loading, redirect, error }) => {
 	const { nodeHostname } = useAppContext();
 	const [ hostname, setHostname ] = useState(nodeHostname);
 
 	useEffect(() => {
 		if (redirect) {
-			window.location.href = 'http://'.concat(hostname);
+			window.location.href = 'http://'.concat(ipv4);
 		}
-	}, [hostname, redirect]);
+	}, [ipv4, redirect]);
 
 	function handleHostname(e) {
 		const end = e.type === 'change';
@@ -89,7 +90,8 @@ export const mapStateToProps = (state) => ({
 	nodeData: getNodeData(state),
 	loading: loading(state),
 	redirect: redirect(state),
-	error: error(state)
+	error: error(state),
+	ipv4: ipv4(state),
 });
 
 export const mapDispatchToProps = (dispatch) => ({

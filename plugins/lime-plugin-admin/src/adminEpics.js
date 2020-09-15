@@ -1,11 +1,13 @@
 import {
 	SET_HOSTNAME,
 	SET_HOSTNAME_SUCCESS,
-	SET_HOSTNAME_ERROR
+	SET_HOSTNAME_ERROR,
+	GET_IP_SUCCESS
 } from './adminConstants';
 
 import {
-	changeHostname
+	changeHostname,
+	getIpV4
 } from './adminApi';
 
 import { ofType } from 'redux-observable';
@@ -20,7 +22,15 @@ const setHostname = (action$, _store, { wsAPI }) =>
 		))
 	);
 
+const _getIpV4 = (action$, _store, { wsAPI }) =>
+	action$.pipe(
+		ofType(SET_HOSTNAME_SUCCESS),
+		mergeMap((action) => getIpV4(wsAPI, action.payload).pipe(
+			map( payload => ({ type: GET_IP_SUCCESS, payload }))
+		))
+	);
 
 export default {
-	setHostname
+	setHostname,
+	_getIpV4
 };
