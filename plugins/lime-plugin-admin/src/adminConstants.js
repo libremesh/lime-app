@@ -1,5 +1,3 @@
-export const RELOAD_CONFIG = 'admin/RELOAD_CONFIG';
-
-export const SET_CONFIG = 'admin/SET_CONFIG';
-export const SET_CONFIG_SUCCESS = 'admin/SET_CONFIG_SUCCESS';
-export const SET_CONFIG_ERROR = 'admin/SET_CONFIG_ERROR';
+export const SET_HOSTNAME = 'admin/SET_HOSTNAME';
+export const SET_HOSTNAME_SUCCESS = 'admin/SET_HOSTNAME_SUCCESS';
+export const SET_HOSTNAME_ERROR = 'admin/SET_HOSTNAME_ERROR';

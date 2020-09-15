@@ -1,2 +1,2 @@
-export const changeConfig = (api, config) =>
-	api.call('lime-utils', 'change_config', { hostname: config.hostname, ip: config.ip });
+export const changeHostname = (api, hostname) =>
+	api.call('lime-utils-admin', 'set_hostname', { hostname });

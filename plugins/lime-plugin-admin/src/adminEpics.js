@@ -1,27 +1,26 @@
 import {
-	RELOAD_CONFIG,
-	SET_CONFIG,
-	SET_CONFIG_SUCCESS,
-	SET_CONFIG_ERROR
+	SET_HOSTNAME,
+	SET_HOSTNAME_SUCCESS,
+	SET_HOSTNAME_ERROR
 } from './adminConstants';
 
 import {
-	changeConfig
+	changeHostname
 } from './adminApi';
 
 import { ofType } from 'redux-observable';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 
-const setConfig = (action$, _store, { wsAPI }) =>
+const setHostname = (action$, _store, { wsAPI }) =>
 	action$.pipe(
-		ofType(SET_CONFIG),
-		mergeMap((action) => changeConfig(wsAPI, action.payload).pipe(
-			map( payload => ({ type: SET_CONFIG_SUCCESS, payload })),
-			catchError( error => ([{ type: SET_CONFIG_ERROR, payload: error }]) )
+		ofType(SET_HOSTNAME),
+		mergeMap((action) => changeHostname(wsAPI, action.payload).pipe(
+			map( payload => ({ type: SET_HOSTNAME_SUCCESS, payload })),
+			catchError( error => ([{ type: SET_HOSTNAME_ERROR, payload: error }]) )
 		))
 	);
 
 
 export default {
-	setConfig
+	setHostname
 };
