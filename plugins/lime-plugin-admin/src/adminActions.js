@@ -1,8 +1,8 @@
 import {
-	SET_CONFIG
+	SET_HOSTNAME
 } from './adminConstants';
 
-export const changeConfig = (config) => ({
-	type: SET_CONFIG,
-	payload: config
+export const changeHostname = (hostname) => ({
+	type: SET_HOSTNAME,
+	payload: hostname
 });

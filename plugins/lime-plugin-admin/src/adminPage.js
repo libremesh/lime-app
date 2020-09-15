@@ -4,8 +4,8 @@ import { useState, useEffect } from 'preact/hooks';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { changeConfig } from './adminActions';
-import { loading, redirect, error } from './adminSelectors';
+import { changeHostname } from './adminActions';
+import { loading, redirect, error, ipv4 } from './adminSelectors';
 import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 
 import Loading from '../../../src/components/loading';
@@ -14,6 +14,7 @@ import I18n from 'i18n-js';
 import { isValidHostname, slugify } from '../../../src/utils/isValidHostname';
 import { showNotification } from '../../../src/store/actions';
 import { useAppContext } from '../../../src/utils/app.context';
+import axios from 'axios';
 
 const style = {
 	textLoading: {
@@ -35,37 +36,25 @@ const style = {
 };
 
 
-export const Admin = ({ changeConfig, showNotification, nodeData, loading, redirect, error }) => {
-	const { nodeHostname, changeNode } = useAppContext();
-	const [ state, setState ] = useState({
-		hostname: nodeHostname,
-		ip: nodeData.ips.filter(ip => ip.version === '4')[0].address
-	});
+export const Admin = ({ ipv4, changeHostname, showNotification, loading, redirect, error }) => {
+	const { nodeHostname } = useAppContext();
+	const [ hostname, setHostname ] = useState(nodeHostname);
 
 	useEffect(() => {
 		if (redirect) {
-			setTimeout(() => {
-				changeNode(state.hostname);
-			}, 60000);
+			window.location.href = 'http://'.concat(ipv4);
 		}
-	}, [state.hostname, redirect, changeNode]);
+	}, [ipv4, redirect]);
 
 	function handleHostname(e) {
 		const end = e.type === 'change';
-		e.target.value = slugify(e.target.value, end);
-		setState({ ...state, hostname: e.target.value });
-		return e;
+		setHostname(slugify(e.target.value, end));
 	}
 
-	function handleIp(e) {
-		setState({ ...state, ip: e.target.value });
-		return e;
-	}
-
-	function _changeConfig(e) {
+	function _changeHostname(e) {
 		e.preventDefault();
-		if (isValidHostname(state.hostname, true)) {
-			return changeConfig({ hostname: state.hostname, ip: state.ip });
+		if (isValidHostname(hostname, true)) {
+			return changeHostname(hostname);
 		}
 		showNotification('Invalid hostname, needs to be at least three characters long.');
 	}
@@ -75,7 +64,7 @@ export const Admin = ({ changeConfig, showNotification, nodeData, loading, redir
 			return (
 				<div style={style.loadingBox}>
 					<Loading />
-					<span style={style.textLoading}>{I18n.t('Applying changes. The system takes a minute to get back online.')}</span>
+					<span style={style.textLoading}>{I18n.t('Applying changes.')}</span>
 				</div>
 			);
 		}
@@ -84,14 +73,10 @@ export const Admin = ({ changeConfig, showNotification, nodeData, loading, redir
 	return (
 		<div className="container container-padded">
 			{showLoading(loading)}
-			<form onSubmit={_changeConfig}>
+			<form onSubmit={_changeHostname}>
 				<p>
 					<label>{I18n.t('Station name')}</label>
-					<input type="text" value={state.hostname} onInput={handleHostname} onChange={handleHostname} className="u-full-width" />
-				</p>
-				<p>
-					<label>{I18n.t('Station IP v4')}</label>
-					<input type="text" value={state.ip} onInput={handleIp} className="u-full-width" />
+					<input type="text" value={hostname} onInput={handleHostname} className="u-full-width" />
 				</p>
 				<button className="button block" type="submit">{I18n.t('Change')}</button>
 			</form>
@@ -105,11 +90,12 @@ export const mapStateToProps = (state) => ({
 	nodeData: getNodeData(state),
 	loading: loading(state),
 	redirect: redirect(state),
-	error: error(state)
+	error: error(state),
+	ipv4: ipv4(state),
 });
 
 export const mapDispatchToProps = (dispatch) => ({
-	changeConfig: bindActionCreators(changeConfig, dispatch),
+	changeHostname: bindActionCreators(changeHostname, dispatch),
 	showNotification: bindActionCreators(showNotification, dispatch)
 });
 
