@@ -22,7 +22,14 @@ jobs:
         skip_clean: true
         on:
           tags: true
-
+      after_deploy:
+        - "./.ci/send_pull_request.sh"
+        '':
+          "/":
+            ci/deploy:
+              key:
+                secure: hYaoxOvHGU1K2oU72Sz4B1Jk9ORy/UGXVvER1PABTb90Bv9LHIhlirsA2PmWou0fos0cnRrPfvxNVSX3lT0r8lUrNhrO4wtFWp/NJTU1pFINEJfXMRRx2vaUoU53y+xYfh60BylE5mzlQRgEqGDaOJPA29l6aX8z7SzPdJcb9TXf/hkwrA+oQhoI5hv5Z0jcUs3jKY3fguHYrF+Fswb7SnIaPOUd0KRVy1tMMcDU1RABvOmlpO1hXhkfsoc1IR6fnYmIBPwgkNFz/EMhbt2lmNUBS65wgFbchj0zD+F7XRY9lIBbedfHNyPDVGxQoTpS5EekDwymwA3cC+JntrOZvwqu+wnS7AbJX2DYVS2gpWZrwFF+b6jAY002+pmO34qiaG0g696sgNlW4K0C1CqDf8/BKzbOLlvD4D4LTzsmQGas35D4LN/eksKrGEWVJTFdSzfOYMN0K+JWhIF65H8IdSymTb1ULRyDZo5+jEXJnbocB5Ict580Vp++i2tgLdY9KOUnmeGjmUKCOppWVHGnY7TipGcGRFLONVFFhEa5n/bKsOsILSujIcHyokkYyZnGsVVlHfJMioSic091JXzR4qJjiWG9OCBkTejK2tADLRifxTQMYpZzM0xuHjdIuGjWnM7gnm3UQWmLjjjHzKx6HIHaDc1BRFm+7WPcWL6gr/U=
+            
     - stage: storybook
       script:
         - npm run storybook:build
