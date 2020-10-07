@@ -8,12 +8,12 @@ import { changeHostname } from './adminActions';
 import { loading, redirect, error, ipv4 } from './adminSelectors';
 import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 
-import Loading from '../../../src/components/loading';
+import Loading from 'components/loading';
 
 import I18n from 'i18n-js';
-import { isValidHostname, slugify } from '../../../src/utils/isValidHostname';
+import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { showNotification } from '../../../src/store/actions';
-import { useAppContext } from '../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 import axios from 'axios';
 
 const style = {

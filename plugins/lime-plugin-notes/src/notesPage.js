@@ -10,7 +10,7 @@ import { getNotes, setNotes } from './notesActions';
 import { getNotesState } from './notesSelectors';
 
 import I18n from 'i18n-js';
-import { useAppContext } from '../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 
 export const Page = ({ setNotes, getNotes, notes, loading }) => {
 	const { nodeHostname } = useAppContext();

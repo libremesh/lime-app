@@ -9,12 +9,12 @@ import { getInternetStatus, getMetrics, getMetricsAll, getMetricsGateway,
 import { getNodeData } from '../../lime-plugin-rx/src/rxSelectors';
 
 import MetricsBox from './components/box';
-import { Box } from '../../../src/components/box';
+import { Box } from 'components/box';
 
 import I18n from 'i18n-js';
 
 import colorScale from 'simple-color-scale';
-import { useAppContext } from '../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 
 const style = {
 	textLoading: {

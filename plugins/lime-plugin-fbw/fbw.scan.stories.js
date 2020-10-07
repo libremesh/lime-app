@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, array, text } from '@storybook/addon-knobs/react';
 
 import { Scan } from './src/containers/Scan';
-import { AppContext } from '../../src/utils/app.context';
+import { AppContext } from 'utils/app.context';
 
 const nodeHostname = text('nodeHostname', 'new-node');
 

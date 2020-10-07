@@ -1,4 +1,5 @@
 require('dotenv').config();
+let path = require('path');
 
 /**
  * Function that mutates original webpack config.
@@ -29,4 +30,7 @@ export default function (config, env, helpers) {
 	// This allows to import less file from another less file;
 	const lessRules = helpers.getRulesByMatchingFile(config, '.less');
 	lessRules[0].rule.use[0].options.options.paths = lessRules[0].rule.use[0].options.options.paths[0];
+	// Add common imports aliases
+	config.resolve.alias.components = path.resolve(__dirname, 'src/components');
+	config.resolve.alias.utils = path.resolve(__dirname, 'src/utils');
 }

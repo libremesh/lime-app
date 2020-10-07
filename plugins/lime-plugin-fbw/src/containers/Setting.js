@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 import '../style';
 
-import ProgressBar from '../../../../src/components/progressbar';
-import Loading from '../../../../src/components/loading';
+import ProgressBar from 'components/progressbar';
+import Loading from 'components/loading';
 
 function useInterval (callback, delay, off) {
 	const savedCallback = useRef();

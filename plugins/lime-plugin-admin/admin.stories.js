@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs/react';
 
 import { Admin } from './src/adminPage';
-import { AppContext } from '../../src/utils/app.context';
+import { AppContext } from 'utils/app.context';
 
 const actions = {
 	changeHostname: action('changeHostname')

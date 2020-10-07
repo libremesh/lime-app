@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 import { getNodeStatusTimer, stopTimer, getNodeStatus } from './rxActions';
 import { getNodeData, isLoading } from './rxSelectors';
 
-import { Box } from '../../../src/components/box';
+import { Box } from 'components/box';
 import I18n from 'i18n-js';
-import { useAppContext } from '../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 
 function stripIface (hostIface) {
 	return hostIface.split('_wlan')[0].replace('_','-');

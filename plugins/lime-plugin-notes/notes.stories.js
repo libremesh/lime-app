@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, text, boolean } from '@storybook/addon-knobs/react';
 
 import { Page } from './src/notesPage';
-import { AppContext } from '../../src/utils/app.context';
+import { AppContext } from 'utils/app.context';
 
 const actions = {
 	getNotes: action('getNotes'),

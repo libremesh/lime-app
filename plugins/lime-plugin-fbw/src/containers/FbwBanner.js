@@ -1,4 +1,4 @@
-import { Banner } from '../../../../src/components/banner';
+import { Banner } from 'components/banner';
 import I18n from 'i18n-js';
 
 export const FbwBanner = ({ onOk, onCancel }) => {

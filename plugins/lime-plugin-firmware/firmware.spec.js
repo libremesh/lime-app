@@ -6,7 +6,7 @@ import waitForExpect from 'wait-for-expect';
 import FirmwarePage from './src/firmwarePage';
 import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware,
 	upgradeConfirm, upgradeRevert } from './src/firmwareApi';
-import { useAppContext } from '../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 import { route } from 'preact-router';
 
 jest.mock('i18n-js', () => ({
@@ -14,7 +14,7 @@ jest.mock('i18n-js', () => ({
 }));
 
 jest.mock('./src/firmwareApi');
-jest.mock('../../src/utils/app.context');
+jest.mock('utils/app.context');
 
 const mockUhttpdService = {
 	call: () => {}

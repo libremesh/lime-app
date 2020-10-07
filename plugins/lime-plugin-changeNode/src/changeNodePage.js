@@ -8,7 +8,7 @@ import { getStations } from './changeNodeSelectors';
 import { loadStations } from './changeNodeActions';
 
 import I18n from 'i18n-js';
-import { useAppContext } from '../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 
 export const ChangeNode = ({ stations, loadStations }) => {
 	const { nodeHostname } = useAppContext();

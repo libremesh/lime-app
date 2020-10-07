@@ -9,11 +9,11 @@ import { connect } from 'react-redux';
 import { searchNetworks, setNetwork } from '../actions';
 
 import I18n from 'i18n-js';
-import { Loading } from '../../../../src/components/loading';
-import Alert from '../../../../src/components/alert';
-import { isValidHostname, slugify } from '../../../../src/utils/isValidHostname';
+import { Loading } from 'components/loading';
+import Alert from 'components/alert';
+import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { showNotification } from '../../../../src/store/actions';
-import { useAppContext } from '../../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 
 export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks }) => {
 	const { nodeHostname } = useAppContext();

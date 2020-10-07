@@ -4,7 +4,7 @@ import colorScale from 'simple-color-scale';
 
 import I18n from 'i18n-js';
 
-import Loading from '../../../../../src/components/loading';
+import Loading from 'components/loading';
 
 const style = {
 	box: {

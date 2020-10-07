@@ -10,7 +10,7 @@ import { getAll } from './alignSelectors';
 import I18n from 'i18n-js';
 
 import colorScale from 'simple-color-scale';
-import { useAppContext } from '../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 
 //Eperimental text-to-speech
 let synth = window.speechSynthesis;

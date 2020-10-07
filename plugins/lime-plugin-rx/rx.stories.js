@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, object, boolean } from '@storybook/addon-knobs/react';
 
 import { Page } from '../lime-plugin-rx/src/rxPage';
-import { AppContext } from '../../src/utils/app.context';
+import { AppContext } from 'utils/app.context';
 
 
 const nodeData =  {

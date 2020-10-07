@@ -3,10 +3,10 @@ import I18n from 'i18n-js';
 
 import { useState } from 'preact/hooks';
 
-import { useAppContext } from '../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 
 import { isValidPassword, ValidationMessages } from '../../../src/containers/SharedPasswordForm';
-import Loading from '../../../src/components/loading';
+import Loading from 'components/loading';
 
 import style from './style';
 

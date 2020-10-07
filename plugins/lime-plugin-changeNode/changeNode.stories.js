@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, array, text } from '@storybook/addon-knobs/react';
 
 import { ChangeNode } from './src/changeNodePage';
-import { AppContext } from '../../src/utils/app.context';
+import { AppContext } from 'utils/app.context';
 
 const actions = {
 	loadStations: action('loadStations')

@@ -5,7 +5,7 @@ import { withKnobs, boolean, text, object } from '@storybook/addon-knobs/react';
 
 import { Metrics } from './src/metricsPage';
 import Box from './src/components/box';
-import { AppContext } from '../../src/utils/app.context';
+import { AppContext } from 'utils/app.context';
 
 const metricState = {
 	metrics: [

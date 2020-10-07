@@ -5,9 +5,9 @@ import { useState, useEffect } from 'preact/hooks';
 
 import { upgradeConfirmIsAvailable, uploadFile, validateFirmware,
 	upgradeFirmware, upgradeConfirm, upgradeRevert} from './firmwareApi';
-import { useAppContext } from '../../../src/utils/app.context';
-import ProgressBar from '../../../src/components/progressbar';
-import Loading from '../../../src/components/loading';
+import { useAppContext } from 'utils/app.context';
+import ProgressBar from 'components/progressbar';
+import Loading from 'components/loading';
 import { route } from 'preact-router';
 
 export const UpgradeConfirm = ({onConfirm, onRevert, submitting}) => (

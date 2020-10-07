@@ -6,7 +6,7 @@ import { withKnobs, object, text } from '@storybook/addon-knobs/react';
 import { store } from '../../src/store';
 import { Align } from './src/alignPage';
 import { useState } from 'preact/hooks';
-import { AppContext } from '../../src/utils/app.context';
+import { AppContext } from 'utils/app.context';
 
 const actions = {
 	changeInterface: action('changeInterface'),

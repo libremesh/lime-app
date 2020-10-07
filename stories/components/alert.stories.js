@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs/react';
 
-import Alert from '../../src/components/alert';
+import Alert from 'components/alert';
 
 const actions = {
 	hideAlert: action('hide')

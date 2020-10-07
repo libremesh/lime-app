@@ -2,7 +2,7 @@
 import { h } from 'preact';
 import { withKnobs, text } from '@storybook/addon-knobs/react';
 
-import { Box } from '../../src/components/box';
+import { Box } from 'components/box';
 
 export default {
 	title: 'Box',

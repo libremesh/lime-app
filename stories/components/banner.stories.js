@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
 import { withKnobs } from '@storybook/addon-knobs/react';
 
-import { Banner } from '../../src/components/banner';
+import { Banner } from 'components/banner';
 
 const actions = {
 	onOk: action('onOk'),

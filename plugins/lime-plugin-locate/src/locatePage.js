@@ -10,9 +10,9 @@ import { getLat, getLon, isCommunityLocation } from './locateSelectors';
 import { getCommunityGeoJSON } from './communityGeoJSON';
 import { loadLeafLet, loadGoogleMapsApi, homeIcon } from './assetsUtils';
 
-import { Loading } from '../../../src/components/loading';
+import { Loading } from 'components/loading';
 import style from './style';
-import { useAppContext } from '../../../src/utils/app.context';
+import { useAppContext } from 'utils/app.context';
 
 const openStreetMapTileString = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 const openStreetMapAttribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
