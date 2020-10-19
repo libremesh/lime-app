@@ -8,23 +8,22 @@ import { getStations } from './changeNodeSelectors';
 import { loadStations } from './changeNodeActions';
 
 import I18n from 'i18n-js';
-import { useAppContext } from 'utils/app.context';
+import { useBoardData } from 'utils/queries';
 
 export const ChangeNode = ({ stations, loadStations }) => {
-	const { nodeHostname } = useAppContext();
+	const { data: boardData } = useBoardData();
 
 	const [ state, setState ] = useState({
-		station: nodeHostname
+		station: boardData && boardData.hostname
 	});
 
-	
 	useEffect(() => {
 		setState({
-			station: nodeHostname
+			station: boardData.hostname
 		});
 		return () => {};
 		
-	},[nodeHostname]);
+	},[boardData]);
 	
 	useEffect(() => {
 		loadStations();
@@ -38,15 +37,15 @@ export const ChangeNode = ({ stations, loadStations }) => {
 	function nextStation(e) {
 		e.preventDefault();
 		if (typeof state.station !== 'undefined') {
-			window.location.href = 'http://' + state.station;
+			window.location.href = 'http://'.concat(state.station);
 		}
 	}
 
 	function sortStations(stations) {
 		const result = stations
-			.filter(x => x !== nodeHostname)
+			.filter(x => x !== boardData.hostname)
 			.sort();
-		result.push(nodeHostname);
+		result.push(boardData.hostname);
 		return result;
 	}
 
@@ -57,7 +56,7 @@ export const ChangeNode = ({ stations, loadStations }) => {
 					<div class="six columns">
 						<p>
 							<label>{I18n.t('Current status')}</label>
-							<span>{I18n.t('Connected Host')}</span>: {nodeHostname}<br />
+							<span>{I18n.t('Connected Host')}</span>: {boardData.hostname}<br />
 						</p>
 					</div>
 					<div class="six columns">

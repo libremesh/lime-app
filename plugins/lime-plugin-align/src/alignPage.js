@@ -10,7 +10,7 @@ import { getAll } from './alignSelectors';
 import I18n from 'i18n-js';
 
 import colorScale from 'simple-color-scale';
-import { useAppContext } from 'utils/app.context';
+import { useCommunitySettings, useBoardData } from 'utils/queries';
 
 //Eperimental text-to-speech
 let synth = window.speechSynthesis;
@@ -65,8 +65,8 @@ function useInterval (callback, delay, off) {
 
 export const Align = ({ startAlign, changeInterface, changeStation, alignData, getSignal }) => {
 
-	const { nodeHostname, communitySettings } = useAppContext();
-
+	const { data: communitySettings } = useCommunitySettings();
+	const { data: boardData } = useBoardData();
 	const [ lastSpeech, setLastSpeech ] = useState(0);
 	const [ resumedTimes, setResumedTimes ] = useState(0);
 
@@ -121,7 +121,7 @@ export const Align = ({ startAlign, changeInterface, changeStation, alignData, g
 				<div className="row">
 					<div className="six columns">
 						<span style={style.hostname}>
-							{nodeHostname || ''}
+							{boardData.hostname || ''}
 						</span>
 						<h1 style={style.signal}>
 							{alignData.currentReading.signal || 0}

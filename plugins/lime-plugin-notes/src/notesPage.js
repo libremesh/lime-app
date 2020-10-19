@@ -10,10 +10,10 @@ import { getNotes, setNotes } from './notesActions';
 import { getNotesState } from './notesSelectors';
 
 import I18n from 'i18n-js';
-import { useAppContext } from 'utils/app.context';
+import { useBoardData } from 'utils/queries';
 
 export const Page = ({ setNotes, getNotes, notes, loading }) => {
-	const { nodeHostname } = useAppContext();
+	const { data: boardData } = useBoardData();
 	const [ value, setValue] = useState(notes || '');
 
 	function handleChange(event) {
@@ -38,7 +38,7 @@ export const Page = ({ setNotes, getNotes, notes, loading }) => {
 
 	return (
 		<div className="container container-padded">
-			<h4><span>{I18n.t('Notes of')}</span> {nodeHostname}</h4>
+			<h4><span>{I18n.t('Notes of')}</span> {boardData.hostname}</h4>
 			<textarea onChange={handleChange} className={style.notes} value={value} />
 			<button disabled={loading} onClick={saveNotes}>{I18n.t('Save notes')}</button>
 		</div>
