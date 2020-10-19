@@ -1,4 +1,3 @@
-import { useAppContext } from '../../utils/app.context';
 import I18n from 'i18n-js';
 import { useState } from 'preact/hooks';
 import Loading from '../../components/loading';
