@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object, text } from '@storybook/addon-knobs/react';
+import { object } from '@storybook/addon-knobs';
 
-import { store } from '../../src/store';
 import { Align } from './src/alignPage';
 import { useState } from 'preact/hooks';
-import { AppContext } from 'utils/app.context';
 
 const actions = {
 	changeInterface: action('changeInterface'),
@@ -47,14 +45,6 @@ const alignData = {
 		iface: 'wlan1-adhoc'
 	}
 };
-const nodeHostname = text('nodeHostname', 'ql-anaymarcos');
-const communitySettings = object('communitySettings', {
-	bad_signal: '-82',
-	acceptable_loss: '20',
-	bad_bandwidth: '1',
-	good_signal: '-65',
-	good_bandwidth: '5'
-});
 
 const AlignWithState = ({ getSignal }) => {
 	const [ align, setAlign ] = useState(alignData);
@@ -94,22 +84,17 @@ const AlignWithState = ({ getSignal }) => {
 };
 
 export default {
-	title: 'Containers|Align screen',
-	component: Align,
-	decorators: [withKnobs]
+	title: 'Containers/Align screen',
+	component: Align
 };
 
 export const withoutAlignData = () => (
-	<AppContext.Provider value={{ nodeHostname, communitySettings }}>
-		<Align
-			alignData={object('Align data', {})}
-			{...actions}
-		/>
-	</AppContext.Provider>
+	<Align
+		alignData={object('Align data', {})}
+		{...actions}
+	/>
 );
 
 export const withAlignData = () => (
-	<AppContext.Provider value={{ nodeHostname, communitySettings }}>
-		<AlignWithState {...actions} />
-	</AppContext.Provider>
+	<AlignWithState {...actions} />
 );

@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
-import { withKnobs, text } from '@storybook/addon-knobs/react';
+import { text } from '@storybook/addon-knobs';
 
 import { Box } from 'components/box';
 
 export default {
-	title: 'Box',
-	decorators: [withKnobs]
+	title: 'Box'
 };
 
 export const basicBox = () =>
