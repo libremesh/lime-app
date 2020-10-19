@@ -17,6 +17,8 @@ import { Menu } from '../containers/Menu';
 import { Header } from './header';
 import Alert from './alert';
 
+import { SafeUpgradeCountdown, UpgradeAvailableBanner } from '../../plugins/lime-plugin-firmware';
+
 import queryCache from 'utils/queryCache';
 
 import { useUpgradeInfo, useNewVersion } from '../../plugins/lime-plugin-firmware/src/firmwareQueries';
@@ -40,9 +42,37 @@ const Routes = () => (
 					<Component.page />
 				</CommunityProtectedRoute>))
 		}
+		{/* Additional plugins routes */}
+		{plugins
+			.filter(plugin => plugin.additionalRoutes)
+			.map(plugin => plugin.additionalRoutes)
+			.flat()
+			.map(([path, Component]) => {
+				return (
+					<Route path={path}>
+						<Component />
+					</Route>
+				)
+			})
+		}
 		<Redirect default path={'/'} to={'rx'} />
 	</Router>
 );
+
+const SubHeader = () => {
+	const { data: session } = useSession();
+	const { data: upgradeInfo } = useUpgradeInfo({enabled: session.username});
+	const { data: newVersion } = useNewVersion({enabled: session.username});
+	const showSuCountdown = upgradeInfo && upgradeInfo.suCounter > 0;
+	const showNewFirmwareVersion = !showSuCountdown && newVersion && newVersion.version;
+
+	return (
+		<div>
+			{showSuCountdown && <SafeUpgradeCountdown counter={upgradeInfo.suCounter} />}
+			{showNewFirmwareVersion && <UpgradeAvailableBanner />}
+		</div>
+	)
+}
 
 const App = () => {
 	const { data: session } = useSession();
@@ -57,7 +87,7 @@ const App = () => {
 		<div id="app">
 			<ReactQueryDevtools />
 			<Header Menu={Menu} />
-			{(suCounter > 0) && <SafeUpgradeCountdown counter={suCounter} />}
+			<SubHeader />
 			<div id="content">
 				<Routes />
 			</div>
