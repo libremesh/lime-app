@@ -22,7 +22,6 @@ const DEFAULT_SESSION_TIMEOUT = 5000;
 export class UhttpdService {
 	constructor(){
 		this.url = window.origin + '/ubus';
-		this.sid = '00000000000000000000000000000000';
 		this.jsonrpc = '2.0';
 		this.sec = 0;
 		this.requestList = [];
