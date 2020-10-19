@@ -12,7 +12,7 @@ import { loadLeafLet, loadGoogleMapsApi, homeIcon } from './assetsUtils';
 
 import { Loading } from 'components/loading';
 import style from './style';
-import { useAppContext } from 'utils/app.context';
+import { useBoardData } from 'utils/queries';
 
 const openStreetMapTileString = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
 const openStreetMapAttribution = '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
@@ -56,7 +56,7 @@ function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
 
 const LocatePage = ({ editting, submitting, stationLat, stationLon, nodesData,
 	isCommunityLocation, loadLocation, loadLocationLinks, changeLocation, toogleEdit }) => {
-	const { nodeHostname } = useAppContext();
+	const { data: boardData } = useBoardData();
 	const [loading, setLoading] = useState(true);
 	const [assetError, setAssetError] = useState(false);
 	const [map, setMap] = useState(null);
@@ -135,7 +135,7 @@ const LocatePage = ({ editting, submitting, stationLat, stationLon, nodesData,
 			setCommunityLayer(null);
 		}
 		else {
-			const layer = getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData);
+			const layer = getCommunityLayer(boardData.hostname, stationLat, stationLon, nodesData);
 			layer.addTo(map);
 			setCommunityLayer(layer);
 		}

@@ -13,8 +13,7 @@ import Loading from 'components/loading';
 import I18n from 'i18n-js';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { showNotification } from '../../../src/store/actions';
-import { useAppContext } from 'utils/app.context';
-import axios from 'axios';
+import { useBoardData } from 'utils/queries';
 
 const style = {
 	textLoading: {
@@ -37,8 +36,8 @@ const style = {
 
 
 export const Admin = ({ ipv4, changeHostname, showNotification, loading, redirect, error }) => {
-	const { nodeHostname } = useAppContext();
-	const [ hostname, setHostname ] = useState(nodeHostname);
+	const { data: boardData } = useBoardData();
+	const [ hostname, setHostname ] = useState(boardData && boardData.hostname);
 
 	useEffect(() => {
 		if (redirect) {

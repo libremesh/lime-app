@@ -9,7 +9,7 @@ import { getNodeData, isLoading } from './rxSelectors';
 
 import { Box } from 'components/box';
 import I18n from 'i18n-js';
-import { useAppContext } from 'utils/app.context';
+import { useBoardData } from 'utils/queries';
 
 function stripIface (hostIface) {
 	return hostIface.split('_wlan')[0].replace('_','-');
@@ -75,10 +75,10 @@ const MostActiveBox = ({ node, changeNode }) => {
 };
 
 export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData }) => {
-	const { boardData } = useAppContext();
+	const { data: boardData, isLoading: loadingBoardData } = useBoardData();
 
 	function loading(option, nodeData) {
-		if (!option) {
+		if (!option && !loadingBoardData) {
 			return nodeStatus(nodeData);
 		}
 		return (
