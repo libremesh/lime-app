@@ -16,6 +16,9 @@ String.prototype.hashCode = function() {
 
 const getHash = (json ) => Promise.resolve(json.hashCode());
 
+const UNAUTH_SESSION_ID = '00000000000000000000000000000000';
+const DEFAULT_SESSION_TIMEOUT = 5000;
+
 export class UhttpdService {
 	constructor(){
 		this.url = window.origin + '/ubus';
@@ -25,12 +28,8 @@ export class UhttpdService {
 		this.requestList = [];
 	}
 
-	setSid(sessionId){
-		this.sid = sessionId;
-	}
-
-	getSid() {
-		return this.sid;
+	sid() {
+		return sessionStorage.getItem('sid');
 	}
 
 	addId(){
@@ -54,7 +53,8 @@ export class UhttpdService {
 
 	request(payload, customSid=null) {
 		return new Promise((res, rej) => {
-			getHash(JSON.stringify([customSid || this.sid, ...payload])).then(hash => {
+			const sid = customSid || this.sid();
+			getHash(JSON.stringify([sid, ...payload])).then(hash => {
 				if (this.requestList.filter(x => x.hash === hash).length > 0) {
 					this.requestList.filter(x => x.hash === hash)[0].callbacks = [...this.requestList.filter(x => x.hash === hash)[0].callbacks, { res,rej }];
 					return;
@@ -68,7 +68,7 @@ export class UhttpdService {
 						id,
 						jsonrpc: this.jsonrpc,
 						method: 'call',
-						params: [customSid || this.sid, ...payload]
+						params: [sid, ...payload]
 					}, { timeout: 15000 })
 						.then(x => {
 							const callbacks = this.requestList.filter(x => x.id === id)[0].callbacks;
@@ -95,6 +95,20 @@ export class UhttpdService {
 		return from(this.request([action, method, data], customSid));
 	}
 
+	login(username, password) {
+		const data = { username, password, timeout: DEFAULT_SESSION_TIMEOUT };
+		return this.request(['session', 'login', data], UNAUTH_SESSION_ID)
+			.then(response =>
+				new Promise((res, rej) => {
+					if (response.ubus_rpc_session) {
+						sessionStorage.setItem('sid', response.ubus_rpc_session);
+						res(response);
+					}
+					else {
+						rej(response);
+					}
+				}));
+	}
 }
 
 const uhttpdService = new UhttpdService();

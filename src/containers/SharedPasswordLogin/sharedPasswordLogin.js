@@ -2,6 +2,7 @@ import { useAppContext } from '../../utils/app.context';
 import I18n from 'i18n-js';
 import { useState, useEffect } from 'preact/hooks';
 import Loading from '../../components/loading';
+import { useLogin } from 'utils/queries';
 
 const loadingBoxStyle = {
 	position: 'fixed',
@@ -78,20 +79,13 @@ const TryToLoginAutomatically = () => {
 }
 
 const SharedPasswordLoginHOC = () => {
-	const { loginAsRoot } = useAppContext();
-	const [submitting, setSubmitting] = useState('');
-	const [error, setError] = useState('');
+	const [login, {isLoading, isError}] = useLogin();
 
 	function submitLogin (password) {
-		setSubmitting(true);
-		loginAsRoot(password)
-			.catch(() => {
-				setError(true);
-				setSubmitting(false);
-			});
+		login({username: 'root', password})
 	}
 
-	return <SharedPasswordLogin submitting={submitting} error={error} submitLogin={submitLogin} />;
+	return <SharedPasswordLogin submitting={isLoading} error={isError} submitLogin={submitLogin} />;
 };
 
 export default TryToLoginAutomatically;

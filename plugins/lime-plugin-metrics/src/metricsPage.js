@@ -14,7 +14,7 @@ import { Box } from 'components/box';
 import I18n from 'i18n-js';
 
 import colorScale from 'simple-color-scale';
-import { useAppContext } from 'utils/app.context';
+import { useBoardData, useCommunitySettings } from 'utils/queries';
 
 const style = {
 	textLoading: {
@@ -47,7 +47,8 @@ const style = {
 };
 
 export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getInternetStatus, metrics, node }) => {
-	const { nodeHostname, communitySettings } = useAppContext();
+	const { data: boardData } = useBoardData();
+	const { data: communitySettings } = useCommunitySettings();
 	function clickGateway(gateway) {
 		return () => {
 			getMetricsGateway(gateway);
@@ -57,7 +58,7 @@ export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getI
 
 	function showButton(loading) {
 		if (!loading) {
-			return !isGateway(nodeHostname, metrics.gateway)
+			return !isGateway(boardData.hostname, metrics.gateway)
 				? (
 					<div class="row">
 						<br />
@@ -132,8 +133,8 @@ export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getI
 	}
 
 	useEffect(() => {
-		if (!nodeHostname) return;
-		getMetricsGateway(nodeHostname);
+		if (!boardData.hostname) return;
+		getMetricsGateway(boardData.hostname);
 		getInternetStatus();
 		colorScale.setConfig({
 			outputStart: 1,
@@ -142,12 +143,12 @@ export const Metrics = ({ getNodeMetrics, getMetricsAll, getMetricsGateway, getI
 			inputEnd: 30
 		});
 		return () => {};
-	},[nodeHostname]);
+	},[boardData]);
 
 	return (
 		<div class="container container-padded" style={{ textAlign: 'center' }}>
 			{metrics.loading? showLoading(metrics.loading) : metrics.error.map(x => showError(x))}
-			<div style={style.box}>{I18n.t('From')+' '+nodeHostname}</div>
+			<div style={style.box}>{I18n.t('From')+' '+boardData.hostname}</div>
 			{metrics.metrics.map((station, key) => (
 				<MetricsBox
 					settings={communitySettings}
