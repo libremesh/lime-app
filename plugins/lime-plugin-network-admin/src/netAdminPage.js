@@ -3,7 +3,7 @@ import I18n from 'i18n-js';
 
 import { useState } from 'preact/hooks';
 
-import { useAppContext } from 'utils/app.context';
+import api from 'utils/uhttpd.service';
 
 import { isValidPassword, ValidationMessages } from '../../../src/containers/SharedPasswordForm';
 import Loading from 'components/loading';
@@ -72,13 +72,12 @@ export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
 };
 
 const NetAdminHOC = () => {
-	const { uhttpdService } = useAppContext();
 	const [submitting, setSubmitting] = useState(false);
 	const [success, setSuccess] = useState(false);
 
 	function submitSharedPassword(password) {
 		setSubmitting(true);
-		return uhttpdService
+		return api
 			.call('lime-utils-admin', 'set_root_password', { password })
 			.toPromise()
 			.then(result => new Promise((res, rej) => {
