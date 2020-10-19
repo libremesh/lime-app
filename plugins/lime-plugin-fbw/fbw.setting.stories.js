@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/preact';
 import { Setting } from './src/containers/Setting';
 import FetchStory from '../../.storybook/mockFetch';
 
-storiesOf('Containers|First boot wizard', module)
+storiesOf('Containers/First boot wizard', module)
 	
 	.add('Applying configuration - Correct network', () => (
 		<FetchStory

@@ -4,25 +4,23 @@ import { h } from 'preact';
 import { Header } from 'components/header';
 import { Menu } from '../../src/containers/Menu';
 import { AppContext } from 'utils/app.context';
-import { text, boolean, withKnobs } from '@storybook/addon-knobs/react';
+import { boolean } from '@storybook/addon-knobs';
 
 const menuEnabled = boolean('menuEnabled', true);
-const nodeHostname = text('nodeHostname', 'ql-anaymarcos');
 
 export default {
 	title: 'Header',
-	component: Header,
-	decorators: [withKnobs]
+	component: Header
 };
 
 export const withMenuDisabled = () => (
-	<AppContext.Provider value={{ nodeHostname, menuEnabled: !menuEnabled }}>
+	<AppContext.Provider value={{ menuEnabled: !menuEnabled }}>
 		<Header Menu={Menu} />
 	</AppContext.Provider>
 );
 
 export const withMenuEnabled = () => (
-	<AppContext.Provider value={{ nodeHostname, menuEnabled }}>
+	<AppContext.Provider value={{ menuEnabled }}>
 		<Header Menu={Menu} />
 	</AppContext.Provider>
 );

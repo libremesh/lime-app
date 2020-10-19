@@ -1,11 +1,10 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, text, object } from '@storybook/addon-knobs/react';
+import { boolean, object } from '@storybook/addon-knobs';
 
 import { Metrics } from './src/metricsPage';
 import Box from './src/components/box';
-import { AppContext } from 'utils/app.context';
 
 const metricState = {
 	metrics: [
@@ -48,7 +47,6 @@ const metricState = {
 	gateway: '16:cc:20:ff:fe:ad:ae:c8 lapraviana si-vale lpl-ravelocasa'
 };
 
-const nodeHostname = text('nodeHostname', 'ql-anaymarcos');
 const communitySettings = object('communitySettings', {
 	bad_signal: '-82',
 	acceptable_loss: '20',
@@ -126,29 +124,24 @@ const actions = {
 const metricsInProcess = addMetrics(metricState);
 
 export default {
-	title: 'Containers|Metrics',
-	component: Metrics,
-	decorators: [withKnobs]
+	title: 'Containers/Metrics',
+	component: Metrics
 };
 
 export const fullPath = () => (
-	<AppContext.Provider value={{ nodeHostname, communitySettings }}>
-		<Metrics
-			metrics={object('Metrics state', metricState)}
-			node={object('Node status', nodeState)}
-			{...actions}
-		/>
-	</AppContext.Provider>
+	<Metrics
+		metrics={object('Metrics state', metricState)}
+		node={object('Node status', nodeState)}
+		{...actions}
+	/>
 );
 
 export const runningMetrics = () => (
-	<AppContext.Provider value={{ nodeHostname, communitySettings }}>
-		<Metrics
-			metrics={object('Metrics state', metricsInProcess)}
-			node={object('Node status', nodeState)}
-			{...actions}
-		/>
-	</AppContext.Provider>
+	<Metrics
+		metrics={object('Metrics state', metricsInProcess)}
+		node={object('Node status', nodeState)}
+		{...actions}
+	/>
 );
 
 export const metricsBox = () => (
