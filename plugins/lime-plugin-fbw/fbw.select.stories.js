@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import { SelectAction } from './src/containers/SelectAction';
 
-storiesOf('Containers|First boot wizard', module)
+storiesOf('Containers/First boot wizard', module)
 	
 	.add('Choose an option', () => (
 		<SelectAction

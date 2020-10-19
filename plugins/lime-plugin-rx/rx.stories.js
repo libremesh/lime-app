@@ -1,11 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object, boolean } from '@storybook/addon-knobs/react';
+import { object, boolean } from '@storybook/addon-knobs';
 
 import { Page } from '../lime-plugin-rx/src/rxPage';
-import { AppContext } from 'utils/app.context';
-
 
 const nodeData =  {
 	internet: {
@@ -53,13 +51,6 @@ const nodeData =  {
 	}
 };
 
-const boardData = object('board data', {
-	release: {
-		description: 'LibreRouterOs 1.2-SNAPSHOT r0-21f7665'
-	},
-	model: 'LibreRouter v1'
-});
-
 const actions = {
 	getNodeStatusTimer: action('getNodeStatusTimer'),
 	getNodeStatus: action('getNodeStatus'),
@@ -68,31 +59,22 @@ const actions = {
 };
 
 export default {
-	title: 'Containers|Home Screen (Rx)',
-	component: Page,
-	decorators: [withKnobs]
+	title: 'Containers/Home Screen (Rx)',
+	component: Page
 };
 
-export const withData = () => {
-	return (
-		<AppContext.Provider value={{ boardData }}>
-			<Page
-				nodeData={object('Node data', nodeData)}
-				isLoading={boolean('Is loading', false)}
-				{...actions}
-			/>
-		</AppContext.Provider>
-	);
-};
+export const withData = () => (
+	<Page
+		nodeData={object('Node data', nodeData)}
+		isLoading={boolean('Is loading', false)}
+		{...actions}
+	/>
+);
 
-export const loadingNodeData = () => {
-	return (
-		<AppContext.Provider value={{boardData}}>
-			<Page
-				nodeData={object('Node data', nodeData)}
-				isLoading={boolean('Is loading', true)}
-				{...actions}
-			/>
-		</AppContext.Provider>
-	);
-};
+export const loadingNodeData = () => (
+	<Page
+		nodeData={object('Node data', nodeData)}
+		isLoading={boolean('Is loading', true)}
+		{...actions}
+	/>
+);

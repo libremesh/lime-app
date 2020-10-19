@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions';
 
 import { NetworkForm } from './src/containers/NetworkForm';
 
-storiesOf('Containers|First boot wizard', module)
+storiesOf('Containers/First boot wizard', module)
 	
 	.add('Create a new network', () => (
 		<NetworkForm
