@@ -126,11 +126,12 @@ describe('firmware form', () => {
 		})
 	});
 	
-	it('calls the firmware upgrade endpoint', async () => {
+	it('calls the firmware upgrade endpoint with the path returned by upload file', async () => {
+		uploadFile.mockImplementation(async () => '/tmp/some/given/path');
 		render(<FirmwarePage />);
 		triggerUpgrade();
 		await waitForExpect(() => {
-			expect(upgradeFirmware).toHaveBeenCalled();
+			expect(upgradeFirmware).toHaveBeenCalledWith('/tmp/some/given/path');
 		})
 	});
 
