@@ -111,7 +111,7 @@ export const UpgradeFromFile = ({onUpgrading}) => {
 			.then(() => onUpgrading())
 			.catch(error => {
 				switch (error) {
-					case 'Invalid Firmware':
+					case 'Invalid firmware':
 						setinvalidFirmwareError(true);
 						break;
 					default:

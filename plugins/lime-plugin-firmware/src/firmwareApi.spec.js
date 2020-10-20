@@ -94,7 +94,7 @@ describe('upgradeFirmware', () => {
 	})
 
 	it('rejects with backend error message when upgrade fails', async () => {
-		const backendMessage = 'Invalid Firmware';
+		const backendMessage = 'Invalid firmware';
 		api.call.mockImplementation(() => of({status: 'error', message: backendMessage}));
 		expect.assertions(1);
 		return expect(upgradeFirmware('some_fw_path')).rejects.toEqual(backendMessage)
