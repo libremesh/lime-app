@@ -42,7 +42,7 @@ describe('uploadFile', () => {
 	it.each([
 		['mycustomfirmware.bin', '/tmp/firmware.bin'],
 		['mysutominstaller.sh', '/tmp/upgrade.sh'],
-		['custom.unkonwnextension', 'custom.unkonwnextension']
+		['custom.unkonwnextension', '/tmp/custom.unkonwnextension']
 	])('sends expected request to cgi-upload endpoint %s %s', async (userFileName, uploadedFilename) => {
 		api.sid.mockImplementation(() => '4261b19d65fac6be2552e10d3a351b5c');
 		const file = new File(['(⌐□_□)'], userFileName);
@@ -56,20 +56,24 @@ describe('uploadFile', () => {
 		await uploadFile(file);
 	});
 
-	it('resolves to cgi-upload response when the upload finished correctly', async () => {
+	it.each([
+		['mycustomfirmware.bin', '/tmp/firmware.bin'],
+		['mysutominstaller.sh', '/tmp/upgrade.sh'],
+		['custom.unkonwnextension', '/tmp/custom.unkonwnextension']
+	])('resolves to destination path when the upload finished correctly', async (userFileName, uploadedFilename) => {
 		const mockResponse = {
 			size: 5374131,
 			checksum: "ef2949e0070830d49e3930a00f9d1794",
 			sha256sum: "3cf8244acc06dd0d852bb2348e0da4f610dda6f0d3eed5807d4fe12570465a24"
 		};
 		api.sid.mockImplementation(() => '4261b19d65fac6be2552e10d3a351b5c');
-		const file = new File(['(⌐□_□)'], 'test.bin');
+		const file = new File(['(⌐□_□)'], userFileName);
 		
 		xhrMock.post('/cgi-bin/cgi-upload',
 			(_req, res) => res.status(200).body(JSON.stringify(mockResponse)));
 
-		const response = await uploadFile(file);
-		expect(JSON.parse(response)).toEqual(mockResponse);
+		const destinationPath = await uploadFile(file);
+		expect(destinationPath).toEqual(uploadedFilename);
 	});
 });
 

@@ -26,12 +26,13 @@ export function uploadFile(file) {
 		const request = new XMLHttpRequest();
 		const formData = new FormData();
 		const extname = path.extname(file.name);
+		const destPath = FW_PATH[extname] || path.resolve('/tmp/', file.name);
 		formData.append("sessionid", api.sid());
-		formData.append("filename", FW_PATH[extname] || file.name);
+		formData.append("filename", destPath);
 		formData.append("filedata", file)
 	
 		request.addEventListener('loadend', () => {
-			res(request.responseText);
+			res(destPath);
 		});
 	
 		request.addEventListener('error', (error) => {
