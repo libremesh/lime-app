@@ -128,7 +128,7 @@
     "the_firmware_is_being_upgraded_f3881802": "The firmware is being upgraded...",
     "the_password_should_have_b9f88155": "The password should have:",
     "the_passwords_do_not_match_62d77c67": "The passwords do not match!",
-    "the_selected_image_is_not_a_valid_for_the_target_d_c5edf208": "The selected image is not a valid for the target device",
+    "the_selected_image_is_not_valid_for_the_target_dev_cea9b494": "The selected image is not valid for the target device",
     "the_shared_password_has_been_chosen_by_the_communi_f9d30a92": "The shared password has been chosen by the community when the network was created. You can ask other community members for it.",
     "the_upgrade_should_be_done_d66854": "The upgrade should be done",
     "this_device_does_not_support_secure_rollback_to_pr_1c167a2c": "This device does not support secure rollback to previous version if something goes wrong",
