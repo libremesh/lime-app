@@ -1,4 +1,5 @@
 import { h, Fragment } from 'preact';
+import path from 'path';
 
 import I18n from 'i18n-js';
 import style from './style.less';
@@ -119,13 +120,18 @@ export const UpgradeFromFile = ({onUpgrading}) => {
 			})
 	}
 
+	function isValidExtname(value) {
+		const extname = path.extname(value[0].name);
+		return extname === '.sh' || extname === '.bin';
+	}
+
 	return (
 		<div class={style.sourceSection}>
 			<h5><b>{I18n.t('Upload firmware image from your device')}</b></h5>
 			<form id="file-upload-form" onSubmit={handleSubmit(onUpgrade)}>
 				<label class="button" htmlFor="file">{I18n.t('Select file')}</label>
 				<input style={{width: 0}} // Hide the ugly builtin input
-					name="file" id="file" type="file" ref={register({required: true})}
+					name="file" id="file" type="file" ref={register({required: true, validate: {validExtname: isValidExtname }})}
 				/>
 				{file && file.length > 0 &&
 					<div>
@@ -133,8 +139,11 @@ export const UpgradeFromFile = ({onUpgrading}) => {
 						<div><b>{I18n.t('Size')}</b>: {(file[0].size / 1048576).toFixed(1)} MB</div>
 					</div>
 				}
-				{errors.file &&
+				{errors.file && errors.file.type === 'required' &&
 					<p style={{color: "#923838"}}>{I18n.t('Please select a file')}</p>
+				}
+				{errors.file && errors.file.type === 'validExtname' &&
+					<p style={{color: "#923838"}}>{I18n.t('Please select a .sh or .bin file')}</p>
 				}
 				<div>
 					<button type="submit">{I18n.t('Upgrade')}</button>

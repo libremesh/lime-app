@@ -118,6 +118,14 @@ describe('firmware form', () => {
 		expect(await screen.findByText('Please select a file', 'i')).toBeInTheDocument();
 	});
 
+	it('shows error if upgrading with a file with invalid extension', async () => {
+		render(<FirmwarePage />);
+		expect(screen.queryByText('Please select a .sh or .bin file', 'i')).toBeNull()
+		stepSelectFile('myfile.unsupportedextension')
+		stepSubmit()
+		expect(await screen.findByText('Please select a .sh or .bin file', 'i')).toBeInTheDocument();
+	});
+
 	it('calls uploadFile to upload the file', async () => {
 		render(<FirmwarePage />);
 		const file = await triggerUpgrade();

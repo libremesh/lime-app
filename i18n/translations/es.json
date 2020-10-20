@@ -160,6 +160,7 @@
     "see_more_b24a4422": "Ver más",
     "the_download_failed_130e1274": "La descarga falló",
     "upgrade_to_versionname_621a0b6a": "Actualizar a %{versionName}",
-    "upload_firmware_image_from_your_device_57327bee": "Subí una imagen del firmware desde tu dispositivo"
+    "upload_firmware_image_from_your_device_57327bee": "Subí una imagen del firmware desde tu dispositivo",
+    "please_select_a_sh_or_bin_file_4004723": "Por favor, seleccioná un archivo .bin o .sh"
 }
 
