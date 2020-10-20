@@ -156,7 +156,7 @@ export const UpgradeFromFile = ({onUpgrading}) => {
 			}
 			{ invalidFirmwareError &&
 				<div class={`${style.note} ${style.noteError}`}>
-					{I18n.t('The selected image is not a valid for the target device')}
+					{I18n.t('The selected image is not valid for the target device')}
 				</div>
 			}
 		</div>
