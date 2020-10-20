@@ -144,7 +144,7 @@ describe('firmware form', () => {
 	});
 
 	it('shows up an error message if firmware validation fails', async () => {
-		upgradeFirmware.mockImplementation(async () => Promise.reject('Invalid Firmware'));
+		upgradeFirmware.mockImplementation(async () => Promise.reject('Invalid firmware'));
 		const noteText = /the selected image is not a valid for the target device/i;
 		render(<FirmwarePage />);
 		expect(screen.queryByText(noteText)).not.toBeInTheDocument();
