@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { render, fireEvent, cleanup, act, screen } from '@testing-library/preact';
+import { render as tlRender, fireEvent, cleanup, act, screen } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 
@@ -7,6 +7,8 @@ import FirmwarePage from './src/firmwarePage';
 import { getUpgradeInfo, uploadFile, upgradeFirmware,
 	upgradeConfirm, upgradeRevert, downloadRelease, getDownloadStatus, getNewVersion } from './src/firmwareApi';
 import { route } from 'preact-router';
+import { ReactQueryCacheProvider } from 'react-query';
+import queryCache from 'utils/queryCache';
 
 jest.mock('i18n-js', () => ({
 	t: jest.fn((x, data={}) => {
@@ -18,7 +20,6 @@ jest.mock('i18n-js', () => ({
 }));
 
 jest.mock('./src/firmwareApi');
-jest.mock('utils/app.context');
 
 const secureRollbackText =
 	/this device supports secure rollback to previous version if something goes wrong/i;
@@ -28,6 +29,12 @@ const noSecureRollbackText =
 function flushPromises() {
 	return new Promise(resolve => setImmediate(resolve));
 }
+
+const render = (ui) => tlRender(
+	<ReactQueryCacheProvider queryCache={queryCache}>
+		{ui}
+	</ReactQueryCacheProvider>
+)
 
 async function stepSelectFile(fileName='test.bin') {
 	const fileInput = await screen.findByLabelText(/select file/i);
@@ -73,6 +80,7 @@ describe('firmware form', () => {
 
 	afterEach(() => {
 		cleanup();
+		act(() => queryCache.clear());
 	});
 	
 	afterAll(() => {
@@ -277,12 +285,10 @@ describe('firmware form', () => {
 		const downloadButton = await screen.findByRole('button', {name: /Download/i})
 		fireEvent.click(downloadButton);
 		expect(await screen.findByText(/Downloading/i)).toBeInTheDocument();
-		await flushPromises();
 		act(() => {
 			jest.advanceTimersByTime(12000);
 		})
 		expect(await screen.findByRole('button', {name: /Upgrade to SomeNewVersionName/i})).toBeDisabled();
-		await flushPromises();
 		act(() => {
 			jest.advanceTimersByTime(12000);
 		})

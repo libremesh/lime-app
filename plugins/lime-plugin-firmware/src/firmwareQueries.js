@@ -1,4 +1,5 @@
-import { useQuery, useMutation, queryCache } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
+import queryCache from 'utils/queryCache';
 import { getUpgradeInfo, getNewVersion, getDownloadStatus,
 		 upgradeConfirm, upgradeRevert, downloadRelease} from './firmwareApi'
 
