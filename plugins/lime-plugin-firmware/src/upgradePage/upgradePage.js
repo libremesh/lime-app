@@ -1,9 +1,9 @@
-import { h, Fragment } from 'preact';
+import { h } from 'preact';
 import path from 'path';
 
 import I18n from 'i18n-js';
 import style from './style.less';
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 import { useForm } from 'react-hook-form';
 import Loading from 'components/loading';
 import { uploadFile, upgradeFirmware } from '../firmwareApi';
@@ -30,7 +30,7 @@ export const SafeUpgradeBadge = () => {
 	)
 }
 
-const UpgradeFromRelease = ({onUpgrading}) => {
+const UpgradeFromRelease = ({onUpgrading, onSwitch}) => {
 	const [pollingInterval, setPollingInterval] = useState(null);
 	const {data: newVersion} = useNewVersion();
 	const versionName = newVersion && newVersion.version;
@@ -64,40 +64,42 @@ const UpgradeFromRelease = ({onUpgrading}) => {
 	if (!versionName) return;
 
 	return (
-		<Fragment>
-			<div class={`${style.note} ${style.noteCTA}`}>
-				<h5>{I18n.t('%{versionName} is now available', { versionName })} 🎉</h5>
-				{status === 'not-initiated' &&
-					<button onClick={onDownload}>{I18n.t('Download')}</button>
-				}
-				{status === 'downloading' &&
-					<div>
-						<div class={style.withLoadingEllipsis}>{I18n.t('Downloading')}</div>
-						<button disabled >{I18n.t('Upgrade to %{versionName}', { versionName })}</button>
-					</div>
-				}
-				{status === 'download-failed' &&
-					<div>
-						<div>{I18n.t('The download failed')}</div>
-						<button onClick={onDownload}>{I18n.t('Retry')}</button>
-					</div>
-				}
-				{status === 'downloaded' &&
-					<button onClick={onUpgrade}>{I18n.t('Upgrade to %{versionName}', { versionName })}</button>
-				}
-				{newVersion['release-info-url'] &&
-					<div>
-						{I18n.t('More info at:')}
-						<br /><a href={newVersion['release-info-url']}> {newVersion['release-info-url']} </a>
-					</div>
-				}
+		<div class="container container-padded">
+			<h5>{I18n.t('Upgrade to lastest firmware version')}</h5>
+			<h6>{I18n.t('%{versionName} is now available', { versionName })} 🎉</h6>
+			{status === 'not-initiated' &&
+				<button onClick={onDownload}>{I18n.t('Download')}</button>
+			}
+			{status === 'downloading' &&
+				<div>
+					<div class={style.withLoadingEllipsis}>{I18n.t('Downloading')}</div>
+					<button disabled >{I18n.t('Upgrade to %{versionName}', { versionName })}</button>
+				</div>
+			}
+			{status === 'download-failed' &&
+				<div>
+					<div>{I18n.t('The download failed')}</div>
+					<button onClick={onDownload}>{I18n.t('Retry')}</button>
+				</div>
+			}
+			{status === 'downloaded' &&
+				<button onClick={onUpgrade}>{I18n.t('Upgrade to %{versionName}', { versionName })}</button>
+			}
+			{newVersion['release-info-url'] &&
+				<div>
+					{I18n.t('More info at:')}
+					<br /><a href={newVersion['release-info-url']}> {newVersion['release-info-url']} </a>
+				</div>
+			}
+			<div style={{marginTop: "1em"}}>
+				<a href="#" onClick={onSwitch}>{I18n.t('Or choose a firmware image from your device')} </a>
 			</div>
-			<hr />
-		</Fragment>
+		</div>
 	)
 }
 
-export const UpgradeFromFile = ({onUpgrading}) => {
+export const UpgradeFromFile = ({onUpgrading, onSwitch}) => {
+	const {data: newVersion} = useNewVersion();
 	const [invalidFirmwareError, setinvalidFirmwareError] = useState(false);
 	const {register, handleSubmit, errors, watch, formState } = useForm();
 	const file = watch('file');
@@ -126,7 +128,8 @@ export const UpgradeFromFile = ({onUpgrading}) => {
 	}
 
 	return (
-		<div class={style.sourceSection}>
+		<div class="container container-padded">
+			<SafeUpgradeBadge />
 			<h5><b>{I18n.t('Upload firmware image from your device')}</b></h5>
 			<form id="file-upload-form" onSubmit={handleSubmit(onUpgrade)}>
 				<label class="button" htmlFor="file">{I18n.t('Select file')}</label>
@@ -159,16 +162,40 @@ export const UpgradeFromFile = ({onUpgrading}) => {
 					{I18n.t('The selected image is not valid for the target device')}
 				</div>
 			}
+			{ newVersion && newVersion.version &&
+				<div style={{marginTop: "1em"}}>
+					<a href="#" onClick={onSwitch}>{I18n.t('Or upgrade to latest release')} </a>
+				</div>
+			}
 		</div>
 	)
 }
 
 
-export const UpgradePage = ({onUpgrading}) => (
-	<div class="container container-padded">
-		<SafeUpgradeBadge />
-		<UpgradeFromRelease onUpgrading={onUpgrading} />
-		<UpgradeFromFile onUpgrading={onUpgrading} />
-	</div>
-)
+export const UpgradePage = ({onUpgrading}) => {
+	const [fwSource, setfwSource] = useState();
+	const { data: newVersion, isLoading } = useNewVersion();
+
+	useEffect(() => {
+		const defaultSrc = newVersion && newVersion.version ? 'fromRelease' : 'fromFile';
+		setfwSource(defaultSrc);
+	}, [newVersion])
+
+	const switchTo = (fwSource) => (e) => {
+		e.preventDefault();
+		setfwSource(fwSource)
+	}
+
+	if (isLoading) {
+		return <div class="container container-padded"><Loading /></div>
+	}
+	if (fwSource === 'fromRelease') {
+		return <UpgradeFromRelease onUpgrading={onUpgrading}
+			onSwitch={switchTo('fromFile')}
+		/>
+	}
+	return <UpgradeFromFile onUpgrading={onUpgrading}
+		onSwitch={switchTo('fromRelease')}
+	/>
+}
 

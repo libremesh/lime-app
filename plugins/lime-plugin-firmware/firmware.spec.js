@@ -311,6 +311,7 @@ describe('firmware confirm', () => {
 
 	afterEach(() => {
 		cleanup();
+		act(() => queryCache.clear());
 	});
 
 	it('shows two buttons, one for confirm, one for revert', async () => {
