@@ -161,6 +161,10 @@
     "the_download_failed_130e1274": "La descarga falló",
     "upgrade_to_versionname_621a0b6a": "Actualizar a %{versionName}",
     "upload_firmware_image_from_your_device_57327bee": "Subí una imagen del firmware desde tu dispositivo",
-    "please_select_a_sh_or_bin_file_4004723": "Por favor, seleccioná un archivo .bin o .sh"
+    "please_select_a_sh_or_bin_file_4004723": "Por favor, seleccioná un archivo .bin o .sh",
+    "or_choose_a_firmware_image_from_your_device_d56be2d8": "O elige una imagen de firmware desde tu dispositivo",
+    "or_upgrade_to_latest_release_e062ddee": "O actualiza a la última version del firmware",
+    "upgrade_to_lastest_firmware_version_9b159910": "Actualizar a la última version del firwmare"
+ 
 }
 
