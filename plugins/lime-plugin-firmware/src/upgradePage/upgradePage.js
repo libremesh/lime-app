@@ -88,7 +88,7 @@ const UpgradeFromRelease = ({onUpgrading, onSwitch}) => {
 			{newVersion['release-info-url'] &&
 				<div>
 					{I18n.t('More info at:')}
-					<br /><a href={newVersion['release-info-url']}> {newVersion['release-info-url']} </a>
+					<a href={newVersion['release-info-url']}> {newVersion['release-info-url']} </a>
 				</div>
 			}
 			<div style={{marginTop: "1em"}}>
