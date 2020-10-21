@@ -11,7 +11,7 @@ export const UpgradeAvailableBanner = () => {
 	const {data: newVersion} = useNewVersion();
 	const hideReleaseBannerPlease = localStorage.getItem('hideReleaseBannerPlease');
 
-	if (!newVersion || hideReleaseBannerPlease === 'hide') return;
+	if (!newVersion || hideReleaseBannerPlease === newVersion.version) return;
 
 	return (
 		<Match>
@@ -39,7 +39,7 @@ export const UpgradeAvailabeInfo = () => {
 	}
 
 	function onNotShowAgain(e) {
-		const value = e.target.checked ? 'hide' : 'show';
+		const value = e.target.checked ? newVersion.version : 'show';
 		localStorage.setItem('hideReleaseBannerPlease', value);
 	}
 
@@ -60,7 +60,7 @@ export const UpgradeAvailabeInfo = () => {
 			</p>
 			<label>
 				<input type="checkbox" name="not-show-again" onInput={onNotShowAgain}
-					checked={hideReleaseBannerPlease === 'hide'} />
+					checked={hideReleaseBannerPlease === newVersion.version} />
 				{I18n.t("Don't show this message again")}
 			</label>
 			<div style={{textAlign: "center"}}>
