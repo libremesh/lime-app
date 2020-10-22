@@ -78,3 +78,36 @@ export const loadingNodeData = () => (
 		{...actions}
 	/>
 );
+
+const newVersionAvailable = {
+	version: 'LibreRouter 1.5'
+}
+
+
+export const newVersionIsAvailable = () => (
+	<Page
+		nodeData={object('Node data', nodeData)}
+		isLoading={boolean('Is loading', false)}
+		{...actions}
+	/>
+)
+newVersionIsAvailable.args = {
+	queries: [
+		[['eupgrade', 'is_new_version_available'], newVersionAvailable]
+	]
+};
+
+export const needToConfirmUpgrade = () => (
+	<Page
+		nodeData={object('Node data', {...nodeData, uptime: '60\n'})}
+		isLoading={boolean('Is loading', false)}
+		{...actions}
+	/>
+)
+needToConfirmUpgrade.args = {
+	queries: [
+		[['lime-utils', 'get_upgrade_info'], {
+			suCounter: 300
+		}]
+	]
+}

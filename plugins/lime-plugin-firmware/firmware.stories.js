@@ -52,6 +52,13 @@ const confirmActions = {
 export const upgradeConfirm = () => (
 	<ConfirmChoices {...confirmActions} />
 )
+upgradeConfirm.args = {
+	queries: [
+		[['lime-utils', 'get_upgrade_info'], {
+			suCounter: 300
+		}]
+	]
+}
 
 export const upgradeReverted = () => (
 	<Reverted />
