@@ -60,21 +60,16 @@ const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
 };
 
 const TryToLoginAutomatically = () => {
-	const [hasPassword, sethasPassword] = useState(undefined);
-	const { loginAsRoot } = useAppContext();
+	const [login, {isError}] = useLogin();
 
 	useEffect(() => {
-		loginAsRoot('')
-			.catch(() => sethasPassword(true));
-	}, [sethasPassword, loginAsRoot]);
+		login({username: 'root', password: ''});
+	}, [login]);
 
-	if (hasPassword === undefined) {
-		return <div class="container container-center"><Loading /></div>
-	}
-	if (hasPassword === true) {
+	if (isError) {
 		return <SharedPasswordLoginHOC />
 	}
-	return hasPassword
+	return <div class="container container-center"><Loading /></div>
 }
 
 const SharedPasswordLoginHOC = () => {

@@ -62,15 +62,3 @@ export function useCommunitySettings() {
 		initialStale: true
 	})
 }
-
-function getFbwStatus() {
-	return api.call('lime-fbw', 'status', {}).toPromise()
-		.catch(() => ({ lock: false }));
-}
-
-export function useFbwStatus() {
-	return useQuery(['lime-fbw', 'status'], getFbwStatus, {
-		initialData: {lock: false},
-		initialStale: true
-	});
-}

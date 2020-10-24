@@ -1,4 +1,10 @@
-import { QueryCache } from 'react-query';
+import { QueryCache, setConsole } from 'react-query';
+
+setConsole({
+	log: () => {},
+	warn: () => {},
+	error: () => {}
+})
 
 const queryCache = new QueryCache({
 	defaultConfig: {
