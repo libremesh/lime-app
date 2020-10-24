@@ -1,5 +1,5 @@
 import I18n from 'i18n-js';
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 import Loading from '../../components/loading';
 import { useLogin } from 'utils/queries';
 
@@ -59,6 +59,19 @@ const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
 	);
 };
 
+const TryToLoginAutomatically = () => {
+	const [login, {isError}] = useLogin();
+
+	useEffect(() => {
+		login({username: 'root', password: ''});
+	}, [login]);
+
+	if (isError) {
+		return <SharedPasswordLoginHOC />
+	}
+	return <div class="container container-center"><Loading /></div>
+}
+
 const SharedPasswordLoginHOC = () => {
 	const [login, {isLoading, isError}] = useLogin();
 
@@ -69,4 +82,4 @@ const SharedPasswordLoginHOC = () => {
 	return <SharedPasswordLogin submitting={isLoading} error={isError} submitLogin={submitLogin} />;
 };
 
-export default SharedPasswordLoginHOC;
+export default TryToLoginAutomatically;
