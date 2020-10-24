@@ -13,3 +13,5 @@ export const getFbwStatus = () =>
 	api.call('lime-fbw', 'status', {}).toPromise()
 		.catch(() => ({ lock: false }));
 
+export const dismissFbw = () =>
+	api.call('lime-fbw', 'dismiss', {}).toPromise();

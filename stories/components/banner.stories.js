@@ -6,7 +6,8 @@ import { Banner } from 'components/banner';
 
 const actions = {
 	onOk: action('onOk'),
-	onCancel: action('onCancel')
+	onCancel: action('onCancel'),
+	onNotShowAgain: action('notShowAgain')
 };
 
 
