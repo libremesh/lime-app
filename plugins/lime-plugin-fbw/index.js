@@ -11,5 +11,6 @@ export default {
 		epics,
 		reducer,
 		constants
-	}
+	},
+	isCommunityProtected: true
 };

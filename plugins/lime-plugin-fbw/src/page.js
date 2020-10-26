@@ -8,23 +8,13 @@ import NetworkForm from './containers/NetworkForm';
 import Scan from './containers/Scan';
 import Setting from './containers/Setting';
 import { useAppContext } from 'utils/app.context';
-import { FbwBanner } from './containers/FbwBanner';
 
 const Page = ({ }) => {
-	const { setMenuEnabled, cancelFbw } = useAppContext();
+	const { setMenuEnabled } = useAppContext();
 	const [form, setForm] = useState(null);
-	const [banner, setBanner] = useState(true);
 
 	function toggleForm(form) {
 		return () => setForm(form);
-	}
-
-	function bannerCancel() {
-		cancelFbw();
-	}
-
-	function bannerOk() {
-		setBanner(false);
 	}
 
 	useEffect(() => {
@@ -33,10 +23,6 @@ const Page = ({ }) => {
 			setMenuEnabled(true);
 		};
 	}, []);
-
-	if (banner) {
-		return <FbwBanner onOk={bannerOk} onCancel={bannerCancel} />
-	}
 
 	return (
 		<Fragment>
