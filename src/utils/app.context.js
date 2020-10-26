@@ -58,7 +58,7 @@ export class AppContextProvider extends Component {
 			.then(([boardData, communitySettings, fbwStatus, upgradeInfo]) => {
 				this.setState({
 					nodeHostname: boardData.hostname,
-					boardData: boardData,
+					boardData,
 					communitySettings: { ...DEFAULT_COMMUNITY_SETTINGS, ...communitySettings },
 					fbwConfigured: !fbwStatus.lock,
 					suCounter: Number(upgradeInfo.safe_upgrade_confirm_remaining_s)
@@ -81,7 +81,8 @@ export class AppContextProvider extends Component {
 	}
 
 	_fetchFBWStatus() {
-		return this.state.uhttpdService.call('lime-fbw', 'status', {}).toPromise();
+		return this.state.uhttpdService.call('lime-fbw', 'status', {}).toPromise()
+			.catch(() => ({lock: false}));
 	}
 
 	_fetchUpgradeInfo() {
