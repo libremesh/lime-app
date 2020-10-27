@@ -9,7 +9,7 @@ const FW_PATH = '/tmp/firmware.bin';
 describe('upgradeConfirmIsAvailable', () => {
 	it('calls the expected endpoint', async () => {
 		const uhttpService = {
-			call: jest.fn(() => of({}))
+			call: jest.fn(() => of({status: 'ok'}))
 		};
 		await upgradeConfirmIsAvailable(uhttpService);
 		expect(uhttpService.call).toBeCalledWith('lime-utils', 'get_upgrade_info', {});
@@ -75,7 +75,7 @@ describe('uploadFile', () => {
 describe('validateFirmware', () => {
 	it('calls the expected endpoint with the expected parameters', async () => {
 		const uhttpService = {
-			call: jest.fn(() => of({}))
+			call: jest.fn(() => of({status: 'ok'}))
 		};
 		validateFirmware(uhttpService);
 		expect(uhttpService.call).toBeCalledWith('lime-utils-admin', 'firmware_verify', {fw_path: FW_PATH});
@@ -95,7 +95,7 @@ describe('validateFirmware', () => {
 			call: jest.fn(() => of({status: 'error', message: backendMessage}))
 		};
 		expect.assertions(1);
-		return expect(validateFirmware(uhttpService)).rejects.toEqual(backendMessage);
+		await expect(validateFirmware(uhttpService)).rejects.toEqual(backendMessage);
 	});
 });
 
@@ -103,7 +103,7 @@ describe('validateFirmware', () => {
 describe('upgradeFirmware', () => {
 	it('sends the appropiate request to preserve config', () => {
 		const uhttpService = {
-			call: jest.fn(() => of({}))
+			call: jest.fn(() => of({status: 'ok'}))
 		};
 		upgradeFirmware(uhttpService, true);
 		const timestamp = (Date.now() / 1000).toFixed(1);
@@ -113,7 +113,7 @@ describe('upgradeFirmware', () => {
 
 	it('sends the appropiate request to not to preserve config', () => {
 		const uhttpService = {
-			call: jest.fn(() => of({}))
+			call: jest.fn(() => of({status: 'ok'}))
 		};
 		upgradeFirmware(uhttpService, false);
 		const timestamp = (Date.now() / 1000).toFixed(1);
@@ -136,7 +136,7 @@ describe('upgradeFirmware', () => {
 			call: jest.fn(() => of({status: 'error', message: backendMessage}))
 		};
 		expect.assertions(1);
-		return expect(upgradeFirmware(uhttpService, false)).rejects.toEqual(backendMessage)
+		await expect(upgradeFirmware(uhttpService, false)).rejects.toEqual(backendMessage)
 	});
 });
 
@@ -144,7 +144,7 @@ describe('upgradeFirmware', () => {
 describe('upgradeConfirm', () => {
 	it('sends the appropiate request', () => {
 		const uhttpService = {
-			call: jest.fn(() => of({}))
+			call: jest.fn(() => of({status: 'ok'}))
 		};
 		upgradeConfirm(uhttpService);
 		expect(uhttpService.call).toBeCalledWith('lime-utils-admin', 'firmware_confirm', {});
@@ -158,12 +158,12 @@ describe('upgradeConfirm', () => {
 		expect(res).toBe(true);
 	})
 
-	it('rejects to false on status error', () => {
+	it('rejects to false on status error', async () => {
 		const uhttpService = {
 			call: jest.fn(() => of({status: 'error'}))
 		};
 		expect.assertions(1);
-		return expect(upgradeConfirm(uhttpService)).rejects.toEqual(false);
+		await expect(upgradeConfirm(uhttpService)).rejects.toEqual(false);
 	})
 })
 
