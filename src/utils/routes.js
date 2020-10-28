@@ -3,8 +3,8 @@ import { SharedPasswordLogin } from '../containers/SharedPasswordLogin';
 import { route } from 'preact-router';
 import { useEffect } from 'preact/hooks';
 import { Loading } from '../components/loading';
-import Fbw from '../../plugins/lime-plugin-fbw';
 import I18n from 'i18n-js';
+import { FbwBanner } from '../../plugins/lime-plugin-fbw/src/containers/FbwBanner';
 
 
 export const Route = ({ path, children }) => {
@@ -27,8 +27,8 @@ export const Route = ({ path, children }) => {
 	}
 
 	const tryingToConfirmUpgrade = (path === 'firmware') && (suCounter > 0);
-	if (!fbwConfigured && !fbwCanceled && !tryingToConfirmUpgrade) {
-		return <Fbw.page />;
+	if (!fbwConfigured && !fbwCanceled && !tryingToConfirmUpgrade && path !== 'firstbootwizard') {
+		return <FbwBanner />;
 	}
 
 	return children;
