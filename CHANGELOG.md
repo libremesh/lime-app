@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.10](https://github.com/germanferrero/lime-app/compare/v0.2.9...v0.2.10) (2020-10-29)
+
+
+### Bug Fixes
+
+* **fbw:** fix app crash when lime-fbw is not available ([8993892](https://github.com/germanferrero/lime-app/commit/8993892334dbdd52c7804dda4d63ff22be4ef276))
+* **fbw:** protect fbw with root password ([3930f1e](https://github.com/germanferrero/lime-app/commit/3930f1eb80caea0904cacbc755dba5e437f6832c))
+
 ### [0.2.9](https://github.com/germanferrero/lime-app/compare/v0.2.8...v0.2.9) (2020-09-16)
 
 ### [0.2.8](https://github.com/germanferrero/lime-app/compare/v0.2.7...v0.2.8) (2020-09-16)
