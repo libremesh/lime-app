@@ -15,7 +15,7 @@ import daysFromNow from '../../../../src/utils/daysFromNow';
 import makeid from '../../../../src/utils/makeid';
 
 export function CreatePiraniaPage({ goBack, createMemberVoucher, createVisitorVoucher, createVoucher, loading, createEpoc, list }) {
-	const initialNote = 'marcos android';
+	const initialNote = '';
 	const [voucherQuantity, setVoucherQuantity] = useState(1);
 	const [daysQuantity, setDaysQuantity] = useState(1);
 	const [note, setNote] = useState(initialNote);
@@ -82,8 +82,7 @@ export function CreatePiraniaPage({ goBack, createMemberVoucher, createVisitorVo
 				<form onSubmit={submitForm}>
 					{!confirm && (
 						<div className="switchContainer">
-							<h5>{I18n.t('Voucher type')}</h5>
-							<div className="box">
+							<div className="box" style="display: none;">
 								<label className="switch">
 									<input type="checkbox" onChange={toggleMember} />
 									<span className="slider">
@@ -99,7 +98,6 @@ export function CreatePiraniaPage({ goBack, createMemberVoucher, createVisitorVo
 									</span>
 								</label>
 							</div>
-							<hr />
 							{!member && (
 								<div className="box">
 									<div>

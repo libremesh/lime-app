@@ -95,7 +95,6 @@ export const ListPiraniaPage = ({ goBack, getVoucherList, removeVoucher, voucher
 		});
 	}
 	let flatList = {
-		member: {},
 		visitor: {},
 		invalid: {}
 	};
