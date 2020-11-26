@@ -104,7 +104,7 @@ describe('upgradeFirmware', () => {
 
 describe('upgradeConfirm', () => {
 	it('sends the appropiate request', () => {
-		api.call.mockImplementation(() => of({}));
+		api.call.mockImplementation(() => of({status: 'ok'}));
 		upgradeConfirm();
 		expect(api.call).toBeCalledWith('lime-utils-admin', 'firmware_confirm', {});
 	})
@@ -124,7 +124,7 @@ describe('upgradeConfirm', () => {
 
 describe('upgradeRevert', () => {
 	it('sends the appropiate request', () => {
-		api.call.mockImplementation(() => of({}));
+		api.call.mockImplementation(() => of({status: 'ok'}));
 		upgradeRevert();
 		expect(api.call).toBeCalledWith('system', 'reboot', {});
 	})
