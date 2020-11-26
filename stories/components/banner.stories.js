@@ -1,20 +1,19 @@
 /* eslint-disable react/jsx-no-bind */
 import { h } from 'preact';
 import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs/react';
 
 import { Banner } from 'components/banner';
 
 const actions = {
 	onOk: action('onOk'),
-	onCancel: action('onCancel')
+	onCancel: action('onCancel'),
+	onNotShowAgain: action('notShowAgain')
 };
 
 
 export default {
 	title: 'Banner',
-	component: Banner,
-	decorator: [withKnobs]
+	component: Banner
 };
 
 export const likeFBW = () => {

@@ -1,51 +1,61 @@
 import { h } from 'preact';
-import { render, fireEvent, cleanup, act } from '@testing-library/preact';
+import { render as tlRender, fireEvent, cleanup, act, screen } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 
 import FirmwarePage from './src/firmwarePage';
-import { upgradeConfirmIsAvailable, uploadFile, validateFirmware, upgradeFirmware,
-	upgradeConfirm, upgradeRevert } from './src/firmwareApi';
-import { useAppContext } from 'utils/app.context';
+import { getUpgradeInfo, uploadFile, upgradeFirmware,
+	upgradeConfirm, upgradeRevert, downloadRelease, getDownloadStatus, getNewVersion } from './src/firmwareApi';
 import { route } from 'preact-router';
+import { ReactQueryCacheProvider } from 'react-query';
+import queryCache from 'utils/queryCache';
 
 jest.mock('i18n-js', () => ({
-	t: jest.fn(x => x)
+	t: jest.fn((x, data={}) => {
+		Object.entries(data).forEach(
+			([key, value]) => x = x.replace(new RegExp(String.raw`%{${key}}`), value)
+		)
+		return x;
+	})
 }));
 
 jest.mock('./src/firmwareApi');
-jest.mock('utils/app.context');
-
-const mockUhttpdService = {
-	call: () => {}
-};
 
 const secureRollbackText =
 	/this device supports secure rollback to previous version if something goes wrong/i;
 const noSecureRollbackText =
 	/this device does not support secure rollback to previous version if something goes wrong/i;
 
-function stepSelectFile(getByLabelText) {
-	const fileInput = getByLabelText(/select file/i);
-	const file = new File(['(⌐□_□)'], 'test.bin');
+function flushPromises() {
+	return new Promise(resolve => setImmediate(resolve));
+}
+
+const render = (ui) => tlRender(
+	<ReactQueryCacheProvider queryCache={queryCache}>
+		{ui}
+	</ReactQueryCacheProvider>
+)
+
+async function stepSelectFile(fileName='test.bin') {
+	const fileInput = await screen.findByLabelText(/select file/i);
+	const file = new File(['(⌐□_□)'], fileName);
 	Object.defineProperty(fileInput, 'files', {
 		value: [file]
+	});
+	Object.defineProperty(fileInput, 'value', {
+		value: file.name
 	});
 	return file
 }
 
-function stepSubmit(getByLabelText, getByRole, preserveConfig=true) {
-	if (!preserveConfig) {
-		const preserveConfigCheckbox = getByLabelText(/preserve config/i);
-		fireEvent.click(preserveConfigCheckbox);
-	}
-	const submitButton = getByRole('button', /upgrade/i);
-	fireEvent.click(submitButton);
+async function stepSubmit() {
+	const submitButton = await screen.findByRole('button', {name: /upgrade/i});
+	fireEvent.submit(submitButton);
 }
 
-function triggerUpgrade(getByLabelText, getByRole, preserveConfig=true) {
-	const file = stepSelectFile(getByLabelText);
-	stepSubmit(getByLabelText, getByRole, preserveConfig)
+async function triggerUpgrade() {
+	const file = stepSelectFile();
+	await stepSubmit()
 	return file;
 }
 
@@ -55,15 +65,22 @@ describe('firmware form', () => {
 	})
 
 	beforeEach(() => {
-		upgradeConfirmIsAvailable.mockImplementation(jest.fn(async () => true));
-		uploadFile.mockImplementation(jest.fn(async () => true));
-		validateFirmware.mockImplementation(jest.fn(async () => true));
-		upgradeFirmware.mockImplementation(jest.fn(async () => true));
-		useAppContext.mockImplementation(() => ({uhttpdService: mockUhttpdService}))
+		getUpgradeInfo.mockImplementation(async () => ({
+			suCounter: -1,
+			is_upgrade_confirm_supported: true
+		}));
+		uploadFile.mockImplementation(async () => true);
+		upgradeFirmware.mockImplementation(async () => true);
+		getDownloadStatus.mockImplementation(async () => ({
+			download_status: 'not-initiated'
+		}));
+		getNewVersion.mockImplementation(async () => ({}))
+		downloadRelease.mockImplementation(async () => ({}));
 	});
 
 	afterEach(() => {
 		cleanup();
+		act(() => queryCache.clear());
 	});
 	
 	afterAll(() => {
@@ -71,172 +88,241 @@ describe('firmware form', () => {
 	})
 
 	it('shows up a legend telling confirm-mechanism is available when it is', async () => {
-		upgradeConfirmIsAvailable.mockImplementation(async () => true);
-		const { findByText, queryByText } = render(<FirmwarePage />);
-		expect(await findByText(secureRollbackText)).toBeInTheDocument();
-		expect(queryByText(noSecureRollbackText)).not.toBeInTheDocument();
+		render(<FirmwarePage />);
+		expect(await screen.findByText(secureRollbackText)).toBeInTheDocument();
+		expect(screen.queryByText(noSecureRollbackText)).not.toBeInTheDocument();
 	});
 
 
 	it('shows up a legend telling confirm-mechanism is not available when it is not', async () => {
-		upgradeConfirmIsAvailable.mockImplementation(async () => false);
-		const { findByText, queryByText } = render(<FirmwarePage />);
-		expect(await findByText(noSecureRollbackText)).toBeInTheDocument();
-		expect(queryByText(secureRollbackText)).not.toBeInTheDocument();
+		getUpgradeInfo.mockImplementation(async () => ({
+			status: 'ok', suCounter: -1,
+			is_upgrade_confirm_supported: false
+		}));
+		render(<FirmwarePage />);
+		expect(await screen.findByText(noSecureRollbackText)).toBeInTheDocument();
+		expect(screen.queryByText(secureRollbackText)).not.toBeInTheDocument();
 	});
 
-	it('shows up a legend to upload a new firmware image from the device', () => {
-		const { getByText } = render(<FirmwarePage />);
-		expect(getByText(/upload firmware image from your device/i)).toBeInTheDocument();
+	it('shows up a legend to upload a new firmware image from the device', async () => {
+		render(<FirmwarePage />);
+		expect(await screen.findByText(/upload firmware image from your device/i)).toBeInTheDocument();
 	});
 
-	it('shows up a file input to select a firmware image', () => {
-		const { getByLabelText } = render(<FirmwarePage />);
-		expect(getByLabelText(/select file/i)).toBeInTheDocument();
+	it('shows up a file input to select a firmware image', async () => {
+		render(<FirmwarePage />);
+		expect(await screen.findByText(/select file/i)).toBeInTheDocument();
 	});
 
-	it('shows up checked checkbox to preserve config', () => {
-		const { getByLabelText } = render(<FirmwarePage />);
-		expect(getByLabelText(/preserve config/i)).toBeChecked();
-	});
-
-	it('shows up a button to perform the firmware upgrade', () => {
-		const { getByRole } = render(<FirmwarePage />);
-		expect(getByRole('button', {name: /upgrade/i})).toBeEnabled();
+	it('shows up a button to perform the firmware upgrade', async () => {
+		render(<FirmwarePage />);
+		expect(await screen.findByRole('button', {name: /upgrade/i})).toBeEnabled();
 	});
 
 	it('shows error if upgrading without selecting a file', async () => {
-		const { getByLabelText, getByRole, queryByText, getByText} = render(<FirmwarePage />);
-		expect(queryByText('Please select a file', 'i')).toBeNull()
-		stepSubmit(getByLabelText, getByRole)
-		expect(getByText('Please select a file', 'i')).toBeInTheDocument();
+		render(<FirmwarePage />);
+		expect(screen.queryByText('Please select a file', 'i')).toBeNull()
+		stepSubmit()
+		expect(await screen.findByText('Please select a file', 'i')).toBeInTheDocument();
 	});
 
-	it('calls the cgi-io endpoint to upload the file', async () => {
-		const { uhttpdService } = useAppContext();
-		const { getByLabelText, getByRole} = render(<FirmwarePage />);
-		const file = triggerUpgrade(getByLabelText, getByRole);
+	it('shows error if upgrading with a file with invalid extension', async () => {
+		render(<FirmwarePage />);
+		expect(screen.queryByText('Please select a .sh or .bin file', 'i')).toBeNull()
+		stepSelectFile('myfile.unsupportedextension')
+		stepSubmit()
+		expect(await screen.findByText('Please select a .sh or .bin file', 'i')).toBeInTheDocument();
+	});
+
+	it('calls uploadFile to upload the file', async () => {
+		render(<FirmwarePage />);
+		const file = await triggerUpgrade();
 		await waitForExpect(() => {
-			expect(uploadFile).toBeCalledWith(uhttpdService, file);
+			expect(uploadFile).toBeCalledWith(file);
 		})
 	});
-
-	it('calls the firmware validation endpoint once uploaded', async () => {
-		const { getByLabelText, getByRole} = render(<FirmwarePage />);
-		const { uhttpdService } = useAppContext();
-		triggerUpgrade(getByLabelText, getByRole);
+	
+	it('calls the firmware upgrade endpoint with the path returned by upload file', async () => {
+		uploadFile.mockImplementation(async () => '/tmp/some/given/path');
+		render(<FirmwarePage />);
+		triggerUpgrade();
 		await waitForExpect(() => {
-			expect(validateFirmware).toHaveBeenCalledWith(uhttpdService);
-			expect(validateFirmware).toHaveBeenCalledAfter(uploadFile);
+			expect(upgradeFirmware).toHaveBeenCalledWith('/tmp/some/given/path');
 		})
 	});
 
 	it('shows up an error message if firmware validation fails', async () => {
-		uploadFile.mockImplementation(async () => true);
-		validateFirmware.mockImplementation(async () => Promise.reject());
-		const noteText = /the selected image is not a valid for the target device/i;
-		const { getByLabelText, getByRole, queryByText, findByText} = render(<FirmwarePage />);
-		expect(queryByText(noteText)).not.toBeInTheDocument();
-		triggerUpgrade(getByLabelText, getByRole);
-		expect(await findByText(noteText)).toBeInTheDocument();
+		upgradeFirmware.mockImplementation(async () => Promise.reject('Invalid firmware'));
+		const noteText = /The selected image is not valid for the target device/i;
+		render(<FirmwarePage />);
+		expect(screen.queryByText(noteText)).not.toBeInTheDocument();
+		triggerUpgrade();
+		expect(await screen.findByText(noteText)).toBeInTheDocument();
 	});
 
-	it('calls the firmware upgrade endpoint if validation success', async () => {
-		uploadFile.mockImplementation(async () => true);
-		validateFirmware.mockImplementation(async () => true);
-		const { getByLabelText, getByRole} = render(<FirmwarePage />);
-		const { uhttpdService } = useAppContext();
-		triggerUpgrade(getByLabelText, getByRole);
-		await waitForExpect(() => {
-			expect(upgradeFirmware).toHaveBeenCalledWith(uhttpdService, true);
-			expect(upgradeFirmware).toHaveBeenCalledAfter(validateFirmware);
-		})
-	});
-
-	it('calls the firmware upgrade endpoint with preserve config when requested', async () => {
-		uploadFile.mockImplementation(async () => true);
-		validateFirmware.mockImplementation(async () => true);
-		const { uhttpdService } = useAppContext();
-		const { getByLabelText, getByRole} = render(<FirmwarePage />);
-		const preserveConfig = true;
-		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
-		await waitForExpect(() => {
-			expect(upgradeFirmware).toHaveBeenCalledWith(uhttpdService, true);
-		})
-	});
-
-	it.each`preserveConfig ${true} ${false}
-	`('shows up a legend asking the user to wait for the upgrade to finish preserveConfig: $preserveConfig', async ({preserveConfig}) => {
-		uploadFile.mockImplementation(async () => true);
-		validateFirmware.mockImplementation(async () => true);
-		upgradeFirmware.mockImplementation(async () => true);
-		const { findByText, getByLabelText, getByRole} = render(<FirmwarePage />);
-		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
+	it('shows up a legend asking the user to wait for the upgrade to finish', async () => {
+		render(<FirmwarePage />);
+		triggerUpgrade();
 		const noteText1 = new RegExp(
 			'The firmware is being upgraded...', 'i');
-		expect(await findByText(noteText1)).toBeInTheDocument();
+		expect(await screen.findByText(noteText1)).toBeInTheDocument();
 		const noteText2 = new RegExp(
 			'Please wait patiently for .* seconds and do not disconnect the device', 'i');
-		expect(await findByText(noteText2)).toBeInTheDocument();
+		expect(await screen.findByText(noteText2)).toBeInTheDocument();
 	});
 
-	it('shows a button to reload app after upgrade countdown when preserving config', async () => {
-		uploadFile.mockImplementation(async () => true);
-		validateFirmware.mockImplementation(async () => true);
-		upgradeFirmware.mockImplementation(async () => true);
-		const { getByLabelText, getByRole, findByRole, findByText} = render(<FirmwarePage />);
-		const preserveConfig = true;
-		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
+	it('shows a button to reload app after upgrade', async () => {
+		render(<FirmwarePage />);
+		triggerUpgrade();
 		const noteText1 = new RegExp(
 			'The firmware is being upgraded...', 'i');
-		await findByText(noteText1);
+		await screen.findByText(noteText1);
 		act(() => {
 			jest.advanceTimersByTime(181 * 1000)
 		})
-		expect(await findByRole('button', {name: /try reloading the app/i})).toBeEnabled()
+		expect(await screen.findByRole('button', {name: /try reloading the app/i})).toBeEnabled()
 	});
 
-	it('shows a legend saying the user may switch network after upgrade when not preserving config', async () => {
-		uploadFile.mockImplementation(async () => true);
-		validateFirmware.mockImplementation(async () => true);
-		upgradeFirmware.mockImplementation(async () => true);
-		const { getByLabelText, getByRole, findByText} = render(<FirmwarePage />);
-		const preserveConfig = false;
-		triggerUpgrade(getByLabelText, getByRole, preserveConfig);
+	it('shows up a legend telling the user to confirm the upgrade when it is needed', async () => {
+		render(<FirmwarePage />);
+		triggerUpgrade();
 		const noteText1 = new RegExp(
 			'The firmware is being upgraded...', 'i');
-		await findByText(noteText1);
+		await screen.findByText(noteText1);
 		act(() => {
 			jest.advanceTimersByTime(181 * 1000)
 		})
-		expect(await findByText('You may need to connect to the new wireless network and reload the app')).toBeInTheDocument()
+		const noteText2 = new RegExp(
+			'When reloading the app you will be asked to confirm the upgrade,'
+			+ ' otherwise it will be reverted', 'i');
+		expect(await screen.findByText(noteText2)).toBeInTheDocument();
+
+	})
+
+	it('shows download option when realease is available', async () => {
+		getNewVersion.mockImplementation(async () => ({
+			version: 'SomeNewVersionName'
+		}));
+		render(<FirmwarePage />)
+		expect(await screen.findByText('SomeNewVersionName is now available 🎉')).toBeInTheDocument()
+	})
+
+	it('calls downdloadRelease when selecting download option', async () => {
+		getNewVersion.mockImplementation(async () => ({
+			version: 'SomeNewVersionName'
+		}));
+		render(<FirmwarePage />)
+		const downloadButton = await screen.findByRole('button', {name: /Download/i})
+		fireEvent.click(downloadButton);
+		stepSubmit();
+		await waitForExpect(() => {
+			expect(downloadRelease).toHaveBeenCalled();
+		})
+	})
+
+	it('shows downloading message when downloading new release', async () => {
+		getNewVersion
+			.mockImplementation(async () => ({version: 'SomeNewVersionName'}));
+		getDownloadStatus
+			.mockImplementation(async () => ({download_status: 'downloading'}));
+		render(<FirmwarePage />)
+		expect(await screen.findByText(/Downloading/i)).toBeInTheDocument();
+		expect(await screen.findByRole('button', {name: /Upgrade to SomeNewVersionName/i}))
+			.toBeDisabled();
+	})
+
+	it('shows an enabled button to upgrade from release when its downloaded', async () => {
+		getNewVersion
+			.mockImplementation(async () => ({version: 'SomeNewVersionName'}));
+		getDownloadStatus
+			.mockImplementation(async () => ({download_status: 'downloaded'}));
+		render(<FirmwarePage />)
+		await flushPromises();
+		expect(await screen.findByRole('button', {name: /Upgrade to SomeNewVersionName/i}))
+			.toBeEnabled();
+	})
+
+	it('shows up a legend asking to wait for the upgrade to finish when upgrading from release', async () => {
+		getNewVersion
+			.mockImplementation(async () => ({version: 'SomeNewVersionName'}));
+		getDownloadStatus
+			.mockImplementation(async () => (
+				{ download_status: 'downloaded', fw_path: '/tmp/upgrade.sh' }
+			));
+		render(<FirmwarePage />)
+		const upgradeButton = await screen.findByRole('button', {name: /Upgrade to SomeNewVersionName/i});
+		fireEvent.click(upgradeButton);
+		const noteText1 = new RegExp(
+			'The firmware is being upgraded...', 'i');
+		expect(await screen.findByText(noteText1)).toBeInTheDocument();
+		const noteText2 = new RegExp(
+			'Please wait patiently for .* seconds and do not disconnect the device', 'i');
+		expect(await screen.findByText(noteText2)).toBeInTheDocument();
 	});
+
+	it('calls upgradeFirmware with the fw_path from downloadStatus when upgrading from release', async () => {
+		getNewVersion
+			.mockImplementation(async () => ({version: 'SomeNewVersionName'}));
+		getDownloadStatus
+			.mockImplementation(async () => (
+				{ download_status: 'downloaded', fw_path: '/tmp/upgrade.sh' }
+			));
+		render(<FirmwarePage />)
+		const upgradeButton = await screen.findByRole('button', {name: /Upgrade to SomeNewVersionName/i});
+		fireEvent.click(upgradeButton);
+		expect(upgradeFirmware).toHaveBeenCalledWith('/tmp/upgrade.sh');
+	});
+
+	it('show downloading message until download finished successfully', async () => {
+		getNewVersion.mockImplementation(jest.fn(async () => ({
+			version: 'SomeNewVersionName'
+		})))
+		getDownloadStatus
+			.mockImplementationOnce(async () => ({download_status: 'not-initiated'}))
+			.mockImplementationOnce(async () => ({download_status: 'downloading'}))
+			.mockImplementationOnce(async () => ({download_status: 'downloaded'}));
+		render(<FirmwarePage />)
+		const downloadButton = await screen.findByRole('button', {name: /Download/i})
+		fireEvent.click(downloadButton);
+		expect(await screen.findByText(/Downloading/i)).toBeInTheDocument();
+		act(() => {
+			jest.advanceTimersByTime(12000);
+		})
+		expect(await screen.findByRole('button', {name: /Upgrade to SomeNewVersionName/i})).toBeDisabled();
+		act(() => {
+			jest.advanceTimersByTime(12000);
+		})
+		await flushPromises();
+		expect(await screen.findByRole('button', {name: /Upgrade to SomeNewVersionName/i})).toBeEnabled();
+	})
 });
 
 
 describe('firmware confirm', () => {
 	beforeEach(() => {
 		// Reset default mock implementations
+		getUpgradeInfo.mockImplementation(jest.fn(async () => ({
+			suCounter: 340,
+			is_upgrade_confirm_supported: true
+		})));
 		upgradeConfirm.mockImplementation(jest.fn(async () => true));
 		upgradeRevert.mockImplementation(jest.fn(async () => true));
-		useAppContext.mockImplementation(() => (
-			{uhttpdService: mockUhttpdService, suCounter: 630, stopSuCounter: jest.fn()})
-		);
 	});
 
 	afterEach(() => {
 		cleanup();
+		act(() => queryCache.clear());
 	});
 
-	it('shows two buttons, one for confirm, one for revert', () => {
-		const { getByRole } = render(<FirmwarePage />);
-		expect(getByRole('button', {name: /confirm/i})).toBeEnabled();
-		expect(getByRole('button', {name: /revert/i})).toBeEnabled();
+	it('shows two buttons, one for confirm, one for revert', async () => {
+		render(<FirmwarePage />);
+		expect(await screen.findByRole('button', {name: /confirm/i})).toBeEnabled();
+		expect(await screen.findByRole('button', {name: /revert/i})).toBeEnabled();
 	})
 
 	it('routes to home page when clicking on confirm', async () => {
-		const { getByRole } = render(<FirmwarePage />);
-		const button = getByRole('button', {name: /confirm/i});
+		render(<FirmwarePage />);
+		const button = await screen.findByRole('button', {name: /confirm/i});
 		fireEvent.click(button);
 		await waitForExpect(() => {
 			expect(route).toHaveBeenCalledWith('/')
@@ -244,12 +330,12 @@ describe('firmware confirm', () => {
 	})
 
 	it('shows a legend saying device will reboot when reverting', async () => {
-		const { getByRole, findByText } = render(<FirmwarePage />);
-		const button = getByRole('button', {name: /revert/i});
+		render(<FirmwarePage />);
+		const button = await screen.findByRole('button', {name: /revert/i});
 		fireEvent.click(button);
-		expect(await findByText(
+		expect(await screen.findByText(
 			new RegExp('Reverting to previous version', 'i'))).toBeInTheDocument();
 		const noteText = new RegExp('Please wait while the device reboots, and reload the app', 'i');
-		expect(await findByText(noteText)).toBeInTheDocument();
+		expect(await screen.findByText(noteText)).toBeInTheDocument();
 	})
 })

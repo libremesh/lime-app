@@ -1,22 +1,38 @@
-const FW_PATH = '/tmp/firmware.bin';
+const FW_PATH = {
+	'.sh': '/tmp/upgrade.sh',
+	'.bin': '/tmp/firmware.bin'
+};
 
-export function upgradeConfirmIsAvailable(api) {
-	return api.call('lime-utils', 'get_upgrade_info', {})
-		.toPromise()
-		.then(res => res["is_upgrade_confirm_supported"]);
+import path from 'path';
+import api from 'utils/uhttpd.service';
+
+export function getUpgradeInfo() {
+	return api.call('lime-utils', 'get_upgrade_info', {}).toPromise()
+		.then(response => new Promise((res, rej) => {
+			if (response.status === 'ok') {
+				res({
+					...response,
+					suCounter: Number(response.safe_upgrade_confirm_remaining_s)
+				});
+			}
+			else {
+				rej(response.message);
+			}
+		}));
 }
 
-export function uploadFile(api, file) {
+export function uploadFile(file) {
 	return new Promise((res, rej) => {
 		const request = new XMLHttpRequest();
 		const formData = new FormData();
-
-		formData.append("sessionid", api.sid);
-		formData.append("filename", FW_PATH);
+		const extname = path.extname(file.name);
+		const destPath = FW_PATH[extname] || path.resolve('/tmp/', file.name);
+		formData.append("sessionid", api.sid());
+		formData.append("filename", destPath);
 		formData.append("filedata", file)
 	
 		request.addEventListener('loadend', () => {
-			res(request.responseText);
+			res(destPath);
 		});
 	
 		request.addEventListener('error', (error) => {
@@ -28,24 +44,10 @@ export function uploadFile(api, file) {
 	})
 }
 
-export function validateFirmware(api) {
-	return api.call('lime-utils-admin', 'firmware_verify', {fw_path: FW_PATH})
-		.toPromise()
-		.then(response => new Promise((res, rej) => {
-			if (response.status === 'ok') {
-				res(true)
-			}
-			else {
-				rej(response.message);
-			}
-		}));
-}
-
-export function upgradeFirmware(api, preserveConfig) {
+export function upgradeFirmware(filepath) {
 	return api.call('lime-utils-admin', 'firmware_upgrade',
 		{
-			fw_path: FW_PATH,
-			preserve_config: preserveConfig,
+			fw_path: filepath,
 			metadata: { upgrade_timestamp: (Date.now() / 1000).toFixed(1) } // in seconds;
 		})
 		.toPromise()
@@ -59,7 +61,7 @@ export function upgradeFirmware(api, preserveConfig) {
 		}));
 }
 
-export function upgradeConfirm(api) {
+export function upgradeConfirm() {
 	return api.call('lime-utils-admin', 'firmware_confirm', {})
 		.toPromise()
 		.then(response => new Promise((res, rej) => {
@@ -72,6 +74,18 @@ export function upgradeConfirm(api) {
 		}))
 }
 
-export function upgradeRevert(api) {
+export function upgradeRevert() {
 	return api.call('system', 'reboot', {}).toPromise().then(() => true);
+}
+
+export function getNewVersion() {
+	return api.call("eupgrade", "is_new_version_available", {}).toPromise();
+}
+
+export function getDownloadStatus() {
+	return api.call("eupgrade", "download_status", {}).toPromise();
+}
+
+export function downloadRelease() {
+	return api.call('eupgrade', 'start_download', {}).toPromise();
 }

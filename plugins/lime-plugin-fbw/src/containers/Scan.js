@@ -13,14 +13,14 @@ import { Loading } from 'components/loading';
 import Alert from 'components/alert';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { showNotification } from '../../../../src/store/actions';
-import { useAppContext } from 'utils/app.context';
+import { useBoardData } from 'utils/queries';
 
 export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks }) => {
-	const { nodeHostname } = useAppContext();
+	const { data: boardData } = useBoardData();
 	const [state, setState] = useState({
 		createForm: false,
 		error: null,
-		hostname: nodeHostname
+		hostname: boardData.hostname
 	});
 
 	/* Load scan results */

@@ -1,7 +1,7 @@
-import { useAppContext } from '../../utils/app.context';
 import I18n from 'i18n-js';
 import { useState, useEffect } from 'preact/hooks';
 import Loading from '../../components/loading';
+import { useLogin } from 'utils/queries';
 
 const loadingBoxStyle = {
 	position: 'fixed',
@@ -60,38 +60,26 @@ const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
 };
 
 const TryToLoginAutomatically = () => {
-	const [hasPassword, sethasPassword] = useState(undefined);
-	const { loginAsRoot } = useAppContext();
+	const [login, {isError}] = useLogin();
 
 	useEffect(() => {
-		loginAsRoot('')
-			.catch(() => sethasPassword(true));
-	}, [sethasPassword, loginAsRoot]);
+		login({username: 'root', password: ''});
+	}, [login]);
 
-	if (hasPassword === undefined) {
-		return <div class="container container-center"><Loading /></div>
-	}
-	if (hasPassword === true) {
+	if (isError) {
 		return <SharedPasswordLoginHOC />
 	}
-	return hasPassword
+	return <div class="container container-center"><Loading /></div>
 }
 
 const SharedPasswordLoginHOC = () => {
-	const { loginAsRoot } = useAppContext();
-	const [submitting, setSubmitting] = useState('');
-	const [error, setError] = useState('');
+	const [login, {isLoading, isError}] = useLogin();
 
 	function submitLogin (password) {
-		setSubmitting(true);
-		loginAsRoot(password)
-			.catch(() => {
-				setError(true);
-				setSubmitting(false);
-			});
+		login({username: 'root', password})
 	}
 
-	return <SharedPasswordLogin submitting={submitting} error={error} submitLogin={submitLogin} />;
+	return <SharedPasswordLogin submitting={isLoading} error={isError} submitLogin={submitLogin} />;
 };
 
 export default TryToLoginAutomatically;
