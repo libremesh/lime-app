@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.11](https://github.com/libremesh/lime-app/compare/v0.2.10...v0.2.11) (2020-11-27)
+
+
+### Features
+
+* **firstbootwizard:** add do not ask again option to fbw banner ([ed9b733](https://github.com/libremesh/lime-app/commit/ed9b73388fe610358f7db52ab2ebabdc3b0d8676))
+
+* **firmware upgrade:** add one click firmware upgrade ([a62547d](https://github.com/libremesh/lime-app/commit/a62547d971438cf3197f40432708469b410eca94))
+
+### Bug Fixes
+
+* **firstbootwizard:** ask root privilege to run fbw ([4c5e52e](https://github.com/libremesh/lime-app/commit/4c5e52e7d25d2e146e8a973a7ca64fdb3e9f9961))
+
 ### [0.2.10](https://github.com/germanferrero/lime-app/compare/v0.2.9...v0.2.10) (2020-10-29)
 
 
