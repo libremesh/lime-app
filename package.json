@@ -70,15 +70,10 @@
     "axios": "^0.19.0",
     "history": "^4.7.2",
     "i18n-js": "^3.0.3",
-    "jssha": "^2.3.1",
     "leaflet.gridlayer.googlemutant": "^0.8.0",
-    "less": "^3.10.3",
-    "less-loader": "^5.0.0",
     "preact": "^10.0.1",
     "preact-i18nline": "^2.0.0",
-    "preact-render-to-string": "^5.1.0",
     "preact-router": "^3.0.0",
-    "preact-router-redux": "^4.1.0",
     "react-hook-form": "^6.9.2",
     "react-query": "^2.23.1",
     "react-query-devtools": "^2.6.0",
@@ -87,10 +82,7 @@
     "redux": "^4.0.0",
     "redux-observable": "^1.2.0",
     "rxjs": "^6.5.4",
-    "rxjs-compat": "^6.1.0",
-    "simple-color-scale": "^1.0.1",
-    "simplegrid": "^1.0.2",
-    "skeleton-less": "^2.0.1"
+    "simple-color-scale": "^1.0.1"
   },
   "husky": {
     "hooks": {
