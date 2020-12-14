@@ -1,4 +1,5 @@
 import api from './uhttpd.service';
+import { getHostname } from './api';
 import { useQuery, useMutation } from 'react-query';
 import queryCache from './queryCache';
 
@@ -61,4 +62,10 @@ export function useCommunitySettings() {
 		initialData: DEFAULT_COMMUNITY_SETTINGS,
 		initialStale: true
 	})
+}
+
+export function useHostname(mac) {
+	return useQuery(['lime-utils', 'get_hostname', mac], async () => getHostname(mac), {
+		retry: 3
+	});
 }

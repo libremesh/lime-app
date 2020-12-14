@@ -1,174 +1,108 @@
 import { h } from 'preact';
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { changeInterface, changeStation, startAlign, getSignal } from './alignActions';
-
-import { getAll } from './alignSelectors';
-
+import { useHostname } from 'utils/queries';
+import { useAssocList, useMeshIfaces } from './alignQueries';
+import { ifaceToRadio } from './utils';
+import { SignalBar } from './components/signalBar';
+import { SecondsAgo } from './components/secondsAgo';
 import I18n from 'i18n-js';
 
-import colorScale from 'simple-color-scale';
-import { useCommunitySettings, useBoardData } from 'utils/queries';
+import Loading from 'components/loading';
+import Tabs from 'components/tabs';
+import style from './style.less';
 
-//Eperimental text-to-speech
-let synth = window.speechSynthesis;
-let voices = synth.getVoices();
-
-const speech = (text, lang, voices, synth) => {
-	let utterThis = new SpeechSynthesisUtterance(text);
-	utterThis.pitch = 0.9;
-	utterThis.rate = 1.2;
-	utterThis.voice = voices.filter(x => x.name === lang)[0];
-	synth.speak(utterThis);
-};
-
-const style = {
-	signal: {
-		fontSize: '20vh',
-		margin: '0.5rem',
-		display: 'block',
-		textAlign: 'center'
-	},
-	bar: {
-		display: 'block',
-		height: '10px'
-	},
-	hostname: {
-		display: 'block',
-		textAlign: 'center'
-	},
-	block: {
-		width: '100%'
-	}
-};
-
-function useInterval (callback, delay, off) {
-	const savedCallback = useRef();
-
-	useEffect(() => {
-		savedCallback.current = callback;
-	}, [callback]);
-
-	useEffect(() => {
-		function tick() {
-			savedCallback.current();
-		}
-		if (delay !== null) {
-			let id = setInterval(tick, delay);
-			return () => clearInterval(id);
-		}
-	}, [delay]);
-
-}
-
-export const Align = ({ startAlign, changeInterface, changeStation, alignData, getSignal }) => {
-
-	const { data: communitySettings } = useCommunitySettings();
-	const { data: boardData } = useBoardData();
-	const [ lastSpeech, setLastSpeech ] = useState(0);
-	const [ resumedTimes, setResumedTimes ] = useState(0);
-
-	function _changeInterface(e) {
-		changeInterface(e.target.value);
-	}
-
-	function _changeStation(e) {
-		const mac = e.target.value;
-		const station = alignData.stations.filter(x => x.mac === mac)[0];
-		changeStation(station);
-	}
-
-	function colorBar(signal) {
-		return Object.assign({}, style.bar,{ backgroundColor: colorScale.getColor(signal) });
-	}
-
-	useEffect(() => {
-		startAlign();
-		colorScale.setConfig({
-			outputStart: 1,
-			outputEnd: Number(communitySettings.bad_signal)* -1,
-			inputStart: Number(communitySettings.good_signal)* -1,
-			inputEnd: Number(communitySettings.bad_signal)* -1 + 10
-		});
-	},[]);
-
-	useEffect(() => {
-		if (typeof alignData.currentReading !== 'undefined') {
-			const value = alignData.currentReading.signal * -1;
-			
-			if ( (Math.floor(lastSpeech/10) !== Math.floor(value/10)) || Number(value.toString()[value.toString().length -1 ]) === 0 || resumedTimes === 5 ) {
-				speech(value || 0, 'es-ES', voices, synth);
-				setResumedTimes(() => 0);
-			}
-			
-			else {
-				speech(value.toString()[value.toString().length - 1] || 0, 'es-ES', voices, synth);
-				setResumedTimes(() => resumedTimes + 1);
-			}
-			setLastSpeech(() => value);
-		}
-	}, [alignData]);
-
-	useInterval(() => {
-		getSignal();
-	},[2000]);
-
+export const AssocRow = ({station}) => {
+	const { data: hostname, isLoading, isError } = useHostname(station.mac);
 	return (
-		<div className="container container-padded">
-			{ typeof alignData.currentReading !== 'undefined'? (
-				<div className="row">
-					<div className="six columns">
-						<span style={style.hostname}>
-							{boardData.hostname || ''}
-						</span>
-						<h1 style={style.signal}>
-							{alignData.currentReading.signal || 0}
-							<span style={colorBar(alignData.currentReading.signal * -1)} />
-						</h1>
-						<span style={style.hostname}>
-							{alignData.currentReading.hostname || ''}
-						</span>
+		<div class={style.row}>
+			<div>
+				{( isLoading || isError ?
+					<div class={`${style.fetchingName} withLoadingEllipsis`}>
+						{ I18n.t('Fetching name') }
 					</div>
-					<div className="six columns">
-						<label>{I18n.t('Interfaces')}</label>
-						<select style={style.block} onChange={_changeInterface} value={alignData.currentReading.iface ? alignData.currentReading.iface : null}>
-							{alignData.ifaces.map((iface) => <option value={iface.name}>{iface.name}</option>)}
-						</select>
-						<label>{I18n.t('Stations')}</label>
-						<select  style={style.block} onChange={_changeStation} value={alignData.currentReading.mac ? alignData.currentReading.mac : null}>
-							{alignData.stations.map((station) => <option value={station.mac}>{station.hostname}</option>)}
-						</select>
+					:
+					<div class={style.stationHostname}>
+						{ hostname }
 					</div>
+				)}
+				{ station.inactive >= 3000 && (
+					<div>
+						<div>{I18n.t('Not associated')}</div>
+						<div>{`${I18n.t('Last packet')}:`} <SecondsAgo initialMs={station.inactive} isStatic /></div>
+					</div>
+				)}
+			</div>
+			{station.inactive >= 3000 ? (
+				<div class={style.signal}>
+					X
+					<SignalBar signal={null} className={style.bar} />
 				</div>
 			): (
-				<div className="row">
-					<div className="six columns">
-						<span style={style.hostname}>
-							{I18n.t('This node does not see other nodes in the network.')}
-						</span>
-						<h1 style={style.signal}>
-							:(
-						</h1>
-					</div>
+				<div class={style.signal}>
+					{ station.signal }
+					<SignalBar signal={station.signal} className={style.bar} />
 				</div>
 			)}
 		</div>
+	)
+}
+
+export const AssocList = ({iface}) => {
+	const { data: assoclist, isLoading } = useAssocList(iface, {
+		refetchInterval: 2000
+	});
+
+	if (isLoading) {
+		return <div className="container container-center"><Loading /></div>
+	}
+
+	return (
+		<div class="d-flex flex-column flex-grow-1">
+			{assoclist.map(station => <AssocRow key={station.mac} station={station} />)}
+			{assoclist.length === 0 &&
+				<div className="container-center">
+					{I18n.t("This radio is not associated with other nodes")}
+				</div>
+			}
+		</div>
+	)
+}
+
+
+export const Align = ({}) => {
+	const [ tabs, setTabs ] = useState([]);
+	const [ selectedIface, setSelectedIface ] = useState(null);
+	const { data: ifaces, isLoading } = useMeshIfaces();
+
+	useEffect(() => {
+		if (!ifaces) return;
+		const tabs = ifaces.sort().map(iface => ({
+			key: iface,
+			repr: ifaceToRadio(iface)
+		}))
+		setTabs(tabs);
+		if (ifaces.length > 0) {
+			setSelectedIface(ifaces[0]);
+		}
+	}, [ifaces])
+
+	if (isLoading) {
+		return <div className="container container-center"><Loading /></div>
+	}
+
+	if (!ifaces) {
+		return <div className="container container-center">
+			{I18n.t('The are not mesh interfaces available')}
+		</div>
+	}
+
+	return (
+		<div class="d-flex flex-column flex-grow-1">
+			<Tabs tabs={tabs} current={selectedIface} onChange={setSelectedIface} />
+			{selectedIface && <AssocList iface={selectedIface} />}
+		</div>
 	);
-};
+}
 
-
-const mapStateToProps = (state) => ({
-	alignData: getAll(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	changeInterface: bindActionCreators(changeInterface, dispatch),
-	changeStation: bindActionCreators(changeStation, dispatch),
-	startAlign: bindActionCreators(startAlign, dispatch),
-	getSignal: bindActionCreators(getSignal, dispatch)
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Align);
+export default Align;
