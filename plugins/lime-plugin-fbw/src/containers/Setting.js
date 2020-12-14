@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useState, useEffect, useRef } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 import I18n from 'i18n-js';
 import { connect } from 'react-redux';
 
@@ -7,25 +7,7 @@ import '../style';
 
 import ProgressBar from 'components/progressbar';
 import Loading from 'components/loading';
-
-function useInterval (callback, delay, off) {
-	const savedCallback = useRef();
-
-	useEffect(() => {
-		savedCallback.current = callback;
-	}, [callback]);
-
-	useEffect(() => {
-		function tick() {
-			savedCallback.current();
-		}
-		if (delay !== null) {
-			let id = setInterval(tick, delay);
-			return () => clearInterval(id);
-		}
-	}, [delay]);
-
-}
+import { useInterval } from 'react-use';
 
 export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 	const [ progress, setProgress ] = useState(0);
