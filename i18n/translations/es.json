@@ -27,18 +27,15 @@
     "packet_loss_1afe48a8": "Paquetes perdidos",
     "save_notes_616850ea": "Guardar notas",
     "select_new_base_station_3652ae73": "Cambiar de nodo seleccionado",
-    "stations_18122820": "Nodos",
     "status_e7fdbe06": "Estado",
     "system_55b0ca91": "Sistema",
     "to_internet_494eb85c": "Hasta Internet",
     "traffic_bfe536d2": "Tráfico",
     "uptime_c1d2415d": "Tiempo en actividad",
-    "interfaces_44f8a99c": "Interfaces",
     "ground_routing_12ab04c9": "Ground Routing",
     "ground_routing_configuration_3f4fa9c1": "Configuración de Ground Routing",
     "login_6f3d6249": "Ingresar",
     "station_name_7d67417c": "Nombre del nodo",
-    "this_node_does_not_see_other_nodes_in_the_network_f281b047": "Este nodo no ve a ningún otro nodo la red",
     "cancel_caeb1e68": "Cancelar",
     "checking_connection_863b319e": "Comprobando conexión",
     "choose_a_name_for_this_node_f491aa8d": "Elije el nombre para el nodo",
@@ -164,7 +161,16 @@
     "please_select_a_sh_or_bin_file_4004723": "Por favor, seleccioná un archivo .bin o .sh",
     "or_choose_a_firmware_image_from_your_device_d56be2d8": "O elige una imagen de firmware desde tu dispositivo",
     "or_upgrade_to_latest_release_e062ddee": "O actualiza a la última version del firmware",
-    "upgrade_to_lastest_firmware_version_9b159910": "Actualizar a la última version del firwmare"
- 
+    "upgrade_to_lastest_firmware_version_9b159910": "Actualizar a la última version del firwmare",
+    "best_signal_913e3460": "Mejor señal",
+    "fetching_name_96831fa4": "Consiguiendo nombre",
+    "last_packet_82ee8e9d": "Último paquete",
+    "more_than_a_minute_ago_a2a28531": "Hace más de un minuto",
+    "not_associated_cb14e43c": "No enlazado",
+    "radio_2573b256": "Radio",
+    "seconds_seconds_ago_699b6316": "hace %{seconds} segundos",
+    "the_are_not_mesh_interfaces_available_4055abd7": "No hay interfaces mesh disponibles",
+    "this_radio_is_not_associated_with_other_nodes_6722a471": "Esta radio no está enlazada a otros nodos",
+    "with_radio_alignin_with_afd151e2": "Con %{radio} alineando con"
 }
 

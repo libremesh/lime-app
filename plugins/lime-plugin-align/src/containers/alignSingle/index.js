@@ -60,7 +60,7 @@ export const AlignSingle = ({iface, mac}) => {
 		<div class="d-flex flex-column container-padded">
 			<SignalBox signal={station && station.associated && station.signal} />
 			<div class={style.section}>
-				<div>{I18n.t('With radio %{radio} alignin with', {radio})}</div>
+				<div>{I18n.t('With %{radio} alignin with', {radio})}</div>
 				<div class={style.hostname}>{ hostname }</div>
 			</div>
 			<BestSignal signal={station && station.signal} />
