@@ -11,12 +11,12 @@ export function useSession() {
 
 export function useOpenSession() {
 	return useMutation(openSession, {
-		onSuccess: () => queryCache.invalidateQueries(["lime.remotesupport", "get_session"])
+		onSuccess: () => queryCache.invalidateQueries(["lime-remotesupport", "get_session"])
 	})
 }
 
 export function useCloseSession() {
 	return useMutation(closeSession, {
-		onSuccess: () => queryCache.invalidateQueries(["lime.remotesupport", "get_session"])
+		onSuccess: () => queryCache.invalidateQueries(["lime-remotesupport", "get_session"])
 	})
 }
