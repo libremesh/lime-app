@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { useSession, useOpenSession, useCloseSession } from './remoteSupportQueries';
 import { useState } from 'preact/hooks';
+import Loading from 'components/loading';
 
 const RemoteSupportPage = () => {
 	const {data: session} = useSession();
@@ -13,7 +14,7 @@ const RemoteSupportPage = () => {
 };
 
 
-export const RemoteSupportPage_ = ({session, consoleViewable=false, remoteHostAccesible=true, onOpenSession, onConsoleViewToggle, onCloseSession}) => {
+export const RemoteSupportPage_ = ({session, consoleViewable=false, remoteHostAccesible=true, isOpening=false, onOpenSession, onConsoleViewToggle, onCloseSession}) => {
 	return <div>
 		{!remoteHostAccesible &&
 			<div> El host remoto está inaccesible, verifique la conexión con la internet para usar esta funcionalidad. </div>}
@@ -40,6 +41,9 @@ export const RemoteSupportPage_ = ({session, consoleViewable=false, remoteHostAc
 				<button onClick={onConsoleViewToggle}>Cerrar ventana</button>
 				<button onClick={onCloseSession}>Cerrar sesion</button>
 			</div>
+		}
+		{isOpening &&
+			<Loading />
 		}
 	</div>
 }

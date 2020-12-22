@@ -10,6 +10,10 @@ export const noHaySesion = () => (
 	<RemoteSupportPage_ session={null} consoleViewable={false} />
 );
 
+export const sesionAbriendose = () => (
+	<RemoteSupportPage_ session={null} isOpening={true} consoleViewable={false} />
+);
+
 export const hayUnaSesionConsolaCerrada = () => (
 	<RemoteSupportPage_ session={{rw:'asdf@ny1.tmate.io', ro:'aswe@ny1.tmate.io'}} consoleViewable={false} />
 );
