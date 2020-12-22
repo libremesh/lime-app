@@ -6,11 +6,11 @@ import Loading from 'components/loading';
 const RemoteSupportPage = () => {
 	const {data: session} = useSession();
 	const [consoleViewable, setConsoleViewable] = useState(false);
-	const [openSession] = useOpenSession();
+	const [openSession, openStatus] = useOpenSession();
 	const [closeSession] = useCloseSession();
 	const onConsoleViewToggle = () => { setConsoleViewable(prev => !prev) }
 
-	return <RemoteSupportPage_ session={session} consoleViewable={consoleViewable} onConsoleViewToggle={onConsoleViewToggle} onOpenSession={openSession} onCloseSession={closeSession} />;
+	return <RemoteSupportPage_ session={session} consoleViewable={consoleViewable} isOpening={openStatus.isLoading} onConsoleViewToggle={onConsoleViewToggle} onOpenSession={openSession} onCloseSession={closeSession} />;
 };
 
 
