@@ -9,7 +9,7 @@ const RemoteSupportPage = () => {
 	const [closeSession] = useCloseSession();
 	const onConsoleViewToggle = () => { setConsoleViewable(prev => !prev) }
 
-	return <RemoteSupportPage_ session={session} onConsoleViewToggle={onConsoleViewToggle} onOpenSession={openSession} onCloseSession={closeSession} />;
+	return <RemoteSupportPage_ session={session} consoleViewable={consoleViewable} onConsoleViewToggle={onConsoleViewToggle} onOpenSession={openSession} onCloseSession={closeSession} />;
 };
 
 
