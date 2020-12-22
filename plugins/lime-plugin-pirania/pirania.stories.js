@@ -118,7 +118,7 @@ let createEpoc = () => false;
 let getVoucherList = () => [];
 let getPiraniaContent = () => [];
 
-storiesOf('Containers|Pirania', module)
+storiesOf('Pirania', module)
     .addDecorator(withKnobs)
     .add('Home screen', () => (
         <Home
