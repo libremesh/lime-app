@@ -7,9 +7,9 @@ const RemoteSupportPage = () => {
 	const [consoleViewable, setConsoleViewable] = useState(false);
 	const [openSession] = useOpenSession();
 	const [closeSession] = useCloseSession();
-	const onConsoleViewToggle = () => setConsoleViewable(prev => !prev) 
+	const onConsoleViewToggle = () => { setConsoleViewable(prev => !prev) }
 
-	return <RemoteSupportPage session={session} onConsoleViewToggle={onConsoleViewToggle} onOpenSession={openSession} onCloseSession={closeSession} />;
+	return <RemoteSupportPage_ session={session} onConsoleViewToggle={onConsoleViewToggle} onOpenSession={openSession} onCloseSession={closeSession} />;
 };
 
 
@@ -29,7 +29,7 @@ export const RemoteSupportPage_ = ({session, consoleViewable=false, remoteHostAc
 			<div>
 				Sesión abierta.<br/>
 				Consola interactiva.
-				<pre>{session.rw}</pre>
+				<pre>{session.rw_ssh}</pre>
 				Copie el texto de este cuadro y compártalo con quien le de soporte.
 				<button onClick={onConsoleViewToggle}>ver</button>
 				<button onClick={onCloseSession}>Cerrar sesion</button>
