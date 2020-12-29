@@ -21,8 +21,8 @@ describe('remote support page', () => {
 	})
 
 	beforeEach(() => {
-		getSession.mockImplementation(async () => 
-			({ rw_ssh: 'test_rw_token@test_host', ro_ssh: 'test_ro_token@test_host'})
+		getSession.mockImplementation(async () =>
+			({ rw: 'test_rw_token@test_host', ro: 'test_ro_token@test_host'})
 		);
 		openSession.mockImplementation(async () => null);
 		closeSession.mockImplementation(async () => null);
@@ -40,7 +40,7 @@ describe('remote support page', () => {
 	it('shows a button to create session when there is no session', async () => {
 		getSession.mockImplementation(async () => null);
 		render(<RemoteSupportPage />);
-		expect(await screen.findByRole('button', {name: /crear sesion/i })).toBeEnabled();
+		expect(await screen.findByRole('button', {name: /create session/i })).toBeEnabled();
 	});
 
 	it('shows rw session token when there is an open session', async () => {
@@ -50,16 +50,16 @@ describe('remote support page', () => {
 
 	it('shows a button to close session when there is an open session', async () => {
 		render(<RemoteSupportPage />);
-		expect(await screen.findByRole('button', {name: /cerrar sesion/i})).toBeEnabled();
+		expect(await screen.findByRole('button', {name: /close session/i})).toBeEnabled();
 	})
 
 	it('shows rw session token after clicking on open session', async() => {
 		getSession
 			.mockImplementationOnce(async () => null)
-			.mockImplementationOnce(async () => 
-				({ rw_ssh: 'test_rw_token@test_host', ro_ssh: 'test_ro_token@test_host'}));
+			.mockImplementationOnce(async () =>
+				({ rw: 'test_rw_token@test_host', ro: 'test_ro_token@test_host'}));
 		render(<RemoteSupportPage />)
-		const createButton = await screen.findByRole('button', {name: /crear sesion/i });
+		const createButton = await screen.findByRole('button', {name: /create session/i });
 		fireEvent.click(createButton);
 		expect(await screen.findByText('test_rw_token@test_host')).toBeInTheDocument();
 	});

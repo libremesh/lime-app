@@ -173,6 +173,17 @@
     "on_its_radio_radio_f32d79ce": "En su radio %{radio}",
     "radio_2573b256": "Radio",
     "with_radio_radio_alignin_with_531510d": "Con radio %{radio} alineando con",
-    "these_are_the_nodes_associated_on_this_radio_3d302167": "Estos son los nodos asociados a esta radio"
+    "these_are_the_nodes_associated_on_this_radio_3d302167": "Estos son los nodos asociados a esta radio",
+    "ask_for_remote_support_7e7eaab0": "Pedir soporte remoto",
+    "click_at_close_session_to_end_the_remote_support_s_1af24bb9": "Haz click en Cerrar Sesión para finalizar la sesión de soporte remoto. Nadie podrá volver a acceder tu nodo con este token",
+    "close_session_89aadfa2": "Cerrar Sesión",
+    "copy_and_paste_the_following_token_to_share_access_c5ca32c5": "Copia y pega el siguiente token para compartir acceso a tu nodo con quien quieras",
+    "create_session_ad54bdb6": "Crear Sesión",
+    "other_people_will_no_be_able_to_acces_your_node_pl_5489f373": "Otras personas no podrán tener acceso a tu nodo. Por favor verifica tu conexión a internet",
+    "please_verify_your_internet_connection_92ecd88c": "Por favor verifica tu conexión a internet",
+    "remote_support_9ba7a3a7": "Soporte Remoto",
+    "there_s_an_active_remote_support_session_4a40a8bb": "Hay una sesión de soporte remoto activa",
+    "there_s_no_connection_with_the_remote_support_serv_1027b703": "No hay conexión con el servidor de soporte remoto",
+    "there_s_no_open_session_for_remote_support_click_a_efd0d415": "No hay una sesión de soporte remoto abierta. Haz click en Crear Sesión para empezar una."
 }
 
