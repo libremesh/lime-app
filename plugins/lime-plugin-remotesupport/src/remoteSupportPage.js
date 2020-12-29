@@ -50,7 +50,7 @@ export const RemoteSupportPage_ = ({session, serverAccesible=true, isSubmitting=
 			<div class={style.section}>
 				<h5>{I18n.t("Close Session")}</h5>
 				<p>{I18n.t("Click at Close Session to end the remote support session. No one will be able to access your node with this token again")}</p>
-				<button onClick={onCloseSession}>{I18n.t("Close Session")}</button>
+				<button class={style.btnDanger} onClick={onCloseSession}>{I18n.t("Close Session")}</button>
 			</div>
 		}
 		{isSubmitting &&
