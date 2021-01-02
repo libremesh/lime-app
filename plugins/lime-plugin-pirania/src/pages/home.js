@@ -36,7 +36,7 @@ export default function HomePiraniaPage({ members, visitors, logged, handlePassw
 					<span>
 						{' '}
 						{navigator.connection
-							? navigator.connection.downlink + 'Mbs'
+							? `${navigator.connection.downlink  }Mbs`
 							: <i>{I18n.t('Speed test not supported in this browser')}</i>
 						}
 					</span>

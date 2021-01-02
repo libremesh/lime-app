@@ -4,10 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { useState, useEffect } from 'preact/hooks';
 
-import { adminLogin } from '../../lime-plugin-admin/src/adminActions';
 import { getPiraniaGovernance, getActiveVouchers } from './piraniaActions';
 import { activeVouchers, governance, loading } from './piraniaSelectors';
-import { authStatus } from '../../lime-plugin-admin/src/adminSelectors';
 
 import Loading from '../../../src/components/loading';
 import Home from './pages/home';
@@ -42,8 +40,6 @@ const style = {
 
 export const Pirania = ({
 	activeVouchers,
-	authStatus,
-	adminLogin,
 	loading,
 	getActiveVouchers,
 	getPiraniaGovernance,
@@ -54,14 +50,6 @@ export const Pirania = ({
 	const [password, changePassword] = useState('');
 	function handlePassword(e) {
 		changePassword(e.target.value);
-	}
-
-	function login(e) {
-		e.preventDefault();
-		adminLogin({
-			username: 'root',
-			password
-		});
 	}
 
 	function showLoading(show) {
@@ -96,48 +84,35 @@ export const Pirania = ({
 		const renewMonth = nextNextRenewday.getMonth() + 1;
 		const renewYear = nextNextRenewday.getFullYear();
 		const renewEpoc = nextNextRenewday.valueOf();
-		const renewDate = `${community.payday + 1}/${ renewMonth > 9 ? renewMonth : '0' + renewMonth}/${renewYear}`;
+		const renewDate = `${community.payday + 1}/${renewMonth > 9 ? renewMonth : `0${  renewMonth}`}/${renewYear}`;
 		const month = nextPayday.getMonth() + 1;
 		const year = nextPayday.getFullYear();
 		const payday =
-			community.payday === date
-				? 'Today'
-				: `${community.payday}/${month > 9 ? month : '0' + month}/${year}`;
+            community.payday === date
+            	? 'Today'
+            	: `${community.payday}/${month > 9 ? month : `0${  month}`}/${year}`;
 		const daysLeft = Math.floor(
 			(Date.UTC(
 				nextPayday.getFullYear(),
 				hasPassed ? nextPayday.getMonth() + 1 : nextPayday.getMonth(),
 				nextPayday.getDate()
 			) -
-				Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) /
-			(1000 * 60 * 60 * 24)
+                Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) /
+            (1000 * 60 * 60 * 24)
 		);
 		return (
 			<div class="container" style={{ paddingTop: '100px' }}>
-				{!authStatus && (
-					<Home
-						logged={authStatus}
-						submit={login}
-						handlePassword={handlePassword}
-						payday={payday}
-						daysLeft={daysLeft}
-						{...activeVouchers}
-						{...governance}
-					/>
-				)}
-				{authStatus && page === 0 && (
-					<Admin
-						list={() => setPage(1)}
-						create={() => setPage(2)}
-						renew={() => setPage(3)}
-						editGovernance={() => setPage(4)}
-						editContent={() => setPage(5)}
-						payday={payday}
-						daysLeft={daysLeft}
-						{...activeVouchers}
-						{...governance}
-					/>
-				)}
+				<Admin
+					list={() => setPage(1)}
+					create={() => setPage(2)}
+					renew={() => setPage(3)}
+					editGovernance={() => setPage(4)}
+					editContent={() => setPage(5)}
+					payday={payday}
+					daysLeft={daysLeft}
+					{...activeVouchers}
+					{...governance}
+				/>
 				{page === 1 && <List goBack={goBack} />}
 				{page === 2 && (
 					<Create
@@ -174,15 +149,13 @@ export const Pirania = ({
 
 export const mapStateToProps = state => ({
 	activeVouchers: activeVouchers(state),
-	authStatus: authStatus(state),
 	loading: loading(state),
 	governance: governance(state)
 });
 
 export const mapDispatchToProps = dispatch => ({
 	getActiveVouchers: bindActionCreators(getActiveVouchers, dispatch),
-	getPiraniaGovernance: bindActionCreators(getPiraniaGovernance, dispatch),
-	adminLogin: bindActionCreators(adminLogin, dispatch)
+	getPiraniaGovernance: bindActionCreators(getPiraniaGovernance, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pirania);

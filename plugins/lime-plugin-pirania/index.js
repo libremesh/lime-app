@@ -9,6 +9,7 @@ export default {
 	name: 'Access',
 	page: Pirania,
 	menu: PiraniaMenu,
+	isCommunityProtected: true,
 	store: {
 		name: 'pirania',
 		epics,
