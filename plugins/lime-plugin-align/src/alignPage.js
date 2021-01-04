@@ -88,7 +88,7 @@ export const Align = ({}) => {
 		if (!ifaces) return;
 		const tabs = ifaces.sort().map(iface => ({
 			key: iface,
-			repr: I18n.t("Radio ").concat(ifaceToRadioNumber(iface))
+			repr: I18n.t("Radio").concat(` ${ifaceToRadioNumber(iface)}`)
 		}))
 		setTabs(tabs);
 		if (ifaces.length > 0) {
