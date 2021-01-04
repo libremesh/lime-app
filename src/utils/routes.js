@@ -1,3 +1,4 @@
+import { cloneElement } from 'preact';
 import { useAppContext } from './app.context';
 import { SharedPasswordLogin } from '../containers/SharedPasswordLogin';
 import { route } from 'preact-router';
@@ -6,15 +7,15 @@ import { useSession } from './queries';
 import { useFbwStatus } from '../../plugins/lime-plugin-fbw/src/queries';
 import { FbwBanner } from '../../plugins/lime-plugin-fbw/src/containers/FbwBanner';
 
-export const Route = ({ path, children }) => {
+export const Route = ({ path, children, ...childrenProps}) => {
 	const { data: fbwStatus } = useFbwStatus();
 	const { fbwCanceled } = useAppContext();
-
+	const childrenWithProps = cloneElement(children, { ...childrenProps});
 	if (fbwStatus.lock && !fbwCanceled && path !== 'firmware' && path !== 'releaseInfo' && path !=='firstbootwizard') {
 		return <FbwBanner />
 	}
 
-	return children;
+	return childrenWithProps;
 };
 
 export const CommunityProtectedRoute = ({ path, children }) => {

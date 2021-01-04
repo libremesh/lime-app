@@ -1,11 +1,13 @@
-import { useHostname } from "utils/queries";
+import { useBatHost } from "utils/queries";
 import { useEffect, useState } from "preact/hooks";
+import { route } from "preact-router";
 import I18n from 'i18n-js';
 import { useAssocList } from "../../alignQueries";
-import { ifaceToRadio } from "../../utils";
+import { ifaceToRadioNumber } from "../../utils";
 import { SignalBar } from "../../components/signalBar";
 import { SecondsAgo } from "../../components/secondsAgo";
 import { SignalSpeech } from "../../components/signalSpeech";
+import Loading from 'components/loading';
 import style from './style.less';
 
 function getStation(assoclist, mac) {
@@ -21,7 +23,7 @@ export const BestSignal = ({signal}) => {
 	const [bestSignalTimestamp, setBestSignalTimestamp] = useState(null);
 
 	useEffect(() => {
-		if (!bestSignal || signal > bestSignal) {
+		if (!bestSignal || signal >= bestSignal) {
 			setBestSignal(signal)
 			setBestSignalTimestamp(Date.now())
 		}
@@ -51,17 +53,28 @@ const SignalBox = ({signal}) => (
 	</div>
 );
 
-export const AlignSingle = ({iface, mac}) => {
-	const { data: hostname } = useHostname(mac);
-	const { data: assocList } = useAssocList(iface);
-	const station = getStation(assocList, mac);
-	const radio = ifaceToRadio(iface);
+const AlignSingle = ({iface, mac}) => {
+	const { data: bathost } = useBatHost(mac, iface);
+	const { data: assocList, isLoading } = useAssocList(iface, {
+		refetchInterval: 2000
+	});
+	const station = assocList && getStation(assocList, mac);
+	const fromRadio = ifaceToRadioNumber(iface);
+	const toRadio = bathost.iface && ifaceToRadioNumber(bathost.iface);
+	
+
+	if (isLoading) {
+		return <div className="container container-center"><Loading /></div>
+	}
+
 	return (
-		<div class="d-flex flex-column container-padded">
+		<div class="d-flex flex-grow-1 flex-column container-padded">
+			<div class="d-flex"><button class={style.backArrow} onClick={() => route('align')}>←</button></div>
 			<SignalBox signal={station && station.associated && station.signal} />
 			<div class={style.section}>
-				<div>{I18n.t('With %{radio} alignin with', {radio})}</div>
-				<div class={style.hostname}>{ hostname }</div>
+				<div>{I18n.t('With radio %{radio} alignin with', {radio: fromRadio})}</div>
+				<div class={style.hostname}>{ bathost.hostname }</div>
+				{toRadio && <div>{I18n.t('At its radio %{radio}', {radio: toRadio})}</div>}
 			</div>
 			<BestSignal signal={station && station.signal} />
 			{station && !station.associated &&
@@ -72,3 +85,5 @@ export const AlignSingle = ({iface, mac}) => {
 		</div>
 	)
 };
+
+export default AlignSingle;

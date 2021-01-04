@@ -1,5 +1,5 @@
 import api from './uhttpd.service';
-import { getHostname } from './api';
+import { getBatHost } from './api';
 import { useQuery, useMutation } from 'react-query';
 import queryCache from './queryCache';
 
@@ -64,8 +64,8 @@ export function useCommunitySettings() {
 	})
 }
 
-export function useHostname(mac) {
-	return useQuery(['lime-utils', 'get_hostname', mac], async () => getHostname(mac), {
+export function useBatHost(mac, outgoingIface) {
+	return useQuery(['lime-utils', 'get_bathost', mac, outgoingIface], async () => getBatHost(mac, outgoingIface), {
 		retry: 3
 	});
 }

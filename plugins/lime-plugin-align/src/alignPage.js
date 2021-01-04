@@ -1,9 +1,9 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 
-import { useHostname } from 'utils/queries';
+import { useBatHost } from 'utils/queries';
 import { useAssocList, useMeshIfaces } from './alignQueries';
-import { ifaceToRadio } from './utils';
+import { ifaceToRadioNumber } from './utils';
 import { SignalBar } from './components/signalBar';
 import { SecondsAgo } from './components/secondsAgo';
 import I18n from 'i18n-js';
@@ -11,11 +11,17 @@ import I18n from 'i18n-js';
 import Loading from 'components/loading';
 import Tabs from 'components/tabs';
 import style from './style.less';
+import { route } from 'preact-router';
 
-export const AssocRow = ({station}) => {
-	const { data: hostname, isLoading, isError } = useHostname(station.mac);
+export const AssocRow = ({station, iface}) => {
+	const { data: bathost, isLoading, isError } = useBatHost(station.mac, iface);
+	
+	function goToAlignSingle() {
+		route(`aling-single/${iface}/${station.mac}`)
+	}
+
 	return (
-		<div class={style.row}>
+		<div class={style.row} onClick={goToAlignSingle}>
 			<div>
 				{( isLoading || isError ?
 					<div class={`${style.fetchingName} withLoadingEllipsis`}>
@@ -23,9 +29,12 @@ export const AssocRow = ({station}) => {
 					</div>
 					:
 					<div class={style.stationHostname}>
-						{ hostname }
+						{ bathost.hostname }
 					</div>
 				)}
+				{ bathost && bathost.iface &&
+					<div> {I18n.t("At its radio %{radio}", {radio: ifaceToRadioNumber(bathost.iface)}) }</div>
+				}
 				{ station.inactive >= 3000 && (
 					<div>
 						<div>{I18n.t('Not associated')}</div>
@@ -59,7 +68,7 @@ export const AssocList = ({iface}) => {
 
 	return (
 		<div class="d-flex flex-column flex-grow-1">
-			{assoclist.map(station => <AssocRow key={station.mac} station={station} />)}
+			{assoclist.map(station => <AssocRow key={station.mac} station={station} iface={iface} />)}
 			{assoclist.length === 0 &&
 				<div className="container-center">
 					{I18n.t("This radio is not associated with other nodes")}
@@ -79,7 +88,7 @@ export const Align = ({}) => {
 		if (!ifaces) return;
 		const tabs = ifaces.sort().map(iface => ({
 			key: iface,
-			repr: ifaceToRadio(iface)
+			repr: I18n.t("Radio ").concat(ifaceToRadioNumber(iface))
 		}))
 		setTabs(tabs);
 		if (ifaces.length > 0) {

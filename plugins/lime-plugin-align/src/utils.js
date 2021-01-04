@@ -37,10 +37,10 @@ export function markAssociated(assoclist) {
 	];
 }
 
-export function ifaceToRadio(iface) {
+export function ifaceToRadioNumber(iface) {
 	const match = iface.match(/\D*(\d+)\D*/);
 	if (match.length === 2) {
-		return I18n.t("Radio").concat(` ${match[1]}`)
+		return match[1];
 	}
 	return iface;
 }

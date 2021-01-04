@@ -167,10 +167,12 @@
     "last_packet_82ee8e9d": "Último paquete",
     "more_than_a_minute_ago_a2a28531": "Hace más de un minuto",
     "not_associated_cb14e43c": "No enlazado",
-    "radio_2573b256": "Radio",
     "seconds_seconds_ago_699b6316": "hace %{seconds} segundos",
     "the_are_not_mesh_interfaces_available_4055abd7": "No hay interfaces mesh disponibles",
     "this_radio_is_not_associated_with_other_nodes_6722a471": "Esta radio no está enlazada a otros nodos",
-    "with_radio_alignin_with_afd151e2": "Con %{radio} alineando con"
+    "at_its_radio_radio_97317e65": "En su radio %{radio}",
+    "radio_e5ce4fd5": "Radio",
+    "with_radio_radio_alignin_with_531510d": "Con radio %{radio} alineando con"
+ 
 }
 
