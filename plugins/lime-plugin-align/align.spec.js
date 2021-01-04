@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import queryCache from 'utils/queryCache';
 
 import { getMeshIfaces, getAssocList } from './src/alignApi';
-import { getHostname } from 'utils/api';
+import { getBatHost } from 'utils/api';
 
 jest.mock('./src/alignApi');
 jest.mock('utils/api');
@@ -32,14 +32,14 @@ async function mockAssocList(iface) {
 }
 
 
-async function mockHostname(mac) {
-	const mac2host = {
-		"52:00:00:ab:cd:a0": "mc-rocio",
-		"52:00:00:ab:cd:a1": "mc-martinez",
-		"52:00:00:ab:cd:a2": "mc-mile",
-		"52:00:00:ab:cd:a3": "mc-tanque"
+async function mockBatHost(mac) {
+	const mac2bathost = {
+		"52:00:00:ab:cd:a0": {hostname: "mc-rocio", iface: "wlan1-mesh"},
+		"52:00:00:ab:cd:a1": {hostname: "mc-martinez", iface: "wlan1-mesh"},
+		"52:00:00:ab:cd:a2": {hostname: "mc-mile", iface: "wlan1-mesh"},
+		"52:00:00:ab:cd:a3": {hostname: "mc-tanque", iface: "wlan1-mesh"}
 	}
-	return mac2host[mac];
+	return mac2bathost[mac];
 }
 
 async function findNeighbors() {
@@ -63,7 +63,7 @@ describe('align page', () => {
 	beforeEach(() => {
 		getMeshIfaces.mockImplementation(async () => ['wlan1-mesh', 'wlan2-mesh']);
 		getAssocList.mockClear().mockImplementation(mockAssocList);
-		getHostname.mockImplementation(mockHostname);
+		getBatHost.mockImplementation(mockBatHost);
 	})
 
 	afterEach(() => {
