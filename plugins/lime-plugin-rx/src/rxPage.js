@@ -9,7 +9,7 @@ import { getNodeData, isLoading } from './rxSelectors';
 
 import { Box } from 'components/box';
 import I18n from 'i18n-js';
-import { useBoardData } from 'utils/queries';
+import { useBoardData, useBatHost } from 'utils/queries';
 
 function stripIface (hostIface) {
 	return hostIface.split('_wlan')[0].replace('_','-');
@@ -60,18 +60,29 @@ const SystemBox = ({ uptime, firmwareVersion, boardModel }) => {
 };
 
 const MostActiveBox = ({ node, changeNode }) => {
-	if (typeof node.most_active !== 'undefined') {
-		return (
-			<Box title={I18n.t('Most Active')}>
-				<span style={{ float: 'right',fontSize: '2.7em' }}>{node.most_active.signal}</span>
-				<a style={{ fontSize: '1.4em' }} onClick={changeNode}><b>{stripIface(node.most_active.station_hostname)}</b></a><br />
-				<b>{I18n.t('Interface')} </b>{node.most_active.iface.split('-')[0]}<br />
-				<b>{I18n.t('Traffic')} </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
-				<div style={{ clear: 'both' }} />
-			</Box>
-		);
+	const {data: bathost } = useBatHost(
+		node.most_active.station_mac, node.most_active.iface,
+		{enabled: node.most_active}
+	);
+
+	if (node.most_active === undefined) {
+		return (<span />)
 	}
-	return (<span />);
+
+	return (
+		<Box title={I18n.t('Most Active')}>
+			<span style={{ float: 'right',fontSize: '2.7em' }}>{node.most_active.signal}</span>
+			{ bathost && bathost.hostname ?
+				<a style={{ fontSize: '1.4em' }} onClick={() => changeNode(bathost.hostname)}><b>{stripIface(bathost.hostname)}</b></a>
+				:
+				<span class="withLoadingEllipsis">{I18n.t("Fetching name")}</span>
+			}
+			<br />
+			<b>{I18n.t('Interface')} </b>{node.most_active.iface.split('-')[0]}<br />
+			<b>{I18n.t('Traffic')} </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
+			<div style={{ clear: 'both' }} />
+		</Box>
+	);
 };
 
 export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, nodeData }) => {
@@ -88,8 +99,8 @@ export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, 
 		);
 	}
 
-	function _changeNode() {
-		window.location.href = 'http://' + stripIface(nodeData.most_active.station_hostname);
+	function _changeNode(hostname) {
+		window.location.href = `http://${hostname}`;
 	}
 
 	function nodeStatus(node){

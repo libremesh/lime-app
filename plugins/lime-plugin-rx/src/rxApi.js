@@ -9,7 +9,7 @@ export const getStationTraffic = (api, node) => {
 
 export const getStationSignal = (api, node) => {
 	if (typeof node === 'undefined') return [];
-	return api.call('lime-openairview', 'get_station_signal', { station_mac: node.station_mac, iface: node.iface });
+	return api.call('iwinfo', 'assoclist', { device: node.iface, mac: node.station_mac });
 };
 
 export const getInternetStatus = (api) => api.call('lime-metrics', 'get_internet_status', {});
