@@ -49,7 +49,10 @@ export const AssocRow = ({station, iface}) => {
 				</div>
 			): (
 				<div class={style.signal}>
-					{ station.signal }
+					<div class="d-flex flex-grow-1 align-items-baseline">
+						<div>{ station.signal }</div>
+						<div class={style.unit}>dBm</div>
+					</div>
 					<SignalBar signal={station.signal} className={style.bar} />
 				</div>
 			)}

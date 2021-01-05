@@ -34,7 +34,10 @@ export const BestSignal = ({signal}) => {
 	return (
 		<div class={style.section}>
 			<span>{I18n.t('Best signal').concat(':')} </span>
-			<span class={style.bestSignal}>{bestSignal}</span>
+			<span class={style.bestSignal}>
+				{bestSignal}
+				<span class={style.unit}>dBm</span>
+			</span>
 			<SecondsAgo initialMs={Date.now() - bestSignalTimestamp} />
 		</div>
 	)
@@ -44,7 +47,12 @@ const SignalBox = ({signal}) => (
 	<div class="d-flex justify-content-center">
 		<div class="d-flex flex-column">
 			<div class="d-flex">
-				{signal && <div class={style.signal}>{signal}</div>}
+				{signal &&
+					<div class={style.signal}>
+						{signal}
+						<span class={style.unit}>dBm</span>
+					</div>
+				}
 				{!signal && <div class={style.notAssociated}>{I18n.t('Not associated') }</div>}
 				{signal && <SignalSpeech signal={signal} className={style.speech} />}
 			</div>
