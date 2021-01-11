@@ -1,5 +1,3 @@
-import { action } from '@storybook/addon-actions';
-
 import {RemoteSupportPage_} from './src/remoteSupportPage';
 
 export default {
@@ -23,10 +21,6 @@ export const sessionWithOpenedConsole = () => (
 	<RemoteSupportPage_ session={{rw: 'pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io'}} consoleViewable={true} />
 );
 
-export const noSessionAndRemoteSupportServerUnreachable = () => (
-	<RemoteSupportPage_ session={null} serverAccesible={false} />
-);
-
-export const sessionAndRemoteSupportServerUnreachable = () => (
-	<RemoteSupportPage_ session={{rw: 'pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io'}} serverAccesible={false} />
+export const errorOpenningSession = () => (
+	<RemoteSupportPage_ session={null} openError={true} />
 );

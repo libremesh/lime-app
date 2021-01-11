@@ -63,4 +63,13 @@ describe('remote support page', () => {
 		fireEvent.click(createButton);
 		expect(await screen.findByText('test_rw_token@test_host')).toBeInTheDocument();
 	});
+
+	it('show an error when open session fails', async() => {
+		getSession.mockImplementation(async() => null);
+		openSession.mockImplementation(async() => { throw new Error() })
+		render(<RemoteSupportPage />)
+		const createButton = await screen.findByRole('button', {name: /create session/i });
+		fireEvent.click(createButton);
+		expect(await screen.findByText(/Cannot connect to the remote support server/i)).toBeVisible();
+	})
 });

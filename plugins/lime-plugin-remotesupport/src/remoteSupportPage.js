@@ -12,24 +12,24 @@ const RemoteSupportPage = () => {
 	if (loadingSession) {
 		return <div class="container container-center"><Loading /></div>
 	}
-	return <RemoteSupportPage_ session={session} isSubmitting={openStatus.isLoading || closeStatus.isLoading} onOpenSession={openSession} onCloseSession={closeSession} />;
+	return <RemoteSupportPage_ session={session} openError={openStatus.isError} isSubmitting={openStatus.isLoading || closeStatus.isLoading} onOpenSession={openSession} onCloseSession={closeSession} />;
 };
 
 
-export const RemoteSupportPage_ = ({session, serverAccesible=true, isSubmitting=false, onOpenSession, onCloseSession}) => {
-	return <div class="d-flex flex-grow-1 flex-column container-padded">
+export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false, onOpenSession, onCloseSession}) => {
+	return <div class="d-flex flex-grow-1 flex-column container container-padded">
 		<h4>{I18n.t("Ask for remote support")}</h4>
 		{!session &&
 			<p>{I18n.t("There's no open session for remote support. Click at Create Session to begin one")}</p>
 		}
-		{!session && !serverAccesible &&
+		{!session &&
+			<button onClick={onOpenSession}>{I18n.t("Create Session")}</button>
+		}
+		{openError &&
 			<div class={style.noteError}>
-				<b>{I18n.t("There's no connection with the remote support server.")}</b><br />
+				<b>{I18n.t("Cannot connect to the remote support server")}</b><br />
 				{I18n.t("Please verify your internet connection")}
 			</div>
-		}
-		{!session &&
-			<button onClick={onOpenSession} disabled={!serverAccesible}>{I18n.t("Create Session")}</button>
 		}
 		{session &&
 			<div>
@@ -39,12 +39,6 @@ export const RemoteSupportPage_ = ({session, serverAccesible=true, isSubmitting=
 		}
 		{session &&
 			<div class={style.token}><pre>{session.rw}</pre></div>
-		}
-		{session && !serverAccesible &&
-			<div class={style.noteError}>
-				<b>{I18n.t("There's no connection with the remote support server.")}</b><br />
-				{I18n.t("Other people will no be able to acces your node. Please verify your internet connection")}
-			</div>
 		}
 		{session &&
 			<div class={style.section}>
