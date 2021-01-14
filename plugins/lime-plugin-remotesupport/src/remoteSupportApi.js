@@ -2,6 +2,7 @@ import api from 'utils/uhttpd.service';
 
 export function getSession() {
 	return api.call("lime-remotesupport", "get_session", {}).toPromise()
+		.then(result => result.session !== 'not initialized' ? result.session : null)
 }
 
 export function openSession() {
