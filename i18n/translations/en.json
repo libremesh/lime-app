@@ -54,5 +54,10 @@
   "count_seconds_2953a98e": {
       "one": "second",
       "other": "seconds"
+  },
+  "count_people_join_sessions_c24dac9c": {
+    "zero": "No one has joined yet.",
+    "one": "One person has joined.",
+    "other": "%{count} people have joined."
   }
 }

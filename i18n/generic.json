@@ -10,6 +10,7 @@
     "best_signal_913e3460": "Best signal",
     "cancel_caeb1e68": "Cancel",
     "cancel_cd471b5e": "cancel",
+    "cannot_connect_to_the_remote_support_server_6a95528b": "Cannot connect to the remote support server",
     "cannot_load_map_check_your_internet_connection_d24f5daf": "Cannot load map, check your internet connection",
     "change_dcaa253a": "Change",
     "change_node_1390712f": "Change Node",
@@ -28,6 +29,7 @@
     "confirm_location_2fe5ae11": "confirm location",
     "congratulations_ffe43bf9": "Congratulations",
     "connected_host_91e11459": "Connected Host",
+    "connected_people_amount_f59e05b8": "Connected people: %{amount}",
     "copy_and_paste_the_following_token_to_share_access_c5ca32c5": "Copy and paste the following token to share access to your node with whoever you want",
     "count_days_de0c6a32": {
       "one": "1 days",
@@ -40,6 +42,10 @@
     "count_minutes_a6eeeacb": {
       "one": "1 minutes",
       "other": "%{count} minutes"
+    },
+    "count_people_join_sessions_c24dac9c": {
+      "one": "1 people-join-session",
+      "other": "%{count} people-join-sessions"
     },
     "count_seconds_2953a98e": {
       "one": "1 seconds",
@@ -99,7 +105,6 @@
     "only_gateway_727b1656": "Only gateway",
     "or_choose_a_firmware_image_from_your_device_d56be2d8": "Or choose a firmware image from your device",
     "or_upgrade_to_latest_release_e062ddee": "Or upgrade to latest release",
-    "other_people_will_no_be_able_to_acces_your_node_pl_5489f373": "Other people will no be able to acces your node. Please verify your internet connection",
     "packet_loss_1afe48a8": "Packet loss",
     "password_8a271b1c": "Password",
     "please_configure_your_network_d6eb8b76": "Please configure your network",
@@ -150,7 +155,6 @@
     "the_upgrade_should_be_done_d66854": "The upgrade should be done",
     "these_are_the_nodes_associated_on_this_radio_3d302167": "These are the nodes associated on this radio",
     "there_s_an_active_remote_support_session_4a40a8bb": "There's an active remote support session",
-    "there_s_no_connection_with_the_remote_support_serv_1027b703": "There's no connection with the remote support server.",
     "there_s_no_open_session_for_remote_support_click_a_efd0d415": "There's no open session for remote support. Click at Create Session to begin one",
     "this_device_does_not_support_secure_rollback_to_pr_1c167a2c": "This device does not support secure rollback to previous version if something goes wrong",
     "this_device_supports_secure_rollback_to_previous_v_a60ddbcb": "This device supports secure rollback to previous version if something goes wrong",

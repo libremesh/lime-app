@@ -13,12 +13,12 @@ export const openingSession = () => (
 	<RemoteSupportPage_ session={null} isSubmitting={true} consoleViewable={false} />
 );
 
-export const sessionWithClosedConsole = () => (
-	<RemoteSupportPage_ session={{rw: 'pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io'}} consoleViewable={false} />
+export const sessionNoOneJoined = () => (
+	<RemoteSupportPage_ session={{rw: 'pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io', clients: 1}} consoleViewable={false} />
 );
 
-export const sessionWithOpenedConsole = () => (
-	<RemoteSupportPage_ session={{rw: 'pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io'}} consoleViewable={true} />
+export const sessionSomeoneJoined = () => (
+	<RemoteSupportPage_ session={{rw: 'pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io', clients: 2}} consoleViewable={true} />
 );
 
 export const errorOpenningSession = () => (
