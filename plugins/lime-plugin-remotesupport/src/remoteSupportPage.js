@@ -12,12 +12,15 @@ const RemoteSupportPage = () => {
 	if (loadingSession) {
 		return <div class="container container-center"><Loading /></div>
 	}
-	return <RemoteSupportPage_ session={session} openError={openStatus.isError} isSubmitting={openStatus.isLoading || closeStatus.isLoading} onOpenSession={openSession} onCloseSession={closeSession} />;
+	return <RemoteSupportPage_
+		session={session} openError={openStatus.isError}
+		isSubmitting={openStatus.isLoading || closeStatus.isLoading}
+		onOpenSession={openSession} onCloseSession={closeSession} />;
 };
 
 
-export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false, onOpenSession, onCloseSession}) => {
-	return <div class="d-flex flex-grow-1 flex-column container container-padded">
+export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false, onOpenSession, onCloseSession}) =>
+	<div class="d-flex flex-grow-1 flex-column container container-padded">
 		<h4>{I18n.t("Ask for remote support")}</h4>
 		{!session &&
 			<p>{I18n.t("There's no open session for remote support. Click at Create Session to begin one")}</p>
@@ -51,6 +54,5 @@ export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false
 			<Loading />
 		}
 	</div>
-}
 
 export default RemoteSupportPage;
