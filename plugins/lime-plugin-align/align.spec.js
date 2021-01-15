@@ -147,7 +147,7 @@ describe('align page', () => {
 			])
 		render(<AlignPage />);
 		expect(await findNeighbors()).toEqual(['mc-martinez', 'mc-mile', 'mc-rocio']);
-		expect(await screen.findByText(/not associated/i)).toBeInTheDocument();
+		expect(await screen.findByText(/signal lost/i)).toBeInTheDocument();
 		expect(await screen.findByText(/last packet: 4 seconds ago/i)).toBeInTheDocument();
 	})
 })

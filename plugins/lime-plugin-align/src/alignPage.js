@@ -33,11 +33,11 @@ export const AssocRow = ({station, iface}) => {
 					</div>
 				)}
 				{ bathost && bathost.iface &&
-					<div> {I18n.t("At its radio %{radio}", {radio: ifaceToRadioNumber(bathost.iface)}) }</div>
+					<div> {I18n.t("On its radio %{radio}", {radio: ifaceToRadioNumber(bathost.iface)}) }</div>
 				}
 				{ station.inactive >= 3000 && (
 					<div>
-						<div>{I18n.t('Not associated')}</div>
+						<div>{I18n.t('Signal lost')}</div>
 						<div>{`${I18n.t('Last packet')}:`} <SecondsAgo initialMs={station.inactive} isStatic /></div>
 					</div>
 				)}
@@ -71,6 +71,9 @@ export const AssocList = ({iface}) => {
 
 	return (
 		<div class="d-flex flex-column flex-grow-1">
+			{assoclist.length > 0 &&
+				<div class={style.assoclistHeader}>{I18n.t("These are the nodes associated on this radio")}</div>
+			}
 			{assoclist.map(station => <AssocRow key={station.mac} station={station} iface={iface} />)}
 			{assoclist.length === 0 &&
 				<div className="container-center">

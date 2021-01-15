@@ -53,7 +53,7 @@ const SignalBox = ({signal}) => (
 						<span class={style.unit}>dBm</span>
 					</div>
 				}
-				{!signal && <div class={style.notAssociated}>{I18n.t('Not associated') }</div>}
+				{!signal && <div class={style.notAssociated}>{I18n.t('Signal lost') }</div>}
 				{signal && <SignalSpeech signal={signal} className={style.speech} />}
 			</div>
 			<SignalBar signal={signal} className={style.bar} />
@@ -82,7 +82,7 @@ const AlignSingle = ({iface, mac}) => {
 			<div class={style.section}>
 				<div>{I18n.t('With radio %{radio} alignin with', {radio: fromRadio})}</div>
 				<div class={style.hostname}>{ bathost.hostname }</div>
-				{toRadio && <div>{I18n.t('At its radio %{radio}', {radio: toRadio})}</div>}
+				{toRadio && <div>{I18n.t('On its radio %{radio}', {radio: toRadio})}</div>}
 			</div>
 			<BestSignal signal={station && station.signal} />
 			{station && !station.associated &&
