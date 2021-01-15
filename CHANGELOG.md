@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.12](https://github.com/germanferrero/lime-app/compare/v0.2.11...v0.2.12) (2021-01-15)
+### Features
+* **align** New align screen, check out more info at PR [#285](https://github.com/libremesh/lime-app/pull/285)
+
 ### [0.2.11](https://github.com/libremesh/lime-app/compare/v0.2.10...v0.2.11) (2020-11-27)
 
 
