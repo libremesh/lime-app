@@ -1,100 +1,91 @@
-/* eslint-disable react/jsx-no-bind */
-import { h } from 'preact';
-import { action } from '@storybook/addon-actions';
-import { object } from '@storybook/addon-knobs';
-
-import { Align } from './src/alignPage';
-import { useState } from 'preact/hooks';
-
-const actions = {
-	changeInterface: action('changeInterface'),
-	changeStation: action('changeStation'),
-	startAlign: action('startAlign'),
-	getSignal: action('getSignal')
-};
-
-const alignData = {
-	ifaces: [
-		{
-			name: 'wlan1-adhoc',
-			mode: 'adhoc'
-		},
-		{
-			name: 'wlan2-adhoc',
-			mode: 'adhoc'
-		}
-	],
-	stations: [
-		{
-			mac: 'A8:40:41:1C:84:05',
-			hostname: 'ql-graciela',
-			signal: -64,
-			iface: 'wlan1-adhoc'
-		},
-		{
-			mac: 'A8:40:41:1C:84:04',
-			hostname: 'ql-margayorlando',
-			signal: -52,
-			iface: 'wlan1-adhoc'
-		}
-	],
-	currentReading: {
-		mac: 'A8:40:41:1C:84:05',
-		hostname: 'ql-graciela',
-		signal: -64,
-		iface: 'wlan1-adhoc'
-	}
-};
-
-const AlignWithState = ({ getSignal }) => {
-	const [ align, setAlign ] = useState(alignData);
- 
-	function changeStation(station) {
-		const newSelected = { ...align.stations.find(x => x.mac === station.mac) };
-		setAlign({ ...align, currentReading: newSelected });
-	}
-
-	function changeInterface(iface) {
-		if (iface === 'wlan2-adhoc') {
-			setAlign({ ...alignData });
-		}
-	}
-
-	function setRandom() {
-		getSignal();
-		setAlign(() => ({
-			...align,
-			currentReading: {
-				...align.currentReading,
-				signal: Math.floor(Math.random() * 10) + 60
-			}
-		})
-		);
-	}
-    
-	return (
-		<Align
-			alignData={align}
-			changeStation={changeStation}
-			changeInterface={changeInterface}
-			startAlign={actions.startAlign}
-			getSignal={setRandom}
-		/>
-	);
-};
+import Align, { AssocRow } from "./src/alignPage";
+import AlignSingle from "./src/containers/alignSingle";
 
 export default {
-	title: 'Containers/Align screen',
-	component: Align
+	title: 'Containers/Align screen'
 };
 
-export const withoutAlignData = () => (
-	<Align
-		alignData={object('Align data', {})}
-		{...actions}
-	/>
-);
+const station = {
+	mac: 'A8:40:41:1C:84:05',
+	signal: -64,
+	inactive: 10
+};
 
-export const withAlignData = () => (
-	<AlignWithState {...actions} />
-);
+export const alignRow = () => (
+	<AssocRow station={station} iface={'wlan1-mesh'} />
+)
+alignRow.args = {
+	queries: [
+		[['lime-utils', 'get_bathost', station.mac, 'wlan1-mesh'], {hostname: 'ql-graciela', iface: 'wlan1-mesh'}]
+	]
+}
+
+export const alignRowNotAssociated = () => (
+	<AssocRow station={{...station, inactive: 4000}} iface={'wlan1-mesh'} />
+)
+alignRowNotAssociated.args = {
+	queries: [
+		[['lime-utils', 'get_bathost', station.mac, 'wlan1-mesh'], {hostname: 'ql-graciela', iface: 'wlan1-mesh'}]
+	]
+}
+
+export const alignPage = () => <Align />;
+alignPage.args = {
+	queries: [
+		[['lime-utils', 'get_mesh_ifaces'], ['wlan1-mesh', 'wlan2-mesh']],
+		[['iwinfo', 'assoclist', 'wlan1-mesh'],
+			[{ mac: "52:00:00:ab:cd:a0", signal: -75, inactive: 10},
+			 { mac: "52:00:00:ab:cd:a1", signal: -73, inactive: 10}]
+		],
+		[['iwinfo', 'assoclist', 'wlan2-mesh'],
+			[{ mac: "52:00:00:ab:cd:a2", signal: -63, inactive: 10},
+			 { mac: "52:00:00:ab:cd:a3", signal: -85, inactive: 10}]
+		],
+		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'mc-rocio', iface: 'wlan1-mesh'}],
+		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a1', 'wlan1-mesh'], {hostname: 'mc-martinez', iface: 'wlan1-mesh'}],
+		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a2', 'wlan2-mesh'], {hostname: 'mc-jorge', iface: 'wlan2-mesh'}],
+		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a3', 'wlan2-mesh'], {hostname: 'mc-tanque', iface: 'wlan1-mesh'}]
+	]
+}
+
+export const noNeighbors = () => <Align />;
+noNeighbors.args = {
+	queries: [
+		[['lime-utils', 'get_mesh_ifaces'], ['wlan1-mesh', 'wlan2-mesh']],
+		[['iwinfo', 'assoclist', 'wlan1-mesh'], []],
+		[['iwinfo', 'assoclist', 'wlan2-mesh'], []]
+	]
+}
+
+export const fetchingNeighborName = () => <Align />;
+fetchingNeighborName.args = {
+	queries: [
+		[['lime-utils', 'get_mesh_ifaces'], ['wlan1-mesh', 'wlan2-mesh']],
+		[['iwinfo', 'assoclist', 'wlan1-mesh'],
+			[{ mac: "52:00:00:ab:cd:a0", signal: -75, inactive: 10},
+			 { mac: "52:00:00:ab:cd:a1", signal: -73, inactive: 10}]
+		],
+		[['iwinfo', 'assoclist', 'wlan2-mesh'], []],
+		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'mc-rocio', iface: 'wlan1-mesh'}]
+	]
+}
+
+export const alignSingle = () => <AlignSingle iface={'wlan1-mesh'} mac={'52:00:00:ab:cd:a0'} />
+alignSingle.args = {
+	queries: [
+		[['iwinfo', 'assoclist', 'wlan1-mesh'],
+			[{ mac: "52:00:00:ab:cd:a0", signal: -75, inactive: 10, associated: true}]
+		],
+		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'mc-rocio', iface: 'wlan1-mesh'}]
+	]
+}
+
+export const alignSingleNoAssociated = () => <AlignSingle iface={'wlan1-mesh'} mac={'52:00:00:ab:cd:a0'} />
+alignSingleNoAssociated.args = {
+	queries: [
+		[['iwinfo', 'assoclist', 'wlan1-mesh'],
+			 [{ mac: "52:00:00:ab:cd:a0", signal: -73, inactive: 4000, associated: false}]
+		],
+		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'mc-rocio', iface: 'wlan1-mesh'}]
+	]
+}

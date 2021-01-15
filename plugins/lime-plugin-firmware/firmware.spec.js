@@ -1,5 +1,6 @@
 import { h } from 'preact';
-import { render as tlRender, fireEvent, cleanup, act, screen } from '@testing-library/preact';
+import { fireEvent, cleanup, act, screen } from '@testing-library/preact';
+import { render } from 'utils/test_utils';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 
@@ -7,17 +8,7 @@ import FirmwarePage from './src/firmwarePage';
 import { getUpgradeInfo, uploadFile, upgradeFirmware,
 	upgradeConfirm, upgradeRevert, downloadRelease, getDownloadStatus, getNewVersion } from './src/firmwareApi';
 import { route } from 'preact-router';
-import { ReactQueryCacheProvider } from 'react-query';
 import queryCache from 'utils/queryCache';
-
-jest.mock('i18n-js', () => ({
-	t: jest.fn((x, data={}) => {
-		Object.entries(data).forEach(
-			([key, value]) => x = x.replace(new RegExp(String.raw`%{${key}}`), value)
-		)
-		return x;
-	})
-}));
 
 jest.mock('./src/firmwareApi');
 
@@ -29,12 +20,6 @@ const noSecureRollbackText =
 function flushPromises() {
 	return new Promise(resolve => setImmediate(resolve));
 }
-
-const render = (ui) => tlRender(
-	<ReactQueryCacheProvider queryCache={queryCache}>
-		{ui}
-	</ReactQueryCacheProvider>
-)
 
 async function stepSelectFile(fileName='test.bin') {
 	const fileInput = await screen.findByLabelText(/select file/i);

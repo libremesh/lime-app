@@ -72,7 +72,7 @@ const UpgradeFromRelease = ({onUpgrading, onSwitch}) => {
 			}
 			{status === 'downloading' &&
 				<div>
-					<div class={style.withLoadingEllipsis}>{I18n.t('Downloading')}</div>
+					<div class="withLoadingEllipsis">{I18n.t('Downloading')}</div>
 					<button disabled >{I18n.t('Upgrade to %{versionName}', { versionName })}</button>
 				</div>
 			}

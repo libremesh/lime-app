@@ -1,19 +1,15 @@
-import  epics from './src/alignEpics';
-import { reducer } from './src/alignReducer';
-import * as selector from './src/alignSelectors';
-import * as constants from './src/alignConstants';
 import Page from './src/alignPage';
 import { AlignMenu } from './src/alignMenu';
+import AlignSingle from './src/containers/alignSingle';
 
 export default {
 	name: 'Align',
 	page: Page,
 	menu: AlignMenu,
 	store: {
-		name: 'align',
-		epics,
-		reducer,
-		selector,
-		constants
-	}
+		name: 'align'
+	},
+	additionalRoutes: [
+		['aling-single/:iface/:mac', AlignSingle]
+	]
 };

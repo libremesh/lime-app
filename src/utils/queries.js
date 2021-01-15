@@ -1,4 +1,5 @@
 import api from './uhttpd.service';
+import { getBatHost } from './api';
 import { useQuery, useMutation } from 'react-query';
 import queryCache from './queryCache';
 
@@ -61,4 +62,11 @@ export function useCommunitySettings() {
 		initialData: DEFAULT_COMMUNITY_SETTINGS,
 		initialStale: true
 	})
+}
+
+export function useBatHost(mac, outgoingIface, queryConfig) {
+	return useQuery(['lime-utils', 'get_bathost', mac, outgoingIface], async () => getBatHost(mac, outgoingIface), {
+		retry: 3,
+		...queryConfig
+	});
 }
