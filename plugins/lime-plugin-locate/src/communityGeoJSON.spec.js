@@ -27,6 +27,8 @@ const getMockedNodesData = jest.fn(() => (
             "data": {
                 "links": [
                     "a0:f3:c1:86:31:d2",
+                    // Link to host3, but host3 doenst link host2
+                    "a8:40:41:1c:84:20"
                 ],
                 "coordinates": {
                     "lon": "-64.42450",

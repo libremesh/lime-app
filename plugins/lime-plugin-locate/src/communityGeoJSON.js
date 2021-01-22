@@ -53,10 +53,18 @@ export function getCommunityGeoJSON(nodesData, keepClean = null) {
     )
     geomac = Object.fromEntries(geomac.flat());
 
+    let macLinks = nodes.map(node =>
+        node.macs
+            .map(mac => [mac, node.links])
+    )
+    macLinks = Object.fromEntries(macLinks.flat());
+
     // geolink: [..., [[lat,lon], [lat,lon]]] All links as pair of coordinates
     let geolinks = nodes.map(node =>
         node.links
             .filter(mac => mac in geomac)
+            //Keep only links if both nodes say there is a link
+            .filter(mac => node.macs.some(node_mac => macLinks[mac].indexOf(node_mac) != -1))
             .map(mac => [geomac[node.macs[0]], geomac[mac]].sort())
     ).flat()
     geolinks = removeDuplicates(geolinks, l => l[0] + ',' + l[1]);
