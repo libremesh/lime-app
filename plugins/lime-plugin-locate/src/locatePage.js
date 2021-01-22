@@ -41,7 +41,9 @@ function setupMap() {
 function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
 
 	/** Create a Leaflet layer with community nodes and links to be added to the map*/
-	nodesData[nodeHostname].data.coordinates = { lat: stationLat, lon: stationLon };
+	if (nodesData[nodeHostname]) {
+		nodesData[nodeHostname].data.coordinates = { lat: stationLat, lon: stationLon };
+	}
 	// Get community GeoJSON, filter out nodes in same location as station host.
 	let geoJSON = getCommunityGeoJSON(nodesData, [stationLon, stationLat]);
 	const layer = L.geoJSON(geoJSON, {
