@@ -71,5 +71,10 @@ describe('remote support page', () => {
 		const createButton = await screen.findByRole('button', {name: /create session/i });
 		fireEvent.click(createButton);
 		expect(await screen.findByText(/Cannot connect to the remote support server/i)).toBeVisible();
-	})
+	});
+
+	it('shows a button to show the console when there is an active session', async() => {
+		render(<RemoteSupportPage />);
+		expect(await screen.findByRole('button', {name: /show console/i})).toBeEnabled();
+	});
 });
