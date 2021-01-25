@@ -55,6 +55,19 @@ const Routes = () => (
 				)
 			})
 		}
+		{/* Additional plugins protected routes */}
+		{plugins
+			.filter(plugin => plugin.additionalProtectedRoutes)
+			.map(plugin => plugin.additionalProtectedRoutes)
+			.flat()
+			.map(([path, Component]) => {
+				return (
+					<CommunityProtectedRoute path={path}>
+						<Component />
+					</CommunityProtectedRoute>
+				)
+			})
+		}
 		<Redirect default path={'/'} to={'rx'} />
 	</Router>
 );
