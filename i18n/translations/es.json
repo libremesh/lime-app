@@ -188,6 +188,9 @@
         "zero": "Nadie se ha unido aún.",
         "one": "Una persona se ha unido.",
         "other": "%{count} personas se han unido."
-    }
+    },
+    "click_at_show_console_to_follow_the_remote_support_8b39ccbc": "Haz click en Ver Consola para seguir la sesión de soporte remoto.",
+    "hide_console_9bbb309e": "Esconder Consola",
+    "show_console_5d6937ac": "Ver consola"
 }
 
