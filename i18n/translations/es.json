@@ -177,7 +177,6 @@
     "ask_for_remote_support_7e7eaab0": "Pedir soporte remoto",
     "click_at_close_session_to_end_the_remote_support_s_1af24bb9": "Haz click en Cerrar Sesión para finalizar la sesión de soporte remoto. Nadie podrá volver a acceder tu nodo con este token",
     "close_session_89aadfa2": "Cerrar Sesión",
-    "copy_and_paste_the_following_token_to_share_access_c5ca32c5": "Copia y pega el siguiente token para compartir acceso a tu nodo con quien quieras",
     "create_session_ad54bdb6": "Crear Sesión",
     "please_verify_your_internet_connection_92ecd88c": "Por favor verifica tu conexión a internet",
     "remote_support_9ba7a3a7": "Soporte Remoto",
@@ -191,6 +190,7 @@
     },
     "click_at_show_console_to_follow_the_remote_support_8b39ccbc": "Haz click en Ver Consola para seguir la sesión de soporte remoto.",
     "hide_console_9bbb309e": "Esconder Consola",
-    "show_console_5d6937ac": "Ver consola"
+    "show_console_5d6937ac": "Ver consola",
+    "share_the_following_command_with_whoever_you_want__6fd30335": "Comparte el siguiente comando con quien quieras para darle acceso a tu nodo"
 }
 

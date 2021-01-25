@@ -15,11 +15,11 @@ export const openingSession = () => (
 );
 
 export const sessionNoOneJoined = () => (
-	<RemoteSupportPage_ session={{rw_ssh: 'pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro_ssh: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io', clients: 1}} consoleViewable={false} />
+	<RemoteSupportPage_ session={{rw_ssh: 'ssh -p2222 pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro_ssh: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io', clients: 1}} consoleViewable={false} />
 );
 
 export const sessionSomeoneJoined = () => (
-	<RemoteSupportPage_ session={{rw_ssh: 'pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro_ssh: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io', clients: 2}} consoleViewable={true} />
+	<RemoteSupportPage_ session={{rw_ssh: 'ssh -p222 pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io', ro_ssh: 'pL2qpxKQvPP9f9GPWjs34hjxM@ny1.tmate.io', clients: 2}} consoleViewable={true} />
 );
 
 export const errorOpenningSession = () => (
