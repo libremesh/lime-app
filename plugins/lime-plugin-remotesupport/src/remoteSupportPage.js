@@ -6,7 +6,7 @@ import I18n from 'i18n-js';
 import style from './style.less';
 
 const RemoteSupportPage = () => {
-	const {data: session, isLoading: loadingSession} = useSession({
+	const {data: session, isLoading: loadingSession, isError} = useSession({
 		refetchInterval: 10000
 	});
 	const [openSession, openStatus] = useOpenSession();
@@ -16,9 +16,16 @@ const RemoteSupportPage = () => {
 		route('console');
 	}
 
+	if (isError) {
+		return <div class="container container-center">
+			Please check that ubus-tmate package is installed
+		</div>
+	}
+
 	if (loadingSession) {
 		return <div class="container container-center"><Loading /></div>
 	}
+
 	return <RemoteSupportPage_
 		session={session} openError={openStatus.isError}
 		isSubmitting={openStatus.isLoading || closeStatus.isLoading}
