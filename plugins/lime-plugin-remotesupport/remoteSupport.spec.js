@@ -22,7 +22,7 @@ describe('remote support page', () => {
 
 	beforeEach(() => {
 		getSession.mockImplementation(async () =>
-			({ rw: 'test_rw_token@test_host', ro: 'test_ro_token@test_host'})
+			({ rw_ssh: 'test_rw_token@test_host', ro_ssh: 'test_ro_token@test_host'})
 		);
 		openSession.mockImplementation(async () => null);
 		closeSession.mockImplementation(async () => null);
@@ -57,7 +57,7 @@ describe('remote support page', () => {
 		getSession
 			.mockImplementationOnce(async () => null)
 			.mockImplementationOnce(async () =>
-				({ rw: 'test_rw_token@test_host', ro: 'test_ro_token@test_host'}));
+				({ rw_ssh: 'test_rw_token@test_host', ro_ssh: 'test_ro_token@test_host'}));
 		render(<RemoteSupportPage />)
 		const createButton = await screen.findByRole('button', {name: /create session/i });
 		fireEvent.click(createButton);
