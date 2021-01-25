@@ -5,7 +5,9 @@ import I18n from 'i18n-js';
 import style from './style.less';
 
 const RemoteSupportPage = () => {
-	const {data: session, isLoading: loadingSession} = useSession();
+	const {data: session, isLoading: loadingSession} = useSession({
+		refetchInterval: 10000
+	});
 	const [openSession, openStatus] = useOpenSession();
 	const [closeSession, closeStatus] = useCloseSession();
 
@@ -40,7 +42,7 @@ export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false
 					{session.clients && " ".concat(I18n.t("people-join-session", {count: session.clients - 1}))}
 				</p>
 				<p>{I18n.t("Copy and paste the following token to share access to your node with whoever you want")}</p>
-				<div class={style.token}><pre>{session.rw}</pre></div>
+				<div class={style.token}><pre>{session.rw_ssh}</pre></div>
 				<div class={style.section}>
 					<h5>{I18n.t("Close Session")}</h5>
 					<p>{I18n.t("Click at Close Session to end the remote support session. No one will be able to access your node with this token again")}</p>
