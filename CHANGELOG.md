@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.13](https://github.com/germanferrero/lime-app/compare/v0.2.12...v0.2.13) (2021-01-25)
+
+### Features
+* **remotesupport:** add support for sharing tmate sessions to your node ([#289](https://github.com/libremesh/lime-app/pull/289))
+
+### Bug Fixes
+
+* **map:** load community when this node is not in nodes_and_links db ([67140b3](https://github.com/germanferrero/lime-app/commit/67140b31efa34b8c3817b84a42d36cebeadab262))
+
+### Improvements
+* **map:** show links only when both nodes list each other as associated ([d195ac4](https://github.com/germanferrero/lime-app/commit/9038906ff7f3de5b6a4758e739705c3c7d195ac4))
+
 ### [0.2.12](https://github.com/germanferrero/lime-app/compare/v0.2.11...v0.2.12) (2021-01-15)
 ### Features
 * **align** New align screen, check out more info at PR [#285](https://github.com/libremesh/lime-app/pull/285)
