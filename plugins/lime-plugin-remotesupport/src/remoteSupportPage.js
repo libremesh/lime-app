@@ -39,7 +39,7 @@ export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false
 		{session &&
 			<div>
 				<p>{I18n.t("There's an active remote support session")}.
-					{session.clients && " ".concat(I18n.t("people-join-session", {count: session.clients - 1}))}
+					{session.clients && " ".concat(I18n.t("people-join-session", {count: Number(session.clients) }))}
 				</p>
 				<p>{I18n.t("Copy and paste the following token to share access to your node with whoever you want")}</p>
 				<div class={style.token}><pre>{session.rw_ssh}</pre></div>
