@@ -1,4 +1,5 @@
 import {RemoteSupportPage_} from './src/remoteSupportPage';
+import {ConsoleView_} from './src/consoleView';
 
 export default {
 	title: 'Containers/RemoteSupport'
@@ -24,3 +25,7 @@ export const sessionSomeoneJoined = () => (
 export const errorOpenningSession = () => (
 	<RemoteSupportPage_ session={null} openError={true} />
 );
+
+export const console = () => (
+	<ConsoleView_ sessionSrc={"about:blank"} />
+)

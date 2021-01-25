@@ -1,4 +1,5 @@
 import { h } from 'preact';
+import { route } from 'preact-router';
 import { useSession, useOpenSession, useCloseSession } from './remoteSupportQueries';
 import Loading from 'components/loading';
 import I18n from 'i18n-js';
@@ -11,17 +12,21 @@ const RemoteSupportPage = () => {
 	const [openSession, openStatus] = useOpenSession();
 	const [closeSession, closeStatus] = useCloseSession();
 
+	function onShowConsole() {
+		route('console');
+	}
+
 	if (loadingSession) {
 		return <div class="container container-center"><Loading /></div>
 	}
 	return <RemoteSupportPage_
 		session={session} openError={openStatus.isError}
 		isSubmitting={openStatus.isLoading || closeStatus.isLoading}
-		onOpenSession={openSession} onCloseSession={closeSession} />;
+		onOpenSession={openSession} onCloseSession={closeSession} onShowConsole={onShowConsole} />;
 };
 
 
-export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false, onOpenSession, onCloseSession}) =>
+export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false, onOpenSession, onCloseSession, onShowConsole}) =>
 	<div class="d-flex flex-grow-1 flex-column container container-padded">
 		<h4>{I18n.t("Ask for remote support")}</h4>
 		{!session &&
@@ -43,6 +48,11 @@ export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false
 				</p>
 				<p>{I18n.t("Copy and paste the following token to share access to your node with whoever you want")}</p>
 				<div class={style.token}><pre>{session.rw_ssh}</pre></div>
+				<div class={style.section}>
+					<h5>{I18n.t("Show Console")}</h5>
+					<p>{I18n.t("Click at Show Console to follow the remote support session.")}</p>
+					<button onClick={onShowConsole}>{I18n.t("Show Console")}</button>
+				</div>
 				<div class={style.section}>
 					<h5>{I18n.t("Close Session")}</h5>
 					<p>{I18n.t("Click at Close Session to end the remote support session. No one will be able to access your node with this token again")}</p>
