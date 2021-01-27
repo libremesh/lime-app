@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.14](https://github.com/germanferrero/lime-app/compare/v0.2.13...v0.2.14) (2021-01-27)
+
+### Refactor
+* **bathost:** adapt to new ubus endpoint
+
 ### [0.2.13](https://github.com/germanferrero/lime-app/compare/v0.2.12...v0.2.13) (2021-01-25)
 
 ### Features
