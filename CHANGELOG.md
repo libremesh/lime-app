@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.15](https://github.com/germanferrero/lime-app/compare/v0.2.14...v0.2.15) (2021-01-27)
+
+
+### Bug Fixes
+
+* **most_active:** fix rx page not loading when no most_active ([428f267](https://github.com/germanferrero/lime-app/commit/428f2670e8a89f6de7f1254129a23ce72988b37f))
+
 ### [0.2.14](https://github.com/germanferrero/lime-app/compare/v0.2.13...v0.2.14) (2021-01-27)
 
 ### Refactor
