@@ -65,7 +65,7 @@ export function useCommunitySettings() {
 }
 
 export function useBatHost(mac, outgoingIface, queryConfig) {
-	return useQuery(['lime-utils', 'get_bathost', mac, outgoingIface], async () => getBatHost(mac, outgoingIface), {
+	return useQuery(['bat-hosts', 'get_bathost', mac, outgoingIface], async () => getBatHost(mac, outgoingIface), {
 		retry: 3,
 		...queryConfig
 	});
