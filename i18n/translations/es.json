@@ -7,8 +7,6 @@
     },
     "align_11050992": "Alineación",
     "change_dcaa253a": "Cambiar",
-    "connected_host_91e11459": "Nodo seleccionado",
-    "current_status_830c5a75": "Estado acutal",
     "from_fdd4956d": "Desde",
     "full_path_metrics_2859608f": "Medir todo el recorrido",
     "interface_177dac54": "Interfaz",
@@ -26,7 +24,6 @@
     "only_gateway_727b1656": "Solo la puerta de enlace",
     "packet_loss_1afe48a8": "Paquetes perdidos",
     "save_notes_616850ea": "Guardar notas",
-    "select_new_base_station_3652ae73": "Cambiar de nodo seleccionado",
     "status_e7fdbe06": "Estado",
     "system_55b0ca91": "Sistema",
     "to_internet_494eb85c": "Hasta Internet",
@@ -72,7 +69,6 @@
     "you_should_try_to_connect_to_the_network_network_8d7f515e": "Intente conectarce a la red wifi %{network} para completar la instalación.",
     "at_least_one_alphanumeric_character_357817ee": "Al menos una letra",
     "at_least_one_number_bf8434bb": "Al menos un número",
-    "change_node_1390712f": "Cambiar de Nodo",
     "change_shared_password_58dc580c": "Cambiar Contraseña Compartida",
     "choose_a_shared_password_for_network_adminitration_f182ed3b": "Elige una contraseña compartida para la administración de la red",
     "error_98e81528": "Error",
@@ -191,6 +187,10 @@
     "click_at_show_console_to_follow_the_remote_support_8b39ccbc": "Haz click en Ver Consola para seguir la sesión de soporte remoto.",
     "hide_console_9bbb309e": "Esconder Consola",
     "show_console_5d6937ac": "Ver consola",
-    "share_the_following_command_with_whoever_you_want__6fd30335": "Comparte el siguiente comando con quien quieras para darle acceso a tu nodo"
+    "share_the_following_command_with_whoever_you_want__6fd30335": "Comparte el siguiente comando con quien quieras para darle acceso a tu nodo",
+    "select_another_node_and_use_the_limeapp_as_you_wer_d189728": "Selecciona el nodo que quieras visitar y usa la LimeApp como si estuvieras ahí",
+    "visit_a_neighboring_node_4116be4": "Visitar un nodo vecino",
+    "select_new_node_5b2e9165": "Selecciona el nodo",
+    "visit_864b4060": "Visitar"
 }
 
