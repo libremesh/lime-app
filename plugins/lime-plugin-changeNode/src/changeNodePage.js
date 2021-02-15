@@ -13,7 +13,7 @@ import { useBoardData } from 'utils/queries';
 export const ChangeNode = ({ stations, loadStations }) => {
 	const { data: boardData } = useBoardData();
 
-	const [ state, setState ] = useState({
+	const [state, setState] = useState({
 		station: boardData && boardData.hostname
 	});
 
@@ -21,10 +21,10 @@ export const ChangeNode = ({ stations, loadStations }) => {
 		setState({
 			station: boardData.hostname
 		});
-		return () => {};
-		
-	},[boardData]);
-	
+		return () => { };
+
+	}, [boardData]);
+
 	useEffect(() => {
 		loadStations();
 	}, [loadStations]);
@@ -51,25 +51,18 @@ export const ChangeNode = ({ stations, loadStations }) => {
 
 	return (
 		<div class="container container-padded">
+			<h4>{I18n.t("Visit a neighboring node")}</h4>
+			<p>
+				{I18n.t("Select another node and use the LimeApp as you were there")}
+			</p>
 			<form onSubmit={nextStation}>
-				<div class="row">
-					<div class="six columns">
-						<p>
-							<label>{I18n.t('Current status')}</label>
-							<span>{I18n.t('Connected Host')}</span>: {boardData.hostname}<br />
-						</p>
-					</div>
-					<div class="six columns">
-						<p>
-							<label>{I18n.t('Select new base station')}</label>
-							<select class="u-full-width" onChange={handleChange} value={state.station}>
-								{sortStations(stations).map(x => (<option value={x}>{x}</option>))}
-							</select>
-						</p>
-					</div>
-				</div>
-		
-				<button class="button block" type="submit">{I18n.t('Change')}</button>
+				<p>
+					<label>{I18n.t('Select new node')}</label>
+					<select class="u-full-width" onChange={handleChange} value={state.station}>
+						{sortStations(stations).map(x => (<option value={x}>{x}</option>))}
+					</select>
+				</p>
+				<button class="button block" type="submit">{I18n.t('Visit')}</button>
 			</form>
 		</div>
 	);
