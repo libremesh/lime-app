@@ -79,7 +79,13 @@ export function upgradeRevert() {
 }
 
 export function getNewVersion() {
-	return api.call("eupgrade", "is_new_version_available", {}).toPromise();
+	return api.call("eupgrade", "is_new_version_available", {}).toPromise()
+		.catch(error => {
+			if (error.code === -32000) {
+				return Promise.resolve(null)
+			}
+			throw error;
+		})
 }
 
 export function getDownloadStatus() {
