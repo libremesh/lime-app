@@ -1,17 +1,38 @@
 import { h } from 'preact';
 
 import { plugins } from '../../config';
-import { Drawer } from '../../components/drawer';
+import { useState } from 'preact/hooks';
+import style from './style.less';
 
-export const Menu = ({ opened, toggle }) => (
-	<Drawer status={opened} toggle={toggle}>
-		<nav>
-			{plugins
-				.filter(plugin => plugin.page && plugin.menu)
-				.map(plugin => plugin.menu)
-				.map((Component, index) =>
-					<Component key={index} />)
-			}
-		</nav>
-	</Drawer>
-);
+export const Menu = ({ opened, toggle }) => {
+	const [currentView, setCurrentView] = useState('node');
+
+	function changeCurrentView(e) {
+		e.preventDefault();
+		setCurrentView(currentView === 'node' ? 'community' : 'node');
+	}
+
+	return (
+		<div className={`${style.menu} ${opened ? style.menuOpened : style.menuClosed} d-flex flex-column`}>
+			<nav class={style.menuItemsWrapper } onClick={toggle}>
+				{plugins
+					.map(plugin => ({ ...plugin, menuView: plugin.menuView || 'node' }))
+					.filter(plugin => plugin.page && plugin.menu && plugin.menuView === currentView)
+					.map(plugin => plugin.menu)
+					.map((Component, index) =>
+						<Component key={index} />)
+				}
+			</nav>
+			<nav class={style.viewSwitchWrapper}>
+				<a href="#0" class={style.viewSwitch} onClick={changeCurrentView}>
+					{currentView === 'node' &&
+						I18n.t('Go to Community View')
+					}
+					{currentView === 'community' &&
+						I18n.t('Go to Node View')
+					}
+				</a>
+			</nav>
+		</div>
+	);
+}
