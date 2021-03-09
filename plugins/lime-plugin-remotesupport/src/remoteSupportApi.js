@@ -2,7 +2,7 @@ import api from 'utils/uhttpd.service';
 
 export function getSession() {
 	return api.call("tmate", "get_session", {}).toPromise()
-		.then(result => result.session !== 'no session' ? result.session : null)
+		.then(result => (result.session && result.session.rw_ssh) ? result.session : null)
 }
 
 export function openSession() {
