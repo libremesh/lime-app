@@ -7,6 +7,10 @@ export function getSession() {
 
 export function openSession() {
 	return api.call("tmate", "open_session", {}).toPromise()
+		.catch((error) => {
+			closeSession();
+			throw error;
+		})
 }
 
 export function closeSession() {
