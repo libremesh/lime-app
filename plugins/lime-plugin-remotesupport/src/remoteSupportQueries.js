@@ -9,7 +9,8 @@ export function useSession(queryConfig) {
 
 export function useOpenSession() {
 	return useMutation(openSession, {
-		onSuccess: () => queryCache.invalidateQueries(["tmate", "get_session"])
+		onSuccess: () => queryCache.invalidateQueries(["tmate", "get_session"]),
+		onError: () => queryCache.setQueryData(["tmate", "get_session"], null)
 	})
 }
 
