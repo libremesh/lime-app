@@ -77,7 +77,7 @@ const AlignSingle = ({iface, mac}) => {
 
 	return (
 		<div class="d-flex flex-grow-1 flex-column container-padded">
-			<div class="d-flex"><button class={style.backArrow} onClick={() => route('align')}>←</button></div>
+			<div class="d-flex"><button class={style.backArrow} onClick={() => route('/align')}>←</button></div>
 			<SignalBox signal={station && station.associated && station.signal} />
 			<div class={style.section}>
 				<div>{I18n.t('With radio %{radio} alignin with', {radio: fromRadio})}</div>

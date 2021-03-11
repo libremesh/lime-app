@@ -10,6 +10,6 @@ export default {
 		name: 'align'
 	},
 	additionalRoutes: [
-		['aling-single/:iface/:mac', AlignSingle]
+		['align-single/:iface/:mac', AlignSingle]
 	]
 };
