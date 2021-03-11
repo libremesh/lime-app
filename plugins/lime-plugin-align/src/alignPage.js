@@ -17,7 +17,7 @@ export const AssocRow = ({station, iface}) => {
 	const { data: bathost, isLoading, isError } = useBatHost(station.mac, iface);
 	
 	function goToAlignSingle() {
-		route(`aling-single/${iface}/${station.mac}`)
+		route(`/align-single/${iface}/${station.mac}`)
 	}
 
 	return (
