@@ -69,7 +69,12 @@ export const withData = () => (
 		isLoading={boolean('Is loading', false)}
 		{...actions}
 	/>
-);
+)
+withData.args = {
+	queries: [
+		[['bat-hosts', 'get_bathost', 'A8:40:41:1C:84:05', 'wlan1-adhoc'], {hostname: 'ql-graciela', iface: 'wlan2-adhoc'}]
+	]
+}
 
 export const loadingNodeData = () => (
 	<Page
