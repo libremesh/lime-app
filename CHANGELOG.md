@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.16](https://github.com/germanferrero/lime-app/compare/v0.2.15...v0.2.16) (2021-03-12)
+
+
+### Bug Fixes
+
+* **align:** url incremental growth at align-single ([3f92f6a](https://github.com/germanferrero/lime-app/commit/3f92f6a5079143c1b6478b0d1ab3483076d642db))
+* **firmware:** fix firmware upgrade when eupgrade is missing ([f6683af](https://github.com/germanferrero/lime-app/commit/f6683af2a36c33a9d67a43824a46d8eb419667f1))
+* **i18n:** fix localization fallback. Bring back some PT-br translations([4891d66](https://github.com/germanferrero/lime-app/commit/4891d666c810623980c36d6ee2dae32a6462a8d3))
+* **remotesupport:** fix remotesupport broken ui when no internet ([a198536](https://github.com/germanferrero/lime-app/commit/a19853687e21aef94b3809ff4155e07a28a1f958))
+
+### Improvements
+
+* **changenode:** improve UI texts with more user-friendly ones ([cab16f3](https://github.com/libremesh/lime-app/commit/cab16f3bbcf54b30f906e065ac569810e8b509a1))
 ### [0.2.15](https://github.com/germanferrero/lime-app/compare/v0.2.14...v0.2.15) (2021-01-27)
 
 
