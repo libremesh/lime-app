@@ -1,14 +1,14 @@
 import { SafeUpgradeCountdown } from './src/upgradeCountdown';
 import { action } from '@storybook/addon-actions';
-import { UpgradeAvailableBanner, UpgradeAvailabeInfo } from './src/upgradeAvailable';
+import { UpgradeAvailabeInfo } from './src/upgradeAvailable';
 import { UpgradingPage } from './src/upgradingPage/upgradingPage';
 import { ConfirmChoices, Reverted } from './src/confirmPage/confirmPage';
 
 import { UpgradePage } from './src/upgradePage/upgradePage';
 
 const newVersionAvailable = {
-	version: 'LibreRouter 1.5',
-	'release-info-url': 'https://foro.librerouter.org/t/lanzamiento-de-librerouteros-1-3'
+	version: 'LibreRouterOS 1.5',
+	'release-info-url': 'https://foro.librerouter.org/t/lanzamiento-de-librerouteros-1-5'
 }
 
 export default {
@@ -65,15 +65,9 @@ export const upgradeReverted = () => (
 )
 
 
-export const newVersionAvailableBanner = () => <UpgradeAvailableBanner />
-newVersionAvailableBanner.args = {
-	queries: [
-		[['eupgrade', 'is_new_version_available'], newVersionAvailable]
-	]
-}
-
 export const newVersionAvailableMoreInfo = () => <UpgradeAvailabeInfo />
 newVersionAvailableMoreInfo.args = {
+	forceSubheaderHidden: true,
 	queries: [
 		[['eupgrade', 'is_new_version_available'], newVersionAvailable]
 	]
@@ -81,6 +75,7 @@ newVersionAvailableMoreInfo.args = {
 
 export const upgradePageWithReleaseAvailable = () => <UpgradePage />
 upgradePageWithReleaseAvailable.args = {
+	forceSubheaderHidden: true,
 	queries: [
 		[['eupgrade', 'is_new_version_available'], newVersionAvailable],
 		[['lime-utils', 'get_upgrade_info'], {
@@ -92,6 +87,7 @@ upgradePageWithReleaseAvailable.args = {
 
 export const upgradePageWithReleaseDownloading = () => <UpgradePage />
 upgradePageWithReleaseDownloading.args = {
+	forceSubheaderHidden: true,
 	queries: [
 		[['eupgrade', 'is_new_version_available'], newVersionAvailable],
 		[['lime-utils', 'get_upgrade_info'], {
@@ -103,6 +99,7 @@ upgradePageWithReleaseDownloading.args = {
 
 export const upgradePageWithReleaseDownloaded = () => <UpgradePage />
 upgradePageWithReleaseDownloaded.args = {
+	forceSubheaderHidden: true,
 	queries: [
 		[['eupgrade', 'is_new_version_available'], newVersionAvailable],
 		[['lime-utils', 'get_upgrade_info'], {

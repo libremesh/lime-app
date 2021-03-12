@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { text, withKnobs } from '@storybook/addon-knobs';
 
 export default {
-	title: 'Map',
+	title: 'Containers/Map',
 	component: LocatePage,
 	decorators: [withKnobs]
 }

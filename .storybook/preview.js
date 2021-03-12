@@ -13,7 +13,7 @@ import { SubHeader } from 'components/app';
 const boarData = {
 	hostname: 'ql-anaymarcos',
 	release: {
-		description: 'LibreRouterOs 1.5'
+		description: 'LibreRouterOs 1.4'
 	},
 	model: 'LibreRouter v1'
 };
@@ -72,7 +72,7 @@ const withinAppContext = (Story, context) => {
 		<AppContext.Provider value={appcontext}>
 			<div id="app">
 				{context.globals.header === 'yes' && <Header Menu={Menu} />}
-				<SubHeader />
+				{!context.args.forceSubheaderHidden && <SubHeader />}
 				<div id="content">
 					<Story />
 				</div>
