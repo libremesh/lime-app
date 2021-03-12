@@ -51,10 +51,10 @@ export const UpgradeAvailabeInfo = () => {
 				<br />{boardData && boardData.release.description}
 				<br />{I18n.t('You can upgrade to:')}
 				<br />{newVersion.version}
-				{newVersion['realease-info-url'] &&
+				{newVersion['release-info-url'] &&
 					<Fragment>
 						<br />{I18n.t('More details on the release can be found at:')}
-						<br /><a href={newVersion['realease-info-url']}> {newVersion['realease-info-url']} </a>
+						<br /><a href={newVersion['release-info-url']}> {newVersion['release-info-url']} </a>
 					</Fragment>
 				}
 			</p>
