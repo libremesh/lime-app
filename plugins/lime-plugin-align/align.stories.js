@@ -16,7 +16,7 @@ export const alignRow = () => (
 )
 alignRow.args = {
 	queries: [
-		[['lime-utils', 'get_bathost', station.mac, 'wlan1-mesh'], {hostname: 'ql-graciela', iface: 'wlan1-mesh'}]
+		[['bat-hosts', 'get_bathost', station.mac, 'wlan1-mesh'], {hostname: 'ql-graciela', iface: 'wlan1-mesh'}]
 	]
 }
 
@@ -25,7 +25,7 @@ export const alignRowNotAssociated = () => (
 )
 alignRowNotAssociated.args = {
 	queries: [
-		[['lime-utils', 'get_bathost', station.mac, 'wlan1-mesh'], {hostname: 'ql-graciela', iface: 'wlan1-mesh'}]
+		[['bat-hosts', 'get_bathost', station.mac, 'wlan1-mesh'], {hostname: 'ql-graciela', iface: 'wlan1-mesh'}]
 	]
 }
 
@@ -41,10 +41,10 @@ alignPage.args = {
 			[{ mac: "52:00:00:ab:cd:a2", signal: -63, inactive: 10},
 			 { mac: "52:00:00:ab:cd:a3", signal: -85, inactive: 10}]
 		],
-		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'mc-rocio', iface: 'wlan1-mesh'}],
-		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a1', 'wlan1-mesh'], {hostname: 'mc-martinez', iface: 'wlan1-mesh'}],
-		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a2', 'wlan2-mesh'], {hostname: 'mc-jorge', iface: 'wlan2-mesh'}],
-		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a3', 'wlan2-mesh'], {hostname: 'mc-tanque', iface: 'wlan1-mesh'}]
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'ql-rocio', iface: 'wlan1-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a1', 'wlan1-mesh'], {hostname: 'ql-martinez', iface: 'wlan1-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a2', 'wlan2-mesh'], {hostname: 'ql-jorge', iface: 'wlan2-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a3', 'wlan2-mesh'], {hostname: 'ql-tanque', iface: 'wlan1-mesh'}]
 	]
 }
 
@@ -66,7 +66,7 @@ fetchingNeighborName.args = {
 			 { mac: "52:00:00:ab:cd:a1", signal: -73, inactive: 10}]
 		],
 		[['iwinfo', 'assoclist', 'wlan2-mesh'], []],
-		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'mc-rocio', iface: 'wlan1-mesh'}]
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'ql-rocio', iface: 'wlan1-mesh'}]
 	]
 }
 
@@ -76,7 +76,7 @@ alignSingle.args = {
 		[['iwinfo', 'assoclist', 'wlan1-mesh'],
 			[{ mac: "52:00:00:ab:cd:a0", signal: -75, inactive: 10, associated: true}]
 		],
-		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'mc-rocio', iface: 'wlan1-mesh'}]
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'ql-rocio', iface: 'wlan1-mesh'}]
 	]
 }
 
@@ -86,6 +86,6 @@ alignSingleNoAssociated.args = {
 		[['iwinfo', 'assoclist', 'wlan1-mesh'],
 			 [{ mac: "52:00:00:ab:cd:a0", signal: -73, inactive: 4000, associated: false}]
 		],
-		[['lime-utils', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'mc-rocio', iface: 'wlan1-mesh'}]
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'ql-rocio', iface: 'wlan1-mesh'}]
 	]
 }

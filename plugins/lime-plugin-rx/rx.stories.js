@@ -69,7 +69,12 @@ export const withData = () => (
 		isLoading={boolean('Is loading', false)}
 		{...actions}
 	/>
-);
+)
+withData.args = {
+	queries: [
+		[['bat-hosts', 'get_bathost', 'A8:40:41:1C:84:05', 'wlan1-adhoc'], {hostname: 'ql-graciela', iface: 'wlan2-adhoc'}]
+	]
+}
 
 export const loadingNodeData = () => (
 	<Page
@@ -78,3 +83,36 @@ export const loadingNodeData = () => (
 		{...actions}
 	/>
 );
+
+const newVersionAvailable = {
+	version: 'LibreRouter 1.5'
+}
+
+
+export const newVersionIsAvailable = () => (
+	<Page
+		nodeData={object('Node data', nodeData)}
+		isLoading={boolean('Is loading', false)}
+		{...actions}
+	/>
+)
+newVersionIsAvailable.args = {
+	queries: [
+		[['eupgrade', 'is_new_version_available'], newVersionAvailable]
+	]
+};
+
+export const needToConfirmUpgrade = () => (
+	<Page
+		nodeData={object('Node data', {...nodeData, uptime: '60\n'})}
+		isLoading={boolean('Is loading', false)}
+		{...actions}
+	/>
+)
+needToConfirmUpgrade.args = {
+	queries: [
+		[['lime-utils', 'get_upgrade_info'], {
+			suCounter: 300
+		}]
+	]
+}

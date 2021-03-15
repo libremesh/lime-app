@@ -5,17 +5,32 @@ import '../src/style';
 import { ReactQueryCacheProvider, QueryCache } from 'react-query';
 import { addDecorator } from '@storybook/preact';
 import { withKnobs } from '@storybook/addon-knobs';
+import { Header } from 'components/header';
+import { Menu } from '../src/containers/Menu';
+import { AppContext } from 'utils/app.context';
+import { SubHeader } from 'components/app';
 
 const boarData = {
 	hostname: 'ql-anaymarcos',
 	release: {
-		description: 'LibreRouterOs 1.2-SNAPSHOT r0-21f7665'
+		description: 'LibreRouterOs 1.4'
 	},
 	model: 'LibreRouter v1'
 };
 
+const session = {
+	username: 'lime-app'
+}
+
+const upgradeInfo = {
+	suCounter: -1,
+}
+
 const DEFAULT_QUERIES = [
-	[['system', 'board'], boarData]
+	[['system', 'board'], boarData],
+	[['session', 'get'], session],
+	[['lime-utils', 'get_upgrade_info'], upgradeInfo],
+	[['eupgrade', 'is_new_version_available'], {}],
 ]
 
 function queryCacheFactory(queries=[]) {
@@ -48,5 +63,43 @@ const withQueryCache = (Story, context) => (
 		<Story />
 	</ReactQueryCacheProvider>
 )
+
+const withinAppContext = (Story, context) => {
+	const appcontext = {
+		menuEnabled: context.globals.menuEnabled === 'yes'
+	}
+	return (
+		<AppContext.Provider value={appcontext}>
+			<div id="app">
+				{context.globals.header === 'yes' && <Header Menu={Menu} />}
+				{!context.args.forceSubheaderHidden && <SubHeader />}
+				<div id="content">
+					<Story />
+				</div>
+			</div>
+		</AppContext.Provider>
+	)
+}
+
+export const globalTypes = {
+	header: {
+		name: 'header',
+		description: 'Show header in story',
+		defaultValue: 'yes',
+		toolbar: {
+			items: ['no', 'yes'],
+		},
+	},
+	menuEnabled: {
+		name: 'menu enabled',
+		description: 'The menu in the header is enabled',
+		defaultValue: 'yes',
+		toolbar: {
+			items: ['no', 'yes'],
+		},
+	},
+};
+
 addDecorator(withKnobs);
+addDecorator(withinAppContext);
 addDecorator(withQueryCache);

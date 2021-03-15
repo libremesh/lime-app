@@ -72,7 +72,7 @@ const Routes = () => (
 	</Router>
 );
 
-const SubHeader = () => {
+export const SubHeader = () => {
 	const { data: session } = useSession();
 	const { data: upgradeInfo } = useUpgradeInfo({enabled: session.username});
 	const { data: newVersion } = useNewVersion({enabled: session.username});

@@ -56,7 +56,7 @@ function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
 	return layer;
 }
 
-const LocatePage = ({ editting, submitting, stationLat, stationLon, nodesData,
+export const LocatePage = ({ editting, submitting, stationLat, stationLon, nodesData,
 	isCommunityLocation, loadLocation, loadLocationLinks, changeLocation, toogleEdit }) => {
 	const { data: boardData } = useBoardData();
 	const [loading, setLoading] = useState(true);
