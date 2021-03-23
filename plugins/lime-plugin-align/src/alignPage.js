@@ -9,6 +9,7 @@ import { SecondsAgo } from './components/secondsAgo';
 import I18n from 'i18n-js';
 
 import Loading from 'components/loading';
+import { List, ListItem } from 'components/list';
 import Tabs from 'components/tabs';
 import style from './style.less';
 import { route } from 'preact-router';
@@ -21,7 +22,7 @@ export const AssocRow = ({station, iface}) => {
 	}
 
 	return (
-		<div class={style.row} onClick={goToAlignSingle}>
+		<ListItem onClick={goToAlignSingle} >
 			<div>
 				{( isLoading || isError ?
 					<div class={`${style.fetchingName} withLoadingEllipsis`}>
@@ -56,7 +57,7 @@ export const AssocRow = ({station, iface}) => {
 					<SignalBar signal={station.signal} className={style.bar} />
 				</div>
 			)}
-		</div>
+		</ListItem>
 	)
 }
 
@@ -70,7 +71,7 @@ export const AssocList = ({iface}) => {
 	}
 
 	return (
-		<div class="d-flex flex-column flex-grow-1">
+		<List>
 			{assoclist.length > 0 &&
 				<div class={style.assoclistHeader}>{I18n.t("These are the nodes associated on this radio")}</div>
 			}
@@ -80,7 +81,7 @@ export const AssocList = ({iface}) => {
 					{I18n.t("This radio is not associated with other nodes")}
 				</div>
 			}
-		</div>
+		</List>
 	)
 }
 
@@ -113,7 +114,7 @@ export const Align = ({}) => {
 	}
 
 	return (
-		<div class="d-flex flex-column flex-grow-1">
+		<div class="d-flex flex-column flex-grow-1 overflow-auto">
 			<Tabs tabs={tabs} current={selectedIface} onChange={setSelectedIface} />
 			{selectedIface && <AssocList iface={selectedIface} />}
 		</div>

@@ -48,6 +48,31 @@ alignPage.args = {
 	]
 }
 
+export const alignPageLotOfNeighbours = () => <Align />;
+alignPageLotOfNeighbours.args = {
+	queries: [
+		[['lime-utils', 'get_mesh_ifaces'], ['wlan1-mesh', 'wlan2-mesh']],
+		[['iwinfo', 'assoclist', 'wlan1-mesh'],
+			[
+				{ mac: "52:00:00:ab:cd:a0", signal: -60, inactive: 10},
+				{ mac: "52:00:00:ab:cd:a1", signal: -60, inactive: 10},
+				{ mac: "52:00:00:ab:cd:a2", signal: -63, inactive: 10},
+				{ mac: "52:00:00:ab:cd:a3", signal: -63, inactive: 10},
+				{ mac: "52:00:00:ab:cd:a4", signal: -75, inactive: 10},
+				{ mac: "52:00:00:ab:cd:a5", signal: -75, inactive: 10},
+				{ mac: "52:00:00:ab:cd:a6", signal: -81, inactive: 10}
+			]
+		],
+		[['iwinfo', 'assoclist', 'wlan2-mesh'], []],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a0', 'wlan1-mesh'], {hostname: 'ql-rocio', iface: 'wlan1-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a1', 'wlan1-mesh'], {hostname: 'ql-martinez', iface: 'wlan1-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a2', 'wlan1-mesh'], {hostname: 'ql-jorge', iface: 'wlan1-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a3', 'wlan1-mesh'], {hostname: 'ql-marisa', iface: 'wlan1-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a4', 'wlan1-mesh'], {hostname: 'ql-guada', iface: 'wlan1-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a5', 'wlan1-mesh'], {hostname: 'ql-quinteros', iface: 'wlan1-mesh'}],
+		[['bat-hosts', 'get_bathost', '52:00:00:ab:cd:a6', 'wlan1-mesh'], {hostname: 'ql-irene', iface: 'wlan1-mesh'}]
+	]
+}
 export const noNeighbors = () => <Align />;
 noNeighbors.args = {
 	queries: [
