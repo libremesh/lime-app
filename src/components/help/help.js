@@ -1,3 +1,4 @@
+import { h } from "preact";
 import style from "./style.less";
 import { useToggle } from 'react-use';
 
@@ -5,7 +6,7 @@ const Help = ({ Content }) => {
     const [shown, toggleShown] = useToggle(false);
     return (
         <div>
-            <div class={style.symbol} onClick={toggleShown}>
+            <div class={style.symbol} onClick={toggleShown} aria-label="help">
                 ?
             </div>
             {shown && <div class={style.background}></div>}
