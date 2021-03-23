@@ -15,7 +15,6 @@ import { Route, CommunityProtectedRoute, Redirect } from '../utils/routes';
 import { Menu } from '../containers/Menu';
 
 import { Header } from './header';
-import Alert from './alert';
 
 import { SafeUpgradeCountdown, UpgradeAvailableBanner } from '../../plugins/lime-plugin-firmware';
 
@@ -104,7 +103,6 @@ const App = () => {
 			<div id="content">
 				<Routes />
 			</div>
-			<Alert />
 		</div>
 	)
 }

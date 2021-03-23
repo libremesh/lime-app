@@ -10,7 +10,7 @@ import { searchNetworks, setNetwork } from '../actions';
 
 import I18n from 'i18n-js';
 import { Loading } from 'components/loading';
-import Alert from 'components/alert';
+import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { showNotification } from '../../../../src/store/actions';
 import { useBoardData } from 'utils/queries';
@@ -149,8 +149,8 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 					): false }
 				</div>
 			</div>
-			{state.error && <Alert text={I18n.t('Must select a network and a valid hostname')} />}
-			{(status === 'scanning' && <Alert text={I18n.t('Scanning for existing networks')} />)}
+			{state.error && <Toast text={I18n.t('Must select a network and a valid hostname')} />}
+			{(status === 'scanning' && <Toast text={I18n.t('Scanning for existing networks')} />)}
 		</div>
 	);
 };
