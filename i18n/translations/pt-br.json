@@ -10,10 +10,10 @@
   "admin_password_6b9d0812": "Senha",
   "align_11050992": "Alinhar",
   "an_error_occurred_a4e1cda4": "Ocorreu um erro",
-  "applying_changes_23ae34f2": "Aplicanto mudanças",
+  "applying_changes_23ae34f2": "Aplicando mudanças",
   "applying_changes_the_system_takes_a_minute_to_get__189a700d": "Aplicando alterações, o sistema leva um minuto para voltar.",
   "ask_for_remote_support_7e7eaab0": "Pedir suporte remoto",
-  "at_least_one_alphanumeric_character_357817ee": "Ao menos um caractere alphanumérico",
+  "at_least_one_alphanumeric_character_357817ee": "Ao menos um caractere alfanumérico",
   "at_least_one_number_bf8434bb": "Ao menos um número",
   "back_to_base_443797cb": "Voltar à base",
   "base_host_a17d45a4": "Servidor de base",
@@ -54,9 +54,9 @@
       "other": "%{count} minutos"
   },
   "count_people_join_sessions_c24dac9c": {
-      "one": "Uma pessoa se uniu a sessão",
-      "other": "%{count} pessoas se uniram a sessão",
-      "zero": "Ninguém se uniu a sessão"
+      "one": "Uma pessoa se uniu à sessão",
+      "other": "%{count} pessoas se uniram à sessão",
+      "zero": "Ninguém se uniu à sessão"
   },
   "count_seconds_2953a98e": {
       "one": "segundo",
@@ -91,7 +91,7 @@
   "interfaces_44f8a99c": "Interfaces",
   "internet_connection_fda60ffa": "Conexão à Internet",
   "ip_addresses_440ac240": "Endereços IP",
-  "join_the_mesh_653219c6": "Se junte a rede",
+  "join_the_mesh_653219c6": "Se junte à rede",
   "last_known_internet_path_45f31c9a": "Esse foi o último caminho para Internet que funcionou",
   "last_packet_82ee8e9d": "Último pacote",
   "load_last_known_internet_path_677f6229": "Carregar o último caminho conhecido da Internet",
@@ -154,7 +154,7 @@
   "select_new_base_station_3652ae73": "Selecionar uma nova estação de base",
   "select_new_node_5b2e9165": "Selecione um nó",
   "select_one_b647b384": "Selecione uma",
-  "set_network_bcd0ea96": "Juntar-se a rede",
+  "set_network_bcd0ea96": "Juntar-se à rede",
   "setting_network_21ebac51": "Configurando a rede",
   "setting_up_new_password_4daf8f1c": "Configurando uma nova senha",
   "share_the_following_command_with_whoever_you_want__6fd30335": "Compartilhe o seguinte comando com quem queira dar acesso ao seu nó",
