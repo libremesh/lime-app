@@ -29,15 +29,15 @@
     "confirm_location_2fe5ae11": "confirm location",
     "congratulations_ffe43bf9": "Congratulations",
     "count_days_de0c6a32": {
-      "one": "1 days",
+      "one": "1 day",
       "other": "%{count} days"
     },
     "count_hours_1bd03883": {
-      "one": "1 hours",
+      "one": "1 hour",
       "other": "%{count} hours"
     },
     "count_minutes_a6eeeacb": {
-      "one": "1 minutes",
+      "one": "1 minute",
       "other": "%{count} minutes"
     },
     "count_people_join_sessions_c24dac9c": {
@@ -45,7 +45,7 @@
       "other": "%{count} people-join-sessions"
     },
     "count_seconds_2953a98e": {
-      "one": "1 seconds",
+      "one": "1 second",
       "other": "%{count} seconds"
     },
     "create_network_d229d642": "Create network",
