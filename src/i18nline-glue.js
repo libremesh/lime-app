@@ -1,7 +1,7 @@
 const extend = require('extend');
 const I18n = require('i18n-js');
 I18n.fallbacks = true;
-I18n.locale = navigator.language;
+I18n.locale = navigator.language.toLowerCase();
 require('i18nline/lib/extensions/i18n_js')(I18n);
 require('preact-i18nline/dist/extensions/i18n_js')(I18n);
 
