@@ -167,6 +167,80 @@ If you have a Pull Request already pending, GitHub should pick up the recent
 changes and indicate that the PR is ready to be merged.
 
 
+### Contributing with translations
+This guide describe how to contribute with translating LimeApp interface texts to different languages
+creating a Pull Request with modifications of the corresponding translation files.
+Please first follow "Forks and Pull Requests" topic above to know how to come up with a well formed Pull Request.
+Once you have setup your fork please do:
+
+```npm install```
+
+To update dependendencies. And then
+
+```npm run translations```
+
+This will print to standard output lines like the following:
+
+```
+(...)
+./i18n/translations/pt-br.json
+   +++ wrong_password_try_again_3100aecf
+   +++ you_can_upgrade_to_7af1ea19
+   +++ you_need_to_know_the_shared_password_to_enter_this_4b0c4ec1
+   +++ you_should_try_to_connect_to_the_network_network_8d7f515e
+   --- @metadata
+   --- back_to_base_443797cb
+   --- base_host_a17d45a4
+   --- connected_host_91e11459
+(...)
+```
+
+The lines starting with +++ indicate that those `keys` are missing, for that language. In the example above
+`wrong_password_try_again_3100aecf` translation for Brasilian Portuguese is missing. And should be added to
+the file `i18n/translations/pt-br.json`.
+The lines starting with --- indicate that those `keys` are not needed anymore. They were shown once in the LimeApp but not in the current version, so it is safe and preferred to eliminate them from correspoding translation file. In the example above: `i18n/translations/pt-br.json`.
+You can allways check out `i18n/generic.json` to checkout original english texts for each `key`, or some other language which you understand (example: `i18n/translations/es.json`).
+
+Ignore @metadata key
+
+Some translations involve variable data interpolation like this one:
+```
+"versionname_is_now_available_a6fbbb63": "%{versionName} is now available",
+```
+Wich you should translate like this:
+```
+"versionname_is_now_available_a6fbbb63": "%{versionName} ya está disponible",
+```
+
+Others involve pluralization like this one:
+```
+  "count_hours_1bd03883": {
+      "one": "hour",
+      "other": "hours"
+  },
+```
+Which you should translate like this:
+```
+    "count_hours_1bd03883": {
+        "one": "hora",
+        "other": "horas"
+    },
+```
+Their keys usually begin with `count_`. (Please check `i18n/translations/en.json` for expected format in these cases)
+
+Once you have completed all translation you can run again
+
+`npm run translations`
+
+to check that there are no missing nor extra keys for the targeted language. And create the Pull Request.
+
+If you need more context to understand how to translate some key you can checkout the demo screens at storybook with:
+
+```npm run storybook```
+
+And findout how is that key used in the LimeApp.
+Also, do not hesitate to contact developers directly :)
+
 ### More Information
 
 For more information, please see [Collaborating on projects using issues and pull requests](https://help.github.com/categories/collaborating-on-projects-using-issues-and-pull-requests/) in the GitHub help guide.
