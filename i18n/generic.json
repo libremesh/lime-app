@@ -17,7 +17,7 @@
     "checking_connection_863b319e": "Checking connection",
     "choose_a_name_for_this_node_f491aa8d": "Choose a name for this node",
     "choose_a_name_for_your_network_69df41e3": "Choose a name for your network",
-    "choose_a_shared_password_for_network_administration_f182ed3b": "Choose a shared password for network administration",
+    "choose_a_shared_password_for_network_administratio_4c98ee0f": "Choose a shared password for network administration",
     "click_at_close_session_to_end_the_remote_support_s_1af24bb9": "Click at Close Session to end the remote support session. No one will be able to access your node with this token again",
     "click_at_show_console_to_follow_the_remote_support_8b39ccbc": "Click at Show Console to follow the remote support session.",
     "close_session_89aadfa2": "Close Session",
@@ -29,15 +29,15 @@
     "confirm_location_2fe5ae11": "confirm location",
     "congratulations_ffe43bf9": "Congratulations",
     "count_days_de0c6a32": {
-      "one": "1 day",
+      "one": "1 days",
       "other": "%{count} days"
     },
     "count_hours_1bd03883": {
-      "one": "1 hour",
+      "one": "1 hours",
       "other": "%{count} hours"
     },
     "count_minutes_a6eeeacb": {
-      "one": "1 minute",
+      "one": "1 minutes",
       "other": "%{count} minutes"
     },
     "count_people_join_sessions_c24dac9c": {
@@ -45,7 +45,7 @@
       "other": "%{count} people-join-sessions"
     },
     "count_seconds_2953a98e": {
-      "one": "1 second",
+      "one": "1 seconds",
       "other": "%{count} seconds"
     },
     "create_network_d229d642": "Create network",
