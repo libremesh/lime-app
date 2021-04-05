@@ -37,7 +37,7 @@ export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
 	return (
 		<div class="container container-padded">
 			<h4>{I18n.t('Change Shared Password')}</h4>
-			<label>{I18n.t('Choose a shared password for network adminitration')}</label>
+			<label>{I18n.t('Choose a shared password for network administration')}</label>
 			<input type="password" placeholder={I18n.t('Password')} class="u-full-width"
 				value={password} onInput={changePassword}
 			/>
