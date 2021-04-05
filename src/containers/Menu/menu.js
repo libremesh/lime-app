@@ -6,7 +6,8 @@ import style from './style.less';
 
 export const Menu = ({ opened, toggle }) => {
 	const [currentView, setCurrentView] = useState('node');
-
+	const hasCommunityPlugins = () => 
+		plugins.filter(p => p.menuView && p.menuView === 'community').length > 0;
 	function changeCurrentView(e) {
 		e.preventDefault();
 		setCurrentView(currentView === 'node' ? 'community' : 'node');
@@ -14,7 +15,7 @@ export const Menu = ({ opened, toggle }) => {
 
 	return (
 		<div className={`${style.menu} ${opened ? style.menuOpened : style.menuClosed} d-flex flex-column`}>
-			<nav class={style.menuItemsWrapper } onClick={toggle}>
+			<nav class={style.menuItemsWrapper} onClick={toggle}>
 				{plugins
 					.map(plugin => ({ ...plugin, menuView: plugin.menuView || 'node' }))
 					.filter(plugin => plugin.page && plugin.menu && plugin.menuView === currentView)
@@ -23,7 +24,7 @@ export const Menu = ({ opened, toggle }) => {
 						<Component key={index} />)
 				}
 			</nav>
-			<nav class={style.viewSwitchWrapper}>
+			{hasCommunityPlugins() && <nav class={style.viewSwitchWrapper}>
 				<a href="#0" class={style.viewSwitch} onClick={changeCurrentView}>
 					{currentView === 'node' &&
 						I18n.t('Go to Community View')
@@ -32,7 +33,7 @@ export const Menu = ({ opened, toggle }) => {
 						I18n.t('Go to Node View')
 					}
 				</a>
-			</nav>
+			</nav>}
 		</div>
 	);
 }
