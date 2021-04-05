@@ -43,15 +43,15 @@
   "connection_fail_57f84354": "Não foi possível conectar a %{meta_ws}",
   "count_days_de0c6a32": {
       "one": "dia",
-      "other": "%{count} dias"
+      "other": "dias"
   },
   "count_hours_1bd03883": {
       "one": "hora",
-      "other": "%{count} horas"
+      "other": "horas"
   },
   "count_minutes_a6eeeacb": {
       "one": "minuto",
-      "other": "%{count} minutos"
+      "other": "minutos"
   },
   "count_people_join_sessions_c24dac9c": {
       "one": "Uma pessoa se uniu à sessão",
@@ -60,7 +60,7 @@
   },
   "count_seconds_2953a98e": {
       "one": "segundo",
-      "other": "%{count} segundos"
+      "other": "segundos"
   },
   "create_network_d229d642": "Criar rede",
   "create_new_network_28805f92": "Criar uma nova rede",
