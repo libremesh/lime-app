@@ -21,7 +21,8 @@
     "storybook": "start-storybook",
     "storybook:build": "build-storybook -c .storybook",
     "storybook:deploy": "gh-pages -d storybook-static",
-    "test": "jest"
+    "test": "jest",
+    "create-plugin": "node ./devTools/plugins create"
   },
   "eslintConfig": {
     "extends": "eslint-config-synacor"
