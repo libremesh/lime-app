@@ -241,6 +241,15 @@ If you need more context to understand how to translate some key you can checkou
 And findout how is that key used in the LimeApp.
 Also, do not hesitate to contact developers directly :)
 
+### Creating a new plugin
+If you want to create a new plugin for the LimeApp you can use the developer tool `create-plugin` to bootstrap the files structure of a new
+plugin along with some minimal code to help you understand how each module relates to each other. Go ahead and run
+
+```
+npm install
+npm run create-plugin <yourPluginName (camelCased)>
+```
+
 ### More Information
 
 For more information, please see [Collaborating on projects using issues and pull requests](https://help.github.com/categories/collaborating-on-projects-using-issues-and-pull-requests/) in the GitHub help guide.

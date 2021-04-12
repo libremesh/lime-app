@@ -21,7 +21,8 @@
     "storybook": "start-storybook",
     "storybook:build": "build-storybook -c .storybook",
     "storybook:deploy": "gh-pages -d storybook-static",
-    "test": "jest"
+    "test": "jest",
+    "create-plugin": "node ./devTools/plugins create"
   },
   "eslintConfig": {
     "extends": "eslint-config-synacor"
@@ -65,7 +66,8 @@
     "serve": "^11.1.0",
     "standard-version": "^8.0.1",
     "wait-for-expect": "^3.0.2",
-    "xhr-mock": "^2.5.1"
+    "xhr-mock": "^2.5.1",
+    "yargs": "^16.2.0"
   },
   "dependencies": {
     "axios": "^0.21.1",
