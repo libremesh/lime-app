@@ -10,6 +10,7 @@ import NetworkAdmin from '../plugins/lime-plugin-network-admin';
 import Firmware from '../plugins/lime-plugin-firmware';
 import RemoteSupport from '../plugins/lime-plugin-remotesupport';
 import Pirania from '../plugins/lime-plugin-pirania';
+import NetworkNodes from '../plugins/lime-plugin-network-nodes';
 
 // REGISTER PLUGINS
 export const plugins = [
@@ -24,5 +25,6 @@ export const plugins = [
 	ChangeNode,
 	RemoteSupport,
 	Pirania,
+	NetworkNodes,
 	Fbw // fbw does not have menu item
 ];
