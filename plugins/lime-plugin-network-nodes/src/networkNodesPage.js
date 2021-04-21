@@ -32,7 +32,8 @@ const NetworkNodes = () => {
     const sortedNodes = (networkNodes &&
         Object.entries(networkNodes)
             .map(([k, v]) => ({ ...v, hostname: k }))
-            .sort((a, b) => a.hostname > b.hostname ? -1 : 1));
+            .filter(n => n.status !== 'gone')
+            .sort((a, b) => a.hostname > b.hostname));
 
     function changeUnfolded(hostname) {
         if (unfoldedNode == hostname) {
