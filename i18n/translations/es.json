@@ -192,8 +192,25 @@
     "visit_a_neighboring_node_4116be4": "Visitar un nodo vecino",
     "select_new_node_5b2e9165": "Selecciona el nodo",
     "visit_864b4060": "Visitar",
-    "go_to_community_view_d12b8d67": "Ir a Vista de Comunidad",
     "go_to_node_view_26ba929d": "Ir a Vista de Nodo",
-    "network_nodes_4368eb67": "Nodos de la Red"
+    "network_nodes_4368eb67": "Nodos de la Red",
+    "connected_howmany_228826ea": "Conectados (%{howMany})",
+    "connected_nodes_4b7e6f49": "Nodos Conectados",
+    "delete_a6efa79d": "Eliminar",
+    "delete_nodes_f63ec0d5": "Eliminar Nodos",
+    "disconnected_howmany_10fc7bd5": "Desconectados (%{howMany})",
+    "disconnected_nodes_88f80d1e": "Nodos Desconectados",
+    "go_to_community_view_d12b8d67": "Ir a Vista de Comunidad",
+    "go_to_delete_nodes_1203128b": "Ir a Eliminar Nodos",
+    "count_selected_nodes_19bbd632": {
+        "one": "nodo seleccionado",
+        "other": "nodos seleccionados"
+    },
+    "successfully_deleted_23ce0a20": "Eliminado/s correctamente",
+    "there_are_no_left_discconected_nodes_cd78852e": "No hay nodos desconectados",
+    "these_are_the_nodes_with_which_you_do_not_have_con_ef5cc209": "Son los nodos con los que no tienes conectividad, es posible que no estén encendidos o que algún enlace para llegar a ellos esté caído.",
+    "these_are_the_nodes_with_which_you_have_connectivi_ef11819b": "Son los nodos con los que tienes conectividad, es decir que hay un camino funcionando entre tu nodo y cada uno de ellos.",
+    "if_some_of_these_nodes_no_longer_belong_to_the_net_a75d316f": "Si alguno de estos nodos no pertence más a la red puedes eliminarlo desde Eliminar Nodos.",
+    "select_the_nodes_which_no_longer_belong_to_the_net_8ed27f05": "Selecciona los nodos que ya no pertenecen a la red y elimínalos de la lista de nodos desconectados"
 }
 

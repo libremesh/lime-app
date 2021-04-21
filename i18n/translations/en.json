@@ -59,5 +59,9 @@
     "zero": "No one has joined yet.",
     "one": "One person has joined.",
     "other": "%{count} people have joined."
+  },
+  "count_selected_nodes_19bbd632": {
+    "one": "node selected",
+    "other": "nodes selected"
   }
 }
