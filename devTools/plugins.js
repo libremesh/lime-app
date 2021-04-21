@@ -57,13 +57,14 @@ const apiContent = () =>
     `// Here you define the api calls to the ubus uhttpd enpoints your plugin needs
 import api from 'utils/uhttpd.service';
 
-export const getSomething = () => api.call('package', 'command', {})
+export const getSomething = () => api.call('package', 'command', {}).toPromise();
 `
 
 const apiSpecContent = (name) =>
     `// Here you define unit tests for the api endpoints of this plugin
 import { getSomething } from './${name}Api'
 import api from 'utils/uhttpd.service';
+import { of } from 'rxjs';
 jest.mock('utils/uhttpd.service')
 
 beforeEach(() => {
