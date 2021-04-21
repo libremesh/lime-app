@@ -4,14 +4,14 @@ const transformConfig = require('preact-cli/lib/lib/webpack/transform-config');
 const webpack = require('webpack');
 
 module.exports = {
-	stories: ['../stories/**/*.stories.js', '../plugins/**/*.stories.js'],
+	stories: ['../stories/**/*stories.js', '../plugins/**/*stories.js'],
 	addons: ['@storybook/addon-actions', '@storybook/addon-knobs', '@storybook/addon-essentials'],
 	webpackFinal: async(config, {configType}) => {
 		const isProd = configType === 'PRODUCTION';
 		const cwd = process.env.PWD;
 		const src =  resolve(cwd, 'src');
 		const source = (dir) => resolve(cwd, 'src', dir);
-		const env = { isProd, isWatch: !isProd, cwd, src, source, config: 'preact.config.js', esm:true};
+		const env = { isProd, isWatch: !isProd, cwd, src, source, config: 'preact.config.js', esm:false };
 		preactConfig = await clientConfig(env);
 		await transformConfig(env, preactConfig);
 		if (isProd) {
