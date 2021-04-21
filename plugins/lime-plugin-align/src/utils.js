@@ -1,5 +1,3 @@
-import I18n from 'i18n-js';
-
 export function sortBySignal(assoclist, threshold=3) {
 
 	/** Sort assoclist by signal but alphabetically when signal differs
