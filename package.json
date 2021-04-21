@@ -33,10 +33,10 @@
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
-    "@storybook/addon-actions": "^6.0.26",
-    "@storybook/addon-essentials": "^6.0.26",
-    "@storybook/addon-knobs": "^6.0.26",
-    "@storybook/preact": "^6.0.26",
+    "@storybook/addon-actions": "^6.2.8",
+    "@storybook/addon-essentials": "^6.2.8",
+    "@storybook/addon-knobs": "^6.2.8",
+    "@storybook/preact": "^6.2.8",
     "@testing-library/jest-dom": "^5.9.0",
     "@testing-library/preact": "^2.0.0",
     "colors": "^1.4.0",
@@ -70,6 +70,7 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
     "axios": "^0.21.1",
     "history": "^4.7.2",
     "i18n-js": "^3.0.3",
