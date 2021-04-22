@@ -1,13 +1,9 @@
-import Page from './src/networkNodesPage';
-import { NetworkNodesMenu } from './src/networkNodesMenu';
-import DeleteNodesPage from './src/containers/deleteNodesPage';
+import Page from './src/reachableNodesPage';
+import { ReachableNodesMenu } from './src/reachableNodesMenu';
 
 export default {
 	name: 'NetworkNodes',
 	page: Page,
-	menu: NetworkNodesMenu,
+	menu: ReachableNodesMenu,
     menuView: 'community',
-	additionalProtectedRoutes: [
-		['delete-nodes', DeleteNodesPage]
-	]
 };

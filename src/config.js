@@ -12,6 +12,7 @@ import RemoteSupport from '../plugins/lime-plugin-remotesupport';
 import Pirania from '../plugins/lime-plugin-pirania';
 import NetworkNodes from '../plugins/lime-plugin-network-nodes';
 import DeleteNodes from '../plugins/lime-plugin-delete-nodes';
+import ReachableNodes from '../plugins/lime-plugin-reachable-nodes';
 
 // REGISTER PLUGINS
 export const plugins = [
