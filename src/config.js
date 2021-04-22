@@ -27,5 +27,6 @@ export const plugins = [
 	RemoteSupport,
 	Pirania,
 	NetworkNodes,
+	DeleteNodes,
 	Fbw // fbw does not have menu item
 ];
