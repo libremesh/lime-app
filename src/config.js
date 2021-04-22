@@ -25,5 +25,6 @@ export const plugins = [
 	ChangeNode,
 	RemoteSupport,
 	NetworkNodes,
+	DeleteNodes,
 	Fbw // fbw does not have menu item
 ];
