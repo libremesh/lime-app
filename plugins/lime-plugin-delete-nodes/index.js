@@ -5,5 +5,6 @@ export default {
     name: 'deleteNodes',
     page: Page,
     menu: Menu,
-    isCommunityProtected: true
+    isCommunityProtected: true,
+    menuView: 'community'
 };
