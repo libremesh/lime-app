@@ -5,13 +5,13 @@ import Toast from 'components/toast';
 import { useEffect, useState } from 'preact/hooks';
 import { useSet } from 'react-use';
 import { useMarkNodesAsGone, useNetworkNodes } from 'plugins/lime-plugin-network-nodes/src/networkNodesQueries'
-import style from './style.less';
+import style from './deleteNodesStyle.less';
 import I18n from 'i18n-js';
 
 export const DeleteNodesPage_ = ({ nodes, onDelete, isSubmitting, isSuccess }) => {
     const [selectedNodes, { toggle, has, reset }] = useSet(new Set([]));
     const [showSuccess, setshowSuccess] = useState(false);
-    const disconnectedNodes = nodes.filter(n => n.status === "disconnected");
+    const unreachableNodes = nodes.filter(n => n.status === "unreachable");
 
     useEffect(() => {
         if (isSuccess) {
@@ -27,15 +27,15 @@ export const DeleteNodesPage_ = ({ nodes, onDelete, isSubmitting, isSuccess }) =
         <div class="d-flex flex-column flex-grow-1 overflow-auto ">
             <div class="d-flex flex-column flex-grow-1 overflow-auto container container-padded">
                 <h4>{I18n.t("Delete Nodes")}</h4>
-                {disconnectedNodes.length > 0 &&
+                {unreachableNodes.length > 0 &&
                     <p>{I18n.t("Select the nodes which no longer belong to the network and "
                         + "delete them from the list of unreachable nodes")}</p>
                 }
-                {disconnectedNodes.length === 0 &&
+                {unreachableNodes.length === 0 &&
                     <p>{I18n.t("There are no left unreachable nodes")}</p>
                 }
                 <List>
-                    {disconnectedNodes.map(node =>
+                    {unreachableNodes.map(node =>
                         <ListItem key={node.hostname} onClick={() => toggle(node.hostname)} >
                             <div class={style.nodeItem} >
                                 <input type="checkbox" name="selected-nodes" id={node.hostname}

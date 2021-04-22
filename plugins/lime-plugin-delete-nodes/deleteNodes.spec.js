@@ -13,13 +13,13 @@ jest.mock('plugins/lime-plugin-network-nodes/src/networkNodesApi');
 describe('delete nodes page', () => {
     beforeEach(() => {
         getNodes.mockImplementation(async () => [
-            { hostname: 'node1', status: 'recently_connected' },
-            { hostname: 'node2', status: 'recently_connected' },
-            { hostname: 'node3', status: 'recently_connected' },
-            { hostname: 'node4', status: 'disconnected' },
-            { hostname: 'node5', status: 'disconnected' },
-            { hostname: 'node6', status: 'disconnected' },
-            { hostname: 'node7', status: 'disconnected' },
+            { hostname: 'node1', status: 'recently_reachable' },
+            { hostname: 'node2', status: 'recently_reachable' },
+            { hostname: 'node3', status: 'recently_reachable' },
+            { hostname: 'node4', status: 'unreachable' },
+            { hostname: 'node5', status: 'unreachable' },
+            { hostname: 'node6', status: 'unreachable' },
+            { hostname: 'node7', status: 'unreachable' },
             { hostname: 'node8', status: 'gone' },
             { hostname: 'node9', status: 'gone' },
         ]);
@@ -32,7 +32,7 @@ describe('delete nodes page', () => {
         markNodesAsGone.mockClear();
     });
     
-    it('shows the list of disconnected nodes only', async () => {
+    it('shows the list of unreachable nodes only', async () => {
         render(<DeleteNodesPage />);
         expect(await screen.findByText('node4')).toBeVisible();
         expect(await screen.findByText('node5')).toBeVisible();
