@@ -32,3 +32,17 @@ describe('getNodes', () => {
         expect(await getNodes()).toEqual(nodes);
     });
 });
+
+describe('markNodesAsGone', () => {
+    it('calls the expected endpoint', async () => {
+        api.call.mockImplementation(() => of({ status: 'ok' }))
+        await markNodesAsGone(['node1']);
+        expect(api.call).toBeCalledWith('network-nodes', 'mark_nodes_as_gone', { hostnames: ['node1'] })
+    })
+
+    it('resolve to hostnames passed as parameters on success', async() => {
+        api.call.mockImplementation(() => of({status: 'ok'}))
+        const result = await markNodesAsGone(['node1', 'node2'])
+        expect(result).toEqual(['node1', 'node2'])
+    })
+});
