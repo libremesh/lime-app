@@ -43,4 +43,5 @@ export default function (config, env, helpers) {
 	// Add common imports aliases
 	config.resolve.alias.components = path.resolve(__dirname, 'src/components');
 	config.resolve.alias.utils = path.resolve(__dirname, 'src/utils');
+	config.resolve.alias.plugins = path.resolve(__dirname, 'plugins');
 }
