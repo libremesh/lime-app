@@ -207,10 +207,11 @@
         "other": "nodos seleccionados"
     },
     "successfully_deleted_23ce0a20": "Eliminado/s correctamente",
-    "there_are_no_left_discconected_nodes_cd78852e": "No hay nodos desconectados",
     "these_are_the_nodes_with_which_you_do_not_have_con_ef5cc209": "Son los nodos con los que no tienes conectividad, es posible que no estén encendidos o que algún enlace para llegar a ellos esté caído.",
     "these_are_the_nodes_with_which_you_have_connectivi_ef11819b": "Son los nodos con los que tienes conectividad, es decir que hay un camino funcionando entre tu nodo y cada uno de ellos.",
     "if_some_of_these_nodes_no_longer_belong_to_the_net_a75d316f": "Si alguno de estos nodos no pertence más a la red puedes eliminarlo desde Eliminar Nodos.",
-    "select_the_nodes_which_no_longer_belong_to_the_net_8ed27f05": "Selecciona los nodos que ya no pertenecen a la red y elimínalos de la lista de nodos desconectados"
+    "remove_nodes_2dd26e14": "Baja de Nodos",
+    "select_the_nodes_which_no_longer_belong_to_the_net_92f853ef": "Selecciona los nodos que ya no pertenecen a la red y elimínalos de la lista de nodos inalcanzables",
+    "there_are_no_left_unreachable_nodes_c0bec63d": "No hay nodos inalcanzables"
 }
 
