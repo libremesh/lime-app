@@ -1,4 +1,5 @@
-import { h } from "preact";
+import { h, Fragment } from "preact";
+import style from "./style.less";
 import { useEffect, useState } from "preact/hooks";
 import Tabs from "components/tabs";
 import Loading from "components/loading";
@@ -8,6 +9,19 @@ import { useNetworkNodes } from "plugins/lime-plugin-network-nodes/src/networkNo
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
 import Help from "components/help";
 import I18n from 'i18n-js';
+
+function groupBy(xs, key) {
+    return xs.reduce(function (rv, x) {
+        let v = key instanceof Function ? key(x) : x[key];
+        let el = rv.find((r) => r && r.key === v);
+        if (el) {
+            el.values.push(x);
+        } else {
+            rv.push({ key: v, values: [x] });
+        }
+        return rv;
+    }, []);
+};
 
 const PageHelp = () => (
     <div>
@@ -33,8 +47,8 @@ const PageTabs = ({ nodes, ...props }) => {
 }
 
 export const UpgradedNodesPage_ = ({ nodes }) => {
-    const [ selectedGroup, setselectedGroup ] = useState('upgraded');
-    const [ unfoldedNode, setunfoldedNode ] = useState(null);
+    const [selectedGroup, setselectedGroup] = useState('upgraded');
+    const [unfoldedNode, setunfoldedNode] = useState(null);
 
     function changeUnfolded(hostname) {
         if (unfoldedNode == hostname) {
@@ -43,6 +57,13 @@ export const UpgradedNodesPage_ = ({ nodes }) => {
         }
         setunfoldedNode(hostname);
     }
+
+    const groupNodes = nodes
+        .filter(n => n.status !== 'gone')
+        .filter(n => n.group === selectedGroup);
+
+    const grouppedByVersion = groupBy(groupNodes, 'fw_version')
+        .sort((a, b) => a.key > b.key);
 
     return (
         <div class="d-flex flex-column flex-grow-1 overflow-auto">
@@ -53,16 +74,23 @@ export const UpgradedNodesPage_ = ({ nodes }) => {
                 </div>
             </div>
             <List>
-                {nodes
-                    .filter(n => n.status !== 'gone')
-                    .filter(n => n.group === selectedGroup)
-                    .sort((a, b) => a.hostname > b.hostname)
-                    .map(
-                        node =>
-                            <ExpandableNode key={node.hostname} node={node}
-                                showMore={unfoldedNode === node.hostname}
-                                onClick={() => changeUnfolded(node.hostname)}/>
-                    )}
+                {grouppedByVersion
+                    .map((versionGroup, index) => (
+                        <Fragment>
+                            {selectedGroup === 'not_upgraded' &&
+                                <div class={style.stickySubheader} style={{ zIndex: 990 + index }}>
+                                    {versionGroup.key}
+                                </div>
+                            }
+                            {versionGroup.values
+                                .map(node =>
+                                    <ExpandableNode key={node.hostname} node={node}
+                                        showMore={unfoldedNode === node.hostname}
+                                        onClick={() => changeUnfolded(node.hostname)} />
+                                )}
+                        </Fragment>
+                    ))
+                }
             </List>
         </div>
     )
@@ -70,15 +98,16 @@ export const UpgradedNodesPage_ = ({ nodes }) => {
 
 const UpgradedNodesPage = () => {
     const { data: nodes, isLoading: isLoadingNodes } = useNetworkNodes();
-    const { data: newVersion, isLoading: isLoadingVersion} = useNewVersion();
+    const { data: newVersion, isLoading: isLoadingVersion } = useNewVersion();
     const [taggedNodes, setTaggedNodes] = useState(undefined);
 
     useEffect(() => {
-        if (nodes && newVersion){
+        if (nodes && newVersion) {
             const taggedNodes = [...nodes].map(
-                n => ({ ...n,
-                group: n.fw_version === newVersion.version ? 'upgraded' : 'not_upgraded'
-            }));
+                n => ({
+                    ...n,
+                    group: n.fw_version === newVersion.version ? 'upgraded' : 'not_upgraded'
+                }));
             setTaggedNodes(taggedNodes);
         }
     }, [nodes, newVersion])

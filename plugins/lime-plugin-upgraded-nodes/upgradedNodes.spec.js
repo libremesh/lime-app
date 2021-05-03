@@ -1,6 +1,3 @@
-// Here you define tests that closely resemble how your component is used
-// Using the testing-library: https://testing-library.com
-
 import { h } from 'preact';
 import { fireEvent, screen, cleanup, act } from '@testing-library/preact';
 import '@testing-library/jest-dom';
