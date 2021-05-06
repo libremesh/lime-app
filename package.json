@@ -70,7 +70,6 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
-    "@popperjs/core": "^2.9.2",
     "axios": "^0.21.1",
     "history": "^4.7.2",
     "i18n-js": "^3.0.3",
