@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.17](https://github.com/germanferrero/lime-app/compare/v0.2.16...v0.2.17) (2021-05-06)
+
+
+### Features
+
+* **translations:**  add a lot of pt-br translations :)
+* **menu:** add community / node view to menu (currently without community features) ([09fcec8](https://github.com/germanferrero/lime-app/commit/09fcec8e5872e27e6adfad0ba1a6e23c14efdb2e))
+
+
+### Bug Fixes
+
+* **translations:** fix English counts ([8b3d0c4](https://github.com/germanferrero/lime-app/commit/8b3d0c4f0998f9b1e77ba2e085b6b8ef082c83e3))
+* **translations:** fix English spelling ([a319694](https://github.com/germanferrero/lime-app/commit/a3196940452fa21de63c9928ee3017b4a1f60cd0))
+* **translations:** force lowercase locale to I18n ([34e7b57](https://github.com/germanferrero/lime-app/commit/34e7b57a7dc6edf58f9ef769ff02f3dc0a64f32c))
+* **translations:** spelling fixes for pt-br ([11d52b8](https://github.com/germanferrero/lime-app/commit/11d52b894dc9404c380622d74adf44b77fc1944f))
+* **upgrade:** fix typo, now showing release link to more info ([14e6f89](https://github.com/germanferrero/lime-app/commit/14e6f89e81c15b41707b7cea0d13b180e0d0c8ff))
+
 ### [0.2.16](https://github.com/germanferrero/lime-app/compare/v0.2.15...v0.2.16) (2021-03-12)
 
 
