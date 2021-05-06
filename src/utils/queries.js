@@ -6,7 +6,6 @@ import queryCache from './queryCache';
 
 function getSession() {
 	return api.call('session', 'get', {ubus_rpc_session: api.sid()})
-		.toPromise()
 		.then(res => res.values);
 }
 
@@ -32,7 +31,7 @@ export function useLogin() {
 }
 
 function getBoardData() {
-	return api.call('system', 'board', {}).toPromise();
+	return api.call('system', 'board', {});
 }
 
 export function useBoardData() {
@@ -52,7 +51,7 @@ const DEFAULT_COMMUNITY_SETTINGS = {
 
 
 function getCommunitySettings() {
-	return api.call('lime-utils', 'get_community_settings', {}).toPromise()
+	return api.call('lime-utils', 'get_community_settings', {})
 		.then(res => ({...res, DEFAULT_COMMUNITY_SETTINGS }))
 		.catch(() => DEFAULT_COMMUNITY_SETTINGS);
 }

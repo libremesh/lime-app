@@ -7,18 +7,11 @@ import path from 'path';
 import api from 'utils/uhttpd.service';
 
 export function getUpgradeInfo() {
-	return api.call('lime-utils', 'get_upgrade_info', {}).toPromise()
-		.then(response => new Promise((res, rej) => {
-			if (response.status === 'ok') {
-				res({
-					...response,
-					suCounter: Number(response.safe_upgrade_confirm_remaining_s)
-				});
-			}
-			else {
-				rej(response.message);
-			}
-		}));
+	return api.call('lime-utils', 'get_upgrade_info', {})
+		.then(response => ({
+			...response,
+			suCounter: Number(response.safe_upgrade_confirm_remaining_s)
+		}))
 }
 
 export function uploadFile(file) {
@@ -30,11 +23,11 @@ export function uploadFile(file) {
 		formData.append("sessionid", api.sid());
 		formData.append("filename", destPath);
 		formData.append("filedata", file)
-	
+
 		request.addEventListener('loadend', () => {
 			res(destPath);
 		});
-	
+
 		request.addEventListener('error', (error) => {
 			rej(error)
 		});
@@ -50,36 +43,18 @@ export function upgradeFirmware(filepath) {
 			fw_path: filepath,
 			metadata: { upgrade_timestamp: (Date.now() / 1000).toFixed(1) } // in seconds;
 		})
-		.toPromise()
-		.then(response => new Promise((res, rej) => {
-			if (response.status === 'ok') {
-				res(true);
-			}
-			else {
-				rej(response.message);
-			}
-		}));
 }
 
 export function upgradeConfirm() {
-	return api.call('lime-utils-admin', 'firmware_confirm', {})
-		.toPromise()
-		.then(response => new Promise((res, rej) => {
-			if (response.status === 'ok') {
-				res(true);
-			}
-			else {
-				rej(false);
-			}
-		}))
+	return api.call('lime-utils-admin', 'firmware_confirm', {});
 }
 
 export function upgradeRevert() {
-	return api.call('system', 'reboot', {}).toPromise().then(() => true);
+	return api.call('system', 'reboot', {}).then(() => true);
 }
 
 export function getNewVersion() {
-	return api.call("eupgrade", "is_new_version_available", {}).toPromise()
+	return api.call("eupgrade", "is_new_version_available", {})
 		.catch(error => {
 			if (error.code === -32000) {
 				return Promise.resolve(null)
@@ -89,9 +64,9 @@ export function getNewVersion() {
 }
 
 export function getDownloadStatus() {
-	return api.call("eupgrade", "download_status", {}).toPromise();
+	return api.call("eupgrade", "download_status", {});
 }
 
 export function downloadRelease() {
-	return api.call('eupgrade', 'start_download', {}).toPromise();
+	return api.call('eupgrade', 'start_download', {});
 }
