@@ -107,7 +107,7 @@ export const Align = ({}) => {
 		return <div className="container container-center"><Loading /></div>
 	}
 
-	if (!ifaces) {
+	if (!ifaces || ifaces.length === 0) {
 		return <div className="container container-center">
 			{I18n.t('The are not mesh interfaces available')}
 		</div>
