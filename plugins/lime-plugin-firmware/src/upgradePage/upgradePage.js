@@ -108,7 +108,7 @@ export const UpgradeFromFile = ({onUpgrading, onSwitch}) => {
 	function onUpgrade(data) {
 		setinvalidFirmwareError(false);
 		const file = data.file[0];
-		uploadFile(file)
+		return uploadFile(file)
 			.then((filepath) => upgradeFirmware(filepath))
 			.then(() => onUpgrading())
 			.catch(error => {
