@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.18](https://github.com/germanferrero/lime-app/compare/v0.2.17...v0.2.18) (2021-05-11)
+
+
+### Bug Fixes
+
+* **firmware:** show loading spinner while uploading file ([ea4293c](https://github.com/germanferrero/lime-app/commit/ea4293cbabf1d0c757114e441d2084518e00e3d6))
+
 ### [0.2.17](https://github.com/germanferrero/lime-app/compare/v0.2.16...v0.2.17) (2021-05-06)
 
 
