@@ -101,7 +101,7 @@ const UpgradeFromRelease = ({onUpgrading, onSwitch}) => {
 export const UpgradeFromFile = ({onUpgrading, onSwitch}) => {
 	const {data: newVersion} = useNewVersion();
 	const [invalidFirmwareError, setinvalidFirmwareError] = useState(false);
-	const {register, handleSubmit, errors, watch, formState } = useForm();
+	const { register, handleSubmit, errors, watch, formState } = useForm();
 	const file = watch('file');
 	const { isSubmitting } = formState;
 
@@ -149,7 +149,7 @@ export const UpgradeFromFile = ({onUpgrading, onSwitch}) => {
 					<p style={{color: "#923838"}}>{I18n.t('Please select a .sh or .bin file')}</p>
 				}
 				<div>
-					<button type="submit">{I18n.t('Upgrade')}</button>
+					<button disabled={isSubmitting} type="submit">{I18n.t('Upgrade')}</button>
 				</div>
 			</form>
 			{isSubmitting &&
