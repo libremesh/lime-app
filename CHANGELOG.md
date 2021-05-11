@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.19](https://github.com/germanferrero/lime-app/compare/v0.2.18...v0.2.19) (2021-05-11)
+
+
+### Bug Fixes
+
+* **firmware:** disable upgrade button after submit ([aaea467](https://github.com/germanferrero/lime-app/commit/aaea4670f064fbb07c6f35bc4ac5d47a6826a1cd))
+
 ### [0.2.18](https://github.com/germanferrero/lime-app/compare/v0.2.17...v0.2.18) (2021-05-11)
 
 
