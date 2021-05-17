@@ -31,8 +31,9 @@ export class UhttpdService {
 
 
 	call(action, method, data, customSid = null) {
+		this.sec +=1;
 		const body = {
-			id: addId(),
+			id: this.addId(),
 			jsonrpc: this.jsonrpc,
 			method: 'call',
 			params: [customSid || this.sid(), action, method, data]
@@ -40,7 +41,8 @@ export class UhttpdService {
 		const controller = new AbortController();
 		const id = setTimeout(() => controller.abort(), 15000);
 		return fetch(this.url,
-			{ method: 'POST', body, signal: controller.signal })
+			{ method: 'POST', body: JSON.stringify(body), signal: controller.signal })
+			.then(response => response.json())
 			.then(parseResult)
 			.finally(clearTimeout(id));
 	}
