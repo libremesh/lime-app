@@ -70,7 +70,6 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "history": "^4.7.2",
     "i18n-js": "^3.0.3",
     "jssha": "^2.3.1",
