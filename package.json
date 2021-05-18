@@ -58,6 +58,7 @@
     "if-env": "^1.0.0",
     "jest": "^24.9.0",
     "jest-extended": "^0.11.5",
+    "jest-fetch-mock": "^3.0.3",
     "jest-preset-preact": "^1.0.0",
     "jest-when": "^2.7.2",
     "per-env": "^1.0.2",
@@ -70,7 +71,6 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "history": "^4.7.2",
     "i18n-js": "^3.0.3",
     "jssha": "^2.3.1",

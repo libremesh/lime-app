@@ -4,6 +4,11 @@ import { routerMiddleware } from 'react-router-redux';
 
 import { history } from './history';
 import uhttpdService from '../utils/uhttpd.service';
+import { from } from 'rxjs';
+
+const api = {
+	call: (...params) => from(uhttpdService.call(...params))
+};
 
 export default (initialState,rootEpics,rootReducers) => {
 
@@ -12,7 +17,7 @@ export default (initialState,rootEpics,rootReducers) => {
 	const reduxRouterMiddleware = routerMiddleware(history);
 
 	const epicMiddleware = createEpicMiddleware({
-		dependencies: { wsAPI: uhttpdService }
+		dependencies: { wsAPI: api }
 	});
 
 	const enhancer = composeEnhancers(

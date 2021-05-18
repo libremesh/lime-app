@@ -79,7 +79,6 @@ const NetAdminHOC = () => {
 		setSubmitting(true);
 		return api
 			.call('lime-utils-admin', 'set_root_password', { password })
-			.toPromise()
 			.then(result => new Promise((res, rej) => {
 				result.status === 'ok' ? res() : rej();
 			}))
