@@ -1,6 +1,6 @@
 import api from './uhttpd.service';
 import {
-	getBatHost, getBoardData, getSession, getCommunitySettings, getCommunityName,
+	getBatHost, getBoardData, getSession, getCommunitySettings,
 	reboot
 } from './api';
 import { DEFAULT_COMMUNITY_SETTINGS } from './constants';
@@ -35,7 +35,6 @@ export function useBoardData() {
 		initialStale: true
 	});
 }
-
 
 export function useCommunitySettings() {
 	return useQuery(['lime-utils', 'get_community_settings'], getCommunitySettings, {
