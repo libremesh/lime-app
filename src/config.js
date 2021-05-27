@@ -5,6 +5,7 @@ import Metrics from '../plugins/lime-plugin-metrics';
 import Notes from '../plugins/lime-plugin-notes';
 import Rx from '../plugins/lime-plugin-rx';
 import Fbw from '../plugins/lime-plugin-fbw';
+import NodeAdmin from '../plugins/lime-plugin-node-admin';
 import NetworkAdmin from '../plugins/lime-plugin-network-admin';
 import Firmware from '../plugins/lime-plugin-firmware';
 import RemoteSupport from '../plugins/lime-plugin-remotesupport';
@@ -16,6 +17,7 @@ export const plugins = [
 	Locate,
 	Metrics,
 	Notes,
+	NodeAdmin,
 	NetworkAdmin,
 	Firmware,
 	ChangeNode,
