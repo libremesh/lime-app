@@ -21,6 +21,5 @@ export const plugins = [
 	Meta,
 	// GroundRouting,
 	Fbw,
-	Admin,
 	Pirania
 ];

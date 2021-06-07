@@ -66,7 +66,7 @@ export const AdminPiraniaPage = ({ provider,
 			</div>
 			<Box title={I18n.t('Current month')}>
 				<div class="info">
-					<span>
+					<span style="display: none;">
 						<b>{I18n.t('Members')}: </b>
 						<span>{members}</span>
 						<b style={{ marginLeft: 30, marginRight: 10 }}>
@@ -87,17 +87,17 @@ export const AdminPiraniaPage = ({ provider,
 			<button class="button green block button-one" onClick={create}>
 				{I18n.t('Create voucher')}
 			</button>
-			<button class="button green block" onClick={renew}>
+			<button class="button green block" onClick={renew} style="display: none;">
 				{I18n.t('Renew member vouchers')}
 			</button>
 			<Box title={I18n.t('Governance information')} style={{ marginTop: 30 }}>
 				<div className="info">
-					<span>
+					<span style="display: none;">
 						<b>{I18n.t('Value per person')}: </b>
 						<span>{community.currency} {member.cost}</span>
 						<br />
 					</span>
-					<span>
+					<span style="display: none;">
 						<b>{I18n.t('Active member vouchers')}: </b>
 						<span>{members}</span>
 						<br />
@@ -107,31 +107,31 @@ export const AdminPiraniaPage = ({ provider,
 						<span>{visitors}</span>
 						<br />
 					</span>
-					<span>
+					<span style="display: none;">
 						<b>{I18n.t('Contracted internet speed')}: </b>
 						<span>{provider.speed}</span>
 						<br />
 					</span>
-					<span>
+					<span style="display: none;">
 						<span>
 							<b>{I18n.t('Provider cost')}: </b>
 							<span>{community.currency} {provider.cost}</span>
 							<br />
 						</span>
 					</span>
-					<span>
+					<span style="display: none;">
 						<b>{I18n.t('Maintenance cost')}: </b>
 						<span>{community.currency} {community.maintenance}</span>
 						<br />
 					</span>
-					<span>
+					<span style="display: none;">
 						<b>{I18n.t('Amount in reserve')}: </b>
 						<span>{community.currency} {community.reserve}</span>
 						<br />
 					</span>
 				</div>
 				<div>
-					<button class="button green block button-one" onClick={editGovernance}>
+					<button class="button green block button-one" onClick={editGovernance} style="display: none;">
 						{I18n.t('Edit governance information')}
 					</button>
 					<button class="button green block" onClick={editContent}>

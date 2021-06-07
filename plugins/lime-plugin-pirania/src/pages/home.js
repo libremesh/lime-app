@@ -8,12 +8,12 @@ export default function HomePiraniaPage({ members, visitors, logged, handlePassw
 		<div>
 			<Box title={I18n.t('Users')}>
 				<div class="info">
-					<span>
+					<span style="display: none;">
 						<b>{I18n.t('Value per person')}: </b>
 						<span>{community.currency} {member.cost}</span>
 						<br />
 					</span>
-					<span>
+					<span style="display: none;">
 						<b>{I18n.t('Active member vouchers')}: </b>
 						<span>{members}</span>
 						<br />
@@ -25,6 +25,7 @@ export default function HomePiraniaPage({ members, visitors, logged, handlePassw
 					</span>
 				</div>
 			</Box>
+			<div style="display: none;">
 			<Box title={I18n.t('Connection')}>
 				<span>
 					<b>{I18n.t('Contracted internet speed')}: </b>
@@ -74,6 +75,7 @@ export default function HomePiraniaPage({ members, visitors, logged, handlePassw
 					<br />
 				</span>
 			</Box>
+			</div>
 			<hr />
 			<form onSubmit={submit} style={{ display: !logged ? 'block' : 'none' }}>
 				<p>
