@@ -16,7 +16,7 @@ const ConfigPageLayout = ({ isLoading, title, isSuccess, isError, children }) =>
     return (
         <div class="container container-padded d-flex flex-column flex-grow-1">
             <div class="d-flex">
-                <div class="clickable" onClick={() => route("nodeadmin")}>❮</div>
+                <div class="clickable" aria-label="back" onClick={() => route("/nodeadmin")}>❮</div>
                 <h4 class="flex-grow-1 text-center">{title}</h4>
             </div>
             <div class="d-flex flex-grow-1 flex-column">
