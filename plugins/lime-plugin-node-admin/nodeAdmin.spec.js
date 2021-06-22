@@ -15,7 +15,7 @@ jest.mock('utils/api');
 describe('nodeAdmin', () => {
     beforeEach(() => {
         getWifiData.mockImplementation(async () => ({
-            ap_name: {password: "", has_password: false}
+            ap_name: { has_password: false }
         }));
         getBoardData.mockImplementation(async () => ({
             hostname: 'node-hostname'
@@ -39,10 +39,19 @@ describe('nodeAdmin', () => {
         expect(route).toHaveBeenCalledWith('nodeadmin/hostname');
     });
 
-    it('shows wifi config', async() => {
+    it('shows wifi config when no password', async() => {
         render(<NodeAdmin />);
         expect(await screen.findByText('Wifi Password')).toBeInTheDocument();
         expect(await screen.findByText('No password')).toBeInTheDocument();
+    });
+
+    it('shows wifi config whit password', async() => {
+        getWifiData.mockImplementation(async () => ({
+            ap_name: {has_password: true}
+        }));
+        render(<NodeAdmin />);
+        expect(await screen.findByText('Wifi Password')).toBeInTheDocument();
+        expect(await screen.findByText('********')).toBeInTheDocument();
     });
 
     it('routes to password wifi config screen when clicking on wifi', async() => {
