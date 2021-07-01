@@ -7,3 +7,4 @@ yarn.lock
 storybook-static
 .vscode
 build
+package-lock.json
