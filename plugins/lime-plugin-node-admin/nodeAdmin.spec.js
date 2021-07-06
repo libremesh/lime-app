@@ -69,7 +69,7 @@ describe('nodeAdmin', () => {
         }));
         render(<NodeAdmin />);
         expect(await screen.findByText('Community Roaming AP')).toBeInTheDocument();
-        expect(await screen.findByText('Opens the quintana-libre.org.ar AP in this node')).toBeInTheDocument();
+        expect(await screen.findByText('Opens the "quintana-libre.org.ar" AP in this node')).toBeInTheDocument();
         expect(await screen.findByText('Disabled')).toBeInTheDocument();
     });
 

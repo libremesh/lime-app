@@ -41,8 +41,8 @@ describe('roaming ap config', () => {
 
     it('shows a text explaining the config', async () => {
         render(<RoamingAPPage />);
-        expect(await screen.findByText('Opens the quintana-libre.org.ar AP in this node')).toBeVisible();
-        expect(await screen.findByText('When enabled it allows devices to connect to any node as they move around the network territory.')).toBeVisible();
+        expect(await screen.findByText('Opens the "quintana-libre.org.ar" AP in this node')).toBeVisible();
+        expect(await screen.findByText('This AP is the same in all nodes that enable it, allowing devices to move around the network territory without losing connection')).toBeVisible();
     });
 
     it('shows the default value for the community, case disabled', async() => {

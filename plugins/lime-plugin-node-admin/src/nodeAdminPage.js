@@ -26,7 +26,7 @@ const RoamingAP = () => {
     const nodeEnabled = wifiData?.ap.node.enabled;
     return <Config title={I18n.t('Community Roaming AP')} 
         value={nodeEnabled === true ? I18n.t('Enabled'): I18n.t('Disabled')}
-        subtitle={I18n.t("Opens the %{ap_ssid} AP in this node", {ap_ssid: wifiData?.ap.node.ssid})}
+        subtitle={I18n.t('Opens the "%{ap_ssid}" AP in this node', {ap_ssid: wifiData?.ap.node.ssid})}
         onClick={() => route('/nodeadmin/roaming-ap')}
     />
 }

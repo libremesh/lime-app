@@ -1,7 +1,7 @@
 import APPasswordPage from './password';
 
 export default {
-    title: 'Containers/Node Admin/Wifi Password'
+    title: 'Containers/Node Configuration/Wifi Password'
 }
 
 export const withoutPassword = () => <APPasswordPage />;
