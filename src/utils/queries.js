@@ -1,6 +1,6 @@
 import api from './uhttpd.service';
 import {
-	getBatHost, getBoardData, getSession, getCommunitySettings,
+	getBatHost, getBoardData, getSession, getCommunitySettings, getCommunityName,
 	reboot
 } from './api';
 import { DEFAULT_COMMUNITY_SETTINGS } from './constants';
@@ -32,6 +32,13 @@ export function useLogin() {
 export function useBoardData() {
 	return useQuery(['system', 'board'], getBoardData, {
 		initialData: { hostname: 'LiMe' },
+		initialStale: true
+	});
+}
+
+export function useCommunityName() {
+	return useQuery(['lime-utils', 'get_community_name'], getCommunityName, {
+		initialData: 'LibreMesh.org',
 		initialStale: true
 	});
 }
