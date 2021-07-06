@@ -1,11 +1,14 @@
 import { useQuery, useMutation } from 'react-query';
 import queryCache from 'utils/queryCache';
-import { getWifiData, getAdminWifiData, changeHostname, changeApNamePassword } from './nodeAdminApi';
+import {
+    getWifiData, getAdminWifiData, changeHostname,
+    changeApNamePassword, setupRoamingAP
+} from './nodeAdminApi';
 
 export const useChangeHostname = () =>
     useMutation(changeHostname, {
         onSuccess: (hostname) => queryCache.setQueryData(['system', 'board'],
-            oldData => ({...oldData, hostname: hostname}) 
+            oldData => ({ ...oldData, hostname: hostname })
         )
     });
 
@@ -17,3 +20,6 @@ export const useAdminWifiData = () =>
 
 export const useChangeAPPassword = () =>
     useMutation(changeApNamePassword);
+
+export const useSetupRoamingAP = () =>
+    useMutation(setupRoamingAP);

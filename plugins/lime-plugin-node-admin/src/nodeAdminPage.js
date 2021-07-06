@@ -10,7 +10,7 @@ const Hostname = () => {
     const { data: boardData } = useBoardData();
     const hostname = boardData && boardData.hostname;
     return <Config title={I18n.t('Node Name')} value={hostname}
-        onClick={() => route('nodeadmin/hostname')} />
+        onClick={() => route('/nodeadmin/hostname')} />
 }
 
 const ApPassword = () => {
@@ -18,9 +18,18 @@ const ApPassword = () => {
     const has_password = wifiData && wifiData.ap_name.has_password;
     return <Config title={I18n.t('Wifi Password')}
         value={has_password ? '********' : I18n.t('No password')}
-        onClick={() => route('nodeadmin/wifipassword')} />
+        onClick={() => route('/nodeadmin/wifipassword')} />
 }
 
+const RoamingAP = () => {
+    const { data: wifiData } = useWifiData();
+    const nodeEnabled = wifiData?.ap.node.enabled;
+    return <Config title={I18n.t('Community Roaming AP')} 
+        value={nodeEnabled === true ? I18n.t('Enabled'): I18n.t('Disabled')}
+        subtitle={I18n.t("Opens the %{ap_ssid} AP in this node", {ap_ssid: wifiData?.ap.node.ssid})}
+        onClick={() => route('/nodeadmin/roaming-ap')}
+    />
+}
 
 const NodeAdmin = () => {
     return (
@@ -29,6 +38,7 @@ const NodeAdmin = () => {
             <List>
                 <Hostname />
                 <ApPassword />
+                <RoamingAP />
             </List>
         </div>
     );

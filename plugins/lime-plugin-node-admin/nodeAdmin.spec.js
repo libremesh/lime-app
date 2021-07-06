@@ -15,7 +15,8 @@ jest.mock('utils/api');
 describe('nodeAdmin', () => {
     beforeEach(() => {
         getWifiData.mockImplementation(async () => ({
-            ap_name: { has_password: false }
+            ap_name: { has_password: false },
+            ap: { community: { enabled: true }, node: {enabled: true, ssid: 'quintana-libre.org.ar'} },
         }));
         getBoardData.mockImplementation(async () => ({
             hostname: 'node-hostname'
@@ -36,7 +37,7 @@ describe('nodeAdmin', () => {
     it('routes to hostname config screen when clicking on hostname', async() => {
         render(<NodeAdmin />);
         fireEvent.click(await screen.findByText('node-hostname'));
-        expect(route).toHaveBeenCalledWith('nodeadmin/hostname');
+        expect(route).toHaveBeenCalledWith('/nodeadmin/hostname');
     });
 
     it('shows wifi config when no password', async() => {
@@ -45,9 +46,10 @@ describe('nodeAdmin', () => {
         expect(await screen.findByText('No password')).toBeInTheDocument();
     });
 
-    it('shows wifi config whit password', async() => {
+    it('shows wifi config with password', async() => {
         getWifiData.mockImplementation(async () => ({
-            ap_name: {has_password: true}
+            ap_name: {has_password: true},
+            ap: { community: { enabled: true }, node: {enabled: true, ssid: 'quintana-libre.org.ar'} },
         }));
         render(<NodeAdmin />);
         expect(await screen.findByText('Wifi Password')).toBeInTheDocument();
@@ -57,6 +59,34 @@ describe('nodeAdmin', () => {
     it('routes to password wifi config screen when clicking on wifi', async() => {
         render(<NodeAdmin />);
         fireEvent.click(await screen.findByText('Wifi Password'));
-        expect(route).toHaveBeenCalledWith('nodeadmin/wifipassword');
+        expect(route).toHaveBeenCalledWith('/nodeadmin/wifipassword');
     });
+
+    it('show community roaming ap config when disabled', async () => {
+        getWifiData.mockImplementation(async () => ({
+            ap_name: { has_password: true },
+            ap: { community: { enabled: true }, node: { enabled: false, ssid: 'quintana-libre.org.ar' } }
+        }));
+        render(<NodeAdmin />);
+        expect(await screen.findByText('Community Roaming AP')).toBeInTheDocument();
+        expect(await screen.findByText('Opens the quintana-libre.org.ar AP in this node')).toBeInTheDocument();
+        expect(await screen.findByText('Disabled')).toBeInTheDocument();
+    });
+
+    it('shows community roaming ap config when enabled', async () => {
+        getWifiData.mockImplementation(async () => ({
+            ap_name: { has_password: true },
+            ap: { community: { enabled: true }, node: { enabled: true } }
+        }));
+        render(<NodeAdmin />);
+        expect(await screen.findByText('Community Roaming AP')).toBeInTheDocument();
+        expect(await screen.findByText('Enabled')).toBeInTheDocument();
+    });
+
+    it('routes to community roaming ap screen when clicking on it', async() => {
+        render(<NodeAdmin />);
+        fireEvent.click(await screen.findByText('Community Roaming AP'));
+        expect(route).toHaveBeenCalledWith('/nodeadmin/roaming-ap');
+    });
+
 });

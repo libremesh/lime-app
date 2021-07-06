@@ -13,3 +13,6 @@ export const getWifiData = () =>
 
 export const getAdminWifiData = () =>
     api.call('lime-utils-admin', 'get_wifi_data');
+
+export const setupRoamingAP = ({enabled}) =>
+    api.call('lime-utils-admin', 'setup_roaming_ap', {enabled})
