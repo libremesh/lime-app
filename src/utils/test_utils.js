@@ -8,3 +8,6 @@ export const render = (ui) => tlRender(
 		{ui}
 	</ReactQueryCacheProvider>
 )
+
+export const flushPromises = async () => 
+	new Promise(resolve => setImmediate(resolve));
