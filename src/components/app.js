@@ -29,7 +29,7 @@ const Routes = () => (
 		{plugins
 			.filter(plugin => !plugin.isCommunityProtected)
 			.map(Component =>
-				(<Route path={Component.name.toLowerCase()}>
+				(<Route path={Component.path || Component.name.toLowerCase()}>
 					<Component.page />
 				</Route>))
 		}
@@ -37,7 +37,7 @@ const Routes = () => (
 		{plugins
 			.filter(plugin => plugin.isCommunityProtected)
 			.map(Component =>
-				(<CommunityProtectedRoute path={Component.name.toLowerCase()}>
+				(<CommunityProtectedRoute path={Component.path || Component.name.toLowerCase()}>
 					<Component.page />
 				</CommunityProtectedRoute>))
 		}

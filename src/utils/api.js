@@ -11,3 +11,7 @@ export function getBatHost(mac, outgoingIface) {
 			}
 		}))
 }
+
+export function checkInternet() {
+	return api.call('check-internet', 'is_connected', {});
+}

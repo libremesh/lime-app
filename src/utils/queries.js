@@ -1,5 +1,5 @@
 import api from './uhttpd.service';
-import { getBatHost } from './api';
+import { getBatHost, checkInternet } from './api';
 import { useQuery, useMutation } from 'react-query';
 import queryCache from './queryCache';
 
@@ -68,4 +68,8 @@ export function useBatHost(mac, outgoingIface, queryConfig) {
 		retry: 3,
 		...queryConfig
 	});
+}
+
+export function useCheckInternet() {
+	return useQuery(['check-internet', 'is_connected'], checkInternet);
 }
