@@ -1,12 +1,14 @@
 import { h } from 'preact';
 import { route } from 'preact-router';
 import { useSession, useOpenSession, useCloseSession } from './remoteSupportQueries';
+import { useCheckInternet } from 'utils/queries';
 import Loading from 'components/loading';
 import { Trans, Plural } from '@lingui/macro';
 import style from './style.less';
 
 const RemoteSupportPage = () => {
-	const { data: session, isLoading: loadingSession, isError } = useSession({
+	const {data: internetStatus, isLoading: loadingInternetStatus } = useCheckInternet();
+	const {data: session, isLoading: loadingSession, isError} = useSession({
 		refetchInterval: 10000
 	});
 	const [openSession, openStatus] = useOpenSession();
@@ -22,8 +24,12 @@ const RemoteSupportPage = () => {
 		</div>
 	}
 
-	if (loadingSession) {
+	if (loadingInternetStatus || loadingSession) {
 		return <div class="container container-center"><Loading /></div>
+	}
+	
+	if (internetStatus?.connected === false) {
+		return <WithoutInternet_ />
 	}
 
 	return <RemoteSupportPage_
@@ -33,7 +39,20 @@ const RemoteSupportPage = () => {
 };
 
 
-export const RemoteSupportPage_ = ({ session, openError = false, isSubmitting = false, onOpenSession, onCloseSession, onShowConsole }) =>
+export const WithoutInternet_ = () =>
+	(
+		<div class="d-flex flex-grow-1 flex-column container container-padded">
+			<h4>{I18n.t("Ask for remote support")}</h4>
+			<p class="bg-error p-05">{I18n.t('Your node has no internet connection')} </p>
+			<p>
+				<div>{I18n.t('To enable remote access an internet connection is needed')} </div>
+				<div>{I18n.t('You can share your mobile connection to the node with a hotspot')}</div>
+			</p>
+			<button onClick={() => route('/hotspot/remotesupport')}>{I18n.t('Use Hotspot')}</button>
+		</div>
+	)
+
+export const RemoteSupportPage_ = ({session, hasInternet, openError=false, isSubmitting=false, onOpenSession, onCloseSession, onShowConsole}) =>
 	<div class="d-flex flex-grow-1 flex-column container container-padded">
 		<h4><Trans>Ask for remote support</Trans></h4>
 		{!session &&

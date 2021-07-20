@@ -1,14 +1,17 @@
 import { h } from 'preact';
-import { screen, cleanup, act, fireEvent, findByLabelText } from '@testing-library/preact';
+import { screen, cleanup, act, fireEvent } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import { render, flushPromises } from 'utils/test_utils';
 import queryCache from 'utils/queryCache';
 
 import Hotspot from './src/hotspotPage';
 import { enable, isConnected, disable } from './src/hotspotApi';
+import { checkInternet } from 'utils/api';
+
 import waitForExpect from 'wait-for-expect';
 import { route } from 'preact-router';
 jest.mock('./src/hotspotApi');
+jest.mock('utils/api');
 
 const findConnectButton = async () =>
     screen.findByRole('button', { name: /connect/i });
@@ -25,13 +28,15 @@ describe('hotspot', () => {
     beforeEach(() => {
         enable.mockImplementation(async () => null);
         disable.mockImplementation(async () => null);
-        isConnected.mockImplementation(async () => ({ enabled: false, connected: false }));
+        isConnected.mockImplementation(async () => ({ connected: false }));
+        checkInternet.mockImplementation(async () => ({ connected: true }));
     });
 
     afterEach(() => {
         disable.mockClear();
         enable.mockClear();
         isConnected.mockClear();
+        checkInternet.mockClear();
         cleanup();
         act(() => queryCache.clear());
     });
@@ -117,21 +122,22 @@ describe('hotspot', () => {
         });
         await flushPromises();
         expect(isConnected).toHaveBeenCalledTimes(2);
-        expect(screen.getByText('The node is connected to your hotspot')).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /continue/i })).toBeEnabled();
+        expect(await screen.findByText('The node is connected to your hotspot')).toBeInTheDocument();
+        expect(await screen.findByRole('button', { name: /continue/i })).toBeEnabled();
     });
 
     it('shows a connected message and continue button if it is \
         already connected', async () => {
-        isConnected.mockImplementation(() => ({ connected: true }));
+        isConnected.mockImplementation(() => ({ connected: true, signal: -45 }));
         render(<Hotspot />);
         expect(await screen.findByText('The node is connected to your hotspot')).toBeInTheDocument();
+        expect(await screen.findByText('Signal: -45 dBm')).toBeInTheDocument();
         expect(await screen.findByRole('button', { name: /continue/i })).toBeEnabled();
     });
 
     it('navigates to nextPage when clicking continue', async () => {
         isConnected.mockImplementation(() => ({ connected: true }));
-        render(<Hotspot nextPage={'/remotesupport'} />);
+        render(<Hotspot nextPage={'remotesupport'} />);
         const button = await screen.findByRole('button', { name: /continue/i });
         fireEvent.click(button);
         await waitForExpect(() => {
@@ -145,7 +151,27 @@ describe('hotspot', () => {
         const button = await screen.findByRole('button', { name: /continue/i });
         fireEvent.click(button);
         await waitForExpect(() => {
-            expect(route).toHaveBeenCalledWith('/');
+            expect(route).toHaveBeenCalledWith('/rx');
         });
+    });
+
+    it('shows a warning message and try again button if it is connected \
+        but without internet connection', async () => {
+        isConnected.mockImplementation(() => ({ connected: true }));
+        checkInternet.mockImplementation(() => ({ connected: false }))
+        render(<Hotspot />);
+        expect(await screen.findByText('But has no Internet connection')).toBeInTheDocument();
+        expect(await screen.findByRole('button', { name: /try again/i })).toBeEnabled();
+    });
+
+    it('shows a connected message if checkInternet works after try again', async() => {
+        isConnected.mockImplementation(() => ({ connected: true, signal: -45 }));
+        checkInternet.mockImplementation(() => ({ connected: false }))
+        render(<Hotspot />);
+        expect(await screen.findByText('But has no Internet connection')).toBeInTheDocument();
+        const button = await screen.findByRole('button', { name: /try again/i });
+        checkInternet.mockImplementation(() => ({ connected: true }));
+        fireEvent.click(button);
+        expect(await screen.findByRole('button', { name: /continue/i })).toBeEnabled();
     });
 });

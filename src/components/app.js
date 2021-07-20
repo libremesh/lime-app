@@ -32,17 +32,29 @@ const Routes = () => (
 		{plugins
 			.filter(plugin => !plugin.isCommunityProtected)
 			.map(Component =>
+<<<<<<< HEAD
 			(<Route path={Component.name.toLowerCase()}>
 				<Component.page />
 			</Route>))
+=======
+				(<Route path={Component.path || Component.name.toLowerCase()}>
+					<Component.page />
+				</Route>))
+>>>>>>> improvement(hostpot): Add hook at remote support
 		}
 		{/* Protected pages, need to be authenticated */}
 		{plugins
 			.filter(plugin => plugin.isCommunityProtected)
 			.map(Component =>
+<<<<<<< HEAD
 			(<CommunityProtectedRoute path={Component.name.toLowerCase()}>
 				<Component.page />
 			</CommunityProtectedRoute>))
+=======
+				(<CommunityProtectedRoute path={Component.path || Component.name.toLowerCase()}>
+					<Component.page />
+				</CommunityProtectedRoute>))
+>>>>>>> improvement(hostpot): Add hook at remote support
 		}
 		{/* Additional plugins routes */}
 		{plugins

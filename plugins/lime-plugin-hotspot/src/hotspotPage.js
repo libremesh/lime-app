@@ -1,6 +1,7 @@
 import { h, Fragment } from 'preact';
 import style from './hotspotStyle.less';
-import { useIsConnected, useEnableHotspot, useWaitForConnect } from './hotspotQueries';
+import { useIsConnected, useEnableHotspot, useWaitForConnect, useWaitForInternet } from './hotspotQueries';
+import { useQueryCache } from 'react-query';
 import Loading from 'components/loading';
 import I18n from 'i18n-js';
 import { route } from 'preact-router';
@@ -50,21 +51,45 @@ const HotspotConnected = ({ nextPage }) => {
     const { data: connectionStatus } = useIsConnected({
         refetchInterval: 5000
     });
+    const { isFetching, isError:internetError} = useWaitForInternet();
+    const queryCache = useQueryCache();
+
+    if (isFetching) {
+        return <div class="container-center"><Loading /></div>
+    }
+
+    const onTryAgain = () => {
+        queryCache.invalidateQueries('check_internet_wait_for_connected');
+    }
+
     return (
         <div class="d-flex flex-grow-1 flex-column">
             <div class="container-center">
                 <div class="d-flex justify-content">
-                    <div class={style.symbol}>✔</div>
+                    {!internetError && 
+                        <div class={`${style.symbol} bg-success`}>✔</div>
+                    }
+                    {internetError && 
+                        <div class={`${style.symbol} bg-warning`}>!</div>
+                    }
                 </div>
                 <div>{I18n.t('The node is connected to your hotspot')}</div>
+                {internetError && 
+                    <div>{I18n.t('But has no Internet connection')}</div>
+                }
                 <div>{I18n.t('Signal: %{signal} dBm', { signal: connectionStatus.signal })}</div>
             </div>
-            <button onClick={() => route(nextPage) }>{I18n.t('continue')}</button>
+            {!internetError &&
+                <button onClick={() => route('/'.concat(nextPage)) }>{I18n.t('Continue')}</button>
+            }
+            {internetError &&
+                <button onClick={onTryAgain}>{I18n.t('Try Again')}</button>
+            }
         </div>
     )
 };
 
-const Hotspot = ({ nextPage = '/' }) => {
+const Hotspot = ({ nextPage='rx' }) => {
     const { data: connectionStatus, isLoading } = useIsConnected();
     const isConnected = connectionStatus?.connected;
 
