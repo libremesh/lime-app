@@ -57,7 +57,7 @@ describe('remote support page', () => {
 		const button = await screen.findByRole('button', {name: 'Use Hotspot'});
 		fireEvent.click(button);
 		await waitForExpect(() => {
-			expect(route).toHaveBeenCalledWith('/hotspot/remotesupport');
+			expect(route).toHaveBeenCalledWith('/hotspot');
 		})
 	})
 

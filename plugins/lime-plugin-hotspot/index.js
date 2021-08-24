@@ -2,7 +2,7 @@ import Page from './src/hotspotPage';
 
 export default {
     name: 'hotspot',
-    path: '/hotspot/:nextPage?',
+    path: '/hotspot',
     page: Page,
     isCommunityProtected: true
 };
