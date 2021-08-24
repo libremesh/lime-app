@@ -40,8 +40,8 @@ describe('remote support page', () => {
 		render(<RemoteSupportPage />);
 		expect(await screen.findByText('Your node has no internet connection')).toBeInTheDocument();
 		expect(await screen.findByText('To enable remote access an internet connection is needed')).toBeInTheDocument();
-		expect(await screen.findByText('You can share your mobile connection to the node with a hotspot')).toBeInTheDocument();
-		expect(await screen.findByRole('button', {name: 'Use Hotspot'}));
+		expect(await screen.findByText('You can share your mobile connection to the node by setting up a mobile hotspot')).toBeInTheDocument();
+		expect(await screen.findByRole('button', {name: 'Setup Hotspot'}));
 	});
 
 	it('redirects to hostpot page when clicking on Use Hotspot button', async () => {
