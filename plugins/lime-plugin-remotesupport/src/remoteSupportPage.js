@@ -48,7 +48,7 @@ export const WithoutInternet_ = () =>
 				<div>{I18n.t('To enable remote access an internet connection is needed')} </div>
 				<div>{I18n.t('You can share your mobile connection to the node with a hotspot')}</div>
 			</p>
-			<button onClick={() => route('/hotspot/remotesupport')}>{I18n.t('Use Hotspot')}</button>
+			<button onClick={() => route('/hotspot')}>{I18n.t('Use Hotspot')}</button>
 		</div>
 	)
 
