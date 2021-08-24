@@ -1,113 +1,94 @@
 import { h, Fragment } from 'preact';
-import style from './hotspotStyle.less';
-import { useIsConnected, useEnableHotspot, useWaitForConnect, useWaitForInternet } from './hotspotQueries';
-import { useQueryCache } from 'react-query';
+import { useForm } from 'react-hook-form';
+import { useToggleHotspot, useHotspotData } from './hotspotQueries';
+import {
+    ConnectionToThePhone,
+    ConnectionToTheInternet
+} from './components/testBoxes';
 import Loading from 'components/loading';
+import { Collapsible } from 'components/collapsible';
+import switchStyle from 'components/switch';
 import I18n from 'i18n-js';
-import { route } from 'preact-router';
 
-const HotspostDisconnected = () => {
-    const [enableHotspot, {
-        isSuccess: enableHotspotSuccess,
-        isLoading: isSubmitting
-    }] = useEnableHotspot();
-    const { isFetching, isError } = useWaitForConnect({
-        enabled: enableHotspotSuccess
+const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting }) => {
+    const { enabled } = hotspotData;
+    const { register, handleSubmit } = useForm({
+        defaultValues: { enabled }
     });
-
-    const isConnecting = isFetching || isSubmitting;
     return (
         <Fragment>
-            <ol class="d-flex flex-grow-1 flex-column">
-                <li>{I18n.t('Get an additional cell phone to the one you are currently using that has a mobile data connection')}</li>
-                <li>
-                    {I18n.t('With this second cell phone create an access point or hotspot with this data:')}
-                    <div class={style.connectionData}>
-                        <div>{I18n.t('Network Name: %{networkName}', {networkName: "internet"})}</div>
-                        <div>{I18n.t('Password: %{password}', {password: "internet"})}</div>
-                    </div>
-                </li>
-                <li>{I18n.t('When ready click on "Connect" to connect the node to the mobile hotspot')}</li>
-            </ol>
-            {!(isError || isConnecting) &&
-                <button onClick={enableHotspot}>{I18n.t('Connect')}</button>
-            }
-            {isConnecting &&
-                    <Loading />
-            }
-            {!isConnecting && isError &&
-                <Fragment>
-                    <p class="text-center text-error">
-                        {I18n.t("Can't connect to the mobile hotspot")}
-                    </p>
-                    <button onClick={enableHotspot}>{I18n.t('Try Again')}</button>
-                </Fragment>
-            }
+            <form class="flex-grow-1">
+                <div class={switchStyle.toggles}>
+                    <input type="checkbox"
+                        name="enabled"
+                        id="enabled"
+                        ref={register()}
+                    />
+                    <label htmlFor="enabled">
+                        {I18n.t("Connect to a Mobile Hotspot")}
+                    </label>
+                </div>
+            </form>
+            <div class="d-flex">
+                <div class="ml-auto">
+                    {!isSubmitting &&
+                        <button onClick={handleSubmit(onSubmit)} class="ml-auto" >
+                            {I18n.t("Save")}
+                        </button>
+                    }
+                    {isSubmitting &&
+                        <Loading />
+                    }
+                </div>
+            </div>
         </Fragment>
     )
 }
 
-const HotspotConnected = ({ nextPage }) => {
-    const { data: connectionStatus } = useIsConnected({
-        refetchInterval: 5000
-    });
-    const { isFetching, isError:internetError} = useWaitForInternet();
-    const queryCache = useQueryCache();
+const CellPhoneInstructions = () => (
+    <div>
+        <ol>
+            <li>{I18n.t('Get an additional cell phone to the one you are currently using' +
+                ' that has a mobile data connection')}</li>
+            <li>{I18n.t('With this second cell phone create an access point or hotspot' +
+                ' with this data:')}
+            </li>
+        </ol>
+        <div class='container-center'>
+            <div><b>{I18n.t('Network Name: %{networkName}', { networkName: "internet" })}</b></div>
+            <div><b>{I18n.t('Password: %{password}', { password: "internet" })}</b></div>
+        </div>
+    </div>
+);
 
-    if (isFetching) {
-        return <div class="container-center"><Loading /></div>
-    }
+const HotspotPage = () => {
+    const { data: hotspotData, isLoading } = useHotspotData();
+    const [toggle, { isSuccess, isError, isSubmitting }] = useToggleHotspot();
 
-    const onTryAgain = () => {
-        queryCache.invalidateQueries('check_internet_wait_for_connected');
+    function onSubmit({ enabled }) {
+        return toggle(enabled);
+    };
+
+    if (isLoading) {
+        return
     }
 
     return (
-        <div class="d-flex flex-grow-1 flex-column">
-            <div class="container-center">
-                <div class="d-flex justify-content">
-                    {!internetError && 
-                        <div class={`${style.symbol} bg-success`}>✔</div>
-                    }
-                    {internetError && 
-                        <div class={`${style.symbol} bg-warning`}>!</div>
-                    }
+        <div class='d-flex flex-column container container-padded'>
+            <p>{I18n.t('Share your mobile connection by connecting' +
+                ' the node to a mobile hotspost')}</p>
+            <Collapsible initCollapsed={true} title={I18n.t('Cellphone Instructions')}>
+                <CellPhoneInstructions />
+            </Collapsible>
+            <div class="mt-1"><HotspotPageForm {...{ hotspotData, onSubmit, isSubmitting }} /></div>
+            {hotspotData?.enabled && 
+                <div>
+                    <div class="mt-1"><ConnectionToThePhone /></div>
+                    <div class="mt-1"><ConnectionToTheInternet /></div>
                 </div>
-                <div>{I18n.t('The node is connected to your hotspot')}</div>
-                {internetError && 
-                    <div>{I18n.t('But has no Internet connection')}</div>
-                }
-                <div>{I18n.t('Signal: %{signal} dBm', { signal: connectionStatus.signal })}</div>
-            </div>
-            {!internetError &&
-                <button onClick={() => route('/'.concat(nextPage)) }>{I18n.t('Continue')}</button>
-            }
-            {internetError &&
-                <button onClick={onTryAgain}>{I18n.t('Try Again')}</button>
             }
         </div>
     )
-};
-
-const Hotspot = ({ nextPage='rx' }) => {
-    const { data: connectionStatus, isLoading } = useIsConnected();
-    const isConnected = connectionStatus?.connected;
-
-    if (isLoading) {
-        return <div class="container container-centered"><Loading /></div>
-    }
-
-    return (
-        <div class="container container-padded d-flex flex-column flex-grow-1">
-            <h4>{I18n.t('Connect the node to a mobile hotspot')}</h4>
-            {isConnected &&
-                <HotspotConnected nextPage={nextPage} />
-            }
-            {!isConnected &&
-                <HotspostDisconnected />
-            }
-        </div>
-    );
 }
 
-export default Hotspot;
+export default HotspotPage;

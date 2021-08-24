@@ -6,6 +6,5 @@ export const enable = () =>
 export const disable = () =>
     api.call('lime-utils-admin', 'hotspot_wwan_disable', {});
 
-
-export const isConnected = () =>
-    api.call('lime-utils-admin', 'hotspot_wwan_is_connected', {});
+export const getStatus = () =>
+    api.call('lime-utils-admin', 'hotspot_wwan_get_status', {});
