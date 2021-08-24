@@ -14,7 +14,7 @@ const parseResult = result =>
 
 export class UhttpdService {
 	constructor() {
-		this.url = 'http://10.13.192.0/ubus';
+		this.url = window.origin + '/ubus';
 		this.jsonrpc = '2.0';
 		this.sec = 0;
 		this.requestList = [];
