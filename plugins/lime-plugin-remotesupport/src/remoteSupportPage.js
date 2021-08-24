@@ -46,9 +46,9 @@ export const WithoutInternet_ = () =>
 			<p class="bg-error p-05">{I18n.t('Your node has no internet connection')} </p>
 			<p>
 				<div>{I18n.t('To enable remote access an internet connection is needed')} </div>
-				<div>{I18n.t('You can share your mobile connection to the node with a hotspot')}</div>
+				<div>{I18n.t('You can share your mobile connection to the node by setting up a mobile hotspot')}</div>
 			</p>
-			<button onClick={() => route('/hotspot')}>{I18n.t('Use Hotspot')}</button>
+			<button onClick={() => route('/hotspot')}>{I18n.t('Setup Hotspot')}</button>
 		</div>
 	)
 
