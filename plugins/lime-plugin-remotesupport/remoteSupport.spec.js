@@ -51,10 +51,10 @@ describe('remote support page', () => {
 		expect(await screen.findByRole('button', {name: 'Setup Hotspot'}));
 	});
 
-	it('redirects to hostpot page when clicking on Use Hotspot button', async () => {
+	it('redirects to hostpot page when clicking on Setup Hotspot button', async () => {
 		checkInternet.mockImplementation(async () => ({ connected: false }));
 		render(<RemoteSupportPage />);
-		const button = await screen.findByRole('button', {name: 'Use Hotspot'});
+		const button = await screen.findByRole('button', {name: 'Setup Hotspot'});
 		fireEvent.click(button);
 		await waitForExpect(() => {
 			expect(route).toHaveBeenCalledWith('/hotspot');
