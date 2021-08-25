@@ -5,12 +5,13 @@ import {
     ConnectionToThePhone,
     ConnectionToTheInternet
 } from './components/testBoxes';
+import { useEffect } from "preact/hooks";
 import Loading from 'components/loading';
 import { Collapsible } from 'components/collapsible';
 import switchStyle from 'components/switch';
 import I18n from 'i18n-js';
 
-const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting }) => {
+const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting, waitingRadioReset }) => {
     const { enabled } = hotspotData;
     const { register, handleSubmit } = useForm({
         defaultValues: { enabled }
@@ -31,12 +32,12 @@ const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting }) => {
             </form>
             <div class="d-flex">
                 <div class="ml-auto">
-                    {!isSubmitting &&
+                    {(!isSubmitting && !waitingRadioReset) &&
                         <button onClick={handleSubmit(onSubmit)} class="ml-auto" >
                             {I18n.t("Save")}
                         </button>
                     }
-                    {isSubmitting &&
+                    {(isSubmitting || waitingRadioReset) &&
                         <Loading />
                     }
                 </div>
@@ -61,9 +62,41 @@ const CellPhoneInstructions = () => (
     </div>
 );
 
+const WaitingRadioResetMessage = () => (
+    <div class="d-flex flex-column text-right">
+        <div>{I18n.t('The radio needs to be restarted...')}</div>
+        <div>{I18n.t('Please stay connected to the wifi network')}</div>
+    </div>
+);
+
+const SubmitError = ({ error }) => (
+    <div>
+        {error && error === 'hotspot ap not found' &&
+            <span class="text-danger">
+                {I18n.t("The hotspot couldn’t be found," +
+                    " please review the instructions above.")}
+            </span>
+        }
+        {error && error === 'radio has mesh ifaces' &&
+            <span class="text-danger">
+                {I18n.t("Cannot use Radio 0," +
+                    " it's being used for mesh links")}
+            </span>
+        }
+    </div>
+)
 const HotspotPage = () => {
-    const { data: hotspotData, isLoading } = useHotspotData();
-    const [toggle, { isSuccess, isError, isSubmitting }] = useToggleHotspot();
+    const { data: hotspotData, isLoading, refetch } = useHotspotData();
+    const [toggle, { error, isLoading: isSubmitting }] = useToggleHotspot();
+    const waitingRadioReset = hotspotData?.waitingForRadioReset;
+
+    useEffect(() => {
+        if (waitingRadioReset) {
+            setTimeout(() => {
+                refetch();
+            }, 10000);
+        }
+    }, [waitingRadioReset])
 
     function onSubmit({ enabled }) {
         return toggle(enabled);
@@ -80,8 +113,10 @@ const HotspotPage = () => {
             <Collapsible initCollapsed={true} title={I18n.t('Cellphone Instructions')}>
                 <CellPhoneInstructions />
             </Collapsible>
-            <div class="mt-1"><HotspotPageForm {...{ hotspotData, onSubmit, isSubmitting }} /></div>
-            {hotspotData?.enabled && 
+            {error && <SubmitError error={error} />}
+            <div class="mt-1"><HotspotPageForm {...{ hotspotData, onSubmit, isSubmitting, waitingRadioReset}} /></div>
+            {waitingRadioReset && <WaitingRadioResetMessage />}
+            {hotspotData?.enabled && !waitingRadioReset &&
                 <div>
                     <div class="mt-1"><ConnectionToThePhone /></div>
                     <div class="mt-1"><ConnectionToTheInternet /></div>

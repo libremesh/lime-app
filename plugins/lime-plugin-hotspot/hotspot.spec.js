@@ -70,6 +70,24 @@ describe('hotspot', () => {
         });
     });
 
+    it('shows an error message if the hotspot can not be found', async () => {
+        enable.mockImplementation(async () => { throw 'hotspot ap not found' });
+        render(<Hotspot />);
+        fireEvent.click(await findConnectCheckbox());
+        fireEvent.click(await findSubmitButton());
+        expect(await screen.findByText("The hotspot couldn’t be found," +
+            " please review the instructions above.")).toBeInTheDocument();
+    });
+
+    it('shows an error message if there are mesh ifaces in the radio 0', async () => {
+        enable.mockImplementation(async () => { throw 'radio has mesh ifaces' });
+        render(<Hotspot />);
+        fireEvent.click(await findConnectCheckbox());
+        fireEvent.click(await findSubmitButton());
+        expect(await screen.findByText("Cannot use Radio 0," +
+            " it's being used for mesh links")).toBeInTheDocument();
+    });
+
     it('show a checked checkbox when enabled', async () => {
         getStatus.mockImplementation(async () => ({ enabled: true, connected: false }));
         render(<Hotspot />);
@@ -96,5 +114,28 @@ describe('hotspot', () => {
         getStatus.mockImplementation(async () => ({ enabled: true, connected: false }));
         render(<Hotspot />);
         expect(await screen.findByTestId('hotspot-internet-test')).toBeInTheDocument();
+    });
+
+    it('shows a loading state with explanation until the router answers again when via wifi', async () => {
+        render(<Hotspot />);
+        fireEvent.click(await findConnectCheckbox());
+        getStatus.mockImplementation(async () => {
+            return new Promise((res,) => {
+                setTimeout(() => {
+                    res({ enabled: true, connected: true, signal: -47 })
+                }, 10000);
+            })
+        })
+        fireEvent.click(await findSubmitButton());
+        expect(await screen.findByLabelText('loading')).toBeInTheDocument();
+        expect(screen.queryByTestId('hotspot-phone-test')).toBeNull();
+        expect(await screen.findByText('The radio needs to be restarted...')).toBeInTheDocument();
+        expect(await screen.findByText('Please stay connected to the wifi network')).toBeInTheDocument();
+        expect(screen.queryByTestId('hotspot-phone-test')).toBeNull();
+        act(() => {
+			jest.advanceTimersByTime(10000);
+		});
+        expect(await screen.findByTestId('hotspot-phone-test')).toBeInTheDocument();
+        expect(screen.queryByText('The radio needs to be restarted...')).toBeNull();
     });
 });

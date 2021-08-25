@@ -1,7 +1,7 @@
 import api from 'utils/uhttpd.service';
 
 export const enable = () =>
-    api.call('lime-utils-admin', 'hotspot_wwan_enable', {});
+    api.call('lime-utils-admin', 'hotspot_wwan_enable', {}, null, 25000);
 
 export const disable = () =>
     api.call('lime-utils-admin', 'hotspot_wwan_disable', {});
