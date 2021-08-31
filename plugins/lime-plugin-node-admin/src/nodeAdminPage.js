@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { Config } from './components/config';
 import { useWifiData } from './nodeAdminQueries';
+import { useHotspotData } from './screens/hotspot/src/hotspotQueries';
 import { useBoardData } from 'utils/queries';
 import { List } from 'components/list';
 import { route } from 'preact-router';
@@ -52,6 +53,14 @@ const RoamingAP = () => {
     />
 }
 
+const Hotspot = () => {
+    const { data } = useHotspotData();
+    return <Config title={I18n.t('Connect to a Mobile Hotspot')}
+        value={data.enabled === true ? I18n.t('Enabled'): I18n.t('Disabled')}
+        onClick={() => route('/nodeadmin/hotspot')}
+    />
+}
+
 const NodeAdmin = () => {
     return (
         <div class="container container-padded">
@@ -60,7 +69,11 @@ const NodeAdmin = () => {
                 <Hostname />
                 <ApPassword />
                 <RoamingAP />
+<<<<<<< HEAD
                 <CommunityPortalConfig />
+=======
+                <Hotspot />
+>>>>>>> chore(hotpost): move to node configs
             </List>
         </div>
     );

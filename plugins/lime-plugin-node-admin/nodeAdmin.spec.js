@@ -6,6 +6,7 @@ import queryCache from 'utils/queryCache';
 
 import NodeAdmin from './src/nodeAdminPage';
 import { getAPsData } from './src/nodeAdminApi';
+import { getStatus as getHotspotStatus } from './src/screens/hotspot/src/hotspotApi';
 import { getBoardData } from 'utils/api';
 import { getPortalConfig } from 'plugins/lime-plugin-pirania/src/piraniaApi';
 import { route } from 'preact-router';
@@ -13,6 +14,7 @@ import { route } from 'preact-router';
 jest.mock('./src/nodeAdminApi');
 jest.mock('utils/api');
 jest.mock('plugins/lime-plugin-pirania/src/piraniaApi');
+jest.mock('./src/screens/hotspot/src/hotspotApi');
 
 describe('nodeAdmin', () => {
     beforeEach(() => {
@@ -24,6 +26,9 @@ describe('nodeAdmin', () => {
             hostname: 'node-hostname'
         }));
         getPortalConfig.mockImplementation(async() => 'some config');
+        getHotspotStatus.mockImplementantion(async() => ({
+            enabled: false
+        }));
     });
 
     afterEach(() => {
@@ -96,4 +101,18 @@ describe('nodeAdmin', () => {
         render(<NodeAdmin />);
         expect(await screen.findByTestId('portal-config-item')).toBeInTheDocument();
     })
+    it('shows hotspot disabled when disabled', () => {
+        render(<NodeAdmin />);
+        expect(await screen.findByText('Connect to a Mobile Hotspot')).toBeInTheDocument();
+        expect(await screen.findByText('Disabled')).toBeInTheDocument();
+    });
+
+    it('shows hotspot disabled when enabled', () => {
+        getHotspotStatus.mockImplementation(async () => ({
+            enabled: true
+        }));
+        render(<NodeAdmin />);
+        expect(await screen.findByText('Connect to a Mobile Hotspot')).toBeInTheDocument();
+        expect(await screen.findByText('Enabled')).toBeInTheDocument();
+    });
 });

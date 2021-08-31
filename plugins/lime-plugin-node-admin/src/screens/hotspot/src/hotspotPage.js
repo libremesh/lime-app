@@ -5,6 +5,7 @@ import {
     ConnectionToThePhone,
     ConnectionToTheInternet
 } from './components/testBoxes';
+import ConfigPageLayout from '../../../layouts/configPageLayout';
 import { useEffect } from "preact/hooks";
 import Loading from 'components/loading';
 import { Collapsible } from 'components/collapsible';
@@ -85,9 +86,28 @@ const SubmitError = ({ error }) => (
         }
     </div>
 )
+const HotspotPage_ = ({ submitError, hotspotData, onSubmit, isSubmitting, waitingRadioReset }) => (
+    <div class='d-flex flex-column container container-padded'>
+        <p>{I18n.t('Share your mobile connection by connecting' +
+            ' the node to a mobile hotspost')}</p>
+        <Collapsible initCollapsed={true} title={I18n.t('Cellphone Instructions')}>
+            <CellPhoneInstructions />
+        </Collapsible>
+        {submitError && <SubmitError error={submitError} />}
+        <div class="mt-1"><HotspotPageForm {...{ hotspotData, onSubmit, isSubmitting, waitingRadioReset }} /></div>
+        {waitingRadioReset && <WaitingRadioResetMessage />}
+        {hotspotData?.enabled && !waitingRadioReset &&
+            <div>
+                <div class="mt-1"><ConnectionToThePhone /></div>
+                <div class="mt-1"><ConnectionToTheInternet /></div>
+            </div>
+        }
+    </div>
+)
+
 const HotspotPage = () => {
     const { data: hotspotData, isLoading, refetch } = useHotspotData();
-    const [toggle, { error, isLoading: isSubmitting }] = useToggleHotspot();
+    const [toggle, { error: submitError, isError, isLoading: isSubmitting, isSuccess}] = useToggleHotspot();
     const waitingRadioReset = hotspotData?.waitingForRadioReset;
 
     useEffect(() => {
@@ -102,28 +122,13 @@ const HotspotPage = () => {
         return toggle(enabled);
     };
 
-    if (isLoading) {
-        return
-    }
-
     return (
-        <div class='d-flex flex-column container container-padded'>
-            <p>{I18n.t('Share your mobile connection by connecting' +
-                ' the node to a mobile hotspost')}</p>
-            <Collapsible initCollapsed={true} title={I18n.t('Cellphone Instructions')}>
-                <CellPhoneInstructions />
-            </Collapsible>
-            {error && <SubmitError error={error} />}
-            <div class="mt-1"><HotspotPageForm {...{ hotspotData, onSubmit, isSubmitting, waitingRadioReset}} /></div>
-            {waitingRadioReset && <WaitingRadioResetMessage />}
-            {hotspotData?.enabled && !waitingRadioReset &&
-                <div>
-                    <div class="mt-1"><ConnectionToThePhone /></div>
-                    <div class="mt-1"><ConnectionToTheInternet /></div>
-                </div>
-            }
-        </div>
+        <ConfigPageLayout {...{
+            isLoading, isSuccess, isError,
+            title: I18n.t("Connect to a Mobile Hotspot")
+        }}>
+            <HotspotPage_ {...{ submitError, hotspotData, onSubmit, isSubmitting, waitingRadioReset }} />
+        </ConfigPageLayout >
     )
 }
-
 export default HotspotPage;

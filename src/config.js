@@ -9,8 +9,11 @@ import NodeAdmin from '../plugins/lime-plugin-node-admin';
 import NetworkAdmin from '../plugins/lime-plugin-network-admin';
 import Firmware from '../plugins/lime-plugin-firmware';
 import RemoteSupport from '../plugins/lime-plugin-remotesupport';
+<<<<<<< HEAD
 import Pirania from '../plugins/lime-plugin-pirania';
 import Hotspot from '../plugins/lime-plugin-hotspot';
+=======
+>>>>>>> chore(hotpost): move to node configs
 
 // REGISTER PLUGINS
 export const plugins = [
@@ -24,7 +27,10 @@ export const plugins = [
 	Firmware,
 	ChangeNode,
 	RemoteSupport,
+<<<<<<< HEAD
 	Pirania,
 	Hotspot,
+=======
+>>>>>>> chore(hotpost): move to node configs
 	Fbw // fbw does not have menu item
 ];
