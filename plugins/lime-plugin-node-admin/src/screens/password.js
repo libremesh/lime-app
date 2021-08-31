@@ -7,8 +7,8 @@ import switchStyle from 'components/switch';
 import I18n from 'i18n-js';
 
 const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
-    const { ap_name: { password, has_password } } = wifiData;
-    const { register, control, handleSubmit, errors, watch } = useForm({
+    const { node_ap: { password, has_password } } = wifiData;
+    const { register, handleSubmit, errors, watch } = useForm({
         defaultValues: { password, enablePassword: has_password }
     });
     const enablePassword = watch("enablePassword");

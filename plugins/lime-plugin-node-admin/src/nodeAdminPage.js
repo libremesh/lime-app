@@ -15,7 +15,7 @@ const Hostname = () => {
 
 const ApPassword = () => {
     const { data: wifiData } = useWifiData();
-    const has_password = wifiData && wifiData.ap_name.has_password;
+    const has_password = wifiData && wifiData.node_ap.has_password;
     return <Config title={I18n.t('Wifi Password')}
         value={has_password ? '********' : I18n.t('No password')}
         onClick={() => route('/nodeadmin/wifipassword')} />
@@ -23,10 +23,10 @@ const ApPassword = () => {
 
 const RoamingAP = () => {
     const { data: wifiData } = useWifiData();
-    const nodeEnabled = wifiData?.ap.node.enabled;
+    const nodeEnabled = wifiData?.community_ap.enabled;
     return <Config title={I18n.t('Community Roaming AP')} 
         value={nodeEnabled === true ? I18n.t('Enabled'): I18n.t('Disabled')}
-        subtitle={I18n.t('Opens the "%{ap_ssid}" AP in this node', {ap_ssid: wifiData?.ap.node.ssid})}
+        subtitle={I18n.t('Opens the "%{ap_ssid}" AP in this node', {ap_ssid: wifiData?.community_ap.ssid})}
         onClick={() => route('/nodeadmin/roaming-ap')}
     />
 }

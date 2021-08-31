@@ -14,11 +14,11 @@ import { changeApNamePassword, getAdminWifiData } from '../nodeAdminApi';
 jest.mock('../nodeAdminApi');
 
 const withoutPasswordMock = async () => ({
-    ap_name: { password: "", has_password: false }
+    node_ap: { password: "", has_password: false }
 });
 
 const withPasswordMock = async () => ({
-    ap_name: { password: "some-password", has_password: true }
+    node_ap: { password: "some-password", has_password: true }
 });
 
 const findPasswordUsageCheckbox = async () =>

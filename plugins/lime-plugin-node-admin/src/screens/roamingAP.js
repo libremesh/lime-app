@@ -9,7 +9,7 @@ import { useCommunityName } from 'utils/queries';
 
 const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
     const { register, handleSubmit } = useForm({
-        defaultValues: { enableRoamingAP: wifiData.ap.node.enabled }
+        defaultValues: { enableRoamingAP: wifiData.community_ap.enabled }
     });
     return (
         <Fragment>
@@ -20,7 +20,7 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
                         id="enableRoamingAP"
                         ref={register()}
                     />
-                    <label htmlFor="enableRoamingAP">{I18n.t("Enable Roaming AP")}</label>
+                    <label htmlFor="enableRoamingAP">{I18n.t("Enable Community Roaming AP")}</label>
                 </div>
             </form>
             <div class="d-flex">
@@ -53,12 +53,12 @@ const RoamingAPPage = () => {
             isLoading, isSuccess, isError,
             title: I18n.t("Community Roaming AP")
         }}>
-            <p>{I18n.t('Opens the "%{ap_ssid}" AP in this node', { ap_ssid: wifiData?.ap?.node.ssid })}</p>
+            <p>{I18n.t('Opens the "%{ap_ssid}" AP in this node', { ap_ssid: wifiData?.community_ap?.ssid })}</p>
             <p>{I18n.t("This AP is the same in all nodes that enable it, allowing devices to move around the network territory without losing connection")}</p>
-            {wifiData?.ap?.community.enabled === false &&
+            {wifiData?.community_ap?.community.enabled === false &&
                 <p>{I18n.t("It is disabled by default in %{communityName}", { communityName })}</p>
             }
-            {wifiData?.ap?.community.enabled === true &&
+            {wifiData?.community_ap?.community.enabled === true &&
                 <p>{I18n.t("It is enabled by default in %{communityName}", { communityName })}</p>
             }
             <RoamingAPForm {...{ wifiData, onSubmit, isSubmitting}} />
