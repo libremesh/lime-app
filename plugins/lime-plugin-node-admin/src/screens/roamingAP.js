@@ -19,11 +19,7 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
                         id="enableRoamingAP"
                         ref={register()}
                     />
-<<<<<<< HEAD
                     <label htmlFor="enableRoamingAP"><Trans>Enable Community Roaming AP</Trans></label>
-=======
-                    <label htmlFor="enableRoamingAP">{I18n.t("Enable Community Roaming AP")}</label>
->>>>>>> improvement(nodeAdmin): adapt endpoints to _cfg_overrides api
                 </div>
             </form>
             <div class="d-flex">
@@ -55,7 +51,6 @@ const RoamingAPPage = () => {
     return (
         <ConfigPageLayout {...{
             isLoading, isSuccess, isError,
-<<<<<<< HEAD
             title: <Trans>Community Roaming AP</Trans>
         }}>
             <p><Trans>Opens the "{apSsid}" AP in this node</Trans></p>
@@ -69,29 +64,13 @@ const RoamingAPPage = () => {
                 <p>
                     <Trans>It is disabled by default in {communityName}</Trans>
                 </p>
-=======
-            title: I18n.t("Community Roaming AP")
-        }}>
-            <p>{I18n.t('Opens the "%{ap_ssid}" AP in this node', { ap_ssid: wifiData?.community_ap?.ssid })}</p>
-            <p>{I18n.t("This AP is the same in all nodes that enable it, allowing devices to move around the network territory without losing connection")}</p>
-            {wifiData?.community_ap?.community.enabled === false &&
-                <p>{I18n.t("It is disabled by default in %{communityName}", { communityName })}</p>
->>>>>>> chore(node admin): change texts, and add stories
             }
             {wifiData?.community_ap?.community.enabled === true &&
-<<<<<<< HEAD
                 <p>
                     <Trans>It is enabled by default in {communityName}</Trans>
                 </p>
-=======
-                <p>{I18n.t("It is enabled by default in %{communityName}", { communityName })}</p>
->>>>>>> improvement(nodeAdmin): adapt endpoints to _cfg_overrides api
             }
-<<<<<<< HEAD
             <RoamingAPForm {...{ wifiData, onSubmit, isSubmitting }} />
-=======
-            <RoamingAPForm {...{ wifiData, onSubmit, isSubmitting}} />
->>>>>>> chore(node admin): change texts, and add stories
         </ConfigPageLayout >
     )
 }
