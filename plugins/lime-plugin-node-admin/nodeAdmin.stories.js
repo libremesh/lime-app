@@ -8,12 +8,13 @@ export const NodeAdmin = () => <NodeAdminPage />
 NodeAdmin.args = {
     queries: [
         [['lime-utils', 'get_wifi_data'], {
-            ap_name: {
+            node_ap: {
                 has_password: false
             },
-            ap: {
+            community_ap: {
                 community: { enabled: true },
-                node: { enabled: true, ssid: 'quintana-libre.org.ar'},
+                enabled: true,
+                ssid: 'quintana-libre.org.ar',
             }
         }]
     ]
