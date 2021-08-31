@@ -54,14 +54,15 @@ const RoamingAPPage = () => {
             title: I18n.t("Community Roaming AP")
         }}>
             <p>{I18n.t('Opens the "%{ap_ssid}" AP in this node', { ap_ssid: wifiData?.community_ap?.ssid })}</p>
-            <p>{I18n.t("This AP is the same in all nodes that enable it, allowing devices to move around the network territory without losing connection")}</p>
+            <p>{I18n.t("The Community AP is present in every node allowing people to " +
+                "move around the network territory without losing connection")}</p>
             {wifiData?.community_ap?.community.enabled === false &&
                 <p>{I18n.t("It is disabled by default in %{communityName}", { communityName })}</p>
             }
             {wifiData?.community_ap?.community.enabled === true &&
                 <p>{I18n.t("It is enabled by default in %{communityName}", { communityName })}</p>
             }
-            <RoamingAPForm {...{ wifiData, onSubmit, isSubmitting}} />
+            <RoamingAPForm {...{ wifiData, onSubmit, isSubmitting }} />
         </ConfigPageLayout >
     )
 }
