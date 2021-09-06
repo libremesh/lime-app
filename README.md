@@ -27,27 +27,35 @@ npm install
 
 
 ## Development Workflow
-Read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentation
 
-**Start a live-reload development server:**
+### Start a live-reload development server
+```
+npm run dev
+```
+ 
+This will serve the LiMe App with hot reloading. By default it will proxy every backend request to http://10.13.0.1, the default ip address for LibreMesh nodes.
+
+If you already have a LibreMesh router reachable at any given IP address, let's say 10.5.0.9, you can use it as a backend with:
 
 ```
-WEB_PATH="/" npm run dev
+env NODE_HOST=10.5.0.9 npm run dev
 ```
 
-**Generate a production build in `./build`:**
+If you want, you can also setup a virtual LibreMesh node following [lime-packages: TESTING.md](https://github.com/libremesh/lime-packages/blob/master/TESTING.md#development-with-qemu-virtual-machine), which will be available at http://10.13.0.1 by default.
+
+### Generate a production build
+```
+npm run build:production
+```
+Now you can copy the bundles to the router:
 
 ```
-WEB_PATH="/" npm run build --production
+ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/app
 ```
 
-> You can now deploy the contents of the `build` directory to production on github pages!
->
-> Fork and `npm run deploy`
-
-
-## Router Installation
-
-In order to install the software in the node, the node must have several ubus packages installed ( see https://github.com/libremesh/lime-packages).
+### Run tests
+```
+npm run tests
+```
 
 For develop you can run `WEB_PATH='/app' npm run build --production` and then copy the build folder to the /www/app directory of the node and go.

@@ -11,9 +11,24 @@ let path = require('path');
  **/
 export default function (config, env, helpers) {
 	// Basepath of lime-app in the router: http://thisnode.info/app/
-	config.output.publicPath = process.env.WEB_PATH || '';
 	// This hack let us use less-modules at plugins/containers directories too
-	const { source } = env;
+	const { source, isProd } = env;
+	config.output.publicPath = isProd ? '/app/' : '';
+
+	const host = process.env.NODE_HOST || '10.13.0.1';
+	config.devServer = {
+		...config.devServer,
+		proxy: [
+			{
+				path: '/ubus',
+				target: `http://${host}/`
+			},
+			{
+				path: '/cgi-bin/**',
+				target: `http://${host}/`
+			}
+		]
+	} 
 	const loaderRules = helpers.getLoadersByName(config, 'css-loader');
 	loaderRules.forEach(({ rule }) => {
 		if (rule.include) {
