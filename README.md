@@ -58,4 +58,6 @@ ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/a
 npm run tests
 ```
 
-For develop you can run `WEB_PATH='/app' npm run build --production` and then copy the build folder to the /www/app directory of the node and go.
+### Contribute
+Plase, read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentation.
+We also have a [Tutorial](docs/Tutorial.md) for newcomers :)
