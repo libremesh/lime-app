@@ -16,7 +16,7 @@ You can also learn by doing, following this guide and encouraging you to try mak
 	<figcaption>Architectural Design of the LimeApp</figcaption>
 </figure>
 
-The LimeApp is a web application built on top of the [Preact] framework (https://preactjs.com/) which is very similar to React, yet we chose it because it takes less space (3kB).
+The LimeApp is a web application built on top of the [Preact framework](https://preactjs.com/) which is very similar to React, yet we chose it because it takes less space (3kB).
 The application bundle, which includes all the application code executable by a web browser, is hosted in `/www/app` and is served by the uHTTPd webserver when visiting the IP address of the router or the domain associated with it, typically: thisnode.info.
 
 uHTTPd has a plugin for [ubus](https://openwrt.org/docs/techref/ubus) that allows us to make ubus calls to the different libremesh services/modules through HTTP POST requests using the JSON RPC (Remote Procedure Call) message protocol.
@@ -514,10 +514,11 @@ Follow instructions at [CONTRIBUTING.md](CONTRIBUTING.md#contributing-with-trans
 ### 6.1 Script "create-plugin"
 This dev tool helps to bootstrap a directory structure for a new plugin.
 You only need to chose a name for it,
-and a working basic skeleton will be created after it.
+and a working basic skeleton will be created under lime-plugin-<newPluginName>.
+
 Try it with:
 ```
-npm run create-plugin <newPluginName>
+npm run create-plugin <newPluginName (camelCased)>
 ```
 
 ## 7 Advanced topics
