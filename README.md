@@ -6,7 +6,7 @@
 
 
 <p align="center"><br><br>
-    <img src="https://raw.githubusercontent.com/libremesh/lime-app/fd31c213/screenshot.gif" alt="Screenshot" />
+    <img height="480" src="docs/assets/screenshots.gif" alt="Screenshots" />
 </p>
 
 
