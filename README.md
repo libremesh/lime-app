@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/libremesh/lime-app.svg?branch=develop)](https://travis-ci.org/libremesh/lime-app) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 
-**Simple, lightweight and scalable PWA for diagnosis of Libremesh nodes**
+**Geek-free Web App for setup and mantainance of Libremesh nodes built on Preact**
 
 
 <p align="center"><br><br>
