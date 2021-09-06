@@ -59,6 +59,7 @@ const CellPhoneInstructions = () => (
         <div class='container-center'>
             <div><b>{I18n.t('Network Name: %{networkName}', { networkName: "internet" })}</b></div>
             <div><b>{I18n.t('Password: %{password}', { password: "internet" })}</b></div>
+            <div><b>{I18n.t('Encryption: %{encryptionMethod}', { encryptionMethod: "WPA2 PSK" })}</b></div>
         </div>
     </div>
 );

@@ -52,6 +52,7 @@ describe('hotspot', () => {
         expect(await screen.findByText('With this second cell phone create an access point or hotspot with this data:')).toBeInTheDocument();
         expect(await screen.findByText('Network Name: internet')).toBeInTheDocument();
         expect(await screen.findByText('Password: internet')).toBeInTheDocument();
+        expect(await screen.findByText('Encryption: WPA2 PSK')).toBeInTheDocument();
         fireEvent.click(text);
         expect(screen.queryByText('Password: internet')).toBeNull();
     });
