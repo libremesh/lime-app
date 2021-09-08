@@ -3,7 +3,7 @@ Wellcome, this the developer tutorial for LimeApp developers!
 
 ## What do I need to know to collaborate in the LimeApp?
 
-The LimeApp is written in Javascript, HTML and css.
+The LimeApp is written in Javascript, HTML and CSS.
 Having a basic knowledge of these languages will help you to collaborate in the  in the development. You can follow these resources to learn about these languages:
 - Javascript tutorial: https://javascript.info/
 	- We particularly recommend you to read about [Promises](https://es.javascript.info/promise-basics)
@@ -357,7 +357,7 @@ const RemoteSupportPage = () => {
 
 ##### Storybook
 
-Once our component passes the tests, we can add styling with css classes to achieve the UI we are looking for.
+Once our component passes the tests, we can add styling with CSS classes to achieve the UI we are looking for.
 
 In order to visualize our component while we add style to it we use [StoryBook](https://storybook.js.org/). Storybook allows you to define the different states of your screen as different user `Stories` and render your component isolated in that context. This is very helpfull as it speeds up the visual feedback while developing components. Also, once the stories are written, it is easy to go back to them to monitor changes in the UI.
 This is how it looks like:  
@@ -408,7 +408,7 @@ npm run storybook
 
 ##### CSS
 
-To add styling rules that only apply to one component, we can use css/less loaders in the following way: 
+To add styling rules that only apply to one component, we can use CSS/Less loaders in the following way: 
 
 ```javascript
 // File Path: lime-plugin-remotesupport/src/remoteSupportPage.js
