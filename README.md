@@ -29,11 +29,14 @@ npm install
 ## Development Workflow
 
 ### Start a live-reload development server
+The LiMeApp is a frontend application for services running on a LibreMesh router.
+By running:
+
 ```
 npm run dev
 ```
- 
-This will serve the LiMe App with hot reloading. By default it will proxy every backend request to http://10.13.0.1, the default ip address for LibreMesh nodes.
+
+we can serve the LiMeApp with hot reloading and it will proxy every backend request to http://10.13.0.1, the default ip address for LibreMesh routers.
 
 If you already have a LibreMesh router reachable at any given IP address, let's say 10.5.0.9, you can use it as a backend with:
 
