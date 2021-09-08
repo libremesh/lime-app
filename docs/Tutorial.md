@@ -1,7 +1,7 @@
 # LimeApp's Developer Tutorial
 Wellcome, this the developer tutorial for LimeApp developers!
 
-## 1 What do I need to know to collaborate in the LimeApp?
+## What do I need to know to collaborate in the LimeApp?
 
 The LimeApp is written in Javascript, HTML and css.
 Having a basic knowledge of these languages will help you to collaborate in the  in the development. You can follow these resources to learn about these languages:
@@ -10,7 +10,7 @@ Having a basic knowledge of these languages will help you to collaborate in the 
  
 You can also learn by doing, following this guide and encouraging you to try making changes or adding new screens.
 
-## 2 Architectural Design
+## Architectural Design
 <figure>
 	<img src="architecture.svg">
 	<figcaption>Architectural Design of the LimeApp</figcaption>
@@ -24,7 +24,7 @@ This is the interface used in the LimeApp to make calls to the `backend` (the ro
 
 It does not matter if you are not familiar with these technologies right now, you will discover them through practice.
 
-## 3 The elements of the LimeApp
+## The elements of the LimeApp
 A typical LimeApp functionality implements a screen composed of one or more Preact `Components`.
 The `Components` define what is rendered on screen, specifying the visual aspect of the screen (HTML + css) and the logical one: what is displayed, when, and which action each button performs.
 In the LimeApp screens we commonly want to display information that is available on the router, (e.g. how long ago it was turned on), and perform actions that modify the router configuration (e.g. change the administration password). This is what we mean by `backend` calls.
@@ -34,13 +34,13 @@ This library allows us to declaratively indicate what data (`Queries`) each comp
 The `Queries` and `Mutations` call asynchronous functions that define the url endpoints and the body of the requests to the backend. We call these functions API endpoints. They match one by one with the `backend` endpoints.
 All of them use a common interface, the `uHTTPd client`, a singleton that abstracts us from handling the ubus session id, the base url address of the webserver and the details of the JSON RPC protocol.
 
-## 4 Example
+## Example
 
 To better understand how all these pieces interact with each other, let's see an example:
 Remote Access. Remote Access allows you to open a terminal session on the router to be accessed remotely by another person to help diagnose problems on the network. In the LimeApp we implemented this functionality based on [tmate](tmate.io). The screen allows you to view the current session token, close the current session or open a new session.
 Let's start the tour!
 
-### 4.1 Tests
+### Tests
 
 The LimeApp has a growing test battery. This battery provides a testing setup and sample tests that allow us to develop new functionality using [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development).
 
@@ -55,7 +55,7 @@ This way, if the tests for the API endpoints pass, the endpoint mocks in the com
 
 The reason for doing this two-step split is that it fits very well with Jest's mocking capabilities.
 
-#### 4.1.2 Component Tests
+#### Component Tests
 The main tip for writing component tests is to think about the requirements it has to fulfill from the user's perspective. They are usually of the type:
 "If I click button A, it shows me text B".
 "If I submit form B, and the backend reports an error, it shows me the error."
@@ -150,7 +150,7 @@ To run the tests we do:
 npm run test plugins/lime-plugin-remotesupport/remoteSupport.spec.js
 ```
 
-#### 4.1.3 API endpoints tests
+#### API endpoints tests
 After having created the tests of the component, surely we already have more confidence in what data and what actions each one of the API endpoints should perform. We can discuss the API with whoever developed the `backend` and settle it down on the tests.
 
 ```javascript
@@ -248,7 +248,7 @@ describe('openSession', () => {
 
 Once we have written the tests for our API endpoints we can implement them.
 
-### 4.2 Queries and Mutations
+### Queries and Mutations
 
 The Queries and Mutations will connect our component with the API endpoints.
 They relieve us from the complexity of re-rendering each component on the screen that depends on data that was updated in the `backend`. That is, if there is more than one component on the screen that depends on the same `Query` and one of the two performs an action that updates the `backend` data, both components will be re-rendered to show the updated information.
@@ -292,7 +292,7 @@ export function useCloseSession() {
 
 Now that we have our `Queries` and `Mutations` written, we can use them in the `Component`.
 
-### 4.3 Component
+### Component
 
 The main `Component` has to render the Remote Access screen. It has to comply with the tests that we defined in section "4.1.2 Component Tests".
 A strategy that works well in practice is to iterate the implementation so that it satisfies the simplest tests first, and then the more complex ones. That way we keep the room for introducing bugs tight, and debugging becomes easier.
@@ -353,13 +353,16 @@ const RemoteSupportPage = () => {
 	export default RemoteSupportPage;
 ```
 
-#### 4.3.1 Style and Visualization
+#### Style and Visualization
 
 ##### Storybook
 
 Once our component passes the tests, we can add styling with css classes to achieve the UI we are looking for.
 
-In order to visualize our component while we add style to it we use [StoryBook](https://storybook.js.org/). Storybook allows you to define the different states of your screen as different user `Stories` and render your component isolated in that context. Once the stories are written, it is easy to go back to them to test changes in the UI.
+In order to visualize our component while we add style to it we use [StoryBook](https://storybook.js.org/). Storybook allows you to define the different states of your screen as different user `Stories` and render your component isolated in that context. This is very helpfull as it speeds up the visual feedback while developing components. Also, once the stories are written, it is easy to go back to them to monitor changes in the UI.
+This is how it looks like:  
+<img height="480" src="assets/storybook.gif" />
+
 
 Let's define the stories for our component.
 
@@ -448,7 +451,7 @@ return (
 )
 ```
 
-### 4.4 API endpoints
+### API endpoints
 
 The only missing piece is the API endpoints implementation, which should comply to the tests defined at "4.1.3 - API endpoints tests".
 
@@ -473,7 +476,7 @@ export function closeSession() {
 }
 ```
 
-### 4.5 Adding a menu item.
+### Adding a menu item.
 
 To add a link to our new screen in the mesnu, we have to define an index.js file for remoteSupport like this: 
 
@@ -504,14 +507,14 @@ export const plugins = [
 ];
 ```
 
-### 4.6 Conclusion
+### Conclusion
 Finally, we have completed all the steps needed for adding a new screen to the LimeApp, which is fully tested, functional and styled.
 
-## 5 Translations
+## Translations
 Follow instructions at [CONTRIBUTING.md](CONTRIBUTING.md#contributing-with-translations)
 
-## 6 Devtools
-### 6.1 Script "create-plugin"
+## Devtools
+### Script "create-plugin"
 This dev tool helps to bootstrap a directory structure for a new plugin.
 You only need to chose a name for it,
 and a working basic skeleton will be created under lime-plugin-<newPluginName>.
@@ -521,18 +524,18 @@ Try it with:
 npm run create-plugin <newPluginName (camelCased)>
 ```
 
-## 7 Advanced topics
-### 7.1 Legacy code
+## Advanced topics
+### Legacy code
 
 Before using the ReactQuery library, the LimeApp code used Redux + Rx-Js to store and update the `backend` state. The files including the concepts of  "epics", "actions", "reducers"  are legacy code that still have to be migrated to use ReactQuery.
 The reason we abandoned those libraries is that they added more indirection to the code than the benefit we were getting from them. ReactQuery has a more straightforward API, which makes it easier to follow the code. We will gradually migrate the legacy code to ReactQuery.
 
-### 7.2 Urls routing
+### Urls routing
 TODO
-### 7.3 Password protected routes
+### Password protected routes
 TODO
-### 7.4 package-lock.json
+### package-lock.json
 TODO
 
-### 8 Further recommended reading
+### Further recommended reading
 - [React as a UI Runtime](https://overreacted.io/react-as-a-ui-runtime/) by Dan Abramov. Usefull to get a deep understanding of the React programming model.
