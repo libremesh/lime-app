@@ -2,11 +2,11 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/libremesh/lime-app.svg)](https://greenkeeper.io/) [![Build Status](https://travis-ci.org/libremesh/lime-app.svg?branch=develop)](https://travis-ci.org/libremesh/lime-app) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 
-**Simple, lightweight and scalable PWA for diagnosis of Libremesh nodes**
+**Geek-free Web App for setup and mantainance of Libremesh nodes built on Preact**
 
 
 <p align="center"><br><br>
-    <img src="https://raw.githubusercontent.com/libremesh/lime-app/fd31c213/screenshot.gif" alt="Screenshot" />
+    <img height="480" src="docs/assets/screenshots.gif" alt="Screenshots" />
 </p>
 
 
@@ -27,27 +27,40 @@ npm install
 
 
 ## Development Workflow
-Read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentation
 
-**Start a live-reload development server:**
-
-```
-WEB_PATH="/" npm run dev
-```
-
-**Generate a production build in `./build`:**
+### Start a live-reload development server
+The LiMeApp is a frontend application for services running on a LibreMesh router.
+By running:
 
 ```
-WEB_PATH="/" npm run build --production
+npm run dev
 ```
 
-> You can now deploy the contents of the `build` directory to production on github pages!
->
-> Fork and `npm run deploy`
+we can serve the LiMeApp with hot reloading and it will proxy every backend request to http://10.13.0.1, the default ip address for LibreMesh routers.
 
+If you already have a LibreMesh router reachable at any given IP address, let's say 10.5.0.9, you can use it as a backend with:
 
-## Router Installation
+```
+env NODE_HOST=10.5.0.9 npm run dev
+```
 
-In order to install the software in the node, the node must have several ubus packages installed ( see https://github.com/libremesh/lime-packages).
+If you want, you can also setup a virtual LibreMesh node following [lime-packages: TESTING.md](https://github.com/libremesh/lime-packages/blob/master/TESTING.md#development-with-qemu-virtual-machine), which will be available at http://10.13.0.1 by default.
 
-For develop you can run `WEB_PATH='/app' npm run build --production` and then copy the build folder to the /www/app directory of the node and go.
+### Generate a production build
+```
+npm run build:production
+```
+Now you can copy the bundles to the router:
+
+```
+ssh root@10.13.0.1 "rm -rf /www/app/*" && scp -r ./build/* root@10.13.0.1:/www/app
+```
+
+### Run tests
+```
+npm run tests
+```
+
+### Contribute
+Plase, read the ["How to contribute and code of conduct"](CONTRIBUTING.md) documentation.
+We also have a [Tutorial](docs/Tutorial.md) for newcomers :)
