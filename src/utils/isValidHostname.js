@@ -10,9 +10,9 @@ export const isValidHostname = (text = '', length = false) => {
 // slugify maintains case, so Fóø -> Foo
 export const slugify = (string, end, domain) => {
 	let a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõṕŕřśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;';
-    a += a.toUpperCase();
+	a += a.toUpperCase();
 	let b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnooooooooprrssssttuuuuuuuuuwxyyzzz------';
-    b += b.toUpperCase();
+	b += b.toUpperCase();
 
 	const p = new RegExp(a.split('').join('|'), 'g');
 	

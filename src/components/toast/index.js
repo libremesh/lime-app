@@ -8,7 +8,7 @@ const getStyle = (type) => {
 		case "error":
 			return style.error;
 		default:
-			return "";	
+			return "";
 	}
 }
 

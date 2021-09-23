@@ -6,7 +6,7 @@ import style from './style.less';
 
 export const Menu = ({ opened, toggle }) => {
 	const [currentView, setCurrentView] = useState('node');
-	const hasCommunityPlugins = () => 
+	const hasCommunityPlugins = () =>
 		plugins.filter(p => p.menuView && p.menuView === 'community').length > 0;
 	function changeCurrentView(e) {
 		e.preventDefault();

@@ -21,7 +21,7 @@ export default (initialState,rootEpics,rootReducers) => {
 	});
 
 	const enhancer = composeEnhancers(
-		applyMiddleware(...[reduxRouterMiddleware,epicMiddleware]),
+		applyMiddleware(...[reduxRouterMiddleware,epicMiddleware])
 	);
 
 	const store = createStore(rootReducers, initialState, enhancer);
