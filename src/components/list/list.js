@@ -2,9 +2,9 @@ import { h } from "preact";
 import style from './style.less';
 
 export const List = ({ children }) => (
-    <div class={style.list}>
-        {children}
-    </div>
+	<div class={style.list}>
+		{children}
+	</div>
 )
 
 export const ListItem = ({ children, onClick, ...props}) => (

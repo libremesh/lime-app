@@ -2,7 +2,7 @@ import { useQuery, useMutation } from 'react-query';
 import {
     getPortalConfig, setPortalConfig,
     getPortalContent, setPortalContent,
-    createCompression
+    createCompression, listVouchers
 } from './piraniaApi';
 import queryCache from 'utils/queryCache';
 
@@ -29,3 +29,7 @@ export const useCreateCompression = () =>
                 compression
             )
     });
+
+export function useListVouchers() {
+	return useQuery(["pirania", "list_vouchers"], listVouchers, {});
+}

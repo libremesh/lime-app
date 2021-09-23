@@ -49,26 +49,22 @@ const Routes = () => (
 			.filter(plugin => plugin.additionalRoutes)
 			.map(plugin => plugin.additionalRoutes)
 			.flat()
-			.map(([path, Component]) => {
-				return (
-					<Route path={path}>
-						<Component />
-					</Route>
-				)
-			})
+			.map(([path, Component]) => (
+				<Route path={path}>
+					<Component />
+				</Route>
+			))
 		}
 		{/* Additional plugins protected routes */}
 		{plugins
 			.filter(plugin => plugin.additionalProtectedRoutes)
 			.map(plugin => plugin.additionalProtectedRoutes)
 			.flat()
-			.map(([path, Component]) => {
-				return (
-					<CommunityProtectedRoute path={path}>
-						<Component />
-					</CommunityProtectedRoute>
-				)
-			})
+			.map(([path, Component]) => (
+				<CommunityProtectedRoute path={path}>
+					<Component />
+				</CommunityProtectedRoute>
+			))
 		}
 		<CommunityProtectedRoute path={'/reboot'}><RebootPage /></CommunityProtectedRoute>
 		<Redirect default path={'/'} to={'rx'} />
