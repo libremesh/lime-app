@@ -23,6 +23,8 @@ import queryCache from 'utils/queryCache';
 import { useUpgradeInfo, useNewVersion } from '../../plugins/lime-plugin-firmware/src/firmwareQueries';
 import { useSession, useLogin } from 'utils/queries';
 
+import { RebootPage } from '../containers/RebootPage';
+
 const Routes = () => (
 	<Router history={history}>
 		{/* Public pages, don't need to be authenticated */}
@@ -67,6 +69,7 @@ const Routes = () => (
 				)
 			})
 		}
+		<CommunityProtectedRoute path={'/reboot'}><RebootPage /></CommunityProtectedRoute>
 		<Redirect default path={'/'} to={'rx'} />
 	</Router>
 );

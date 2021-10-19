@@ -50,3 +50,14 @@ export function useBatHost(mac, outgoingIface, queryConfig) {
 		...queryConfig
 	});
 }
+
+export function useNeedReboot() {
+	return useQuery('changes-need-reboot', {
+		initialStale: false,
+		initialData: false
+	});
+}
+
+export function useReboot(config) {
+	return useMutation(reboot, config);
+}

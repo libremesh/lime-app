@@ -28,3 +28,6 @@ export function getCommunitySettings() {
 		.catch(() => DEFAULT_COMMUNITY_SETTINGS);
 }
 
+export function reboot() {
+	return api.call('system', 'reboot', {}).then(() => true);
+}
