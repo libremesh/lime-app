@@ -1,3 +1,4 @@
+import { h } from "preact";
 import { route } from 'preact-router';
 import Match from 'preact-router/match';
 import I18n from 'i18n-js';

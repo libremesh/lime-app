@@ -7,9 +7,8 @@ import {
 
 export const useChangeHostname = () =>
     useMutation(changeHostname, {
-        onSuccess: (hostname) => queryCache.setQueryData(['system', 'board'],
-            oldData => ({ ...oldData, hostname: hostname })
-        )
+        onSuccess: () =>
+            queryCache.setQueryData('changes-need-reboot', true)
     });
 
 export const useWifiData = () =>
@@ -19,7 +18,19 @@ export const useAdminWifiData = () =>
     useQuery(['lime-utils-admin', 'get_wifi_data'], getAdminWifiData);
 
 export const useChangeAPPassword = () =>
-    useMutation(changeApNamePassword);
+    useMutation(changeApNamePassword, {
+        onSuccess: () => {
+            queryCache.setQueryData('changes-need-reboot', true);
+            queryCache.invalidateQueries(['lime-utils', 'get_wifi_data']);
+            queryCache.invalidateQueries(['lime-utils-admin', 'get_wifi_data']);
+        }
+    });
 
 export const useSetupRoamingAP = () =>
-    useMutation(setupRoamingAP);
+    useMutation(setupRoamingAP, {
+        onSuccess: () => {
+            queryCache.setQueryData('changes-need-reboot', true);
+            queryCache.invalidateQueries(['lime-utils', 'get_wifi_data']);
+            queryCache.invalidateQueries(['lime-utils-admin', 'get_wifi_data']);
+        }
+    });

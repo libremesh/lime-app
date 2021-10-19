@@ -32,6 +32,7 @@ describe('hostname config', () => {
         await waitForExpect(() => {
             expect(changeHostname).toBeCalledWith('new-hostname');
         })
+        expect(await screen.findByTestId('changes-need-reboot')).toBeVisible();
     });
 
     it('shows an error message when hostname length is less than 3', async () => {
@@ -56,5 +57,6 @@ describe('hostname config', () => {
         await waitForExpect(() => {
             expect(changeHostname).toBeCalledWith('foo-foo-foo');
         });
+        expect(await screen.findByTestId('changes-need-reboot')).toBeVisible();
     });
 });

@@ -1,6 +1,7 @@
 import api from './uhttpd.service';
 import {
-	getBatHost, getBoardData, getSession, getCommunitySettings, getCommunityName
+	getBatHost, getBoardData, getSession, getCommunitySettings, getCommunityName,
+	reboot
 } from './api';
 import { DEFAULT_COMMUNITY_SETTINGS } from './constants';
 import { useQuery, useMutation } from 'react-query';
@@ -35,12 +36,6 @@ export function useBoardData() {
 	});
 }
 
-export function useCommunityName() {
-	return useQuery(['lime-utils', 'get_community_name'], getCommunityName, {
-		initialData: 'LibreMesh.org',
-		initialStale: true
-	});
-}
 
 export function useCommunitySettings() {
 	return useQuery(['lime-utils', 'get_community_settings'], getCommunitySettings, {
@@ -54,4 +49,15 @@ export function useBatHost(mac, outgoingIface, queryConfig) {
 		retry: 3,
 		...queryConfig
 	});
+}
+
+export function useNeedReboot() {
+	return useQuery('changes-need-reboot', {
+		initialStale: false,
+		initialData: false
+	});
+}
+
+export function useReboot(config) {
+	return useMutation(reboot, config);
 }

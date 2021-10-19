@@ -28,12 +28,16 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
                     />
                     <label htmlFor="enablePassword">{I18n.t("Enable Password")}</label>
                 </div>
-                <label class="d-none" htmlFor="password">{I18n.t("Wifi Password")}</label>
-                <input type="text" name="password" id="password"
-                    ref={register({
-                        validate: isValidPassword
-                    })}
-                    class={`w-100 ${!enablePassword && 'd-none'}`} />
+                {enablePassword &&
+                    <div>
+                        <label htmlFor="password">{I18n.t("Wifi Password")}</label>
+                            <input type="text" name="password" id="password"
+                                ref={register({
+                                    validate: isValidPassword
+                                })}
+                                class="w-100" />
+                    </div>
+                }
                 {errors && errors.password &&
                     <p class="text-danger">
                         {I18n.t('The password should have at least 8 characters')}

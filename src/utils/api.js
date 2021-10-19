@@ -22,12 +22,12 @@ export function getSession() {
 		.then(res => res.values);
 }
 
-export function getCommunityName() {
-	return api.call('lime-utils', 'get_community_name', {});
-}
-
 export function getCommunitySettings() {
 	return api.call('lime-utils', 'get_community_settings', {})
 		.then(res => ({...res, DEFAULT_COMMUNITY_SETTINGS }))
 		.catch(() => DEFAULT_COMMUNITY_SETTINGS);
+}
+
+export function reboot() {
+	return api.call('system', 'reboot', {}).then(() => true);
 }

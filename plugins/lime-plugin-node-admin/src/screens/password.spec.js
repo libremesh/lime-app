@@ -55,7 +55,7 @@ describe('ap password config', () => {
 
     it('doesnt show an input for password when password is disabled', async () => {
         render(<APPasswordPage />);
-        expect(await findPasswordInput()).toHaveClass('d-none');
+        expect(screen.queryByLabelText("Wifi Password")).toBeNull();
     });
     it('shows a checked switch for password usage when password is enabled', async () => {
         getAdminWifiData.mockImplementation(withPasswordMock);
@@ -66,14 +66,14 @@ describe('ap password config', () => {
     it('shows password input with current password when password is enabled', async () => {
         getAdminWifiData.mockImplementation(withPasswordMock);
         render(<APPasswordPage />);
-        expect(await findPasswordInput()).not.toHaveClass('d-none');
+        expect(await findPasswordInput()).toBeVisible();
     });
 
     it('shows password input when password usage is switched on', async () => {
         render(<APPasswordPage />);
         fireEvent.click(await findPasswordUsageCheckbox());
         await waitForExpect(async () => {
-            expect(await findPasswordInput()).not.toHaveClass('d-none');
+            expect(await findPasswordInput()).toBeVisible();
         });
     });
 
@@ -81,7 +81,7 @@ describe('ap password config', () => {
         getAdminWifiData.mockImplementation(withPasswordMock);
         render(<APPasswordPage />);
         fireEvent.click(await findPasswordUsageCheckbox());
-        expect(await findPasswordInput()).toHaveClass('d-none');
+        expect(screen.queryByLabelText("Wifi Password")).toBeNull();
     });
 
 
@@ -93,6 +93,7 @@ describe('ap password config', () => {
                 password: "", enablePassword: false
             });
         });
+        expect(await screen.findByTestId('changes-need-reboot')).toBeVisible();
     });
 
     it('calls api endpoint for enabling password when switched on', async () => {
@@ -106,6 +107,7 @@ describe('ap password config', () => {
                 password: "12345678", enablePassword: true
             });
         });
+        expect(await screen.findByTestId('changes-need-reboot')).toBeVisible();
     });
 
     it('shows an error if password usage is switched on but password is to short', async () => {
