@@ -7,7 +7,8 @@ import '@testing-library/jest-dom';
 import queryCache from 'utils/queryCache';
 
 import { getMeshIfaces, getAssocList } from './src/alignApi';
-import { getBatHost } from 'utils/api';
+import { getBatHost, getCommunitySettings} from 'utils/api';
+import { DEFAULT_COMMUNITY_SETTINGS } from 'utils/constants';
 
 jest.mock('./src/alignApi');
 jest.mock('utils/api');
@@ -64,6 +65,7 @@ describe('align page', () => {
 		getMeshIfaces.mockImplementation(async () => ['wlan1-mesh', 'wlan2-mesh']);
 		getAssocList.mockClear().mockImplementation(mockAssocList);
 		getBatHost.mockImplementation(mockBatHost);
+		getCommunitySettings.mockImplementation(async () => DEFAULT_COMMUNITY_SETTINGS);
 	})
 
 	afterEach(() => {
