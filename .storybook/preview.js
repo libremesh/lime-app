@@ -8,7 +8,7 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { Header } from 'components/header';
 import { Menu } from '../src/containers/Menu';
 import { AppContext } from 'utils/app.context';
-import { SubHeader } from 'components/app';
+import SubHeader from 'containers/SubHeader';
 
 const boarData = {
 	hostname: 'ql-anaymarcos',

@@ -1,3 +1,4 @@
+import { h } from "preact";
 import { useState, useEffect } from 'preact/hooks';
 import { route } from 'preact-router';
 

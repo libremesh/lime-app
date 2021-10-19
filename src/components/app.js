@@ -13,14 +13,11 @@ import { AppContextProvider } from '../utils/app.context';
 import { Route, CommunityProtectedRoute, Redirect } from '../utils/routes';
 
 import { Menu } from '../containers/Menu';
-
 import { Header } from './header';
-
-import { SafeUpgradeCountdown, UpgradeAvailableBanner } from '../../plugins/lime-plugin-firmware';
+import SubHeader from '../containers/SubHeader';
 
 import queryCache from 'utils/queryCache';
 
-import { useUpgradeInfo, useNewVersion } from '../../plugins/lime-plugin-firmware/src/firmwareQueries';
 import { useSession, useLogin } from 'utils/queries';
 
 import { RebootPage } from '../containers/RebootPage';
@@ -73,21 +70,6 @@ const Routes = () => (
 		<Redirect default path={'/'} to={'rx'} />
 	</Router>
 );
-
-export const SubHeader = () => {
-	const { data: session } = useSession();
-	const { data: upgradeInfo } = useUpgradeInfo({enabled: session.username});
-	const { data: newVersion } = useNewVersion({enabled: session.username});
-	const showSuCountdown = upgradeInfo && upgradeInfo.suCounter > 0;
-	const showNewFirmwareVersion = !showSuCountdown && newVersion && newVersion.version;
-
-	return (
-		<div>
-			{showSuCountdown && <SafeUpgradeCountdown counter={upgradeInfo.suCounter} />}
-			{showNewFirmwareVersion && <UpgradeAvailableBanner />}
-		</div>
-	)
-}
 
 const App = () => {
 	const { data: session } = useSession();
