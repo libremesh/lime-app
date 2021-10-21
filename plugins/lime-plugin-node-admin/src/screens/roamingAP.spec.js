@@ -10,7 +10,7 @@ import queryCache from 'utils/queryCache';
 
 import RoamingAPPage from './roamingAP';
 
-import { setupRoamingAP, getWifiData } from '../nodeAdminApi';
+import { setupRoamingAP, getAPsData } from '../nodeAdminApi';
 
 jest.mock('utils/api');
 jest.mock('../nodeAdminApi');
@@ -23,7 +23,7 @@ const findSubmitButton = async () =>
 
 describe('roaming ap config', () => {
     beforeEach(() => {
-        getWifiData.mockImplementation(async () =>
+        getAPsData.mockImplementation(async () =>
             ({ community_ap: { community: { enabled: true }, enabled: true, ssid: 'QuintanaLibre' } })
         );
         setupRoamingAP.mockImplementation(async () => null);
@@ -32,7 +32,7 @@ describe('roaming ap config', () => {
 
     afterEach(() => {
         cleanup();
-        getWifiData.mockClear();
+        getAPsData.mockClear();
         setupRoamingAP.mockClear();
         act(() => queryCache.clear());
     });
@@ -45,7 +45,7 @@ describe('roaming ap config', () => {
     });
 
     it('shows the default value for the community, case disabled', async () => {
-        getWifiData.mockImplementation(async () =>
+        getAPsData.mockImplementation(async () =>
             ({ community_ap: { community: { enabled: false }, enabled: true, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
@@ -53,7 +53,7 @@ describe('roaming ap config', () => {
     });
 
     it('shows the default value for the community case enabled', async () => {
-        getWifiData.mockImplementation(async () =>
+        getAPsData.mockImplementation(async () =>
             ({ community_ap: { community: { enabled: true }, enabled: true, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
@@ -61,7 +61,7 @@ describe('roaming ap config', () => {
     });
 
     it('shows an unchecked switch for enabling the ap when it is disabled in the node', async () => {
-        getWifiData.mockImplementation(async () =>
+        getAPsData.mockImplementation(async () =>
             ({ community_ap: { community: { enabled: true }, enabled: false, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
@@ -74,7 +74,7 @@ describe('roaming ap config', () => {
     });
 
     it('calls api endpoint for disabling ap when switched off', async () => {
-        getWifiData.mockImplementation(async () =>
+        getAPsData.mockImplementation(async () =>
             ({ community_ap: { community: { enabled: true }, enabled: true, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
@@ -89,7 +89,7 @@ describe('roaming ap config', () => {
     });
 
     it('calls api endpoint for disabling ap when switched on', async () => {
-        getWifiData.mockImplementation(async () =>
+        getAPsData.mockImplementation(async () =>
             ({ community_ap: { community: { enabled: true }, enabled: false, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);

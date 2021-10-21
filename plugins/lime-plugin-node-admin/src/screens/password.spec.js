@@ -9,7 +9,7 @@ import { render } from 'utils/test_utils';
 import queryCache from 'utils/queryCache';
 
 import APPasswordPage from './password';
-import { changeApNamePassword, getAdminWifiData } from '../nodeAdminApi';
+import { changeApNamePassword, getAdminApsData } from '../nodeAdminApi';
 
 jest.mock('../nodeAdminApi');
 
@@ -32,7 +32,7 @@ const findSubmitButton = async () =>
 
 describe('ap password config', () => {
     beforeEach(() => {
-        getAdminWifiData.mockImplementation(withoutPasswordMock);
+        getAdminApsData.mockImplementation(withoutPasswordMock);
         changeApNamePassword.mockClear();
         changeApNamePassword.mockImplementation(async () => null);
     });
@@ -58,13 +58,13 @@ describe('ap password config', () => {
         expect(screen.queryByLabelText("Wifi Password")).toBeNull();
     });
     it('shows a checked switch for password usage when password is enabled', async () => {
-        getAdminWifiData.mockImplementation(withPasswordMock);
+        getAdminApsData.mockImplementation(withPasswordMock);
         render(<APPasswordPage />);
         expect(await findPasswordUsageCheckbox()).toBeChecked();
     });
 
     it('shows password input with current password when password is enabled', async () => {
-        getAdminWifiData.mockImplementation(withPasswordMock);
+        getAdminApsData.mockImplementation(withPasswordMock);
         render(<APPasswordPage />);
         expect(await findPasswordInput()).toBeVisible();
     });
@@ -78,7 +78,7 @@ describe('ap password config', () => {
     });
 
     it('hides password input when password usage is switched off', async () => {
-        getAdminWifiData.mockImplementation(withPasswordMock);
+        getAdminApsData.mockImplementation(withPasswordMock);
         render(<APPasswordPage />);
         fireEvent.click(await findPasswordUsageCheckbox());
         expect(screen.queryByLabelText("Wifi Password")).toBeNull();

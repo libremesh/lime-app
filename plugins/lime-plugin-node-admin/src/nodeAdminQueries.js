@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from 'react-query';
 import queryCache from 'utils/queryCache';
 import {
-    getWifiData, getAdminWifiData, changeHostname,
+    getAPsData, getAdminApsData, changeHostname,
     changeApNamePassword, setupRoamingAP
 } from './nodeAdminApi';
 
@@ -12,10 +12,10 @@ export const useChangeHostname = () =>
     });
 
 export const useWifiData = () =>
-    useQuery(['lime-utils', 'get_wifi_data'], getWifiData);
+    useQuery(['lime-utils', 'get_wifi_data'], getAPsData);
 
 export const useAdminWifiData = () =>
-    useQuery(['lime-utils-admin', 'get_wifi_data'], getAdminWifiData);
+    useQuery(['lime-utils-admin', 'get_wifi_data'], getAdminApsData);
 
 export const useChangeAPPassword = () =>
     useMutation(changeApNamePassword, {

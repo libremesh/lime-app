@@ -5,7 +5,7 @@ import { render } from 'utils/test_utils';
 import queryCache from 'utils/queryCache';
 
 import NodeAdmin from './src/nodeAdminPage';
-import { getWifiData } from './src/nodeAdminApi';
+import { getAPsData } from './src/nodeAdminApi';
 import { getBoardData } from 'utils/api';
 import { route } from 'preact-router';
 
@@ -14,7 +14,7 @@ jest.mock('utils/api');
 
 describe('nodeAdmin', () => {
     beforeEach(() => {
-        getWifiData.mockImplementation(async () => ({
+        getAPsData.mockImplementation(async () => ({
             node_ap: { has_password: false },
             community_ap: { community: { enabled: true }, enabled: true, ssid: 'quintana-libre.org.ar' },
         }));
@@ -47,7 +47,7 @@ describe('nodeAdmin', () => {
     });
 
     it('shows wifi config with password', async () => {
-        getWifiData.mockImplementation(async () => ({
+        getAPsData.mockImplementation(async () => ({
             node_ap: { has_password: true },
             community_ap: { community: { enabled: true }, enabled: true, ssid: 'quintana-libre.org.ar' },
         }));
@@ -63,7 +63,7 @@ describe('nodeAdmin', () => {
     });
 
     it('show community roaming ap config when disabled', async () => {
-        getWifiData.mockImplementation(async () => ({
+        getAPsData.mockImplementation(async () => ({
             node_ap: { has_password: true },
             community_ap: { community: { enabled: true }, enabled: false, ssid: 'quintana-libre.org.ar' }
         }));
@@ -74,7 +74,7 @@ describe('nodeAdmin', () => {
     });
 
     it('shows community roaming ap config when enabled', async () => {
-        getWifiData.mockImplementation(async () => ({
+        getAPsData.mockImplementation(async () => ({
             node_ap: { has_password: true },
             community_ap: { community: { enabled: true }, enabled: true }
         }));

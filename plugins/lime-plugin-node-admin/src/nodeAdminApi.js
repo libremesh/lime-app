@@ -8,11 +8,11 @@ export const changeApNamePassword = ({password, enablePassword}) =>
     api.call('wireless-service-admin', 'set_node_ap',
         { password: password, "has_password": enablePassword });
 
-export const getWifiData = () =>
-    api.call('wireless-service', 'get_wifi_data', {});
+export const getAPsData = () =>
+    api.call('wireless-service', 'get_access_points_data', {});
 
-export const getAdminWifiData = () =>
-    api.call('wireless-service-admin', 'get_wifi_data', {});
+export const getAdminApsData = () =>
+    api.call('wireless-service-admin', 'get_access_points_data', {});
 
 export const setupRoamingAP = ({enabled}) =>
     api.call('wireless-service-admin', 'set_community_ap', {enabled})
