@@ -4,7 +4,7 @@ const transformConfig = require('preact-cli/lib/lib/webpack/transform-config');
 const webpack = require('webpack');
 
 module.exports = {
-	stories: ['../stories/**/*stories.js', '../plugins/**/*stories.js'],
+	stories: ['../stories/**/*stories.js', '../plugins/**/*stories.js', 'containers/**/*stories.js'],
 	addons: ['@storybook/addon-actions', '@storybook/addon-knobs', '@storybook/addon-essentials'],
 	webpackFinal: async(config, {configType}) => {
 		const isProd = configType === 'PRODUCTION';

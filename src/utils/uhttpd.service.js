@@ -6,7 +6,7 @@ const parseResult = result =>
 		if (result.error) { return rej(result.error); }
 		if (result.result[0] !== 0) { return rej(result); }
 		result = result.result[1];
-		if (result.status === 'error') {
+		if (result && result.status === 'error') {
 			return rej(result.message);
 		}
 		return res(result);

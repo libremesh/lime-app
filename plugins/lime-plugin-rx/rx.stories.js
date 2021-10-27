@@ -116,3 +116,16 @@ needToConfirmUpgrade.args = {
 		}]
 	]
 }
+
+export const changesNeedReboot = () => (
+	<Page
+		nodeData={object('Node data', {...nodeData, uptime: '60\n'})}
+		isLoading={boolean('Is loading', false)}
+		{...actions}
+	/>
+)
+changesNeedReboot.args = {
+	queries: [
+		['changes-need-reboot', true]
+	]
+}
