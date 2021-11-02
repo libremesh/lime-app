@@ -1,0 +1,198 @@
+/* Voucher list */
+.filterBox {
+  padding: 25px 5vw;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  text-transform: capitalize;
+}
+.filterBox > div {
+  display: flex;
+  flex-flow: column;
+  padding: 15px 0;
+}
+.filterBox input, .filterBox select {
+  border-radius: 5px;
+  height: 35px;
+  width: 100%;
+}
+.voucherBox {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.divider hr {
+  width: 93%;
+  border-top: #38927f 0.1px solid;
+}
+.divider h2 {
+  text-align: center;
+}
+.voucherItem {
+  padding: 5px;
+  display: flex;
+  flex-flow: column;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 5px;;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+  margin: 15px 0;
+  box-shadow: 6px -6px rgba(0,0,0,0.1);
+}
+.code,
+.dates {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.codeSecret {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.codeCopy {
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 0.8em;
+}
+.codeStatus {
+  color: purple;
+  text-transform: capitalize;
+}
+.voucherDescription {
+  text-align: left;
+  width: 100%;
+  color: black;
+  padding: 20px;
+  margin-left: 30px;
+  cursor: pointer;
+}
+.dates {
+  cursor: pointer;
+  font-size: 0.8em;
+  text-transform: capitalize;
+}
+.fab {
+  position: fixed;
+  top: 90vh;
+  right: 3vw;
+  font-size: 1em;
+	background: #38927f	;
+  color: white;
+}
+/* Voucher details */
+.voucherDetailBox {
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 2vh;
+  margin-bottom: 30px;
+}
+.voucherDetailBox h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+/* Edit voucher */
+.editForm textarea {
+  padding: 5px;
+  border-radius: 15px;
+}
+.editForm label {
+  text-transform: capitalize;
+}
+/* Create voucher */
+.goBackTitle {
+  width: 100%;
+  padding: 2.5vh 0;
+  display: flex;
+  position: relative;
+  align-items: baseline;
+  justify-content: center;
+}
+.goBackTitle img {
+  position: absolute;
+  left: 0;
+  top: 4vh;
+}
+.goBackTitle h1 {
+  text-align: center;
+  font-size: 2em;
+  text-transform: capitalize;
+}
+.createForm {
+  display: flex;
+  flex-flow: column;
+}
+input, textarea, button {
+  width: 295px;
+}
+.isPermanent {
+  display: flex;
+  align-items: baseline;
+  padding: 5px 0;
+}
+.isPermanent input {
+  width: 30px;
+  height: 15px;
+  margin-left: 20px;
+}
+.confirmCodeBox h3 {
+  font-size: 1em;
+}
+.confirmCodeBox {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.confirmCode {
+  border: 1px solid purple;
+  width: 250px;
+  padding: 25px 0;
+  margin: 10px auto;
+  border-radius: 15px;
+  text-align: center;
+}
+.confirmCodeBox button {
+  margin-top: 5vh;
+}
+
+/* Media queries: 720 968 */
+
+@media screen and (min-width: 720px) {
+  .voucherItem {
+      margin: 15px 25px;
+  }
+  .filterBox {
+    flex-flow: row;
+    width: 95vw;
+  }
+  .filterBox > div {
+    width: 50%;
+    padding-top: 5vh;
+    flex-flow: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .filterBox input, .filterBox select {
+    width: 200px;
+    text-transform: capitalize;
+  }
+  .filterBox label {
+    margin-right: 2vw;
+  }
+}
+
+@media screen and (min-width: 968px) {
+  .filterBox {
+    width: 90vw;
+  }
+  .divider h2 {
+    padding-bottom: 2.5vh;
+  }
+  .filterBox input, .filterBox select {
+    width: 300px;
+  }
+}

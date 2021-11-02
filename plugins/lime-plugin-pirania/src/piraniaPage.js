@@ -1,21 +1,17 @@
-import { h } from 'preact';
-import { VoucherTablePage } from './voucherTablePage/voucherTablePage';
-import { useListVouchers } from './piraniaQueries';
-import { Loading } from 'components/loading';
-
+import { h } from "preact";
+import { useListVouchers } from "./piraniaQueries";
+import { Loading } from "components/loading";
+import VoucherList from "./screens/voucherList";
 const PiraniaPage = ({}) => {
-	const { data: voucherList, isLoading } = useListVouchers();
+	const { data, isLoading } = useListVouchers();
 	if (isLoading) {
 		return (
 			<div class="container container-center">
 				<Loading />
-			</div>)
+			</div>
+		);
 	}
-	if (voucherList && voucherList.vouchers.length > 0) {
-	return <VoucherTablePage list={voucherList.vouchers} />
-	}
-	
-	return <div />
-}
+	return <VoucherList vouchers={data} />;
+};
 
 export default PiraniaPage;

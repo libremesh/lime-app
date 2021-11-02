@@ -97,7 +97,8 @@
     "redux-observable": "1.2.0",
     "rxjs": "6.5.4",
     "simple-color-scale": "1.0.1",
-    "skeleton-less": "2.0.1"
+    "skeleton-less": "2.0.1",
+    "timeago.js": "^4.0.2"
   },
   "husky": {
     "hooks": {

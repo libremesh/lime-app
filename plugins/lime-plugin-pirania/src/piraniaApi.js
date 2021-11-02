@@ -28,17 +28,60 @@ export const createCompression = (file) =>
             }
         });
     });
-
 export function listVouchers() {
-	return api.call('pirania', 'list_vouchers', {})
-	.then(response => {
-		console.log(response)
-			return response
-	})
-	.catch(error => {
-		if (error.code === -32000) {
-			return Promise.resolve(null)
-		}
-		throw error;
-	})
+	return api
+		.call("pirania", "list_vouchers", {})
+		.then((response) => response.vouchers.map((voucher) => {
+			const { is_active, expiration_date } = voucher;
+			let status = is_active ? "used" : "available";
+			if (expiration_date < Date.now()) status = "disabled";
+			return {
+				...voucher,
+				status
+			};
+		}))
+		.catch((error) => {
+			if (error.code === -32000) {
+				return Promise.resolve(null);
+			}
+			throw error;
+		});
+}
+
+export function addVoucher(input) {
+	return api
+		.call("pirania", "add_vouchers", input)
+		.then((response) => response.vouchers)
+		.catch((error) => {
+			if (error.code === -32000) {
+				return Promise.resolve(null);
+			}
+			throw error;
+		});
+}
+
+
+export function rename(input) {
+	return api
+		.call("pirania", "rename", input)
+		.then((response) => response)
+		.catch((error) => {
+			if (error.code === -32000) {
+				return Promise.resolve(null);
+			}
+			throw error;
+		});
+}
+
+
+export function invalidate(id) {
+	return api
+		.call("pirania", "invalidate", id)
+		.then((response) => response)
+		.catch((error) => {
+			if (error.code === -32000) {
+				return Promise.resolve(null);
+			}
+			throw error;
+		});
 }
