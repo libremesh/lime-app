@@ -4,31 +4,34 @@ import I18n from "i18n-js";
 import Loading from "../../../../src/components/loading";
 import { route } from "preact-router";
 import style from "../style.less";
-import { useListVouchers, useRename } from "../piraniaQueries";
+import { useListVouchers, useRename, useInvalidade } from "../piraniaQueries";
 import GoBack from "../components/goBack";
 
-const EditVoucherForm = ({ submit, permanent, name }) => {
+const EditVoucherForm = ({ submit, status, name }) => {
 	const [description, setDescription] = useState(name);
-	const [isPermanent, setPermanent] = useState(permanent);
+	const [isDisabled, setDisabled] = useState(status === "disabled");
 
 	return (
-		<form onSubmit={() => submit(description)} style={style.createForm}>
+		<form
+			onSubmit={(e) => submit(e, description, isDisabled)}
+			class={style.createForm}
+		>
 			<label for="description">{I18n.t("description")}</label>
 			<textarea
 				id="description"
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 			/>
-			<div class={style.isPermanent}>
-				<label for="permanent">{I18n.t("permanent")}</label>
+			{status !== 'disabled' && <div class={style.isPermanent}>
+				<label for="permanent">{I18n.t("disable voucher")}</label>
 				<input
-					checked={isPermanent}
+					checked={isDisabled}
 					type="checkbox"
-					value={isPermanent}
+					value={isDisabled}
 					id="permanent"
-					onChange={() => setPermanent(!isPermanent)}
+					onChange={() => setDisabled(!isDisabled)}
 				/>
-			</div>
+			</div>}
 			<button type="submit">{I18n.t("save")}</button>
 		</form>
 	);
@@ -36,7 +39,10 @@ const EditVoucherForm = ({ submit, permanent, name }) => {
 
 const EditVoucher = ({ id }) => {
 	const [renameVoucher] = useRename();
-	const submit = async (name) => {
+	const [disableVoucher] = useInvalidade();
+	const submit = async (e, name, isDisabled) => {
+		e.preventDefault()
+		if (isDisabled) await disableVoucher({ id });
 		await renameVoucher({
 			id,
 			name
@@ -57,7 +63,8 @@ const EditVoucher = ({ id }) => {
 				/>
 			</div>
 		);
-	} return <Loading />;
+	}
+	return <Loading />;
 };
 
 export default EditVoucher;

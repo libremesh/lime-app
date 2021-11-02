@@ -23,9 +23,11 @@ describe("Edit voucher", () => {
 		listVouchers.mockImplementation(async () => [voucher]);
 		render(<EditVoucher id={voucher.id} />);
 	});
-
-
 	it("has input for changing description with label", async () => {
+		const input = await screen.findByLabelText(`description`);
+		expect(input).toBeInTheDocument();
+	});
+	it("has input for changing disabling the voucher", async () => {
 		const input = await screen.findByLabelText(`description`);
 		expect(input).toBeInTheDocument();
 	});
