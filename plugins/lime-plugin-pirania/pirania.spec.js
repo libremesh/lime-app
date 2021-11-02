@@ -8,19 +8,8 @@ import VoucherList from "./src/screens/voucherList";
 import { listVouchers } from "./src/piraniaApi";
 
 jest.mock("./src/piraniaApi");
-const now = (new Date()).getTime()/1000
+const now = new Date().getTime() / 1000;
 let vouchers = [
-	{
-		code: "PIDFIG",
-		id: "x5crd4",
-		activation_date: now - 600e3,
-		name: "luandro",
-		duration_m: 1200,
-		is_active: false,
-		creation_date: now - 700e3,
-		permanent: false,
-		status: 'available'
-	},
 	{
 		code: "NNDAMD",
 		id: "fteNhN",
@@ -29,8 +18,8 @@ let vouchers = [
 		duration_m: 10000000000,
 		creation_date: 1631880815,
 		permanent: false,
-		status: 'available'
-
+		status: "available",
+		author_node: "conteiner"
 	},
 	{
 		mac: "6c:88:14:ba:c4:84",
@@ -43,8 +32,8 @@ let vouchers = [
 		is_active: true,
 		creation_date: 1631880790,
 		permanent: false,
-		status: 'used'
-
+		status: "used",
+		author_node: "conteiner"
 	},
 	{
 		mac: "98:9e:63:a7:91:e2",
@@ -57,7 +46,20 @@ let vouchers = [
 		is_active: true,
 		creation_date: 1633530042,
 		permanent: false,
-		status: 'disabled'
+		status: "disabled",
+		author_node: "sede"
+	},
+	{
+		code: "PIDFIG",
+		id: "x5crd4",
+		activation_date: now - 600e3,
+		name: "luandro",
+		duration_m: 1200,
+		is_active: false,
+		creation_date: now - 700e3,
+		permanent: false,
+		status: "available",
+		author_node: "pirania"
 	}
 ];
 
@@ -81,19 +83,9 @@ describe("voucher list", () => {
 			)
 		).toBeInTheDocument();
 	});
-	it("by default it lists last created vouchers", async () => {
-		render(<VoucherList vouchers={vouchers} />);
-		expect(await screen.findByText(vouchers[0].name)).toBeInTheDocument();
-	});
-
 	it("by default it lists vouchers value", async () => {
 		render(<VoucherList vouchers={vouchers} />);
 		expect(await screen.findByText(vouchers[0].code)).toBeInTheDocument();
-	});
-
-	it.skip("by default it lists the vouchers created in this node", async () => {
-		render(<VoucherList vouchers={vouchers} />);
-		expect(await screen.findByText(vouchers[1].name)).toBeInTheDocument();
 	});
 });
 
@@ -149,12 +141,5 @@ describe("voucher list search field", () => {
 	it("shows a text field with label search by", async () => {
 		const input = await screen.findByLabelText(`search by`);
 		expect(input).toBeInTheDocument();
-	});
-	it.skip("let you filter by node name", async () => {});
-	it.skip("let you filter by voucher name", async () => {
-		const input = await screen.findByLabelText("search by");
-		fireEvent.change(input, { target: { value: vouchers[0].name } });
-		expect(await screen.findByText(vouchers[0].name)).toBeInTheDocument();
-		expect(await screen.findByText(vouchers[1].name)).not.toBeInTheDocument();
 	});
 });

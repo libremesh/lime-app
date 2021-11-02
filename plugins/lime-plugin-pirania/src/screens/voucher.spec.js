@@ -21,7 +21,7 @@ let vouchers = [
 		duration_m: 1200,
 		is_active: false,
 		creation_date: now - 700e3,
-		permanent: false
+		permanent: true
 	}
 ];
 

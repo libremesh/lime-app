@@ -45,15 +45,14 @@ const VoucherDetails = ({
 			)}
 			<h3>{I18n.t("Creation date")}</h3>
 			<p>
-				<span>{I18n.t("created")}{" "}</span>
 				<TimeAgo date={creation_date} />
 			</p>
-			<div class={style.isPermanent}>
+			{permanent && <div class={style.isPermanent}>
 				<label>{I18n.t("permanent")}</label>
-				<input disabled type="checkbox" checked={permanent} />
-			</div>
+				<span style={{ color: 'green', marginLeft: 5 }}>✔</span>
+			</div>}
 		</div>
-		<button onClick={() => route(`/access/edit/${id}`)}>
+		<button disabled={status === "disabled"} onClick={() => route(`/access/edit/${id}`)}>
 			{I18n.t("Edit")}
 		</button>
 	</div>

@@ -5,11 +5,13 @@ import { route } from "preact-router";
 import Loading from "../../../../src/components/loading";
 import VoucherListItem from "../components/voucherListItem";
 import style from "../style.less";
+import { useBoardData } from 'utils/queries';
 
 const VoucherList = ({ vouchers }) => {
+	const {data: boardData} = useBoardData()
 	const [search, setSearch] = useState("");
 	const [filterSelection, setFilterSelection] = useState("all-vouchers");
-	if (!vouchers) return <Loading />
+	if (!vouchers || !boardData) return <Loading />
 	return (
 		<div>
 			<div class={style.filterBox}>
@@ -36,13 +38,18 @@ const VoucherList = ({ vouchers }) => {
 			</div>
 			<div class={style.voucherBox}>
 				{vouchers
+					.sort((a) => (a.author_node === boardData.hostname) ? -1 : 1)
 					.filter((voucher) => {
 						if (filterSelection === "all-vouchers") return true;
 						return voucher.status === filterSelection;
 					})
 					.filter((voucher) => {
 						if (!search || search === "") return true;
-						return voucher.name.includes(search);
+						const withName = voucher.name.includes(search);
+						const withNode = voucher.author_node?.includes(search);
+						const withId = voucher.id.includes(search);
+						const withCode = voucher.code.includes(search);
+						if (withName || withNode || withId || withCode) return true
 					})
 					.map((voucher) => (
 						<VoucherListItem {...voucher} key={voucher.id} />
