@@ -12,5 +12,6 @@ module.exports = {
 		'^components/(.*)$': '<rootDir>/src/components/$1',
 		'^utils/(.*)$': '<rootDir>/src/utils/$1',
 		'^containers/(.*)$': '<rootDir>/src/containers/$1',
+		'^plugins/(.*)$': '<rootDir>/plugins/$1',
 	}
 };

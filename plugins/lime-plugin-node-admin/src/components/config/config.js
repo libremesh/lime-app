@@ -3,9 +3,9 @@ import style from './config.style.less';
 import Loading from 'components/loading';
 import { ListItem } from 'components/list';
 
-export const Config = ({ title, subtitle, value, onClick, isLoading }) => {
+export const Config = ({ title, subtitle, value, onClick, isLoading, ...props }) => {
     return (
-        <ListItem onClick={onClick}>
+        <ListItem onClick={onClick} {...props}>
             <div class="d-flex flex-grow-1">
                 <div>
                     <div class={style.title}> {title} </div>

@@ -7,8 +7,8 @@ export const List = ({ children }) => (
     </div>
 )
 
-export const ListItem = ({ children, onClick}) => (
-    <div class={`${style.listItem} ${onClick ? style.clickable: ''}`} onClick={onClick}>
+export const ListItem = ({ children, onClick, ...props}) => (
+    <div class={`${style.listItem} ${onClick ? style.clickable: ''}`} onClick={onClick} {...props}>
         {children}
     </div>
 )
