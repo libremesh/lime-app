@@ -57,7 +57,7 @@ const apiContent = () =>
     `// Here you define the api calls to the ubus uhttpd enpoints your plugin needs
 import api from 'utils/uhttpd.service';
 
-export const getSomething = () => api.call('package', 'command', {}).toPromise();
+export const getSomething = () => api.call('package', 'command', {});
 `
 
 const apiSpecContent = (name) =>
