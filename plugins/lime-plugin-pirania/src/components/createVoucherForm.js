@@ -2,9 +2,11 @@ import { h } from "preact";
 import { useState } from "preact/hooks";
 import I18n from "i18n-js";
 import style from "../style.less";
+import Loading from "../../../../src/components/loading";
 const maxLength = 100;
 
 const CreateVoucherForm = ({ submitVoucher }) => {
+	const [loading, setLoading] = useState(false);
 	const [input, updateInput] = useState({
 		duration_m: 1,
 		name: "",
@@ -20,8 +22,12 @@ const CreateVoucherForm = ({ submitVoucher }) => {
 			[field]: value
 		});
 	};
+	const createVoucher = (e) => {
+		setLoading(true);
+		submitVoucher(e, input);
+	};
 	return (
-		<form class={style.createForm} onSubmit={(e) => submitVoucher(e, input)}>
+		<form class={style.createForm} onSubmit={(e) => createVoucher(e)}>
 			<label for="description">{I18n.t("Voucher group description")}</label>
 			<textarea
 				required
@@ -60,7 +66,11 @@ const CreateVoucherForm = ({ submitVoucher }) => {
 				id="quantity"
 				onChange={(e) => changeInput("qty", e.target.value)}
 			/>
-			<button type="submit">{I18n.t("Create")}</button>
+			{loading ? (
+				<Loading />
+			) : (
+				<button type="submit">{I18n.t("Create")}</button>
+			)}
 		</form>
 	);
 };
