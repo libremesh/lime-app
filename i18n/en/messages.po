@@ -369,10 +369,6 @@ msgstr ""
 msgid "Opens the \"{apSsid}\" AP in this node"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
-#~ msgid "Opens the {apSsid} AP in this node"
-#~ msgstr ""
-
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:95
 msgid "Or choose a firmware image from your device"
 msgstr ""
@@ -797,10 +793,6 @@ msgstr ""
 #: plugins/lime-plugin-rx/src/rxPage.js:26
 msgid "{mins, plural, one {# minute} other {# minutes}}"
 msgstr ""
-
-#: plugins/lime-plugin-rx/src/rxPage.js:26
-#~ msgid "{minutes, plural, one {# minute} other {# minutes}}"
-#~ msgstr ""
 
 #: plugins/lime-plugin-align/src/components/secondsAgo.js:21
 msgid "{secondsAmount} seconds ago"

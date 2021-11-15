@@ -177,62 +177,49 @@ Once you have setup your fork please do:
 
 To update dependendencies. And then
 
-```npm run translations```
+```npm run translations:extract```
 
-This will print to standard output lines like the following:
+This will create a messages.po for each locale under i18n/{locale}/ and print statistics of total/missing translations for each of the supported locales:
 
 ```
-(...)
-./i18n/translations/pt-br.json
-   +++ wrong_password_try_again_3100aecf
-   +++ you_can_upgrade_to_7af1ea19
-   +++ you_need_to_know_the_shared_password_to_enter_this_4b0c4ec1
-   +++ you_should_try_to_connect_to_the_network_network_8d7f515e
-   --- @metadata
-   --- back_to_base_443797cb
-   --- base_host_a17d45a4
-   --- connected_host_91e11459
-(...)
+Catalog statistics for i18n/{locale}/messages: 
+┌─────────────┬─────────────┬─────────┐
+│ Language    │ Total count │ Missing │
+├─────────────┼─────────────┼─────────┤
+│ es          │     191     │    0    │
+│ pt          │     191     │   23    │
+│ en (source) │     191     │    -    │
+│ it          │     191     │   171   │
+└─────────────┴─────────────┴─────────┘
 ```
 
-The lines starting with +++ indicate that those `keys` are missing, for that language. In the example above
-`wrong_password_try_again_3100aecf` translation for Brasilian Portuguese is missing. And should be added to
-the file `i18n/translations/pt-br.json`.
-The lines starting with --- indicate that those `keys` are not needed anymore. They were shown once in the LimeApp but not in the current version, so it is safe and preferred to eliminate them from correspoding translation file. In the example above: `i18n/translations/pt-br.json`.
-You can allways check out `i18n/generic.json` to checkout original english texts for each `key`, or some other language which you understand (example: `i18n/translations/es.json`).
+If the locale you are willing to add is not there, please add it to `.linguirc` in `locales` field.
 
-Ignore @metadata key
+There are lot of desktop/online tools to edit .po files. [poedit](https://poedit.net/) is one of them, available in apt package manager: `sudo apt install poedit`.
 
 Some translations involve variable data interpolation like this one:
 ```
-"versionname_is_now_available_a6fbbb63": "%{versionName} is now available",
+"{versionName} is now available",
 ```
-Wich you should translate like this:
+Wich you should be translated like this (in spanish):
 ```
-"versionname_is_now_available_a6fbbb63": "%{versionName} ya está disponible",
+"{versionName} ya está disponible",
 ```
 
 Others involve pluralization like this one:
 ```
-  "count_hours_1bd03883": {
-      "one": "hour",
-      "other": "hours"
-  },
+{hours, plural, one {# hour} other {# hours}}
 ```
-Which you should translate like this:
+Which you should be translated like this (in spanish):
 ```
-    "count_hours_1bd03883": {
-        "one": "hora",
-        "other": "horas"
-    },
+{hours, plural, one {# hora} other {# horas}}
 ```
-Their keys usually begin with `count_`. (Please check `i18n/translations/en.json` for expected format in these cases)
 
 Once you have completed all translation you can run again
 
-`npm run translations`
+`npm run translations:extract`
 
-to check that there are no missing nor extra keys for the targeted language. And create the Pull Request.
+to check that there are no missing keys for the targeted language. And create the Pull Request (including modifications to .po files).
 
 If you need more context to understand how to translate some key you can checkout the demo screens at storybook with:
 
