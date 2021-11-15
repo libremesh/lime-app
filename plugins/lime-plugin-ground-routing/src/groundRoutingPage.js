@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import { getGroundRouting } from './groundRoutingActions';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const Page = ({ getGroundRouting, loading, configuration }) => {
 	
@@ -25,11 +25,11 @@ const Page = ({ getGroundRouting, loading, configuration }) => {
 
 	return (
 		<div class="container" style={{ paddingTop: '100px' }}>
-			<h4>{I18n.t('Ground Routing configuration')}</h4>
+			<h4><Trans>Ground Routing configuration</Trans></h4>
 			<pre style={preStyle}>
 				{(loading)? 'Loading...' : JSON.stringify(configuration, null, '  ')}
 			</pre>
-			<button onClick={getGroundRouting}>{I18n.t('Reload')}</button>
+			<button onClick={getGroundRouting}><Trans>Reload</Trans></button>
 			
 		</div>
 	);

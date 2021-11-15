@@ -8,7 +8,7 @@ import { getNodeStatusTimer, stopTimer, getNodeStatus } from './rxActions';
 import { getNodeData, isLoading } from './rxSelectors';
 
 import { Box } from 'components/box';
-import I18n from 'i18n-js';
+import { Trans, plural } from '@lingui/macro';
 import { useBoardData, useBatHost } from 'utils/queries';
 
 function stripIface (hostIface) {
@@ -21,10 +21,10 @@ const toHHMMSS = (seconds, plus) => {
 	let hours = Math.floor(secNum / 3600) % 24;
 	let mins = Math.floor(secNum / 60) % 60;
 	let secs = secNum % 60;
-	const daysText = days ? [days, I18n.t('days', { count: days })].join(' ') : null;
-	const hoursText = hours ? [hours, I18n.t('hours', { count: hours })].join(' ') : null;
-	const minsText = mins ? [mins, I18n.t('minutes', { count: mins })].join(' ') : null;
-	const secsText = secs ? [secs, I18n.t('seconds', { count: secs })].join(' ') : null;
+	const daysText = days ? plural(days, { one: "# day", other: "# days" }) : null;
+	const hoursText = hours ? plural(hours, { one: "# hour", other: "# hours" }) : null;
+	const minsText = mins ? plural(mins, { one: "# minute", other: "# minutes" }) : null;
+	const secsText = secs ? plural(secs, { one: "# second", other: "# seconds" }) : null;
 	const allTexts = [daysText, hoursText, minsText, secsText];
 	return allTexts.filter(x => x !== null).join(', ');
 };
@@ -45,15 +45,15 @@ const SystemBox = ({ uptime, firmwareVersion, boardModel }) => {
 	}
 	actualUptime = toHHMMSS(uptime, count);
 	return (
-		<Box title={I18n.t('System')}>
+		<Box title={<Trans>System</Trans>}>
 			<span>
-				<b>{I18n.t('Uptime')} </b>{actualUptime} <br />
+				<b><Trans>Uptime</Trans></b> {actualUptime} <br />
 			</span>
 			<span>
-				<b>{I18n.t('Device')} </b>{boardModel}<br />
+				<b><Trans>Device</Trans></b> {boardModel}<br />
 			</span>
 			<span style={{whiteSpace: 'nowrap'}}>
-				<b>{I18n.t('Firmware')} </b>{firmwareVersion}<br />
+				<b><Trans>Firmware</Trans> </b>{firmwareVersion}<br />
 			</span>
 		</Box>
 	);
@@ -71,16 +71,16 @@ const MostActiveBox = ({ node, changeNode }) => {
 	}
 
 	return (
-		<Box title={I18n.t('Most Active')}>
+		<Box title={<Trans>Most Active</Trans>}>
 			<span style={{ float: 'right',fontSize: '2.7em' }}>{node.most_active.signal}</span>
 			{ bathost && bathost.hostname ?
 				<a style={{ fontSize: '1.4em' }} onClick={() => changeNode(bathost.hostname)}><b>{stripIface(bathost.hostname)}</b></a>
 				:
-				<span class="withLoadingEllipsis">{I18n.t("Fetching name")}</span>
+				<span class="withLoadingEllipsis"><Trans>Fetching name</Trans></span>
 			}
 			<br />
-			<b>{I18n.t('Interface')} </b>{node.most_active.iface.split('-')[0]}<br />
-			<b>{I18n.t('Traffic')} </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
+			<b><Trans>Interface</Trans> </b>{node.most_active.iface.split('-')[0]}<br />
+			<b><Trans>Traffic</Trans> </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
 			<div style={{ clear: 'both' }} />
 		</Box>
 	);
@@ -95,7 +95,7 @@ export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, 
 		}
 		return (
 			<h4 style={{ textAlign: 'center' }} >
-				{I18n.t('Loading node status...')}
+				<Trans>Loading node status...</Trans>
 			</h4>
 		);
 	}
@@ -113,7 +113,7 @@ export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, 
 
 					<SystemBox uptime={node.uptime} firmwareVersion={boardData.release.description} boardModel={boardData.model} />
 
-					<Box title={I18n.t('Internet connection')}>
+					<Box title={<Trans>Internet connection</Trans>}>
 						<span>
 							<b> {(node.internet.IPv4.working === true)? (<span style={{ color: '#38927f' }}>✔</span>): (<span style={{ color: '#b11' }}>✘</span>)} IPv4 </b>
 							<b> {(node.internet.IPv6.working === true)? (<span style={{ color: '#38927f' }}>✔</span>): (<span style={{ color: '#b11' }}>✘</span>)} IPv6 </b>
@@ -121,7 +121,7 @@ export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, 
 						</span>
 					</Box>
             
-					<Box title={I18n.t('IP Addresses')}>
+					<Box title={<Trans>IP Addresses</Trans>}>
 						{ node.ips.map((ip,key) => (
 							<span style={(key === 0)? { fontSize: '1.4em' } :{}}>
 								<b>IPv{ip.version} </b> {ip.address}<br />

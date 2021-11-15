@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import I18n from 'i18n-js';
+import { Trans, t } from '@lingui/macro';
 
 import { useState } from 'preact/hooks';
 
@@ -36,35 +36,35 @@ export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
 
 	return (
 		<div class="container container-padded">
-			<h4>{I18n.t('Change Shared Password')}</h4>
-			<label>{I18n.t('Choose a shared password for network administration')}</label>
-			<input type="password" placeholder={I18n.t('Password')} class="u-full-width"
+			<h4><Trans>Change Shared Password</Trans></h4>
+			<label><Trans>Choose a shared password for network administration</Trans></label>
+			<input type="password" placeholder={t`Password`} class="u-full-width"
 				value={password} onInput={changePassword}
 			/>
 			<ValidationMessages password={password} />
-			<label>{I18n.t('Re-enter the shared password')}</label>
-			<input type="password" placeholder={I18n.t('Re-enter Password')} class="u-full-width"
+			<label><Trans>Re-enter the shared password</Trans></label>
+			<input type="password" placeholder={t`Re-enter Password`} class="u-full-width"
 				value={passwordConfirmation} onInput={changePasswordConfirmation}
 			/>
 			{passwordConfirmation && password !== passwordConfirmation &&
-				<p>{I18n.t('The passwords do not match!')}</p>
+				<p><Trans>The passwords do not match!</Trans></p>
 			}
 			<div>
 				<button className="button block"
 					onClick={_submitSharedPassword} disabled={!isValidForm()}
 				>
-					{I18n.t('Change')}
+					<Trans>Change</Trans>
 				</button>
 			</div>
 			{submitting &&
 				<div className={style.loadingBox}>
 					<Loading />
-					{I18n.t('Setting up new password')}
+					<Trans>Setting up new password</Trans>
 				</div>
 			}
 			{success &&
 				<div className={style.successMessage}>
-					{I18n.t('Shared Password changed successfully')}
+					<Trans>Shared Password changed successfully</Trans>
 				</div>
 			}
 		</div>

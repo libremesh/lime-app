@@ -17,10 +17,10 @@ export default {
 
 const menuContent = (name, menuName) =>
     `import { h } from 'preact';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const Menu = () => (
-	<a href={'#/${name.toLowerCase()}'}>{I18n.t('${menuName || name}')}</a>
+	<a href={'#/${name.toLowerCase()}'}><Trans>${menuName || name}</Trans></a>
 );
 
 export default Menu;

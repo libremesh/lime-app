@@ -2,11 +2,11 @@ import { h } from 'preact';
 import { route } from 'preact-router';
 import { useSession, useOpenSession, useCloseSession } from './remoteSupportQueries';
 import Loading from 'components/loading';
-import I18n from 'i18n-js';
+import { Trans, Plural } from '@lingui/macro';
 import style from './style.less';
 
 const RemoteSupportPage = () => {
-	const {data: session, isLoading: loadingSession, isError} = useSession({
+	const { data: session, isLoading: loadingSession, isError } = useSession({
 		refetchInterval: 10000
 	});
 	const [openSession, openStatus] = useOpenSession();
@@ -33,37 +33,46 @@ const RemoteSupportPage = () => {
 };
 
 
-export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false, onOpenSession, onCloseSession, onShowConsole}) =>
+export const RemoteSupportPage_ = ({ session, openError = false, isSubmitting = false, onOpenSession, onCloseSession, onShowConsole }) =>
 	<div class="d-flex flex-grow-1 flex-column container container-padded">
-		<h4>{I18n.t("Ask for remote support")}</h4>
+		<h4><Trans>Ask for remote support</Trans></h4>
 		{!session &&
 			<div>
-				<p>{I18n.t("There's no open session for remote support. Click at Create Session to begin one")}</p>
-				<button onClick={onOpenSession}>{I18n.t("Create Session")}</button>
+				<p><Trans>There's no open session for remote support. Click at Create Session to begin one</Trans></p>
+				<button onClick={onOpenSession}><Trans>Create Session</Trans></button>
 			</div>
 		}
 		{openError &&
 			<div class={style.noteError}>
-				<b>{I18n.t("Cannot connect to the remote support server")}</b><br />
-				{I18n.t("Please verify your internet connection")}
+				<b><Trans>Cannot connect to the remote support server</Trans></b><br />
+				<Trans>Please verify your internet connection</Trans>
 			</div>
 		}
 		{session &&
 			<div>
-				<p>{I18n.t("There's an active remote support session")}.
-					{session.clients && " ".concat(I18n.t("people-join-session", {count: Number(session.clients) }))}
+				<p><Trans>There's an active remote support session</Trans>.
+					{session.clients !== null  &&
+						<span>
+							{' '}
+							<Plural value={Number(session.clients)}
+								_0="No one has joined yet."
+								one="One person has joined."
+								other="# people have joined."
+							/>
+						</span>
+					}
 				</p>
-				<p>{I18n.t("Share the following command with whoever you want to give them access to your node")}</p>
+				<p><Trans>Share the following command with whoever you want to give them access to your node</Trans></p>
 				<div class={style.token}><pre>{session.rw_ssh}</pre></div>
 				<div class={style.section}>
-					<h5>{I18n.t("Show Console")}</h5>
-					<p>{I18n.t("Click at Show Console to follow the remote support session.")}</p>
-					<button onClick={onShowConsole}>{I18n.t("Show Console")}</button>
+					<h5><Trans>Show Console</Trans></h5>
+					<p><Trans>Click at Show Console to follow the remote support session.</Trans></p>
+					<button onClick={onShowConsole}><Trans>Show Console</Trans></button>
 				</div>
 				<div class={style.section}>
-					<h5>{I18n.t("Close Session")}</h5>
-					<p>{I18n.t("Click at Close Session to end the remote support session. No one will be able to access your node with this token again")}</p>
-					<button class={style.btnDanger} onClick={onCloseSession}>{I18n.t("Close Session")}</button>
+					<h5><Trans>Close Session</Trans></h5>
+					<p><Trans>Click at Close Session to end the remote support session. No one will be able to access your node with this token again</Trans></p>
+					<button class={style.btnDanger} onClick={onCloseSession}><Trans>Close Session</Trans></button>
 				</div>
 			</div>
 		}

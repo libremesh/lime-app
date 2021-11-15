@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import path from 'path';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 import style from './style.less';
 import { useState, useEffect } from 'preact/hooks';
 import { useForm } from 'react-hook-form';
@@ -18,12 +18,12 @@ export const SafeUpgradeBadge = () => {
 		<div>
 			{isAvailable === true &&
 				<div class={`${style.note} ${style.notePositive}`}>
-					{I18n.t('This device supports secure rollback to previous version if something goes wrong')}
+					<Trans>This device supports secure rollback to previous version if something goes wrong</Trans>
 				</div>
 			}
 			{isAvailable === false &&
 				<div class={`${style.note} ${style.noteWarning}`}>
-					{I18n.t('This device does not support secure rollback to previous version if something goes wrong')}
+					<Trans>This device does not support secure rollback to previous version if something goes wrong</Trans>
 				</div>
 			}
 		</div>
@@ -65,34 +65,34 @@ const UpgradeFromRelease = ({onUpgrading, onSwitch}) => {
 
 	return (
 		<div class="container container-padded">
-			<h5>{I18n.t('Upgrade to lastest firmware version')}</h5>
-			<h6>{I18n.t('%{versionName} is now available', { versionName })} 🎉</h6>
+			<h5><Trans>Upgrade to lastest firmware version</Trans></h5>
+			<h6><Trans>{versionName} is now available</Trans>🎉</h6>
 			{status === 'not-initiated' &&
-				<button onClick={onDownload}>{I18n.t('Download')}</button>
+				<button onClick={onDownload}><Trans>Download</Trans></button>
 			}
 			{status === 'downloading' &&
 				<div>
-					<div class="withLoadingEllipsis">{I18n.t('Downloading')}</div>
-					<button disabled >{I18n.t('Upgrade to %{versionName}', { versionName })}</button>
+					<div class="withLoadingEllipsis"><Trans>Downloading</Trans></div>
+					<button disabled ><Trans>Upgrade to {versionName}</Trans></button>
 				</div>
 			}
 			{status === 'download-failed' &&
 				<div>
-					<div>{I18n.t('The download failed')}</div>
-					<button onClick={onDownload}>{I18n.t('Retry')}</button>
+					<div><Trans>The download failed</Trans></div>
+					<button onClick={onDownload}><Trans>Retry</Trans></button>
 				</div>
 			}
 			{status === 'downloaded' &&
-				<button onClick={onUpgrade}>{I18n.t('Upgrade to %{versionName}', { versionName })}</button>
+				<button onClick={onUpgrade}><Trans>Upgrade to {versionName}</Trans></button>
 			}
 			{newVersion['release-info-url'] &&
 				<div>
-					{I18n.t('More info at:')}
+					<Trans>More info at:</Trans>
 					<a href={newVersion['release-info-url']}> {newVersion['release-info-url']} </a>
 				</div>
 			}
 			<div style={{marginTop: "1em"}}>
-				<a href="#" onClick={onSwitch}>{I18n.t('Or choose a firmware image from your device')} </a>
+				<a href="#" onClick={onSwitch}><Trans>Or choose a firmware image from your device</Trans> </a>
 			</div>
 		</div>
 	)
@@ -130,26 +130,26 @@ export const UpgradeFromFile = ({onUpgrading, onSwitch}) => {
 	return (
 		<div class="container container-padded">
 			<SafeUpgradeBadge />
-			<h5><b>{I18n.t('Upload firmware image from your device')}</b></h5>
+			<h5><b><Trans>Upload firmware image from your device</Trans></b></h5>
 			<form id="file-upload-form" onSubmit={handleSubmit(onUpgrade)}>
-				<label class="button" htmlFor="file">{I18n.t('Select file')}</label>
+				<label class="button" htmlFor="file"><Trans>Select file</Trans></label>
 				<input style={{width: 0}} // Hide the ugly builtin input
 					name="file" id="file" type="file" ref={register({required: true, validate: {validExtname: isValidExtname }})}
 				/>
 				{file && file.length > 0 &&
 					<div>
-						<div><b>{I18n.t('Filename')}</b>: {file[0].name}</div>
-						<div><b>{I18n.t('Size')}</b>: {(file[0].size / 1048576).toFixed(1)} MB</div>
+						<div><b><Trans>Filename</Trans></b>: {file[0].name}</div>
+						<div><b><Trans>Size</Trans></b>: {(file[0].size / 1048576).toFixed(1)} MB</div>
 					</div>
 				}
 				{errors.file && errors.file.type === 'required' &&
-					<p style={{color: "#923838"}}>{I18n.t('Please select a file')}</p>
+					<p style={{color: "#923838"}}><Trans>Please select a file</Trans></p>
 				}
 				{errors.file && errors.file.type === 'validExtname' &&
-					<p style={{color: "#923838"}}>{I18n.t('Please select a .sh or .bin file')}</p>
+					<p style={{color: "#923838"}}><Trans>Please select a .sh or .bin file</Trans></p>
 				}
 				<div>
-					<button disabled={isSubmitting} type="submit">{I18n.t('Upgrade')}</button>
+					<button disabled={isSubmitting} type="submit"><Trans>Upgrade</Trans></button>
 				</div>
 			</form>
 			{isSubmitting &&
@@ -159,12 +159,12 @@ export const UpgradeFromFile = ({onUpgrading, onSwitch}) => {
 			}
 			{ invalidFirmwareError &&
 				<div class={`${style.note} ${style.noteError}`}>
-					{I18n.t('The selected image is not valid for the target device')}
+					<Trans>The selected image is not valid for the target device</Trans>
 				</div>
 			}
 			{ newVersion && newVersion.version &&
 				<div style={{marginTop: "1em"}}>
-					<a href="#" onClick={onSwitch}>{I18n.t('Or upgrade to latest release')} </a>
+					<a href="#" onClick={onSwitch}><Trans>Or upgrade to latest release</Trans> </a>
 				</div>
 			}
 		</div>

@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const MetricsMenu = () => (
-	<a href={'#/metrics'}>{I18n.t('Metrics')}</a>
+	<a href={'#/metrics'}><Trans>Metrics</Trans></a>
 );

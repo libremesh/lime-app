@@ -3,7 +3,7 @@ import { h } from 'preact';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { useState, useEffect } from 'preact/hooks';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 import { loadLocation, changeLocation, loadLocationLinks, toogleEdit } from './locateActions';
 import { getLat, getLon, isCommunityLocation } from './locateSelectors';
@@ -160,7 +160,7 @@ export const LocatePage = ({ editting, submitting, stationLat, stationLon, nodes
 	if (assetError) {
 		return (
 			<div id="map-container" className={style.hasAssetError}>
-				{I18n.t('Cannot load map, check your internet connection')}
+				<Trans>Cannot load map, check your internet connection</Trans>
 			</div>
 		);
 	}
@@ -179,22 +179,25 @@ export const LocatePage = ({ editting, submitting, stationLat, stationLon, nodes
 				<div id="edit-action" className={style.editAction}>
 					{/* Actions while editting */}
 					{editting &&
-						<button onClick={onConfirmLocation}>{I18n.t('confirm location')}</button>
+						<button onClick={onConfirmLocation}><Trans>confirm location</Trans></button>
 					}
 					{editting &&
-						<button onClick={toogleEditFalse}>{I18n.t('cancel')}</button>
+						<button onClick={toogleEditFalse}><Trans>cancel</Trans></button>
 					}
 					{/* Actions while not editting */}
 					{!editting && hasLocation &&
-						<button onClick={toogleEditTrue}>{I18n.t('edit location')}</button>
+						<button onClick={toogleEditTrue}><Trans>edit location</Trans></button>
 					}
 					{!editting && !hasLocation &&
-						<button onClick={toogleEditTrue}>{I18n.t('locate my node')}</button>
+						<button onClick={toogleEditTrue}><Trans>locate my node</Trans></button>
 					}
 					{!editting &&
 						<button onClick={toogleCommunityLayer}>
 							{communityLayer ?
-								I18n.t('hide community') : I18n.t('show community')}
+								<Trans>hide community</Trans>
+								:
+								<Trans>show community</Trans>
+							}
 						</button>
 					}
 				</div>

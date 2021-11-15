@@ -27,10 +27,10 @@ export const Menu = ({ opened, toggle }) => {
 			{hasCommunityPlugins() && <nav class={style.viewSwitchWrapper}>
 				<a href="#0" class={style.viewSwitch} onClick={changeCurrentView}>
 					{currentView === 'node' &&
-						I18n.t('Go to Community View')
+						<Trans>Go to Community View</Trans>
 					}
 					{currentView === 'community' &&
-						I18n.t('Go to Node View')
+						<Trans>Go to Node View</Trans>
 					}
 				</a>
 			</nav>}

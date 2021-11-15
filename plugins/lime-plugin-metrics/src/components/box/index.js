@@ -2,7 +2,7 @@ import { h } from 'preact';
 
 import colorScale from 'simple-color-scale';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 import Loading from 'components/loading';
 
@@ -68,14 +68,14 @@ const Box = ({ station, settings, loading, click, gateway }) => {
 			<span>
 				<b>{isGateway(gateway, station.host.hostname)}
 					{ Number(station.bandwidth || '0') === 0 && station.loss
-						? <b> ({I18n.t('Error')})</b>
+						? <b> (<Trans>Error</Trans>)</b>
 						:false}
 				</b><br /></span>
 			{loading
 				? (<Loading />)
 				: station.bandwidth
 					? (<div>
-						{station.bandwidth} Mbps / <span>{I18n.t('Packet loss')}</span> {station.loss}%<br />
+						{station.bandwidth} Mbps / <span><Trans>Packet loss</Trans></span> {station.loss}%<br />
 						<div style={barStyle(station.loss)} />
 					</div>)
 					:false

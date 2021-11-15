@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import { searchNetworks, setNetwork } from '../actions';
 
-import I18n from 'i18n-js';
+import { Trans, t } from '@lingui/macro';
 import { Loading } from 'components/loading';
 import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
@@ -103,18 +103,16 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 					{ networks && status === 'scanned' ? (
 						<div>
 							<div class="container">
-								{networks.length === 0 && <p>:( {I18n.t('No network found, try realigning your node and rescanning.')}</p>}
+								{networks.length === 0 && <p>:( <Trans>No network found, try realigning your node and rescanning.</Trans></p>}
 								{networks.length > 0 && <div>
-									<h4>{I18n.t('Join the mesh')}</h4>
-									<label>{I18n.t('Select a network to join')}</label>
+									<h4><Trans>Join the mesh</Trans></h4>
+									<label><Trans>Select a network to join</Trans></label>
 									<select onChange={selectNetwork}  class="u-full-width">
-										<option disabled selected>{I18n.t('Select one')}</option>
+										<option disabled selected><Trans>Select one</Trans></option>
 										{networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
 									</select>
-									<label>{I18n.t('Choose a name for this node')}</label>
-									<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
-									{/* <label>{I18n.t('Choose a password for this node')}</label>
-									<input type="text" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onChange={_changePassword} /> */}
+									<label><Trans>Choose a name for this node</Trans></label>
+									<input type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
 								</div>}
 								<div class="row">
 									{networks.length > 0 && <div class="six columns">
@@ -123,7 +121,7 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 											disabled={!isValidHostname(state.hostname)}
 											class="u-full-width"
 										>
-											{I18n.t('Set network')}
+											<Trans>Set network</Trans>
 										</button>
 									</div>}
 									<div class="six columns">
@@ -131,14 +129,14 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 											onClick={_searchNetworks}
 											class="u-full-width"
 										>
-											{I18n.t('Rescan')}
+											<Trans>Rescan</Trans>
 										</button>
 									</div>
 									<button
 										onClick={toggleForm(null)}
 										class="u-full-width"
 									>
-										{I18n.t('Cancel')}
+										<Trans>Cancel</Trans>
 									</button>
 								</div>
 							</div>
@@ -149,8 +147,8 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 					): false }
 				</div>
 			</div>
-			{state.error && <Toast text={I18n.t('Must select a network and a valid hostname')} />}
-			{(status === 'scanning' && <Toast text={I18n.t('Scanning for existing networks')} />)}
+			{state.error && <Toast text={<Trans>Must select a network and a valid hostname</Trans>} />}
+			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
 };

@@ -1,4 +1,0 @@
-{
-  "out": "i18n/generic.json",
-  "directories": ["src", "plugins"]
-}

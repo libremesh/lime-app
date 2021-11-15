@@ -2,7 +2,7 @@ import { h } from "preact";
 import { useState, useEffect } from 'preact/hooks';
 import { route } from 'preact-router';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const SafeUpgradeCountdown = ({ counter }) => {
 	const [_counter, setcounter] = useState(counter);
@@ -19,8 +19,8 @@ export const SafeUpgradeCountdown = ({ counter }) => {
 
 	return (
 		<div class="subheader-notification" style={{backgroundColor: "#f7a336"}}>
-			<div>{I18n.t('Cofirm upgrade before %{seconds} seconds or it will be reverted', {seconds: _counter})}</div>
-			<button onClick={() => route('firmware')}>{I18n.t('Go!')}</button>
+			<div><Trans>Cofirm upgrade before {_counter} seconds or it will be reverted</Trans></div>
+			<button onClick={() => route('firmware')}><Trans>Go!</Trans></button>
 		</div>
 	);
 };

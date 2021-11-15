@@ -1,5 +1,4 @@
 import { h } from 'preact';
-import '../src/i18nline-glue';
 import '../src/style';
 
 import { ReactQueryCacheProvider, QueryCache } from 'react-query';
@@ -9,6 +8,8 @@ import { Header } from 'components/header';
 import { Menu } from '../src/containers/Menu';
 import { AppContext } from 'utils/app.context';
 import SubHeader from 'containers/SubHeader';
+import i18n from '../src/i18n';
+import { I18nProvider } from '@lingui/react'
 
 const boarData = {
 	hostname: 'ql-anaymarcos',
@@ -64,6 +65,12 @@ const withQueryCache = (Story, context) => (
 	</ReactQueryCacheProvider>
 )
 
+const withI18n = (Story) => (
+	<I18nProvider i18n={i18n} >
+		<Story />
+	</I18nProvider>
+);
+
 const withinAppContext = (Story, context) => {
 	const appcontext = {
 		menuEnabled: context.globals.menuEnabled === 'yes'
@@ -100,6 +107,8 @@ export const globalTypes = {
 	},
 };
 
+
 addDecorator(withKnobs);
 addDecorator(withinAppContext);
 addDecorator(withQueryCache);
+addDecorator(withI18n);

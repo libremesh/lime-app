@@ -6,7 +6,7 @@ import { useAssocList, useMeshIfaces } from './alignQueries';
 import { ifaceToRadioNumber } from './utils';
 import { SignalBar } from './components/signalBar';
 import { SecondsAgo } from './components/secondsAgo';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 import Loading from 'components/loading';
 import { List, ListItem } from 'components/list';
@@ -21,12 +21,13 @@ export const AssocRow = ({station, iface}) => {
 		route(`/align-single/${iface}/${station.mac}`)
 	}
 
+	const radioNumber = bathost?.iface && ifaceToRadioNumber(bathost.iface);
 	return (
 		<ListItem onClick={goToAlignSingle} >
 			<div>
 				{( isLoading || isError ?
 					<div class={`${style.fetchingName} withLoadingEllipsis`}>
-						{ I18n.t('Fetching name') }
+						<Trans>Fetching name</Trans>
 					</div>
 					:
 					<div class={style.stationHostname}>
@@ -34,12 +35,12 @@ export const AssocRow = ({station, iface}) => {
 					</div>
 				)}
 				{ bathost && bathost.iface &&
-					<div> {I18n.t("On its radio %{radio}", {radio: ifaceToRadioNumber(bathost.iface)}) }</div>
+					<div><Trans>On its radio {radioNumber}</Trans></div>
 				}
 				{ station.inactive >= 3000 && (
 					<div>
-						<div>{I18n.t('Signal lost')}</div>
-						<div>{`${I18n.t('Last packet')}:`} <SecondsAgo initialMs={station.inactive} isStatic /></div>
+						<div><Trans>Signal lost</Trans></div>
+						<div><Trans>Last packet</Trans>: <SecondsAgo initialMs={station.inactive} isStatic /></div>
 					</div>
 				)}
 			</div>
@@ -73,12 +74,12 @@ export const AssocList = ({iface}) => {
 	return (
 		<List>
 			{assoclist.length > 0 &&
-				<div class={style.assoclistHeader}>{I18n.t("These are the nodes associated on this radio")}</div>
+				<div class={style.assoclistHeader}><Trans>These are the nodes associated on this radio</Trans></div>
 			}
 			{assoclist.map(station => <AssocRow key={station.mac} station={station} iface={iface} />)}
 			{assoclist.length === 0 &&
 				<div className="container-center">
-					{I18n.t("This radio is not associated with other nodes")}
+					<Trans>This radio is not associated with other nodes</Trans>
 				</div>
 			}
 		</List>
@@ -93,10 +94,13 @@ export const Align = ({}) => {
 
 	useEffect(() => {
 		if (!ifaces) return;
-		const tabs = ifaces.sort().map(iface => ({
-			key: iface,
-			repr: I18n.t("Radio").concat(` ${ifaceToRadioNumber(iface)}`)
-		}))
+		const tabs = ifaces.sort().map(iface => {
+			const radioNumber = ifaceToRadioNumber(iface);
+			return ({
+				key: iface,
+				repr: <Trans>Radio {radioNumber}</Trans>
+			})
+		});
 		setTabs(tabs);
 		if (ifaces.length > 0) {
 			setSelectedIface(ifaces[0]);
@@ -109,7 +113,7 @@ export const Align = ({}) => {
 
 	if (!ifaces || ifaces.length === 0) {
 		return <div className="container container-center">
-			{I18n.t('The are not mesh interfaces available')}
+			<Trans>The are not mesh interfaces available</Trans>
 		</div>
 	}
 

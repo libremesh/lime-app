@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { route } from 'preact-router';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 import { useReboot } from 'utils/queries';
 import Loading from 'components/loading';
@@ -11,17 +11,17 @@ const RebootPage = () => {
 	if (isSuccess) {
 		return (
 			<div class={`container container-padded container-center`}>
-				<h3>{I18n.t('Rebooting')}</h3>
-				<span>{I18n.t('Please wait while the device reboots, and reload the app')}</span>
+				<h3><Trans>Rebooting</Trans></h3>
+				<span><Trans>Please wait while the device reboots, and reload the app</Trans></span>
 			</div>
 		)
 	}
 
 	return (
 		<div class={`container container-padded container-center`}>
-			<p>{I18n.t('Are you sure you want to reboot?')}</p>
-			<button onClick={reboot}>{I18n.t('Yes')}</button>
-			<button onClick={() => route('/')}>{I18n.t('No, cancel')}</button>
+			<p><Trans>Are you sure you want to reboot?</Trans></p>
+			<button onClick={reboot}><Trans>Yes</Trans></button>
+			<button onClick={() => route('/')}><Trans>No, cancel</Trans></button>
 			{isLoading &&
 				<div>
 					<Loading />

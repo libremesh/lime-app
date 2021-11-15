@@ -4,7 +4,7 @@ import { useWifiData, useSetupRoamingAP } from '../nodeAdminQueries';
 import ConfigPageLayout from '../layouts/configPageLayout';
 import Loading from 'components/loading';
 import switchStyle from 'components/switch';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
     const { register, handleSubmit } = useForm({
@@ -19,14 +19,14 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
                         id="enableRoamingAP"
                         ref={register()}
                     />
-                    <label htmlFor="enableRoamingAP">{I18n.t("Enable Community Roaming AP")}</label>
+                    <label htmlFor="enableRoamingAP"><Trans>Enable Community Roaming AP</Trans></label>
                 </div>
             </form>
             <div class="d-flex">
                 <div class="ml-auto">
                     {!isSubmitting &&
                         <button onClick={handleSubmit(onSubmit)} class="ml-auto" >
-                            {I18n.t("Save")}
+                            <Trans>Save</Trans>
                         </button>
                     }
                     {isSubmitting &&
@@ -41,6 +41,8 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
 const RoamingAPPage = () => {
     const { data: wifiData, isLoading } = useWifiData();
     const [setupRoamingAP, { isLoading: isSubmitting, isSuccess, isError }] = useSetupRoamingAP();
+    const apSsid = wifiData?.community_ap?.ssid;
+    const communityName = wifiData?.community_ap.ssid;
 
     function onSubmit({ enableRoamingAP }) {
         return setupRoamingAP({ enabled: enableRoamingAP });
@@ -49,16 +51,24 @@ const RoamingAPPage = () => {
     return (
         <ConfigPageLayout {...{
             isLoading, isSuccess, isError,
-            title: I18n.t("Community Roaming AP")
+            title: <Trans>Community Roaming AP</Trans>
         }}>
-            <p>{I18n.t('Opens the "%{ap_ssid}" AP in this node', { ap_ssid: wifiData?.community_ap?.ssid })}</p>
-            <p>{I18n.t("The Community AP is present in every node allowing people to " +
-                "move around the network territory without losing connection")}</p>
+            <p><Trans>Opens the "{apSsid}" AP in this node</Trans></p>
+            <p>
+                <Trans>
+                    The Community AP is present in every node allowing people to
+                    move around the network territory without losing connection
+                </Trans>
+            </p>
             {wifiData?.community_ap?.community.enabled === false &&
-                <p>{I18n.t("It is disabled by default in %{communityName}", { communityName: wifiData.community_ap.ssid })}</p>
+                <p>
+                    <Trans>It is disabled by default in {communityName}</Trans>
+                </p>
             }
             {wifiData?.community_ap?.community.enabled === true &&
-                <p>{I18n.t("It is enabled by default in %{communityName}", { communityName: wifiData.community_ap.ssid })}</p>
+                <p>
+                    <Trans>It is enabled by default in {communityName}</Trans>
+                </p>
             }
             <RoamingAPForm {...{ wifiData, onSubmit, isSubmitting }} />
         </ConfigPageLayout >

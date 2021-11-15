@@ -1,0 +1,816 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2021-11-10 13:08-0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh-HANS\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:51
+msgid "A new firmware version has been released"
+msgstr ""
+
+#: src/containers/RebootBanner/rebootBanner.js:11
+msgid "A reboot is needed to apply changes"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignMenu.js:6
+msgid "Align"
+msgstr "对齐"
+
+#: src/containers/RebootPage/RebootPage.js:22
+msgid "Are you sure you want to reboot?"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:38
+msgid "Ask for remote support"
+msgstr ""
+
+#: src/containers/SharedPasswordForm/sharedPasswordForm.js:42
+msgid "At least one alphanumeric character"
+msgstr ""
+
+#: src/containers/SharedPasswordForm/sharedPasswordForm.js:41
+msgid "At least one number"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:36
+msgid "Best signal"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:97
+msgid "Calculating network path"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:95
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:139
+#: src/components/banner/index.js:13
+msgid "Cancel"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:47
+msgid "Cannot connect to the remote support server"
+msgstr ""
+
+#: plugins/lime-plugin-locate/src/locatePage.js:163
+msgid "Cannot load map, check your internet connection"
+msgstr ""
+
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:56
+msgid "Change"
+msgstr "更新"
+
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:39
+msgid "Change Shared Password"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:95
+msgid "Checking connection"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:78
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:114
+msgid "Choose a name for this node"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:68
+msgid "Choose a name for your network"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:70
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:40
+msgid "Choose a shared password for network administration"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:74
+msgid "Click at Close Session to end the remote support session. No one will be able to access your node with this token again"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:69
+msgid "Click at Show Console to follow the remote support session."
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:73
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:75
+msgid "Close Session"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradeCountdown.js:22
+msgid "Cofirm upgrade before {_counter} seconds or it will be reverted"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:30
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:54
+msgid "Community Roaming AP"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:69
+msgid "Community name"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/SelectAction.js:6
+msgid "Configure your network"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:67
+msgid "Configure your new community network"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:10
+msgid "Confirm"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:108
+msgid "Congratulations"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:42
+msgid "Create Session"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:87
+msgid "Create network"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/SelectAction.js:17
+msgid "Create new network"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:52
+msgid "Currently your node has version:"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:53
+msgid "Device"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:31
+msgid "Disabled"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:66
+#: src/components/banner/index.js:18
+msgid "Don't show this message again"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:71
+msgid "Download"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:75
+msgid "Downloading"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:22
+msgid "Enable Community Roaming AP"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/password.js:29
+msgid "Enable Password"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:31
+msgid "Enabled"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/components/box/index.js:71
+msgid "Error"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.js:26
+msgid "Error: Not Saved"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignPage.js:30
+#: plugins/lime-plugin-rx/src/rxPage.js:79
+msgid "Fetching name"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:141
+msgid "Filename"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/index.js:9
+#: plugins/lime-plugin-rx/src/rxPage.js:56
+msgid "Firmware"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:152
+msgid "From"
+msgstr "从"
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:71
+msgid "Full path metrics"
+msgstr "完整路径度量"
+
+#: plugins/lime-plugin-firmware/src/upgradeCountdown.js:23
+msgid "Go!"
+msgstr ""
+
+#: plugins/lime-plugin-ground-routing/src/groundRoutingMenu.js:6
+msgid "Ground Routing"
+msgstr ""
+
+#: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:28
+msgid "Ground Routing configuration"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/consoleView.js:13
+msgid "Hide Console"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:79
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:115
+msgid "Host name"
+msgstr ""
+
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:48
+msgid "I don't know the shared password"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:124
+msgid "IP Addresses"
+msgstr "IP地址"
+
+#: plugins/lime-plugin-rx/src/rxPage.js:82
+msgid "Interface"
+msgstr "界面"
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:110
+#: plugins/lime-plugin-rx/src/rxPage.js:116
+msgid "Internet connection"
+msgstr "网络连接"
+
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:65
+msgid "It is disabled by default in {communityName}"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:70
+msgid "It is enabled by default in {communityName}"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:108
+msgid "Join the mesh"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignPage.js:43
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:90
+msgid "Last packet"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:99
+msgid "Load last known Internet path"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:98
+msgid "Loading node status..."
+msgstr "正在加载节点状态..."
+
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:55
+msgid "Logging in"
+msgstr ""
+
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:46
+msgid "Login"
+msgstr ""
+
+#: plugins/lime-plugin-locate/src/locateMenu.js:6
+msgid "Map"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:98
+msgid "Measuring links"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsMenu.js:6
+msgid "Metrics"
+msgstr "度量"
+
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:58
+msgid "More details on the release can be found at:"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:90
+msgid "More info at:"
+msgstr ""
+
+#: src/containers/SharedPasswordForm/sharedPasswordForm.js:40
+msgid "More than 10 characters"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:74
+msgid "Most Active"
+msgstr "最活跃"
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:150
+msgid "Must select a network and a valid hostname"
+msgstr ""
+
+#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:6
+msgid "Network Configuration"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:106
+msgid "No network found, try realigning your node and rescanning."
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:21
+msgid "No password"
+msgstr ""
+
+#: src/containers/RebootPage/RebootPage.js:24
+msgid "No, cancel"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:5
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:41
+msgid "Node Configuration"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:12
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:27
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:30
+msgid "Node Name"
+msgstr ""
+
+#: plugins/lime-plugin-notes/src/notesMenu.js:6
+msgid "Notes"
+msgstr "注释"
+
+#: plugins/lime-plugin-notes/src/notesPage.js:41
+msgid "Notes of"
+msgstr "注释属于"
+
+#: src/components/banner/index.js:12
+msgid "Ok"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignPage.js:38
+msgid "On its radio {radioNumber}"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:85
+msgid "On its radio {toRadio}"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:68
+msgid "Only gateway"
+msgstr "仅网关"
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:56
+msgid "Opens the \"{apSsid}\" AP in this node"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
+#~ msgid "Opens the {apSsid} AP in this node"
+#~ msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:95
+msgid "Or choose a firmware image from your device"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:167
+msgid "Or upgrade to latest release"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/components/box/index.js:78
+msgid "Packet loss"
+msgstr "封包丢失"
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:71
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:41
+msgid "Password"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:30
+msgid "Please configure your network"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:149
+msgid "Please select a .sh or .bin file"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:146
+msgid "Please select a file"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:48
+msgid "Please verify your internet connection"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:29
+msgid "Please wait patiently for {remainingTime} seconds and do not disconnect the device."
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:25
+#: src/containers/RebootPage/RebootPage.js:15
+msgid "Please wait while the device reboots, and reload the app"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:86
+msgid "Please wait {time} seconds"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignPage.js:101
+msgid "Radio {radioNumber}"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:74
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:46
+msgid "Re-enter Password"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:73
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:45
+msgid "Re-enter the shared password"
+msgstr ""
+
+#: src/containers/RebootBanner/rebootBanner.js:12
+msgid "Reboot"
+msgstr ""
+
+#: src/containers/RebootPage/RebootPage.js:14
+msgid "Rebooting"
+msgstr ""
+
+#: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:32
+msgid "Reload"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:112
+msgid "Reload page"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/index.js:9
+msgid "Remote Support"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:132
+msgid "Rescan"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:82
+msgid "Retry"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:12
+msgid "Revert"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:24
+msgid "Reverting to previous version"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
+#: plugins/lime-plugin-node-admin/src/screens/password.js:51
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:29
+msgid "Save"
+msgstr ""
+
+#: plugins/lime-plugin-notes/src/notesPage.js:43
+msgid "Save notes"
+msgstr "保存注释"
+
+#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.js:25
+msgid "Saved"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/SelectAction.js:12
+msgid "Scan for existing networks"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:151
+msgid "Scanning for existing networks"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:96
+msgid "Searching gateway"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:23
+msgid "See More"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:109
+msgid "Select a network to join"
+msgstr ""
+
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:56
+msgid "Select another node and use the LimeApp as you were there"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:135
+msgid "Select file"
+msgstr ""
+
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:60
+msgid "Select new node"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:111
+msgid "Select one"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:124
+msgid "Set network"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:83
+msgid "Setting network"
+msgstr ""
+
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:62
+msgid "Setting up new password"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:65
+msgid "Share the following command with whoever you want to give them access to your node"
+msgstr ""
+
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:40
+msgid "Shared Password"
+msgstr ""
+
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:67
+msgid "Shared Password changed successfully"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:68
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:70
+msgid "Show Console"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignPage.js:42
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:56
+msgid "Signal lost"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:142
+msgid "Size"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxMenu.js:6
+msgid "Status"
+msgstr "状态"
+
+#: plugins/lime-plugin-rx/src/rxPage.js:48
+msgid "System"
+msgstr "系统"
+
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:58
+msgid "The Community AP is present in every node allowing people to move around the network territory without losing connection"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignPage.js:116
+msgid "The are not mesh interfaces available"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:81
+msgid "The download failed"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:26
+msgid "The firmware is being upgraded..."
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:40
+msgid "The name should have at least 3 characters"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/password.js:43
+msgid "The password should have at least 8 characters"
+msgstr ""
+
+#: src/containers/SharedPasswordForm/sharedPasswordForm.js:39
+msgid "The password should have:"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:76
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:50
+msgid "The passwords do not match!"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:162
+msgid "The selected image is not valid for the target device"
+msgstr ""
+
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:50
+msgid "The shared password has been chosen by the community when the network was created. You can ask other community members for it."
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:10
+msgid "The upgrade should be done"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:53
+msgid "There's an active remote support session"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:41
+msgid "There's no open session for remote support. Click at Create Session to begin one"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignPage.js:77
+msgid "These are the nodes associated on this radio"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:26
+msgid "This device does not support secure rollback to previous version if something goes wrong"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:21
+msgid "This device supports secure rollback to previous version if something goes wrong"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:79
+msgid "This node is the gateway"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/alignPage.js:82
+msgid "This radio is not associated with other nodes"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:127
+msgid "This your last working path to the Internet"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:162
+msgid "To Internet"
+msgstr "至网络"
+
+#: plugins/lime-plugin-rx/src/rxPage.js:83
+msgid "Traffic"
+msgstr "流量"
+
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:12
+msgid "Try reloading the app"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:152
+msgid "Upgrade"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:69
+msgid "Upgrade Now"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:68
+msgid "Upgrade to lastest firmware version"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:76
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:86
+msgid "Upgrade to {versionName}"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:133
+msgid "Upload firmware image from your device"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:50
+msgid "Uptime"
+msgstr "运行时间"
+
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:65
+msgid "Visit"
+msgstr ""
+
+#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:6
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:54
+msgid "Visit a neighboring node"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:15
+msgid "When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:20
+#: plugins/lime-plugin-node-admin/src/screens/password.js:33
+#: plugins/lime-plugin-node-admin/src/screens/password.js:76
+msgid "Wifi Password"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:83
+msgid "With radio {fromRadio} alignin with"
+msgstr ""
+
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:43
+msgid "Wrong password, try again"
+msgstr ""
+
+#: src/containers/RebootPage/RebootPage.js:23
+msgid "Yes"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:98
+msgid "You are connected to another node in the network, try connecting to"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:111
+msgid "You are now part of"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/SelectAction.js:7
+msgid "You can search for mesh networks around you to add or to create a new one."
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:54
+msgid "You can upgrade to:"
+msgstr ""
+
+#: plugins/lime-plugin-metrics/src/metricsPage.js:80
+msgid "You don't go through any paths to get here."
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:110
+msgid "You have successfuly connected to"
+msgstr ""
+
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:39
+msgid "You need to know the shared password to enter this page"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:99
+msgid "You should try to connect to the network {wifiSsid}."
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:31
+msgid "Your router has not yet been configured, you can use our wizard to incorporate it into an existing network or create a new one. If you ignore this message it will continue to work with the default configuration."
+msgstr ""
+
+#: plugins/lime-plugin-locate/src/locatePage.js:185
+msgid "cancel"
+msgstr ""
+
+#: plugins/lime-plugin-locate/src/locatePage.js:182
+msgid "confirm location"
+msgstr ""
+
+#: plugins/lime-plugin-locate/src/locatePage.js:189
+msgid "edit location"
+msgstr ""
+
+#: plugins/lime-plugin-locate/src/locatePage.js:197
+msgid "hide community"
+msgstr ""
+
+#: plugins/lime-plugin-locate/src/locatePage.js:192
+msgid "locate my node"
+msgstr ""
+
+#: plugins/lime-plugin-align/src/components/secondsAgo.js:19
+msgid "more than a minute ago"
+msgstr ""
+
+#: plugins/lime-plugin-locate/src/locatePage.js:199
+msgid "show community"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:11
+msgid "to keep the current configuration. Or ..."
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:13
+msgid "to the previous configuration"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:57
+msgid "{0, plural, =0 {No one has joined yet.} one {One person has joined.} other {# people have joined.}}"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:24
+msgid "{days, plural, one {# day} other {# days}}"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:25
+msgid "{hours, plural, one {# hour} other {# hours}}"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:26
+msgid "{mins, plural, one {# minute} other {# minutes}}"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:26
+#~ msgid "{minutes, plural, one {# minute} other {# minutes}}"
+#~ msgstr ""
+
+#: plugins/lime-plugin-align/src/components/secondsAgo.js:21
+msgid "{secondsAmount} seconds ago"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPage.js:27
+msgid "{secs, plural, one {# second} other {# seconds}}"
+msgstr ""
+
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:22
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:69
+msgid "{versionName} is now available"
+msgstr ""

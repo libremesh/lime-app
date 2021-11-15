@@ -1,18 +1,18 @@
 import { h } from 'preact';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 import { useState, useEffect } from 'preact/hooks';
 import ProgressBar from 'components/progressbar';
 
 export const UpgradeSuccess = ({ onReload, upgradeConfirmAvailable} ) => (
 	<div class="container container-padded container-center">
 		<h3>
-			{I18n.t('The upgrade should be done')}
+			<Trans>The upgrade should be done</Trans>
 		</h3>
-		<button onClick={onReload}>{I18n.t('Try reloading the app')}</button>
+		<button onClick={onReload}><Trans>Try reloading the app</Trans></button>
 		{ upgradeConfirmAvailable &&
 			<span>
-				<b>{I18n.t('When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted')}</b>
+				<b><Trans>When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted</Trans></b>
 			</span>
 		}
 	</div>
@@ -23,10 +23,10 @@ export const UpgradeProgress = ({elapsedTime, totalTime}) => {
 	return (
 		<div class="container container-padded container-center">
 			<h3>
-				{I18n.t('The firmware is being upgraded...')}
+				<Trans>The firmware is being upgraded...</Trans>
 			</h3>
 			<ProgressBar progress={progress} />
-			<span>{I18n.t('Please wait patiently for %{seconds} seconds and do not disconnect the device.', {seconds: remainingTime})}</span>
+			<span><Trans>Please wait patiently for {remainingTime} seconds and do not disconnect the device.</Trans></span>
 		</div>
 	)
 };

@@ -189,7 +189,7 @@ describe('firmware form', () => {
 			version: 'SomeNewVersionName'
 		}));
 		render(<FirmwarePage />)
-		expect(await screen.findByText('SomeNewVersionName is now available 🎉')).toBeInTheDocument()
+		expect(await screen.findByText('SomeNewVersionName is now available')).toBeInTheDocument()
 	})
 
 	it('calls downdloadRelease when selecting download option', async () => {

@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 import { connect } from 'react-redux';
 
 import '../style';
@@ -19,6 +19,7 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 		notOnNetwork: false
 	});
 
+	const wifiSsid = expectedNetwork + '/' + expectedHost;
 	function fetchHost (cb) {
 		if (state.action === 'finish') return;
 		if (state.action === 'setting') {
@@ -79,10 +80,10 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 						{ state.action === 'setting'
 							? (
 								<div>
-									<h1>{I18n.t('Setting network')}</h1>
+									<h1><Trans>Setting network</Trans></h1>
 									<ProgressBar progress={progress} />
 									<div style={{ width: '100%' }}>
-										<span style={{ margin: '0 auto', textAlign: 'center' }}>{I18n.t('Please wait')} {time} {I18n.t('seconds')}</span>
+										<span style={{ margin: '0 auto', textAlign: 'center' }}><Trans>Please wait {time} seconds</Trans></span>
 									</div>
 								</div>
 							)
@@ -91,11 +92,11 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 						{ state.action === 'checking'
 							? (
 								<div>
-									<h1>{I18n.t('Checking connection')}</h1>
+									<h1><Trans>Checking connection</Trans></h1>
 									<Loading />
 									  { state.notOnNetwork
-										? <p>{I18n.t('You are connected to another node in the network, try connecting to')} {expectedNetwork}/{expectedHost}</p>
-										: <p>{I18n.t('You should try to connect to the network %{network}.', { network: expectedNetwork +'/'+expectedHost })} </p>
+										? <p><Trans>You are connected to another node in the network, try connecting to</Trans> {expectedNetwork}/{expectedHost}</p>
+										: <p><Trans>You should try to connect to the network {wifiSsid}.</Trans></p>
 									  }
 								</div>
 							  )
@@ -104,11 +105,11 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 					</div>
 				)
 				: <div>
-					<h1>{I18n.t('Congratulations')}</h1>
+					<h1><Trans>Congratulations</Trans></h1>
 					<div>
-						<p>{I18n.t('You have successfuly connected to')} {state.hostname}</p>
-						<p>{I18n.t('You are now part of ')} {expectedNetwork}</p>
-						<button onClick={reload}>{I18n.t('Reload page')}</button>
+						<p><Trans>You have successfuly connected to</Trans> {state.hostname}</p>
+						<p><Trans>You are now part of </Trans> {expectedNetwork}</p>
+						<button onClick={reload}><Trans>Reload page</Trans></button>
 					</div>
 				</div>
 			}

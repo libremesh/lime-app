@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const ChangeNodeMenu = () => (
-	<a href={'#/changenode'}>{I18n.t("Visit a neighboring node")}</a>
+	<a href={'#/changenode'}><Trans>Visit a neighboring node</Trans></a>
 );
