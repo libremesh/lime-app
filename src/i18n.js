@@ -19,7 +19,6 @@ i18n.loadLocaleData({
     pt: { plurals: ptPlurals }
 });
 
-
 i18n.activate(fromNavigator().split('-')[0]);
 
 export default i18n;

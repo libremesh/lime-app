@@ -8,5 +8,8 @@
    "extractBabelOptions": {
        presets: ["preact"]
    },
-   "sourceLocale": "en"
+   "sourceLocale": "en",
+   "fallbackLocales": {
+      default: "en"
+   }
 }
