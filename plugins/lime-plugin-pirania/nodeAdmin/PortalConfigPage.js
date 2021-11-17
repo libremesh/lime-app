@@ -27,25 +27,6 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                     />
                     <label htmlFor="activated">{I18n.t("Activate Portal in Community AP")}</label>
                 </div>
-                <h4>{I18n.t('Access vouchers')}</h4>
-                <p>
-                    {I18n.t('Vouchers can be used to limit access ' +
-                            'through the Community Portal to those who have ' +
-                            'an authorization code')}
-                </p>
-                <div class={switchStyle.toggles}>
-                    <input type="checkbox"
-                        name="with_vouchers"
-                        id="with_vouchers"
-                        ref={register()}
-                    />
-                    <label htmlFor="with_vouchers">{I18n.t("Use vouchers for access")}</label>
-                </div>
-                {config?.with_vouchers &&
-                    <p>
-                        <a href="#" onClick={() => route('/access')}>{I18n.t('Manage Vouchers')} </a>
-                    </p>  
-                }
             </form>
             <div class="d-flex">
                 <div class="ml-auto">

@@ -6,7 +6,6 @@ import { render } from "utils/test_utils";
 import { PortalConfigPage } from './PortalConfigPage';
 import { getPortalConfig, setPortalConfig } from '../src/piraniaApi';
 import queryCache from 'utils/queryCache';
-import { route } from 'preact-router';
 
 jest.mock('../src/piraniaApi');
 
@@ -15,9 +14,6 @@ const findSubmitButton = async () =>
 
 const findActiveCheckbox = async () =>
     screen.findByLabelText("Activate Portal in Community AP");
-
-const findVouchersCheckbox = async () =>
-    screen.findByLabelText("Use vouchers for access");
 
 describe('portal config page', () => {
     beforeEach(() => {
@@ -57,22 +53,6 @@ describe('portal config page', () => {
         expect(await findActiveCheckbox()).toBeChecked();
     });
 
-    it('shows an unchecked switch for vouchers usage when not activated', async () => {
-        getPortalConfig.mockImplementation(async () => ({
-            activated: true, with_vouchers: false
-        }));
-        render(<PortalConfigPage />);
-        expect(await findVouchersCheckbox()).not.toBeChecked();
-    });
-
-    it('shows an checked switch for vouchers usage when activated', async () => {
-        getPortalConfig.mockImplementation(async () => ({
-            activated: true, with_vouchers: true
-        }));
-        render(<PortalConfigPage />);
-        expect(await findVouchersCheckbox()).toBeChecked();
-    });
-
 
     it('calls setPortalConfig on submit', async () => {
         render(<PortalConfigPage />);
@@ -80,41 +60,15 @@ describe('portal config page', () => {
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': true, 'with_vouchers': true
-            });
-        });
-        fireEvent.click(await findActiveCheckbox());
-        fireEvent.click(await findVouchersCheckbox());
-        fireEvent.click(button);
-        await waitForExpect(() => {
-            expect(setPortalConfig).toBeCalledWith({
-                'activated': false, 'with_vouchers': false
+                'activated': true
             });
         });
         fireEvent.click(await findActiveCheckbox());
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': true, 'with_vouchers': false
+                'activated': false
             });
         });
-        fireEvent.click(await findActiveCheckbox());
-        fireEvent.click(await findVouchersCheckbox());
-        fireEvent.click(button);
-        await waitForExpect(() => {
-            expect(setPortalConfig).toBeCalledWith({
-                'activated': false, 'with_vouchers': true
-            });
-        });
-    });
-
-    it('has a link to pirania vouchers admin page', async () => {
-        render(<PortalConfigPage />);
-        const link = await (screen.findByText('Manage Vouchers'));
-        expect(link).toBeVisible();
-        fireEvent.click(link);
-        await waitForExpect(() => {
-            expect(route).toBeCalledWith('/access')
-        })
     });
 });
