@@ -11,6 +11,12 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
     const { register, handleSubmit } = useForm({
         defaultValues: config
     });
+
+    const routeToEditor = (e) => {
+        e.preventDefault();
+        route('/access/wellcomescreen');
+    }
+
     return (
         <Fragment>
             <form class="flex-grow-1">
@@ -28,7 +34,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                     <label htmlFor="activated">{I18n.t("Activate Portal in Community AP")}</label>
                 </div>
                 <p>
-                    <a href="#" onClick={() => route('/access/wellcome-screen')}>{I18n.t('Edit wellcome screen')} </a>
+                    <a href="#" onClick={routeToEditor}>{I18n.t('Edit wellcome screen')} </a>
                 </p>
             </form>
             <div class="d-flex">

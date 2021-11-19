@@ -5,6 +5,7 @@ import waitForExpect from 'wait-for-expect';
 import { render } from "utils/test_utils";
 import { PortalConfigPage } from './PortalConfigPage';
 import { getPortalConfig, setPortalConfig } from '../src/piraniaApi';
+import { route } from 'preact-router';
 import queryCache from 'utils/queryCache';
 
 jest.mock('../src/piraniaApi');
@@ -53,6 +54,15 @@ describe('portal config page', () => {
         expect(await findActiveCheckbox()).toBeChecked();
     });
 
+    it('has a link for wellcome screen editor', async () => {
+        render(<PortalConfigPage />);
+        const link = await screen.findByRole('link', {name: 'Edit wellcome screen'});
+        expect(link).toBeInTheDocument();
+        fireEvent.click(link);
+        await waitForExpect(() => {
+            expect(route).toBeCalledWith('/access/wellcomescreen');
+        });
+    })
 
     it('calls setPortalConfig on submit', async () => {
         render(<PortalConfigPage />);
