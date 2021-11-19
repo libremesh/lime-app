@@ -1,14 +1,17 @@
 import { h } from 'preact';
-import { fireEvent, act, screen} from '@testing-library/preact';
+import { fireEvent, act, screen } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
-import { render } from "utils/test_utils";
+import { render, flushPromises } from "utils/test_utils";
 import { WellcomeScreenEditor } from './wellcomeScreenEditor.js';
 import { getPortalContent, setPortalContent, createCompression } from '../piraniaApi';
 import queryCache from 'utils/queryCache';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('../piraniaApi');
+
+const INPUT_COMPRESSED_BASE64 = 'data:image/png;base64,compressed...'
+const DB_BASE64 = 'data:image/png;base64,input_db...'
 
 const findSubmitButton = async () =>
     screen.findByRole('button', { name: "Save" });
@@ -46,34 +49,34 @@ const fillLogo = async () => {
     const input = await screen.findByLabelText('Community Logo');
     expect(input).toBeInTheDocument();
     const file = selectInputFile(input);
-    return await getBase64(file);
+    return file;
 };
-
-const getBase64 = (file) => new Promise(res => {
-    const reader = new FileReader();
-    reader.onloadend = function () {
-        res(reader.result);
-    }
-    reader.readAsDataURL(file);
-});
 
 const defaultContentMock = {
     title: 'mocked title',
     body: 'mocked body',
     link_title: 'mocked link title',
     link_url: 'mocked_link_url.com',
-    logo: 'data:image/png;base64,iVBOR...w0Kv='
+    logo: DB_BASE64
 }
 
 describe('portal wellcome screen', () => {
     beforeEach(() => {
         getPortalContent.mockImplementation(async () => defaultContentMock);
         setPortalContent.mockImplementation(async () => { });
-        createCompression.mockImplementation(async (file) => await getBase64(file));
+        createCompression.mockImplementation(async () => INPUT_COMPRESSED_BASE64);
     });
 
     afterEach(() => {
         act(() => queryCache.clear());
+    });
+
+    beforeAll(() => {
+        jest.useFakeTimers();
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
     });
 
     it('shows wellcome screen config title', async () => {
@@ -84,16 +87,36 @@ describe('portal wellcome screen', () => {
     it('shows a thumbnail of the logo', async () => {
         render(<WellcomeScreenEditor />);
         const logo = await screen.findByAltText('logo-preview');
-        expect(logo.src).toEqual(defaultContentMock.logo)
+        expect(logo.src).toEqual(DB_BASE64)
     });
 
     it('shows an input to change the logo that updates thumbnail', async () => {
         render(<WellcomeScreenEditor />);
-        const base64 = await fillLogo();
+        const file = await fillLogo();
         await waitForExpect(() => {
+            expect(createCompression).toBeCalledWith(file);
             const preview = screen.getByAltText('logo-preview');
-            expect(preview.src).toEqual(base64);
-        })
+            expect(preview.src).toEqual(INPUT_COMPRESSED_BASE64);
+        });
+    });
+
+    it('shows a loading state for thumbnail and disables submit while compressing', async () => {
+        createCompression.mockImplementation(() =>
+            new Promise((res) => {
+                setTimeout(() => {
+                    res(DB_BASE64);
+                }, 2000);
+            }));
+        render(<WellcomeScreenEditor />);
+        await fillLogo();
+        expect(await screen.findByTestId('loading')).toBeInTheDocument();
+        expect(await findSubmitButton()).toBeDisabled();
+        act(() => {
+            jest.advanceTimersByTime(2000);
+        });
+		await flushPromises();
+        expect(screen.queryByTestId('loading')).toBeNull();
+        expect(await findSubmitButton()).toBeEnabled();
     });
 
     it('shows a text input for title', async () => {
@@ -126,7 +149,7 @@ describe('portal wellcome screen', () => {
         const title = await fillTitle();
         const mainText = await fillMainText();
         const [linkTitle, linkURL] = await fillLinkData();
-        const logoBase64 = await fillLogo();
+        await fillLogo();
         await waitForExpect(() => {
             expect(screen.getByRole('button', { name: "Save" })).toBeEnabled();
         });
@@ -138,7 +161,7 @@ describe('portal wellcome screen', () => {
                     main_text: mainText,
                     link_title: linkTitle,
                     link_url: linkURL,
-                    logo: logoBase64
+                    logo: INPUT_COMPRESSED_BASE64
                 }
             )
         });
@@ -148,10 +171,13 @@ describe('portal wellcome screen', () => {
     it('shows an error message if submition fails', async () => {
         setPortalContent.mockImplementation(async () => Promise.reject());
         render(<WellcomeScreenEditor />);
-        const title = await fillTitle();
-        const mainText = await fillMainText();
-        const [linkTitle, linkURL] = await fillLinkData();
-        const logoBase64 = await fillLogo();
+        await fillTitle();
+        await fillMainText();
+        await fillLinkData();
+        await fillLogo();
+        await waitForExpect(() => {
+            expect(screen.getByRole('button', { name: "Save" })).toBeEnabled();
+        });
         const submitButton = await findSubmitButton();
         fireEvent.click(submitButton);
         expect(await screen.findByText('Error: Not Saved')).toBeInTheDocument();

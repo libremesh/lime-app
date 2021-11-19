@@ -16,3 +16,8 @@ export const render = (ui) => tlRender(
 		</ReactQueryCacheProvider>
 	</I18nProvider>
 )
+
+export const flushPromises = () =>
+	// Flush all pending resolved promise handlers.
+	// Usefull when testing some scenarios with async tasks.  
+	new Promise(resolve => setImmediate(resolve));

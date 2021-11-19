@@ -27,11 +27,14 @@ const WellcomeScreenEditorForm = (
                     ref={register({ required: true, maxLength: 512 })}
                 ></textarea>
                 <label for="logo_file">{I18n.t('Community Logo')}</label>
-                {logoCompressed &&
-                    <div>
-                        <img src={logoCompressed} alt="logo-preview" />
-                    </div>
-                }
+                <div>
+                    {isCompressing &&
+                        <Loading />
+                    }
+                    {!isCompressing &&
+                        <img src={logoCompressed} class="border border-primary rounded .container-padded" alt="logo-preview" />
+                    }
+                </div>
                 <label class="button" htmlFor="logo_file">{I18n.t('Select file')}</label>
                 <input style={{ width: 0 }} // Hide the ugly builtin input
                     onInput={onLogoFileSelection}
@@ -40,18 +43,18 @@ const WellcomeScreenEditorForm = (
                 <h5>{I18n.t('Local services link')}</h5>
                 <p>{I18n.t('If your community network has local services, you can point a link to them.')}</p>
                 <label for="link_title">{I18n.t('Link Title')}</label>
-                <input type="text" name="link_title" id="link_title"
+                <input type="text" name="link_title" id="link_title" class="w-100"
                     ref={register({ maxLength: 128 })}
                 ></input>
                 <label for="link_url">{I18n.t('Link URL')}</label>
-                <input type="text" name="link_url" id="link_url"
+                <input type="text" name="link_url" id="link_url" class="w-100"
                     ref={register()}
                 ></input>
             </form>
             <div class="d-flex">
                 <div class="ml-auto">
                     {!isSubmitting &&
-                        <button onClick={handleSubmit(onSubmit)} class="ml-auto" disable={isCompressing}>
+                        <button onClick={handleSubmit(onSubmit)} class="ml-auto" disabled={isCompressing}>
                             {I18n.t("Save")}
                         </button>
                     }
