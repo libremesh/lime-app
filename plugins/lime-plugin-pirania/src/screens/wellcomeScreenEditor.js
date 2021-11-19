@@ -12,20 +12,34 @@ import Loading from 'components/loading';
 const WellcomeScreenEditorForm = (
     { content, logoCompressed, isCompressing,
         onLogoFileSelection, onSubmit, isSubmitting }) => {
-    const { register, handleSubmit } = useForm({
+    const { register, handleSubmit, errors } = useForm({
         defaultValues: content
     });
     return (
         <Fragment>
             <form>
                 <label for="title">{I18n.t('Title')}</label>
+                <span>{I18n.t('Required')} {I18n.t('(Max. %{chars} characters)', { chars: 100 })}</span>
                 <input type="text" name="title" id="title" class="w-100"
-                    ref={register({ required: true, maxLength: 128 })}
+                    ref={register({ required: true, maxLength: 100 })}
                 ></input>
+                {errors.title?.type === 'required' &&
+                    <p style={{ color: "#923838" }}>{I18n.t('This field is required')}</p>
+                }
+                {errors.title?.type === 'maxLength' &&
+                    <p style={{ color: "#923838" }}>{I18n.t('(Max. %{chars} characters)', { chars: 100 })}</p>
+                }
                 <label for="main_text">{I18n.t('Main Text')}</label>
-                <textarea name="main_text" id="main_text" class="w-100" rows="6"
-                    ref={register({ required: true, maxLength: 512 })}
+                <span>{I18n.t('Required')} {I18n.t('(Max. %{chars} characters)', { chars: 500 })}</span>
+                <textarea name="main_text" id="main_text" class="w-100" style={{ minHeight: '9em' }}
+                    ref={register({ required: true, maxLength: 500 })}
                 ></textarea>
+                {errors.main_text?.type === 'required' &&
+                    <p style={{ color: "#923838" }}>{I18n.t('This field is required')}</p>
+                }
+                {errors.main_text?.type === 'maxLength' &&
+                    <p style={{ color: "#923838" }}>{I18n.t('(Max. %{chars} characters)', { chars: 500 })}</p>
+                }
                 <label for="logo_file">{I18n.t('Community Logo')}</label>
                 <div>
                     {isCompressing &&
@@ -37,15 +51,19 @@ const WellcomeScreenEditorForm = (
                 </div>
                 <label class="button" htmlFor="logo_file">{I18n.t('Select file')}</label>
                 <input style={{ width: 0 }} // Hide the ugly builtin input
+                    accept="image/*"
                     onInput={onLogoFileSelection}
                     name="logo_file" id="logo_file" type="file" ref={register()} />
-
-                <h5>{I18n.t('Local services link')}</h5>
+                <h4>{I18n.t('Local services link')}</h4>
                 <p>{I18n.t('If your community network has local services, you can point a link to them.')}</p>
                 <label for="link_title">{I18n.t('Link Title')}</label>
+                <span>{I18n.t('(Max. %{chars} characters)', { chars: 100 })}</span>
                 <input type="text" name="link_title" id="link_title" class="w-100"
-                    ref={register({ maxLength: 128 })}
+                    ref={register({ maxLength: 100 })}
                 ></input>
+                {errors.link_title?.type === 'maxLength' &&
+                    <p style={{ color: "#923838" }}>{I18n.t('(Max. %{chars} characters)', { chars: 100 })}</p>
+                }
                 <label for="link_url">{I18n.t('Link URL')}</label>
                 <input type="text" name="link_url" id="link_url" class="w-100"
                     ref={register()}
