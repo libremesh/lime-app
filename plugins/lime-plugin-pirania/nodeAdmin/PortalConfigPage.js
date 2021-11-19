@@ -27,6 +27,9 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                     />
                     <label htmlFor="activated">{I18n.t("Activate Portal in Community AP")}</label>
                 </div>
+                <p>
+                    <a href="#" onClick={() => route('/access/wellcome-screen')}>{I18n.t('Edit wellcome screen')} </a>
+                </p>
             </form>
             <div class="d-flex">
                 <div class="ml-auto">

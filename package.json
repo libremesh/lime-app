@@ -46,6 +46,7 @@
     "@testing-library/user-event": "^13.5.0",
     "babel-plugin-macros": "^2.8.0",
     "babel-preset-preact": "^2.0.0",
+    "@testing-library/user-event": "^13.5.0",
     "colors": "^1.4.0",
     "commitizen": "^4.0.0",
     "commitlint": "^8.0.0",
