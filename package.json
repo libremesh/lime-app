@@ -80,6 +80,7 @@
   "dependencies": {
     "@lingui/detect-locale": "^3.12.1",
     "@lingui/react": "^3.12.1",
+    "compressorjs": "^1.1.1",
     "history": "4.7.2",
     "leaflet.gridlayer.googlemutant": "0.13.4",
     "preact": "10.5.7",
