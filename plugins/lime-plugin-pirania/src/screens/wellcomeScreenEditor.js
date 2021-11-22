@@ -65,9 +65,13 @@ const WellcomeScreenEditorForm = (
                     <p style={{ color: "#923838" }}>{I18n.t('(Max. %{chars} characters)', { chars: 100 })}</p>
                 }
                 <label for="link_url">{I18n.t('Link URL')}</label>
+                <span>{I18n.t('Starting with https:// or http://')}</span>
                 <input type="text" name="link_url" id="link_url" class="w-100"
-                    ref={register()}
+                    ref={register({ pattern: /^(http:\/\/|https:\/\/).*$/ })}
                 ></input>
+                {errors.link_url?.type === 'pattern' &&
+                    <p style={{ color: "#923838" }}>{I18n.t('It must start with https:// or http://', { chars: 100 })}</p>
+                }
             </form>
             <div class="d-flex">
                 <div class="ml-auto">

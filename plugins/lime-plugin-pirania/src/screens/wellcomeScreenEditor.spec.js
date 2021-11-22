@@ -39,9 +39,9 @@ const fillMainText = async () => await fillField(
     "This is a commmunity network self organized by it's members."
 );
 
-const fillLinkData = async () => {
+const fillLinkData = async (url) => {
     const linkTitle = await fillField("Link Title", "Local Community Services");
-    const linkURL = await fillField("Link URL", "http://quintalibre.org.ar");
+    const linkURL = await fillField("Link URL", url || "http://quintalibre.org.ar");
     return [linkTitle, linkURL]
 };
 
@@ -56,7 +56,7 @@ const defaultContentMock = {
     title: 'mocked title',
     body: 'mocked body',
     link_title: 'mocked link title',
-    link_url: 'mocked_link_url.com',
+    link_url: 'http://mocked_link_url.com',
     logo: DB_BASE64
 }
 
@@ -181,5 +181,13 @@ describe('portal wellcome screen', () => {
         const submitButton = await findSubmitButton();
         fireEvent.click(submitButton);
         expect(await screen.findByText('Error: Not Saved')).toBeInTheDocument();
+    });
+
+    it('shows an error if link url doesnt start with http or https', async() => {
+        render(<WellcomeScreenEditor />);
+        await fillLinkData('mysite.com');
+        const submitButton = await findSubmitButton();
+        fireEvent.click(submitButton);
+        expect(await screen.findByText('It must start with https:// or http://'));
     });
 });
