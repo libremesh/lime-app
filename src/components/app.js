@@ -21,9 +21,10 @@ import queryCache from 'utils/queryCache';
 import { useSession, useLogin } from 'utils/queries';
 
 import { RebootPage } from '../containers/RebootPage';
-
-import i18n from '../i18n';
+import i18n, { dynamicActivate } from '../i18n';
 import { I18nProvider } from '@lingui/react'
+import { useEffect } from 'preact/hooks';
+import { fromNavigator } from "@lingui/detect-locale";
 
 const Routes = () => (
 	<Router history={history}>
@@ -96,16 +97,21 @@ const App = () => {
 }
 
 
-const AppDefault = () => (
-	<I18nProvider i18n={i18n} >
-		<ReactQueryCacheProvider queryCache={queryCache}>
-			<AppContextProvider>
-				<Provider store={store}>
-					<App />
-				</Provider>
-			</AppContextProvider>
-		</ReactQueryCacheProvider>
-	</I18nProvider >
-);
+const AppDefault = () => {
+	useEffect(() => {
+		dynamicActivate(fromNavigator().split('-')[0]);
+	}, []);
+	return (
+		<I18nProvider i18n={i18n} >
+			<ReactQueryCacheProvider queryCache={queryCache}>
+				<AppContextProvider>
+					<Provider store={store}>
+						<App />
+					</Provider>
+				</AppContextProvider>
+			</ReactQueryCacheProvider>
+		</I18nProvider >
+	);
+};
 
 export default AppDefault;

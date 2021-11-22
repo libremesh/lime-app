@@ -8,8 +8,11 @@ import { Header } from 'components/header';
 import { Menu } from '../src/containers/Menu';
 import { AppContext } from 'utils/app.context';
 import SubHeader from 'containers/SubHeader';
-import i18n from '../src/i18n';
+import i18n, { dynamicActivate } from '../src/i18n';
 import { I18nProvider } from '@lingui/react'
+import { fromNavigator } from "@lingui/detect-locale";
+
+dynamicActivate(fromNavigator().split('-')[0]);
 
 const boarData = {
 	hostname: 'ql-anaymarcos',
@@ -34,7 +37,7 @@ const DEFAULT_QUERIES = [
 	[['eupgrade', 'is_new_version_available'], {}],
 ]
 
-function queryCacheFactory(queries=[]) {
+function queryCacheFactory(queries = []) {
 	const defaultQueries = Object.fromEntries(DEFAULT_QUERIES
 		.map(([key, value]) => [JSON.stringify(key), value]))
 	const customQueries = Object.fromEntries(queries
