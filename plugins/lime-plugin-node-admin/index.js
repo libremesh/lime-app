@@ -13,6 +13,6 @@ export default {
 		['nodeadmin/hostname', HostnamePage],
 		['nodeadmin/wifipassword', APPasswordPage],
 		['nodeadmin/roaming-ap', RoamingAPPage],
-		['nodeadmin/community-portal', PortalConfigPage],
+		['nodeadmin/communityPortal', PortalConfigPage],
 	]
 };

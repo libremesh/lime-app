@@ -2,9 +2,11 @@ import { h } from 'preact';
 import { render } from "utils/test_utils";
 import { getPortalConfig } from '../src/piraniaApi';
 import { PortalConfigItem } from './PortalConfigItem';
-import { screen, cleanup, act } from '@testing-library/preact';
+import { fireEvent, screen, cleanup, act } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import queryCache  from 'utils/queryCache';
+import { route } from 'preact-router';
+import waitForExpect from 'wait-for-expect';
 
 jest.mock('../src/piraniaApi');
 
@@ -48,4 +50,13 @@ describe('portal config item', () => {
         render(<PortalConfigItem />);
         expect(await screen.findByText('Deactivated')).toBeVisible();
     });
+
+    it('routes to portal config page on click', async() => {
+        render(<PortalConfigItem />);
+        const item = await screen.findByTestId('portal-config-item');
+        fireEvent.click(item);
+        await waitForExpect(() => {
+            expect(route).toBeCalledWith('/nodeadmin/communityPortal');
+        })
+    })
 })
