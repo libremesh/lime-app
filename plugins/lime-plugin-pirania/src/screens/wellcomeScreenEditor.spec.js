@@ -54,15 +54,17 @@ const fillLogo = async () => {
 
 const defaultContentMock = {
     title: 'mocked title',
-    body: 'mocked body',
+    main_text: 'mocked body',
     link_title: 'mocked link title',
     link_url: 'http://mocked_link_url.com',
-    logo: DB_BASE64
+    logo: DB_BASE64,
+    background_color: "#ffffff",
 }
 
 describe('portal wellcome screen', () => {
     beforeEach(() => {
         getPortalContent.mockImplementation(async () => defaultContentMock);
+        setPortalContent.mockClear();
         setPortalContent.mockImplementation(async () => { });
         createCompression.mockImplementation(async () => INPUT_COMPRESSED_BASE64);
     });
@@ -129,6 +131,11 @@ describe('portal wellcome screen', () => {
         expect(await screen.findByLabelText('Main Text')).toBeInTheDocument();
     });
 
+    it('shows a color input for background color', async () => {
+        render(<WellcomeScreenEditor />);
+        expect(await screen.findByLabelText('Background Color')).toBeInTheDocument();
+    });
+
     it('shows an optional dual input for link title and url', async () => {
         render(<WellcomeScreenEditor />);
         expect(await screen.findByText(
@@ -142,6 +149,16 @@ describe('portal wellcome screen', () => {
     it('shows a button to submit content', async () => {
         render(<WellcomeScreenEditor />);
         expect(await findSubmitButton()).toBeInTheDocument();
+    });
+
+    it('submits existent data when clicking submit button', async () => {
+        render(<WellcomeScreenEditor />);
+        const button = await findSubmitButton();
+        fireEvent.click(button);
+        await waitForExpect(() => {
+            expect(setPortalContent).toBeCalledWith(defaultContentMock);
+        });
+        expect(await screen.findByText('Saved')).toBeInTheDocument();
     });
 
     it('submits all data when clicking submit button', async () => {
@@ -158,6 +175,7 @@ describe('portal wellcome screen', () => {
             expect(setPortalContent).toBeCalledWith(
                 {
                     title,
+                    background_color: "#ffffff",
                     main_text: mainText,
                     link_title: linkTitle,
                     link_url: linkURL,

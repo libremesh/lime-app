@@ -13,7 +13,7 @@ const WellcomeScreenEditorForm = (
     { content, logoCompressed, isCompressing,
         onLogoFileSelection, onSubmit, isSubmitting }) => {
     const { register, handleSubmit, errors } = useForm({
-        defaultValues: content
+        defaultValues: { background_color: '#ffffff', ...content }
     });
     return (
         <Fragment>
@@ -54,6 +54,13 @@ const WellcomeScreenEditorForm = (
                     accept="image/*"
                     onInput={onLogoFileSelection}
                     name="logo_file" id="logo_file" type="file" ref={register()} />
+                <label for="background_color">{I18n.t('Background Color')}</label>
+                <input type="color" name="background_color" id="background_color"
+                    ref={register({ required: true })}
+                ></input>
+                {errors.background_color?.type === 'required' &&
+                    <p style={{ color: "#923838" }}>{I18n.t('This field is required')}</p>
+                }
                 <h4>{I18n.t('Local services link')}</h4>
                 <p>{I18n.t('If your community network has local services, you can point a link to them.')}</p>
                 <label for="link_title">{I18n.t('Link Title')}</label>
@@ -102,7 +109,7 @@ export const WellcomeScreenEditor = () => {
     }
 
     const onSubmit = (formData) => {
-        formData['logo'] = logoCompressed;
+        formData['logo'] = logoCompressed || content.logo;
         delete formData.logo_file;
         return setPortalContent(formData);
     }
