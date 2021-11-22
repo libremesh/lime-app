@@ -5,7 +5,7 @@ export const getPortalConfig = () =>
     api.call('pirania', 'get_portal_config', {});
 
 export const setPortalConfig = (config) =>
-    api.call('pirania', 'set_portal_config', config);
+    api.call('pirania', 'set_portal_config', { ...config, with_vouchers: true });
 
 export const getPortalContent = () =>
     api.call('pirania-app', 'read_content', {});
@@ -19,7 +19,7 @@ export const createCompression = (file) =>
             quality: 0.6,
             maxHeight: 150,
             maxWidth: 150,
-            success: (result) =>  {
+            success: (result) => {
                 const reader = new FileReader();
                 reader.onloadend = function () {
                     res(reader.result);
