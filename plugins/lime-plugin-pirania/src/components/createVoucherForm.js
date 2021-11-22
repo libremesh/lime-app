@@ -1,6 +1,6 @@
 import { h } from "preact";
 import { useState } from "preact/hooks";
-import I18n from "i18n-js";
+import { Trans, t } from '@lingui/macro';
 import style from "../style.less";
 import Loading from "../../../../src/components/loading";
 const maxLength = 100;
@@ -28,7 +28,7 @@ const CreateVoucherForm = ({ submitVoucher }) => {
 	};
 	return (
 		<form class={style.createForm} onSubmit={(e) => createVoucher(e)}>
-			<label for="description">{I18n.t("Voucher group description")}</label>
+			<label for="description"><Trans>Voucher group description</Trans></label>
 			<textarea
 				required
 				maxLength={maxLength}
@@ -37,7 +37,7 @@ const CreateVoucherForm = ({ submitVoucher }) => {
 				onChange={(e) => changeInput("name", e.target.value)}
 			/>
 			<div class={style.isPermanent}>
-				<label for="permanent">{I18n.t("Is permanent")}</label>
+				<label for="permanent"><Trans>Is permanent</Trans></label>
 				<input
 					checked={input.permanent}
 					type="checkbox"
@@ -47,17 +47,17 @@ const CreateVoucherForm = ({ submitVoucher }) => {
 				/>
 			</div>
 			<label style={{ opacity: input.permanent ? 0.3 : 1 }} for="duration">
-				{I18n.t("Voucher duration in days")}
+				<Trans>Voucher duration in days</Trans>
 			</label>
 			<input
 				disabled={input.permanent}
 				type={input.permanent ? "text" : "number"}
 				min="1"
-				value={input.permanent ? I18n.t("Permanently") : input.duration_m}
+				value={input.permanent ? t`Permanently` : input.duration_m}
 				id="duration"
 				onChange={(e) => changeInput("duration_m", e.target.value)}
 			/>
-			<label for="quantity">{I18n.t("Number of vouchers")}</label>
+			<label for="quantity"><Trans>Number of vouchers</Trans></label>
 			<input
 				type="number"
 				min="1"
@@ -69,7 +69,7 @@ const CreateVoucherForm = ({ submitVoucher }) => {
 			{loading ? (
 				<Loading />
 			) : (
-				<button type="submit">{I18n.t("Create")}</button>
+				<button type="submit"><Trans>Create</Trans></button>
 			)}
 		</form>
 	);

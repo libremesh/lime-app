@@ -1,6 +1,6 @@
 import { h } from "preact";
 import { useState } from "preact/hooks";
-import I18n from "i18n-js";
+import { Trans } from '@lingui/macro';
 import { useAddVoucher } from "../piraniaQueries";
 import GoBack from "../components/goBack";
 import CreateVoucherForm from "../components/createVoucherForm";
@@ -19,7 +19,7 @@ const CreateVoucher = () => {
 		<div class="container container-padded">
 			<div class={style.goBackTitle}>
 				<GoBack url="/access/" />
-				<h1>{I18n.t("create voucher")}</h1>
+				<h1><Trans>create voucher</Trans></h1>
 			</div>
 			{!createdVouchers && <CreateVoucherForm submitVoucher={submitVoucher} />}
 			{createdVouchers && <CreateVoucherConfirm vouchers={createdVouchers} />}

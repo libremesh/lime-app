@@ -2,7 +2,7 @@ import { h } from "preact";
 import { route } from "preact-router";
 import TimeAgo from "./timeAgo";
 import Copy from "./copy";
-import I18n from "i18n-js";
+import { Trans } from '@lingui/macro';
 import style from "../style.less";
 
 const VoucherListItem = ({
@@ -25,15 +25,15 @@ const VoucherListItem = ({
 				<Copy text={code} />
 				<span class={style.codeStatus}>
 					{status === "available"
-						? I18n.t("available")
+						? <Trans>available</Trans>
 						: status === "used"
-							? I18n.t("used")
-							: I18n.t("disabled")}
+							? <Trans>used</Trans>
+							: <Trans>disabled</Trans>}
 				</span>
 			</div>
 			<div class={style.nodeInfo}>
-				<span>{I18n.t("Node")}:</span>{" "}
-				<span role="node-name">{author_node || I18n.t("unknown")}</span>
+				<span><Trans>Node</Trans>:</span>{" "}
+				<span role="node-name">{author_node} || <Trans>unknown</Trans></span>
 			</div>
 			<div
 				role="voucher-item"
@@ -43,17 +43,17 @@ const VoucherListItem = ({
 				<span>{name}</span>
 			</div>
 			<div class={style.dates} onClick={goToVoucherView}>
-				{permanent && <span>{I18n.t("permanent")}</span>}
+				{permanent && <span><Trans>permanent</Trans></span>}
 				{expiration_date && (
 					<span class={className}>
 						<span>
-							{status === "disabled" ? I18n.t("expired") : I18n.t("expires")}{" "}
+							{status === "disabled" ? <Trans>expired</Trans> : <span><Trans>expires</Trans>{" "}</span>}
 						</span>
 						<TimeAgo date={expiration_date} />
 					</span>
 				)}
 				<span class={className}>
-					<span>{I18n.t("created")} </span>
+					<span><Trans>created</Trans></span>
 					<TimeAgo date={creation_date} />
 				</span>
 			</div>

@@ -1,6 +1,6 @@
 import { h } from "preact";
 import { useState } from "preact/hooks";
-import I18n from "i18n-js";
+import { Trans } from '@lingui/macro';
 import { route } from "preact-router";
 import Loading from "../../../../src/components/loading";
 import VoucherListItem from "../components/voucherListItem";
@@ -16,25 +16,25 @@ const VoucherList = ({ vouchers }) => {
 		<div>
 			<div class={style.filterBox}>
 				<div>
-					<label for="search-by">{I18n.t("search by")}</label>
+					<label for="search-by"><Trans>search by</Trans></label>
 					<input id="search-by" onChange={(e) => setSearch(e.target.value)} />
 				</div>
 				<div>
-					<label for="filter-by">{I18n.t("filter by")}</label>
+					<label for="filter-by"><Trans>filter by</Trans></label>
 					<select
 						id="filter-by"
 						onChange={(e) => setFilterSelection(e.target.value)}
 					>
-						<option value="all-vouchers">{I18n.t("All Vouchers")}</option>
-						<option value="available">{I18n.t("available")}</option>
-						<option value="used">{I18n.t("used")}</option>
-						<option value="disabled">{I18n.t("disabled")}</option>
+						<option value="all-vouchers"><Trans>All Vouchers</Trans></option>
+						<option value="available"><Trans>available</Trans></option>
+						<option value="used"><Trans>used</Trans></option>
+						<option value="disabled"><Trans>disabled</Trans></option>
 					</select>
 				</div>
 			</div>
 			<div class={style.divider}>
 				<hr />
-				<h2>{I18n.t("Voucher list")}</h2>
+				<h2><Trans>Voucher list</Trans></h2>
 			</div>
 			<div class={style.voucherBox}>
 				{vouchers
@@ -57,11 +57,11 @@ const VoucherList = ({ vouchers }) => {
 			</div>
 			{vouchers.length === 0 && (
 				<span>
-					{I18n.t("There are no vouchers matching the current criteria")}
+					<Trans>There are no vouchers matching the current criteria</Trans>
 				</span>
 			)}
 			<button class={style.fab} onClick={() => route("/access/create")}>
-				{I18n.t("Create")}
+				<Trans>Create</Trans>
 			</button>
 		</div>
 	);

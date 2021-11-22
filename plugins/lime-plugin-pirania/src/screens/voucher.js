@@ -1,5 +1,5 @@
 import { h } from "preact";
-import I18n from "i18n-js";
+import { Trans } from '@lingui/macro';
 import { route } from "preact-router";
 import style from "../style.less";
 import { useListVouchers } from "../piraniaQueries";
@@ -18,9 +18,9 @@ const VoucherDetails = ({
 }) => (
 	<div>
 		<div class={style.voucherDetailBox}>
-			<h3>{I18n.t("Voucher code")}</h3>
+			<h3><Trans>Voucher code</Trans></h3>
 			<Copy style={{ marginBottom: 25 }} text={code} />
-			<h3>{I18n.t("Voucher status")}</h3>
+			<h3><Trans>Voucher status</Trans></h3>
 			<p
 				style={{
 					color: "purple",
@@ -30,30 +30,30 @@ const VoucherDetails = ({
 			>
 				{status}
 			</p>
-			<h3>{I18n.t("Voucher description")}</h3>
+			<h3><Trans>Voucher description</Trans></h3>
 			<p>{name}</p>
 			{expiration_date && (
 				<div>
-					<h3>{I18n.t("Expiration date")}</h3>
+					<h3><Trans>Expiration date</Trans></h3>
 					<p>
 						<span>
-							{status === "disabled" ? I18n.t("expired") : I18n.t("expires")}
+							{status === "disabled" ? <Trans>expired</Trans> : <span><Trans>expires</Trans>{" "}</span>}
 						</span>{" "}
 						<TimeAgo date={expiration_date} />
 					</p>
 				</div>
 			)}
-			<h3>{I18n.t("Creation date")}</h3>
+			<h3><Trans>Creation date</Trans></h3>
 			<p>
 				<TimeAgo date={creation_date} />
 			</p>
 			{permanent && <div class={style.isPermanent}>
-				<label>{I18n.t("permanent")}</label>
+				<label><Trans>permanent</Trans></label>
 				<span style={{ color: 'green', marginLeft: 5 }}>✔</span>
 			</div>}
 		</div>
 		<button disabled={status === "disabled"} onClick={() => route(`/access/edit/${id}`)}>
-			{I18n.t("Edit")}
+			<Trans>Edit</Trans>
 		</button>
 	</div>
 );
@@ -64,7 +64,7 @@ const Voucher = ({ id }) => {
 		<div class="container container-padded">
 			<div class={style.goBackTitle}>
 				<GoBack url="/access/" />
-				<h1>{I18n.t("voucher details")}</h1>
+				<h1><Trans>voucher details</Trans></h1>
 			</div>
 			<div>
 				{vouchers && (
