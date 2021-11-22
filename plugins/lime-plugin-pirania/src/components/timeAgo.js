@@ -10,7 +10,7 @@ register('it', it);
 
 export const TimeAgo = ({ date }) => {
     const { i18n } = useLingui();
-    return format(date, i18n.locale);
+    return format(date * 1000, i18n.locale);
 }
 
 export default TimeAgo;

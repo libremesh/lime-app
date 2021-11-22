@@ -11,36 +11,26 @@ import VoucherListItem from "./voucherListItem";
 const voucher = {
 	code: "PIDFIG",
 	id: "x5crd4",
-	activation_date: 1632417986,
+	activation_deadline: 1633022276, // creation_date + 1 week
 	name: "luandro",
 	duration_m: 10000,
-	creation_date: 1632417476,
+	creation_date: 1632417476, // Sep 23 2021 14:17:56 GMT-0300
 	permanent: false,
 	status: 'available',
 	author_node: 'ml-luandro'
 };
 
 describe("voucher list item", () => {
-	it("shows vouchers creation date", async () => {
+	it('has test id voucher-item-{voucher.id}', async () => {
 		render(<VoucherListItem {...voucher} />);
 		expect(
-			await screen.findByText(timeago.format(new Date(voucher.creation_date*1000)))
+			await screen.findByTestId('voucher-item-x5crd4')
 		).toBeInTheDocument();
 	});
 
-	it("renders voucher-list-item with a test code", async () => {
+	it("shows the voucher code", async () => {
 		render(<VoucherListItem {...voucher} />);
 		expect(await screen.findByText(voucher.code)).toBeInTheDocument();
-	});
-
-	it("routes to the voucher detail screen on click", async () => {
-		render(<VoucherListItem {...voucher} />);
-		const element = await screen.findByRole("voucher-item");
-		expect(element).toBeInTheDocument();
-		fireEvent.click(element);
-		await waitForExpect(() => {
-			expect(route).toHaveBeenCalledWith(`/access/view/${voucher.id}`);
-		});
 	});
 
 	it("shows voucher name", async () => {
@@ -48,33 +38,86 @@ describe("voucher list item", () => {
 		expect(await screen.findByText(voucher.name)).toBeInTheDocument();
 	});
 
-	it("shows used status when it is used", async () => {
-		render(
-			<VoucherListItem
-				{...voucher}
-				status={"used"}
-			/>
-		);
-		expect(await screen.findByText("used")).toBeInTheDocument();
+	it("shows active status when it is active", async () => {
+		const voucher_ = { ...voucher, status: 'active' };
+		render(<VoucherListItem {...voucher_} />);
+		expect(await screen.findByText("Active")).toBeInTheDocument();
 	});
 
 	it("shows available status when it is available", async () => {
-		render(<VoucherListItem {...voucher} status={"available"} />);
-		expect(await screen.findByText("available")).toBeInTheDocument();
+		const voucher_ = { ...voucher, status: 'available' };
+		render(<VoucherListItem {...voucher_} />);
+		expect(await screen.findByText("Available")).toBeInTheDocument();
 	});
-	it("shows disabled status when it is disabled", async () => {
-		render(<VoucherListItem {...voucher} status={"disabled"} />);
-		expect(await screen.findByText("disabled")).toBeInTheDocument();
+
+	it("shows expired status when it is expired", async () => {
+		const voucher_ = { ...voucher, status: 'expired' };
+		render(<VoucherListItem {...voucher_} />);
+		expect(await screen.findByText("Expired")).toBeInTheDocument();
 	});
-	it("shows expired date when it has an expiration date", async () => {
-		const expirationDate = new Date().getTime() / 1000 + 10e5;
-		render(<VoucherListItem {...voucher} expiration_date={expirationDate} />);
+
+	it("shows vouchers creation date", async () => {
+		render(<VoucherListItem {...voucher} />);
+		const timeAgo = timeago.format(new Date(voucher.creation_date * 1000));
 		expect(
-			await screen.findByText(timeago.format(new Date(expirationDate*1000)))
+			await screen.findByText(`Created ${timeAgo}`)
 		).toBeInTheDocument();
 	});
-	it("shows permanent legend when it has no expiration date", async () => {
-		render(<VoucherListItem {...voucher} permanent={true} />);
-		expect(await screen.findByText("permanent")).toBeInTheDocument();
+
+	it("shows expired date when its active and has expiration date", async () => {
+		const voucher_ = {
+			...voucher,
+			expiration_date: new Date().getTime() / 1000 + 10e5,
+			status: 'active'
+		};
+		const timeAhead = timeago.format(voucher_.expiration_date * 1000);
+		render(<VoucherListItem {...voucher_} />);
+		expect(
+			await screen.findByText(`Expires ${timeAhead}`)
+		).toBeInTheDocument();
+		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
+	});
+
+	it("shows expired date when its expired", async () => {
+		const voucher_ = {
+			...voucher,
+			expiration_date: new Date().getTime() / 1000 - 10e5,
+			status: 'expired'
+		};
+		const timeAgo = timeago.format(voucher_.expiration_date * 1000);
+		render(<VoucherListItem {...voucher_} />);
+		expect(
+			await screen.findByText(`Expired ${timeAgo}`)
+		).toBeInTheDocument();
+		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
+		expect(screen.queryByText("Permanent")).toBeNull();
+	});
+
+	it("shows permanent legend when it is active an has no expiration date", async () => {
+		const voucher_ = { ...voucher, status: 'active', permanent: true }
+		render(<VoucherListItem {...voucher_} />);
+		expect(await screen.findByText("Permanent")).toBeInTheDocument();
+		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
+		expect(screen.queryByText(/Expires.*/)).toBeNull();
+	});
+
+	it("shows activation deadline when it is available and has an activation deadline", async() => {
+		const timeAhead = timeago.format(voucher.activation_deadline * 1000);
+		render(<VoucherListItem {...voucher} />);
+		expect(
+			await screen.findByText(`Activation Deadline: ${timeAhead}`)
+		).toBeInTheDocument();
+		expect(screen.queryByText(/Expires.*/)).toBeNull();
+		expect(screen.queryByText("Permanent")).toBeNull();
+	});
+
+	it("routes to the voucher detail screen on click", async () => {
+		render(<VoucherListItem {...voucher} />);
+		const element = await screen.findByTestId("voucher-item-x5crd4");
+		expect(element).toBeInTheDocument();
+		fireEvent.click(element);
+		await waitForExpect(() => {
+			expect(route).toHaveBeenCalledWith(`/access/view/${voucher.id}`);
+		});
 	});
 });

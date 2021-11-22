@@ -30,21 +30,8 @@ export const createCompression = (file) =>
     });
 export function listVouchers() {
 	const now = new Date().getTime() / 1000;
-	return api
-		.call("pirania", "list_vouchers", {})
-		.then((response) =>
-			response.vouchers.map((voucher) => {
-				const { is_active, expiration_date, duration_m } = voucher;
-				let status = is_active ? "used" : "available";
-
-				if ((expiration_date && expiration_date < now) || duration_m === 0)
-					status = "disabled";
-				return {
-					...voucher,
-					status
-				};
-			})
-		)
+	return api.call("pirania", "list_vouchers", {})
+		.then(response =>response.vouchers)
 		.catch((error) => {
 			if (error.code === -32000) {
 				return Promise.resolve(null);
