@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { Config } from 'plugins/lime-plugin-node-admin/src/components/config';
 import { usePortalConfig } from '../src/piraniaQueries';
 import { route } from 'preact-router';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 
 export const PortalConfigItem = () => {
@@ -10,16 +10,16 @@ export const PortalConfigItem = () => {
     let message = '';
     if (config) {
         if (config.activated && config.with_vouchers) {
-            message = I18n.t('Activated, with vouchers');
+            message = <Trans>Activated, with vouchers</Trans>;
         }
         if (config.activated && !config.with_vouchers) {
-            message = I18n.t('Activated, without vouchers');
+            message = <Trans>Activated, without vouchers</Trans>;
         }
         if (!config.activated) {
-            message = I18n.t('Deactivated');
+            message = <Trans>Deactivated</Trans>;
         }
     }
-    return <Config data-testid='portal-config-item' title={I18n.t('Community Portal')}
+    return <Config data-testid='portal-config-item' title={<Trans>Community Portal</Trans>}
         onClick={() => route('/nodeadmin/communityPortal')}
         value={message}
         isLoading={isLoading} />

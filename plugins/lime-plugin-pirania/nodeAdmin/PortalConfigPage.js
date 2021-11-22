@@ -5,7 +5,7 @@ import { usePortalConfig, useSetPortalConfig } from '../src/piraniaQueries';
 import ConfigPageLayout from 'plugins/lime-plugin-node-admin/src/layouts/configPageLayout';
 import Loading from 'components/loading';
 import switchStyle from 'components/switch';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
     const { register, handleSubmit } = useForm({
@@ -20,28 +20,31 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
     return (
         <Fragment>
             <form class="flex-grow-1">
-                <p>{I18n.t(
-                    'The Community Portal enables a welcome screen ' +
-                    'to be displayed in the web browser to ' +
-                    'anyone connecting to the network using the  ' +
-                    'Community AP')}</p>
+                <p>
+                    <Trans>
+                        The Community Portal enables a welcome screen
+                        to be displayed in the web browser to
+                        anyone connecting to the network using the
+                        Community AP
+                    </Trans>
+                </p>
                 <div class={switchStyle.toggles}>
                     <input type="checkbox"
                         name="activated"
                         id="activated"
                         ref={register()}
                     />
-                    <label htmlFor="activated">{I18n.t("Activate Portal in Community AP")}</label>
+                    <label htmlFor="activated"><Trans>Activate Portal in Community AP</Trans></label>
                 </div>
                 <p>
-                    <a href="#" onClick={routeToEditor}>{I18n.t('Edit wellcome screen')} </a>
+                    <a href="#" onClick={routeToEditor}><Trans>Edit wellcome screen</Trans> </a>
                 </p>
             </form>
             <div class="d-flex">
                 <div class="ml-auto">
                     {!isSubmitting &&
                         <button onClick={handleSubmit(onSubmit)} class="ml-auto" >
-                            {I18n.t("Save")}
+                            <Trans>Save</Trans>
                         </button>
                     }
                     {isSubmitting &&
@@ -60,7 +63,7 @@ export const PortalConfigPage = () => {
     return (
         <ConfigPageLayout {...{
             isLoading, isSuccess, isError,
-            title: I18n.t("Community Portal")
+            title: <Trans>Community Portal</Trans>
         }}>
             <PortalConfigForm {...{ config, onSubmit: setPortalConfig, isSubmitting }} />
         </ConfigPageLayout >

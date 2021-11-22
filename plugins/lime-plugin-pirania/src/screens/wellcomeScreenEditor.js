@@ -1,5 +1,5 @@
 import { h, Fragment } from "preact";
-import I18n from "i18n-js";
+import { Trans } from '@lingui/macro';
 
 import { ConfigPageLayout } from 'plugins/lime-plugin-node-admin/src/layouts';
 import {
@@ -8,6 +8,8 @@ import {
 } from '../piraniaQueries';
 import { useForm } from 'react-hook-form';
 import Loading from 'components/loading';
+
+const MaxLengthMsg = ({ length }) => <Trans>Max. {length} characters</Trans>
 
 const WellcomeScreenEditorForm = (
     { content, logoCompressed, isCompressing,
@@ -18,29 +20,29 @@ const WellcomeScreenEditorForm = (
     return (
         <Fragment>
             <form>
-                <label for="title">{I18n.t('Title')}</label>
-                <span>{I18n.t('Required')} {I18n.t('(Max. %{chars} characters)', { chars: 100 })}</span>
+                <label for="title"><Trans>Title</Trans></label>
+                <span><Trans>Required</Trans> (<MaxLengthMsg length={100} />)</span>
                 <input type="text" name="title" id="title" class="w-100"
                     ref={register({ required: true, maxLength: 100 })}
                 ></input>
                 {errors.title?.type === 'required' &&
-                    <p style={{ color: "#923838" }}>{I18n.t('This field is required')}</p>
+                    <p style={{ color: "#923838" }}><Trans>This field is required</Trans></p>
                 }
                 {errors.title?.type === 'maxLength' &&
-                    <p style={{ color: "#923838" }}>{I18n.t('(Max. %{chars} characters)', { chars: 100 })}</p>
+                    <p style={{ color: "#923838" }}><MaxLengthMsg length={100} /></p>
                 }
-                <label for="main_text">{I18n.t('Main Text')}</label>
-                <span>{I18n.t('Required')} {I18n.t('(Max. %{chars} characters)', { chars: 500 })}</span>
+                <label for="main_text"><Trans>Main Text</Trans></label>
+                <span><Trans>Required</Trans> (<MaxLengthMsg length={500} />)</span>
                 <textarea name="main_text" id="main_text" class="w-100" style={{ minHeight: '9em' }}
                     ref={register({ required: true, maxLength: 500 })}
                 ></textarea>
                 {errors.main_text?.type === 'required' &&
-                    <p style={{ color: "#923838" }}>{I18n.t('This field is required')}</p>
+                    <p style={{ color: "#923838" }}><Trans>This field is required</Trans></p>
                 }
                 {errors.main_text?.type === 'maxLength' &&
-                    <p style={{ color: "#923838" }}>{I18n.t('(Max. %{chars} characters)', { chars: 500 })}</p>
+                    <p style={{ color: "#923838" }}><MaxLengthMsg length={500} /></p>
                 }
-                <label for="logo_file">{I18n.t('Community Logo')}</label>
+                <label for="logo_file"><Trans>Community Logo</Trans></label>
                 <div>
                     {isCompressing &&
                         <Loading />
@@ -49,42 +51,42 @@ const WellcomeScreenEditorForm = (
                         <img src={logoCompressed} class="border border-primary rounded .container-padded" alt="logo-preview" />
                     }
                 </div>
-                <label class="button" htmlFor="logo_file">{I18n.t('Select file')}</label>
+                <label class="button" htmlFor="logo_file"><Trans>Select file</Trans></label>
                 <input style={{ width: 0 }} // Hide the ugly builtin input
                     accept="image/*"
                     onInput={onLogoFileSelection}
                     name="logo_file" id="logo_file" type="file" ref={register()} />
-                <label for="background_color">{I18n.t('Background Color')}</label>
+                <label for="background_color"><Trans>Background Color</Trans></label>
                 <input type="color" name="background_color" id="background_color"
                     ref={register({ required: true })}
                 ></input>
                 {errors.background_color?.type === 'required' &&
-                    <p style={{ color: "#923838" }}>{I18n.t('This field is required')}</p>
+                    <p style={{ color: "#923838" }}><Trans>This field is required</Trans></p>
                 }
-                <h4>{I18n.t('Local services link')}</h4>
-                <p>{I18n.t('If your community network has local services, you can point a link to them.')}</p>
-                <label for="link_title">{I18n.t('Link Title')}</label>
-                <span>{I18n.t('(Max. %{chars} characters)', { chars: 100 })}</span>
+                <h4><Trans>Local services link</Trans></h4>
+                <p><Trans>If your community network has local services, you can point a link to them.</Trans></p>
+                <label for="link_title"><Trans>Link Title</Trans></label>
+                <span><MaxLengthMsg length={100} /></span>
                 <input type="text" name="link_title" id="link_title" class="w-100"
                     ref={register({ maxLength: 100 })}
                 ></input>
                 {errors.link_title?.type === 'maxLength' &&
-                    <p style={{ color: "#923838" }}>{I18n.t('(Max. %{chars} characters)', { chars: 100 })}</p>
+                    <p style={{ color: "#923838" }}><MaxLengthMsg length={100} /></p>
                 }
-                <label for="link_url">{I18n.t('Link URL')}</label>
-                <span>{I18n.t('Starting with https:// or http://')}</span>
+                <label for="link_url"><Trans>Link URL</Trans></label>
+                <span><Trans>Starting with https:// or http://</Trans></span>
                 <input type="text" name="link_url" id="link_url" class="w-100"
                     ref={register({ pattern: /^(http:\/\/|https:\/\/).*$/ })}
                 ></input>
                 {errors.link_url?.type === 'pattern' &&
-                    <p style={{ color: "#923838" }}>{I18n.t('It must start with https:// or http://', { chars: 100 })}</p>
+                    <p style={{ color: "#923838" }}><Trans>It must start with https:// or http://</Trans></p>
                 }
             </form>
             <div class="d-flex">
                 <div class="ml-auto">
                     {!isSubmitting &&
                         <button onClick={handleSubmit(onSubmit)} class="ml-auto" disabled={isCompressing}>
-                            {I18n.t("Save")}
+                            <Trans>Save</Trans>
                         </button>
                     }
                     {isSubmitting &&
@@ -115,7 +117,7 @@ export const WellcomeScreenEditor = () => {
     }
 
     return (
-        <ConfigPageLayout title={I18n.t('Wellcome Screen')}
+        <ConfigPageLayout title={<Trans>Wellcome Screen</Trans>}
             isLoading={isLoading} isSuccess={isSuccess} isError={isError}>
             <WellcomeScreenEditorForm content={content}
                 logoCompressed={logoCompressed || content?.logo}
