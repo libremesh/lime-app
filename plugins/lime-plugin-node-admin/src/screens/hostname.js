@@ -6,7 +6,7 @@ import { useBoardData } from 'utils/queries';
 import { useChangeHostname } from '../nodeAdminQueries';
 import ConfigPageLayout from '../layouts/configPageLayout';
 import Loading from 'components/loading';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const HostnamePage = () => {
     const { data: boardData, isLoading } = useBoardData();
@@ -24,10 +24,10 @@ const HostnamePage = () => {
     return (
         <ConfigPageLayout {...{
             isLoading, isSuccess, isError,
-            title: I18n.t("Node Name")
+            title: <Trans>Node Name</Trans>
         }}>
             <form class="flex-grow-1">
-                <label class="d-none" htmlFor="hostname">{I18n.t("Node Name")}</label>
+                <label class="d-none" htmlFor="hostname"><Trans>Node Name</Trans></label>
                 <input type="text" name="hostname" id="hostname"
                     ref={register({
                         required: true,
@@ -37,7 +37,7 @@ const HostnamePage = () => {
                     class="w-100" />
                 {errors && errors.hostname &&
                     <p class="text-danger">
-                        {I18n.t('The name should have at least 3 characters')}
+                        <Trans>The name should have at least 3 characters</Trans>
                     </p>
                 }
             </form>
@@ -45,7 +45,7 @@ const HostnamePage = () => {
                 <div class="ml-auto">
                     {!isSubmitting &&
                         <button onClick={handleSubmit(onSubmit)} class="ml-auto" >
-                            {I18n.t("Save")}
+                            <Trans>Save</Trans>
                         </button>
                     }
                     {isSubmitting &&

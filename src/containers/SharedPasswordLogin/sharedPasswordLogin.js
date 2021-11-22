@@ -1,4 +1,4 @@
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 import { useState, useEffect } from 'preact/hooks';
 import Loading from '../../components/loading';
 import { useLogin } from 'utils/queries';
@@ -36,23 +36,23 @@ const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
 
 	return (
 		<div className="container container-padded">
-			<p>{I18n.t('You need to know the shared password to enter this page')}</p>
-			<label htmlFor="password">{I18n.t('Shared Password')}</label>
+			<p><Trans>You need to know the shared password to enter this page</Trans></p>
+			<label htmlFor="password"><Trans>Shared Password</Trans></label>
 			<input name="password" type="password" value={password} onInput={changePassword} />
 			{error &&
-				<p>{I18n.t('Wrong password, try again')}</p>
+				<p><Trans>Wrong password, try again</Trans></p>
 			}
 			<div>
-				<button onClick={_submitLogin}>{I18n.t('Login')}</button>
+				<button onClick={_submitLogin}><Trans>Login</Trans></button>
 			</div>
-			<a href="#" onClick={toogleHelp}>{I18n.t("I don't know the shared password")}</a>
+			<a href="#" onClick={toogleHelp}><Trans>I don't know the shared password</Trans></a>
 			{showHelp &&
-				<p>{I18n.t('The shared password has been chosen by the community when the network was created. You can ask other community members for it.')}</p>
+				<p><Trans>The shared password has been chosen by the community when the network was created. You can ask other community members for it.</Trans></p>
 			}
 			{submitting &&
 				<div style={loadingBoxStyle}>
 					<Loading />
-					{I18n.t('Logging in')}
+					<Trans>Logging in</Trans>
 				</div>
 			}
 		</div>

@@ -4,16 +4,10 @@ import '@testing-library/jest-dom';
 
 import RemoteSupportPage from './src/remoteSupportPage';
 import { getSession, openSession, closeSession } from './src/remoteSupportApi';
-import { ReactQueryCacheProvider } from 'react-query';
+import { render } from 'utils/test_utils';
 import queryCache from 'utils/queryCache';
 
 jest.mock('./src/remoteSupportApi');
-
-const render = (ui) => tlRender(
-	<ReactQueryCacheProvider queryCache={queryCache}>
-		{ui}
-	</ReactQueryCacheProvider>
-)
 
 describe('remote support page', () => {
 	beforeAll(() => {

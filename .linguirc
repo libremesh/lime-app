@@ -1,0 +1,15 @@
+{
+   "locales": ["es", "pt", "en", "it"],
+   "catalogs": [{
+      "path": "i18n/{locale}/messages",
+      "include": ["src", "plugins"]
+   }],
+   "format": "po",
+   "extractBabelOptions": {
+       presets: ["preact"]
+   },
+   "sourceLocale": "en",
+   "fallbackLocales": {
+      default: "en"
+   }
+}

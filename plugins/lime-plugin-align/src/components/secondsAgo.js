@@ -1,4 +1,5 @@
-import I18n from 'i18n-js';
+import { h } from "preact";
+import { Trans } from '@lingui/macro';
 import { useState, useEffect } from 'preact/hooks';
 import { useInterval } from 'react-use';
 
@@ -13,9 +14,9 @@ export const SecondsAgo = ({ initialMs, isStatic=false }) => {
 		setCount(prev => prev + 1)
 	}, isStatic ? null : 1000);
 
-	const seconds = ms => Math.round(ms / 1000) + count;
-	if (seconds(initialMs) > 60) {
-		return I18n.t('more than a minute ago');
+	const secondsAmount = Math.round(initialMs / 1000) + count;
+	if (secondsAmount > 60) {
+		return <Trans>more than a minute ago</Trans>;
 	}
-	return I18n.t('%{seconds} seconds ago', { seconds: seconds(initialMs) });
+	return <Trans>{secondsAmount} seconds ago</Trans>;
 }

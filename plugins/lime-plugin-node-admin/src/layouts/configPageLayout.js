@@ -3,7 +3,7 @@ import { useTimeoutToggle } from '../hooks/timeoutToggle';
 import { route } from 'preact-router';
 import Loading from 'components/loading';
 import Toast from 'components/toast';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const ConfigPageLayout = ({ isLoading, title, isSuccess, isError, children }) => {
     const showSuccess = useTimeoutToggle(isSuccess, 1500);
@@ -22,8 +22,8 @@ const ConfigPageLayout = ({ isLoading, title, isSuccess, isError, children }) =>
             <div class="d-flex flex-grow-1 flex-column">
                 {children}
             </div>
-            { showSuccess && <Toast type="success" text={I18n.t("Saved")} />}
-            { showError && <Toast type="error" text={I18n.t("Error: Not Saved")} />}
+            { showSuccess && <Toast type="success" text={<Trans>Saved</Trans>} />}
+            { showError && <Toast type="error" text={<Trans>Error: Not Saved</Trans>} />}
         </div>
     );
 };

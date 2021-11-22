@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const AlignMenu = () => (
-	<a href={'#/align'}>{I18n.t('Align')}</a>
+	<a href={'#/align'}><Trans>Align</Trans></a>
 );

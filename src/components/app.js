@@ -22,23 +22,26 @@ import { useSession, useLogin } from 'utils/queries';
 
 import { RebootPage } from '../containers/RebootPage';
 
+import i18n from '../i18n';
+import { I18nProvider } from '@lingui/react'
+
 const Routes = () => (
 	<Router history={history}>
 		{/* Public pages, don't need to be authenticated */}
 		{plugins
 			.filter(plugin => !plugin.isCommunityProtected)
 			.map(Component =>
-				(<Route path={Component.name.toLowerCase()}>
-					<Component.page />
-				</Route>))
+			(<Route path={Component.name.toLowerCase()}>
+				<Component.page />
+			</Route>))
 		}
 		{/* Protected pages, need to be authenticated */}
 		{plugins
 			.filter(plugin => plugin.isCommunityProtected)
 			.map(Component =>
-				(<CommunityProtectedRoute path={Component.name.toLowerCase()}>
-					<Component.page />
-				</CommunityProtectedRoute>))
+			(<CommunityProtectedRoute path={Component.name.toLowerCase()}>
+				<Component.page />
+			</CommunityProtectedRoute>))
 		}
 		{/* Additional plugins routes */}
 		{plugins
@@ -73,10 +76,10 @@ const Routes = () => (
 
 const App = () => {
 	const { data: session } = useSession();
-	const [login, {isIdle}] = useLogin();
+	const [login, { isIdle }] = useLogin();
 
 	if (session.username === null && isIdle) {
-		login({username: 'lime-app', password: 'generic'});
+		login({ username: 'lime-app', password: 'generic' });
 		return 'Loading...'
 	}
 
@@ -94,13 +97,15 @@ const App = () => {
 
 
 const AppDefault = () => (
-	<ReactQueryCacheProvider queryCache={queryCache}>
-		<AppContextProvider>
-			<Provider store={store}>
-				<App />
-			</Provider>
-		</AppContextProvider>
-	</ReactQueryCacheProvider>
+	<I18nProvider i18n={i18n} >
+		<ReactQueryCacheProvider queryCache={queryCache}>
+			<AppContextProvider>
+				<Provider store={store}>
+					<App />
+				</Provider>
+			</AppContextProvider>
+		</ReactQueryCacheProvider>
+	</I18nProvider >
 );
 
 export default AppDefault;

@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const NetAdminMenu = () => (
-	<a href='#/netadmin'>{I18n.t('Network Configuration')}</a>
+	<a href='#/netadmin'><Trans>Network Configuration</Trans></a>
 );

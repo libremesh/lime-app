@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import style from './style';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const Banner = ({ onOk, onCancel, title, description, onNotShowAgain }) => (
 	<div className={style.banner}>
@@ -9,13 +9,13 @@ export const Banner = ({ onOk, onCancel, title, description, onNotShowAgain }) =
 			{description}
 		</div>
 		<div>
-			<button className={style.bannerButton} onClick={onOk}>{I18n.t('Ok')}</button>
-			<button className={style.bannerButton} onClick={onCancel}>{I18n.t('Cancel')}</button>
+			<button className={style.bannerButton} onClick={onOk}><Trans>Ok</Trans></button>
+			<button className={style.bannerButton} onClick={onCancel}><Trans>Cancel</Trans></button>
 		</div>
 		<div class={style.dontShowAgain}>
 			<label>
 				<input type="checkbox" name="not-show-again" onInput={onNotShowAgain} />
-				{I18n.t("Don't show this message again")}
+				<Trans>Don't show this message again</Trans>
 			</label>
 		</div>
 	</div>

@@ -4,7 +4,7 @@ import { useAdminWifiData, useChangeAPPassword } from '../nodeAdminQueries';
 import ConfigPageLayout from '../layouts/configPageLayout';
 import Loading from 'components/loading';
 import switchStyle from 'components/switch';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
     const { node_ap: { password, has_password } } = wifiData;
@@ -26,11 +26,11 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
                         id="enablePassword"
                         ref={register()}
                     />
-                    <label htmlFor="enablePassword">{I18n.t("Enable Password")}</label>
+                    <label htmlFor="enablePassword"><Trans>Enable Password</Trans></label>
                 </div>
                 {enablePassword &&
                     <div>
-                        <label htmlFor="password">{I18n.t("Wifi Password")}</label>
+                        <label htmlFor="password"><Trans>Wifi Password</Trans></label>
                             <input type="text" name="password" id="password"
                                 ref={register({
                                     validate: isValidPassword
@@ -40,7 +40,7 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
                 }
                 {errors && errors.password &&
                     <p class="text-danger">
-                        {I18n.t('The password should have at least 8 characters')}
+                        <Trans>The password should have at least 8 characters</Trans>
                     </p>
                 }
             </form>
@@ -48,7 +48,7 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
                 <div class="ml-auto">
                     {!isSubmitting &&
                         <button onClick={handleSubmit(onSubmit)} class="ml-auto" >
-                            {I18n.t("Save")}
+                            <Trans>Save</Trans>
                         </button>
                     }
                     {isSubmitting &&
@@ -73,7 +73,7 @@ const APPasswordPage = () => {
     return (
         <ConfigPageLayout {...{
             isLoading, isSuccess, isError,
-            title: I18n.t("Wifi Password")
+            title: <Trans>Wifi Password</Trans>
         }}>
             <APPasswordPageForm {...{wifiData, onSubmit, isSubmitting}} />
         </ConfigPageLayout >

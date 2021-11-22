@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const LocateMenu = () => (
-	<a href={'#/locate'}>{I18n.t('Map')}</a>
+	<a href={'#/locate'}><Trans>Map</Trans></a>
 );

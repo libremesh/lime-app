@@ -1,16 +1,16 @@
 import { h } from 'preact';
 import { route } from 'preact-router';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 import { useUpgradeConfirm, useUpgradeRevert } from '../firmwareQueries';
 import Loading from 'components/loading';
 
 export const ConfirmChoices = ({onConfirm, onRevert, submitting}) => (
 	<div class={`container container-padded container-center`}>
-		<button onClick={onConfirm}>{I18n.t('Confirm')}</button>
-		<p>{I18n.t('to keep the current configuration. Or ...')}</p>
-		<button onClick={onRevert}>{I18n.t('Revert')}</button>
-		<p>{I18n.t('to the previous configuration')}</p>
+		<button onClick={onConfirm}><Trans>Confirm</Trans></button>
+		<p><Trans>to keep the current configuration. Or ...</Trans></p>
+		<button onClick={onRevert}><Trans>Revert</Trans></button>
+		<p><Trans>to the previous configuration</Trans></p>
 		{submitting &&
 			<div>
 				<Loading />
@@ -21,8 +21,8 @@ export const ConfirmChoices = ({onConfirm, onRevert, submitting}) => (
 
 export const Reverted = () => (
 	<div class={`container container-padded container-center`}>
-		<h3>{I18n.t('Reverting to previous version')}</h3>
-		<span>{I18n.t('Please wait while the device reboots, and reload the app')}</span>
+		<h3><Trans>Reverting to previous version</Trans></h3>
+		<span><Trans>Please wait while the device reboots, and reload the app</Trans></span>
 	</div>
 );
 

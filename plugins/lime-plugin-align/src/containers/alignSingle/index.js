@@ -1,7 +1,7 @@
 import { useBatHost } from "utils/queries";
 import { useEffect, useState } from "preact/hooks";
 import { route } from "preact-router";
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 import { useAssocList } from "../../alignQueries";
 import { ifaceToRadioNumber } from "../../utils";
 import { SignalBar } from "../../components/signalBar";
@@ -33,7 +33,7 @@ export const BestSignal = ({signal}) => {
 
 	return (
 		<div class={style.section}>
-			<span>{I18n.t('Best signal').concat(':')} </span>
+			<span><Trans>Best signal</Trans>:</span>
 			<span class={style.bestSignal}>
 				{bestSignal}
 				<span class={style.unit}>dBm</span>
@@ -53,7 +53,7 @@ const SignalBox = ({signal}) => (
 						<span class={style.unit}>dBm</span>
 					</div>
 				}
-				{!signal && <div class={style.notAssociated}>{I18n.t('Signal lost') }</div>}
+				{!signal && <div class={style.notAssociated}><Trans>Signal lost</Trans></div>}
 				{signal && <SignalSpeech signal={signal} className={style.speech} />}
 			</div>
 			<SignalBar signal={signal} className={style.bar} />
@@ -80,14 +80,14 @@ const AlignSingle = ({iface, mac}) => {
 			<div class="d-flex"><button class={style.backArrow} onClick={() => route('/align')}>←</button></div>
 			<SignalBox signal={station && station.associated && station.signal} />
 			<div class={style.section}>
-				<div>{I18n.t('With radio %{radio} alignin with', {radio: fromRadio})}</div>
+				<div><Trans>With radio {fromRadio} alignin with</Trans></div>
 				<div class={style.hostname}>{ bathost.hostname }</div>
-				{toRadio && <div>{I18n.t('On its radio %{radio}', {radio: toRadio})}</div>}
+				{toRadio && <div><Trans>On its radio {toRadio}</Trans></div>}
 			</div>
 			<BestSignal signal={station && station.signal} />
 			{station && !station.associated &&
 				<div class={style.section}>
-					<span>{`${I18n.t('Last packet')}: `}<SecondsAgo initialMs={station.inactive} isStatic /></span>
+					<span><Trans>Last packet</Trans>: <SecondsAgo initialMs={station.inactive} isStatic /></span>
 				</div>
 			}
 		</div>

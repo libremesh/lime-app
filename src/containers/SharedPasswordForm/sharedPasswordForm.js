@@ -1,4 +1,5 @@
 import { h } from 'preact';
+import { Trans } from '@lingui/macro';
 
 function passwordHasLength(password) {
     // Check there is at least 10 characters in the string
@@ -35,9 +36,9 @@ const StatusBox = ({value}) => (
 
 export const ValidationMessages = ({password}) => (
     <p>
-        {I18n.t('The password should have:')}<br />
-        <StatusBox value={passwordHasLength(password)} /> {I18n.t('More than 10 characters')}<br />
-        <StatusBox value={passwordHasNumber(password)} /> {I18n.t('At least one number')}<br />
-        <StatusBox value={passwordHasAlphanumeric(password)} /> {I18n.t('At least one alphanumeric character')}<br />
+        <Trans>The password should have:</Trans><br />
+        <StatusBox value={passwordHasLength(password)} /> <Trans>More than 10 characters</Trans><br />
+        <StatusBox value={passwordHasNumber(password)} /> <Trans>At least one number</Trans><br />
+        <StatusBox value={passwordHasAlphanumeric(password)} /> <Trans>At least one alphanumeric character</Trans><br />
     </p>
 )

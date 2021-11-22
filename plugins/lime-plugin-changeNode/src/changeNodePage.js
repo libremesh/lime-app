@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { getStations } from './changeNodeSelectors';
 import { loadStations } from './changeNodeActions';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 import { useBoardData } from 'utils/queries';
 
 export const ChangeNode = ({ stations, loadStations }) => {
@@ -51,18 +51,18 @@ export const ChangeNode = ({ stations, loadStations }) => {
 
 	return (
 		<div class="container container-padded">
-			<h4>{I18n.t("Visit a neighboring node")}</h4>
+			<h4><Trans>Visit a neighboring node</Trans></h4>
 			<p>
-				{I18n.t("Select another node and use the LimeApp as you were there")}
+				<Trans>Select another node and use the LimeApp as you were there</Trans>
 			</p>
 			<form onSubmit={nextStation}>
 				<p>
-					<label>{I18n.t('Select new node')}</label>
+					<label><Trans>Select new node</Trans></label>
 					<select class="u-full-width" onChange={handleChange} value={state.station}>
 						{sortStations(stations).map(x => (<option value={x}>{x}</option>))}
 					</select>
 				</p>
-				<button class="button block" type="submit">{I18n.t('Visit')}</button>
+				<button class="button block" type="submit"><Trans>Visit</Trans></button>
 			</form>
 		</div>
 	);

@@ -1,23 +1,20 @@
 import { h } from 'preact';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const SelectAction = ({ toggleForm }) => (
 	<div class="container container-padded">
-		<h4><span>{I18n.t('Configure your network')}</span></h4>
-		<p>{I18n.t('You can search for mesh networks around you to add or to create a new one.')}</p>
+		<h4><span><Trans>Configure your network</Trans></span></h4>
+		<p><Trans>You can search for mesh networks around you to add or to create a new one.</Trans></p>
 		<br />
 		<div class="row">
 			<div class="six columns">
-				{/* <button disabled={this.props.status === 'scanning'} onClick={this.searchNetworks} class="u-full-width">
-					{ this.props.status === 'scanned' ? I18n.t('Rescan for existent networks') : I18n.t('Scan for existing networks') }
-				</button> */}
 				<button onClick={toggleForm('scan')} class="u-full-width">
-					{I18n.t('Scan for existing networks')}
+					<Trans>Scan for existing networks</Trans>
 				</button>
 			</div>
 			<div class="six columns">
 				<button onClick={toggleForm('create')} class="u-full-width">
-					{I18n.t('Create new network')}
+					<Trans>Create new network</Trans>
 				</button>
 			</div>
 		</div>

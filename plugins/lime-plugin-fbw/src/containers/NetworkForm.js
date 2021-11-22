@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import { createNetwork } from '../actions';
 
-import I18n from 'i18n-js';
+import { Trans, t } from '@lingui/macro';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { isValidPassword, ValidationMessages } from '../../../../src/containers/SharedPasswordForm';
 
@@ -64,19 +64,19 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 	}
 
 	return (<div class="container container-padded">
-		<h4><span>{I18n.t('Configure your new community network')}</span></h4>
-		<label>{I18n.t('Choose a name for your network')}</label>
-		<input type="text" placeholder={I18n.t('Community name')} class="u-full-width" onInput={_changeName} />
-		<label>{I18n.t('Choose a shared password for network administration')}</label>
-		<input type="password" placeholder={I18n.t('Password')} class="u-full-width" value={state.password} onInput={_changePassword} />
+		<h4><span><Trans>Configure your new community network</Trans></span></h4>
+		<label><Trans>Choose a name for your network</Trans></label>
+		<input type="text" placeholder={t`Community name`} class="u-full-width" onInput={_changeName} />
+		<label><Trans>Choose a shared password for network administration</Trans></label>
+		<input type="password" placeholder={t`Password`} class="u-full-width" value={state.password} onInput={_changePassword} />
 		<ValidationMessages password={state.password} />
-		<label>{I18n.t('Re-enter the shared password')}</label>
-		<input type="password" placeholder={I18n.t('Re-enter Password')} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
+		<label><Trans>Re-enter the shared password</Trans></label>
+		<input type="password" placeholder={t`Re-enter Password`} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
 		{state.passwordConfirmation && state.password !== state.passwordConfirmation &&
-			<p>{I18n.t('The passwords do not match!')}</p>
+			<p><Trans>The passwords do not match!</Trans></p>
 		}
-		<label>{I18n.t('Choose a name for this node')}</label>
-		<input type="text" placeholder={I18n.t('Host name')} class="u-full-width" value={state.hostName} onInput={_changeHostName} />
+		<label><Trans>Choose a name for this node</Trans></label>
+		<input type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostName} onInput={_changeHostName} />
 		<div class="row">
 			<div class="six columns">
 				<button
@@ -84,7 +84,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 					disabled={!_isValidForm()}
 					onClick={_createNetwork}
 				>
-					{I18n.t('Create network')}
+					<Trans>Create network</Trans>
 				</button>
 			</div>
 			<div class="six columns">
@@ -92,7 +92,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 					class="u-full-width"
 					onClick={toggleForm(null)}
 				>
-					{I18n.t('Cancel')}
+					<Trans>Cancel</Trans>
 				</button>
 			</div>
 		</div>

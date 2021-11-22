@@ -304,8 +304,8 @@ Let's see how our component that passes the tests is implemented.
 import { h } from 'preact';
 import { useSession, useOpenSession, useCloseSession } from './remoteSupportQueries';
 import Loading from 'components/loading';
-// We use i18n-js for internazionalization
-import I18n from 'i18n-js';
+// We use lingui for internazionalization
+import { Trans } from '@lingui/macro';
 
 const RemoteSupportPage = () => {
 	// React Query make it easy to see the status of a query (i.e, isLoading).
@@ -319,28 +319,28 @@ const RemoteSupportPage = () => {
 
 	return(
 		<div>
-			<h4>{I18n.t("Ask for remote support")}</h4>
+			<h4><Trans>Ask for remote support</Trans></h4>
 			{!session &&
 				<div>
-					<p>{I18n.t("There's no open session for remote support. Click at Create Session to begin one")}</p>
-					<button onClick={openSession}>{I18n.t("Create Session")}</button>
+					<p><Trans>There's no open session for remote support. Click at Create Session to begin one</Trans></p>
+					<button onClick={openSession}><Trans>Create Session</Trans>}</button>
 				</div>
 			}
 			{openStatus.isError &&
 				<div>
-					<b>{I18n.t("Cannot connect to the remote support server")}</b><br />
-					{I18n.t("Please verify your internet connection")}
+					<b><Trans>Cannot connect to the remote support server</Trans></b><br />
+					<Trans>Please verify your internet connection</Trans>
 				</div>
 			}
 			{session &&
 				<div>
-					<p>{I18n.t("There's an active remote support session")}</p>
-					<p>{I18n.t("Share the following command with whoever you want to give them access to your node")}</p>
+					<p><Trans>There's an active remote support session</Trans></p>
+					<p><Trans>Share the following command with whoever you want to give them access to your node</Trans></p>
 					<div><pre>{session.rw_ssh}</pre></div>
 					<div>
-						<h5>{I18n.t("Close Session")}</h5>
-						<p>{I18n.t("Click at Close Session to end the remote support session. No one will be able to access your node with this token again")}</p>
-						<button onClick={closeSession}>{I18n.t("Close Session")}</button>
+						<h5><Trans>Close Session</Trans></h5>
+						<p><Trans>Click at Close Session to end the remote support session. No one will be able to access your node with this token again</Trans></p>
+						<button onClick={closeSession}><Trans>Close Session</Trans></button>
 					</div>
 				</div>
 			}
@@ -483,14 +483,14 @@ To add a link to our new screen in the mesnu, we have to define an index.js file
 ```javascript
 // Path: lime-plugin-remotesupport/index.js
 import { h } from 'preact';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 import RemoteSupportPage from './src/remoteSupportPage';
 
 export default {
 	name: 'remotesupport',
 	page: RemoteSupportPage,
 	// menu defines the element to be rendered in the menu list.
-	menu: () => <a href={'#/remotesupport'}>{I18n.t('Remote Support')}</a>,
+	menu: () => <a href={'#/remotesupport'}><Trans>Remote Support</Trans></a>,
 }
 ```
 

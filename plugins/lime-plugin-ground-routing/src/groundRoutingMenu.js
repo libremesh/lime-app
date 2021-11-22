@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 export const Menu = () => (
-	<a href={'#/groundrouting'}>{I18n.t('Ground Routing')}</a>
+	<a href={'#/groundrouting'}><Trans>Ground Routing</Trans></a>
 );

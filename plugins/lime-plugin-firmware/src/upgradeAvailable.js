@@ -1,7 +1,7 @@
 import { h } from "preact";
 import { route } from 'preact-router';
 import Match from 'preact-router/match';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 import { Fragment } from 'preact';
 import { useNewVersion } from './firmwareQueries';
 import Loading from 'components/loading';
@@ -11,15 +11,16 @@ import { useBoardData } from 'utils/queries';
 export const UpgradeAvailableBanner = () => {
 	const {data: newVersion} = useNewVersion();
 	const hideReleaseBannerPlease = localStorage.getItem('hideReleaseBannerPlease');
+	const versionName = newVersion?.version;
 
-	if (!newVersion || hideReleaseBannerPlease === newVersion.version) return;
+	if (!newVersion || hideReleaseBannerPlease === versionName) return;
 
 	return (
 		<Match>
 			{({path}) => !(['firmware', 'releaseInfo'].includes(path.replace('/', ''))) &&
 				<div class="subheader-notification" style={{backgroundColor: "#923853", color: "#fff"}}>
-					{I18n.t('%{versionName} is now available', { versionName: newVersion.version })}
-					<button onClick={() => route('releaseInfo')}>{I18n.t('See More')}</button>
+					<Trans>{versionName} is now available</Trans>
+					<button onClick={() => route('releaseInfo')}><Trans>See More</Trans></button>
 				</div>
 			}
 		</Match>
@@ -47,14 +48,14 @@ export const UpgradeAvailabeInfo = () => {
 	return (
 		<div className="container container-padded">
 			<p>
-				<h5>{I18n.t('A new firmware version has been released')}</h5>
-				{I18n.t('Currently your node has version:')}
+				<h5><Trans>A new firmware version has been released</Trans></h5>
+				<Trans>Currently your node has version:</Trans>
 				<br />{boardData && boardData.release.description}
-				<br />{I18n.t('You can upgrade to:')}
+				<br /><Trans>You can upgrade to:</Trans>
 				<br />{newVersion.version}
 				{newVersion['release-info-url'] &&
 					<Fragment>
-						<br />{I18n.t('More details on the release can be found at:')}
+						<br /><Trans>More details on the release can be found at:</Trans>
 						<br /><a href={newVersion['release-info-url']}> {newVersion['release-info-url']} </a>
 					</Fragment>
 				}
@@ -62,10 +63,10 @@ export const UpgradeAvailabeInfo = () => {
 			<label>
 				<input type="checkbox" name="not-show-again" onInput={onNotShowAgain}
 					checked={hideReleaseBannerPlease === newVersion.version} />
-				{I18n.t("Don't show this message again")}
+				<Trans>Don't show this message again</Trans>
 			</label>
 			<div style={{textAlign: "center"}}>
-				<button onClick={() => route('firmware')}>{I18n.t('Upgrade Now')}</button>
+				<button onClick={() => route('firmware')}><Trans>Upgrade Now</Trans></button>
 			</div>
 		</div>
 	)
