@@ -56,11 +56,11 @@ describe("voucher list item", () => {
 		expect(await screen.findByText("Expired")).toBeInTheDocument();
 	});
 
-	it("shows vouchers creation date", async () => {
+	it("shows vouchers creation date and author", async () => {
 		render(<VoucherListItem {...voucher} />);
 		const timeAgo = timeago.format(new Date(voucher.creation_date * 1000));
 		expect(
-			await screen.findByText(`Created ${timeAgo}`)
+			await screen.findByText(`Created ${timeAgo} by ${voucher.author_node}`)
 		).toBeInTheDocument();
 	});
 
