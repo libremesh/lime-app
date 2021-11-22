@@ -14,9 +14,10 @@ const voucher = {
 	activation_date: 1632417986,
 	name: "luandro",
 	duration_m: 10000,
-	is_active: false,
 	creation_date: 1632417476,
-	permanent: false
+	permanent: false,
+	status: 'available',
+	author_node: 'ml-luandro'
 };
 
 describe("voucher list item", () => {

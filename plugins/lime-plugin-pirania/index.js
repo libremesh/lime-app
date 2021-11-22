@@ -7,7 +7,7 @@ import EditVoucher from "./src/screens/editVoucher";
 import Voucher from "./src/screens/voucher";
 
 export default {
-	name: 'Access vouchers',
+	name: 'Access',
 	page: PiraniaPage,
 	menu: () => <a href={'#/access'}><Trans>Access Vouchers</Trans></a>,
 	isCommunityProtected: true,

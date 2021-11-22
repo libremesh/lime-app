@@ -47,13 +47,13 @@ const VoucherListItem = ({
 				{expiration_date && (
 					<span class={className}>
 						<span>
-							{status === "disabled" ? <Trans>expired</Trans> : <span><Trans>expires</Trans>{" "}</span>}
+							{status === "disabled" ? <span><Trans>Expired</Trans> </span> : <span><Trans>Expires</Trans> </span>}
 						</span>
 						<TimeAgo date={expiration_date} />
 					</span>
 				)}
 				<span class={className}>
-					<span><Trans>created</Trans></span>
+					<span><Trans>Created</Trans> </span>
 					<TimeAgo date={creation_date} />
 				</span>
 			</div>
