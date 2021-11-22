@@ -25,42 +25,47 @@ const VoucherListItem = ({
 		'active': <Trans>Active</Trans>,
 	};
 
+	const statusClassName = {
+		'available': style.voucherStatusAvailable,
+		'active': 'text-primary',
+		'expired': 'text-danger'
+	};
+
 	return (
-		<div class={style.voucherItem} data-testid={`voucher-item-${id}`} onClick={goToVoucherView}>
-			<div class={style.code}>
-				<Copy text={code} />
-				<span class={style.codeStatus}>
+		<div class={`d-flex flex-column container-padded ${style.voucherItem}`} data-testid={`voucher-item-${id}`} onClick={goToVoucherView}>
+			<div class="d-flex">
+				<div class="flex-grow-1">
+					<Copy text={code} className={style.voucherCode} />
+				</div>
+				<div class={`${style.voucherStatus} ${statusClassName[status]}`}>
 					{statusMsgs[status]}
-				</span>
-			</div>
-			<div class={style.nodeInfo}>
-				<span><Trans>Node</Trans>:</span>{" "}
-				<span role="node-name">{author_node} || <Trans>unknown</Trans></span>
+				</div>
 			</div>
 			<div
-				role="voucher-item"
-				class={style.voucherDescription}	
+				class={style.voucherDescription}
 			>
-				<span>{name}</span>
+				{name}
 			</div>
-			<div class={style.dates} >
-				{status === "active" && permanent &&
-					<span><Trans>Permanent</Trans></span>
-				}
-				{status === "active" && expiration_date &&
-					<span>
-						<Trans>Expires <TimeAgo date={expiration_date} /></Trans>
-					</span>
-				}
-				{status === "expired" && 
-					<span><Trans>Expired <TimeAgo date={expiration_date} /></Trans></span>
-				}
-				{status === "available" && activation_deadline &&
-					<span><Trans>Activation Deadline: <TimeAgo date={activation_deadline} /></Trans></span>
-				}
-				<span>
-					<Trans>Created <TimeAgo date={creation_date} /></Trans>
-				</span>
+			<div class="d-flex">
+				<div class="flex-grow-1 container-padded">
+					{status === "active" && permanent &&
+						<span><Trans>Permanent</Trans></span>
+					}
+					{status === "active" && expiration_date &&
+						<span>
+							<Trans>Expires <TimeAgo date={expiration_date} /></Trans>
+						</span>
+					}
+					{status === "expired" &&
+						<span><Trans>Expired <TimeAgo date={expiration_date} /></Trans></span>
+					}
+					{status === "available" && activation_deadline &&
+						<span><Trans>Activation Deadline: <TimeAgo date={activation_deadline} /></Trans></span>
+					}
+				</div>
+				<div class="flex-grow-1 container-padded">
+					<Trans>Created <TimeAgo date={creation_date} /> by {author_node} </Trans>
+				</div>
 			</div>
 		</div>
 	);

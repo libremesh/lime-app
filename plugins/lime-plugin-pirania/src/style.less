@@ -32,17 +32,23 @@
   text-align: center;
 }
 .voucherItem {
-  padding: 5px;
-  display: flex;
-  flex-flow: column;
   border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 5px;;
-  justify-content: space-around;
-  align-items: center;
-  width: 300px;
-  margin: 15px 0;
-  box-shadow: 6px -6px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  box-shadow: -1px 2px rgba(0, 0, 0, 0.1);
 }
+
+.voucherCode {
+  font-size: 2em;
+}
+
+.voucherStatus {
+  font-size: 1.5em;
+}
+
+.voucherStatusAvailable {
+  color: #787DFF;
+}
+
 .code,
 .dates {
   width: 100%;
@@ -75,14 +81,7 @@
 .nodeInfo span:nth-child(2) {
   text-transform: uppercase;
 }
-.voucherDescription {
-  text-align: left;
-  width: 100%;
-  color: black;
-  padding: 20px;
-  margin-left: 30px;
-  cursor: pointer;
-}
+
 .dates {
   cursor: pointer;
   font-size: 0.8em;

@@ -1,7 +1,7 @@
 import { h } from "preact";
 import { useState } from "react";
 
-const GoBack = ({ text, style }) => {
+const Copy = ({ text, className }) => {
 	const [isCopied, setIsCopied] = useState(false);
 	async function copyTextToClipboard(text) {
 		if ("clipboard" in navigator) {
@@ -11,8 +11,9 @@ const GoBack = ({ text, style }) => {
 		return document.execCommand("copy", true, text);
 
 	}
-	const handleCopyClick = () => {
+	const handleCopyClick = (e) => {
 		// Asynchronously call copyTextToClipboard
+		e.stopPropagation();
 		copyTextToClipboard(text)
 			.then(() => {
 				// If successful, update the isCopied state value
@@ -23,7 +24,7 @@ const GoBack = ({ text, style }) => {
 			})
 	};
 	return (
-		<div style={style}>
+		<div class={className} >
 			<div onClick={handleCopyClick}>
 				<span style={{ marginRight: 10, cursor: "pointer" }}>{text}</span>
 				<span style={{ cursor: "pointer", opacity: isCopied ? 0.3 : 1 }}>⧉</span>
@@ -31,4 +32,4 @@ const GoBack = ({ text, style }) => {
 		</div>
 	);
 };
-export default GoBack;
+export default Copy;
