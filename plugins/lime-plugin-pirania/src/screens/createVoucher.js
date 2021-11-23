@@ -10,6 +10,13 @@ const CreateVoucher = () => {
 	const [createdVouchers, setCreatedVouchers] = useState(null);
 	const [addVoucher, {isLoading:isSubmitting, isSuccess, isError }] = useAddVoucher();
 	const submitVoucher = async (formData) => {
+		let deadline = null;
+		
+		if (formData.with_activation_deadline) {
+			let date = new Date(formData.activation_deadline + 'T00:00:00Z');
+			deadline = parseInt(date.getTime() / 1000);
+		}
+
 		const finalData = {
 			...formData,
 			qty: parseInt(formData.qty),
@@ -17,10 +24,7 @@ const CreateVoucher = () => {
 				formData.permanent ?
 					null : parseInt(formData.duration_m) * 24 * 60
 			),
-			activation_deadline: (
-				formData.with_activation_deadline === false ?
-					null : formData.activation_deadline
-			)
+			activation_deadline: deadline
 		};
 		delete finalData.permanent;
 		delete finalData.with_activation_deadline;

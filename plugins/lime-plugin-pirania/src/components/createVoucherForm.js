@@ -20,13 +20,13 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
 	return (
 		<Fragment>
 			<form class="flex-grow-1">
-				<label for="description"><Trans>Voucher group description</Trans></label>
+				<label for="name"><Trans>Voucher group description</Trans></label>
 				<span><MaxLengthMsg length={100} /></span>
-				<textarea id="description" name="description"
+				<textarea id="name" name="name"
 					ref={register({ required: true, maxLength:100 })} class="w-100"
 				/>
-				{errors.description?.type === 'required' && <RequiredErrorMsg />}
-				{errors.description?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
+				{errors.name?.type === 'required' && <RequiredErrorMsg />}
+				{errors.name?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
 				<div class={switchStyle.toggles}>
 					<input type="checkbox" id="permanent" name="permanent"
 						ref={register} class="w-100"

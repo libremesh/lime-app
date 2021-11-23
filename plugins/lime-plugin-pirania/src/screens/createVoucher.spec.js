@@ -67,21 +67,22 @@ describe("Create voucher", () => {
 		fireEvent.click(
 			await screen.findByLabelText("Setup activation deadline")
 		);
-		const minDate = new Date();
-		minDate.setDate(minDate.getDate() + 2);
+		const deadline = '2022-10-10';
+		const date = new Date('2022-10-10T00:00:00Z');
+		const unixtimestamp = parseInt(date.getTime() / 1000);
 		userEvent.type(
 			await screen.findByLabelText("Activation Deadline"),
-			minDate.toISOString().substring(0, 10)
+			deadline
 		);
 		const button = await screen.findByRole("button", { name: /create/i });
 		expect(button).toBeInTheDocument();
 		fireEvent.click(button);
 		await waitForExpect(() => {
 			expect(addVoucher).toHaveBeenCalledWith({
-				description: "My voucher description",
+				name: "My voucher description",
 				duration_m: 3 * 24 * 60,
 				qty: 2,
-				activation_deadline: minDate.toISOString().substring(0, 10),
+				activation_deadline: unixtimestamp,
 			});
 		});
 	});
@@ -103,7 +104,7 @@ describe("Create voucher", () => {
 		fireEvent.click(button);
 		await waitForExpect(() => {
 			expect(addVoucher).toHaveBeenCalledWith({
-				description: "My voucher description",
+				name: "My voucher description",
 				duration_m: null,
 				qty: 2,
 				activation_deadline: null,
