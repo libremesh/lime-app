@@ -1,36 +1,13 @@
 /* Voucher list */
-.filterBox {
-  padding: 25px 5vw;
-  width: 100%;
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  text-transform: capitalize;
+.listItem {
+  padding: 1em 0em;
 }
-.filterBox > div {
-  display: flex;
-  flex-flow: column;
-  padding: 15px 0;
+
+.listBottomAction {
+  border-top: 0.01em solid #bdbdbd;
 }
-.filterBox input, .filterBox select {
-  border-radius: 5px;
-  height: 35px;
-  width: 100%;
-}
-.voucherBox {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-.divider hr {
-  width: 93%;
-  border-top: #38927f 0.1px solid;
-}
-.divider h2 {
-  text-align: center;
-}
+
+/* Voucher List Item */
 .voucherItem {
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 5px;
@@ -39,62 +16,33 @@
 
 .voucherCode {
   font-size: 2em;
+  padding: 0 0.25em;
+  background-color: #ffcf84;
+  border-radius: 0.25em;
+  border: 0.1em solid rgba(0,0,0,0.1);
 }
 
 .voucherStatus {
   font-size: 1.5em;
+  margin-left: auto;
 }
 
 .voucherStatusAvailable {
   color: #787DFF;
 }
 
-.code,
-.dates {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.codeSecret {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.codeCopy {
-  cursor: pointer;
-  margin-left: 5px;
-  font-size: 0.8em;
-}
-.codeStatus {
-  color: purple;
-  text-transform: capitalize;
-}
-.nodeInfo {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  text-align: left;
-}
-.nodeInfo span:first-child {
-  font-weight: bold;
-}
-.nodeInfo span:nth-child(2) {
-  text-transform: uppercase;
+.voucherDescription {
+  padding: .5em 0em;
 }
 
-.dates {
-  cursor: pointer;
-  font-size: 0.8em;
-  text-transform: capitalize;
+.voucherDateLeft {
+  padding-right: 1em;
 }
-.fab {
-  position: fixed;
-  bottom:30px;
-  right: 3vw;
-  font-size: 1em;
-	background: #38927f	;
-  color: white;
+
+.voucherDateRight {
+  margin-left: auto;
 }
+
 /* Voucher details */
 .voucherDetailBox {
   border: 1px solid black;
@@ -171,42 +119,4 @@ input, textarea, button {
 }
 .confirmCodeBox button {
   margin-top: 5vh;
-}
-
-/* Media queries: 720 968 */
-
-@media screen and (min-width: 720px) {
-  .voucherItem {
-      margin: 15px 25px;
-  }
-  .filterBox {
-    flex-flow: row;
-    width: 95vw;
-  }
-  .filterBox > div {
-    width: 50%;
-    padding-top: 5vh;
-    flex-flow: row;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .filterBox input, .filterBox select {
-    width: 200px;
-    text-transform: capitalize;
-  }
-  .filterBox label {
-    margin-right: 2vw;
-  }
-}
-
-@media screen and (min-width: 968px) {
-  .filterBox {
-    width: 90vw;
-  }
-  .divider h2 {
-    padding-bottom: 2.5vh;
-  }
-  .filterBox input, .filterBox select {
-    width: 300px;
-  }
 }

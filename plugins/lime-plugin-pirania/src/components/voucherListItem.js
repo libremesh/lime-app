@@ -32,9 +32,9 @@ const VoucherListItem = ({
 	};
 
 	return (
-		<div class={`d-flex flex-column container-padded ${style.voucherItem}`} data-testid={`voucher-item-${id}`} onClick={goToVoucherView}>
-			<div class="d-flex">
-				<div class="flex-grow-1">
+		<div class={`flex-grow-1 d-flex flex-column container-padded ${style.voucherItem}`} data-testid={`voucher-item-${id}`} onClick={goToVoucherView}>
+			<div class="d-flex align-items-center">
+				<div>
 					<Copy text={code} className={style.voucherCode} />
 				</div>
 				<div class={`${style.voucherStatus} ${statusClassName[status]}`}>
@@ -45,7 +45,7 @@ const VoucherListItem = ({
 				{author_node}: {name}
 			</div>
 			<div class="d-flex">
-				<div class="flex-grow-1 container-padded">
+				<div class={`flex-grow-1 ${style.voucherDateLeft}`}>
 					{status === "active" && permanent &&
 						<span><Trans>Permanent</Trans></span>
 					}
@@ -61,7 +61,7 @@ const VoucherListItem = ({
 						<span><Trans>Activation Deadline: <TimeAgo date={activation_deadline} /></Trans></span>
 					}
 				</div>
-				<div class="flex-grow-1 container-padded">
+				<div class="ml-auto">
 					<Trans>Created <TimeAgo date={creation_date} /></Trans>
 				</div>
 			</div>
