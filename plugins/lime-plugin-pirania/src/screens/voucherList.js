@@ -17,7 +17,9 @@ const VoucherList = () => {
 	if (loadingBoardData || loadingVouchers) return <Loading />
 
 	const filteredVoucher = vouchers
-		.sort((a) => (a.author_node === boardData.hostname) ? -1 : 1)
+		.sort((a, b) => {
+			return parseInt(a.creation_date) < parseInt(b.creation_date) ? 1 : -1
+		})
 		.filter((voucher) => {
 			if (filterSelection === "all-vouchers") return true;
 			if (filterSelection === "created-in-this-node") {
