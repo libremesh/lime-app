@@ -43,7 +43,7 @@ const VoucherList = () => {
 				<div>
 					<div>
 						<label for="search-by"><Trans>Search by</Trans></label>
-						<input id="search-by" class="w-100" onChange={(e) => setSearch(e.target.value)} />
+						<input type="text" id="search-by" class="w-100" onChange={(e) => setSearch(e.target.value)} />
 					</div>
 					<div>
 						<label for="filter-by"><Trans>Filter by</Trans></label>
