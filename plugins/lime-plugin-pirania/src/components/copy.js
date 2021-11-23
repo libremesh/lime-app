@@ -20,7 +20,7 @@ const Copy = ({ text, className }) => {
 				setIsCopied(true);
 				setTimeout(() => {
 					setIsCopied(false);
-				}, 1500);
+				}, 500);
 			})
 	};
 	return (

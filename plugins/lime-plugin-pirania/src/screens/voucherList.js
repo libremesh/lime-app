@@ -2,22 +2,27 @@ import { h } from "preact";
 import { useState } from "preact/hooks";
 import { Trans } from '@lingui/macro';
 import { route } from "preact-router";
-import Loading from "../../../../src/components/loading";
+import Loading from "components/loading";
 import VoucherListItem from "../components/voucherListItem";
 import style from "../style.less";
 import { useBoardData } from 'utils/queries';
+import { useListVouchers } from '../piraniaQueries';
 
-const VoucherList = ({ vouchers }) => {
-	const { data: boardData } = useBoardData()
+const VoucherList = () => {
+	const { data: boardData, isLoading: loadingBoardData } = useBoardData();
+	const { data: vouchers, isLoading: loadingVouchers } = useListVouchers();
 	const [search, setSearch] = useState("");
-	const [filterSelection, setFilterSelection] = useState("all-vouchers");
+	const [filterSelection, setFilterSelection] = useState("created-in-this-node");
 
-	if (!vouchers || !boardData) return <Loading />
+	if (loadingBoardData || loadingVouchers) return <Loading />
 
-	const sortedVouchers = vouchers
+	const filteredVoucher = vouchers
 		.sort((a) => (a.author_node === boardData.hostname) ? -1 : 1)
 		.filter((voucher) => {
 			if (filterSelection === "all-vouchers") return true;
+			if (filterSelection === "created-in-this-node") {
+				return voucher.author_node === boardData.hostname 
+			}
 			return voucher.status === filterSelection;
 		})
 		.filter((voucher) => {
@@ -28,6 +33,7 @@ const VoucherList = ({ vouchers }) => {
 			const withCode = voucher.code.includes(search);
 			if (withName || withNode || withId || withCode) return true
 		})
+
 
 	return (
 		<div class="d-flex flex-column flex-grow-1">
@@ -45,21 +51,23 @@ const VoucherList = ({ vouchers }) => {
 						<select
 							id="filter-by" class="w-100"
 							onChange={(e) => setFilterSelection(e.target.value)}
+							value={filterSelection}
 						>
+							<option value="created-in-this-node"><Trans>Created in this node</Trans></option>
 							<option value="all-vouchers"><Trans>All Vouchers</Trans></option>
 							<option value="available"><Trans>Available</Trans></option>
-							<option value="used"><Trans>Used</Trans></option>
-							<option value="disabled"><Trans>Disabled</Trans></option>
+							<option value="active"><Trans>Active</Trans></option>
+							<option value="expired"><Trans>Expired</Trans></option>
 						</select>
 					</div>
 				</div>
 				<div class="d-flex flex-column flex-grow-1">
-					{sortedVouchers.map((voucher) => (
+					{filteredVoucher.map((voucher) => (
 						<div class="p-y-sm">
 							<VoucherListItem {...voucher} key={voucher.id} />
 						</div>
 					))}
-					{vouchers.length === 0 && (
+					{filteredVoucher.length === 0 && (
 						<span>
 							<Trans>There are no vouchers matching the current criteria</Trans>
 						</span>
