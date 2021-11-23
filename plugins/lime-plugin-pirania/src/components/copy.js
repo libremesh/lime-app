@@ -1,20 +1,41 @@
-import { h } from "preact";
-import { useState } from "react";
+import { h, createRef } from "preact";
+import { useState } from "preact/hooks";
+
+function selectText(node) {
+    if (document.body.createTextRange) {
+        const range = document.body.createTextRange();
+        range.moveToElementText(node);
+        range.select();
+    } else if (window.getSelection) {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else {
+        console.warn("Could not select text in node: Unsupported browser.");
+    }
+}
+
 
 const Copy = ({ text, className }) => {
 	const [isCopied, setIsCopied] = useState(false);
+	const ref = createRef();
 	async function copyTextToClipboard(text) {
 		if ("clipboard" in navigator) {
 			return await navigator.clipboard.writeText(text);
+		} else {
+			// clipboard API works only on https sites
+			selectText(ref.current.firstChild);
+			return document.execCommand("copy");
 		}
-
-		return document.execCommand("copy", true, text);
 
 	}
 	const handleCopyClick = (e) => {
 		// Asynchronously call copyTextToClipboard
 		e.stopPropagation();
-		copyTextToClipboard(text)
+		
+		return copyTextToClipboard(text)
 			.then(() => {
 				// If successful, update the isCopied state value
 				setIsCopied(true);
@@ -26,7 +47,7 @@ const Copy = ({ text, className }) => {
 	return (
 		<div class={className} >
 			<div onClick={handleCopyClick}>
-				<span style={{ marginRight: 10, cursor: "pointer" }}>{text}</span>
+				<span ref={ref} style={{ marginRight: 10, cursor: "pointer" }}>{text}</span>
 				<span style={{ cursor: "pointer", opacity: isCopied ? 0.3 : 1 }}>⧉</span>
 			</div>
 		</div>
