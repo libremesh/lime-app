@@ -1,77 +1,78 @@
-import { h } from "preact";
-import { useState } from "preact/hooks";
-import { Trans, t } from '@lingui/macro';
-import style from "../style.less";
-import Loading from "../../../../src/components/loading";
-const maxLength = 100;
+import { h, Fragment } from "preact";
+import { useForm } from 'react-hook-form';
+import { Trans } from '@lingui/macro';
+import switchStyle from 'components/switch';
+import Loading from "components/loading";
+import { RequiredErrorMsg, MaxLengthMsg, MaxLengthErrorMsg } from "components/form";
+const minDate = (new Date()).toISOString().substring(0, 10);
 
-const CreateVoucherForm = ({ submitVoucher }) => {
-	const [loading, setLoading] = useState(false);
-	const [input, updateInput] = useState({
-		duration_m: 1,
-		name: "",
-		qty: 1,
-		permanent: false
-	});
-	const changeInput = (field, value) => {
-		if (field === "name" && value.length > maxLength) {
-			value = value.slice(0, maxLength);
+const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
+	const { register, handleSubmit, errors, watch } = useForm({
+		defaultValues: {
+			duration_m: 1,
+			qty: 1,
+			activation_deadline: minDate
 		}
-		updateInput({
-			...input,
-			[field]: value
-		});
-	};
-	const createVoucher = (e) => {
-		setLoading(true);
-		submitVoucher(e, input);
-	};
+	});
+	const isPermanent = watch('permanent');
+	const withActivationDeadline = watch('with_activation_deadline');
+
 	return (
-		<form class={style.createForm} onSubmit={(e) => createVoucher(e)}>
-			<label for="description"><Trans>Voucher group description</Trans></label>
-			<textarea
-				required
-				maxLength={maxLength}
-				value={input.name}
-				id="description"
-				onChange={(e) => changeInput("name", e.target.value)}
-			/>
-			<div class={style.isPermanent}>
-				<label for="permanent"><Trans>Is permanent</Trans></label>
-				<input
-					checked={input.permanent}
-					type="checkbox"
-					value={input.permanent}
-					id="permanent"
-					onChange={() => changeInput("permanent", !input.permanent)}
+		<Fragment>
+			<form class="flex-grow-1">
+				<label for="description"><Trans>Voucher group description</Trans></label>
+				<span><MaxLengthMsg length={100} /></span>
+				<textarea id="description" name="description"
+					ref={register({ required: true, maxLength:100 })} class="w-100"
 				/>
+				{errors.description?.type === 'required' && <RequiredErrorMsg />}
+				{errors.description?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
+				<div class={switchStyle.toggles}>
+					<input type="checkbox" id="permanent" name="permanent"
+						ref={register} class="w-100"
+					/>
+					<label for="permanent"><Trans>Is permanent</Trans></label>
+				</div>
+				<label style={{ opacity: isPermanent ? 0.3 : 1 }} for="duration_m">
+					<Trans>Voucher duration in days</Trans>
+				</label>
+				<input type="number" id="duration_m" name="duration_m"
+					disabled={isPermanent}
+					ref={register} class="w-100"
+					min={1}
+				/>
+				<label for="quantity"><Trans>Number of vouchers</Trans></label>
+				<input type="number" id="quantity" name="qty"
+					ref={register} class="w-100"
+					min={1}
+				/>
+				<div class={switchStyle.toggles}>
+					<input type="checkbox" id="with_activation_deadline"
+						name="with_activation_deadline"
+						ref={register} class="w-100"
+					/>
+					<label for="with_activation_deadline"><Trans>Setup activation deadline</Trans></label>
+				</div>
+				<label for="activation_deadline"><Trans>Activation Deadline</Trans></label>
+				<input type="date" id="activation_deadline" name="activation_deadline"
+					ref={register} class="w-100"
+					disabled={!withActivationDeadline}
+					min={minDate}
+				/>
+			</form>
+			<div class="d-flex">
+				<div class="ml-auto">
+					{!isSubmitting &&
+						<button onClick={handleSubmit(submitVoucher)} class="ml-auto" >
+							<Trans>Create</Trans>
+						</button>
+					}
+					{isSubmitting &&
+						<Loading />
+					}
+				</div>
 			</div>
-			<label style={{ opacity: input.permanent ? 0.3 : 1 }} for="duration">
-				<Trans>Voucher duration in days</Trans>
-			</label>
-			<input
-				disabled={input.permanent}
-				type={input.permanent ? "text" : "number"}
-				min="1"
-				value={input.permanent ? t`Permanently` : input.duration_m}
-				id="duration"
-				onChange={(e) => changeInput("duration_m", e.target.value)}
-			/>
-			<label for="quantity"><Trans>Number of vouchers</Trans></label>
-			<input
-				type="number"
-				min="1"
-				max="10"
-				value={input.qty}
-				id="quantity"
-				onChange={(e) => changeInput("qty", e.target.value)}
-			/>
-			{loading ? (
-				<Loading />
-			) : (
-				<button type="submit"><Trans>Create</Trans></button>
-			)}
-		</form>
+		</Fragment>
 	);
 };
 

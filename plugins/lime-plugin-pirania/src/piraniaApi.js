@@ -40,9 +40,9 @@ export function listVouchers() {
 		});
 }
 
-export function addVoucher(input) {
+export function addVoucher(formData) {
 	return api
-		.call("pirania", "add_vouchers", input)
+		.call("pirania", "add_vouchers", formData)
 		.then((response) => response.vouchers)
 		.catch((error) => {
 			if (error.code === -32000) {

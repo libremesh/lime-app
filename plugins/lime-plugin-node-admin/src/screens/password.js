@@ -1,5 +1,5 @@
 import { h, Fragment } from 'preact';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useAdminWifiData, useChangeAPPassword } from '../nodeAdminQueries';
 import ConfigPageLayout from '../layouts/configPageLayout';
 import Loading from 'components/loading';

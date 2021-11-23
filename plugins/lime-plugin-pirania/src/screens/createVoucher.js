@@ -2,29 +2,45 @@ import { h } from "preact";
 import { useState } from "preact/hooks";
 import { Trans } from '@lingui/macro';
 import { useAddVoucher } from "../piraniaQueries";
-import GoBack from "../components/goBack";
 import CreateVoucherForm from "../components/createVoucherForm";
 import CreateVoucherConfirm from "../components/createVoucherConfirm";
-import style from "../style.less";
+import ConfigPageLayout from 'plugins/lime-plugin-node-admin/src/layouts/configPageLayout';
 
 const CreateVoucher = () => {
 	const [createdVouchers, setCreatedVouchers] = useState(null);
-	const [addVoucher] = useAddVoucher();
-	const submitVoucher = async (e, input) => {
-		e.preventDefault();
-		const vouchers = await addVoucher(input);
+	const [addVoucher, {isLoading:isSubmitting, isSuccess, isError }] = useAddVoucher();
+	const submitVoucher = async (formData) => {
+		const finalData = {
+			...formData,
+			qty: parseInt(formData.qty),
+			duration_m: (
+				formData.permanent ?
+					null : parseInt(formData.duration_m) * 24 * 60
+			),
+			activation_deadline: (
+				formData.with_activation_deadline === false ?
+					null : formData.activation_deadline
+			)
+		};
+		delete finalData.permanent;
+		delete finalData.with_activation_deadline;
+		const vouchers = await addVoucher(finalData);
 		setCreatedVouchers(vouchers);
 	};
+
+	if (createdVouchers) {
+		return <CreateVoucherConfirm vouchers={createdVouchers} />
+	};
+
 	return (
-		<div class="container container-padded">
-			<div class={style.goBackTitle}>
-				<GoBack url="/access/" />
-				<h1><Trans>create voucher</Trans></h1>
-			</div>
-			{!createdVouchers && <CreateVoucherForm submitVoucher={submitVoucher} />}
-			{createdVouchers && <CreateVoucherConfirm vouchers={createdVouchers} />}
-		</div>
-	);
+		<ConfigPageLayout {...{
+			isSuccess, isError,
+			title: <Trans>Create Voucher</Trans>,
+			backUrl: '/access'
+		}}>
+			<CreateVoucherForm submitVoucher={submitVoucher} isSubmitting={isSubmitting} />
+		</ConfigPageLayout >
+	)
 };
 
 export default CreateVoucher;

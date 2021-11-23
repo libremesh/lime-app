@@ -6,10 +6,12 @@ import {
     usePortalContent, useSetPortalContent,
     useLogoCompression, useCreateCompression
 } from '../piraniaQueries';
+import {
+    RequiredMsg, MaxLengthMsg,
+    RequiredErrorMsg, MaxLengthErrorMsg
+} from 'components/form';
 import { useForm } from 'react-hook-form';
 import Loading from 'components/loading';
-
-const MaxLengthMsg = ({ length }) => <Trans>Max. {length} characters</Trans>
 
 const WellcomeScreenEditorForm = (
     { content, logoCompressed, isCompressing,
@@ -21,27 +23,19 @@ const WellcomeScreenEditorForm = (
         <Fragment>
             <form>
                 <label for="title"><Trans>Title</Trans></label>
-                <span><Trans>Required</Trans> (<MaxLengthMsg length={100} />)</span>
+                <span><RequiredMsg /> (<MaxLengthMsg length={100} />)</span>
                 <input type="text" name="title" id="title" class="w-100"
                     ref={register({ required: true, maxLength: 100 })}
                 ></input>
-                {errors.title?.type === 'required' &&
-                    <p style={{ color: "#923838" }}><Trans>This field is required</Trans></p>
-                }
-                {errors.title?.type === 'maxLength' &&
-                    <p style={{ color: "#923838" }}><MaxLengthMsg length={100} /></p>
-                }
+                {errors.title?.type === 'required' && <RequiredErrorMsg />}
+                {errors.title?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
                 <label for="main_text"><Trans>Main Text</Trans></label>
-                <span><Trans>Required</Trans> (<MaxLengthMsg length={500} />)</span>
+                <span><RequiredMsg /> (<MaxLengthMsg length={500} />)</span>
                 <textarea name="main_text" id="main_text" class="w-100" style={{ minHeight: '9em' }}
                     ref={register({ required: true, maxLength: 500 })}
                 ></textarea>
-                {errors.main_text?.type === 'required' &&
-                    <p style={{ color: "#923838" }}><Trans>This field is required</Trans></p>
-                }
-                {errors.main_text?.type === 'maxLength' &&
-                    <p style={{ color: "#923838" }}><MaxLengthMsg length={500} /></p>
-                }
+                {errors.main_text?.type === 'required' && <RequiredErrorMsg />}
+                {errors.main_text?.type === 'maxLength' && <MaxLengthErrorMsg length={500} />}
                 <label for="logo_file"><Trans>Community Logo</Trans></label>
                 <div>
                     {isCompressing &&
@@ -60,9 +54,7 @@ const WellcomeScreenEditorForm = (
                 <input type="color" name="background_color" id="background_color"
                     ref={register({ required: true })}
                 ></input>
-                {errors.background_color?.type === 'required' &&
-                    <p style={{ color: "#923838" }}><Trans>This field is required</Trans></p>
-                }
+                {errors.background_color?.type === 'required' && <RequiredErrorMsg />}
                 <h4><Trans>Local services link</Trans></h4>
                 <p><Trans>If your community network has local services, you can point a link to them.</Trans></p>
                 <label for="link_title"><Trans>Link Title</Trans></label>
@@ -70,9 +62,7 @@ const WellcomeScreenEditorForm = (
                 <input type="text" name="link_title" id="link_title" class="w-100"
                     ref={register({ maxLength: 100 })}
                 ></input>
-                {errors.link_title?.type === 'maxLength' &&
-                    <p style={{ color: "#923838" }}><MaxLengthMsg length={100} /></p>
-                }
+                {errors.link_title?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
                 <label for="link_url"><Trans>Link URL</Trans></label>
                 <span><Trans>Starting with https:// or http://</Trans></span>
                 <input type="text" name="link_url" id="link_url" class="w-100"
