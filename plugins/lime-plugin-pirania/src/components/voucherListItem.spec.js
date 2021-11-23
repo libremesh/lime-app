@@ -33,9 +33,9 @@ describe("voucher list item", () => {
 		expect(await screen.findByText(voucher.code)).toBeInTheDocument();
 	});
 
-	it("shows voucher name", async () => {
+	it("shows voucher name and author node", async () => {
 		render(<VoucherListItem {...voucher} />);
-		expect(await screen.findByText(voucher.name)).toBeInTheDocument();
+		expect(await screen.findByText(`${voucher.author_node}: ${voucher.name}`)).toBeInTheDocument();
 	});
 
 	it("shows active status when it is active", async () => {
@@ -56,11 +56,11 @@ describe("voucher list item", () => {
 		expect(await screen.findByText("Expired")).toBeInTheDocument();
 	});
 
-	it("shows vouchers creation date and author", async () => {
+	it("shows vouchers creation date", async () => {
 		render(<VoucherListItem {...voucher} />);
 		const timeAgo = timeago.format(new Date(voucher.creation_date * 1000));
 		expect(
-			await screen.findByText(`Created ${timeAgo} by ${voucher.author_node}`)
+			await screen.findByText(`Created ${timeAgo}`)
 		).toBeInTheDocument();
 	});
 
@@ -76,6 +76,7 @@ describe("voucher list item", () => {
 			await screen.findByText(`Expires ${timeAhead}`)
 		).toBeInTheDocument();
 		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
+		expect(screen.queryByText("Permament")).toBeNull();
 	});
 
 	it("shows expired date when its expired", async () => {
@@ -90,6 +91,7 @@ describe("voucher list item", () => {
 			await screen.findByText(`Expired ${timeAgo}`)
 		).toBeInTheDocument();
 		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
+		expect(screen.queryByText(/Expires.*/)).toBeNull();
 		expect(screen.queryByText("Permanent")).toBeNull();
 	});
 
@@ -99,6 +101,7 @@ describe("voucher list item", () => {
 		expect(await screen.findByText("Permanent")).toBeInTheDocument();
 		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
 		expect(screen.queryByText(/Expires.*/)).toBeNull();
+		expect(screen.queryByText(/Expired.*/)).toBeNull();
 	});
 
 	it("shows activation deadline when it is available and has an activation deadline", async() => {
@@ -108,6 +111,7 @@ describe("voucher list item", () => {
 			await screen.findByText(`Activation Deadline: ${timeAhead}`)
 		).toBeInTheDocument();
 		expect(screen.queryByText(/Expires.*/)).toBeNull();
+		expect(screen.queryByText(/Expired.*/)).toBeNull();
 		expect(screen.queryByText("Permanent")).toBeNull();
 	});
 

@@ -2,7 +2,7 @@ import { h } from "preact";
 import { route } from "preact-router";
 import TimeAgo from "./timeAgo";
 import Copy from "./copy";
-import { Trans, defineMessage } from '@lingui/macro';
+import { Trans } from '@lingui/macro';
 import style from "../style.less";
 
 const VoucherListItem = ({
@@ -41,10 +41,8 @@ const VoucherListItem = ({
 					{statusMsgs[status]}
 				</div>
 			</div>
-			<div
-				class={style.voucherDescription}
-			>
-				{name}
+			<div class={style.voucherDescription}>
+				{author_node}: {name}
 			</div>
 			<div class="d-flex">
 				<div class="flex-grow-1 container-padded">
@@ -64,7 +62,7 @@ const VoucherListItem = ({
 					}
 				</div>
 				<div class="flex-grow-1 container-padded">
-					<Trans>Created <TimeAgo date={creation_date} /> by {author_node} </Trans>
+					<Trans>Created <TimeAgo date={creation_date} /></Trans>
 				</div>
 			</div>
 		</div>
