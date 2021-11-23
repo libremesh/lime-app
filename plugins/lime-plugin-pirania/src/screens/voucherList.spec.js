@@ -85,6 +85,33 @@ const vouchers = [
 	...expiredVouchers
 ];
 
+
+const selectFilterOption = async (option) => {
+	const select = await screen.findByLabelText("Filter by");
+	userEvent.selectOptions(select,
+		screen.getByRole('option', { name: option })
+	);
+	expect(screen.getByRole('option', { name: option }));
+};
+
+const findExpectedVouchers = async (expectedVouchers) => {
+	for (let i = 0; i < expectedVouchers.length; i++) {
+		const v = expectedVouchers[i];
+		expect(
+			await screen.findByTestId(`voucher-item-${v.id}`)
+		).toBeInTheDocument();
+	}
+	const otherVouchers = vouchers.filter(
+		v => expectedVouchers.indexOf(v) === -1
+	);
+	for (let i = 0; i < otherVouchers.length; i++) {
+		const v = otherVouchers[i];
+		expect(
+			screen.queryByTestId(`voucher-item-${v.id}`)
+		).toBeNull();
+	}
+}
+
 describe("voucher list", () => {
 	beforeEach(() => {
 		listVouchers.mockImplementation(async () => vouchers);
@@ -116,47 +143,6 @@ describe("voucher list", () => {
 				"There are no vouchers matching the current criteria"
 			)
 		).toBeInTheDocument();
-	});
-});
-
-describe("voucher list filter field", () => {
-	const selectFilterOption = async option => {
-		const select = await screen.findByLabelText("Filter by");
-		userEvent.selectOptions(select,
-			screen.getByRole('option', { name: option })
-		);
-		expect(screen.getByRole('option', { name: option })
-			.selected).toBeTrue();
-	};
-
-	const findExpectedVouchers = async (expectedVouchers) => {
-		for (let i = 0; i < expectedVouchers.length; i++) {
-			const v = expectedVouchers[i];
-			expect(
-				await screen.findByTestId(`voucher-item-${v.id}`)
-			).toBeInTheDocument();
-		}
-		const otherVouchers = vouchers.filter(
-			v => expectedVouchers.indexOf(v) === -1
-		);
-		for (let i = 0; i < otherVouchers.length; i++) {
-			const v = otherVouchers[i];
-			expect(
-				screen.queryByTestId(`voucher-item-${v.id}`)
-			).toBeNull();
-		}
-	}
-
-	beforeEach(() => {
-		listVouchers.mockImplementation(async () => vouchers);
-		getBoardData.mockImplementation(async () => ({
-			hostname: 'conteiner'
-		}));
-	});
-
-	afterEach(() => {
-		cleanup();
-		act(() => queryCache.clear());
 	});
 
 	it("shows a filter field with label filter by", async () => {
@@ -197,22 +183,45 @@ describe("voucher list filter field", () => {
 	});
 
 	it("shows message if no voucher match filter criteria", async () => {
-		listVouchers.mockImplementation(async() => availableVouchers);
+		listVouchers.mockImplementation(async () => [...availableVouchers]);
 		render(<VoucherList />);
 		await selectFilterOption('Expired');
 		expect(
 			screen.getByText("There are no vouchers matching the current criteria")
 		).toBeInTheDocument();
 	});
-});
 
-describe("voucher list search field", () => {
-	beforeEach(() => {
-		listVouchers.mockImplementation(async () => vouchers);
-		render(<VoucherList vouchers={vouchers} />);
-	});
-	it.skip("shows a text field with label search by", async () => {
-		const input = await screen.findByLabelText(`search by`);
+	it("shows a text field with label search by", async () => {
+		render(<VoucherList />);
+		const input = await screen.findByLabelText("Search by");
 		expect(input).toBeInTheDocument();
+	});
+
+	it("search by node hostname", async () => {
+		render(<VoucherList />);
+		await selectFilterOption('All Vouchers');
+		await findExpectedVouchers(vouchers);
+		const input = await screen.findByLabelText("Search by");
+		expect(input).toBeInTheDocument();
+		userEvent.type(input, 'se'); // For voucher name 'hiure2'
+		await findExpectedVouchers([expiredVouchers[0]]);
+	});
+
+	it("search by voucher name", async () => {
+		render(<VoucherList />);
+		await selectFilterOption('All Vouchers');
+		await findExpectedVouchers(vouchers);
+		const input = await screen.findByLabelText("Search by");
+		userEvent.type(input, 'hiu'); // For voucher name 'hiure2'
+		await findExpectedVouchers([availableVouchers[1], activeVouchers[0]]);
+	});
+
+	it("search only over filtered list", async () => {
+		render(<VoucherList />);
+		await selectFilterOption('Available');
+		await findExpectedVouchers(availableVouchers);
+		const input = await screen.findByLabelText("Search by");
+		userEvent.type(input, 'hiur'); // For voucher name 'hiure2'
+		await findExpectedVouchers([availableVouchers[1]]);
 	});
 });

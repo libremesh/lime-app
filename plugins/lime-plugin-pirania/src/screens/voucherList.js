@@ -34,7 +34,6 @@ const VoucherList = () => {
 			if (withName || withNode || withId || withCode) return true
 		})
 
-
 	return (
 		<div class="d-flex flex-column flex-grow-1">
 			<div class="flex-grow-1 overflow-auto container-padded">
