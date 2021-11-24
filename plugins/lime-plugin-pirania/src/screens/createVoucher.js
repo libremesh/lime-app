@@ -15,7 +15,7 @@ const CreateVoucher = () => {
 
 		if (formData.with_activation_deadline) {
 			deadline = dateToLocalUnixTimestamp(
-				formData.activation_deadline
+				formData.activation_deadline, '23:59'
 			);
 		}
 
