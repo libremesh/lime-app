@@ -6,6 +6,7 @@ import waitForExpect from "wait-for-expect";
 import CreateVoucher from "./createVoucher";
 import { addVoucher } from "../piraniaApi";
 import userEvent from "@testing-library/user-event";
+import { dateToLocalUnixTimestamp } from 'utils/time';
 jest.mock("../piraniaApi");
 
 const voucher = {
@@ -53,23 +54,23 @@ describe("Create voucher", () => {
 	it("shows a button to create a new voucher that creates voucher with data", async () => {
 		fireEvent.input(
 			await screen.findByLabelText("Voucher group description"),
-			{target: {value: "My voucher description"}}
+			{ target: { value: "My voucher description" } }
 		);
 		fireEvent.input(
 			await screen.findByLabelText("Voucher duration in days"),
-			{target: {value: 3}}
+			{ target: { value: 3 } }
 		);
 
 		fireEvent.input(
 			await screen.findByLabelText("Number of vouchers"),
-			{target: {value: 2}}
+			{ target: { value: 2 } }
 		);
 		fireEvent.click(
 			await screen.findByLabelText("Setup activation deadline")
 		);
+
 		const deadline = '2022-10-10';
-		const date = new Date('2022-10-10T00:00:00Z');
-		const unixtimestamp = parseInt(date.getTime() / 1000);
+		const timestamp = dateToLocalUnixTimestamp(deadline);
 		userEvent.type(
 			await screen.findByLabelText("Activation Deadline"),
 			deadline
@@ -82,7 +83,7 @@ describe("Create voucher", () => {
 				name: "My voucher description",
 				duration_m: 3 * 24 * 60,
 				qty: 2,
-				activation_deadline: unixtimestamp,
+				activation_deadline: timestamp,
 			});
 		});
 	});
@@ -90,14 +91,14 @@ describe("Create voucher", () => {
 	it("submits duration_m and activation_deadline as null when is permanent and without deadline", async () => {
 		fireEvent.input(
 			await screen.findByLabelText("Voucher group description"),
-			{target: {value: "My voucher description"}}
+			{ target: { value: "My voucher description" } }
 		);
 		fireEvent.click(
 			await screen.findByLabelText("Is permanent")
 		);
 		fireEvent.input(
 			await screen.findByLabelText("Number of vouchers"),
-			{target: {value: 2}}
+			{ target: { value: 2 } }
 		);
 		const button = await screen.findByRole("button", { name: /create/i });
 		expect(button).toBeInTheDocument();

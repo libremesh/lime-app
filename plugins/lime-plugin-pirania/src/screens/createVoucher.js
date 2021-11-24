@@ -5,16 +5,18 @@ import { useAddVoucher } from "../piraniaQueries";
 import CreateVoucherForm from "../components/createVoucherForm";
 import CreateVoucherConfirm from "../components/createVoucherConfirm";
 import ConfigPageLayout from 'plugins/lime-plugin-node-admin/src/layouts/configPageLayout';
+import { dateToLocalUnixTimestamp } from 'utils/time';
 
 const CreateVoucher = () => {
 	const [createdVouchers, setCreatedVouchers] = useState(null);
-	const [addVoucher, {isLoading:isSubmitting, isSuccess, isError }] = useAddVoucher();
+	const [addVoucher, { isLoading: isSubmitting, isSuccess, isError }] = useAddVoucher();
 	const submitVoucher = async (formData) => {
 		let deadline = null;
-		
+
 		if (formData.with_activation_deadline) {
-			let date = new Date(formData.activation_deadline + 'T00:00:00Z');
-			deadline = parseInt(date.getTime() / 1000);
+			deadline = dateToLocalUnixTimestamp(
+				formData.activation_deadline
+			);
 		}
 
 		const finalData = {
