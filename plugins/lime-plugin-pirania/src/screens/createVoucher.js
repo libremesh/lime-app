@@ -34,7 +34,6 @@ const CreateVoucher = () => {
 		setCreatedVouchers(vouchers);
 	};
 
-	console.log(createdVouchers);
 	if (createdVouchers) {
 		return <PostCreate vouchers={createdVouchers} />
 	};

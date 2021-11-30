@@ -1,6 +1,4 @@
 import PiraniaPage from './src/piraniaPage';
-import CreateVoucher from './src/screens/createVoucher';
-import Voucher from './src/screens/voucher'
 import EditVoucher from './src/screens/editVoucher'
 
 export default {
@@ -64,20 +62,6 @@ export const voucherList = () => (
 )
 
 voucherList.args = {
-	queries: [
-		[['pirania', 'list_vouchers'], vouchers]
-	]
-}
-
-export const createVoucher = () => (
-	<CreateVoucher />
-)
-
-export const voucherDetails = () => (
-	<Voucher id={vouchers[0].id} />
-)
-
-voucherDetails.args = {
 	queries: [
 		[['pirania', 'list_vouchers'], vouchers]
 	]

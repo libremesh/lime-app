@@ -41,7 +41,6 @@ export function listVouchers() {
 }
 
 export function addVoucher(formData) {
-	console.log(formData)
 	return api
 		.call("pirania", "add_vouchers", formData)
 		.then((response) =>

@@ -3,9 +3,21 @@ import { Trans } from '@lingui/macro';
 import { route } from "preact-router";
 import style from "../style.less";
 import { useListVouchers } from "../piraniaQueries";
-import TimeAgo from "../components/timeAgo";
-import GoBack from "../components/goBack";
+import { ConfigPageLayout } from 'plugins/lime-plugin-node-admin/src/layouts';
 import Copy from "../components/copy";
+import { i18n } from "@lingui/core";
+
+const statusMsgs = {
+	'available': <Trans>Available</Trans>,
+	'expired': <Trans>Expired</Trans>,
+	'active': <Trans>Active</Trans>,
+};
+
+const formatDate = (date) => i18n.date(date * 1000,
+	{ dateStyle: "medium", timeStyle: "medium" });
+
+const Duration = ({ days }) => 
+	<Trans>Duration: <Plural value={days} one="# day" other="# days" /></Trans>;
 
 const VoucherDetails = ({
 	id,
@@ -14,64 +26,67 @@ const VoucherDetails = ({
 	status,
 	creation_date,
 	expiration_date,
-	permanent
-}) => (
-	<div>
-		<div class={style.voucherDetailBox}>
-			<h3><Trans>Voucher code</Trans></h3>
-			<Copy style={{ marginBottom: 25 }} text={code} />
-			<h3><Trans>Voucher status</Trans></h3>
-			<p
-				style={{
-					color: "purple",
-					textTransform: "uppercase",
-					fontWeight: "bold"
-				}}
-			>
-				{status}
-			</p>
-			<h3><Trans>Voucher description</Trans></h3>
-			<p>{name}</p>
-			{expiration_date && (
-				<div>
-					<h3><Trans>Expiration date</Trans></h3>
-					<p>
-						<span>
-							{status === "disabled" ? <Trans>expired</Trans> : <span><Trans>expires</Trans>{" "}</span>}
-						</span>{" "}
-						<TimeAgo date={expiration_date} />
-					</p>
+	activation_date,
+	activation_deadline,
+	duration_m,
+	permanent,
+	author_node,
+}) => {
+	const durationInDays = duration_m && parseInt(duration_m / (24 * 60));
+	return (
+		<div class="d-flex flex-grow-1 flex-column container-padded">
+			<div class="d-flex flex-grow-1 flex-column">
+				<div class="text-center">
+					<Copy text={code} className={style.voucherCode} />
 				</div>
-			)}
-			<h3><Trans>Creation date</Trans></h3>
-			<p>
-				<TimeAgo date={creation_date} />
-			</p>
-			{permanent && <div class={style.isPermanent}>
-				<label><Trans>permanent</Trans></label>
-				<span style={{ color: 'green', marginLeft: 5 }}>✔</span>
-			</div>}
+				<div><Trans>Description: {name}</Trans></div>
+				<div><Trans>Author node: {author_node}</Trans></div>
+				<div><Trans>Creation date: {formatDate(creation_date)}</Trans></div>
+				<div>
+					{!permanent && 
+						<Duration days={durationInDays} />
+					}
+					{permanent &&
+						<Trans>Duration: is permanent</Trans>
+					}
+				</div>
+				<div><Trans>Status: {statusMsgs[status]}</Trans></div>
+				{status === 'expired' &&
+					<div>
+						<Trans>Expiration date: {formatDate(expiration_date)}</Trans>
+					</div>
+				}
+				{status === 'active' &&
+					<div>
+						<Trans>Activation date: {formatDate(activation_date)}</Trans>
+					</div>
+				}
+				{status === 'available' && activation_deadline &&
+					<div>
+						<Trans>Activation deadline: {formatDate(activation_deadline)}</Trans>
+					</div>
+				}
+			</div>
+			{status !== 'expired' && 
+				<button onClick={() => route(`/access/edit/${id}`)}>
+					<Trans>Edit</Trans>
+				</button>
+			}
 		</div>
-		<button disabled={status === "disabled"} onClick={() => route(`/access/edit/${id}`)}>
-			<Trans>Edit</Trans>
-		</button>
-	</div>
-);
+	)
+};
 
 const Voucher = ({ id }) => {
-	const { data: vouchers } = useListVouchers();
+	const { data: vouchers, isLoading } = useListVouchers();
+	const voucher = vouchers && vouchers.filter((v) => v.id === id)[0];
 	return (
-		<div class="container container-padded">
-			<div class={style.goBackTitle}>
-				<GoBack url="/access/" />
-				<h1><Trans>voucher details</Trans></h1>
-			</div>
-			<div>
-				{vouchers && (
-					<VoucherDetails {...vouchers.filter((v) => v.id === id)[0]} />
-				)}
-			</div>
-		</div>
+		<ConfigPageLayout {...{
+			isLoading,
+			title: <Trans>Voucher Details</Trans>,
+			backUrl: '/access'
+		}}>
+			<VoucherDetails {...voucher} />
+		</ConfigPageLayout >
 	);
 };
 

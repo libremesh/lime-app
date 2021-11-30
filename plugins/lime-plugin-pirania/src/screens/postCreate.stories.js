@@ -1,6 +1,6 @@
 import PostCreate from './postCreate';
 export default {
-	title: 'Containers/Pirania/PostCreate'
+	title: 'Containers/Pirania'
 };
 
 const vouchers = [
