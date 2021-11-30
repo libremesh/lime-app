@@ -3,7 +3,7 @@ import { useState } from "preact/hooks";
 import { Trans } from '@lingui/macro';
 import { useAddVoucher } from "../piraniaQueries";
 import CreateVoucherForm from "../components/createVoucherForm";
-import CreateVoucherConfirm from "../components/createVoucherConfirm";
+import PostCreate from "./postCreate";
 import ConfigPageLayout from 'plugins/lime-plugin-node-admin/src/layouts/configPageLayout';
 import { dateToLocalUnixTimestamp } from 'utils/time';
 
@@ -34,8 +34,9 @@ const CreateVoucher = () => {
 		setCreatedVouchers(vouchers);
 	};
 
+	console.log(createdVouchers);
 	if (createdVouchers) {
-		return <CreateVoucherConfirm vouchers={createdVouchers} />
+		return <PostCreate vouchers={createdVouchers} />
 	};
 
 	return (

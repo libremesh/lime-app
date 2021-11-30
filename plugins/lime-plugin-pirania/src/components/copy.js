@@ -21,21 +21,24 @@ function selectText(node) {
 const Copy = ({ text, className }) => {
 	const [isCopied, setIsCopied] = useState(false);
 	const ref = createRef();
-	async function copyTextToClipboard(text) {
+
+	async function copyTextToClipboard() {
 		if ("clipboard" in navigator) {
-			return await navigator.clipboard.writeText(text);
+			return await navigator.clipboard.writeText(
+				ref.current.innerText
+			);
 		} else {
 			// clipboard API works only on https sites
 			selectText(ref.current.firstChild);
 			return document.execCommand("copy");
 		}
-
 	}
+
 	const handleCopyClick = (e) => {
 		// Asynchronously call copyTextToClipboard
 		e.stopPropagation();
 		
-		return copyTextToClipboard(text)
+		return copyTextToClipboard()
 			.then(() => {
 				// If successful, update the isCopied state value
 				setIsCopied(true);
@@ -44,6 +47,7 @@ const Copy = ({ text, className }) => {
 				}, 500);
 			})
 	};
+
 	return (
 		<div class={className} >
 			<div onClick={handleCopyClick}>

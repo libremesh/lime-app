@@ -1,6 +1,5 @@
 import PiraniaPage from './src/piraniaPage';
 import CreateVoucher from './src/screens/createVoucher';
-import CreateVoucherConfirm from './src/components/createVoucherConfirm';
 import Voucher from './src/screens/voucher'
 import EditVoucher from './src/screens/editVoucher'
 
@@ -73,29 +72,6 @@ voucherList.args = {
 export const createVoucher = () => (
 	<CreateVoucher />
 )
-
-const createdVouchers = [
-	{
-		id: "La80ty",
-		code: "AJDOWJ"
-	},
-	{
-		id: "JUsj800y",
-		code: "FJSMLW"
-	},
-	{
-		id: "Fhjsk6q",
-		code: "UHJWKK"
-	}
-]
-
-export const confirmVoucher = () => (
-	<CreateVoucherConfirm vouchers={createdVouchers} />
-)
-
-confirmVoucher.args = {
-	createdVouchers
-}
 
 export const voucherDetails = () => (
 	<Voucher id={vouchers[0].id} />

@@ -44,7 +44,10 @@ export function addVoucher(formData) {
 	console.log(formData)
 	return api
 		.call("pirania", "add_vouchers", formData)
-		.then((response) => response.vouchers)
+		.then((response) =>
+			response.vouchers.map(
+				v => ({...v, ...formData})
+			))
 		.catch((error) => {
 			if (error.code === -32000) {
 				return Promise.resolve(null);
