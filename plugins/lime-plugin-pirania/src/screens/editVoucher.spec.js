@@ -1,38 +1,41 @@
 import { h } from "preact";
-import { screen } from "@testing-library/preact";
+import { screen, fireEvent } from "@testing-library/preact";
 import { render } from "utils/test_utils";
 import "@testing-library/jest-dom";
 import EditVoucher from "./editVoucher";
-import { listVouchers } from "../piraniaApi";
-const now = Date.now();
+import { listVouchers, rename } from "../piraniaApi";
+import waitForExpect from "wait-for-expect";
+
 jest.mock("../piraniaApi");
 
 let voucher = {
-	code: "PIDFIG",
 	id: "x5crd4",
-	activation_date: now - 600e3,
 	name: "luandro",
-	duration_m: 1200,
-	is_active: false,
-	creation_date: now - 700e3,
-	permanent: false
 };
 
 describe("Edit voucher", () => {
 	beforeEach(() => {
 		listVouchers.mockImplementation(async () => [voucher]);
+		rename.mockImplementation(async() => null);
 		render(<EditVoucher id={voucher.id} />);
 	});
-	it("has input for changing description with label", async () => {
-		const input = await screen.findByLabelText(`description`);
+	it("has an input for changing the description", async () => {
+		const input = await screen.findByLabelText("Description");
 		expect(input).toBeInTheDocument();
 	});
-	it("has input for changing disabling the voucher", async () => {
-		const input = await screen.findByLabelText(`description`);
-		expect(input).toBeInTheDocument();
-	});
+
 	it("shows a button to edit the voucher", async () => {
+		const input = await screen.findByLabelText("Description");
+		fireEvent.input(input, {target: {value: 'new description'}});
 		const button = await screen.findByRole("button", { name: /save/i });
 		expect(button).toBeInTheDocument();
+		fireEvent.click(button);
+		await waitForExpect(() => {
+			expect(rename).toHaveBeenCalledWith({
+				id: voucher.id,
+				name: 'new description'
+			})
+		});
+        expect(await screen.findByText('Saved')).toBeInTheDocument();
 	});
 });

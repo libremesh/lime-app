@@ -4,6 +4,7 @@ import PiraniaPage from './src/piraniaPage';
 import { WellcomeScreenEditor } from './src/screens/wellcomeScreenEditor';
 import CreateVoucher from "./src/screens/createVoucher";
 import EditVoucher from "./src/screens/editVoucher";
+import InvalidateVoucher from "./src/screens/invalidateVoucher";
 import Voucher from "./src/screens/voucher";
 
 export default {
@@ -15,6 +16,7 @@ export default {
 		['access/wellcomescreen', WellcomeScreenEditor],
 		["access/create", CreateVoucher],
 		["access/view/:id", Voucher],
-		["access/edit/:id", EditVoucher]
+		["access/edit/:id", EditVoucher],
+		["access/invalidate/:id", InvalidateVoucher]
 	]
 }

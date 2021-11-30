@@ -113,13 +113,23 @@ describe("Voucher details", () => {
 		).toBeInTheDocument();
 	});
 
-	it("shows a button to edit the voucher if not expired", async () => {
+	it("shows a button to edit the voucher", async () => {
 		render(<Voucher id={voucher.id} />);
 		const button = await screen.findByRole("button", { name: /edit/i });
 		expect(button).toBeInTheDocument();
 		fireEvent.click(button);
 		await waitForExpect(() => {
 			expect(route).toHaveBeenCalledWith(`/access/edit/${voucher.id}`);
+		});
+	});
+
+	it("shows a button to invalidate the voucher if not expired", async () => {
+		render(<Voucher id={voucher.id} />);
+		const button = await screen.findByRole("button", { name: /invalidate/i });
+		expect(button).toBeInTheDocument();
+		fireEvent.click(button);
+		await waitForExpect(() => {
+			expect(route).toHaveBeenCalledWith(`/access/invalidate/${voucher.id}`);
 		});
 	});
 
@@ -135,7 +145,7 @@ describe("Voucher details", () => {
 		// wait for something to be rendered.
 		expect(await screen.findByText(voucher.code)).toBeInTheDocument();
 		expect(
-			screen.queryByRole("button", { name: /edit/i })
+			screen.queryByRole("button", { name: /invalidate/i })
 		).toBeNull();
 	});
 });

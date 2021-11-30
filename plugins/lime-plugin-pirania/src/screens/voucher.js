@@ -67,9 +67,12 @@ const VoucherDetails = ({
 					</div>
 				}
 			</div>
+			<button onClick={() => route(`/access/edit/${id}`)}>
+				<Trans>Edit</Trans>
+			</button>
 			{status !== 'expired' && 
-				<button onClick={() => route(`/access/edit/${id}`)}>
-					<Trans>Edit</Trans>
+				<button class="text-danger" onClick={() => route(`/access/invalidate/${id}`)}>
+					<Trans>Invalidate</Trans>
 				</button>
 			}
 		</div>

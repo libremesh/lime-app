@@ -44,7 +44,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
 				<label for="quantity"><Trans>Number of vouchers</Trans></label>
 				<input type="number" id="quantity" name="qty"
 					ref={register} class="w-100"
-					min={1}
+					min={1} max={10}
 				/>
 				<div class={switchStyle.toggles}>
 					<input type="checkbox" id="with_activation_deadline"

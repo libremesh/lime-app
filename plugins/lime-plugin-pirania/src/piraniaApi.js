@@ -71,7 +71,7 @@ export function rename(input) {
 
 export function invalidate(id) {
 	return api
-		.call("pirania", "invalidate", id)
+		.call("pirania", "invalidate", { id })
 		.then((response) => response)
 		.catch((error) => {
 			if (error.code === -32000) {

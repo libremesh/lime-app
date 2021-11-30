@@ -53,7 +53,7 @@ export function useRename() {
 	});
 }
 
-export function useInvalidade() {
+export function useInvalidate() {
 	return useMutation(invalidate, {
 		onSuccess: (data) => {
 			queryCache.invalidateQueries(["pirania", "list_vouchers"])
