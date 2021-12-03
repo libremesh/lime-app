@@ -14,7 +14,7 @@ export const useSetPortalConfig = () =>
     useMutation(setPortalConfig);
 
 export const usePortalContent = () =>
-    useQuery(['pirania-app', 'read_content'], getPortalContent);
+    useQuery(['pirania', 'get_portal_page_content'], getPortalContent);
 
 export const useSetPortalContent = () =>
     useMutation(setPortalContent);

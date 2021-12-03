@@ -8,10 +8,10 @@ export const setPortalConfig = (config) =>
     api.call('pirania', 'set_portal_config', { ...config, with_vouchers: true });
 
 export const getPortalContent = () =>
-    api.call('pirania-app', 'read_content', {});
+    api.call('pirania', 'get_portal_page_content', {});
 
 export const setPortalContent = (content) =>
-    api.call('pirania-app', 'write_content', content);
+    api.call('pirania', 'set_portal_page_content', content);
 
 export const createCompression = (file) =>
     new Promise(res => {

@@ -7,7 +7,7 @@ export default {
 export const wellcomeScreenWithoutLogo = () => < WellcomeScreenEditor />;
 wellcomeScreenWithoutLogo.args = {
     queries: [
-        [['pirania-app', 'read_content'],
+        [['pirania', 'get_portal_page_content'],
         {
             title: 'mocked title',
             body: 'mocked body',
@@ -21,7 +21,7 @@ wellcomeScreenWithoutLogo.args = {
 export const wellcomeScreenWithLogo = () => < WellcomeScreenEditor />;
 wellcomeScreenWithLogo.args = {
     queries: [
-        [['pirania-app', 'read_content'],
+        [['pirania', 'get_portal_page_content'],
         {
             title: 'mocked title',
             body: 'mocked body',
