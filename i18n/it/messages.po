@@ -21,12 +21,62 @@ msgstr ""
 msgid "A reboot is needed to apply changes"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/index.js:13
+msgid "Access Vouchers"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
+msgid "Activate Portal in Community AP"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
+msgid "Activated, with vouchers"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
+msgid "Activated, without vouchers"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:62
+msgid "Activation date: {0}"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:56
+msgid "Activation deadline"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:62
+msgid "Activation deadline: <0/>"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:67
+msgid "Activation deadline: {0}"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:41
+msgid "Activation deadline: {deadlineText}"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:25
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:13
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:60
+msgid "Active"
+msgstr ""
+
 #: plugins/lime-plugin-align/src/alignMenu.js:6
 msgid "Align"
 msgstr "Allineare"
 
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:58
+msgid "All Vouchers"
+msgstr ""
+
 #: src/containers/RebootPage/RebootPage.js:22
 msgid "Are you sure you want to reboot?"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:26
+msgid "Are you sure?"
 msgstr ""
 
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:38
@@ -39,6 +89,20 @@ msgstr ""
 
 #: src/containers/SharedPasswordForm/sharedPasswordForm.js:41
 msgid "At least one number"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:44
+msgid "Author node: {author_node}"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:23
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:11
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:59
+msgid "Available"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:53
+msgid "Background Color"
 msgstr ""
 
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:36
@@ -106,7 +170,16 @@ msgstr ""
 msgid "Cofirm upgrade before {_counter} seconds or it will be reverted"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:30
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:39
+msgid "Community Logo"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:22
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:66
+msgid "Community Portal"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:31
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:54
 msgid "Community Roaming AP"
 msgstr ""
@@ -131,8 +204,17 @@ msgstr ""
 msgid "Congratulations"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:67
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:81
+msgid "Create"
+msgstr ""
+
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:42
 msgid "Create Session"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/createVoucher.js:44
+msgid "Create Voucher"
 msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:87
@@ -143,15 +225,44 @@ msgstr ""
 msgid "Create new network"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:66
+msgid "Created <0/>"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:57
+msgid "Created in this node"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:33
+msgid "Created vouchers"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:45
+msgid "Creation date: {0}"
+msgstr ""
+
 #: plugins/lime-plugin-firmware/src/upgradeAvailable.js:52
 msgid "Currently your node has version:"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
+msgid "Deactivated"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:16
+msgid "Description"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:37
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:43
+msgid "Description: {name}"
 msgstr ""
 
 #: plugins/lime-plugin-rx/src/rxPage.js:53
 msgid "Device"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:31
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
 msgid "Disabled"
 msgstr ""
 
@@ -168,6 +279,28 @@ msgstr ""
 msgid "Downloading"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:16
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:51
+msgid "Duration: is permanent"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:18
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:21
+msgid "Duration: {days, plural, one {# day} other {# days}}"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:72
+msgid "Edit"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:61
+msgid "Edit Voucher"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:40
+msgid "Edit wellcome screen"
+msgstr ""
+
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:22
 msgid "Enable Community Roaming AP"
 msgstr ""
@@ -176,7 +309,7 @@ msgstr ""
 msgid "Enable Password"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:31
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
 msgid "Enabled"
 msgstr ""
 
@@ -188,6 +321,24 @@ msgstr ""
 msgid "Error: Not Saved"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:57
+msgid "Expiration date: {0}"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:24
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:12
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:61
+msgid "Expired"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:59
+msgid "Expired <0/>"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:55
+msgid "Expires <0/>"
+msgstr ""
+
 #: plugins/lime-plugin-align/src/alignPage.js:30
 #: plugins/lime-plugin-rx/src/rxPage.js:79
 msgid "Fetching name"
@@ -195,6 +346,10 @@ msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:141
 msgid "Filename"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:51
+msgid "Filter by"
 msgstr ""
 
 #: plugins/lime-plugin-firmware/index.js:9
@@ -239,6 +394,14 @@ msgstr ""
 msgid "IP Addresses"
 msgstr "Indirizzi IP"
 
+#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:19
+msgid "If you invalidate this voucher no one will be able to use it anymore. This cannot be reverted."
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:59
+msgid "If your community network has local services, you can point a link to them."
+msgstr ""
+
 #: plugins/lime-plugin-rx/src/rxPage.js:82
 msgid "Interface"
 msgstr "Interfaccia"
@@ -248,12 +411,31 @@ msgstr "Interfaccia"
 msgid "Internet connection"
 msgstr "Connessione a Internet"
 
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:76
+msgid "Invalidate"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:26
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:14
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:62
+msgid "Invalidated"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:34
+msgid "Is permanent"
+msgstr ""
+
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:65
 msgid "It is disabled by default in {communityName}"
 msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:70
 msgid "It is enabled by default in {communityName}"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:67
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:72
+msgid "It must start with https:// or http://"
 msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/Scan.js:108
@@ -265,6 +447,14 @@ msgstr ""
 msgid "Last packet"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:60
+msgid "Link Title"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:66
+msgid "Link URL"
+msgstr ""
+
 #: plugins/lime-plugin-metrics/src/metricsPage.js:99
 msgid "Load last known Internet path"
 msgstr ""
@@ -272,6 +462,10 @@ msgstr ""
 #: plugins/lime-plugin-rx/src/rxPage.js:98
 msgid "Loading node status..."
 msgstr "Caricando lo stato del nodo..."
+
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:58
+msgid "Local services link"
+msgstr ""
 
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:55
 msgid "Logging in"
@@ -281,8 +475,16 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:32
+msgid "Main Text"
+msgstr ""
+
 #: plugins/lime-plugin-locate/src/locateMenu.js:6
 msgid "Map"
+msgstr ""
+
+#: src/components/form/index.js:11
+msgid "Max. {length} characters"
 msgstr ""
 
 #: plugins/lime-plugin-metrics/src/metricsPage.js:98
@@ -321,20 +523,21 @@ msgstr ""
 msgid "No network found, try realigning your node and rescanning."
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:21
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:22
 msgid "No password"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:29
 #: src/containers/RebootPage/RebootPage.js:24
 msgid "No, cancel"
 msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:5
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:41
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:42
 msgid "Node Configuration"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:12
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:13
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:27
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:30
 msgid "Node Name"
@@ -348,6 +551,11 @@ msgstr "Note"
 msgid "Notes of"
 msgstr "Note di"
 
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:44
+msgid "Number of vouchers"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:46
 #: src/components/banner/index.js:12
 msgid "Ok"
 msgstr ""
@@ -364,7 +572,7 @@ msgstr ""
 msgid "Only gateway"
 msgstr "Solo porta di connessione"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:33
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:56
 msgid "Opens the \"{apSsid}\" AP in this node"
 msgstr ""
@@ -384,6 +592,10 @@ msgstr "Perdita di pacchetti"
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:71
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:41
 msgid "Password"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:51
+msgid "Permanent"
 msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:30
@@ -449,6 +661,10 @@ msgstr ""
 msgid "Remote Support"
 msgstr ""
 
+#: src/components/form/index.js:18
+msgid "Required"
+msgstr ""
+
 #: plugins/lime-plugin-fbw/src/containers/Scan.js:132
 msgid "Rescan"
 msgstr ""
@@ -468,6 +684,9 @@ msgstr ""
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
 #: plugins/lime-plugin-node-admin/src/screens/password.js:51
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:29
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:47
+#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:28
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:79
 msgid "Save"
 msgstr ""
 
@@ -487,6 +706,10 @@ msgstr ""
 msgid "Scanning for existing networks"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:47
+msgid "Search by"
+msgstr ""
+
 #: plugins/lime-plugin-metrics/src/metricsPage.js:96
 msgid "Searching gateway"
 msgstr ""
@@ -504,6 +727,7 @@ msgid "Select another node and use the LimeApp as you were there"
 msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:135
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:48
 msgid "Select file"
 msgstr ""
 
@@ -525,6 +749,10 @@ msgstr ""
 
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:62
 msgid "Setting up new password"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:54
+msgid "Setup activation deadline"
 msgstr ""
 
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:65
@@ -557,12 +785,20 @@ msgstr ""
 msgid "Status"
 msgstr "Stato"
 
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:54
+msgid "Status: {0}"
+msgstr ""
+
 #: plugins/lime-plugin-rx/src/rxPage.js:48
 msgid "System"
 msgstr "Sistema"
 
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:58
 msgid "The Community AP is present in every node allowing people to move around the network territory without losing connection"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:24
+msgid "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 msgstr ""
 
 #: plugins/lime-plugin-align/src/alignPage.js:116
@@ -606,6 +842,10 @@ msgstr ""
 msgid "The upgrade should be done"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:74
+msgid "There are no vouchers matching the current criteria"
+msgstr ""
+
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:53
 msgid "There's an active remote support session"
 msgstr ""
@@ -626,6 +866,10 @@ msgstr ""
 msgid "This device supports secure rollback to previous version if something goes wrong"
 msgstr ""
 
+#: src/components/form/index.js:22
+msgid "This field is required"
+msgstr ""
+
 #: plugins/lime-plugin-metrics/src/metricsPage.js:79
 msgid "This node is the gateway"
 msgstr ""
@@ -636,6 +880,10 @@ msgstr ""
 
 #: plugins/lime-plugin-metrics/src/metricsPage.js:127
 msgid "This your last working path to the Internet"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:25
+msgid "Title"
 msgstr ""
 
 #: plugins/lime-plugin-metrics/src/metricsPage.js:162
@@ -684,11 +932,31 @@ msgstr ""
 msgid "Visit a neighboring node"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:89
+msgid "Voucher Details"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:37
+msgid "Voucher duration in days"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:23
+msgid "Voucher group description"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:43
+msgid "Voucher list"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:110
+msgid "Wellcome Screen"
+msgstr ""
+
 #: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:15
 msgid "When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:20
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:21
 #: plugins/lime-plugin-node-admin/src/screens/password.js:33
 #: plugins/lime-plugin-node-admin/src/screens/password.js:76
 msgid "Wifi Password"
@@ -702,6 +970,7 @@ msgstr ""
 msgid "Wrong password, try again"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:28
 #: src/containers/RebootPage/RebootPage.js:23
 msgid "Yes"
 msgstr ""
