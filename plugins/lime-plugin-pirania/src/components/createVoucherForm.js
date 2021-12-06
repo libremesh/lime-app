@@ -53,7 +53,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
 					/>
 					<label for="with_activation_deadline"><Trans>Setup activation deadline</Trans></label>
 				</div>
-				<label for="activation_deadline"><Trans>Activation Deadline</Trans></label>
+				<label for="activation_deadline"><Trans>Activation deadline</Trans></label>
 				<input type="date" id="activation_deadline" name="activation_deadline"
 					ref={register} class="w-100"
 					disabled={!withActivationDeadline}

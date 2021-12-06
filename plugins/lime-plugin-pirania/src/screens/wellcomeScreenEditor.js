@@ -64,7 +64,7 @@ const WellcomeScreenEditorForm = (
                 ></input>
                 {errors.link_title?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
                 <label for="link_url"><Trans>Link URL</Trans></label>
-                <span><Trans>Starting with https:// or http://</Trans></span>
+                <span><Trans>It must start with https:// or http://</Trans></span>
                 <input type="text" name="link_url" id="link_url" class="w-100"
                     ref={register({ pattern: /^(http:\/\/|https:\/\/).*$/ })}
                 ></input>

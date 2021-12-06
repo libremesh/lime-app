@@ -70,7 +70,7 @@ describe("voucher list item", () => {
 		expect(
 			await screen.findByText(`Expires ${timeAhead}`)
 		).toBeInTheDocument();
-		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
+		expect(screen.queryByText(/Activation deadline.*/)).toBeNull();
 		expect(screen.queryByText("Permament")).toBeNull();
 	});
 
@@ -85,7 +85,7 @@ describe("voucher list item", () => {
 		expect(
 			await screen.findByText(`Expired ${timeAgo}`)
 		).toBeInTheDocument();
-		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
+		expect(screen.queryByText(/Activation deadline.*/)).toBeNull();
 		expect(screen.queryByText(/Expires.*/)).toBeNull();
 		expect(screen.queryByText("Permanent")).toBeNull();
 	});
@@ -94,7 +94,7 @@ describe("voucher list item", () => {
 		const voucher_ = { ...voucher, status: 'active', permanent: true }
 		render(<VoucherListItem {...voucher_} />);
 		expect(await screen.findByText("Permanent")).toBeInTheDocument();
-		expect(screen.queryByText(/Activation Deadline.*/)).toBeNull();
+		expect(screen.queryByText(/Activation deadline.*/)).toBeNull();
 		expect(screen.queryByText(/Expires.*/)).toBeNull();
 		expect(screen.queryByText(/Expired.*/)).toBeNull();
 	});
@@ -103,7 +103,7 @@ describe("voucher list item", () => {
 		const timeAhead = timeago.format(voucher.activation_deadline * 1000);
 		render(<VoucherListItem {...voucher} />);
 		expect(
-			await screen.findByText(`Activation Deadline: ${timeAhead}`)
+			await screen.findByText(`Activation deadline: ${timeAhead}`)
 		).toBeInTheDocument();
 		expect(screen.queryByText(/Expires.*/)).toBeNull();
 		expect(screen.queryByText(/Expired.*/)).toBeNull();

@@ -38,7 +38,7 @@ const PostCreate = ({ vouchers }) => {
 					<div><Duration days={durationInDays} /></div>
 					{activation_deadline && 
 						<div>
-							<Trans>Activation Deadline: {deadlineText}</Trans>
+							<Trans>Activation deadline: {deadlineText}</Trans>
 						</div>
 					}
 				</div>

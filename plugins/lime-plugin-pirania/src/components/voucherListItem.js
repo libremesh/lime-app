@@ -59,7 +59,7 @@ const VoucherListItem = ({
 						<span><Trans>Expired <TimeAgo date={expiration_date} /></Trans></span>
 					}
 					{status === "available" && activation_deadline &&
-						<span><Trans>Activation Deadline: <TimeAgo date={activation_deadline} /></Trans></span>
+						<span><Trans>Activation deadline: <TimeAgo date={activation_deadline} /></Trans></span>
 					}
 				</div>
 				<div class="ml-auto">

@@ -47,7 +47,7 @@ describe("Create voucher", () => {
 	it("shows an optional input for activation deadline", async () => {
 		const checkbox = await screen.findByLabelText("Setup activation deadline");
 		expect(checkbox).not.toBeChecked();
-		const dateInput = await screen.findByLabelText("Activation Deadline");
+		const dateInput = await screen.findByLabelText("Activation deadline");
 		expect(dateInput).toBeDisabled();
 	});
 
@@ -72,7 +72,7 @@ describe("Create voucher", () => {
 		const deadline = '2022-10-10';
 		const timestamp = dateToLocalUnixTimestamp(deadline, '23:59');
 		userEvent.type(
-			await screen.findByLabelText("Activation Deadline"),
+			await screen.findByLabelText("Activation deadline"),
 			deadline
 			);
 		const button = await screen.findByRole("button", { name: /create/i });

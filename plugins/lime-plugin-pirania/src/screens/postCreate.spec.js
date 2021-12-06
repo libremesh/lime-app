@@ -74,7 +74,7 @@ describe("voucher post create screen", () => {
 		const deadlineText = i18n.date(date, { dateStyle: "medium", timeStyle: "medium" });
 		render(<PostCreate vouchers={vouchers_} />);
 		expect(await screen.findByText(
-			`Activation Deadline: ${deadlineText}`
+			`Activation deadline: ${deadlineText}`
 		)).toBeInTheDocument();
 	});
 
