@@ -14,7 +14,7 @@ const statusMsgs = {
 	'invalidated': <Trans>Invalidated</Trans>
 };
 
-const formatDate = (date) => Number.isInteger(date) && i18n.date(String(date) * 1000,
+const formatDate = (date) => Number.isInteger(date) && i18n.date(new Date(date * 1000),
 	{ dateStyle: "medium", timeStyle: "medium" });
 
 const Duration = ({ days }) => 
