@@ -11,7 +11,11 @@ export const usePortalConfig = () =>
     useQuery(['pirania', 'get_portal_config'], getPortalConfig);
 
 export const useSetPortalConfig = () =>
-    useMutation(setPortalConfig);
+    useMutation(setPortalConfig, {
+		onSuccess: () => queryCache.invalidateQueries(
+			['pirania', 'get_portal_config']
+		)
+	});
 
 export const usePortalContent = () =>
     useQuery(['pirania', 'get_portal_page_content'], getPortalContent);
