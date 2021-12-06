@@ -74,15 +74,34 @@ const expiredVouchers = [
 	}
 ];
 
+const invalidatedVouchers = [
+	{
+		mac: "98:9e:63:a7:91:e2",
+		expiration_date: 6e25,
+		code: "KQEDWC",
+		id: "7tyG2",
+		activation_date: 1633530122,
+		name: "made by mistake",
+		duration_m: 1e24,
+		is_active: false,
+		creation_date: 1633530042,
+		permanent: false,
+		status: "invalidated",
+		author_node: "some-node"
+	}
+];
+
 const createdInThisNode = [
 	availableVouchers[1],
 	activeVouchers[0]
 ];
 
+
 const vouchers = [
 	...availableVouchers,
 	...activeVouchers,
-	...expiredVouchers
+	...expiredVouchers,
+	...invalidatedVouchers
 ];
 
 
@@ -180,6 +199,12 @@ describe("voucher list", () => {
 		render(<VoucherList />);
 		await selectFilterOption('Expired');
 		await findExpectedVouchers(expiredVouchers);
+	});
+
+	it("let you filter by invalidated vouchers", async () => {
+		render(<VoucherList />);
+		await selectFilterOption('Invalidated');
+		await findExpectedVouchers(invalidatedVouchers);
 	});
 
 	it("shows message if no voucher match filter criteria", async () => {

@@ -59,6 +59,7 @@ const VoucherList = () => {
 							<option value="available"><Trans>Available</Trans></option>
 							<option value="active"><Trans>Active</Trans></option>
 							<option value="expired"><Trans>Expired</Trans></option>
+							<option value="invalidated"><Trans>Invalidated</Trans></option>
 						</select>
 					</div>
 				</div>

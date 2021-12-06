@@ -11,9 +11,10 @@ const statusMsgs = {
 	'available': <Trans>Available</Trans>,
 	'expired': <Trans>Expired</Trans>,
 	'active': <Trans>Active</Trans>,
+	'invalidated': <Trans>Invalidated</Trans>
 };
 
-const formatDate = (date) => i18n.date(date * 1000,
+const formatDate = (date) => Number.isInteger(date) && i18n.date(String(date) * 1000,
 	{ dateStyle: "medium", timeStyle: "medium" });
 
 const Duration = ({ days }) => 
@@ -70,7 +71,7 @@ const VoucherDetails = ({
 			<button onClick={() => route(`/access/edit/${id}`)}>
 				<Trans>Edit</Trans>
 			</button>
-			{status !== 'expired' && 
+			{(status == 'available' || status == 'active') && 
 				<button class="text-danger" onClick={() => route(`/access/invalidate/${id}`)}>
 					<Trans>Invalidate</Trans>
 				</button>

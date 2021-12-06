@@ -5,6 +5,7 @@ import "@testing-library/jest-dom";
 import * as timeago from "timeago.js";
 import { route } from "preact-router";
 import waitForExpect from "wait-for-expect";
+import each from "jest-each";
 
 import VoucherListItem from "./voucherListItem";
 
@@ -38,22 +39,16 @@ describe("voucher list item", () => {
 		expect(await screen.findByText(`${voucher.author_node}: ${voucher.name}`)).toBeInTheDocument();
 	});
 
-	it("shows active status when it is active", async () => {
-		const voucher_ = { ...voucher, status: 'active' };
-		render(<VoucherListItem {...voucher_} />);
-		expect(await screen.findByText("Active")).toBeInTheDocument();
-	});
+	each([
+		['Active', 'active'],
+		['Expired', 'expired'],
+		['Available', 'available'],
+		['Invalidated', 'invalidated'],
 
-	it("shows available status when it is available", async () => {
-		const voucher_ = { ...voucher, status: 'available' };
+	]).it("shows the voucher status as %s when status is %s", async (expected, status) => {
+		const voucher_ = { ...voucher, status: status };
 		render(<VoucherListItem {...voucher_} />);
-		expect(await screen.findByText("Available")).toBeInTheDocument();
-	});
-
-	it("shows expired status when it is expired", async () => {
-		const voucher_ = { ...voucher, status: 'expired' };
-		render(<VoucherListItem {...voucher_} />);
-		expect(await screen.findByText("Expired")).toBeInTheDocument();
+		expect(await screen.findByText(expected)).toBeInTheDocument();
 	});
 
 	it("shows vouchers creation date", async () => {

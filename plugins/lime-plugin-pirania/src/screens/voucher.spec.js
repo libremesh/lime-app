@@ -8,10 +8,10 @@ import Voucher from "./voucher";
 import { listVouchers } from "../piraniaApi";
 import queryCache from "utils/queryCache";
 import { i18n } from '@lingui/core';
-
+import each from 'jest-each';
 
 jest.mock("../piraniaApi");
-const now = new Date().getTime() / 1000;
+const now = Math.floor(new Date().getTime() / 1000);
 const voucher = {
 	code: "PIDFIG",
 	id: "x5crd4",
@@ -63,10 +63,22 @@ describe("Voucher details", () => {
 		)).toBeInTheDocument();
 	});
 
-	it("shows the voucher status", async () => {
-		render(<Voucher id={voucher.id} />);
+
+	each([
+		['Active', 'active'],
+		['Expired', 'expired'],
+		['Available', 'available'],
+		['Invalidated', 'invalidated'],
+
+	]).it("shows the voucher status as %s when status is %s", async (expected, status) => {
+		const voucher_ = {
+			...voucher,
+			status,
+		};
+		listVouchers.mockImplementation(async () => [voucher_]);
+		render(<Voucher id={voucher_.id} />);
 		expect(await screen.findByText(
-			`Status: Available`)
+			`Status: ${expected}`)
 		).toBeInTheDocument();
 	});
 
@@ -123,7 +135,12 @@ describe("Voucher details", () => {
 		});
 	});
 
-	it("shows a button to invalidate the voucher if not expired", async () => {
+	each(
+		['active', 'available']
+	).it("shows a button to invalidate the voucher if its %s", async (status) => {
+		listVouchers.mockImplementation(async () => [
+			{ ...voucher, status }
+		]);
 		render(<Voucher id={voucher.id} />);
 		const button = await screen.findByRole("button", { name: /invalidate/i });
 		expect(button).toBeInTheDocument();
@@ -133,12 +150,13 @@ describe("Voucher details", () => {
 		});
 	});
 
-	it("doesnt show a button to edit the voucher if not expired", async () => {
+	each([
+		'expired', 'invalidated'
+	]).it("doesnt show a button to invalidate the voucher if it is %s", async (status) => {
 		listVouchers.mockImplementation(async () => [
 			{
 				...voucher,
-				status: 'expired',
-				expiration_date: now - 700e3
+				status,
 			}
 		]);
 		render(<Voucher id={voucher.id} />);
