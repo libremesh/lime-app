@@ -1,6 +1,6 @@
 {
-  "name": "LiMe",
-  "short_name": "LiMe",
+  "name": "LimeApp",
+  "short_name": "LimeApp",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
