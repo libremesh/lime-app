@@ -7,6 +7,6 @@ export const dateToLocalUnixTimestamp = (date, time) => {
     const utcDate = new Date(date + `T${time}:00.000Z`);
     const utcTimestamp = utcDate.getTime();
 	const utcOffset = utcDate.getTimezoneOffset() * 60 * 1000;
-    const localTimestamp = utcTimestamp - utcOffset;
-    return parseInt(localTimestamp / 1000);
+    const localTimestamp = utcTimestamp + utcOffset;
+    return Math.floor(localTimestamp / 1000);
 }
