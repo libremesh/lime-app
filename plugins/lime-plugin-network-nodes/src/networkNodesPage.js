@@ -1,4 +1,3 @@
-// NetworkNodes will be rendered when navigating to this plugin
 import { h } from 'preact';
 import { useNetworkNodes } from './networkNodesQueries';
 import { List } from 'components/list';

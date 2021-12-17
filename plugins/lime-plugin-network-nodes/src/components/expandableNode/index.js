@@ -14,7 +14,7 @@ export const ExpandableNode = ({ node, showMore, onClick }) => {
                 {showMore &&
                     <div class={style.moreData} onClick={e => e.stopPropagation()}>
                         {ipv4 && <div>IPv4: <a href={`http://${ipv4}`}>{ipv4}</a></div>}
-                        {ipv6 && <div>IPv6: {ipv6}</div>}
+                        {ipv6 && <div>IPv6: <a href={`http://[${ipv6}]`}>{ipv6}</a></div>}
                         {board && <div>{I18n.t('Device')}: {board}</div>}
                         {fw_version && <div>{I18n.t('Firmware')}: {fw_version}</div>}
                     </div>

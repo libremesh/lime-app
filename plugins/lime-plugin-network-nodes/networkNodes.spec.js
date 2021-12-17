@@ -55,7 +55,7 @@ describe('networkNodes', () => {
         const element = await screen.findByText('ql-nelson');
         fireEvent.click(element);
         expect(await screen.findByRole('link', { name: '10.5.0.17'})).toBeInTheDocument();
-        expect(await screen.findByText('IPv6: fd0d:fe46:8ce8::8bbf:75bf')).toBeInTheDocument();
+        expect(await screen.findByRole('link', { name: 'fd0d:fe46:8ce8::8bbf:75bf'})).toBeInTheDocument();
         expect(await screen.findByText('Device: LibreRouter v1')).toBeInTheDocument();
         expect(await screen.findByText('Firmware: LibreRouterOS 1.4')).toBeInTheDocument();
     });
