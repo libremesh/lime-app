@@ -12,17 +12,17 @@ jest.mock('plugins/lime-plugin-network-nodes/src/networkNodesApi');
 
 describe('delete nodes page', () => {
     beforeEach(() => {
-        getNodes.mockImplementation(async () => [
-            { hostname: 'node1', status: 'recently_reachable' },
-            { hostname: 'node2', status: 'recently_reachable' },
-            { hostname: 'node3', status: 'recently_reachable' },
-            { hostname: 'node4', status: 'unreachable' },
-            { hostname: 'node5', status: 'unreachable' },
-            { hostname: 'node6', status: 'unreachable' },
-            { hostname: 'node7', status: 'unreachable' },
-            { hostname: 'node8', status: 'gone' },
-            { hostname: 'node9', status: 'gone' },
-        ]);
+        getNodes.mockImplementation(async () => ({
+            'node1': { hostname: 'node1', status: 'recently_reachable' },
+            'node2': { hostname: 'node2', status: 'recently_reachable' },
+            'node3': { hostname: 'node3', status: 'recently_reachable' },
+            'node4': { hostname: 'node4', status: 'unreachable' },
+            'node5': { hostname: 'node5', status: 'unreachable' },
+            'node6': { hostname: 'node6', status: 'unreachable' },
+            'node7': { hostname: 'node7', status: 'unreachable' },
+            'node8': { hostname: 'node8', status: 'gone' },
+            'node9': { hostname: 'node9', status: 'gone' },
+        }));
         markNodesAsGone.mockImplementation(async () => []);
     });
     

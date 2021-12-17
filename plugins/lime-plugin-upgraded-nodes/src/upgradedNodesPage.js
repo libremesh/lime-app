@@ -103,7 +103,7 @@ const UpgradedNodesPage = () => {
 
     useEffect(() => {
         if (nodes && newVersion) {
-            const taggedNodes = [...nodes].map(
+            const taggedNodes = [...Object.values(nodes)].map(
                 n => ({
                     ...n,
                     group: n.fw_version === newVersion.version ? 'upgraded' : 'not_upgraded'

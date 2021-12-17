@@ -27,8 +27,8 @@ const PageHelp = () => (
 );
 
 const PageTabs = ({ nodes, ...props }) => {
-    const nReachable = nodes.filter(n => n.status === "recently_reachable").length;
-    const nUnreachable = nodes.filter(n => n.status === "unreachable").length;
+    const nReachable = Object.values(nodes).filter(n => n.status === "recently_reachable").length;
+    const nUnreachable = Object.values(nodes).filter(n => n.status === "unreachable").length;
     const tabs = [
         { key: 'recently_reachable', repr: I18n.t('Reachable (%{howMany})', { howMany: nReachable }) },
         { key: 'unreachable', repr: I18n.t('Unreachable (%{howMany})', { howMany: nUnreachable }) },
@@ -39,7 +39,6 @@ const PageTabs = ({ nodes, ...props }) => {
 export const ReachableNodesPage_ = ({ nodes }) => {
     const [ selectedGroup, setselectedGroup ] = useState('recently_reachable');
     const [ unfoldedNode, setunfoldedNode ] = useState(null);
-
     function changeUnfolded(hostname) {
         if (unfoldedNode == hostname) {
             setunfoldedNode(null);
@@ -56,7 +55,7 @@ export const ReachableNodesPage_ = ({ nodes }) => {
                 </div>
             </div>
             <List>
-                {nodes
+                {Object.values(nodes)
                     .filter(n => n.status === selectedGroup)
                     .sort((a, b) => a.hostname > b.hostname)
                     .map(

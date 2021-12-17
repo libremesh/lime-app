@@ -14,12 +14,12 @@ jest.mock('plugins/lime-plugin-firmware/src/firmwareApi');
 
 describe('upgradedNodes', () => {
     beforeEach(() => {
-        getNodes.mockImplementation(async () => [
-            { hostname: 'node1', status: 'unreachable', fw_version: 'LibreRouterOS 1.4' },
-            { hostname: 'node2', status: 'recently_reachable', fw_version: 'LibreRouterOS 1.4' },
-            { hostname: 'node3', status: 'unreachable', fw_version: 'LibreRouterOS 1.3' },
-            { hostname: 'node4', status: 'recently_reachable', fw_version: 'LibreRouterOS 1.3' },
-        ]);
+        getNodes.mockImplementation(async () => ({
+            'node1': { hostname: 'node1', status: 'unreachable', fw_version: 'LibreRouterOS 1.4' },
+            'node2': { hostname: 'node2', status: 'recently_reachable', fw_version: 'LibreRouterOS 1.4' },
+            'node3': { hostname: 'node3', status: 'unreachable', fw_version: 'LibreRouterOS 1.3' },
+            'node4': { hostname: 'node4', status: 'recently_reachable', fw_version: 'LibreRouterOS 1.3' },
+        }));
         getNewVersion.mockImplementation(async () => ({
             version: 'LibreRouterOS 1.4'
         }))

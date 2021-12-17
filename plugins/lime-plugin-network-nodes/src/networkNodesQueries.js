@@ -8,9 +8,10 @@ export const useNetworkNodes = () =>
 export const useMarkNodesAsGone = () => useMutation(markNodesAsGone, {
     onSuccess: hostnames => queryCache.setQueryData(['network-nodes', 'get_nodes'],
         old => {
-            const result = old.map(
-                node => hostnames.indexOf(node.hostname) != -1 ? { ...node, status: "gone" } : node
-            )
+            const result = old;
+            hostnames.forEach(hostname => {
+                result[hostname] = {...old[hostname], status: "gone"}
+            });
             return result;
         }
     )

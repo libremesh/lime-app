@@ -11,7 +11,7 @@ import I18n from 'i18n-js';
 export const DeleteNodesPage_ = ({ nodes, onDelete, isSubmitting, isSuccess }) => {
     const [selectedNodes, { toggle, has, reset }] = useSet(new Set([]));
     const [showSuccess, setshowSuccess] = useState(false);
-    const unreachableNodes = nodes.filter(n => n.status === "unreachable");
+    const unreachableNodes = Object.values(nodes).filter(n => n.status === "unreachable");
 
     useEffect(() => {
         if (isSuccess) {
