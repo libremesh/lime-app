@@ -6,7 +6,7 @@ import { useEffect, useState } from 'preact/hooks';
 import { useSet } from 'react-use';
 import { useMarkNodesAsGone, useNetworkNodes } from 'plugins/lime-plugin-network-nodes/src/networkNodesQueries'
 import style from './deleteNodesStyle.less';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro'; 
 
 export const DeleteNodesPage_ = ({ nodes, onDelete, isSubmitting, isSuccess }) => {
     const [selectedNodes, { toggle, has, reset }] = useSet(new Set([]));
@@ -26,13 +26,17 @@ export const DeleteNodesPage_ = ({ nodes, onDelete, isSubmitting, isSuccess }) =
     return (
         <div class="d-flex flex-column flex-grow-1 overflow-auto ">
             <div class="d-flex flex-column flex-grow-1 overflow-auto container container-padded">
-                <h4>{I18n.t("Delete Nodes")}</h4>
+                <h4><Trans>Delete Nodes</Trans></h4>
                 {unreachableNodes.length > 0 &&
-                    <p>{I18n.t("Select the nodes which no longer belong to the network and "
-                        + "delete them from the list of unreachable nodes")}</p>
+                    <p>
+                        <Trans>
+                            Select the nodes which no longer belong to the network and
+                            delete them from the list of unreachable nodes
+                        </Trans>
+                    </p>
                 }
                 {unreachableNodes.length === 0 &&
-                    <p>{I18n.t("There are no left unreachable nodes")}</p>
+                    <p><Trans>There are no left unreachable nodes</Trans></p>
                 }
                 <List>
                     {unreachableNodes.map(node =>
@@ -48,15 +52,16 @@ export const DeleteNodesPage_ = ({ nodes, onDelete, isSubmitting, isSuccess }) =
             </div>
             <div class={style.bottomAction}>
                 <span>
-                    {[selectedNodes.size,
-                    I18n.t('selected-nodes', { count: selectedNodes.size })
-                    ].join(' ')}
+                    <Plural value={Number(selectedNodes.size)}
+                        one="# node selected"
+                        other="# nodes selected"
+                    />
                 </span>
                 {!isSubmitting &&
                     <button class="ml-auto"
                         onClick={() => onDelete([...selectedNodes])}
                         disabled={selectedNodes.size < 1}>
-                        {I18n.t("Delete")}
+                        <Trans>Delete</Trans>
                     </button>
                 }
                 {isSubmitting &&
@@ -66,7 +71,7 @@ export const DeleteNodesPage_ = ({ nodes, onDelete, isSubmitting, isSuccess }) =
                 }
             </div>
             {showSuccess &&
-                <Toast type={"success"} text={I18n.t("Successfully deleted")} />
+                <Toast type={"success"} text={<Trans>Successfully deleted</Trans>} />
             }
         </div>
     )

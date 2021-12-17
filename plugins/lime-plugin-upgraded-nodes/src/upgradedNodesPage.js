@@ -8,7 +8,7 @@ import { ExpandableNode } from "plugins/lime-plugin-network-nodes/src/components
 import { useNetworkNodes } from "plugins/lime-plugin-network-nodes/src/networkNodesQueries";
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
 import Help from "components/help";
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro'; 
 
 function groupBy(xs, key) {
     return xs.reduce(function (rv, x) {
@@ -26,12 +26,12 @@ function groupBy(xs, key) {
 const PageHelp = () => (
     <div>
         <p>
-            <h5>{I18n.t("Upgraded Nodes")}</h5>
-            {I18n.t("These are the nodes running the last version of the Firmware")}
+            <h5><Trans>Upgraded Nodes</Trans></h5>
+            <Trans>These are the nodes running the last version of the Firmware</Trans>
         </p>
         <p>
-            <h5>{I18n.t("Not Upgraded Nodes")}</h5>
-            {I18n.t("These are the nodes that need to be upgraded to the last version of the Firmware")}
+            <h5><Trans>Not Upgraded Nodes</Trans></h5>
+            <Trans>These are the nodes that need to be upgraded to the last version of the Firmware</Trans>
         </p>
     </div>
 );
@@ -40,8 +40,8 @@ const PageTabs = ({ nodes, ...props }) => {
     const nUpgraded = nodes.filter(n => n.group === "upgraded").length;
     const nNotUpgraded = nodes.filter(n => n.group === "not_upgraded").length;
     const tabs = [
-        { key: 'upgraded', repr: I18n.t('Upgraded (%{howMany})', { howMany: nUpgraded }) },
-        { key: 'not_upgraded', repr: I18n.t('Not Upgraded (%{howMany})', { howMany: nNotUpgraded }) },
+        { key: 'upgraded', repr: <Trans>Upgraded ({nUpgraded})</Trans>},
+        { key: 'not_upgraded', repr: <Trans>Not Upgraded ({nNotUpgraded})</Trans>},
     ];
     return <Tabs tabs={tabs} {...props} />
 }

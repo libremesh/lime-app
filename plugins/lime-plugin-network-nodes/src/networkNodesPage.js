@@ -5,7 +5,7 @@ import { Loading } from 'components/loading';
 import { ExpandableNode } from './components/expandableNode';
 import style from './networkNodesStyle.less';
 import { useState } from 'preact/hooks';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro'; 
 
 export const _NetworkNodes = ({ nodes, isLoading, unfoldedNode, onUnfold }) => {
     if (isLoading) {
@@ -13,7 +13,7 @@ export const _NetworkNodes = ({ nodes, isLoading, unfoldedNode, onUnfold }) => {
     }
     return (
         <div class="d-flex flex-column flex-grow-1 overflow-auto">
-            <div class={style.title}>{I18n.t("Network Nodes")}</div>
+            <div class={style.title}><Trans>Network Nodes</Trans></div>
             <List>
                 {nodes.map((node) =>
                     <ExpandableNode key={node.hostname} 

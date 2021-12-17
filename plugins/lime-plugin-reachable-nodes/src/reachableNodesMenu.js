@@ -1,7 +1,7 @@
 import { h } from 'preact';
 
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro'; 
 
 export const ReachableNodesMenu = () => (
-	<a href={'#/reachablenodes'}>{I18n.t('Reachable Nodes')}</a>
+	<a href={'#/reachablenodes'}><Trans>Reachable Nodes</Trans></a>
 );

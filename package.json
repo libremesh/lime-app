@@ -85,7 +85,6 @@
     "leaflet.gridlayer.googlemutant": "0.13.4",
     "preact": "10.5.7",
     "preact-cli": "3.0.0",
-    "preact-i18nline": "2.0.0",
     "preact-router": "3.2.1",
     "react-hook-form": "6.9.2",
     "react-query": "2.23.1",

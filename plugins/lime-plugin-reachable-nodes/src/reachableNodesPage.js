@@ -6,22 +6,28 @@ import { List } from "components/list";
 import { ExpandableNode } from "plugins/lime-plugin-network-nodes/src/components/expandableNode";
 import { useNetworkNodes } from "plugins/lime-plugin-network-nodes/src/networkNodesQueries";
 import Help from "components/help";
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro'; 
 
 const PageHelp = () => (
     <div>
         <p>
-            <h5>{I18n.t("Reachable Nodes")}</h5>
-            {I18n.t("These are the nodes that can be reached from your node, " +
-                "i.e. there is a working path from your node to each of them.")}
+            <h5><Trans>Reachable Nodes</Trans></h5>
+            <Trans>
+                These are the nodes that can be reached from your node,
+                i.e. there is a working path from your node to each of them.
+            </Trans>
             <br/>
-            {I18n.t("This information is synced periodically " +
-                "and can be outdated by some minutes")}
+            <Trans>
+                This information is synced periodically
+                and can be outdated by some minutes.
+            </Trans>
         </p>
         <p>
-            <h5>{I18n.t("Unreachable Nodes")}</h5>
-            {I18n.t("These are the nodes that can't be reached from your node, " +
-                "it is possible that they are not turned on or a link to reach them is down.")}
+            <h5><Trans>Unreachable Nodes</Trans></h5>
+            <Trans>
+                These are the nodes that can't be reached from your node,
+                it is possible that they are not turned on or a link to reach them is down.
+            </Trans>
         </p>
     </div>
 );
@@ -30,8 +36,8 @@ const PageTabs = ({ nodes, ...props }) => {
     const nReachable = Object.values(nodes).filter(n => n.status === "recently_reachable").length;
     const nUnreachable = Object.values(nodes).filter(n => n.status === "unreachable").length;
     const tabs = [
-        { key: 'recently_reachable', repr: I18n.t('Reachable (%{howMany})', { howMany: nReachable }) },
-        { key: 'unreachable', repr: I18n.t('Unreachable (%{howMany})', { howMany: nUnreachable }) },
+        { key: 'recently_reachable', repr: <Trans>Reachable ({nReachable}) </Trans>},
+        { key: 'unreachable', repr: <Trans>Unreachable ({nUnreachable}) </Trans>},
     ];
     return <Tabs tabs={tabs} {...props} />
 }
