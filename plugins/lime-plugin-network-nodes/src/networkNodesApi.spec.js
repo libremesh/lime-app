@@ -1,10 +1,9 @@
 import { getNodes, markNodesAsGone } from './networkNodesApi'
 import api from 'utils/uhttpd.service';
-import { of } from 'rxjs';
 jest.mock('utils/uhttpd.service')
 
 beforeEach(() => {
-    api.call.mockImplementation(() => of({ status: 'ok' }))
+    api.call.mockImplementation(async () => ({ status: 'ok' }))
 })
 
 describe('getNodes', () => {
@@ -28,20 +27,20 @@ describe('getNodes', () => {
                 fw_version: 'LibreRouterOS 1.4'
             }
         };
-        api.call.mockImplementation(() => of({ status: 'ok', nodes }));
+        api.call.mockImplementation(async () => ({ status: 'ok', nodes }));
         expect(await getNodes()).toEqual(nodes);
     });
 });
 
 describe('markNodesAsGone', () => {
     it('calls the expected endpoint', async () => {
-        api.call.mockImplementation(() => of({ status: 'ok' }))
+        api.call.mockImplementation(async () => ({ status: 'ok' }));
         await markNodesAsGone(['node1']);
         expect(api.call).toBeCalledWith('network-nodes', 'mark_nodes_as_gone', { hostnames: ['node1'] })
     })
 
     it('resolve to hostnames passed as parameters on success', async() => {
-        api.call.mockImplementation(() => of({status: 'ok'}))
+        api.call.mockImplementation(async () => ({status: 'ok'}));
         const result = await markNodesAsGone(['node1', 'node2'])
         expect(result).toEqual(['node1', 'node2'])
     })
