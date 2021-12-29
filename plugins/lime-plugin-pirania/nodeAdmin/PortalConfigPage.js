@@ -39,6 +39,27 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                 <p>
                     <a href="#" onClick={routeToEditor}><Trans>Edit wellcome screen</Trans> </a>
                 </p>
+                <h4><Trans>Access vouchers</Trans></h4>
+                <p>
+                    <Trans>
+                        Vouchers can be used to limit access
+                        through the Community Portal to those who have
+                        an authorization code
+                    </Trans>
+                </p>
+                <div class={switchStyle.toggles}>
+                    <input type="checkbox"
+                        name="with_vouchers"
+                        id="with_vouchers"
+                        ref={register()}
+                    />
+                    <label htmlFor="with_vouchers"><Trans>Use vouchers for access</Trans></label>
+                </div>
+                {config?.with_vouchers &&
+                    <p>
+                        <a href="#" onClick={() => route('/access')}><Trans>Manage Vouchers</Trans></a>
+                    </p>  
+                }
             </form>
             <div class="d-flex">
                 <div class="ml-auto">

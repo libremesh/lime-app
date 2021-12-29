@@ -25,6 +25,10 @@ msgstr ""
 msgid "Access Vouchers"
 msgstr "Access Vouchers"
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:42
+msgid "Access vouchers"
+msgstr "Access vouchers"
+
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
 msgid "Activate Portal in Community AP"
 msgstr "Activate Portal in Community AP"
@@ -175,7 +179,7 @@ msgid "Community Logo"
 msgstr "Community Logo"
 
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:22
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:66
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:87
 msgid "Community Portal"
 msgstr "Community Portal"
 
@@ -479,6 +483,10 @@ msgstr ""
 msgid "Main Text"
 msgstr "Main Text"
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:60
+msgid "Manage Vouchers"
+msgstr "Manage Vouchers"
+
 #: plugins/lime-plugin-locate/src/locateMenu.js:6
 msgid "Map"
 msgstr ""
@@ -684,7 +692,7 @@ msgstr ""
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
 #: plugins/lime-plugin-node-admin/src/screens/password.js:51
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:29
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:47
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:68
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:28
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:79
 msgid "Save"
@@ -923,6 +931,10 @@ msgstr ""
 msgid "Uptime"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:56
+msgid "Use vouchers for access"
+msgstr "Use vouchers for access"
+
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:65
 msgid "Visit"
 msgstr ""
@@ -947,6 +959,10 @@ msgstr "Voucher group description"
 #: plugins/lime-plugin-pirania/src/screens/voucherList.js:43
 msgid "Voucher list"
 msgstr "Voucher list"
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:44
+msgid "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
+msgstr "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:110
 msgid "Wellcome Screen"

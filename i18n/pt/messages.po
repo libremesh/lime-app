@@ -25,6 +25,10 @@ msgstr ""
 msgid "Access Vouchers"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:42
+msgid "Access vouchers"
+msgstr ""
+
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
 msgid "Activate Portal in Community AP"
 msgstr ""
@@ -175,7 +179,7 @@ msgid "Community Logo"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:22
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:66
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:87
 msgid "Community Portal"
 msgstr ""
 
@@ -479,6 +483,10 @@ msgstr "Entrar"
 msgid "Main Text"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:60
+msgid "Manage Vouchers"
+msgstr ""
+
 #: plugins/lime-plugin-locate/src/locateMenu.js:6
 msgid "Map"
 msgstr "Mapa"
@@ -684,7 +692,7 @@ msgstr "Revertendo para versão prévia"
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
 #: plugins/lime-plugin-node-admin/src/screens/password.js:51
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:29
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:47
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:68
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:28
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:79
 msgid "Save"
@@ -923,6 +931,10 @@ msgstr "Carregar uma imagem de firmware do seu dispositivo"
 msgid "Uptime"
 msgstr "Tempo de atividade"
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:56
+msgid "Use vouchers for access"
+msgstr ""
+
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:65
 msgid "Visit"
 msgstr "Visitar"
@@ -946,6 +958,10 @@ msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/voucherList.js:43
 msgid "Voucher list"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:44
+msgid "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:110
