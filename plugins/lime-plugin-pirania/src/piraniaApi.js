@@ -5,7 +5,7 @@ export const getPortalConfig = () =>
     api.call('pirania', 'get_portal_config', {});
 
 export const setPortalConfig = (config) =>
-    api.call('pirania', 'set_portal_config', { ...config });
+    api.call('pirania', 'set_portal_config', config);
 
 export const getPortalContent = () =>
     api.call('pirania', 'get_portal_page_content', {});

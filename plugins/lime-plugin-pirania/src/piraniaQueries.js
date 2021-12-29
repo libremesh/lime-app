@@ -21,7 +21,11 @@ export const usePortalContent = () =>
     useQuery(['pirania', 'get_portal_page_content'], getPortalContent);
 
 export const useSetPortalContent = () =>
-    useMutation(setPortalContent);
+    useMutation(setPortalContent, {
+		onSuccess: () => queryCache.invalidateQueries(
+			['pirania', 'get_portal_page_content']
+		)
+	});
 
 export const useLogoCompression = () =>
     useQuery(['local-service', 'logo_compression']);
