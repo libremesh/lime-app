@@ -18,12 +18,13 @@ export const Route = ({ path, children, ...childrenProps}) => {
 	return childrenWithProps;
 };
 
-export const CommunityProtectedRoute = ({ path, children }) => {
+export const CommunityProtectedRoute = ({ path, children, ...childrenProps }) => {
 	const { data: session } = useSession();
+	const childrenWithProps = cloneElement(children, { ...childrenProps});
 	if (session.username !== 'root') {
 		return <Route path={path}><SharedPasswordLogin /></Route>;
 	}
-	return <Route path={path}>{children}</Route>;
+	return childrenWithProps
 };
 
 export const Redirect = ({ to }) => {

@@ -5,6 +5,7 @@ import { useBoardData } from 'utils/queries';
 import { List } from 'components/list';
 import { route } from 'preact-router';
 import { Trans } from '@lingui/macro';
+import { CommunityPortalConfig } from 'plugins/lime-plugin-pirania/nodeAdmin';
 
 const Hostname = () => {
     const { data: boardData, isLoading } = useBoardData();
@@ -43,6 +44,7 @@ const NodeAdmin = () => {
                 <Hostname />
                 <ApPassword />
                 <RoamingAP />
+                <CommunityPortalConfig />
             </List>
         </div>
     );

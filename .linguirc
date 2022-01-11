@@ -6,10 +6,10 @@
    }],
    "format": "po",
    "extractBabelOptions": {
-       presets: ["preact"]
+       "presets": ["preact"]
    },
    "sourceLocale": "en",
    "fallbackLocales": {
-      default: "en"
+      "default": "en"
    }
 }

@@ -7,10 +7,12 @@ import queryCache from 'utils/queryCache';
 import NodeAdmin from './src/nodeAdminPage';
 import { getAPsData } from './src/nodeAdminApi';
 import { getBoardData } from 'utils/api';
+import { getPortalConfig } from 'plugins/lime-plugin-pirania/src/piraniaApi';
 import { route } from 'preact-router';
 
 jest.mock('./src/nodeAdminApi');
 jest.mock('utils/api');
+jest.mock('plugins/lime-plugin-pirania/src/piraniaApi');
 
 describe('nodeAdmin', () => {
     beforeEach(() => {
@@ -21,6 +23,7 @@ describe('nodeAdmin', () => {
         getBoardData.mockImplementation(async () => ({
             hostname: 'node-hostname'
         }));
+        getPortalConfig.mockImplementation(async() => 'some config');
     });
 
     afterEach(() => {
@@ -89,4 +92,8 @@ describe('nodeAdmin', () => {
         expect(route).toHaveBeenCalledWith('/nodeadmin/roaming-ap');
     });
 
+    it('shows config for Community Portal', async () => {
+        render(<NodeAdmin />);
+        expect(await screen.findByTestId('portal-config-item')).toBeInTheDocument();
+    })
 });

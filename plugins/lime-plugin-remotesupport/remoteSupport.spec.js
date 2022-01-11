@@ -1,10 +1,9 @@
 import { h } from 'preact';
-import { render as tlRender, fireEvent, cleanup, act, screen } from '@testing-library/preact';
+import { fireEvent, cleanup, act, screen } from '@testing-library/preact';
 import '@testing-library/jest-dom';
-
+import { render } from "utils/test_utils";
 import RemoteSupportPage from './src/remoteSupportPage';
 import { getSession, openSession, closeSession } from './src/remoteSupportApi';
-import { render } from 'utils/test_utils';
 import queryCache from 'utils/queryCache';
 
 jest.mock('./src/remoteSupportApi');

@@ -44,4 +44,5 @@ export default function (config, env, helpers) {
 	config.resolve.alias.components = path.resolve(__dirname, 'src/components');
 	config.resolve.alias.containers = path.resolve(__dirname, 'src/containers');
 	config.resolve.alias.utils = path.resolve(__dirname, 'src/utils');
+	config.resolve.alias.plugins = path.resolve(__dirname, 'plugins');
 }

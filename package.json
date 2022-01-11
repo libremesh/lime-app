@@ -10,7 +10,7 @@
     "start:production": "npm run -s serve",
     "start:development": "npm run -s dev",
     "build": "preact build --no-prerender",
-    "prebuild:production": "lingui compile",
+    "prebuild:production": "lingui extract; lingui compile",
     "build:production": "preact build --no-prerender --production --no-esm && rm build/*.map",
     "serve": "preact build && serve build --single",
     "dev": "preact watch",
@@ -79,7 +79,9 @@
   "dependencies": {
     "@lingui/detect-locale": "^3.12.1",
     "@lingui/react": "^3.12.1",
+    "compressorjs": "^1.1.1",
     "history": "4.7.2",
+    "jest-each": "^24.9.0",
     "leaflet.gridlayer.googlemutant": "0.13.4",
     "preact": "10.5.7",
     "preact-cli": "3.0.0",
@@ -95,7 +97,8 @@
     "redux-observable": "1.2.0",
     "rxjs": "6.5.4",
     "simple-color-scale": "1.0.1",
-    "skeleton-less": "2.0.1"
+    "skeleton-less": "2.0.1",
+    "timeago.js": "^4.0.2"
   },
   "husky": {
     "hooks": {
