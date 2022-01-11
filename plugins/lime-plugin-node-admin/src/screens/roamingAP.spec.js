@@ -9,9 +9,8 @@ import { render } from 'utils/test_utils';
 import queryCache from 'utils/queryCache';
 
 import RoamingAPPage from './roamingAP';
-import { getCommunityName } from 'utils/api';
 
-import { setupRoamingAP, getWifiData } from '../nodeAdminApi';
+import { setupRoamingAP, getAPsData } from '../nodeAdminApi';
 
 jest.mock('utils/api');
 jest.mock('../nodeAdminApi');
@@ -24,9 +23,8 @@ const findSubmitButton = async () =>
 
 describe('roaming ap config', () => {
     beforeEach(() => {
-        getCommunityName.mockImplementation(async () => 'QuintanaLibre');
-        getWifiData.mockImplementation(async () =>
-            ({ community_ap: { community: { enabled: true }, enabled: true, ssid: 'quintana-libre.org.ar' } })
+        getAPsData.mockImplementation(async () =>
+            ({ community_ap: { community: { enabled: true }, enabled: true, ssid: 'QuintanaLibre' } })
         );
         setupRoamingAP.mockImplementation(async () => null);
     });
@@ -34,37 +32,37 @@ describe('roaming ap config', () => {
 
     afterEach(() => {
         cleanup();
-        getWifiData.mockClear();
+        getAPsData.mockClear();
         setupRoamingAP.mockClear();
         act(() => queryCache.clear());
     });
 
     it('shows a text explaining the config', async () => {
         render(<RoamingAPPage />);
-        expect(await screen.findByText('Opens the "quintana-libre.org.ar" AP in this node')).toBeVisible();
+        expect(await screen.findByText('Opens the "QuintanaLibre" AP in this node')).toBeVisible();
         expect(await screen.findByText('The Community AP is present in every node allowing people to ' +
         'move around the network territory without losing connection')).toBeVisible();
     });
 
     it('shows the default value for the community, case disabled', async () => {
-        getWifiData.mockImplementation(async () =>
-            ({ community_ap: { community: { enabled: false }, enabled: true } })
+        getAPsData.mockImplementation(async () =>
+            ({ community_ap: { community: { enabled: false }, enabled: true, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
         expect(await screen.findByText('It is disabled by default in QuintanaLibre')).toBeVisible();
     });
 
     it('shows the default value for the community case enabled', async () => {
-        getWifiData.mockImplementation(async () =>
-            ({ community_ap: { community: { enabled: true }, enabled: true } })
+        getAPsData.mockImplementation(async () =>
+            ({ community_ap: { community: { enabled: true }, enabled: true, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
         expect(await screen.findByText('It is enabled by default in QuintanaLibre')).toBeVisible();
     });
 
     it('shows an unchecked switch for enabling the ap when it is disabled in the node', async () => {
-        getWifiData.mockImplementation(async () =>
-            ({ community_ap: { community: { enabled: true }, enabled: false } })
+        getAPsData.mockImplementation(async () =>
+            ({ community_ap: { community: { enabled: true }, enabled: false, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
         expect(await findCheckbox()).not.toBeChecked();
@@ -76,8 +74,8 @@ describe('roaming ap config', () => {
     });
 
     it('calls api endpoint for disabling ap when switched off', async () => {
-        getWifiData.mockImplementation(async () =>
-            ({ community_ap: { community: { enabled: true }, enabled: true, ssid: 'quintana-libre.org.ar' } })
+        getAPsData.mockImplementation(async () =>
+            ({ community_ap: { community: { enabled: true }, enabled: true, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
         fireEvent.click(await findCheckbox());
@@ -87,11 +85,12 @@ describe('roaming ap config', () => {
                 enabled: false
             });
         });
+        expect(await screen.findByTestId('changes-need-reboot')).toBeVisible();
     });
 
     it('calls api endpoint for disabling ap when switched on', async () => {
-        getWifiData.mockImplementation(async () =>
-            ({ community_ap: { community: { enabled: true }, enabled: false, ssid: 'quintana-libre.org.ar' } })
+        getAPsData.mockImplementation(async () =>
+            ({ community_ap: { community: { enabled: true }, enabled: false, ssid: 'QuintanaLibre' } })
         );
         render(<RoamingAPPage />);
         fireEvent.click(await findCheckbox());
@@ -101,5 +100,6 @@ describe('roaming ap config', () => {
                 enabled: true
             });
         });
+        expect(await screen.findByTestId('changes-need-reboot')).toBeVisible();
     });
 });

@@ -17,7 +17,6 @@ const Hostname = () => {
 }
 
 const ApPassword = () => {
-<<<<<<< HEAD
     const { data: wifiData, isLoading } = useWifiData();
     const has_password = wifiData && wifiData.node_ap.has_password;
     return <Config title={<Trans>Wifi Password</Trans>}
@@ -33,21 +32,6 @@ const RoamingAP = () => {
     return <Config title={<Trans>Community Roaming AP</Trans>}
         value={nodeEnabled === true ? <Trans>Enabled</Trans> : <Trans>Disabled</Trans>}
         subtitle={<Trans>Opens the "{apSsid}" AP in this node</Trans>}
-=======
-    const { data: wifiData } = useWifiData();
-    const has_password = wifiData && wifiData.node_ap.has_password;
-    return <Config title={I18n.t('Wifi Password')}
-        value={has_password ? '********' : I18n.t('No password')}
-        onClick={() => route('/nodeadmin/wifipassword')} />
-}
-
-const RoamingAP = () => {
-    const { data: wifiData } = useWifiData();
-    const nodeEnabled = wifiData?.community_ap.enabled;
-    return <Config title={I18n.t('Community Roaming AP')} 
-        value={nodeEnabled === true ? I18n.t('Enabled'): I18n.t('Disabled')}
-        subtitle={I18n.t('Opens the "%{ap_ssid}" AP in this node', {ap_ssid: wifiData?.community_ap.ssid})}
->>>>>>> improvement(nodeAdmin): adapt endpoints to _cfg_overrides api
         onClick={() => route('/nodeadmin/roaming-ap')}
         isLoading={isLoading}
     />
@@ -69,11 +53,8 @@ const NodeAdmin = () => {
                 <Hostname />
                 <ApPassword />
                 <RoamingAP />
-<<<<<<< HEAD
                 <CommunityPortalConfig />
-=======
                 <Hotspot />
->>>>>>> chore(hotpost): move to node configs
             </List>
         </div>
     );

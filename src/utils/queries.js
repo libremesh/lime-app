@@ -36,13 +36,6 @@ export function useBoardData() {
 	});
 }
 
-export function useCommunityName() {
-	return useQuery(['lime-utils', 'get_community_name'], getCommunityName, {
-		initialData: 'LibreMesh.org',
-		initialStale: true
-	});
-}
-
 export function useCommunitySettings() {
 	return useQuery(['lime-utils', 'get_community_settings'], getCommunitySettings, {
 		initialData: DEFAULT_COMMUNITY_SETTINGS,
