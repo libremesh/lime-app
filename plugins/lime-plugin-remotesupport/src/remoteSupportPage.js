@@ -42,13 +42,13 @@ const RemoteSupportPage = () => {
 export const WithoutInternet_ = () =>
 	(
 		<div class="d-flex flex-grow-1 flex-column container container-padded">
-			<h4>{I18n.t("Ask for remote support")}</h4>
-			<p class="bg-error p-05">{I18n.t('Your node has no internet connection')} </p>
+			<h4><Trans>Ask for remote support</Trans></h4>
+			<p class="bg-error p-05"><Trans>Your node has no internet connection</Trans> </p>
 			<p>
-				<div>{I18n.t('To enable remote access an internet connection is needed')} </div>
-				<div>{I18n.t('You can share your mobile connection to the node by setting up a mobile hotspot')}</div>
+				<div><Trans>To enable remote access an internet connection is needed</Trans> </div>
+				<div><Trans>You can share your mobile connection to the node by setting up a mobile hotspot</Trans></div>
 			</p>
-			<button onClick={() => route('/nodeadmin/hotspot')}>{I18n.t('Setup Hotspot')}</button>
+			<button onClick={() => route('/nodeadmin/hotspot')}><Trans>Setup Hotspot</Trans></button>
 		</div>
 	)
 

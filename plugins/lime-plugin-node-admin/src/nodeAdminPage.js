@@ -25,11 +25,12 @@ const ApPassword = () => {
         isLoading={isLoading} />
 }
 
-const RoamingAP = () => {
+export const RoamingAP = () => {
     const { data: wifiData, isLoading } = useWifiData();
     const nodeEnabled = wifiData?.community_ap.enabled;
     const apSsid = wifiData?.community_ap.ssid;
-    return <Config title={<Trans>Community Roaming AP</Trans>}
+    return <Config data-testid={'roamingAP-config-item'}
+        title={<Trans>Community Roaming AP</Trans>}
         value={nodeEnabled === true ? <Trans>Enabled</Trans> : <Trans>Disabled</Trans>}
         subtitle={<Trans>Opens the "{apSsid}" AP in this node</Trans>}
         onClick={() => route('/nodeadmin/roaming-ap')}
@@ -37,11 +38,14 @@ const RoamingAP = () => {
     />
 }
 
-const Hotspot = () => {
-    const { data } = useHotspotData();
-    return <Config title={I18n.t('Connect to a Mobile Hotspot')}
-        value={data.enabled === true ? I18n.t('Enabled'): I18n.t('Disabled')}
+export const Hotspot = () => {
+    const { data, isLoading } = useHotspotData();
+    const enabled = data?.enabled;
+    return <Config data-testid={'hotspot-config-item'}
+        title={<Trans>Connect to a Mobile Hotspot</Trans>}
+        value={enabled ? <Trans>Enabled</Trans> : <Trans>Disabled</Trans>}
         onClick={() => route('/nodeadmin/hotspot')}
+        isLoading={isLoading}
     />
 }
 

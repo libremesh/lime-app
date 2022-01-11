@@ -2,7 +2,7 @@ import { h } from "preact";
 import Loading from 'components/loading';
 import { useHotspotData } from '../hotspotQueries';
 import { useCheckInternet } from 'utils/queries';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const TestBox = ({
     title, testPassed, isFetching, onClick, testId, children,
@@ -35,13 +35,13 @@ const TestBox = ({
 export const ConnectionToThePhone = () => {
     const { data, isFetching, refetch } = useHotspotData();
     return (
-        <TestBox title={I18n.t('Connection to the cellphone')} isFetching={isFetching}
+        <TestBox title={<Trans>Connection to the cellphone</Trans>} isFetching={isFetching}
             testPassed={data?.connected} onClick={refetch}
             testId='hotspot-phone-test'
         >
             {data?.connected === true &&
                 <div class="d-flex flex-grow-1 align-items-baseline">
-                    <div>{I18n.t('Connected')}</div>
+                    <div><Trans>Connected</Trans></div>
                     <div class="ml-auto">
                         <span class='font-size-2'>{data.signal}</span>
                         <span>dBm</span>
@@ -50,7 +50,7 @@ export const ConnectionToThePhone = () => {
             }
             {data?.connected === false &&
                 <div class="d-flex">
-                    <div>{I18n.t('Not Connected')}</div>
+                    <div><Trans>Not Connected</Trans></div>
                 </div>
             }
         </TestBox>
@@ -60,18 +60,18 @@ export const ConnectionToThePhone = () => {
 export const ConnectionToTheInternet = () => {
     const { data, isFetching, refetch } = useCheckInternet();
     return (
-        <TestBox title={I18n.t('Connection to the internet')} isFetching={isFetching}
+        <TestBox title={<Trans>Connection to the internet</Trans>} isFetching={isFetching}
             testPassed={data?.connected} onClick={refetch}
             testId='hotspot-internet-test'
         >
             {data?.connected === true &&
                 <div class="d-flex">
-                    <div>{I18n.t('Connected')}</div>
+                    <div><Trans>Connected</Trans></div>
                 </div>
             }
             {data?.connected === false &&
                 <div class="d-flex">
-                    <div>{I18n.t('Not Connected')}</div>
+                    <div><Trans>Not Connected</Trans></div>
                 </div>
             }
         </TestBox>

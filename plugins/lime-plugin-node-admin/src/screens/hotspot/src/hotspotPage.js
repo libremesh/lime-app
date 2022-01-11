@@ -10,7 +10,7 @@ import { useEffect } from "preact/hooks";
 import Loading from 'components/loading';
 import { Collapsible } from 'components/collapsible';
 import switchStyle from 'components/switch';
-import I18n from 'i18n-js';
+import { Trans } from '@lingui/macro';
 
 const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting, waitingRadioReset }) => {
     const { enabled } = hotspotData;
@@ -27,7 +27,7 @@ const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting, waitingRadioRese
                         ref={register()}
                     />
                     <label htmlFor="enabled">
-                        {I18n.t("Connect to a Mobile Hotspot")}
+                        <Trans>Connect to a Mobile Hotspot</Trans>
                     </label>
                 </div>
             </form>
@@ -35,7 +35,7 @@ const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting, waitingRadioRese
                 <div class="ml-auto">
                     {(!isSubmitting && !waitingRadioReset) &&
                         <button onClick={handleSubmit(onSubmit)} class="ml-auto" >
-                            {I18n.t("Save")}
+                            <Trans>Save</Trans>
                         </button>
                     }
                     {(isSubmitting || waitingRadioReset) &&
@@ -47,27 +47,39 @@ const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting, waitingRadioRese
     )
 }
 
-const CellPhoneInstructions = () => (
-    <div>
-        <ol>
-            <li>{I18n.t('Get an additional cell phone to the one you are currently using' +
-                ' that has a mobile data connection')}</li>
-            <li>{I18n.t('With this second cell phone create an access point or hotspot' +
-                ' with this data:')}
-            </li>
-        </ol>
-        <div class='container-center'>
-            <div><b>{I18n.t('Network Name: %{networkName}', { networkName: "internet" })}</b></div>
-            <div><b>{I18n.t('Password: %{password}', { password: "internet" })}</b></div>
-            <div><b>{I18n.t('Encryption: %{encryptionMethod}', { encryptionMethod: "WPA2 PSK" })}</b></div>
+const CellPhoneInstructions = () => {
+    const ssid = 'internet';
+    const password = 'internet';
+    const encryptionMethod = 'WPA2 PSK';
+    return (
+        <div>
+            <ol>
+                <li>
+                    <Trans>
+                        Get an additional cell phone to the one you are currently using
+                        that has a mobile data connection
+                    </Trans>
+                </li>
+                <li>
+                    <Trans>
+                        With this second cell phone create an access point or hotspot
+                        with this data:
+                    </Trans>
+                </li>
+            </ol>
+            <div class='container-center'>
+                <div><b><Trans>Network Name: {ssid}</Trans></b></div>
+                <div><b><Trans>Password: {password}</Trans></b></div>
+                <div><b><Trans>Encryption: {encryptionMethod}</Trans></b></div>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 const WaitingRadioResetMessage = () => (
     <div class="d-flex flex-column text-right">
-        <div>{I18n.t('The radio needs to be restarted...')}</div>
-        <div>{I18n.t('Please stay connected to the wifi network')}</div>
+        <div><Trans>The radio needs to be restarted...</Trans></div>
+        <div><Trans>Please stay connected to the wifi network</Trans></div>
     </div>
 );
 
@@ -75,23 +87,30 @@ const SubmitError = ({ error }) => (
     <div>
         {error && error === 'hotspot ap not found' &&
             <span class="text-danger">
-                {I18n.t("The hotspot couldn’t be found," +
-                    " please review the instructions above.")}
+                <Trans>
+                    The hotspot couldn’t be found,
+                    please review the instructions above.
+                </Trans>
             </span>
         }
         {error && error === 'radio has mesh ifaces' &&
             <span class="text-danger">
-                {I18n.t("Cannot use Radio 0," +
-                    " it's being used for mesh links")}
+                <Trans>
+                    Cannot use Radio 0, it's being used for mesh links
+                </Trans>
             </span>
         }
     </div>
 )
 const HotspotPage_ = ({ submitError, hotspotData, onSubmit, isSubmitting, waitingRadioReset }) => (
     <div class='d-flex flex-column container container-padded'>
-        <p>{I18n.t('Share your mobile connection by connecting' +
-            ' the node to a mobile hotspost')}</p>
-        <Collapsible initCollapsed={true} title={I18n.t('Cellphone Instructions')}>
+        <p>
+            <Trans>
+                Share your mobile connection by connecting
+                the node to a mobile hotspost
+            </Trans>
+        </p>
+        <Collapsible initCollapsed={true} title={<Trans>Cellphone Instructions</Trans>}>
             <CellPhoneInstructions />
         </Collapsible>
         {submitError && <SubmitError error={submitError} />}
@@ -108,7 +127,7 @@ const HotspotPage_ = ({ submitError, hotspotData, onSubmit, isSubmitting, waitin
 
 const HotspotPage = () => {
     const { data: hotspotData, isLoading, refetch } = useHotspotData();
-    const [toggle, { error: submitError, isError, isLoading: isSubmitting, isSuccess}] = useToggleHotspot();
+    const [toggle, { error: submitError, isError, isLoading: isSubmitting, isSuccess }] = useToggleHotspot();
     const waitingRadioReset = hotspotData?.waitingForRadioReset;
 
     useEffect(() => {
@@ -126,7 +145,7 @@ const HotspotPage = () => {
     return (
         <ConfigPageLayout {...{
             isLoading, isSuccess, isError,
-            title: I18n.t("Connect to a Mobile Hotspot")
+            title: <Trans>Connect to a Mobile Hotspot</Trans>
         }}>
             <HotspotPage_ {...{ submitError, hotspotData, onSubmit, isSubmitting, waitingRadioReset }} />
         </ConfigPageLayout >

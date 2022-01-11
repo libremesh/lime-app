@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { render } from 'utils/test_utils';
 import queryCache from 'utils/queryCache';
 
-import NodeAdmin from './src/nodeAdminPage';
+import NodeAdmin, { RoamingAP, Hotspot } from './src/nodeAdminPage';
 import { getAPsData } from './src/nodeAdminApi';
 import { getStatus as getHotspotStatus } from './src/screens/hotspot/src/hotspotApi';
 import { getBoardData } from 'utils/api';
@@ -26,7 +26,7 @@ describe('nodeAdmin', () => {
             hostname: 'node-hostname'
         }));
         getPortalConfig.mockImplementation(async() => 'some config');
-        getHotspotStatus.mockImplementantion(async() => ({
+        getHotspotStatus.mockImplementation(async() => ({
             enabled: false
         }));
     });
@@ -70,12 +70,41 @@ describe('nodeAdmin', () => {
         expect(route).toHaveBeenCalledWith('/nodeadmin/wifipassword');
     });
 
+    it('shows config for Community Portal', async () => {
+        render(<NodeAdmin />);
+        expect(await screen.findByTestId('portal-config-item')).toBeInTheDocument();
+    })
+
+    it('shows config for Roaming AP', async () => {
+        render(<NodeAdmin />);
+        expect(await screen.findByTestId('roamingAP-config-item')).toBeInTheDocument();
+    })
+
+    it('shows config for Hotspot', async () => {
+        render(<NodeAdmin />);
+        expect(await screen.findByTestId('hotspot-config-item')).toBeInTheDocument();
+    })
+});
+
+describe('nodeAdmin config for community roaming ap', () => {
+    beforeEach(() => {
+        getAPsData.mockImplementation(async () => ({
+            node_ap: { has_password: false },
+            community_ap: { community: { enabled: true }, enabled: true, ssid: 'quintana-libre.org.ar' },
+        }));
+    });
+
+    afterEach(() => {
+        cleanup();
+        act(() => queryCache.clear());
+    });
+
     it('show community roaming ap config when disabled', async () => {
         getAPsData.mockImplementation(async () => ({
             node_ap: { has_password: true },
             community_ap: { community: { enabled: true }, enabled: false, ssid: 'quintana-libre.org.ar' }
         }));
-        render(<NodeAdmin />);
+        render(<RoamingAP />);
         expect(await screen.findByText('Community Roaming AP')).toBeInTheDocument();
         expect(await screen.findByText('Opens the "quintana-libre.org.ar" AP in this node')).toBeInTheDocument();
         expect(await screen.findByText('Disabled')).toBeInTheDocument();
@@ -86,33 +115,42 @@ describe('nodeAdmin', () => {
             node_ap: { has_password: true },
             community_ap: { community: { enabled: true }, enabled: true }
         }));
-        render(<NodeAdmin />);
+        render(<RoamingAP />);
         expect(await screen.findByText('Community Roaming AP')).toBeInTheDocument();
         expect(await screen.findByText('Enabled')).toBeInTheDocument();
     });
 
     it('routes to community roaming ap screen when clicking on it', async () => {
-        render(<NodeAdmin />);
+        render(<RoamingAP />);
         fireEvent.click(await screen.findByText('Community Roaming AP'));
         expect(route).toHaveBeenCalledWith('/nodeadmin/roaming-ap');
     });
+})
 
-    it('shows config for Community Portal', async () => {
-        render(<NodeAdmin />);
-        expect(await screen.findByTestId('portal-config-item')).toBeInTheDocument();
-    })
-    it('shows hotspot disabled when disabled', () => {
-        render(<NodeAdmin />);
+describe('nodeAdmin config for hotspot', () => {
+    beforeEach(() => {
+        getHotspotStatus.mockImplementation(async() => ({
+            enabled: false
+        }));
+    });
+
+    afterEach(() => {
+        cleanup();
+        act(() => queryCache.clear());
+    });
+
+    it('shows hotspot disabled when disabled', async () => {
+        render(<Hotspot />);
         expect(await screen.findByText('Connect to a Mobile Hotspot')).toBeInTheDocument();
         expect(await screen.findByText('Disabled')).toBeInTheDocument();
     });
 
-    it('shows hotspot disabled when enabled', () => {
+    it('shows hotspot disabled when enabled', async () => {
         getHotspotStatus.mockImplementation(async () => ({
             enabled: true
         }));
-        render(<NodeAdmin />);
+        render(<Hotspot />);
         expect(await screen.findByText('Connect to a Mobile Hotspot')).toBeInTheDocument();
         expect(await screen.findByText('Enabled')).toBeInTheDocument();
     });
-});
+})
