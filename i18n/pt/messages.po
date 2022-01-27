@@ -83,7 +83,8 @@ msgstr ""
 msgid "Are you sure?"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:38
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:45
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:57
 msgid "Ask for remote support"
 msgstr "Pedir suporte remoto"
 
@@ -123,13 +124,21 @@ msgstr "Calculando o caminho da rede"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:47
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:66
 msgid "Cannot connect to the remote support server"
 msgstr "Não foi possível conectar ao servidor de suporte remoto"
 
 #: plugins/lime-plugin-locate/src/locatePage.js:163
 msgid "Cannot load map, check your internet connection"
 msgstr "Não foi possível carregar o mapa, verifique sua conexão"
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:98
+msgid "Cannot use Radio 0, it's being used for mesh links"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:113
+msgid "Cellphone Instructions"
+msgstr ""
 
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:56
 msgid "Change"
@@ -157,16 +166,16 @@ msgstr "Escolha um nome para a sua rede"
 msgid "Choose a shared password for network administration"
 msgstr "Escolha uma senha compartilhada para administração da rede"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:74
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:93
 msgid "Click at Close Session to end the remote support session. No one will be able to access your node with this token again"
 msgstr "Clique em Encerrar Sessão para finalizar a sessão de suporte remoto. Ninguém vai mais poder acessar seu nó usando essa chave novamente"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:69
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:88
 msgid "Click at Show Console to follow the remote support session."
 msgstr "Clique em Mostrar Console para acompanhar a sessão de suporte remoto."
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:73
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:75
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:92
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:94
 msgid "Close Session"
 msgstr "Encerrar Sessão"
 
@@ -183,7 +192,7 @@ msgstr ""
 msgid "Community Portal"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:31
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:33
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:54
 msgid "Community Roaming AP"
 msgstr ""
@@ -208,12 +217,31 @@ msgstr "Confirmar"
 msgid "Congratulations"
 msgstr "Parabéns"
 
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:45
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:30
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:148
+msgid "Connect to a Mobile Hotspot"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:44
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:69
+msgid "Connected"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:38
+msgid "Connection to the cellphone"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:63
+msgid "Connection to the internet"
+msgstr ""
+
 #: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:67
 #: plugins/lime-plugin-pirania/src/screens/voucherList.js:81
 msgid "Create"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:42
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:61
 msgid "Create Session"
 msgstr "Criar Sessão"
 
@@ -266,7 +294,8 @@ msgstr ""
 msgid "Device"
 msgstr "Dispositivo"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
 msgid "Disabled"
 msgstr ""
 
@@ -313,8 +342,13 @@ msgstr ""
 msgid "Enable Password"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
 msgid "Enabled"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:73
+msgid "Encryption: {encryptionMethod}"
 msgstr ""
 
 #: plugins/lime-plugin-metrics/src/components/box/index.js:71
@@ -368,6 +402,10 @@ msgstr "De"
 #: plugins/lime-plugin-metrics/src/metricsPage.js:71
 msgid "Full path metrics"
 msgstr "Métricas de caminho completo"
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:58
+msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
+msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradeCountdown.js:23
 msgid "Go!"
@@ -527,11 +565,15 @@ msgstr "Deve selecionar uma rede e um nome de host válido"
 msgid "Network Configuration"
 msgstr "Configurações de Rede"
 
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:71
+msgid "Network Name: {ssid}"
+msgstr ""
+
 #: plugins/lime-plugin-fbw/src/containers/Scan.js:106
 msgid "No network found, try realigning your node and rescanning."
 msgstr "Nenhuma rede encontrada, tente realinhar seu nó e rescaneie."
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:22
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:23
 msgid "No password"
 msgstr ""
 
@@ -541,14 +583,19 @@ msgid "No, cancel"
 msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:5
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:42
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:55
 msgid "Node Configuration"
 msgstr "Configurações do Nó"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:13
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:14
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:27
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:30
 msgid "Node Name"
+msgstr ""
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:53
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:74
+msgid "Not Connected"
 msgstr ""
 
 #: plugins/lime-plugin-notes/src/notesMenu.js:6
@@ -580,7 +627,7 @@ msgstr "Em seu rádio {radioNumber}"
 msgid "Only gateway"
 msgstr "Apenas gateway"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:33
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:35
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:56
 msgid "Opens the \"{apSsid}\" AP in this node"
 msgstr ""
@@ -602,6 +649,10 @@ msgstr "Perda de pacotes"
 msgid "Password"
 msgstr "Senha"
 
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:72
+msgid "Password: {password}"
+msgstr ""
+
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:51
 msgid "Permanent"
 msgstr ""
@@ -618,7 +669,11 @@ msgstr "Por favor, selecione um arquivo .bin ou .sh"
 msgid "Please select a file"
 msgstr "Por favor, selecione um arquivo"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:48
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:82
+msgid "Please stay connected to the wifi network"
+msgstr ""
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:67
 msgid "Please verify your internet connection"
 msgstr "Por favor verifique sua conexão com a Internet"
 
@@ -690,6 +745,7 @@ msgid "Reverting to previous version"
 msgstr "Revertendo para versão prévia"
 
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:38
 #: plugins/lime-plugin-node-admin/src/screens/password.js:51
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:29
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:68
@@ -759,13 +815,21 @@ msgstr "Configurando a rede"
 msgid "Setting up new password"
 msgstr "Configurando uma nova senha"
 
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:51
+msgid "Setup Hotspot"
+msgstr ""
+
 #: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:54
 msgid "Setup activation deadline"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:65
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:84
 msgid "Share the following command with whoever you want to give them access to your node"
 msgstr "Compartilhe o seguinte comando com quem queira dar acesso ao seu nó"
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:108
+msgid "Share your mobile connection by connecting the node to a mobile hotspost"
+msgstr ""
 
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:40
 msgid "Shared Password"
@@ -775,8 +839,8 @@ msgstr "Senha Compartilhada"
 msgid "Shared Password changed successfully"
 msgstr "Senha compartilhada alterada com sucesso"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:68
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:70
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:87
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:89
 msgid "Show Console"
 msgstr "Mostrar console"
 
@@ -821,6 +885,10 @@ msgstr "O download falhou"
 msgid "The firmware is being upgraded..."
 msgstr "O firmware está sendo atualizado."
 
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:90
+msgid "The hotspot couldn’t be found, please review the instructions above."
+msgstr ""
+
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:40
 msgid "The name should have at least 3 characters"
 msgstr ""
@@ -838,6 +906,10 @@ msgstr "A senha deve incluir."
 msgid "The passwords do not match!"
 msgstr "As senhas não conincidem!"
 
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:81
+msgid "The radio needs to be restarted..."
+msgstr ""
+
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:162
 msgid "The selected image is not valid for the target device"
 msgstr "A imagem selecionada não é válida para este dispositivo"
@@ -854,11 +926,11 @@ msgstr "A atualização deve estar pronta"
 msgid "There are no vouchers matching the current criteria"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:53
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:72
 msgid "There's an active remote support session"
 msgstr "Existe uma sesssão de suporte remoto ativa"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:41
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:60
 msgid "There's no open session for remote support. Click at Create Session to begin one"
 msgstr "Não a uma sessão de suporte remoto aberta. Clique em Criar Sessão para começar uma"
 
@@ -897,6 +969,10 @@ msgstr ""
 #: plugins/lime-plugin-metrics/src/metricsPage.js:162
 msgid "To Internet"
 msgstr "Para a Internet"
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:48
+msgid "To enable remote access an internet connection is needed"
+msgstr ""
 
 #: plugins/lime-plugin-rx/src/rxPage.js:83
 msgid "Traffic"
@@ -972,7 +1048,7 @@ msgstr ""
 msgid "When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted"
 msgstr "Ao carregar o aplicativo, será pedida uma confirmação da atualização, caso não confirme a versão será revertida"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:21
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:22
 #: plugins/lime-plugin-node-admin/src/screens/password.js:33
 #: plugins/lime-plugin-node-admin/src/screens/password.js:76
 msgid "Wifi Password"
@@ -981,6 +1057,10 @@ msgstr ""
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:83
 msgid "With radio {fromRadio} alignin with"
 msgstr "Com rádio %{radio} alinhado com"
+
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:64
+msgid "With this second cell phone create an access point or hotspot with this data:"
+msgstr ""
 
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:43
 msgid "Wrong password, try again"
@@ -1003,6 +1083,10 @@ msgstr "Você agora é parte de"
 msgid "You can search for mesh networks around you to add or to create a new one."
 msgstr "Você pode buscar redes por perto para se juntar, ou criar uma nova."
 
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:49
+msgid "You can share your mobile connection to the node by setting up a mobile hotspot"
+msgstr ""
+
 #: plugins/lime-plugin-firmware/src/upgradeAvailable.js:54
 msgid "You can upgrade to:"
 msgstr "Pode atualizar para:"
@@ -1022,6 +1106,10 @@ msgstr "Deve usar a senha compartiada para entrar"
 #: plugins/lime-plugin-fbw/src/containers/Setting.js:99
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr "Tente conectar-se a rede wifi %{network} para completar a instalação."
+
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:46
+msgid "Your node has no internet connection"
+msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:31
 msgid "Your router has not yet been configured, you can use our wizard to incorporate it into an existing network or create a new one. If you ignore this message it will continue to work with the default configuration."
@@ -1063,7 +1151,7 @@ msgstr "a atualização, ou..."
 msgid "to the previous configuration"
 msgstr "a versão prévia"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:57
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:76
 msgid "{0, plural, =0 {No one has joined yet.} one {One person has joined.} other {# people have joined.}}"
 msgstr "{0, plural, =0 {Ninguém se uniu à sessão.} one {Uma pessoa se uniu à sessão.} other {# pessoas se uniram à sessão.}}"
 
