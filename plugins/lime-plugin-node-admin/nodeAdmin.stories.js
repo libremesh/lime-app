@@ -16,6 +16,9 @@ NodeAdmin.args = {
                 enabled: true,
                 ssid: 'quintana-libre.org.ar',
             }
+        }],
+        [['lime-utils', 'hotspot_wwan_get_status'], {
+            enabled: true
         }]
     ]
 }

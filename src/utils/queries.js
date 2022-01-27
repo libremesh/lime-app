@@ -1,7 +1,7 @@
 import api from './uhttpd.service';
 import {
 	getBatHost, getBoardData, getSession, getCommunitySettings, getCommunityName,
-	reboot
+	reboot, checkInternet
 } from './api';
 import { DEFAULT_COMMUNITY_SETTINGS } from './constants';
 import { useQuery, useMutation } from 'react-query';
@@ -36,7 +36,6 @@ export function useBoardData() {
 	});
 }
 
-
 export function useCommunitySettings() {
 	return useQuery(['lime-utils', 'get_community_settings'], getCommunitySettings, {
 		initialData: DEFAULT_COMMUNITY_SETTINGS,
@@ -60,4 +59,8 @@ export function useNeedReboot() {
 
 export function useReboot(config) {
 	return useMutation(reboot, config);
+}
+
+export function useCheckInternet() {
+	return useQuery(['check-internet', 'is_connected'], checkInternet);
 }
