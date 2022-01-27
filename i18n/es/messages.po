@@ -651,7 +651,7 @@ msgstr "Contraseña"
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:72
 msgid "Password: {password}"
-msgstr "Contraseña: {contraseña}"
+msgstr "Contraseña: {password}"
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:51
 msgid "Permanent"
