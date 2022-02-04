@@ -28,7 +28,7 @@ It does not matter if you are not familiar with these technologies right now, yo
 A typical LimeApp functionality implements a screen composed of one or more Preact `Components`.
 The `Components` define what is rendered on screen, specifying the visual aspect of the screen (HTML + css) and the logical one: what is displayed, when, and which action each button performs.
 In the LimeApp screens we commonly want to display information that is available on the router, (e.g. how long ago it was turned on), and perform actions that modify the router configuration (e.g. change the administration password). This is what we mean by `backend` calls.
-To connect the interface with `backend` calls the `Components` use `Queries` and `Mutations` from the [React Query](react-query.tanstack.com/) library.
+To connect the interface with `backend` calls the `Components` use `Queries` and `Mutations` from the [React Query](https://react-query.tanstack.com/) library.
 This library allows us to declaratively indicate what data (`Queries`) each component uses and what actions (`Mutations`) each component performs. And it also relieves us from the complexity of: re-rendering each screen component that depends on a data that was updated in the `backend`, de-duplicating repeated calls, and managing the cache of these calls to avoid asking twice for the same data unnecessarily.
 
 The `Queries` and `Mutations` call asynchronous functions that define the url endpoints and the body of the requests to the backend. We call these functions API endpoints. They match one by one with the `backend` endpoints.
