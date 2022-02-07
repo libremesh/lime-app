@@ -29,18 +29,6 @@ msgstr "Cupones de Acceso"
 msgid "Access vouchers"
 msgstr "Cupones de Acceso"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
-msgid "Activate Portal in Community AP"
-msgstr "Activar Portal en AP Comunitario"
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
-msgid "Activated, with vouchers"
-msgstr "Activado, con cupones"
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
-msgid "Activated, without vouchers"
-msgstr "Activado, sin cupones"
-
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:62
 msgid "Activation date: {0}"
 msgstr "Plazo para activación: {0}"
@@ -277,10 +265,6 @@ msgstr "Fecha de creación: {0}"
 msgid "Currently your node has version:"
 msgstr "Actualmente tu nodo tiene la versión:"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
-msgid "Deactivated"
-msgstr "Desactivado"
-
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:16
 msgid "Description"
 msgstr "Descripción"
@@ -296,6 +280,7 @@ msgstr "Equipo"
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
 msgid "Disabled"
 msgstr "Deshabilitado"
 
@@ -342,10 +327,22 @@ msgstr "Activar AP Comunitario"
 msgid "Enable Password"
 msgstr "Activar Contraseña"
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
+msgid "Enable Portal in Community AP"
+msgstr "Habilita el Portal en el AP Comunitario"
+
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
 msgid "Enabled"
 msgstr "Activado"
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
+msgid "Enabled, with vouchers"
+msgstr "Habilitado, con vouchers"
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
+msgid "Enabled, without vouchers"
+msgstr "Habilitado, con vouchers"
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:73
 msgid "Encryption: {encryptionMethod}"

@@ -34,7 +34,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                         id="activated"
                         ref={register()}
                     />
-                    <label htmlFor="activated"><Trans>Activate Portal in Community AP</Trans></label>
+                    <label htmlFor="activated"><Trans>Enable Portal in Community AP</Trans></label>
                 </div>
                 <p>
                     <a href="#" onClick={routeToEditor}><Trans>Edit wellcome screen</Trans> </a>

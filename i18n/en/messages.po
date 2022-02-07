@@ -29,18 +29,6 @@ msgstr "Access Vouchers"
 msgid "Access vouchers"
 msgstr "Access vouchers"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
-msgid "Activate Portal in Community AP"
-msgstr "Activate Portal in Community AP"
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
-msgid "Activated, with vouchers"
-msgstr "Activated, with vouchers"
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
-msgid "Activated, without vouchers"
-msgstr "Activated, without vouchers"
-
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:62
 msgid "Activation date: {0}"
 msgstr "Activation date: {0}"
@@ -277,10 +265,6 @@ msgstr "Creation date: {0}"
 msgid "Currently your node has version:"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
-msgid "Deactivated"
-msgstr "Deactivated"
-
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:16
 msgid "Description"
 msgstr "Description"
@@ -296,6 +280,7 @@ msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
 msgid "Disabled"
 msgstr ""
 
@@ -342,10 +327,22 @@ msgstr ""
 msgid "Enable Password"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
+msgid "Enable Portal in Community AP"
+msgstr "Enable Portal in Community AP"
+
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
 msgid "Enabled"
 msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
+msgid "Enabled, with vouchers"
+msgstr "Enabled, with vouchers"
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
+msgid "Enabled, without vouchers"
+msgstr "Enabled, without vouchers"
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:73
 msgid "Encryption: {encryptionMethod}"

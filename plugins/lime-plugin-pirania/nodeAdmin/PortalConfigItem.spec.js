@@ -28,27 +28,27 @@ describe('portal config item', () => {
         expect(await screen.findByTestId('portal-config-item')).toBeInTheDocument();
     });
 
-    it('shows value as Activated, with vouchers', async() => {
+    it('shows value as Enabled, with vouchers', async() => {
         render(<PortalConfigItem />);
-        expect(await screen.findByText('Activated, with vouchers')).toBeVisible();
+        expect(await screen.findByText('Enabled, with vouchers')).toBeVisible();
     });
 
-    it('shows value as Activated, without vouchers', async() => {
+    it('shows value as Enabled, without vouchers', async() => {
         getPortalConfig.mockImplementation(async () => ({
             'activated': true,
             'with_vouchers': false, 
         }));
         render(<PortalConfigItem />);
-        expect(await screen.findByText('Activated, without vouchers')).toBeVisible();
+        expect(await screen.findByText('Enabled, without vouchers')).toBeVisible();
     });
 
-    it('shows value as Deactivated', async() => {
+    it('shows value as Disabled', async() => {
         getPortalConfig.mockImplementation(async () => ({
             'activated': false,
             'with_vouchers': false, 
         }));
         render(<PortalConfigItem />);
-        expect(await screen.findByText('Deactivated')).toBeVisible();
+        expect(await screen.findByText('Disabled')).toBeVisible();
     });
 
     it('routes to portal config page on click', async() => {

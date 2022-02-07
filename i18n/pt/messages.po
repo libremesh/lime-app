@@ -29,18 +29,6 @@ msgstr ""
 msgid "Access vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
-msgid "Activate Portal in Community AP"
-msgstr ""
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
-msgid "Activated, with vouchers"
-msgstr ""
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
-msgid "Activated, without vouchers"
-msgstr ""
-
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:62
 msgid "Activation date: {0}"
 msgstr ""
@@ -277,10 +265,6 @@ msgstr ""
 msgid "Currently your node has version:"
 msgstr "Atualmente seu nó usa a versão:"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
-msgid "Deactivated"
-msgstr ""
-
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:16
 msgid "Description"
 msgstr ""
@@ -296,6 +280,7 @@ msgstr "Dispositivo"
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
 msgid "Disabled"
 msgstr ""
 
@@ -342,9 +327,21 @@ msgstr ""
 msgid "Enable Password"
 msgstr ""
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
+msgid "Enable Portal in Community AP"
+msgstr ""
+
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
 msgid "Enabled"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
+msgid "Enabled, with vouchers"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
+msgid "Enabled, without vouchers"
 msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:73
