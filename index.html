@@ -4,17 +4,32 @@
     width: 100%;
     margin: 0;
     padding: 0;
+  }
+
+  * {
+    box-sizing: border-box;
   }</style><script>/* globals window */
   /* eslint-disable no-underscore-dangle */
   try {
-    if (window.parent !== window) {
-      window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-      window.__VUE_DEVTOOLS_GLOBAL_HOOK__ = window.parent.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+    if (window.top !== window) {
+      window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.top.__REACT_DEVTOOLS_GLOBAL_HOOK__;
     }
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.warn('unable to connect to parent frame for connecting dev tools');
+    console.warn('unable to connect to top frame for connecting dev tools');
   }</script><style>#root[hidden],
       #docs-root[hidden] {
         display: none !important;
-      }</style></head><body><div id="root"></div><div id="docs-root"></div><script>window['DOCS_MODE'] = false;</script><script src="runtime~main.6b70b35614cf83eab770.bundle.js"></script><script src="vendors~main.5378e0deed10f0733b28.bundle.js"></script><script src="main.5ebc6c257f5932da8252.bundle.js"></script></body></html>
+      }</style></head><body><div id="root"></div><div id="docs-root"></div><script>window['CONFIG_TYPE'] = "PRODUCTION";
+            
+        
+            
+              window['LOGLEVEL'] = "info";
+            
+        
+            
+        
+            
+        
+            
+              window['DOCS_MODE'] = false;</script><script src="runtime~main.870e8ee0658e83d05c6b.bundle.js"></script><script src="vendors~main.d47ab663066e5ac9ba91.bundle.js"></script><script src="main.a5d7d15d17c437316526.bundle.js"></script></body></html>
