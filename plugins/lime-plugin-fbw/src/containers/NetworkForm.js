@@ -3,21 +3,27 @@ import { useState } from 'preact/hooks';
 
 import '../style';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { createNetwork } from '../actions';
-
 import { Trans, t } from '@lingui/macro';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { isValidPassword, ValidationMessages } from '../../../../src/containers/SharedPasswordForm';
+import { useCreateNetwork } from '../queries';
 
-export const NetworkForm = ({ createNetwork, toggleForm }) => {
+export const NetworkForm = ({toggleForm}) => {
+
+	const [createNetwork, { isLoading: isSubmitting}] = useCreateNetwork({
+		onSuccess: () => {
+			toggleForm('setting')();
+		},
+		onError: () => {
+			toggleForm('create')();
+		}
+	});
+
 	const [state, setState] = useState({
 		communityName: '',
 		hostName: '',
 		password: '',
-		passwordConfirmation: '',
+		passwordConfirmation: ''
 	});
 
 	function _changeName(e) {
@@ -51,7 +57,6 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 			hostname: state.hostName,
 			adminPassword: state.password
 		});
-		toggleForm('setting')();
 	}
 
 	function _isValidForm() {
@@ -81,7 +86,7 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 			<div class="six columns">
 				<button
 					class="u-full-width"
-					disabled={!_isValidForm()}
+					disabled={!_isValidForm() || isSubmitting}
 					onClick={_createNetwork}
 				>
 					<Trans>Create network</Trans>
@@ -98,11 +103,3 @@ export const NetworkForm = ({ createNetwork, toggleForm }) => {
 		</div>
 	</div>);
 };
-
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = (dispatch) => ({
-	createNetwork: bindActionCreators(createNetwork, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NetworkForm);
