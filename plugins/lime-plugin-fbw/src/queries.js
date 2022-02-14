@@ -15,7 +15,7 @@ export function useFbwStatus() {
 	});
 }
 
-export function useCreateNetwork() {
-	return useMutation(createNetwork);
+export function useCreateNetwork(params) {
+	return useMutation(createNetwork, params);
 }
 
