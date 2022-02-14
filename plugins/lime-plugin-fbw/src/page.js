@@ -6,7 +6,7 @@ import './style';
 import SelectAction from './containers/SelectAction';
 import { NetworkForm } from './containers/NetworkForm';
 import { Scan } from './containers/Scan';
-import Setting from './containers/Setting';
+import { Setting } from './containers/Setting';
 import { useAppContext } from 'utils/app.context';
 
 const Page = ({ }) => {
