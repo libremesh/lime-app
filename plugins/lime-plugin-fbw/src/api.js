@@ -1,7 +1,7 @@
 import api from 'utils/uhttpd.service';
 import { from } from 'rxjs';
 
-export const searchNetworks = (api, rescan) =>
+export const searchNetworks = (rescan) =>
 	api.call('lime-fbw', 'search_networks', { scan: rescan || false });
 
 export const setNetwork = (api, { file, hostname }) =>

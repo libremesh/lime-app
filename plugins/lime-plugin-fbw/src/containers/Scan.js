@@ -6,7 +6,8 @@ import '../style';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { searchNetworks, setNetwork } from '../actions';
+// import { setNetwork } from '../actions';
+	// searchNetworks, 
 
 import { Trans, t } from '@lingui/macro';
 import { Loading } from 'components/loading';
@@ -14,13 +15,30 @@ import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { showNotification } from '../../../../src/store/actions';
 import { useBoardData } from 'utils/queries';
+import { useSearchNetworks } from '../queries';
 
-export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks }) => {
+export const Scan = ({ setNetwork, toggleForm }) => {
 	const { data: boardData } = useBoardData();
 	const [state, setState] = useState({
 		createForm: false,
 		error: null,
 		hostname: boardData.hostname
+	});
+
+	const [networks, setNetworks] = useState()
+	const [status, setStatus] = useState()
+
+	const [searchNetworks, { isLoading: isSubmitting}] = useSearchNetworks({
+		onSuccess: (payload) => {
+			setNetworks(payload.networks.map(net => ({
+				...net,
+				ap: getApName(net)
+			})) || [])
+			setStatus(payload.status || null)
+		},
+		onError: () => {
+			setStatus('error')
+		}
 	});
 
 	/* Load scan results */
@@ -94,7 +112,7 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 		return () => {
 			if (interval) clearInterval(interval);
 		};
-	}, [status, searchNetworks]);
+	}, [status, isSubmitting]);
 
 	return (
 		<div class="container container-padded">
@@ -148,20 +166,27 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 				</div>
 			</div>
 			{state.error && <Toast text={<Trans>Must select a network and a valid hostname</Trans>} />}
+			{/* todo(kon) create scanning error toast */}
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
 };
 
-const mapStateToProps = (state) => ({
-	networks: state.firstbootwizard.networks,
-	status: state.firstbootwizard.status
-});
+const getApName = ({ ap = '', file = '' }) => {
+	let getHostname = /(?:host__)(.+)/;
+	let hostname = getHostname.exec(file)[1];
+	return '' + (ap && ap !== '')? '('+ap+') '+ hostname : hostname;
+};
 
-const mapDispatchToProps = (dispatch) => ({
-	searchNetworks: bindActionCreators(searchNetworks ,dispatch),
-	setNetwork: bindActionCreators(setNetwork ,dispatch),
-	showNotification: bindActionCreators(showNotification, dispatch)
-});
+// const mapStateToProps = (state) => ({
+// 	networks: state.firstbootwizard.networks,
+// 	status: state.firstbootwizard.status
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Scan);
+// const mapDispatchToProps = (dispatch) => ({
+// 	// searchNetworks: bindActionCreators(searchNetworks ,dispatch),
+// 	setNetwork: bindActionCreators(setNetwork ,dispatch),
+// 	showNotification: bindActionCreators(showNotification, dispatch)
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Scan);
