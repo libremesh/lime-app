@@ -6,7 +6,7 @@ import '../style';
 import { Trans, t } from '@lingui/macro';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { isValidPassword, ValidationMessages } from '../../../../src/containers/SharedPasswordForm';
-import { useCreateNetwork } from '../queries';
+import { useCreateNetwork } from '../FbwQueries';
 
 export const NetworkForm = ({toggleForm}) => {
 

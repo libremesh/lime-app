@@ -9,7 +9,7 @@ import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 // import { showNotification } from '../../../../src/store/actions';
 import { useBoardData } from 'utils/queries';
-import { useSearchNetworks, useSetNetwork } from '../queries';
+import { useSearchNetworks, useSetNetwork } from '../FbwQueries';
 
 export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const { data: boardData } = useBoardData();

@@ -1,4 +1,4 @@
-import Page from './src/page';
+import Page from './src/FbwPage';
 
 export default {
 	name: 'firstbootwizard',

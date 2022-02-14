@@ -1,7 +1,7 @@
 import { Banner } from 'components/banner';
 import { useState } from 'preact/hooks';
 import { Trans } from '@lingui/macro';
-import { useDismissFbw } from '../queries';
+import { useDismissFbw } from '../FbwQueries';
 import { route } from 'preact-router';
 import { useAppContext } from 'utils/app.context';
 

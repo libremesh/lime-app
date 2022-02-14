@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from 'react-query';
 import queryCache from 'utils/queryCache';
 import { dismissFbw, getFbwStatus, createNetwork, searchNetworks, setNetwork } 
-	from './api';
+	from './FbwApi';
 
 export function useDismissFbw() {
 	return useMutation(dismissFbw, {
