@@ -4,8 +4,8 @@ import { useState, useEffect } from 'preact/hooks';
 import './style';
 
 import SelectAction from './containers/SelectAction';
-import NetworkForm from './containers/NetworkForm';
-import Scan from './containers/Scan';
+import { NetworkForm } from './containers/NetworkForm';
+import { Scan } from './containers/Scan';
 import Setting from './containers/Setting';
 import { useAppContext } from 'utils/app.context';
 
@@ -13,9 +13,10 @@ const Page = ({ }) => {
 	const { setMenuEnabled } = useAppContext();
 	const [form, setForm] = useState(null);
 
-	function toggleForm(form) {
-		return () => setForm(form);
-	}
+	const [expectedHost, setExpectedHost] = useState(null);
+	const [expectedNetwork, setExpectedNetwork] = useState(null);
+
+	const toggleForm = (form) => () => setForm(form)
 
 	useEffect(() => {
 		setMenuEnabled(false);
@@ -27,8 +28,9 @@ const Page = ({ }) => {
 	return (
 		<Fragment>
 			{form === 'create' && <NetworkForm toggleForm={toggleForm} />}
-			{form === 'scan' && <Scan toggleForm={toggleForm} />}
-			{form === 'setting' && <Setting toggleForm={toggleForm} />}
+			{form === 'scan' &&
+				<Scan toggleForm={toggleForm} setExpectedHost={setExpectedHost} setExpectedNetwork={setExpectedNetwork} />}
+			{form === 'setting' && <Setting toggleForm={toggleForm} expectedHost={expectedHost} expectedNetwork={expectedNetwork} />}
 			{!form && <SelectAction toggleForm={toggleForm} />}
 		</Fragment>
 	);

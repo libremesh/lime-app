@@ -11,7 +11,7 @@ import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { useBoardData } from 'utils/queries';
 import { useSearchNetworks, useSetNetwork } from '../queries';
 
-export const Scan = ({ toggleForm }) => {
+export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const { data: boardData } = useBoardData();
 	const [state, setState] = useState({
 		createForm: false,
@@ -37,6 +37,8 @@ export const Scan = ({ toggleForm }) => {
 
 	const [setNetwork, { isLoading: isSetNetworkSubmitting}] = useSetNetwork({
 		onSuccess: () => {
+			setExpectedHost(state.hostname)
+			setExpectedNetwork(state.community)
 			toggleForm('setting')();
 		},
 		onError: () => {
