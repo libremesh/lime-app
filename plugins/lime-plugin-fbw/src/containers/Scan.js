@@ -131,7 +131,9 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 									<label><Trans>Select a network to join</Trans></label>
 									<select onChange={selectNetwork}  class="u-full-width">
 										<option disabled selected><Trans>Select one</Trans></option>
-										{networks.map((network, key) => {(<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>)})}
+										{ networks.map((network, key) => {
+											return (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>)
+										})}
 									</select>
 									<label><Trans>Choose a name for this node</Trans></label>
 									<input type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
