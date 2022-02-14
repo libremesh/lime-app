@@ -1,7 +1,6 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import { Trans } from '@lingui/macro';
-import { connect } from 'react-redux';
 
 import '../style';
 
@@ -117,11 +116,3 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 	);
 };
 
-const mapStateToProps = (state) => ({
-	expectedHost: state.firstbootwizard.expectedHost,
-	expectedNetwork: state.firstbootwizard.expectedNetwork
-});
-
-const mapDispatchToProps = (dispatch) => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Setting);
