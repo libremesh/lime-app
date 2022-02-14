@@ -3,21 +3,15 @@ import { useState, useEffect } from 'preact/hooks';
 
 import '../style';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-// import { setNetwork } from '../actions';
-	// searchNetworks, 
-
 import { Trans, t } from '@lingui/macro';
 import { Loading } from 'components/loading';
 import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
-import { showNotification } from '../../../../src/store/actions';
+// import { showNotification } from '../../../../src/store/actions';
 import { useBoardData } from 'utils/queries';
-import { useSearchNetworks } from '../queries';
+import { useSearchNetworks, useSetNetwork } from '../queries';
 
-export const Scan = ({ setNetwork, toggleForm }) => {
+export const Scan = ({ toggleForm }) => {
 	const { data: boardData } = useBoardData();
 	const [state, setState] = useState({
 		createForm: false,
@@ -35,6 +29,15 @@ export const Scan = ({ setNetwork, toggleForm }) => {
 				ap: getApName(net)
 			})) || [])
 			setStatus(payload.status || null)
+		},
+		onError: () => {
+			setStatus('error')
+		}
+	});
+
+	const [setNetwork, { isLoading: isSetNetworkSubmitting}] = useSetNetwork({
+		onSuccess: () => {
+			toggleForm('setting')();
 		},
 		onError: () => {
 			setStatus('error')
@@ -65,7 +68,6 @@ export const Scan = ({ setNetwork, toggleForm }) => {
 				hostname: state.hostname,
 				network: state.community
 			});
-			toggleForm('setting')();
 		}
 		else {
 			setState({
@@ -127,7 +129,7 @@ export const Scan = ({ setNetwork, toggleForm }) => {
 									<label><Trans>Select a network to join</Trans></label>
 									<select onChange={selectNetwork}  class="u-full-width">
 										<option disabled selected><Trans>Select one</Trans></option>
-										{networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
+										{networks.map((network, key) => {(<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>)})}
 									</select>
 									<label><Trans>Choose a name for this node</Trans></label>
 									<input type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
@@ -136,7 +138,7 @@ export const Scan = ({ setNetwork, toggleForm }) => {
 									{networks.length > 0 && <div class="six columns">
 										<button
 											onClick={_setNetwork}
-											disabled={!isValidHostname(state.hostname)}
+											disabled={!isValidHostname(state.hostname) || isSetNetworkSubmitting}
 											class="u-full-width"
 										>
 											<Trans>Set network</Trans>
@@ -177,16 +179,3 @@ const getApName = ({ ap = '', file = '' }) => {
 	let hostname = getHostname.exec(file)[1];
 	return '' + (ap && ap !== '')? '('+ap+') '+ hostname : hostname;
 };
-
-// const mapStateToProps = (state) => ({
-// 	networks: state.firstbootwizard.networks,
-// 	status: state.firstbootwizard.status
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-// 	// searchNetworks: bindActionCreators(searchNetworks ,dispatch),
-// 	setNetwork: bindActionCreators(setNetwork ,dispatch),
-// 	showNotification: bindActionCreators(showNotification, dispatch)
-// });
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Scan);
