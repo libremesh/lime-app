@@ -1,12 +1,11 @@
-import {h} from 'preact';
-import { Trans } from '@lingui/macro';
 import FirmwarePage from './src/firmwarePage';
+import { Menu } from './src/firmwareMenu';
 import { UpgradeAvailabeInfo } from './src/upgradeAvailable';
 
 export default {
 	name: 'Firmware',
 	page: FirmwarePage,
-	menu: () => <a href={'#/firmware'}><Trans>Firmware</Trans></a>,
+	menu: Menu,
 	isCommunityProtected: true,
 	additionalRoutes: [
 		['releaseInfo', UpgradeAvailabeInfo]

@@ -48,7 +48,7 @@ describe("voucher post create screen", () => {
 
 	it('shows duration in days if not permanent', async () => {
 		render(<PostCreate vouchers={vouchers} />);
-		const durationDays = parseInt(vouchers[0].duration_m / (24 * 60))
+		const durationDays = parseInt(vouchers[0].duration_m / (24 * 60), 10)
 		expect(await screen.findByText(
 			`Duration: ${durationDays} days`)
 		).toBeInTheDocument();

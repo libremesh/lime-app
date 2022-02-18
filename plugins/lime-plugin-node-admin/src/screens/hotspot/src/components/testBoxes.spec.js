@@ -12,10 +12,18 @@ jest.mock('../hotspotApi');
 jest.mock('utils/api');
 
 describe('ConnectionToThePhone TestBox', () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     beforeEach(() => {
         getStatus.mockImplementation(async () => ({ enabled: true, connected: false }));
     });
-    
+
     afterEach(() => {
         getStatus.mockClear();
         cleanup();
@@ -31,9 +39,9 @@ describe('ConnectionToThePhone TestBox', () => {
         render(<ConnectionToThePhone />);
         expect(await screen.findByText('Connection to the cellphone')).toBeInTheDocument();
     });
-    
+
     it('shows connected and signal when the node is connected to the cellphone', async () => {
-        getStatus.mockImplementation(async () => ({ enabled:true, connected: true, signal: -47 }));
+        getStatus.mockImplementation(async () => ({ enabled: true, connected: true, signal: -47 }));
         render(<ConnectionToThePhone />);
         expect(await screen.findByText('Connected')).toBeInTheDocument();
         expect(await screen.findByText('-47')).toBeInTheDocument();
@@ -47,16 +55,15 @@ describe('ConnectionToThePhone TestBox', () => {
 
     it('shows loading while fetching', async () => {
         render(<ConnectionToThePhone />);
-        expect(await screen.getByLabelText('loading')).toBeInTheDocument();
+        expect(screen.getByLabelText('loading')).toBeInTheDocument();
     });
 
     it('refreshes on click', async () => {
         render(<ConnectionToThePhone />);
         expect(await screen.findByText('Not Connected')).toBeInTheDocument();
-        getStatus.mockImplementation(async() => ({ enabled: true, connected: true}));
+        getStatus.mockImplementation(async () => ({ enabled: true, connected: true }));
         const elem = screen.getByTestId('hotspot-phone-test');
         fireEvent.click(elem);
-        expect(await screen.findByLabelText('loading')).toBeInTheDocument();
         expect(await screen.findByText('Connected')).toBeInTheDocument();
     });
 });
@@ -66,7 +73,7 @@ describe('ConnectionToTheInternet TestBox', () => {
     beforeEach(() => {
         checkInternet.mockImplementation(async () => ({ connected: false }));
     });
-    
+
     afterEach(() => {
         checkInternet.mockClear();
         cleanup();
@@ -82,7 +89,7 @@ describe('ConnectionToTheInternet TestBox', () => {
         render(<ConnectionToTheInternet />);
         expect(await screen.findByText('Connection to the internet')).toBeInTheDocument();
     });
-    
+
     it('shows connected when the node is connected to the cellphone', async () => {
         checkInternet.mockImplementation(async () => ({ connected: true }));
         render(<ConnectionToTheInternet />);
@@ -96,16 +103,15 @@ describe('ConnectionToTheInternet TestBox', () => {
 
     it('shows loading while fetching', async () => {
         render(<ConnectionToTheInternet />);
-        expect(await screen.getByLabelText('loading')).toBeInTheDocument();
+        expect(screen.getByLabelText('loading')).toBeInTheDocument();
     });
 
     it('refreshes on click', async () => {
         render(<ConnectionToTheInternet />);
         expect(await screen.findByText('Not Connected')).toBeInTheDocument();
-        checkInternet.mockImplementation(async() => ({connected: true}));
+        checkInternet.mockImplementation(async () => ({ connected: true }));
         const elem = screen.getByTestId('hotspot-internet-test');
         fireEvent.click(elem);
-        expect(await screen.findByLabelText('loading')).toBeInTheDocument();
         expect(await screen.findByText('Connected')).toBeInTheDocument();
     });
 });

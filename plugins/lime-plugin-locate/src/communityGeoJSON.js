@@ -67,7 +67,7 @@ export function getCommunityGeoJSON(nodesData, keepClean = null) {
             .filter(mac => node.macs.some(node_mac => macLinks[mac].indexOf(node_mac) != -1))
             .map(mac => [geomac[node.macs[0]], geomac[mac]].sort())
     ).flat()
-    geolinks = removeDuplicates(geolinks, l => l[0] + ',' + l[1]);
+    geolinks = removeDuplicates(geolinks, l => `${l[0]},${l[1]}`);
 
     // nodefeatures: [..., GeoJSONFeature:Point] All nodes to be shown
     let nodefeatures = nodes.map(node => coordsToPoint(

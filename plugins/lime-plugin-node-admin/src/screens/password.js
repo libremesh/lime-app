@@ -68,7 +68,7 @@ const APPasswordPage = () => {
             password: enablePassword ? password: "",
             enablePassword
         });
-    };
+    }
 
     return (
         <ConfigPageLayout {...{

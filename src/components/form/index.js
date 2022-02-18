@@ -12,7 +12,7 @@ export const MaxLengthMsg = ({ length }) => (
 );
 
 export const MaxLengthErrorMsg = ({ length }) =>
-    <ErrorMsg><MaxLengthMsg length={length}/></ErrorMsg>
+    <ErrorMsg><MaxLengthMsg length={length} /></ErrorMsg>
 
 export const RequiredMsg = () =>
     <Trans>Required</Trans>

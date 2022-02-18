@@ -17,7 +17,7 @@ export const loadEpics = (plugins) => plugins
 	.filter(x => x.store)
 	.filter(plugin => typeof plugin.store.epics !== 'undefined')
 	.map(x => x.store.epics)
-	.map(data => Object.keys(data).map((key, index) => data[key]).reduce((x,y) => x.concat(y), []))
+	.map(data => Object.keys(data).map((key) => data[key]).reduce((x,y) => x.concat(y), []))
 	.reduce((a,b) => a.concat(b), []);
 
 export const loadSelectors = (plugins) => simpleLoader('selector',plugins);

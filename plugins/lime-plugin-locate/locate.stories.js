@@ -1,6 +1,6 @@
 import { LocatePage } from './src/locatePage';
 import { action } from '@storybook/addon-actions';
-import { text, withKnobs } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
 
 export default {
 	title: 'Containers/Map',
@@ -12,8 +12,6 @@ const actions = {
 	loadLocation: action('loadLocation'),
 	loadLocationLinks: action('loadLocationLinks')
 }
-
-const nodeHostname = text('nodeHostname', 'ql-anaymarcos');
 
 export const nodeAndCommunityNotLocated = () => (
 	<LocatePage

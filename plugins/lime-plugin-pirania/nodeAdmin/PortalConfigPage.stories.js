@@ -4,7 +4,7 @@ export default {
     title: 'Containers/Node Configuration/Portal Config'
 }
 
-export const activeWithoutVouchers = () => < PortalConfigPage/>;
+export const activeWithoutVouchers = () => <PortalConfigPage />;
 activeWithoutVouchers.args = {
     queries: [
         [['pirania', 'get_portal_config'], {
@@ -13,7 +13,7 @@ activeWithoutVouchers.args = {
     ]
 };
 
-export const activeWithVouchers = () => < PortalConfigPage/>;
+export const activeWithVouchers = () => <PortalConfigPage />;
 activeWithVouchers.args = {
     queries: [
         [['pirania', 'get_portal_config'], {

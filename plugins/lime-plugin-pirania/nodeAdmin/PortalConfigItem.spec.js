@@ -13,8 +13,8 @@ jest.mock('../src/piraniaApi');
 describe('portal config item', () => {
     beforeEach(() => {
         getPortalConfig.mockImplementation(async () => ({
-            'activated': true,
-            'with_vouchers': true, 
+            activated: true,
+            with_vouchers: true, 
         }));
     });
 
@@ -35,8 +35,8 @@ describe('portal config item', () => {
 
     it('shows value as Enabled, without vouchers', async() => {
         getPortalConfig.mockImplementation(async () => ({
-            'activated': true,
-            'with_vouchers': false, 
+            activated: true,
+            with_vouchers: false, 
         }));
         render(<PortalConfigItem />);
         expect(await screen.findByText('Enabled, without vouchers')).toBeVisible();
@@ -44,8 +44,8 @@ describe('portal config item', () => {
 
     it('shows value as Disabled', async() => {
         getPortalConfig.mockImplementation(async () => ({
-            'activated': false,
-            'with_vouchers': false, 
+            activated: false,
+            with_vouchers: false, 
         }));
         render(<PortalConfigItem />);
         expect(await screen.findByText('Disabled')).toBeVisible();

@@ -1,9 +1,8 @@
 
 import { h } from 'preact';
 
-import { screen, fireEvent, cleanup, act } from '@testing-library/preact';
+import { screen, fireEvent } from '@testing-library/preact';
 import '@testing-library/jest-dom';
-import waitForExpect from 'wait-for-expect';
 
 import { render } from 'utils/test_utils';
 import { route } from 'preact-router';
@@ -16,7 +15,7 @@ const findBackArrow = async () =>
 describe('config layout', () => {
     it('renders the title for the config', async() => {
         render(<ConfigPageLayout title={"My Config"} />);
-        expect(await screen.findByText('My Config'));
+        expect(await screen.findByText('My Config')).toBeInTheDocument();
     });
 
     it('routes back to node admin when clicking on back arrow', async() => {

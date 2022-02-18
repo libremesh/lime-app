@@ -21,10 +21,10 @@ const CreateVoucher = () => {
 
 		const finalData = {
 			...formData,
-			qty: parseInt(formData.qty),
+			qty: parseInt(formData.qty, 10),
 			duration_m: (
 				formData.permanent ?
-					null : parseInt(formData.duration_m) * 24 * 60
+					null : parseInt(formData.duration_m, 10) * 24 * 60
 			),
 			activation_deadline: deadline
 		};
@@ -36,7 +36,7 @@ const CreateVoucher = () => {
 
 	if (createdVouchers) {
 		return <PostCreate vouchers={createdVouchers} />
-	};
+	}
 
 	return (
 		<ConfigPageLayout {...{

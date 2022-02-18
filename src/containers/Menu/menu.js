@@ -1,5 +1,5 @@
 import { h } from 'preact';
-
+import { Trans } from '@lingui/macro';
 import { plugins } from '../../config';
 import { useState } from 'preact/hooks';
 import style from './style.less';

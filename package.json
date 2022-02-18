@@ -25,12 +25,6 @@
     "test": "jest",
     "create-plugin": "node ./devTools/plugins create"
   },
-  "eslintConfig": {
-    "extends": "eslint-config-synacor"
-  },
-  "eslintIgnore": [
-    "build/*"
-  ],
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",

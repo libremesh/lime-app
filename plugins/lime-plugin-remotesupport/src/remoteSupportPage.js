@@ -52,7 +52,7 @@ export const WithoutInternet_ = () =>
 		</div>
 	)
 
-export const RemoteSupportPage_ = ({session, hasInternet, openError=false, isSubmitting=false, onOpenSession, onCloseSession, onShowConsole}) =>
+export const RemoteSupportPage_ = ({session, openError=false, isSubmitting=false, onOpenSession, onCloseSession, onShowConsole}) =>
 	<div class="d-flex flex-grow-1 flex-column container container-padded">
 		<h4><Trans>Ask for remote support</Trans></h4>
 		{!session &&

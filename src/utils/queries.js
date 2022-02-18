@@ -1,6 +1,6 @@
 import api from './uhttpd.service';
 import {
-	getBatHost, getBoardData, getSession, getCommunitySettings, getCommunityName,
+	getBatHost, getBoardData, getSession, getCommunitySettings,
 	reboot, checkInternet
 } from './api';
 import { DEFAULT_COMMUNITY_SETTINGS } from './constants';
