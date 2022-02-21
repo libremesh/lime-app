@@ -305,7 +305,7 @@ msgstr "Duração: permanente"
 #: plugins/lime-plugin-pirania/src/screens/postCreate.js:18
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:21
 msgid "Duration: {days, plural, one {# day} other {# days}}"
-msgstr "Duração: {dias, plural, um {# day} outros {# days}}"
+msgstr "Duração: {dias, plural, one {# dia} other {# dias}}"
 
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:72
 msgid "Edit"
