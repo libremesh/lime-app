@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.22](https://github.com/germanferrero/lime-app/compare/v0.2.21...v0.2.22) (2022-02-21)
+
+* **pirania:** add portuguese translations ([63476a2](https://github.com/germanferrero/lime-app/commit/d005012fb9925c849591c7051c3150f9263ebeba))
+
 ### [0.2.21](https://github.com/germanferrero/lime-app/compare/v0.2.20...v0.2.21) (2022-02-21)
 
 
@@ -17,9 +21,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* **getvoices:** modified if condition to synth !== undefined ([1ba18c4](https://github.com/germanferrero/lime-app/commit/1ba18c4e0a0154a9568ae6e6a4d73e570f940c98))
-* **pirania:** correctly shows create button on voucher list page ([e6a5afa](https://github.com/germanferrero/lime-app/commit/e6a5afaf8778da7d08ef93174a3956f50b7e1f1f))
-* **routes:** fixes CommunityProtectedRoute to pass props down ([5028122](https://github.com/germanferrero/lime-app/commit/50281228765df93070dfdad79ffe314245c6e7c2))
+* **getvoices:** fix synth voices crash in align screen ([1ba18c4](https://github.com/germanferrero/lime-app/commit/1ba18c4e0a0154a9568ae6e6a4d73e570f940c98))
 
 ### [0.2.20](https://github.com/germanferrero/lime-app/compare/v0.2.19...v0.2.20) (2021-05-11)
 
