@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.23](https://github.com/germanferrero/lime-app/compare/v0.2.22...v0.2.23) (2022-02-21)
+
+### Bug Fixes
+* **translations:** fix error in pt translation ([3640de1](https://github.com/germanferrero/lime-app/commit/3640de19b3614066be66f84829354132ea30ccfb))
+
 ### [0.2.22](https://github.com/germanferrero/lime-app/compare/v0.2.21...v0.2.22) (2022-02-21)
 
 * **pirania:** add portuguese translations ([63476a2](https://github.com/germanferrero/lime-app/commit/d005012fb9925c849591c7051c3150f9263ebeba))
