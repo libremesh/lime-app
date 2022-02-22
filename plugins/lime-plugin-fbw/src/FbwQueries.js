@@ -21,7 +21,24 @@ export function useCreateNetwork(params) {
 }
 
 export function useSearchNetworks(params) {
-	return useMutation(searchNetworks, params);
+	return useMutation(searchNetworks, {
+		onSuccess: () => {
+			queryCache.setQueryData(
+				['lime-fbw', 'search-networks'],
+				(payload) => {
+					return payload
+					// return payload.networks.map(net => ({
+					// 	...net,
+					// 	ap: getApName(net)
+					// })) || []
+				}
+			)
+		},
+		...params});
+}
+
+export function useGetNetworks(params) {
+	return useQuery(['lime-fbw', 'search-networks'], () => searchNetworks(false), params);
 }
 
 

@@ -8,7 +8,7 @@ import { Loading } from 'components/loading';
 import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { useBoardData } from 'utils/queries';
-import { useSearchNetworks, useSetNetwork } from '../FbwQueries';
+import { useSearchNetworks, useSetNetwork, useGetNetworks } from '../FbwQueries';
 
 export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const { data: boardData } = useBoardData();
@@ -18,21 +18,15 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		hostname: boardData.hostname
 	});
 
-	const [networks, setNetworks] = useState()
 	const [status, setStatus] = useState()
 
+	const { data: networks } = useGetNetworks();
+
 	const [searchNetworks, { isLoading: isSubmitting}] = useSearchNetworks({
-		onSuccess: (payload) => {
-			setNetworks(payload.networks.map(net => ({
-				...net,
-				ap: getApName(net)
-			})) || [])
-			setStatus(payload.status || null)
-		},
 		onError: () => {
 			setStatus('error')
 		}
-	});
+	})
 
 	const [setNetwork, { isLoading: isSetNetworkSubmitting}] = useSetNetwork({
 		onSuccess: () => {
