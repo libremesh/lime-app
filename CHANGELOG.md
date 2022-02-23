@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.24](https://github.com/germanferrero/lime-app/compare/v0.2.23...v0.2.24) (2022-02-23)
+
+### Bug Fixes
+
+* **firmware:** display spinners in download from release ([a50d314](https://github.com/germanferrero/lime-app/commit/a50d3144703a7c213e0ed1e80993a6db1ee9e89c))
+
 ### [0.2.23](https://github.com/germanferrero/lime-app/compare/v0.2.22...v0.2.23) (2022-02-21)
 
 ### Bug Fixes
