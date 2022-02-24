@@ -74,24 +74,17 @@ describe('openSession', () => {
     })
 
     it('rejects to api call error on error', async () => {
-        api.call.mockImplementationOnce(() => Promise.reject('timeout'));
-        api.call.mockImplementationOnce(async () => ({'status': 'ok'}));
+        api.call.mockImplementationOnce(async () => Promise.reject('timeout'));
+        api.call.mockImplementationOnce(async () => ({status: 'ok'}));
         expect.assertions(1);
-        try {
-            await openSession()
-        } catch (e) {
-            expect(e).toEqual('timeout')
-        }
+        await expect(openSession()).rejects.toEqual('timeout');
     })
 
     it('calls close session when rejected ', async () => {
         api.call.mockImplementationOnce(() => Promise.reject('timeout'));
-        api.call.mockImplementationOnce(async () => ({'status': 'ok'}));
-        expect.assertions(1);
-        try {
-            await openSession()
-        } catch (e) {
-            expect(api.call).toBeCalledWith('tmate', 'close_session', {})
-        }
+        api.call.mockImplementationOnce(async () => ({status: 'ok'}));
+        expect.assertions(2);
+        await expect(openSession()).rejects.toEqual('timeout');
+        expect(api.call).toBeCalledWith('tmate', 'close_session', {});
     })
 });

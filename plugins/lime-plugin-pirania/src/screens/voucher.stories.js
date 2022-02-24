@@ -14,7 +14,6 @@ const voucher = {
     creation_date: 1631880790,
     status: 'active',
     author_node: 'ql-berta',
-    activation_date: 1631881790,
 }
 
 export const voucherDetails = () => (

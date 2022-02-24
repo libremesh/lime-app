@@ -133,7 +133,7 @@ export const myStory = () => <${componentName} />
 
 const styleContent = () => "// Here you define the css for this plugin";
 
-const argv = yargs(hideBin(process.argv))
+yargs(hideBin(process.argv))
     .command('$0 create <name>', 'create an skeleton for a new plugin',
         yargs => yargs
             .positional('name', {
@@ -156,7 +156,7 @@ const argv = yargs(hideBin(process.argv))
 function create(argv) {
     const name = argv.name;
     const pluginName = `lime-plugin-${name}`;
-    baseDir = path.join(__dirname, '..', 'plugins', pluginName);
+    const baseDir = path.join(__dirname, '..', 'plugins', pluginName);
     fs.mkdirSync(baseDir);
     fs.mkdirSync(path.join(baseDir, 'src'))
     fs.writeFileSync(path.join(baseDir, 'src', `${name}Page.js`), pageContent(name));

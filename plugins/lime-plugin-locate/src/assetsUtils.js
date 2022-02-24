@@ -11,7 +11,7 @@ function loadLeafletScript() {
             document.body.appendChild(script);
         }
     })
-};
+}
 
 function loadLeafletStylesheet() {
     return new Promise((res, rej) => {
@@ -27,7 +27,7 @@ function loadLeafletStylesheet() {
             document.head.appendChild(style);
         }
     })
-};
+}
 
 
 export function loadLeafLet() {
@@ -44,7 +44,7 @@ export function loadGoogleMapsApi() {
             const script = document.createElement('script');
             script.onload = res;
             script.onerror = rej;
-            script.src = 'https://maps.googleapis.com/maps/api/js?key='+key;
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${key}`;
             script.id = 'googlemaps-script';
             document.body.appendChild(script);
         }

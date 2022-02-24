@@ -27,11 +27,11 @@ const Copy = ({ text, className }) => {
 			return await navigator.clipboard.writeText(
 				ref.current.innerText
 			);
-		} else {
+		} 
 			// clipboard API works only on https sites
 			selectText(ref.current.firstChild);
 			return document.execCommand("copy");
-		}
+		
 	}
 
 	const handleCopyClick = (e) => {

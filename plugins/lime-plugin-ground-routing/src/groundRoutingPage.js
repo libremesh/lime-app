@@ -14,7 +14,7 @@ const Page = ({ getGroundRouting, loading, configuration }) => {
 	
 	useEffect(() => {
 		getGroundRouting();
-	}, []);
+	}, [getGroundRouting]);
 
 	const preStyle = {
 		backgroundColor: '#f5f5f5',

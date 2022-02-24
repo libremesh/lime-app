@@ -77,6 +77,7 @@ describe("Voucher details", () => {
 		};
 		listVouchers.mockImplementation(async () => [voucher_]);
 		render(<Voucher id={voucher_.id} />);
+		// eslint-disable-next-line jest/no-standalone-expect
 		expect(await screen.findByText(
 			`Status: ${expected}`)
 		).toBeInTheDocument();
@@ -109,7 +110,7 @@ describe("Voucher details", () => {
 
 	it('shows duration in days if not permanent', async () => {
 		render(<Voucher id={voucher.id} />);
-		const durationDays = parseInt(voucher.duration_m / (24 * 60))
+		const durationDays = parseInt(voucher.duration_m / (24 * 60), 10)
 		expect(await screen.findByText(
 			`Duration: ${durationDays} days`)
 		).toBeInTheDocument();
@@ -143,9 +144,11 @@ describe("Voucher details", () => {
 		]);
 		render(<Voucher id={voucher.id} />);
 		const button = await screen.findByRole("button", { name: /invalidate/i });
+		// eslint-disable-next-line jest/no-standalone-expect
 		expect(button).toBeInTheDocument();
 		fireEvent.click(button);
 		await waitForExpect(() => {
+			// eslint-disable-next-line jest/no-standalone-expect
 			expect(route).toHaveBeenCalledWith(`/access/invalidate/${voucher.id}`);
 		});
 	});
@@ -161,7 +164,9 @@ describe("Voucher details", () => {
 		]);
 		render(<Voucher id={voucher.id} />);
 		// wait for something to be rendered.
+		// eslint-disable-next-line jest/no-standalone-expect
 		expect(await screen.findByText(voucher.code)).toBeInTheDocument();
+		// eslint-disable-next-line jest/no-standalone-expect
 		expect(
 			screen.queryByRole("button", { name: /invalidate/i })
 		).toBeNull();

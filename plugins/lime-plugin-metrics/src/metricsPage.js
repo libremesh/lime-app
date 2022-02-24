@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { useEffect } from 'preact/hooks';
-
+import { i18n } from '@lingui/core';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -144,7 +144,7 @@ useEffect(() => {
 		inputEnd: 30
 	});
 	return () => { };
-}, [boardData]);
+}, [boardData, getMetricsGateway, getInternetStatus]);
 
 return (
 	<div class="container container-padded" style={{ textAlign: 'center' }}>

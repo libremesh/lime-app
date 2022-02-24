@@ -12,7 +12,7 @@ export const initialState = {
 	error: false
 };
 
-export const reducer = (state = initialState, { type, payload, meta }) => {
+export const reducer = (state = initialState, { type, payload }) => {
 	switch (type) {
 
 		case GROUNDROUTING_GET:

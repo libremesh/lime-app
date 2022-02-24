@@ -136,11 +136,11 @@ const HotspotPage = () => {
                 refetch();
             }, 10000);
         }
-    }, [waitingRadioReset])
+    }, [waitingRadioReset, refetch])
 
     function onSubmit({ enabled }) {
         return toggle(enabled);
-    };
+    }
 
     return (
         <ConfigPageLayout {...{

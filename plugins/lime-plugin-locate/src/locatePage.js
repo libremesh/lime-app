@@ -75,10 +75,20 @@ export const LocatePage = ({ editting, submitting, stationLat, stationLon, nodes
 			.catch(onAssetsError)
 			.then(loadLocation) // Load node location
 			.then(loadLocationLinks); // Load community locations
-	}, []);
+	}, [loadLocation, loadLocationLinks]);
 
 	// Set map position when map is available or location gets updated
 	useEffect(() => {
+		function updateNodeMarker(lat, lon) {
+			if (nodeMarker) {
+				nodeMarker.setLatLng([lat, lon]);
+			}
+			else {
+				const marker = L.marker([lat, lon], { icon: L.icon(homeIcon), alt: 'node marker' }).addTo(map);
+				setNodeMarker(marker);
+			}
+		}
+
 		if (map && stationLat) {
 			map.setView([stationLat, stationLon], 13);
 			updateNodeMarker(stationLat, stationLon);
@@ -86,7 +96,7 @@ export const LocatePage = ({ editting, submitting, stationLat, stationLon, nodes
 		else if (map) {
 			map.setView([-30, -60], 3);
 		}
-	}, [stationLat, stationLon, map]);
+	}, [stationLat, stationLon, map, nodeMarker]);
 
 	// Center the map on the node also when editting is turned on
 	useEffect(() => {
@@ -118,16 +128,6 @@ export const LocatePage = ({ editting, submitting, stationLat, stationLon, nodes
 		if (communityLayer) {
 			// Hide the community view, to avoid outdated links
 			toogleCommunityLayer();
-		}
-	}
-
-	function updateNodeMarker(lat, lon) {
-		if (nodeMarker) {
-			nodeMarker.setLatLng([lat, lon]);
-		}
-		else {
-			const marker = L.marker([lat, lon], { icon: L.icon(homeIcon), alt: 'node marker' }).addTo(map);
-			setNodeMarker(marker);
 		}
 	}
 

@@ -89,7 +89,7 @@ describe('portal config page', () => {
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': true, 'with_vouchers': true
+                activated: true, with_vouchers: true
             });
         });
         fireEvent.click(await findActiveCheckbox());
@@ -97,14 +97,14 @@ describe('portal config page', () => {
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': false, 'with_vouchers': false
+                activated: false, with_vouchers: false
             });
         });
         fireEvent.click(await findActiveCheckbox());
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': true, 'with_vouchers': false
+                activated: true, with_vouchers: false
             });
         });
         fireEvent.click(await findActiveCheckbox());
@@ -112,7 +112,7 @@ describe('portal config page', () => {
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': false, 'with_vouchers': true
+                activated: false, with_vouchers: true
             });
         });
     });

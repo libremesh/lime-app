@@ -22,7 +22,7 @@ const TestBox = ({
             <div class="d-flex flex-grow-1 ">
                 {isFetching ?
                     <div class="flex-grow-1 justify-content-center">
-                        <Loading color={bgClass !== 'bg-gray' ? 'white' : null}/>
+                        <Loading color={bgClass !== 'bg-gray' ? 'white' : null} />
                     </div>
                     :
                     <div class="d-flex flex-grow-1">{children}</div>

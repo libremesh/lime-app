@@ -29,7 +29,6 @@ export const createCompression = (file) =>
         });
     });
 export function listVouchers() {
-	const now = new Date().getTime() / 1000;
 	return api.call("pirania", "list_vouchers", {})
 		.then(response =>response.vouchers)
 		.catch((error) => {

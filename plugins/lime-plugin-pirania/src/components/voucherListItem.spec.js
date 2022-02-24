@@ -46,11 +46,13 @@ describe("voucher list item", () => {
 		['Invalidated', 'invalidated'],
 
 	]).it("shows the voucher status as %s when status is %s", async (expected, status) => {
-		const voucher_ = { ...voucher, status: status };
+		const voucher_ = { ...voucher, status };
 		render(<VoucherListItem {...voucher_} />);
+		// eslint-disable-next-line jest/no-standalone-expect
 		expect(await screen.findByText(expected)).toBeInTheDocument();
 	});
 
+	
 	it("shows vouchers creation date", async () => {
 		render(<VoucherListItem {...voucher} />);
 		const timeAgo = timeago.format(new Date(voucher.creation_date * 1000));

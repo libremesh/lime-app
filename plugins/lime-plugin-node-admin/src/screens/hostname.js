@@ -15,11 +15,11 @@ const HostnamePage = () => {
 
     useEffect(() => {
         reset({ hostname: boardData && boardData.hostname });
-    }, [boardData]);
+    }, [boardData, reset]);
 
     function onSubmit({ hostname }) {
         changeHostname(hostname);
-    };
+    }
 
     return (
         <ConfigPageLayout {...{

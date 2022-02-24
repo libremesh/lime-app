@@ -16,5 +16,5 @@ export const useToggleHotspot = () =>
     useMutation(toggle, {
         onSuccess: (enabled) => queryCache.setQueryData(
             ['lime-utils', 'hotspot_wwan_get_status'],
-            { enabled: enabled, waitingForRadioReset: true })
+            { enabled, waitingForRadioReset: true })
     });

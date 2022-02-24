@@ -20,16 +20,16 @@ const VoucherListItem = ({
 		route(`/access/view/${id}`);
 	}
 	const statusMsgs = {
-		'available': <Trans>Available</Trans>,
-		'expired': <Trans>Expired</Trans>,
-		'active': <Trans>Active</Trans>,
-		'invalidated': <Trans>Invalidated</Trans>
+		available: <Trans>Available</Trans>,
+		expired: <Trans>Expired</Trans>,
+		active: <Trans>Active</Trans>,
+		invalidated: <Trans>Invalidated</Trans>
 	};
 
 	const statusClassName = {
-		'available': style.voucherStatusAvailable,
-		'active': 'text-primary',
-		'expired': 'text-danger'
+		available: style.voucherStatusAvailable,
+		active: 'text-primary',
+		expired: 'text-danger'
 	};
 
 	return (

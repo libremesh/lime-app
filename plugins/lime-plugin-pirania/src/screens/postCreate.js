@@ -21,7 +21,7 @@ const Duration = ({ days }) => {
 const PostCreate = ({ vouchers }) => {
 	const { name, duration_m,
 		activation_deadline } = vouchers[0];
-	const durationInDays = duration_m && parseInt(duration_m / (24 * 60));
+	const durationInDays = duration_m && parseInt(duration_m / (24 * 60), 10);
 	const deadlineText = activation_deadline && (
 		i18n.date(activation_deadline * 1000,
 			{ dateStyle: "medium", timeStyle: "medium" })

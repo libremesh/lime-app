@@ -28,7 +28,7 @@ export const Page = ({ setNotes, getNotes, notes, loading }) => {
 	useEffect(() => {
 		getNotes();
 		return () => {};
-	}, []);
+	}, [getNotes]);
 
 	//After notes reload
 	useEffect(() => {

@@ -206,6 +206,6 @@ describe('portal wellcome screen', () => {
         await fillLinkData('mysite.com');
         const submitButton = await findSubmitButton();
         fireEvent.click(submitButton);
-        expect(await screen.findByText('It must start with https:// or http://'));
+        expect(await screen.findByText('It must start with https:// or http://')).toBeInTheDocument();
     });
 });
