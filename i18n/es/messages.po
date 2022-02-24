@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:51
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:50
 msgid "A new firmware version has been released"
 msgstr "Nueva versión del firmware disponible"
 
@@ -21,7 +21,7 @@ msgstr "Nueva versión del firmware disponible"
 msgid "A reboot is needed to apply changes"
 msgstr "Reinicia el nodo para aplicar cambios"
 
-#: plugins/lime-plugin-pirania/index.js:13
+#: plugins/lime-plugin-pirania/src/piraniaMenu.js:5
 msgid "Access Vouchers"
 msgstr "Cupones de Acceso"
 
@@ -261,7 +261,7 @@ msgstr "Cupones creados"
 msgid "Creation date: {0}"
 msgstr "Fecha de creación: {0}"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:52
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:51
 msgid "Currently your node has version:"
 msgstr "Actualmente tu nodo tiene la versión:"
 
@@ -284,16 +284,16 @@ msgstr "Equipo"
 msgid "Disabled"
 msgstr "Deshabilitado"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:66
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:65
 #: src/components/banner/index.js:18
 msgid "Don't show this message again"
 msgstr "No volver a mostrar a este mensaje"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:71
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:73
 msgid "Download"
 msgstr "Descargar"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:75
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:80
 msgid "Downloading"
 msgstr "Descargando"
 
@@ -342,7 +342,7 @@ msgstr "Habilitado, con vouchers"
 
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
 msgid "Enabled, without vouchers"
-msgstr "Habilitado, con vouchers"
+msgstr "Habilitado, sin vouchers"
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:73
 msgid "Encryption: {encryptionMethod}"
@@ -379,7 +379,7 @@ msgstr "Expira <0/>"
 msgid "Fetching name"
 msgstr "Consiguiendo nombre"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:141
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:146
 msgid "Filename"
 msgstr "Nombre"
 
@@ -387,7 +387,7 @@ msgstr "Nombre"
 msgid "Filter by"
 msgstr "Filtrar por"
 
-#: plugins/lime-plugin-firmware/index.js:9
+#: plugins/lime-plugin-firmware/src/firmwareMenu.js:3
 #: plugins/lime-plugin-rx/src/rxPage.js:56
 msgid "Firmware"
 msgstr "Firmware"
@@ -403,6 +403,14 @@ msgstr "Medir todo el recorrido"
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:58
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Consigue un teléfono adicional al que estás usando que tenga conexión a internet por datos móviles"
+
+#: src/containers/Menu/menu.js:30
+msgid "Go to Community View"
+msgstr ""
+
+#: src/containers/Menu/menu.js:33
+msgid "Go to Node View"
+msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradeCountdown.js:23
 msgid "Go!"
@@ -538,11 +546,11 @@ msgstr "Midiendo enlaces"
 msgid "Metrics"
 msgstr "Diagnostico"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:58
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:57
 msgid "More details on the release can be found at:"
 msgstr "Puedes encontrar las novedades de esta versión en:"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:90
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:95
 msgid "More info at:"
 msgstr "Más info en:"
 
@@ -629,11 +637,11 @@ msgstr "Solo la puerta de enlace"
 msgid "Opens the \"{apSsid}\" AP in this node"
 msgstr "Abre el AP \"{apSsid}\" en este nodo"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:95
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:100
 msgid "Or choose a firmware image from your device"
 msgstr "O elige una imagen de firmware desde tu dispositivo"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:167
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:172
 msgid "Or upgrade to latest release"
 msgstr "O actualiza a la última version del firmware"
 
@@ -658,11 +666,11 @@ msgstr "Permanente"
 msgid "Please configure your network"
 msgstr "Por favor configure su conexión de red"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:149
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:154
 msgid "Please select a .sh or .bin file"
 msgstr "Por favor, seleccione un archivo .bin o .sh"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:146
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:151
 msgid "Please select a file"
 msgstr "Porfavor, elige un archivo"
 
@@ -717,7 +725,7 @@ msgstr "Recargar"
 msgid "Reload page"
 msgstr "Recargar página"
 
-#: plugins/lime-plugin-remotesupport/index.js:9
+#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:4
 msgid "Remote Support"
 msgstr "Soporte Remoto"
 
@@ -729,7 +737,7 @@ msgstr "Requerido"
 msgid "Rescan"
 msgstr "Volver a escanear"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:82
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:87
 msgid "Retry"
 msgstr "Reintenar"
 
@@ -775,7 +783,7 @@ msgstr "Buscar por"
 msgid "Searching gateway"
 msgstr "Buscando tu salida a Internet"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:23
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:22
 msgid "See More"
 msgstr "Ver más"
 
@@ -787,7 +795,7 @@ msgstr "Seleccione una red a la que sumarse"
 msgid "Select another node and use the LimeApp as you were there"
 msgstr "Selecciona el nodo que quieras visitar y usa la LimeApp como si estuvieras ahí"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:135
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:140
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:48
 msgid "Select file"
 msgstr "Seleccioná el archivo"
@@ -846,7 +854,7 @@ msgstr "Ver consola"
 msgid "Signal lost"
 msgstr "Sin señal"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:142
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:147
 msgid "Size"
 msgstr "Tamaño"
 
@@ -874,7 +882,7 @@ msgstr "El Portal Comunitario permite mostrar una pantalla de bienvenida en el n
 msgid "The are not mesh interfaces available"
 msgstr "No hay interfaces mesh disponibles"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:81
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:86
 msgid "The download failed"
 msgstr "La descarga falló"
 
@@ -907,7 +915,7 @@ msgstr "Las contraseñas no coinciden!"
 msgid "The radio needs to be restarted..."
 msgstr "La radio necesita reiniciarse..."
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:162
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:167
 msgid "The selected image is not valid for the target device"
 msgstr "La imagen seleccionada no es válida para este dispositivo"
 
@@ -935,11 +943,11 @@ msgstr "No hay una sesión de soporte remoto abierta. Haz click en Crear Sesión
 msgid "These are the nodes associated on this radio"
 msgstr "Estos son los nodos asociados a esta radio"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:26
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:27
 msgid "This device does not support secure rollback to previous version if something goes wrong"
 msgstr "En este dispositivo no se puede revertir la actualización en caso de errores"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:21
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:22
 msgid "This device supports secure rollback to previous version if something goes wrong"
 msgstr "En este dispositivo se puede revertir la actualización en caso de errores"
 
@@ -979,24 +987,24 @@ msgstr "Tráfico"
 msgid "Try reloading the app"
 msgstr "Intentar recargar la app"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:152
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:157
 msgid "Upgrade"
 msgstr "Actualizar"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:69
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:68
 msgid "Upgrade Now"
 msgstr "Actualizar ahora"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:68
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:70
 msgid "Upgrade to lastest firmware version"
 msgstr "Actualizar a la última version del firwmare"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:76
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:86
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:81
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:91
 msgid "Upgrade to {versionName}"
 msgstr "Actualizar a {versionName}"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:133
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:138
 msgid "Upload firmware image from your device"
 msgstr "Subí una imagen del firmware desde tu dispositivo"
 
@@ -1084,7 +1092,7 @@ msgstr "Puede buscar redes cercanas para sumarse o crear una nueva."
 msgid "You can share your mobile connection to the node by setting up a mobile hotspot"
 msgstr "Puedes compartir tu conexión de datos con el nodo a través de un Punto de Acceso Móvil"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:54
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:53
 msgid "You can upgrade to:"
 msgstr "Puedes actualizar a:"
 
@@ -1172,7 +1180,7 @@ msgstr "hace {secondsAmount} segundos"
 msgid "{secs, plural, one {# second} other {# seconds}}"
 msgstr "{secs, plural, one {# segundo} other {# segundos}}"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:22
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:69
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:21
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:71
 msgid "{versionName} is now available"
 msgstr "{versionName} ya está disponible"
