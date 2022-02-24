@@ -22,16 +22,11 @@ export function useCreateNetwork(params) {
 
 export function useSearchNetworks(params) {
 	return useMutation(searchNetworks, {
-		onSuccess: () => {
+		onSuccess: (payload) => {
+			console.debug("PAYLOAD" , payload)
 			queryCache.setQueryData(
 				['lime-fbw', 'search-networks'],
-				(payload) => {
-					return payload
-					// return payload.networks.map(net => ({
-					// 	...net,
-					// 	ap: getApName(net)
-					// })) || []
-				}
+				payload
 			)
 		},
 		...params});
