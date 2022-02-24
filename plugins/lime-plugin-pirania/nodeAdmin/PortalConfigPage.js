@@ -17,6 +17,11 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
         route('/access/wellcomescreen');
     }
 
+    const routeToVouchers = (e) => {
+        e.preventDefault();
+        route('/access');
+    }
+
     return (
         <Fragment>
             <form class="flex-grow-1">
@@ -57,7 +62,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                 </div>
                 {config?.with_vouchers &&
                     <p>
-                        <a href="#" onClick={() => route('/access')}><Trans>Manage Vouchers</Trans></a>
+                        <a href="#" onClick={routeToVouchers}><Trans>Manage Vouchers</Trans></a>
                     </p>  
                 }
             </form>
