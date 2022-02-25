@@ -30,12 +30,13 @@ const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
 		setPassword(e.target.value || '');
 	}
 
-	function _submitLogin() {
+	function _submitLogin(e) {
+		e.preventDefault();
 		submitLogin(password);
 	}
 
 	return (
-		<div className="container container-padded">
+		<form onSubmit={_submitLogin} className="container container-padded">
 			<p><Trans>You need to know the shared password to enter this page</Trans></p>
 			<label htmlFor="password"><Trans>Shared Password</Trans></label>
 			<input name="password" type="password" value={password} onInput={changePassword} />
@@ -43,7 +44,7 @@ const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
 				<p><Trans>Wrong password, try again</Trans></p>
 			}
 			<div>
-				<button onClick={_submitLogin}><Trans>Login</Trans></button>
+				<button type="submit"><Trans>Login</Trans></button>
 			</div>
 			<a href="#" onClick={toogleHelp}><Trans>I don't know the shared password</Trans></a>
 			{showHelp &&
@@ -55,7 +56,7 @@ const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
 					<Trans>Logging in</Trans>
 				</div>
 			}
-		</div>
+		</form>
 	);
 };
 
