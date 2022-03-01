@@ -19,8 +19,9 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	});
 
 	const [status, setStatus] = useState()
+	const [networks, setNetworks] = useState()
 
-	const { data: networks } = useGetNetworks();
+	const { data: payloadData } = useGetNetworks();
 
 	const [searchNetworks, { isLoading: isSubmitting}] = useSearchNetworks({
 		onError: () => {
@@ -93,6 +94,11 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			password: e.target.value || ''
 		});
 	} */
+
+	useEffect(() => {
+		setStatus(payloadData?.status || null)
+		setNetworks(payloadData?.networks || [])
+	}, [payloadData])
 
 	useEffect(() => {
 		let interval;
@@ -169,10 +175,4 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
-};
-
-const getApName = ({ ap = '', file = '' }) => {
-	let getHostname = /(?:host__)(.+)/;
-	let hostname = getHostname.exec(file)[1];
-	return '' + (ap && ap !== '')? '('+ap+') '+ hostname : hostname;
 };
