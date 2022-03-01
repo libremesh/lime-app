@@ -21,29 +21,27 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const [networks, setNetworks] = useState()
 	const [status, setStatus] = useState()
 
-	const [searchNetworks, { isLoading: isSubmitting}] = useSearchNetworks({
+	const [searchNetworks, { isLoading: isSubmitting, isError: isSeachNetworkError }] = useSearchNetworks({
 		onSuccess: (payload) => {
 			setNetworks(payload.networks.map(net => ({
 				...net,
 				ap: getApName(net)
 			})) || [])
 			setStatus(payload.status || null)
-		},
-		onError: () => {
-			setStatus('error')
 		}
 	});
 
-	const [setNetwork, { isLoading: isSetNetworkSubmitting}] = useSetNetwork({
+	const [setNetwork, { isLoading: isSetNetworkSubmitting, isError: isSetNetworkError }] = useSetNetwork({
 		onSuccess: () => {
 			setExpectedHost(state.hostname)
 			setExpectedNetwork(state.community)
 			toggleForm('setting')();
-		},
-		onError: () => {
-			setStatus('error')
 		}
 	});
+
+	useEffect(() => {
+		if (isSeachNetworkError || isSetNetworkError) setStatus('error')
+	},[isSeachNetworkError, isSetNetworkError])
 
 	/* Load scan results */
 	function _searchNetworks() {
