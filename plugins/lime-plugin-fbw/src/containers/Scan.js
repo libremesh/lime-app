@@ -8,7 +8,7 @@ import { Loading } from 'components/loading';
 import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { useBoardData } from 'utils/queries';
-import { useSearchNetworks, useSetNetwork } from '../FbwQueries';
+import { useSearchNetworks, useSetNetwork, useGetNetworks } from '../FbwQueries';
 
 export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const { data: boardData } = useBoardData();
@@ -18,18 +18,12 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		hostname: boardData.hostname
 	});
 
-	const [networks, setNetworks] = useState()
 	const [status, setStatus] = useState()
+	const [networks, setNetworks] = useState()
 
-	const [searchNetworks, { isLoading: isSubmitting, isError: isSeachNetworkError }] = useSearchNetworks({
-		onSuccess: (payload) => {
-			setNetworks(payload.networks.map(net => ({
-				...net,
-				ap: getApName(net)
-			})) || [])
-			setStatus(payload.status || null)
-		}
-	});
+	const { data: payloadData } = useGetNetworks();
+
+	const [searchNetworks, { isLoading: isSubmitting,isError: isSeachNetworkError}] = useSearchNetworks()
 
 	const [setNetwork, { isLoading: isSetNetworkSubmitting, isError: isSetNetworkError }] = useSetNetwork({
 		onSuccess: () => {
@@ -97,6 +91,11 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			password: e.target.value || ''
 		});
 	} */
+
+	useEffect(() => {
+		setStatus(payloadData?.status || null)
+		setNetworks(payloadData?.networks || [])
+	}, [payloadData])
 
 	useEffect(() => {
 		let interval;
@@ -173,10 +172,4 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
-};
-
-const getApName = ({ ap = '', file = '' }) => {
-	let getHostname = /(?:host__)(.+)/;
-	let hostname = getHostname.exec(file)[1];
-	return '' + (ap && ap !== '')? '('+ap+') '+ hostname : hostname;
 };
