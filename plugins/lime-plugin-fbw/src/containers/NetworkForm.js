@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 
-import '../style';
+import '../style.less';
 
 import { Trans, t } from '@lingui/macro';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
@@ -70,18 +70,18 @@ export const NetworkForm = ({toggleForm}) => {
 
 	return (<div class="container container-padded">
 		<h4><span><Trans>Configure your new community network</Trans></span></h4>
-		<label><Trans>Choose a name for your network</Trans></label>
-		<input type="text" placeholder={t`Community name`} class="u-full-width" onInput={_changeName} />
-		<label><Trans>Choose a shared password for network administration</Trans></label>
-		<input type="password" placeholder={t`Password`} class="u-full-width" value={state.password} onInput={_changePassword} />
+		<label for="community_name" ><Trans>Choose a name for your network</Trans></label>
+		<input id="community_name" type="text" placeholder={t`Community name`} class="u-full-width" onInput={_changeName} />
+		<label for="shared_password"><Trans>Choose a shared password for network administration</Trans></label>
+		<input id="shared_password" type="password" placeholder={t`Password`} class="u-full-width" value={state.password} onInput={_changePassword} />
 		<ValidationMessages password={state.password} />
-		<label><Trans>Re-enter the shared password</Trans></label>
-		<input type="password" placeholder={t`Re-enter Password`} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
+		<label for="shared_password_confirm"><Trans>Re-enter the shared password</Trans></label>
+		<input id="shared_password_confirm" type="password" placeholder={t`Re-enter Password`} class="u-full-width" value={state.passwordConfirmation} onInput={_changePasswordConfirmation} />
 		{state.passwordConfirmation && state.password !== state.passwordConfirmation &&
 			<p><Trans>The passwords do not match!</Trans></p>
 		}
-		<label><Trans>Choose a name for this node</Trans></label>
-		<input type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostName} onInput={_changeHostName} />
+		<label for="hostname"><Trans>Choose a name for this node</Trans></label>
+		<input id="hostname" type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostName} onInput={_changeHostName} />
 		<div class="row">
 			<div class="six columns">
 				<button
