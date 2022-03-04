@@ -8,22 +8,24 @@ import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { isValidPassword, ValidationMessages } from '../../../../src/containers/SharedPasswordForm';
 import { useCreateNetwork } from '../FbwQueries';
 
-export const NetworkForm = ({toggleForm}) => {
-
-	const [createNetwork, { isLoading: isSubmitting}] = useCreateNetwork({
-		onSuccess: () => {
-			toggleForm('setting')();
-		},
-		onError: () => {
-			toggleForm('create')();
-		}
-	});
+export const NetworkForm = ({toggleForm, setExpectedHost, setExpectedNetwork}) => {
 
 	const [state, setState] = useState({
 		communityName: '',
 		hostName: '',
 		password: '',
 		passwordConfirmation: ''
+	});
+
+	const [createNetwork, { isLoading: isSubmitting}] = useCreateNetwork({
+		onSuccess: (payload) => {
+			setExpectedHost(state.hostName)
+			setExpectedNetwork(state.communityName)
+			toggleForm('setting')();
+		},
+		onError: () => {
+			toggleForm('create')();
+		}
 	});
 
 	function _changeName(e) {

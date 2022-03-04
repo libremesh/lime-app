@@ -27,7 +27,7 @@ const Page = ({ }) => {
 
 	return (
 		<Fragment>
-			{form === 'create' && <NetworkForm toggleForm={toggleForm} />}
+			{form === 'create' && <NetworkForm toggleForm={toggleForm} setExpectedHost={setExpectedHost} setExpectedNetwork={setExpectedNetwork} />}
 			{form === 'scan' &&
 				<Scan toggleForm={toggleForm} setExpectedHost={setExpectedHost} setExpectedNetwork={setExpectedNetwork} />}
 			{form === 'setting' && <Setting toggleForm={toggleForm} expectedHost={expectedHost} expectedNetwork={expectedNetwork} />}
