@@ -58,7 +58,7 @@ describe('Fbw Page', () => {
         fetch.mockReject();
         render(<AppContextProvider><FbwPage /></AppContextProvider>);
         await advanceToChecking();
-        expect(await screen.findByText('You should try to connect to the network ournetwork/mynode'));
+        expect(await screen.findByText('You should try to connect to the network ournetwork/mynode.'));
     });
 
     it('asks to connect to the wifi network for this node if getting different hostname ', async () => {
