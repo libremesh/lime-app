@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-import '../style';
+import '../style.less';
 
 import { Trans, t } from '@lingui/macro';
 import { Loading } from 'components/loading';

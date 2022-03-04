@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import { Trans } from '@lingui/macro';
 
-import '../style';
+import '../style.less';
 
 import ProgressBar from 'components/progressbar';
 import Loading from 'components/loading';
@@ -57,8 +57,8 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 	}
 
 	function runProgress (totalTime, cb) {
-		if (time > 0) setTime(time - 1);
-		if (progress < 100) setProgress(progress + (100/totalTime));
+		if (time > 0) setTime(time => time - 1);
+		if (progress < 100) setProgress(progress => progress + (100/totalTime));
 		if (time <= 1) cb();
 	}
 

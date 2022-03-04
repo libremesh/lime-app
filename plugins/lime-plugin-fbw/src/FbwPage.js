@@ -1,7 +1,7 @@
 import { h, Fragment } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-import './style';
+import './style.less';
 
 import SelectAction from './containers/SelectAction';
 import { NetworkForm } from './containers/NetworkForm';
