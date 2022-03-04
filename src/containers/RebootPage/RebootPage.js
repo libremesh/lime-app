@@ -2,11 +2,18 @@ import { h } from 'preact';
 import { route } from 'preact-router';
 import { Trans } from '@lingui/macro';
 
-import { useReboot } from 'utils/queries';
+import { useReboot, useSetNeedReboot } from 'utils/queries';
 import Loading from 'components/loading';
 
 const RebootPage = () => {
-	const [reboot, { isLoading, isSuccess }] = useReboot();
+	const [ reboot, { isLoading, isSuccess }] = useReboot();
+	const [ setNeedReboot ] = useSetNeedReboot();
+
+	function cancel() {
+		setNeedReboot('no');
+		route('/');
+	}
+
 
 	if (isSuccess) {
 		return (
@@ -21,7 +28,7 @@ const RebootPage = () => {
 		<div class={`container container-padded container-center`}>
 			<p><Trans>Are you sure you want to reboot?</Trans></p>
 			<button onClick={reboot}><Trans>Yes</Trans></button>
-			<button onClick={() => route('/')}><Trans>No, cancel</Trans></button>
+			<button onClick={cancel}><Trans>No, cancel</Trans></button>
 			{isLoading &&
 				<div>
 					<Loading />

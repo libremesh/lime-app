@@ -25,7 +25,7 @@ msgstr ""
 msgid "Access Vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:42
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:47
 msgid "Access vouchers"
 msgstr ""
 
@@ -63,7 +63,7 @@ msgstr "Allineare"
 msgid "All Vouchers"
 msgstr ""
 
-#: src/containers/RebootPage/RebootPage.js:22
+#: src/containers/RebootPage/RebootPage.js:29
 msgid "Are you sure you want to reboot?"
 msgstr ""
 
@@ -176,7 +176,7 @@ msgid "Community Logo"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:22
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:87
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:92
 msgid "Community Portal"
 msgstr ""
 
@@ -315,7 +315,7 @@ msgstr ""
 msgid "Edit Voucher"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:40
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:45
 msgid "Edit wellcome screen"
 msgstr ""
 
@@ -327,7 +327,7 @@ msgstr ""
 msgid "Enable Password"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:42
 msgid "Enable Portal in Community AP"
 msgstr ""
 
@@ -526,7 +526,7 @@ msgstr ""
 msgid "Main Text"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:60
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:65
 msgid "Manage Vouchers"
 msgstr ""
 
@@ -583,7 +583,7 @@ msgid "No password"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:29
-#: src/containers/RebootPage/RebootPage.js:24
+#: src/containers/RebootPage/RebootPage.js:31
 msgid "No, cancel"
 msgstr ""
 
@@ -687,7 +687,7 @@ msgid "Please wait patiently for {remainingTime} seconds and do not disconnect t
 msgstr ""
 
 #: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:25
-#: src/containers/RebootPage/RebootPage.js:15
+#: src/containers/RebootPage/RebootPage.js:22
 msgid "Please wait while the device reboots, and reload the app"
 msgstr ""
 
@@ -713,7 +713,7 @@ msgstr ""
 msgid "Reboot"
 msgstr ""
 
-#: src/containers/RebootPage/RebootPage.js:14
+#: src/containers/RebootPage/RebootPage.js:21
 msgid "Rebooting"
 msgstr ""
 
@@ -753,7 +753,7 @@ msgstr ""
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:38
 #: plugins/lime-plugin-node-admin/src/screens/password.js:51
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:29
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:68
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:73
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:28
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:79
 msgid "Save"
@@ -874,7 +874,7 @@ msgstr "Sistema"
 msgid "The Community AP is present in every node allowing people to move around the network territory without losing connection"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:24
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:29
 msgid "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 msgstr ""
 
@@ -1012,7 +1012,7 @@ msgstr ""
 msgid "Uptime"
 msgstr "Tempo di attività"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:56
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:61
 msgid "Use vouchers for access"
 msgstr ""
 
@@ -1041,7 +1041,7 @@ msgstr ""
 msgid "Voucher list"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:44
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:49
 msgid "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 msgstr ""
 
@@ -1072,7 +1072,7 @@ msgid "Wrong password, try again"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:28
-#: src/containers/RebootPage/RebootPage.js:23
+#: src/containers/RebootPage/RebootPage.js:30
 msgid "Yes"
 msgstr ""
 

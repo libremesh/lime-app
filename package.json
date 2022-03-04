@@ -59,6 +59,7 @@
     "jest": "^24.9.0",
     "jest-extended": "^0.11.5",
     "jest-fetch-mock": "^3.0.3",
+    "jest-localstorage-mock": "^2.4.19",
     "jest-preset-preact": "^1.0.0",
     "jest-when": "^2.7.2",
     "less": "^3.12.2",

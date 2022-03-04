@@ -12,7 +12,6 @@ import RoamingAPPage from './roamingAP';
 
 import { setupRoamingAP, getAPsData } from '../nodeAdminApi';
 
-jest.mock('utils/api');
 jest.mock('../nodeAdminApi');
 
 const findCheckbox = async () =>

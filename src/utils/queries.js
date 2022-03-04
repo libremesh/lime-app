@@ -1,7 +1,7 @@
 import api from './uhttpd.service';
 import {
 	getBatHost, getBoardData, getSession, getCommunitySettings,
-	reboot, checkInternet
+	reboot, checkInternet, getChangesNeedReboot, setChangesNeedReboot
 } from './api';
 import { DEFAULT_COMMUNITY_SETTINGS } from './constants';
 import { useQuery, useMutation } from 'react-query';
@@ -51,14 +51,24 @@ export function useBatHost(mac, outgoingIface, queryConfig) {
 }
 
 export function useNeedReboot() {
-	return useQuery('changes-need-reboot', {
-		initialStale: false,
-		initialData: false
-	});
+	return useQuery('changes-need-reboot', getChangesNeedReboot);
 }
 
-export function useReboot(config) {
-	return useMutation(reboot, config);
+export function useSetNeedReboot() {
+	return useMutation(setChangesNeedReboot, {
+		onSuccess: () => {
+			queryCache.invalidateQueries('changes-need-reboot')
+		}
+	})
+}
+
+export function useReboot() {
+	return useMutation(reboot, {
+		onSuccess: () => {
+			setChangesNeedReboot('no');
+			queryCache.invalidateQueries('changes-need-reboot');
+		}
+	});
 }
 
 export function useCheckInternet() {

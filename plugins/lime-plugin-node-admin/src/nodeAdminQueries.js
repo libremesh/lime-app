@@ -4,11 +4,14 @@ import {
     getAPsData, getAdminApsData, changeHostname,
     changeApNamePassword, setupRoamingAP
 } from './nodeAdminApi';
+import { setChangesNeedReboot } from 'utils/api';
 
 export const useChangeHostname = () =>
     useMutation(changeHostname, {
-        onSuccess: () =>
-            queryCache.setQueryData('changes-need-reboot', true)
+        onSuccess: () => {
+            setChangesNeedReboot('yes');
+            queryCache.invalidateQueries('changes-need-reboot');
+        }
     });
 
 export const useWifiData = () =>
@@ -20,7 +23,8 @@ export const useAdminWifiData = () =>
 export const useChangeAPPassword = () =>
     useMutation(changeApNamePassword, {
         onSuccess: () => {
-            queryCache.setQueryData('changes-need-reboot', true);
+            setChangesNeedReboot('yes');
+            queryCache.invalidateQueries('changes-need-reboot');
             queryCache.invalidateQueries(['lime-utils', 'get_wifi_data']);
             queryCache.invalidateQueries(['lime-utils-admin', 'get_wifi_data']);
         }
@@ -29,7 +33,8 @@ export const useChangeAPPassword = () =>
 export const useSetupRoamingAP = () =>
     useMutation(setupRoamingAP, {
         onSuccess: () => {
-            queryCache.setQueryData('changes-need-reboot', true);
+            setChangesNeedReboot('yes');
+            queryCache.invalidateQueries('changes-need-reboot');
             queryCache.invalidateQueries(['lime-utils', 'get_wifi_data']);
             queryCache.invalidateQueries(['lime-utils-admin', 'get_wifi_data']);
         }

@@ -6,7 +6,7 @@ module.exports = {
 		'<rootDir>/plugins/**/__tests__/**/*.{mjs,js,jsx,ts,tsx}',
 		'<rootDir>/{plugins, src,test,tests}/**/*.{spec,test}.{mjs,js,jsx,ts,tsx}'
 	],
-	setupFiles: ['core-js'],
+	setupFiles: ['core-js', 'jest-localstorage-mock'],
 	setupFilesAfterEnv: ['jest-extended'],
 	moduleNameMapper: {
 		...preactPreset.moduleNameMapper,

@@ -35,3 +35,12 @@ export function reboot() {
 export function checkInternet() {
 	return api.call('check-internet', 'is_connected', {});
 }
+
+export async function getChangesNeedReboot() {
+	return sessionStorage.getItem('need-reboot') == 'yes' ;
+}
+
+export async function setChangesNeedReboot(value) {
+	sessionStorage.setItem('need-reboot', value);
+	return value;
+}
