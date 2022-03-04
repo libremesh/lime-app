@@ -21,7 +21,8 @@ export class UhttpdService {
 	}
 
 	sid() {
-		return sessionStorage.getItem('sid');
+		const sid = sessionStorage.getItem('sid');
+		return sid || UNAUTH_SESSION_ID;
 	}
 
 	addId() {

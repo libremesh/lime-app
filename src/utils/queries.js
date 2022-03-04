@@ -8,11 +8,7 @@ import { useQuery, useMutation } from 'react-query';
 import queryCache from './queryCache';
 
 export function useSession() {
-	return useQuery(['session', 'get'], getSession, {
-		initialData: {
-			username: null
-		}
-	})
+	return useQuery(['session', 'get'], getSession)
 }
 
 function login({ username, password }) {
@@ -29,11 +25,8 @@ export function useLogin() {
 
 
 
-export function useBoardData() {
-	return useQuery(['system', 'board'], getBoardData, {
-		initialData: { hostname: 'LiMe' },
-		initialStale: true
-	});
+export function useBoardData(config) {
+	return useQuery(['system', 'board'], getBoardData, config);
 }
 
 export function useCommunitySettings() {

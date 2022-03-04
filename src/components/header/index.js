@@ -16,8 +16,8 @@ export const Header = ({ Menu }) => {
 	return (
 		<Fragment>
 			<header class={style.header}>
-				<h1>{boardData.hostname}</h1>
-				{menuEnabled &&
+				{boardData && <h1>{boardData.hostname}</h1>}
+				{boardData && menuEnabled &&
 				<div className={`${style.hamburger} ${menuOpened ? style.isActive : ''}`}
 					onClick={toggleMenu}
 				>
