@@ -18,7 +18,7 @@ import SubHeader from '../containers/SubHeader';
 
 import queryCache from 'utils/queryCache';
 
-import { useSession, useLogin } from 'utils/queries';
+import { useSession, useLogin, useBoardData } from 'utils/queries';
 
 import { RebootPage } from '../containers/RebootPage';
 import i18n, { dynamicActivate } from '../i18n';
@@ -73,10 +73,18 @@ const Routes = () => (
 
 const App = () => {
 	const { data: session } = useSession();
-	const [login, { isIdle }] = useLogin();
+	const [login] = useLogin();
+	const { data: boardData } = useBoardData(
+		{enabled: session && session.username}
+	);
 
-	if (session.username === null && isIdle) {
-		login({ username: 'lime-app', password: 'generic' });
+	useEffect(() => {
+		if (session?.username === null) {
+			login({ username: 'lime-app', password: 'generic' });
+		}
+	}, [session, login])
+
+	if (!(session?.username) || !(boardData)) {
 		return 'Loading...'
 	}
 

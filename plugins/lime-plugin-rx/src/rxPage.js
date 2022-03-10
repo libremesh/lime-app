@@ -138,7 +138,7 @@ export const Page = ({ getNodeStatusTimer, getNodeStatus, stopTimer, isLoading, 
 		getNodeStatusTimer();
 		getNodeStatus();
 		return stopTimer;
-	},[]);
+	},[getNodeStatusTimer, getNodeStatus, stopTimer]);
 
 	return (
 		<div className="container container-padded" >

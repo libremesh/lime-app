@@ -26,7 +26,7 @@ const locateChange = ( action$, _state$, { wsAPI } ) =>
 	action$.pipe(
 		ofType(LOCATION_CHANGE),
 		mergeMap((action) => changeLocation(wsAPI, action.payload)),
-		map((payload) => ({ type: LOCATION_CHANGE_SUCCESS }))
+		map(() => ({ type: LOCATION_CHANGE_SUCCESS }))
 	);
 
 const locateLoadlinks = ( action$, _state$, { wsAPI } ) =>

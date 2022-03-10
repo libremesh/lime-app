@@ -4,7 +4,7 @@ export default {
     title: 'Containers/WellcomeScreenEditor'
 }
 
-export const wellcomeScreenWithoutLogo = () => < WellcomeScreenEditor />;
+export const wellcomeScreenWithoutLogo = () => <WellcomeScreenEditor />;
 wellcomeScreenWithoutLogo.args = {
     queries: [
         [['pirania', 'get_portal_page_content'],
@@ -18,7 +18,7 @@ wellcomeScreenWithoutLogo.args = {
     ]
 };
 
-export const wellcomeScreenWithLogo = () => < WellcomeScreenEditor />;
+export const wellcomeScreenWithLogo = () => <WellcomeScreenEditor />;
 wellcomeScreenWithLogo.args = {
     queries: [
         [['pirania', 'get_portal_page_content'],

@@ -46,7 +46,7 @@ const RoamingAPPage = () => {
 
     function onSubmit({ enableRoamingAP }) {
         return setupRoamingAP({ enabled: enableRoamingAP });
-    };
+    }
 
     return (
         <ConfigPageLayout {...{

@@ -14,7 +14,7 @@ const findSubmitButton = async () =>
     screen.findByRole('button', { name: "Save" });
 
 const findActiveCheckbox = async () =>
-    screen.findByLabelText("Activate Portal in Community AP");
+    screen.findByLabelText("Enable Portal in Community AP");
 
 const findVouchersCheckbox = async () =>
     screen.findByLabelText("Use vouchers for access");
@@ -41,7 +41,7 @@ describe('portal config page', () => {
         expect(await findSubmitButton()).toBeVisible();
     });
 
-    it('shows an unchecked switch for portal activation when deactivated', async () => {
+    it('shows an unchecked switch for portal activation when disabled', async () => {
         getPortalConfig.mockImplementation(async () => ({
             activated: false
         }));
@@ -89,7 +89,7 @@ describe('portal config page', () => {
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': true, 'with_vouchers': true
+                activated: true, with_vouchers: true
             });
         });
         fireEvent.click(await findActiveCheckbox());
@@ -97,14 +97,14 @@ describe('portal config page', () => {
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': false, 'with_vouchers': false
+                activated: false, with_vouchers: false
             });
         });
         fireEvent.click(await findActiveCheckbox());
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': true, 'with_vouchers': false
+                activated: true, with_vouchers: false
             });
         });
         fireEvent.click(await findActiveCheckbox());
@@ -112,7 +112,7 @@ describe('portal config page', () => {
         fireEvent.click(button);
         await waitForExpect(() => {
             expect(setPortalConfig).toBeCalledWith({
-                'activated': false, 'with_vouchers': true
+                activated: false, with_vouchers: true
             });
         });
     });

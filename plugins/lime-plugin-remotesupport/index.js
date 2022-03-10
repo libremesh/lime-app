@@ -1,12 +1,11 @@
-import {h} from 'preact';
-import { Trans } from '@lingui/macro';
 import RemoteSupportPage from './src/remoteSupportPage';
+import Menu from './src/remoteSupportMenu';
 import ConsoleView from './src/consoleView';
 
 export default {
 	name: 'remotesupport',
 	page: RemoteSupportPage,
-	menu: () => <a href={'#/remotesupport'}><Trans>Remote Support</Trans></a>,
+	menu: Menu,
 	isCommunityProtected: true,
 	additionalProtectedRoutes: [
 		['console', ConsoleView]

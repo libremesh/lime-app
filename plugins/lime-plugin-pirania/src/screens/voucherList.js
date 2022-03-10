@@ -18,7 +18,7 @@ const VoucherList = () => {
 
 	const filteredVoucher = vouchers
 		.sort((a, b) => {
-			return parseInt(a.creation_date) < parseInt(b.creation_date) ? 1 : -1
+			return parseInt(a.creation_date, 10) < parseInt(b.creation_date, 10) ? 1 : -1
 		})
 		.filter((voucher) => {
 			if (filterSelection === "all-vouchers") return true;

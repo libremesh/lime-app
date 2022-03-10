@@ -1,5 +1,5 @@
 import { h } from "preact";
-import { Trans } from '@lingui/macro';
+import { Trans, Plural } from '@lingui/macro';
 import { route } from "preact-router";
 import style from "../style.less";
 import { useListVouchers } from "../piraniaQueries";
@@ -8,10 +8,10 @@ import Copy from "../components/copy";
 import { i18n } from "@lingui/core";
 
 const statusMsgs = {
-	'available': <Trans>Available</Trans>,
-	'expired': <Trans>Expired</Trans>,
-	'active': <Trans>Active</Trans>,
-	'invalidated': <Trans>Invalidated</Trans>
+	available: <Trans>Available</Trans>,
+	expired: <Trans>Expired</Trans>,
+	active: <Trans>Active</Trans>,
+	invalidated: <Trans>Invalidated</Trans>
 };
 
 const formatDate = (date) => Number.isInteger(date) && i18n.date(new Date(date * 1000),
@@ -33,7 +33,7 @@ const VoucherDetails = ({
 	permanent,
 	author_node,
 }) => {
-	const durationInDays = duration_m && parseInt(duration_m / (24 * 60));
+	const durationInDays = duration_m && parseInt(duration_m / (24 * 60), 10);
 	return (
 		<div class="d-flex flex-grow-1 flex-column container-padded">
 			<div class="d-flex flex-grow-1 flex-column">

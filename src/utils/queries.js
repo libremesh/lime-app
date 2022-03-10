@@ -1,18 +1,14 @@
 import api from './uhttpd.service';
 import {
-	getBatHost, getBoardData, getSession, getCommunitySettings, getCommunityName,
-	reboot, checkInternet
+	getBatHost, getBoardData, getSession, getCommunitySettings,
+	reboot, checkInternet, getChangesNeedReboot, setChangesNeedReboot
 } from './api';
 import { DEFAULT_COMMUNITY_SETTINGS } from './constants';
 import { useQuery, useMutation } from 'react-query';
 import queryCache from './queryCache';
 
 export function useSession() {
-	return useQuery(['session', 'get'], getSession, {
-		initialData: {
-			username: null
-		}
-	})
+	return useQuery(['session', 'get'], getSession)
 }
 
 function login({ username, password }) {
@@ -29,11 +25,8 @@ export function useLogin() {
 
 
 
-export function useBoardData() {
-	return useQuery(['system', 'board'], getBoardData, {
-		initialData: { hostname: 'LiMe' },
-		initialStale: true
-	});
+export function useBoardData(config) {
+	return useQuery(['system', 'board'], getBoardData, config);
 }
 
 export function useCommunitySettings() {
@@ -51,14 +44,24 @@ export function useBatHost(mac, outgoingIface, queryConfig) {
 }
 
 export function useNeedReboot() {
-	return useQuery('changes-need-reboot', {
-		initialStale: false,
-		initialData: false
-	});
+	return useQuery('changes-need-reboot', getChangesNeedReboot);
 }
 
-export function useReboot(config) {
-	return useMutation(reboot, config);
+export function useSetNeedReboot() {
+	return useMutation(setChangesNeedReboot, {
+		onSuccess: () => {
+			queryCache.invalidateQueries('changes-need-reboot')
+		}
+	})
+}
+
+export function useReboot() {
+	return useMutation(reboot, {
+		onSuccess: () => {
+			setChangesNeedReboot('no');
+			queryCache.invalidateQueries('changes-need-reboot');
+		}
+	});
 }
 
 export function useCheckInternet() {

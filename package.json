@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "preact-limeapp",
-  "version": "0.2.20",
+  "version": "0.2.25",
   "description": "Limeapp webUI and app",
   "license": "GNU",
   "author": "Marcos Gutierrez <gmarcos@altermundi.net>",
@@ -23,14 +23,9 @@
     "storybook:build": "build-storybook -c .storybook",
     "storybook:deploy": "gh-pages -d storybook-static",
     "test": "jest",
-    "create-plugin": "node ./devTools/plugins create"
+    "create-plugin": "node ./devTools/plugins create",
+    "prepare": "husky install"
   },
-  "eslintConfig": {
-    "extends": "eslint-config-synacor"
-  },
-  "eslintIgnore": [
-    "build/*"
-  ],
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
@@ -46,7 +41,6 @@
     "@testing-library/user-event": "^13.5.0",
     "babel-plugin-macros": "^2.8.0",
     "babel-preset-preact": "^2.0.0",
-    "colors": "^1.4.0",
     "commitizen": "^4.0.0",
     "commitlint": "^8.0.0",
     "enzyme": "^3.10.0",
@@ -59,16 +53,18 @@
     "eslint-plugin-testing-library": "^3.1.4",
     "fetch-mock": "^8.3.2",
     "gh-pages": "^2.0.1",
-    "husky": "^3.0.0",
+    "husky": "^7.0.0",
     "identity-obj-proxy": "^3.0.0",
     "if-env": "^1.0.0",
     "jest": "^24.9.0",
     "jest-extended": "^0.11.5",
     "jest-fetch-mock": "^3.0.3",
+    "jest-localstorage-mock": "^2.4.19",
     "jest-preset-preact": "^1.0.0",
     "jest-when": "^2.7.2",
     "less": "^3.12.2",
     "less-loader": "^6.2.0",
+    "lint-staged": "^12.3.4",
     "per-env": "^1.0.2",
     "serve": "^11.1.0",
     "standard-version": "^8.0.1",
@@ -104,5 +100,8 @@
     "hooks": {
       "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
   }
 }

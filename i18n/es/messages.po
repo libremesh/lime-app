@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:51
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:50
 msgid "A new firmware version has been released"
 msgstr "Nueva versión del firmware disponible"
 
@@ -21,25 +21,13 @@ msgstr "Nueva versión del firmware disponible"
 msgid "A reboot is needed to apply changes"
 msgstr "Reinicia el nodo para aplicar cambios"
 
-#: plugins/lime-plugin-pirania/index.js:13
+#: plugins/lime-plugin-pirania/src/piraniaMenu.js:5
 msgid "Access Vouchers"
 msgstr "Cupones de Acceso"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:42
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:47
 msgid "Access vouchers"
 msgstr "Cupones de Acceso"
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:37
-msgid "Activate Portal in Community AP"
-msgstr "Activar Portal en AP Comunitario"
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
-msgid "Activated, with vouchers"
-msgstr "Activado, con cupones"
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
-msgid "Activated, without vouchers"
-msgstr "Activado, sin cupones"
 
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:62
 msgid "Activation date: {0}"
@@ -75,7 +63,7 @@ msgstr "Alineación"
 msgid "All Vouchers"
 msgstr "Todos los cupones"
 
-#: src/containers/RebootPage/RebootPage.js:22
+#: src/containers/RebootPage/RebootPage.js:29
 msgid "Are you sure you want to reboot?"
 msgstr "Estás seguro/a de que quieres reiniciar?"
 
@@ -188,7 +176,7 @@ msgid "Community Logo"
 msgstr "Logo de la Comunidad"
 
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:22
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:87
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:92
 msgid "Community Portal"
 msgstr "Portal Comunitario"
 
@@ -273,13 +261,9 @@ msgstr "Cupones creados"
 msgid "Creation date: {0}"
 msgstr "Fecha de creación: {0}"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:52
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:51
 msgid "Currently your node has version:"
 msgstr "Actualmente tu nodo tiene la versión:"
-
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
-msgid "Deactivated"
-msgstr "Desactivado"
 
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:16
 msgid "Description"
@@ -296,19 +280,20 @@ msgstr "Equipo"
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
 msgid "Disabled"
 msgstr "Deshabilitado"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:66
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:65
 #: src/components/banner/index.js:18
 msgid "Don't show this message again"
 msgstr "No volver a mostrar a este mensaje"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:71
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:73
 msgid "Download"
 msgstr "Descargar"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:75
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:80
 msgid "Downloading"
 msgstr "Descargando"
 
@@ -330,7 +315,7 @@ msgstr "Editar"
 msgid "Edit Voucher"
 msgstr "Editar Cupón"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:40
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:45
 msgid "Edit wellcome screen"
 msgstr "Editar pantalla de bienvenida"
 
@@ -342,10 +327,22 @@ msgstr "Activar AP Comunitario"
 msgid "Enable Password"
 msgstr "Activar Contraseña"
 
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:42
+msgid "Enable Portal in Community AP"
+msgstr "Habilita el Portal en el AP Comunitario"
+
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
 msgid "Enabled"
 msgstr "Activado"
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
+msgid "Enabled, with vouchers"
+msgstr "Habilitado, con vouchers"
+
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
+msgid "Enabled, without vouchers"
+msgstr "Habilitado, sin vouchers"
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:73
 msgid "Encryption: {encryptionMethod}"
@@ -382,7 +379,7 @@ msgstr "Expira <0/>"
 msgid "Fetching name"
 msgstr "Consiguiendo nombre"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:141
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:146
 msgid "Filename"
 msgstr "Nombre"
 
@@ -390,7 +387,7 @@ msgstr "Nombre"
 msgid "Filter by"
 msgstr "Filtrar por"
 
-#: plugins/lime-plugin-firmware/index.js:9
+#: plugins/lime-plugin-firmware/src/firmwareMenu.js:3
 #: plugins/lime-plugin-rx/src/rxPage.js:56
 msgid "Firmware"
 msgstr "Firmware"
@@ -406,6 +403,14 @@ msgstr "Medir todo el recorrido"
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:58
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Consigue un teléfono adicional al que estás usando que tenga conexión a internet por datos móviles"
+
+#: src/containers/Menu/menu.js:30
+msgid "Go to Community View"
+msgstr ""
+
+#: src/containers/Menu/menu.js:33
+msgid "Go to Node View"
+msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradeCountdown.js:23
 msgid "Go!"
@@ -521,7 +526,7 @@ msgstr "Ingresar"
 msgid "Main Text"
 msgstr "Texto principal"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:60
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:65
 msgid "Manage Vouchers"
 msgstr "Administrar Cupones"
 
@@ -541,11 +546,11 @@ msgstr "Midiendo enlaces"
 msgid "Metrics"
 msgstr "Diagnostico"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:58
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:57
 msgid "More details on the release can be found at:"
 msgstr "Puedes encontrar las novedades de esta versión en:"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:90
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:95
 msgid "More info at:"
 msgstr "Más info en:"
 
@@ -578,7 +583,7 @@ msgid "No password"
 msgstr "Sin contraseña"
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:29
-#: src/containers/RebootPage/RebootPage.js:24
+#: src/containers/RebootPage/RebootPage.js:31
 msgid "No, cancel"
 msgstr "No, cancelar"
 
@@ -632,11 +637,11 @@ msgstr "Solo la puerta de enlace"
 msgid "Opens the \"{apSsid}\" AP in this node"
 msgstr "Abre el AP \"{apSsid}\" en este nodo"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:95
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:100
 msgid "Or choose a firmware image from your device"
 msgstr "O elige una imagen de firmware desde tu dispositivo"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:167
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:172
 msgid "Or upgrade to latest release"
 msgstr "O actualiza a la última version del firmware"
 
@@ -661,11 +666,11 @@ msgstr "Permanente"
 msgid "Please configure your network"
 msgstr "Por favor configure su conexión de red"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:149
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:154
 msgid "Please select a .sh or .bin file"
 msgstr "Por favor, seleccione un archivo .bin o .sh"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:146
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:151
 msgid "Please select a file"
 msgstr "Porfavor, elige un archivo"
 
@@ -682,7 +687,7 @@ msgid "Please wait patiently for {remainingTime} seconds and do not disconnect t
 msgstr "Por favor espere {remainingTime} segundos pacientemente y no desconecte el router."
 
 #: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:25
-#: src/containers/RebootPage/RebootPage.js:15
+#: src/containers/RebootPage/RebootPage.js:22
 msgid "Please wait while the device reboots, and reload the app"
 msgstr "Por favor espere a que el dispositivo se reinicie y recargue la app"
 
@@ -708,7 +713,7 @@ msgstr "Re-ingrese la contraseña compartida"
 msgid "Reboot"
 msgstr "Reiniciar"
 
-#: src/containers/RebootPage/RebootPage.js:14
+#: src/containers/RebootPage/RebootPage.js:21
 msgid "Rebooting"
 msgstr "Reiniciando"
 
@@ -720,7 +725,7 @@ msgstr "Recargar"
 msgid "Reload page"
 msgstr "Recargar página"
 
-#: plugins/lime-plugin-remotesupport/index.js:9
+#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:4
 msgid "Remote Support"
 msgstr "Soporte Remoto"
 
@@ -732,7 +737,7 @@ msgstr "Requerido"
 msgid "Rescan"
 msgstr "Volver a escanear"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:82
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:87
 msgid "Retry"
 msgstr "Reintenar"
 
@@ -748,7 +753,7 @@ msgstr "Volviendo a la versión anterior"
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:38
 #: plugins/lime-plugin-node-admin/src/screens/password.js:51
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:29
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:68
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:73
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:28
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:79
 msgid "Save"
@@ -778,7 +783,7 @@ msgstr "Buscar por"
 msgid "Searching gateway"
 msgstr "Buscando tu salida a Internet"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:23
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:22
 msgid "See More"
 msgstr "Ver más"
 
@@ -790,7 +795,7 @@ msgstr "Seleccione una red a la que sumarse"
 msgid "Select another node and use the LimeApp as you were there"
 msgstr "Selecciona el nodo que quieras visitar y usa la LimeApp como si estuvieras ahí"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:135
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:140
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:48
 msgid "Select file"
 msgstr "Seleccioná el archivo"
@@ -849,7 +854,7 @@ msgstr "Ver consola"
 msgid "Signal lost"
 msgstr "Sin señal"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:142
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:147
 msgid "Size"
 msgstr "Tamaño"
 
@@ -869,7 +874,7 @@ msgstr "Sistema"
 msgid "The Community AP is present in every node allowing people to move around the network territory without losing connection"
 msgstr "El AP Comunitario está presente en todos los nodos permitiendo que las personas se muevan por el territorio de la red sin perder conectividad"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:24
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:29
 msgid "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 msgstr "El Portal Comunitario permite mostrar una pantalla de bienvenida en el navegador a cualquier persona que se conecte a la red a través del AP Comunitario"
 
@@ -877,7 +882,7 @@ msgstr "El Portal Comunitario permite mostrar una pantalla de bienvenida en el n
 msgid "The are not mesh interfaces available"
 msgstr "No hay interfaces mesh disponibles"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:81
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:86
 msgid "The download failed"
 msgstr "La descarga falló"
 
@@ -910,7 +915,7 @@ msgstr "Las contraseñas no coinciden!"
 msgid "The radio needs to be restarted..."
 msgstr "La radio necesita reiniciarse..."
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:162
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:167
 msgid "The selected image is not valid for the target device"
 msgstr "La imagen seleccionada no es válida para este dispositivo"
 
@@ -938,11 +943,11 @@ msgstr "No hay una sesión de soporte remoto abierta. Haz click en Crear Sesión
 msgid "These are the nodes associated on this radio"
 msgstr "Estos son los nodos asociados a esta radio"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:26
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:27
 msgid "This device does not support secure rollback to previous version if something goes wrong"
 msgstr "En este dispositivo no se puede revertir la actualización en caso de errores"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:21
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:22
 msgid "This device supports secure rollback to previous version if something goes wrong"
 msgstr "En este dispositivo se puede revertir la actualización en caso de errores"
 
@@ -982,24 +987,24 @@ msgstr "Tráfico"
 msgid "Try reloading the app"
 msgstr "Intentar recargar la app"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:152
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:157
 msgid "Upgrade"
 msgstr "Actualizar"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:69
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:68
 msgid "Upgrade Now"
 msgstr "Actualizar ahora"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:68
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:70
 msgid "Upgrade to lastest firmware version"
 msgstr "Actualizar a la última version del firwmare"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:76
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:86
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:81
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:91
 msgid "Upgrade to {versionName}"
 msgstr "Actualizar a {versionName}"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:133
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:138
 msgid "Upload firmware image from your device"
 msgstr "Subí una imagen del firmware desde tu dispositivo"
 
@@ -1007,7 +1012,7 @@ msgstr "Subí una imagen del firmware desde tu dispositivo"
 msgid "Uptime"
 msgstr "Tiempo en actividad"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:56
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:61
 msgid "Use vouchers for access"
 msgstr "Usar cupones de acceso"
 
@@ -1036,7 +1041,7 @@ msgstr "Descripción del grupo de cupones"
 msgid "Voucher list"
 msgstr "Lista de Cupones"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:44
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:49
 msgid "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 msgstr "Los cupones sirven para limitar el acceso a través del Portal Comunitario a quienes posean un código de autorización"
 
@@ -1067,7 +1072,7 @@ msgid "Wrong password, try again"
 msgstr "Contraseña incorrecta, intenta nuevamente"
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:28
-#: src/containers/RebootPage/RebootPage.js:23
+#: src/containers/RebootPage/RebootPage.js:30
 msgid "Yes"
 msgstr "Si"
 
@@ -1087,7 +1092,7 @@ msgstr "Puede buscar redes cercanas para sumarse o crear una nueva."
 msgid "You can share your mobile connection to the node by setting up a mobile hotspot"
 msgstr "Puedes compartir tu conexión de datos con el nodo a través de un Punto de Acceso Móvil"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:54
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:53
 msgid "You can upgrade to:"
 msgstr "Puedes actualizar a:"
 
@@ -1175,7 +1180,7 @@ msgstr "hace {secondsAmount} segundos"
 msgid "{secs, plural, one {# second} other {# seconds}}"
 msgstr "{secs, plural, one {# segundo} other {# segundos}}"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:22
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:69
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:21
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:71
 msgid "{versionName} is now available"
 msgstr "{versionName} ya está disponible"

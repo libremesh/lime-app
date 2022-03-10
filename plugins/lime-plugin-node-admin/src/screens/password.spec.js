@@ -32,6 +32,7 @@ const findSubmitButton = async () =>
 
 describe('ap password config', () => {
     beforeEach(() => {
+        // getChangesNeedReboot.mockImplementation(false);
         getAdminApsData.mockImplementation(withoutPasswordMock);
         changeApNamePassword.mockClear();
         changeApNamePassword.mockImplementation(async () => null);

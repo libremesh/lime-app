@@ -9,13 +9,15 @@ import { render } from 'utils/test_utils';
 
 import { RebootPage } from './';
 
-import { reboot } from 'utils/api';
+import { reboot, setChangesNeedReboot } from 'utils/api';
 import { route } from 'preact-router';
 
 jest.mock('utils/api');
 
 describe('RebootPage', () => {
     beforeEach(() => {
+        setChangesNeedReboot.mockClear();
+        setChangesNeedReboot.mockImplementation(() => true);
         reboot.mockClear();
         reboot.mockImplementation(async () => null);
     });
@@ -31,6 +33,15 @@ describe('RebootPage', () => {
         fireEvent.click(yesButton);
         await waitForExpect(() => {
             expect(reboot).toHaveBeenCalled();
+        });
+    });
+
+    it('calls setChangesNeedReboot(no) when yes is clicked', async () => {
+        render(<RebootPage />);
+        const yesButton = await screen.findByRole('button', { name: /yes/i });
+        fireEvent.click(yesButton);
+        await waitForExpect(() => {
+            expect(setChangesNeedReboot).toHaveBeenCalledWith('no');
         });
     });
 
@@ -55,5 +66,14 @@ describe('RebootPage', () => {
         });
         expect(reboot).not.toHaveBeenCalled();
 
+    });
+
+    it('calls setChangesNeedReboot(no) when no is clicked', async () => {
+        render(<RebootPage />);
+        const noButton = await screen.findByRole('button', { name: /no, cancel/i });
+        fireEvent.click(noButton);
+        await waitForExpect(() => {
+            expect(setChangesNeedReboot).toHaveBeenCalledWith('no');
+        });
     });
 });

@@ -43,14 +43,14 @@ const style = {
 const Box = ({ station, settings, loading, click, gateway }) => {
 	function barStyle(loss) {
 		return Object.assign({},style.line,{
-			width: ((station.bandwidth*100/settings.good_bandwidth) || 3).toString()+'%',
+			width: `${((station.bandwidth*100/settings.good_bandwidth) || 3).toString()}%`,
 			maxWidth: '100%',
 			backgroundColor: colorScale.getColor(loss)
 		});
 	}
 
 	function isGateway(gateway, hostname){
-		return (gateway === true)? hostname + ' (Gateway)' : hostname;
+		return (gateway === true)? `${hostname  } (Gateway)` : hostname;
 	}
 
 	function onClick() {

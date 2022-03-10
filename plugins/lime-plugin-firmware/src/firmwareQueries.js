@@ -1,7 +1,8 @@
 import { useQuery, useMutation } from 'react-query';
 import queryCache from 'utils/queryCache';
 import { getUpgradeInfo, getNewVersion, getDownloadStatus,
-		 upgradeConfirm, upgradeRevert, downloadRelease} from './firmwareApi'
+		 upgradeConfirm, upgradeRevert, downloadRelease,
+		 upgradeFirmware } from './firmwareApi'
 
 export function useUpgradeInfo() {
 	return useQuery(["lime-utils", "get_upgrade_info"], getUpgradeInfo, {});
@@ -40,4 +41,8 @@ export function useDownloadRelease() {
 			{download_status: 'downloading'}
 		)}
 	)
+}
+
+export function useUpgradeFirwmare() {
+	return useMutation(upgradeFirmware);
 }

@@ -50,11 +50,8 @@ describe('uhttpd.service', () => {
 			result: [0, { status: "error", message: "Invalid Firmware"}]
 		}));
 		expect.assertions(1);
-		try {
-			await api.call('lime-utils-admin', 'firmware_upgrade', {fw_path: '/tmp/firmware'});
-		}
-		catch (e) {
-			expect(e).toEqual('Invalid Firmware');
-		}
+		await expect(
+			api.call('lime-utils-admin', 'firmware_upgrade', {fw_path: '/tmp/firmware'})
+		).rejects.toEqual('Invalid Firmware');
 	});
 });

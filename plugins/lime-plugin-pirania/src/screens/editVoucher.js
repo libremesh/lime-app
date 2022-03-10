@@ -49,7 +49,7 @@ const EditVoucher = ({ id }) => {
 	const submitVoucher = async ({ name }) => {
 		return renameVoucher({
 			id: voucher.id,
-			name: name
+			name
 		});
 	};
 

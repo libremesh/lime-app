@@ -7,7 +7,8 @@ import { useState, useEffect } from 'preact/hooks';
 import { useForm } from 'react-hook-form';
 import Loading from 'components/loading';
 import { uploadFile, upgradeFirmware } from '../firmwareApi';
-import { useUpgradeInfo, useDownloadRelease, useDownloadStatus, useNewVersion} from '../firmwareQueries';
+import { useUpgradeInfo, useDownloadRelease, useDownloadStatus,
+	     useNewVersion, useUpgradeFirwmare} from '../firmwareQueries';
 
 export const SafeUpgradeBadge = () => {
 	const { isLoading, data: upgradeInfo} = useUpgradeInfo();
@@ -48,7 +49,8 @@ const UpgradeFromRelease = ({onUpgrading, onSwitch}) => {
 		}
 	});
 
-	const [downloadRelease] = useDownloadRelease();
+	const [downloadRelease, { isLoading: submittingDownload }] = useDownloadRelease();
+	const [upgradeFirmware, { isLoading: submittingUpgrade }] = useUpgradeFirwmare();
 	const filePath = downloadStatus && downloadStatus.fw_path;
 	const status = downloadStatus && downloadStatus.download_status;
 
@@ -69,6 +71,9 @@ const UpgradeFromRelease = ({onUpgrading, onSwitch}) => {
 			<h6><Trans>{versionName} is now available</Trans>🎉</h6>
 			{status === 'not-initiated' &&
 				<button onClick={onDownload}><Trans>Download</Trans></button>
+			}
+			{(submittingDownload || submittingUpgrade) &&
+				<Loading />
 			}
 			{status === 'downloading' &&
 				<div>

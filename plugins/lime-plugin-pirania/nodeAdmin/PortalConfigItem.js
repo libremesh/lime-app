@@ -10,13 +10,13 @@ export const PortalConfigItem = () => {
     let message = '';
     if (config) {
         if (config.activated && config.with_vouchers) {
-            message = <Trans>Activated, with vouchers</Trans>;
+            message = <Trans>Enabled, with vouchers</Trans>;
         }
         if (config.activated && !config.with_vouchers) {
-            message = <Trans>Activated, without vouchers</Trans>;
+            message = <Trans>Enabled, without vouchers</Trans>;
         }
         if (!config.activated) {
-            message = <Trans>Deactivated</Trans>;
+            message = <Trans>Disabled</Trans>;
         }
     }
     return <Config data-testid='portal-config-item' title={<Trans>Community Portal</Trans>}

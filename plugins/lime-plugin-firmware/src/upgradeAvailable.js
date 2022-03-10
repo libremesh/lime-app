@@ -1,8 +1,7 @@
-import { h } from "preact";
+import { h, Fragment } from "preact";
 import { route } from 'preact-router';
 import Match from 'preact-router/match';
 import { Trans } from '@lingui/macro';
-import { Fragment } from 'preact';
 import { useNewVersion } from './firmwareQueries';
 import Loading from 'components/loading';
 import { useBoardData } from 'utils/queries';

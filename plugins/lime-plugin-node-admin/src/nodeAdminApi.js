@@ -6,7 +6,7 @@ export const changeHostname = (hostname) =>
 
 export const changeApNamePassword = ({password, enablePassword}) =>
     api.call('wireless-service-admin', 'set_node_ap',
-        { password: password, "has_password": enablePassword });
+        { password, has_password: enablePassword });
 
 export const getAPsData = () =>
     api.call('wireless-service', 'get_access_points_data', {});

@@ -197,9 +197,11 @@ describe('firmware form', () => {
 			version: 'SomeNewVersionName'
 		}));
 		render(<FirmwarePage />)
+		downloadRelease.mockImplementation(() =>
+			new Promise(res => setTimeout(res, 10))); // let loading enter screen
 		const downloadButton = await screen.findByRole('button', {name: /Download/i})
 		fireEvent.click(downloadButton);
-		stepSubmit();
+		expect(await screen.findByLabelText('loading')).toBeInTheDocument();
 		await waitForExpect(() => {
 			expect(downloadRelease).toHaveBeenCalled();
 		})
@@ -252,9 +254,11 @@ describe('firmware form', () => {
 			.mockImplementation(async () => (
 				{ download_status: 'downloaded', fw_path: '/tmp/upgrade.sh' }
 			));
+		upgradeFirmware.mockImplementation(() => new Promise(res => setTimeout(res, 10)));
 		render(<FirmwarePage />)
 		const upgradeButton = await screen.findByRole('button', {name: /Upgrade to SomeNewVersionName/i});
 		fireEvent.click(upgradeButton);
+		expect(await screen.findByLabelText('loading')).toBeInTheDocument();
 		expect(upgradeFirmware).toHaveBeenCalledWith('/tmp/upgrade.sh');
 	});
 

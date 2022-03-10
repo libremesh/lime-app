@@ -18,8 +18,17 @@ export function getBoardData() {
 }
 
 export function getSession() {
-	return api.call('session', 'get', { ubus_rpc_session: api.sid() })
-		.then(res => res.values);
+	return api.call('session', 'access', {}).
+		then(async (result) => {
+			let username = null;
+			if (result['access-group']['root']) {
+				username = 'root';
+			} else if (result['access-group']['lime-app']){
+				username = 'lime-app';
+			}
+			return ({ username })
+		})
+		.catch(async () => ({ username: null }));
 }
 
 export function getCommunitySettings() {
@@ -34,4 +43,13 @@ export function reboot() {
 
 export function checkInternet() {
 	return api.call('check-internet', 'is_connected', {});
+}
+
+export async function getChangesNeedReboot() {
+	return sessionStorage.getItem('need-reboot') == 'yes' ;
+}
+
+export async function setChangesNeedReboot(value) {
+	sessionStorage.setItem('need-reboot', value);
+	return value;
 }

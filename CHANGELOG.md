@@ -2,6 +2,59 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.25](https://github.com/germanferrero/lime-app/compare/v0.2.24...v0.2.25) (2022-03-04)
+
+
+### Features
+
+* **hotspot:** add hotspot feature ([6f0355f](https://github.com/germanferrero/lime-app/commit/6f0355fc4af7f6a55198bed58d5957ff14ce7e02))
+* **node admin:** add Roaming AP config ([31c65d1](https://github.com/germanferrero/lime-app/commit/31c65d19389bfa237245db7de3b5467bc9364172))
+* **node-admin:** allow changing wifi password ([12d8492](https://github.com/germanferrero/lime-app/commit/12d849275cbed31dd885c156ebe629b693062b39))
+* **pirania:** adds interface for pirania based on new-pirania-api ([63476a2](https://github.com/germanferrero/lime-app/commit/63476a2561eed8e7531faba5a4699622cf363c3c))
+* pirania ui ([353ffd9](https://github.com/germanferrero/lime-app/commit/353ffd90ac946815fc30cc09ae5e658f7ef874af))
+* **portal editor:** add portal editor ([d95d4fb](https://github.com/germanferrero/lime-app/commit/d95d4fb993dd8601a43d0854ccc8a1d0b63cf291))
+
+
+### Bug Fixes
+
+* **login:** make form submit on enter ([f218c6b](https://github.com/germanferrero/lime-app/commit/f218c6bee093e5407b8662010081d31181a34106))
+* **login:** persist session after page refresh ([ee0d9d4](https://github.com/germanferrero/lime-app/commit/ee0d9d486d317c89afdb838c4cb29d3e70bbde3c))
+* **reboot-banner:** persist page refresh ([cee2800](https://github.com/germanferrero/lime-app/commit/cee28004b13ab21a53f475f3c5eda4f2fe53a388))
+* **subheader:** show only one banner at a time ([0bc37bc](https://github.com/germanferrero/lime-app/commit/0bc37bcd90ce57b7839f0c7aceb9603814eb0557))
+* **translations:** fix error in pt translation ([3640de1](https://github.com/germanferrero/lime-app/commit/3640de19b3614066be66f84829354132ea30ccfb))
+
+### [0.2.24](https://github.com/germanferrero/lime-app/compare/v0.2.23...v0.2.24) (2022-02-23)
+
+### Bug Fixes
+
+* **firmware:** display spinners in download from release ([a50d314](https://github.com/germanferrero/lime-app/commit/a50d3144703a7c213e0ed1e80993a6db1ee9e89c))
+
+### [0.2.23](https://github.com/germanferrero/lime-app/compare/v0.2.22...v0.2.23) (2022-02-21)
+
+### Bug Fixes
+* **translations:** fix error in pt translation ([3640de1](https://github.com/germanferrero/lime-app/commit/3640de19b3614066be66f84829354132ea30ccfb))
+
+### [0.2.22](https://github.com/germanferrero/lime-app/compare/v0.2.21...v0.2.22) (2022-02-21)
+
+* **pirania:** add portuguese translations ([63476a2](https://github.com/germanferrero/lime-app/commit/d005012fb9925c849591c7051c3150f9263ebeba))
+
+### [0.2.21](https://github.com/germanferrero/lime-app/compare/v0.2.20...v0.2.21) (2022-02-21)
+
+
+### Features
+
+* **hotspot:** add hotspot feature ([6f0355f](https://github.com/germanferrero/lime-app/commit/6f0355fc4af7f6a55198bed58d5957ff14ce7e02))
+* **node admin:** add Roaming AP config ([31c65d1](https://github.com/germanferrero/lime-app/commit/31c65d19389bfa237245db7de3b5467bc9364172))
+* **node-admin:** allow changing wifi password ([12d8492](https://github.com/germanferrero/lime-app/commit/12d849275cbed31dd885c156ebe629b693062b39))
+* **pirania:** adds interface for pirania based on new-pirania-api ([63476a2](https://github.com/germanferrero/lime-app/commit/63476a2561eed8e7531faba5a4699622cf363c3c))
+* pirania ui ([353ffd9](https://github.com/germanferrero/lime-app/commit/353ffd90ac946815fc30cc09ae5e658f7ef874af))
+* **portal editor:** add portal editor ([d95d4fb](https://github.com/germanferrero/lime-app/commit/d95d4fb993dd8601a43d0854ccc8a1d0b63cf291))
+
+
+### Bug Fixes
+
+* **getvoices:** fix synth voices crash in align screen ([1ba18c4](https://github.com/germanferrero/lime-app/commit/1ba18c4e0a0154a9568ae6e6a4d73e570f940c98))
+
 ### [0.2.20](https://github.com/germanferrero/lime-app/compare/v0.2.19...v0.2.20) (2021-05-11)
 
 * **map:** prevent buttons overflow in mobile
