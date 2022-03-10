@@ -112,7 +112,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		return () => {
 			if (interval) clearInterval(interval);
 		};
-	}, [status, isSubmitting]);
+	}, [status, isSubmitting, searchNetworks]);
 
 	return (
 		<div class="container container-padded">
@@ -128,7 +128,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 									<select onChange={selectNetwork}  class="u-full-width">
 										<option disabled selected><Trans>Select one</Trans></option>
 										{ networks.map((network, key) => {
-											return (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>)
+											return (<option key={key} value={key}>{`${network.ap } (${ network.config.wifi.ap_ssid })`}</option>)
 										})}
 									</select>
 									<label><Trans>Choose a name for this node</Trans></label>

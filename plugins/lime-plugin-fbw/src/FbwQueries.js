@@ -24,7 +24,7 @@ export function useCreateNetwork(params) {
 const _getApName = ({ ap = '', file = '' }) => {
 	let getHostname = /(?:host__)(.+)/;
 	let hostname = getHostname.exec(file)[1];
-	return '' + (ap && ap !== '')? '('+ap+') '+ hostname : hostname;
+	return `${  ap && ap !== ''}`? `(${ap}) ${ hostname}` : hostname;
 };
 
 async function _searchNetworks(rescan) {

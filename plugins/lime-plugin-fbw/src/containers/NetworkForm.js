@@ -18,7 +18,7 @@ export const NetworkForm = ({toggleForm, setExpectedHost, setExpectedNetwork}) =
 	});
 
 	const [createNetwork, { isLoading: isSubmitting}] = useCreateNetwork({
-		onSuccess: (payload) => {
+		onSuccess: () => {
 			setExpectedHost(state.hostName)
 			setExpectedNetwork(state.communityName)
 			toggleForm('setting')();

@@ -18,8 +18,8 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 		notOnNetwork: false
 	});
 
-	const wifiSsid = expectedNetwork + '/' + expectedHost;
-	function fetchHost (cb) {
+	const wifiSsid = `${expectedNetwork}/${expectedHost}`;
+	function fetchHost () {
 		if (state.action === 'finish') return;
 		if (state.action === 'setting') {
 			setState({
@@ -46,7 +46,7 @@ export const Setting = ({ expectedHost, expectedNetwork, delay=1000 }) => {
 					});
 				}
 			})
-			.catch(err => {
+			.catch(() => {
 				if (state.notOnNetwork === true) {
 					setState({
 						...state,

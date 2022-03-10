@@ -23,7 +23,7 @@ const Page = ({ }) => {
 		return () => {
 			setMenuEnabled(true);
 		};
-	}, []);
+	}, [setMenuEnabled]);
 
 	return (
 		<Fragment>
