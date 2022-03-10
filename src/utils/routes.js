@@ -4,7 +4,7 @@ import { SharedPasswordLogin } from '../containers/SharedPasswordLogin';
 import { route } from 'preact-router';
 import { useEffect } from 'preact/hooks';
 import { useSession } from './queries';
-import { useFbwStatus } from '../../plugins/lime-plugin-fbw/src/queries';
+import { useFbwStatus } from '../../plugins/lime-plugin-fbw/src/FbwQueries';
 import { FbwBanner } from '../../plugins/lime-plugin-fbw/src/containers/FbwBanner';
 
 export const Route = ({ path, children, ...childrenProps}) => {

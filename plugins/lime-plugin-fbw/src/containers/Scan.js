@@ -1,27 +1,41 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-import '../style';
-
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { searchNetworks, setNetwork } from '../actions';
+import '../style.less';
 
 import { Trans, t } from '@lingui/macro';
 import { Loading } from 'components/loading';
 import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
-import { showNotification } from '../../../../src/store/actions';
 import { useBoardData } from 'utils/queries';
+import { useSearchNetworks, useSetNetwork, useGetNetworks } from '../FbwQueries';
 
-export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks }) => {
+export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const { data: boardData } = useBoardData();
 	const [state, setState] = useState({
 		createForm: false,
 		error: null,
 		hostname: boardData.hostname
 	});
+
+	const [status, setStatus] = useState()
+	const [networks, setNetworks] = useState()
+
+	const { data: payloadData } = useGetNetworks();
+
+	const [searchNetworks, { isLoading: isSubmitting,isError: isSeachNetworkError}] = useSearchNetworks()
+
+	const [setNetwork, { isLoading: isSetNetworkSubmitting, isError: isSetNetworkError }] = useSetNetwork({
+		onSuccess: () => {
+			setExpectedHost(state.hostname)
+			setExpectedNetwork(state.community)
+			toggleForm('setting')();
+		}
+	});
+
+	useEffect(() => {
+		if (isSeachNetworkError || isSetNetworkError) setStatus('error')
+	},[isSeachNetworkError, isSetNetworkError])
 
 	/* Load scan results */
 	function _searchNetworks() {
@@ -47,7 +61,6 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 				hostname: state.hostname,
 				network: state.community
 			});
-			toggleForm('setting')();
 		}
 		else {
 			setState({
@@ -80,6 +93,11 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 	} */
 
 	useEffect(() => {
+		setStatus(payloadData?.status || null)
+		setNetworks(payloadData?.networks || [])
+	}, [payloadData])
+
+	useEffect(() => {
 		let interval;
 		if (status === 'scanned') return;
 		else if (status === 'scanning') {
@@ -94,7 +112,7 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 		return () => {
 			if (interval) clearInterval(interval);
 		};
-	}, [status, searchNetworks]);
+	}, [status, isSubmitting, searchNetworks]);
 
 	return (
 		<div class="container container-padded">
@@ -109,7 +127,9 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 									<label><Trans>Select a network to join</Trans></label>
 									<select onChange={selectNetwork}  class="u-full-width">
 										<option disabled selected><Trans>Select one</Trans></option>
-										{networks.map((network, key) => (<option value={key}>{network.ap+ ' ('+ network.config.wifi.ap_ssid +')'}</option>))}
+										{ networks.map((network, key) => {
+											return (<option key={key} value={key}>{`${network.ap } (${ network.config.wifi.ap_ssid })`}</option>)
+										})}
 									</select>
 									<label><Trans>Choose a name for this node</Trans></label>
 									<input type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
@@ -118,7 +138,7 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 									{networks.length > 0 && <div class="six columns">
 										<button
 											onClick={_setNetwork}
-											disabled={!isValidHostname(state.hostname)}
+											disabled={!isValidHostname(state.hostname) || isSetNetworkSubmitting}
 											class="u-full-width"
 										>
 											<Trans>Set network</Trans>
@@ -148,20 +168,8 @@ export const Scan = ({ searchNetworks, setNetwork, toggleForm, status, networks 
 				</div>
 			</div>
 			{state.error && <Toast text={<Trans>Must select a network and a valid hostname</Trans>} />}
+			{/* todo(kon) create scanning error toast */}
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
 };
-
-const mapStateToProps = (state) => ({
-	networks: state.firstbootwizard.networks,
-	status: state.firstbootwizard.status
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	searchNetworks: bindActionCreators(searchNetworks ,dispatch),
-	setNetwork: bindActionCreators(setNetwork ,dispatch),
-	showNotification: bindActionCreators(showNotification, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Scan);
