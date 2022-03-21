@@ -169,7 +169,7 @@ msgstr "Cerrar Sesión"
 
 #: plugins/lime-plugin-firmware/src/upgradeCountdown.js:22
 msgid "Cofirm upgrade before {_counter} seconds or it will be reverted"
-msgstr "Confirmá la actualización en los próximos _{counter} segundos o será revertida"
+msgstr "Confirmá la actualización en los próximos {_counter} segundos o será revertida"
 
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:39
 msgid "Community Logo"
