@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
 import '../style.less';
+import style from '../style.less'; // todo(kon): unify imports
 
 import { Trans, t } from '@lingui/macro';
 import { Loading } from 'components/loading';
@@ -9,6 +10,38 @@ import Toast from 'components/toast';
 import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { useBoardData } from 'utils/queries';
 import { useSearchNetworks, useSetNetwork, useGetNetworks } from '../FbwQueries';
+import { List, ListItem } from 'components/list';
+import { SignalBar } from '../../../lime-plugin-align/src/components/signalBar'; // todo(kon): implement common component
+
+const NetworkBox = ({ station }) => {
+	return (
+		<ListItem key={station.ssid}>
+			<div >
+				<div class={`${style.fetchingName} withLoadingEllipsis`}>
+					{station.ssid}
+				</div>
+				<div>{station.bssid}</div> 
+				{/* <div>{station.quality}</div> */}
+				{/* <div>{station.signal}</div> */}
+				<div>Chan: {station.channel}</div>
+				<div>{station.encryption.enabled}</div>
+				<div>{station.encryption.enabled ? station.encryption.wep 
+					? "WEP" 
+					: `WPA${station.encryption.wpa} ${station.encryption.auth_suites} ${station.encryption.pair_ciphers}`
+					: "Open"}
+				</div>
+			</div>
+			<div class={style.signal}>
+				<div class="d-flex flex-grow-1 align-items-baseline">
+					<div>{ station.signal }</div>
+					<div class={style.unit}>dBm</div>
+				</div>
+				<SignalBar signal={station.signal} className={style.bar} />
+			</div>
+		</ListItem>
+	);
+};
+
 
 export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const { data: boardData } = useBoardData();
@@ -20,6 +53,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 
 	const [status, setStatus] = useState()
 	const [networks, setNetworks] = useState()
+	const [scanned, setScanned] = useState([])
 
 	const { data: payloadData } = useGetNetworks();
 
@@ -95,6 +129,8 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	useEffect(() => {
 		setStatus(payloadData?.status || null)
 		setNetworks(payloadData?.networks || [])
+		setScanned(payloadData?.scanned || [])
+		console.debug(payloadData?.scanned)
 	}, [payloadData])
 
 	useEffect(() => {
@@ -161,9 +197,21 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 								</div>
 							</div>
 						</div>
-					): status === 'scanning' ? false : <Loading />}
+					): status === 'scanning' ? false :  <Loading />} 
 					{ status === 'scanning'? (
-						<Loading />
+						<>
+							<List>
+								{scanned.length &&
+									<div class={style.assoclistHeader}><Trans>Scanned radios, requesting configuration</Trans></div>
+								}
+								{scanned.length ? scanned.map(
+									(station, key) => {
+										return <NetworkBox key={key} station={station} />
+									}): false}
+							</List>
+							
+							<Loading />
+						</>
 					): false }
 				</div>
 			</div>

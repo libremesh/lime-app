@@ -30,6 +30,7 @@ const _getApName = ({ ap = '', file = '' }) => {
 async function _searchNetworks(rescan) {
 	let payload = await searchNetworks(rescan)
 	return {
+		scanned: payload.scanned || [],
 		networks: payload.networks.map(net => ({
 			...net,
 			ap: _getApName(net)
