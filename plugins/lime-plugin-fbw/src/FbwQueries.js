@@ -27,13 +27,19 @@ const _getApName = ({ ap = '', file = '' }) => {
 	return `${  ap && ap !== ''}`? `(${ap}) ${ hostname}` : hostname;
 };
 
+const _getBssid = ({ file = '' }) => {
+	let bssid = file.split("__").pop(); 
+	return bssid;
+};
+
 async function _searchNetworks(rescan) {
 	let payload = await searchNetworks(rescan)
 	return {
 		scanned: payload.scanned || [],
 		networks: payload.networks.map(net => ({
 			...net,
-			ap: _getApName(net)
+			ap: _getApName(net),
+			bssid: _getBssid(net)
 		})) || [],
 		status: payload.status || null
 	};
