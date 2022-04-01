@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
 import '../style.less';
-import style from '../style.less'; // todo(kon): unify imports
+import style from '../../../lime-plugin-align/src/style.less'; // todo(kon): unify imports
 
 import { Trans, t } from '@lingui/macro';
 import { Loading } from 'components/loading';
@@ -12,35 +12,6 @@ import { useBoardData } from 'utils/queries';
 import { useSearchNetworks, useSetNetwork, useGetNetworks } from '../FbwQueries';
 import { List, ListItem } from 'components/list';
 import { SignalBar } from '../../../lime-plugin-align/src/components/signalBar'; // todo(kon): implement common component
-
-const NetworkBox = ({ station }) => {
-	return (
-		<ListItem key={station.ssid}>
-			<div >
-				<div class={`${style.fetchingName} withLoadingEllipsis`}>
-					{station.ssid}
-				</div>
-				<div>{station.bssid}</div> 
-				{/* <div>{station.quality}</div> */}
-				{/* <div>{station.signal}</div> */}
-				<div>Chan: {station.channel}</div>
-				<div>{station.encryption.enabled}</div>
-				<div>{station.encryption.enabled ? station.encryption.wep 
-					? "WEP" 
-					: `WPA${station.encryption.wpa} ${station.encryption.auth_suites} ${station.encryption.pair_ciphers}`
-					: "Open"}
-				</div>
-			</div>
-			<div class={style.signal}>
-				<div class="d-flex flex-grow-1 align-items-baseline">
-					<div>{ station.signal }</div>
-					<div class={style.unit}>dBm</div>
-				</div>
-				<SignalBar signal={station.signal} className={style.bar} />
-			</div>
-		</ListItem>
-	);
-};
 
 
 export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
@@ -150,6 +121,71 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		};
 	}, [status, isSubmitting, searchNetworks]);
 
+	const RescanButton = () => {
+		return (
+			<div class="six columns">
+				<button
+					onClick={_searchNetworks}
+					class="u-full-width"
+				>
+					<Trans>Rescan</Trans>
+				</button>
+			</div>
+		)
+	}
+
+	const NetworkBox = ({ station }) => {
+		return (
+			<ListItem key={station.ssid}>
+				<div >
+					{station.hostname ? 
+						<div class={`${style.fetchingName} `}>
+							{station.hostname}
+						</div>
+					: 
+						<div class={`${style.fetchingName} withLoadingEllipsis`}>
+							<Trans>Fetching name</Trans>
+						</div>
+					}
+					<div>{station.bssid}</div> 
+					<div>Ch: {station.channel}</div>
+				</div>
+				{/* Todo(kon):  move all the styles to classes*/}
+				<div class={style.signal} style={"margin-top:auto;"} >
+					<div class="d-flex flex-grow-1 align-items-baseline">
+						<div>{ station.signal }</div>
+						<div class={style.unit}>dBm</div>
+					</div>
+					<SignalBar signal={station.signal} className={style.bar} />
+				</div>
+				<div class="d-flex" style={"margin-left: 20px; margin-top:auto;"} >
+					<button disabled={!station.hostname} class={style.backArrow} onClick={() => {
+						selectNetwork(0)
+					}}><Trans>Select</Trans></button>
+				</div>
+			</ListItem>
+		);
+	}
+
+	const NetworksList = () =>{
+		return (
+			<List>
+				{scanned.length &&
+					<div class={style.assoclistHeader}><Trans>Scanned radios, requesting configuration</Trans></div>
+				}
+				{scanned.map(station => <NetworkBox key={station.mac} station={station} />)}
+				{scanned.length === 0 &&
+					<>
+						<div className="container-center">
+							<Trans>No scan result</Trans>
+						</div>
+						<RescanButton />
+					</>
+				}
+			</List>
+		)
+	}
+
 	return (
 		<div class="container container-padded">
 			<div>
@@ -180,14 +216,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 											<Trans>Set network</Trans>
 										</button>
 									</div>}
-									<div class="six columns">
-										<button
-											onClick={_searchNetworks}
-											class="u-full-width"
-										>
-											<Trans>Rescan</Trans>
-										</button>
-									</div>
+									<RescanButton />
 									<button
 										onClick={toggleForm(null)}
 										class="u-full-width"
@@ -198,21 +227,8 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 							</div>
 						</div>
 					): status === 'scanning' ? false :  <Loading />} 
-					{ status === 'scanning'? (
-						<>
-							<List>
-								{scanned.length &&
-									<div class={style.assoclistHeader}><Trans>Scanned radios, requesting configuration</Trans></div>
-								}
-								{scanned.length ? scanned.map(
-									(station, key) => {
-										return <NetworkBox key={key} station={station} />
-									}): false}
-							</List>
-							
-							<Loading />
-						</>
-					): false }
+					{ status === 'scanning' && !state.apname ? (<Loading />): false }
+					{status === 'scanning' && !state.apname ? ( <NetworksList /> ) : null  }
 				</div>
 			</div>
 			{state.error && <Toast text={<Trans>Must select a network and a valid hostname</Trans>} />}
