@@ -22,9 +22,9 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		hostname: boardData.hostname
 	});
 
-	const [status, setStatus] = useState()
-	const [networks, setNetworks] = useState()
-	const [scanned, setScanned] = useState([])
+	const [status, setStatus] = useState()		// Scan status
+	const [networks, setNetworks] = useState() 	// Configuration files downloaded
+	const [scanned, setScanned] = useState([]) 	// Scanned AP's
 
 	const { data: payloadData } = useGetNetworks();
 
@@ -44,17 +44,28 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 
 	/* Load scan results */
 	function _searchNetworks() {
+		cancelSelectedNetwork()
 		searchNetworks(true);
 	}
 
 	/* Change state after selectbox change event */
-	function selectNetwork(event) {
-		const { config, file } = networks[event.target.value];
+	function selectNetwork(netIdx) {
+		const { config, file } = networks[netIdx];
 		setState({
 			...state,
 			file,
 			apname: config.wifi.apname_ssid.split('/%H')[0],
 			community: config.wifi.ap_ssid
+		});
+	}
+
+	/* Used to dismis previously selected network, ex: on back or rescan button */
+	function cancelSelectedNetwork() {
+		setState({
+			...state,
+			file: "",
+			apname: "",
+			community: ""
 		});
 	}
 
@@ -123,14 +134,23 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 
 	const RescanButton = () => {
 		return (
-			<div class="six columns">
-				<button
-					onClick={_searchNetworks}
-					class="u-full-width"
-				>
-					<Trans>Rescan</Trans>
-				</button>
-			</div>
+			<button
+				onClick={_searchNetworks}
+				class="u-full-width"
+			>
+				<Trans>Rescan</Trans>
+			</button>
+		)
+	}
+
+	const CancelButton = () => {
+		return (
+			<button
+				onClick={toggleForm(null)}
+				class="u-full-width"
+			>
+				<Trans>Cancel</Trans>
+			</button>
 		)
 	}
 
@@ -139,10 +159,14 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			<ListItem key={station.ssid}>
 				<div >
 					{station.hostname ? 
-						<div class={`${style.fetchingName} `}>
+						<div style={"font-size: 2rem;"}>
 							{station.hostname}
 						</div>
-					: 
+					: status === "scanned" ? 
+						<div class={`${style.fetchingName}`}>
+							<Trans>Error reaching hostname!</Trans>
+						</div>
+					:
 						<div class={`${style.fetchingName} withLoadingEllipsis`}>
 							<Trans>Fetching name</Trans>
 						</div>
@@ -150,7 +174,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 					<div>{station.bssid}</div> 
 					<div>Ch: {station.channel}</div>
 				</div>
-				{/* Todo(kon):  move all the styles to classes*/}
+				{/* Todo(kon):  move all the styles on the file to classes*/}
 				<div class={style.signal} style={"margin-top:auto;"} >
 					<div class="d-flex flex-grow-1 align-items-baseline">
 						<div>{ station.signal }</div>
@@ -170,18 +194,12 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const NetworksList = () =>{
 		return (
 			<List>
-				{scanned.length &&
-					<div class={style.assoclistHeader}><Trans>Scanned radios, requesting configuration</Trans></div>
+				{scanned.length > 0 &&
+					<div class={style.assoclistHeader}><Trans>Scanned radios:</Trans></div>
 				}
-				{scanned.map(station => <NetworkBox key={station.mac} station={station} />)}
-				{scanned.length === 0 &&
-					<>
-						<div className="container-center">
-							<Trans>No scan result</Trans>
-						</div>
-						<RescanButton />
-					</>
-				}
+				{scanned.length > 0 && 
+					scanned.map(station => <NetworkBox key={station.mac} station={station} />
+				)}
 			</List>
 		)
 	}
@@ -190,24 +208,18 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		<div class="container container-padded">
 			<div>
 				<div>
-					{ networks && status === 'scanned' ? (
+					{ state.apname ? (
 						<div>
 							<div class="container">
-								{networks.length === 0 && <p>:( <Trans>No network found, try realigning your node and rescanning.</Trans></p>}
-								{networks.length > 0 && <div>
+								<div>
 									<h4><Trans>Join the mesh</Trans></h4>
-									<label><Trans>Select a network to join</Trans></label>
-									<select onChange={selectNetwork}  class="u-full-width">
-										<option disabled selected><Trans>Select one</Trans></option>
-										{ networks.map((network, key) => {
-											return (<option key={key} value={key}>{`${network.ap } (${ network.config.wifi.ap_ssid })`}</option>)
-										})}
-									</select>
+									<label><Trans>Selected network to join</Trans></label>
+									<input type="text" disabled={true} class="u-full-width" value={state.apname} />
 									<label><Trans>Choose a name for this node</Trans></label>
 									<input type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
-								</div>}
+								</div>
 								<div class="row">
-									{networks.length > 0 && <div class="six columns">
+									<div class="six columns">
 										<button
 											onClick={_setNetwork}
 											disabled={!isValidHostname(state.hostname) || isSetNetworkSubmitting}
@@ -215,20 +227,39 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 										>
 											<Trans>Set network</Trans>
 										</button>
-									</div>}
-									<RescanButton />
+									</div>
+									<div class="six columns"> 
+										<RescanButton />
+									</div>
 									<button
-										onClick={toggleForm(null)}
+										onClick={cancelSelectedNetwork}
 										class="u-full-width"
 									>
-										<Trans>Cancel</Trans>
+										<Trans>Back</Trans>
 									</button>
+									<CancelButton />
 								</div>
 							</div>
 						</div>
-					): status === 'scanning' ? false :  <Loading />} 
+					): false} 
 					{ status === 'scanning' && !state.apname ? (<Loading />): false }
-					{status === 'scanning' && !state.apname ? ( <NetworksList /> ) : null  }
+					{ scanned.length === 0 && status === 'scanned' ?
+						<>
+							<h3 className="container-center">
+								<Trans>No scan result</Trans>
+							</h3>
+							<div class="row">
+								<div class="six columns"> 
+									<RescanButton />
+								</div>
+								<div class="six columns"> 
+									<CancelButton />
+								</div>
+							</div>
+
+						</>
+					: false} 
+					{ !state.apname ? ( <NetworksList /> ) : null  }
 				</div>
 			</div>
 			{state.error && <Toast text={<Trans>Must select a network and a valid hostname</Trans>} />}
