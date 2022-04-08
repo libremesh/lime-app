@@ -2,8 +2,9 @@ import api from 'utils/uhttpd.service';
 
 export const searchNetworks = (rescan) => 
 	// responseJsonNoNets
-	responseJson
-	// api.call('lime-fbw', 'search_networks', { scan: rescan || false });
+	// responseJson
+	// responseWifiOnly
+	api.call('lime-fbw', 'search_networks', { scan: rescan || false });
 
 export const setNetwork = ({ file, hostname }) =>
 	api.call('lime-fbw', 'set_network', { file, hostname });
@@ -19,8 +20,9 @@ export const dismissFbw = () =>
 	api.call('lime-fbw', 'dismiss', {});
 
 const responseJson = JSON.parse(`{
-	"status": "scanned",
+	"status": "scanning",
 	"networks": [
+
 			{
 					"file": "lime-community__host__ql-refu-bbone__38:AB:C0:C1:D6:70",
 					"config": {
@@ -339,6 +341,85 @@ const responseJsonNoNets = JSON.parse(`{
 	],
 	"scanned": [
 	  
+	]
+}`
+)
+
+const responseWifiOnly = JSON.parse(`{
+	"status": "scanning",
+	"networks": [
+			{
+				"file": "lime-community__host__ql-refu-bbone__38:AB:C0:C1:D6:70",
+				"config": {
+					"wifi": {
+						".name": "wifi",
+						".anonymous": false,
+						"country": "TZ",
+						"ap_ssid": "quintana.libre.org.ar",
+						".index": 2,
+						"channel_2ghz": "11",
+						"apname_ssid": "quintana.libre.org.ar/%H",
+						"modes": [
+								"ap_2ghz",
+								"apname_2ghz",
+								"ieee80211s_5ghz"
+						],
+						"channel_5ghz": [
+								"136",
+								"60"
+						],
+						".type": "lime"
+					}
+				}
+			}
+	],
+	"scanned": [
+		{
+		  "quality": 57,
+		  "quality_max": 70,
+		  "ssid": "foo_ssid",
+		  "encryption": {
+			"enabled": true,
+			"auth_algs": [],
+			"description": "WPA2 PSK (CCMP)",
+			"wep": false,
+			"auth_suites": [
+			  [
+				"PSK"
+			  ]
+			],
+			"wpa": 2,
+			"pair_ciphers": [
+			  "CCMP"
+			],
+			"group_ciphers": [
+			  "CCMP"
+			]
+		  },
+		  "mode": "Master",
+		  "bssid": "38:AB:C0:C1:D6:70",
+		  "channel": 1,
+		  "signal": -53
+		},
+		{
+		  "quality": 43,
+		  "quality_max": 70,
+		  "ssid": "bar_ssid",
+		  "encryption": {
+			"enabled": false,
+			"auth_algs": [],
+			"description": "None",
+			"wep": false,
+			"auth_suites": [],
+			"wpa": 0,
+			"pair_ciphers": [],
+			"group_ciphers": []
+		  },
+		  "mode": "Master",
+		  "bssid": "C2:4A:00:BE:7B:B7",
+		  "channel": 11,
+		  "signal": -67
+		}
 	]
 }`
 )
