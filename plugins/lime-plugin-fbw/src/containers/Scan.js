@@ -154,13 +154,23 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		)
 	}
 
+	const getNetworkFromBssid = (bssid) => {
+		for (let i = 0; i < networks.length; i++) {
+			if(networks[i].bssid === bssid) return {...networks[i], index: i}
+		} 
+		return ""
+	}
+
 	const NetworkBox = ({ station }) => {
+		let network = getNetworkFromBssid(station.bssid)
+		let hostname = network.ap
+		
 		return (
 			<ListItem key={station.ssid}>
 				<div >
-					{station.hostname ? 
+					{hostname ? 
 						<div style={"font-size: 2rem;"}>
-							{station.hostname}
+							{hostname+ ' ('+ network.config.ap_ssid +')'}
 						</div>
 					: status === "scanned" ? 
 						<div class={`${style.fetchingName}`}>
@@ -183,8 +193,8 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 					<SignalBar signal={station.signal} className={style.bar} />
 				</div>
 				<div class="d-flex" style={"margin-left: 20px; margin-top:auto;"} >
-					<button disabled={!station.hostname} class={style.backArrow} onClick={() => {
-						selectNetwork(0)
+					<button disabled={!hostname} class={style.backArrow} onClick={() => {
+						selectNetwork(network.index)
 					}}><Trans>Select</Trans></button>
 				</div>
 			</ListItem>
