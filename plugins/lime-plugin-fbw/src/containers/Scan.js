@@ -1,8 +1,7 @@
 import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
-import '../style.less';
-import style from '../../../lime-plugin-align/src/style.less'; // todo(kon): unify imports
+import style from '../style.less';
 
 import { Trans, t } from '@lingui/macro';
 import { Loading } from 'components/loading';
@@ -25,6 +24,9 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const [status, setStatus] = useState()		// Scan status
 	const [networks, setNetworks] = useState() 	// Configuration files downloaded
 	const [scanned, setScanned] = useState([]) 	// Scanned AP's
+
+	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
+
 
 	const { data: payloadData } = useGetNetworks();
 
@@ -164,14 +166,29 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const NetworkBox = ({ station }) => {
 		let network = getNetworkFromBssid(station.bssid)
 		let hostname = network.ap
-		
+		let listKey = station.ssid
+		// Todo(kon):  move all the styles on the file to classes 
+
+		const setExpanded = () => {
+			if(expandedAps.includes(listKey)) {
+				setExpandedAps([...expandedAps.filter(v => v !== listKey)])
+			} else {
+				setExpandedAps([...expandedAps, listKey])
+			}
+		}
+
 		return (
-			<ListItem key={station.ssid}>
+			<ListItem onClick={setExpanded} style={"padding-left: 0.5em; padding-right:0.5em;"} key={listKey} >
 				<div >
 					{hostname ? 
-						<div style={"font-size: 2rem;"}>
-							{hostname+ ' ('+ network.config.ap_ssid +')'}
-						</div>
+						<>
+							<div style={"font-size: 2rem;"}>
+								{hostname}
+							</div>
+							<div style={"font-size: 1.5rem; padding-right: 10px;"}>
+								{'(' + network.config.wifi.ap_ssid +')'}
+							</div>
+						</>
 					: status === "scanned" ? 
 						<div class={`${style.fetchingName}`}>
 							<Trans>Error reaching hostname!</Trans>
@@ -181,23 +198,24 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 							<Trans>Fetching name</Trans>
 						</div>
 					}
-					<div>{station.bssid}</div> 
-					<div>Ch: {station.channel}</div>
+					<div class={expandedAps.includes(listKey) ? style.itemActive : style.itemHidden} >
+						<div>{station.bssid}</div> 
+						<div><Trans>Channel</Trans>: {station.channel}</div>
+					</div>
 				</div>
-				{/* Todo(kon):  move all the styles on the file to classes*/}
-				<div class={style.signal} style={"margin-top:auto;"} >
+				<div class={style.signal} style={"margin-bottom:auto;"} >
 					<div class="d-flex flex-grow-1 align-items-baseline">
 						<div>{ station.signal }</div>
-						<div class={style.unit}>dBm</div>
 					</div>
 					<SignalBar signal={station.signal} className={style.bar} />
 				</div>
-				<div class="d-flex" style={"margin-left: 20px; margin-top:auto;"} >
+				<div class="d-flex" style={"margin-left: 20px; margin-bottom:auto; margin-top: 10px;"} >
 					<button disabled={!hostname} class={style.backArrow} onClick={() => {
 						selectNetwork(network.index)
 					}}><Trans>Select</Trans></button>
 				</div>
 			</ListItem>
+			
 		);
 	}
 
@@ -205,7 +223,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		return (
 			<List>
 				{scanned.length > 0 &&
-					<div class={style.assoclistHeader}><Trans>Scanned radios:</Trans></div>
+					<div class={style.assoclistHeader}><Trans>Choose a mesh node to join it's network:</Trans></div>
 				}
 				{scanned.length > 0 && 
 					scanned.map(station => <NetworkBox key={station.mac} station={station} />

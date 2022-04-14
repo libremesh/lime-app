@@ -1,3 +1,36 @@
 button:disabled {
     opacity: 0.3;
 }
+
+.bar {
+	height: 0.4rem;
+}
+
+.signal {
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	font-size: 2.6rem;
+	justify-content: center;
+}
+
+.fetchingName {
+	font-size: 2rem;
+}
+
+.unit {
+	font-size: 0.3em;
+	margin-left: 0.1em;
+}
+
+.itemHidden{
+	overflow: hidden;
+	max-height: 0;
+	transition: all linear 0.5s;
+}
+  
+.itemActive {
+	max-height: 100px;
+	transition: all linear 0.5s 0.3s;
+	font-size: 0.9em;
+}
