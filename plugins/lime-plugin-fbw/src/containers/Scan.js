@@ -284,14 +284,16 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 									<CancelButton />
 								</div>
 							</div>
-
 						</>
 					: false} 
-					{ !state.apname ? ( <NetworksList /> ) : null  }
+					{ !state.apname ? 
+					(<>
+						<NetworksList /> 
+						<CancelButton />
+					</>) : null  }
 				</div>
 			</div>
 			{state.error && <Toast text={<Trans>Must select a network and a valid hostname</Trans>} />}
-			{/* todo(kon) create scanning error toast */}
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
