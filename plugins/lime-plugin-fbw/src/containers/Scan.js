@@ -203,16 +203,17 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 						<div><Trans>Channel</Trans>: {station.channel}</div>
 					</div>
 				</div>
-				<div class={style.signal} style={"margin-bottom:auto;"} >
-					<div class="d-flex flex-grow-1 align-items-baseline">
-						<div>{ station.signal }</div>
-					</div>
-					<SignalBar signal={station.signal} className={style.bar} />
-				</div>
-				<div class="d-flex" style={"margin-left: 20px; margin-bottom:auto; margin-top: 10px;"} >
-					<button disabled={!hostname} class={style.backArrow} onClick={() => {
+				<div class={`${style.netItemRight  } d-flex`} >
+					{hostname && <button class={style.backArrow} onClick={() => {
 						selectNetwork(network.index)
-					}}><Trans>Select</Trans></button>
+					}}><Trans>Select</Trans></button>}
+
+					<div class={style.signal} style={"margin-bottom:auto;"} >
+						<div class="d-flex flex-grow-1 align-items-baseline">
+							<div>{ station.signal }</div>
+						</div>
+						<SignalBar signal={station.signal} className={style.bar} />
+					</div>
 				</div>
 			</ListItem>
 			
