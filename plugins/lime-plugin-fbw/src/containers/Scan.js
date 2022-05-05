@@ -164,11 +164,11 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	}
 
 	const NetworkBox = ({ station }) => {
-		let network = getNetworkFromBssid(station.bssid)
-		let hostname = network.ap
-		let listKey = station.ssid
-		// Todo(kon):  move all the styles on the file to classes 
-
+		let network = getNetworkFromBssid(station.bssid);
+		let hostname = network.ap; // Hostname got from config file
+		let listKey =
+		 station.bssid.replace(":", "_"); // Used as key to expand the card
+	
 		const setExpanded = () => {
 			if(expandedAps.includes(listKey)) {
 				setExpandedAps([...expandedAps.filter(v => v !== listKey)])
