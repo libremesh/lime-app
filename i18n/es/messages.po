@@ -94,6 +94,10 @@ msgstr "Nodo autor: {author_node}"
 msgid "Available"
 msgstr "Disponible"
 
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:339
+msgid "Back"
+msgstr ""
+
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:53
 msgid "Background Color"
 msgstr "Color de Fondo"
@@ -106,8 +110,8 @@ msgstr "Mejor señal"
 msgid "Calculating network path"
 msgstr "Cargando el recorrido en la red"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:95
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:139
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:102
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:154
 #: src/components/banner/index.js:13
 msgid "Cancel"
 msgstr "Cancelar"
@@ -136,20 +140,28 @@ msgstr "Cambiar"
 msgid "Change Shared Password"
 msgstr "Cambiar Contraseña Compartida"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:95
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:267
+msgid "Channel"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:94
 msgid "Checking connection"
 msgstr "Comprobando conexión"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:78
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:114
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:299
+msgid "Choose a mesh node to join it's network:"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:85
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:319
 msgid "Choose a name for this node"
 msgstr "Elije el nombre para el nodo"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:68
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:75
 msgid "Choose a name for your network"
 msgstr "Elije el nombre para la red"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:70
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:77
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:40
 msgid "Choose a shared password for network administration"
 msgstr "Elige una contraseña compartida para la administración de la red"
@@ -185,7 +197,7 @@ msgstr "Portal Comunitario"
 msgid "Community Roaming AP"
 msgstr "AP Comunitario"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:69
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:76
 msgid "Community name"
 msgstr "Nombre de la comunidad"
 
@@ -193,7 +205,7 @@ msgstr "Nombre de la comunidad"
 msgid "Configure your network"
 msgstr "Configure su red"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:67
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:74
 msgid "Configure your new community network"
 msgstr "Configure su nueva red mesh"
 
@@ -201,7 +213,7 @@ msgstr "Configure su nueva red mesh"
 msgid "Confirm"
 msgstr "Confirmar"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:108
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:107
 msgid "Congratulations"
 msgstr "Felicitaciones"
 
@@ -215,6 +227,10 @@ msgstr "Conectarse a Punto de Acceso Móvil"
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:69
 msgid "Connected"
 msgstr "Conectado"
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:197
+msgid "Connection attempt not yet started"
+msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:38
 msgid "Connection to the cellphone"
@@ -237,7 +253,7 @@ msgstr "Crear Sesión"
 msgid "Create Voucher"
 msgstr "Crear Cupón"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:87
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:94
 msgid "Create network"
 msgstr "Crear red"
 
@@ -352,6 +368,22 @@ msgstr "Cifrado: {encryptionMethod}"
 msgid "Error"
 msgstr "Error"
 
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:210
+msgid "Error destination network is not configured yet"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:214
+msgid "Error downloading lime assets"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:206
+msgid "Error downloading lime community"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:189
+msgid "Error reaching hostname!"
+msgstr ""
+
 #: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.js:26
 msgid "Error: Not Saved"
 msgstr "Error: No se guardó"
@@ -375,6 +407,7 @@ msgid "Expires <0/>"
 msgstr "Expira <0/>"
 
 #: plugins/lime-plugin-align/src/alignPage.js:30
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:225
 #: plugins/lime-plugin-rx/src/rxPage.js:79
 msgid "Fetching name"
 msgstr "Consiguiendo nombre"
@@ -428,12 +461,12 @@ msgstr "Configuración de Ground Routing"
 msgid "Hide Console"
 msgstr "Esconder Consola"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:79
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:115
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:86
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:320
 msgid "Host name"
 msgstr "Nombre del nodo"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:48
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:49
 msgid "I don't know the shared password"
 msgstr "No sé la contraseña compartida"
 
@@ -485,7 +518,7 @@ msgstr "Está habilitado por defecto en {communityName}"
 msgid "It must start with https:// or http://"
 msgstr "Debe empezar con https:// o http://"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:108
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:316
 msgid "Join the mesh"
 msgstr "Unirse a la red"
 
@@ -514,11 +547,11 @@ msgstr "Cargando el estado del nodo..."
 msgid "Local services link"
 msgstr "Enlace a servicios locales"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:55
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:56
 msgid "Logging in"
 msgstr "Iniciando Sesión"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:46
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:47
 msgid "Login"
 msgstr "Ingresar"
 
@@ -562,7 +595,7 @@ msgstr "Más de 10 caracteres"
 msgid "Most Active"
 msgstr "Enlace más activo"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:150
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:369
 msgid "Must select a network and a valid hostname"
 msgstr "Debes elegir una red y un nombre de host valido"
 
@@ -574,13 +607,13 @@ msgstr "Configuración de la Red"
 msgid "Network Name: {ssid}"
 msgstr "Nombre de Red: {ssid}"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:106
-msgid "No network found, try realigning your node and rescanning."
-msgstr "No se encontraron redes, intente alinear el nodo y volver a escanear."
-
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:23
 msgid "No password"
 msgstr "Sin contraseña"
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:350
+msgid "No scan result"
+msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:29
 #: src/containers/RebootPage/RebootPage.js:31
@@ -649,7 +682,7 @@ msgstr "O actualiza a la última version del firmware"
 msgid "Packet loss"
 msgstr "Paquetes perdidos"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:71
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:78
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:41
 msgid "Password"
 msgstr "Contraseña"
@@ -691,7 +724,7 @@ msgstr "Por favor espere {remainingTime} segundos pacientemente y no desconecte 
 msgid "Please wait while the device reboots, and reload the app"
 msgstr "Por favor espere a que el dispositivo se reinicie y recargue la app"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:86
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:85
 msgid "Please wait {time} seconds"
 msgstr "Por favor espere {time} segundos"
 
@@ -699,12 +732,12 @@ msgstr "Por favor espere {time} segundos"
 msgid "Radio {radioNumber}"
 msgstr "Radio {radioNumber}"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:74
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:81
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:46
 msgid "Re-enter Password"
 msgstr "Re-ingrese la contraseña"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:73
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:80
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:45
 msgid "Re-enter the shared password"
 msgstr "Re-ingrese la contraseña compartida"
@@ -721,7 +754,7 @@ msgstr "Reiniciando"
 msgid "Reload"
 msgstr "Recargar"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:112
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:111
 msgid "Reload page"
 msgstr "Recargar página"
 
@@ -733,7 +766,7 @@ msgstr "Soporte Remoto"
 msgid "Required"
 msgstr "Requerido"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:132
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:143
 msgid "Rescan"
 msgstr "Volver a escanear"
 
@@ -771,7 +804,7 @@ msgstr "Guardado"
 msgid "Scan for existing networks"
 msgstr "Buscar redes existentes"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:151
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:370
 msgid "Scanning for existing networks"
 msgstr "Buscando redes existentes"
 
@@ -787,9 +820,9 @@ msgstr "Buscando tu salida a Internet"
 msgid "See More"
 msgstr "Ver más"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:109
-msgid "Select a network to join"
-msgstr "Seleccione una red a la que sumarse"
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:279
+msgid "Select"
+msgstr ""
 
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:56
 msgid "Select another node and use the LimeApp as you were there"
@@ -804,15 +837,15 @@ msgstr "Seleccioná el archivo"
 msgid "Select new node"
 msgstr "Selecciona el nodo"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:111
-msgid "Select one"
-msgstr "Seleccionar una"
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:317
+msgid "Selected network to join"
+msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:124
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:329
 msgid "Set network"
 msgstr "Sumarse a la red"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:83
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:82
 msgid "Setting network"
 msgstr "Configurando red"
 
@@ -836,7 +869,7 @@ msgstr "Comparte el siguiente comando con quien quieras para darle acceso a tu n
 msgid "Share your mobile connection by connecting the node to a mobile hotspost"
 msgstr "Comparte tu conexión de datos con el nodo a través de un Punto de Acceso Móvil"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:40
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:41
 msgid "Shared Password"
 msgstr "Contraseña Compartida"
 
@@ -906,7 +939,7 @@ msgstr "La contraseña tiene que tener al menos 8 caracteres"
 msgid "The password should have:"
 msgstr "La contraseña debe incluir:"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:76
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:83
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:50
 msgid "The passwords do not match!"
 msgstr "Las contraseñas no coinciden!"
@@ -919,7 +952,7 @@ msgstr "La radio necesita reiniciarse..."
 msgid "The selected image is not valid for the target device"
 msgstr "La imagen seleccionada no es válida para este dispositivo"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:50
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:51
 msgid "The shared password has been chosen by the community when the network was created. You can ask other community members for it."
 msgstr "La contraseña compartida fue elegida por la comunidad al iniciar la red. Pregúntale a otros miembros cuál es."
 
@@ -986,6 +1019,10 @@ msgstr "Tráfico"
 #: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:12
 msgid "Try reloading the app"
 msgstr "Intentar recargar la app"
+
+#: plugins/lime-plugin-fbw/src/containers/Scan.js:243
+msgid "Unknown error"
+msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:157
 msgid "Upgrade"
@@ -1067,7 +1104,7 @@ msgstr "Con radio {fromRadio} alineando con"
 msgid "With this second cell phone create an access point or hotspot with this data:"
 msgstr "Con este segundo celular crea un punto de acceso móvil (\"hotspot\") con estos datos:"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:43
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:44
 msgid "Wrong password, try again"
 msgstr "Contraseña incorrecta, intenta nuevamente"
 
@@ -1076,11 +1113,11 @@ msgstr "Contraseña incorrecta, intenta nuevamente"
 msgid "Yes"
 msgstr "Si"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:98
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:97
 msgid "You are connected to another node in the network, try connecting to"
 msgstr "Está conectado a otro nodo de la red, intente conectarse a"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:111
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:110
 msgid "You are now part of"
 msgstr "Usted es ahora parte de"
 
@@ -1100,15 +1137,15 @@ msgstr "Puedes actualizar a:"
 msgid "You don't go through any paths to get here."
 msgstr "No necesitas pasar por ningún nodo para llega hasta aquí."
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:110
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:109
 msgid "You have successfuly connected to"
 msgstr "La conexión fué exitosa, está conectado a"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:39
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:40
 msgid "You need to know the shared password to enter this page"
 msgstr "Debes ingresar la contraseña compartida para seguir"
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:99
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:98
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr "Intente conectarse a la red wifi {wifiSsid} para completar la instalación."
 
