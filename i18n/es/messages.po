@@ -370,7 +370,7 @@ msgstr "Error"
 
 #: plugins/lime-plugin-fbw/src/containers/Scan.js:210
 msgid "Error destination network is not configured yet"
-msgstr "Error, La red de destino del error aún no está configurada"
+msgstr "Error, la red de destino no está configurada aún"
 
 #: plugins/lime-plugin-fbw/src/containers/Scan.js:214
 msgid "Error downloading lime assets"
