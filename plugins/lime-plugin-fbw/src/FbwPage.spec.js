@@ -1,6 +1,6 @@
 import { h } from "preact";
 import FbwPage from './FbwPage';
-import { fireEvent, screen, within} from '@testing-library/preact';
+import { fireEvent, screen, within, act, cleanup } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import { render, flushPromises } from 'utils/test_utils';
 import { AppContextProvider } from 'utils/app.context';
@@ -8,6 +8,8 @@ import { createNetwork, searchNetworks, setNetwork } from './FbwApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { getBoardData } from 'utils/api';
 import waitForExpect from 'wait-for-expect';
+import queryCache from 'utils/queryCache';
+
 
 
 jest.mock('./FbwApi');
@@ -65,6 +67,8 @@ describe('Fbw Page', () => {
         jest.useRealTimers();
     })
 
+    
+
     it('asks to connect to the wifi network for this node if cannot get hostname', async () => {
         fetch.mockReject();
         render(<AppContextProvider><FbwPage /></AppContextProvider>);
@@ -85,21 +89,21 @@ describe('Fbw Page', () => {
 
 describe('Fbw Join Network Page', () => {
     beforeEach(() => {
-        fetch.resetMocks();
-        getBoardData.mockImplementation(async() => boardData)
-        searchNetworks.mockImplementation(async () => allScanCases)
-        setNetwork.mockImplementation(async () => setNetworkRes)
+        render(<AppContextProvider><FbwPage /></AppContextProvider>);
     })
 
 
     beforeAll(() => {
+        getBoardData.mockImplementation(async() => boardData)
+        searchNetworks.mockImplementation(async () => allScanCases)
     });
 
-    afterAll(() => {
+    afterEach(() => {
+		cleanup();
+		act(() => queryCache.clear());
     })
 
     it('join to existing network from scan results', async () => {
-        render(<AppContextProvider><FbwPage /></AppContextProvider>);
         await advanceToJoinNetwork()
         expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
         let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))        
@@ -110,6 +114,7 @@ describe('Fbw Join Network Page', () => {
             await screen.findByLabelText('Choose a name for this node'),
             { target: { value: 'mynode' } }
         );
+        setNetwork.mockImplementation(async () => setNetworkRes)
         
         fireEvent.click(
             await screen.findByRole('button', { name: /Set network/i })
@@ -126,12 +131,34 @@ describe('Fbw Join Network Page', () => {
     });
 
 
-    it.skip('test scanning screen case downloading configuration', async () => {});
-    it.skip('test scanning screen case downloaded configuration', async () => {});
-    it.skip('test scanning screen case failed fetch config', async () => {});
-    it.skip('test scanning screen case failed not configured yet', async () => {});
-    it.skip('test scanning screen case failed download assets ', async () => {});
-    
+    it('test scan results contain all cases', async () => { 
+        await advanceToJoinNetwork()
+        expect(await screen.findByText('(quintana.libre.org.ar)')).toBeInTheDocument();
+    });
+
+    it('test scan results contain all Fetching name', async () => {  
+        await advanceToJoinNetwork()
+        expect(await screen.findByText('Fetching name')).toBeInTheDocument();
+    });
+
+    it('test scan results contain all Connection attempt not yet started', async () => {  
+        await advanceToJoinNetwork()
+        expect(await screen.findByText('Connection attempt not yet started')).toBeInTheDocument();
+    });
+
+    it('test scan results contain all Error downloading lime community', async () => {  
+        await advanceToJoinNetwork()
+        expect(await screen.findByText('Error downloading lime community')).toBeInTheDocument();
+    });
+    it('test scan results contain all Error destination network is not configured yet', async () => {  
+        await advanceToJoinNetwork()
+        expect(await screen.findByText('Error destination network is not configured yet')).toBeInTheDocument();
+    });
+
+    it('test scan results contain all Error downloading lime assets', async () => {  
+        await advanceToJoinNetwork()
+        expect(await screen.findByText('Error downloading lime assets')).toBeInTheDocument();
+    });
 })
 
 const setNetworkRes = JSON.parse(`{ 
