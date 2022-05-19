@@ -18,7 +18,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 	const [state, setState] = useState({
 		createForm: false,
 		error: null,
-		hostname: boardData.hostname
+		hostname: boardData?.hostname
 	});
 
 	const [status, setStatus] = useState()		// Scan status
@@ -37,7 +37,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			setExpectedHost(state.hostname)
 			setExpectedNetwork(state.community)
 			toggleForm('setting')();
-		}
+		},
 	});
 
 	useEffect(() => {
@@ -73,6 +73,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 
 	/* Validate state and set network in the router */
 	function _setNetwork() {
+
 		if (state.apname && isValidHostname(state.hostname, true)) {
 			setNetwork({
 				file: state.file,
@@ -114,7 +115,6 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		setStatus(payloadData?.status || null)
 		setNetworks(payloadData?.networks || [])
 		setScanned(payloadData?.scanned || [])
-		console.debug(payloadData?.scanned)
 	}, [payloadData])
 
 	useEffect(() => {
@@ -167,7 +167,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		let network = getNetworkFromBssid(station.bssid);
 		let hostname = network.ap; // Hostname got from config file
 		let listKey =
-		 station.bssid.replace(":", "_"); // Used as key to expand the card
+		 station.bssid.replaceAll(":", "_"); // Used as key to expand the card
 	
 		const setExpanded = () => {
 		  if (expandedAps.includes(listKey)) {
@@ -178,7 +178,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 		};
 	
 		const statusMessage = () => {
-			console.debug(station.bssid, hostname)
+			// console.debug(station.bssid, hostname)
 		  // Case no scanned status or scanned is true but scan end
 		  if ((station.status == null 
 				|| (station?.status?.code === "downloaded_config" && hostname === undefined)
@@ -229,12 +229,12 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			// Hast hostname
 			else if (station.status.code === "downloaded_config" && hostname) {
 			  return (
-				<>
+				<span>
 				  <div style={"font-size: 2rem;"}>{hostname}</div>
 				  <div style={"font-size: 1.5rem; padding-right: 10px;"}>
-					{"(" + network.config.wifi.ap_ssid + ")"}
+					{`(${  network.config.wifi.ap_ssid  })`}
 				  </div>
-				</>
+				</span>
 			  );
 			}
 		  }
@@ -250,6 +250,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			onClick={setExpanded}
 			style={"padding-left: 0.5em; padding-right:0.5em;"}
 			key={listKey}
+			data-testid={listKey}
 		  >
 			<div>
 			  {
@@ -316,8 +317,8 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 									<h4><Trans>Join the mesh</Trans></h4>
 									<label><Trans>Selected network to join</Trans></label>
 									<input type="text" disabled={true} class="u-full-width" value={state.apname} />
-									<label><Trans>Choose a name for this node</Trans></label>
-									<input type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
+									<label for="hostname"><Trans>Choose a name for this node</Trans></label>
+									<input id="hostname" type="text" placeholder={t`Host name`} class="u-full-width" value={state.hostname} onInput={_changeHostName} />
 								</div>
 								<div class="row">
 									<div class="six columns">
@@ -345,7 +346,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 					): false} 
 					{ status === 'scanning' && !state.apname ? (<Loading />): false }
 					{ scanned.length === 0 && status === 'scanned' ?
-						<>
+						<span>
 							<h3 className="container-center">
 								<Trans>No scan result</Trans>
 							</h3>
@@ -357,13 +358,13 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 									<CancelButton />
 								</div>
 							</div>
-						</>
+						</span>
 					: false} 
 					{ !state.apname ? 
-					(<>
+					(<span>
 						<NetworksList /> 
 						<CancelButton />
-					</>) : null  }
+					</span>) : null  }
 				</div>
 			</div>
 			{state.error && <Toast text={<Trans>Must select a network and a valid hostname</Trans>} />}
