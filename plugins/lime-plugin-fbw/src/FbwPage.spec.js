@@ -1,12 +1,13 @@
 import { h } from "preact";
 import FbwPage from './FbwPage';
-import { fireEvent, screen} from '@testing-library/preact';
+import { fireEvent, screen, within} from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import { render, flushPromises } from 'utils/test_utils';
 import { AppContextProvider } from 'utils/app.context';
-import { createNetwork, searchNetworks } from './FbwApi';
+import { createNetwork, searchNetworks, setNetwork } from './FbwApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { getBoardData } from 'utils/api';
+import waitForExpect from 'wait-for-expect';
 
 
 jest.mock('./FbwApi');
@@ -84,26 +85,44 @@ describe('Fbw Page', () => {
 
 describe('Fbw Join Network Page', () => {
     beforeEach(() => {
+        fetch.resetMocks();
         getBoardData.mockImplementation(async() => boardData)
         searchNetworks.mockImplementation(async () => allScanCases)
+        setNetwork.mockImplementation(async () => setNetworkRes)
     })
 
+
     beforeAll(() => {
-        jest.useFakeTimers();
     });
 
     afterAll(() => {
-        jest.useRealTimers();
-
-		// cleanup();
-		// act(() => queryCache.clear());
     })
 
     it('join to existing network from scan results', async () => {
         render(<AppContextProvider><FbwPage /></AppContextProvider>);
-        advanceToJoinNetwork()
-        let tile = await screen.findByText('ql-refu-bbone')
-        expect(tile).toBeInTheDocument();
+        await advanceToJoinNetwork()
+        expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
+        let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))        
+        fireEvent.click(
+            await tile.findByRole('button', { name: /Select/i })
+        )
+        fireEvent.input(
+            await screen.findByLabelText('Choose a name for this node'),
+            { target: { value: 'mynode' } }
+        );
+        
+        fireEvent.click(
+            await screen.findByRole('button', { name: /Set network/i })
+        )
+        await waitForExpect(() => {
+            expect(setNetwork).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    file: 'lime-community__host__ql-refu-bbone__38:AB:C0:C1:D6:70',
+                    hostname: 'mynode',
+                })
+            )
+        });
+        expect(await screen.findByText('Setting network')).toBeInTheDocument();
     });
 
 
@@ -114,6 +133,26 @@ describe('Fbw Join Network Page', () => {
     it.skip('test scanning screen case failed download assets ', async () => {});
     
 })
+
+const setNetworkRes = JSON.parse(`{ 
+    "status": "configuring"
+}`)
+
+const boardData = JSON.parse(`{
+    "kernel": "4.14.215",
+    "hostname": "LiMe-abc000",
+    "system": "QEMU Virtual CPU version 2.5+",
+    "model": "QEMU Standard PC (i440FX + PIIX, 1996)",
+    "board_name": "qemu-standard-pc-i440fx-piix-1996",
+    "release": {
+      "distribution": "%LIME_ID%",
+      "version": "%LIME_RELEASE%",
+      "revision": "%LIME_REVISION%",
+      "target": "x86/64",
+      "description": "%LIME_DESCRIPTION%"
+    }
+  }`
+)
 
 
 const allScanCases = JSON.parse(`{
@@ -210,20 +249,4 @@ const allScanCases = JSON.parse(`{
         
     ]
 }`
-)
-
-const boardData = JSON.parse(`{
-    "kernel": "4.14.215",
-    "hostname": "LiMe-abc000",
-    "system": "QEMU Virtual CPU version 2.5+",
-    "model": "QEMU Standard PC (i440FX + PIIX, 1996)",
-    "board_name": "qemu-standard-pc-i440fx-piix-1996",
-    "release": {
-      "distribution": "%LIME_ID%",
-      "version": "%LIME_RELEASE%",
-      "revision": "%LIME_REVISION%",
-      "target": "x86/64",
-      "description": "%LIME_DESCRIPTION%"
-    }
-  }`
 )
