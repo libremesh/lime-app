@@ -133,31 +133,31 @@ describe('Fbw Join Network Page', () => {
     });
 
 
-    it('test scan results contain all cases', async () => { 
+    it('shows community name for results with successful config download', async () => { 
         await advanceToJoinNetwork()
         expect(await screen.findByText('(quintana.libre.org.ar)')).toBeInTheDocument();
     });
 
-    it('test scan results contain all Fetching name', async () => {  
+    it('shows "Fetching name" when config community file is downloading', async () => {  
         await advanceToJoinNetwork()
         expect(await screen.findByText('Fetching name')).toBeInTheDocument();
     });
 
-    it('test scan results contain all Connection attempt not yet started', async () => {  
+    it('shows "Connection attempt not yet started" when a network is scanned but the config donwload is not started', async () => {  
         await advanceToJoinNetwork()
         expect(await screen.findByText('Connection attempt not yet started')).toBeInTheDocument();
     });
 
-    it('test scan results contain all Error downloading lime community', async () => {  
+    it('shows "Error downloading lime community" when config file was not downloaded properly', async () => {  
         await advanceToJoinNetwork()
         expect(await screen.findByText('Error downloading lime community')).toBeInTheDocument();
     });
-    it('test scan results contain all Error destination network is not configured yet', async () => {  
+    it('shows "Error destination network is not configured yet" when destination node is not configured', async () => {  
         await advanceToJoinNetwork()
         expect(await screen.findByText('Error destination network is not configured yet')).toBeInTheDocument();
     });
 
-    it('test scan results contain all Error downloading lime assets', async () => {  
+    it('shows "Error downloading lime assets" if error when downloading community assets', async () => {  
         await advanceToJoinNetwork()
         expect(await screen.findByText('Error downloading lime assets')).toBeInTheDocument();
     });
