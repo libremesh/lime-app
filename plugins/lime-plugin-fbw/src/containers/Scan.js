@@ -229,7 +229,7 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 				</div>
 			  );
 			}
-			// Hast hostname
+			// Has hostname
 			else if (station.status.code === "downloaded_config" && hostname) {
 			  return (
 				<span>
@@ -275,7 +275,6 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 			<div class={`${style.netItemRight} d-flex`}>
 			  {hostname && station?.status?.code == "downloaded_config" && (
 				<button
-				  class={style.backArrow}
 				  onClick={() => {
 					selectNetwork(network.index);
 				  }}
