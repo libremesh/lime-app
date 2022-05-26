@@ -90,10 +90,10 @@ describe('Fbw Page', () => {
 
 
 describe('Fbw Join Network Page', () => {
+    
     beforeEach(() => {
         render(<AppContextProvider><FbwPage /></AppContextProvider>);
     })
-
 
     beforeAll(() => {
         getBoardData.mockImplementation(async() => boardData)

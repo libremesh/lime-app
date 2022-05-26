@@ -10,7 +10,10 @@ import { isValidHostname, slugify } from 'utils/isValidHostname';
 import { useBoardData } from 'utils/queries';
 import { useSearchNetworks, useSetNetwork, useGetNetworks } from '../FbwQueries';
 import { List, ListItem } from 'components/list';
-import { SignalBar } from '../../../lime-plugin-align/src/components/signalBar'; // todo(kon): implement common component
+
+import { SignalBar } from 'components/signalbar';
+import signalStyle from 'components/signalbar/style.less';
+
 
 
 export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
@@ -281,11 +284,11 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 				</button>
 			  )}
 	
-			  <div class={style.signal} style={"margin-bottom:auto;"}>
+			  <div class={signalStyle.signal} style={"margin-bottom:auto;"}>
 				<div class="d-flex flex-grow-1 align-items-baseline">
 				  <div>{station.signal}</div>
 				</div>
-				<SignalBar signal={station.signal} className={style.bar} />
+				<SignalBar signal={station.signal} className={signalStyle.bar} />
 			  </div>
 			</div>
 		  </ListItem>
