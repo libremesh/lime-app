@@ -73,16 +73,18 @@ describe('Fbw Page', () => {
         fetch.mockReject();
         render(<AppContextProvider><FbwPage /></AppContextProvider>);
         await advanceToChecking();
-        // eslint-disable-next-line jest/valid-expect
-        expect(await screen.findByText('You should try to connect to the network ournetwork/mynode.'));
+        expect(await screen
+            .findByText('You should try to connect to the network ournetwork/mynode.'))
+            .toBeInTheDocument();
     });
 
     it('asks to connect to the wifi network for this node if getting different hostname ', async () => {
         fetch.mockResponse('anothernode\n');
         render(<AppContextProvider><FbwPage /></AppContextProvider>);
         await advanceToChecking();
-        // eslint-disable-next-line jest/valid-expect
-        expect(await screen.findByText('You are connected to another node in the network, try connecting to ournetwork/mynode'));
+        expect(await screen
+            .findByText('You are connected to another node in the network, try connecting to ournetwork/mynode'))
+            .toBeInTheDocument();
     });    
 })
 
