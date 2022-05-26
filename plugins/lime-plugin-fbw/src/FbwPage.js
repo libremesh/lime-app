@@ -5,7 +5,7 @@ import './style.less';
 
 import SelectAction from './containers/SelectAction';
 import { NetworkForm } from './containers/NetworkForm';
-import { Scan } from './containers/Scan';
+import { ScanPage } from './containers/scanPage/ScanPage';
 import { Setting } from './containers/Setting';
 import { useAppContext } from 'utils/app.context';
 
@@ -29,7 +29,9 @@ const Page = ({ }) => {
 		<Fragment>
 			{form === 'create' && <NetworkForm toggleForm={toggleForm} setExpectedHost={setExpectedHost} setExpectedNetwork={setExpectedNetwork} />}
 			{form === 'scan' &&
-				<Scan toggleForm={toggleForm} setExpectedHost={setExpectedHost} setExpectedNetwork={setExpectedNetwork} />}
+				<ScanPage toggleForm={toggleForm} 
+				setExpectedHost={setExpectedHost} 
+				setExpectedNetwork={setExpectedNetwork} />}
 			{form === 'setting' && <Setting toggleForm={toggleForm} expectedHost={expectedHost} expectedNetwork={expectedNetwork} />}
 			{!form && <SelectAction toggleForm={toggleForm} />}
 		</Fragment>
