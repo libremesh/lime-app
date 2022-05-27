@@ -16,18 +16,18 @@ import { RescanButton, CancelButton } from './components/buttons';
 
 export const ScanList = ({ 
 	selectedNetwork, 
-	setSetSelectedNetwork, 
+	setSelectedNetwork, 
 	cancelSelectedNetwork, 
 	cancel, 
 }) => {
 
-	const [status, setStatus] = useState()		// Scan status
-	const [networks, setNetworks] = useState() 	// Configuration files downloaded
-	const [scanned, setScanned] = useState([]) 	// Scanned AP's
-
 	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
 
 	const { data: payloadData } = useGetNetworks();
+
+	const status  = payloadData?.status || null	  	// Scan status
+	const networks = payloadData?.networks || []	// Configuration files downloaded
+	const scanned  = payloadData?.scanned || []	 	// Scanned AP's
 
 	const [searchNetworks, { isLoading: isSubmitting, isError: isSeachNetworkError }] = useSearchNetworks()
 
@@ -40,7 +40,7 @@ export const ScanList = ({
 	/* Change selectedNetwork after selectbox change event */
 	function selectNetwork(netIdx) {
 		const { config, file } = networks[netIdx];
-		setSetSelectedNetwork({
+		setSelectedNetwork({
 			...selectedNetwork,
 			file,
 			apname: config.wifi.apname_ssid.split('/%H')[0],
@@ -48,12 +48,6 @@ export const ScanList = ({
 		});
 
 	}
-
-	useEffect(() => {
-		setStatus(payloadData?.status || null)
-		setNetworks(payloadData?.networks || [])
-		setScanned(payloadData?.scanned || [])
-	}, [payloadData])
 
 	useEffect(() => {
 		let interval;
@@ -226,7 +220,7 @@ export const ScanList = ({
 		<div class="container container-padded">
 			<div>
 				<div>
-					{ status === 'scanning' && !selectedNetwork.apname ? (<Loading />): false }
+					{ status === 'scanning' && !selectedNetwork?.apname ? (<Loading />): false }
 					{ scanned.length === 0 && status === 'scanned' ?
 						<span>
 							<h3 className="container-center">
@@ -242,7 +236,7 @@ export const ScanList = ({
 							</div>
 						</span>
 					: false} 
-					{ !selectedNetwork.apname ?
+					{ !selectedNetwork?.apname ?
 					(<span>
 						<NetworksList /> 
 						<div class="row">

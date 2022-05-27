@@ -7,7 +7,6 @@ import { useBoardData } from 'utils/queries';
 export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
     const { data: boardData } = useBoardData();
     const [selectedNetwork, setSelectedNetwork] = useState({
-		error: null,
 		hostname: boardData?.hostname
 	});
 
@@ -33,13 +32,13 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
                     toggleForm={toggleForm} 
                     setExpectedHost={setExpectedHost} 
                     setExpectedNetwork={setExpectedNetwork}
-                    state={selectedNetwork} 
-                    setState={setSelectedNetwork} 
+                    selectedNetwork={selectedNetwork} 
+                    setSelectedNetwork={setSelectedNetwork} 
                     cancelSelectedNetwork={_cancelSelectedNetwork} 
                 />
                 : <ScanList
-                    state={selectedNetwork}
-                    setState={setSelectedNetwork} 
+                    selectedNetwork={selectedNetwork}
+                    setSelectedNetwork={setSelectedNetwork} 
                     cancelSelectedNetwork={_cancelSelectedNetwork} 
                     cancel={_cancel}
                 /> }
