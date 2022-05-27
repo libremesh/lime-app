@@ -6,16 +6,15 @@ import { useBoardData } from 'utils/queries';
 
 export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
     const { data: boardData } = useBoardData();
-    const [state, setState] = useState({
-		createForm: false,
+    const [selectedNetwork, setSelectedNetwork] = useState({
 		error: null,
 		hostname: boardData?.hostname
 	});
 
     /* Used to dismis previously selected network, ex: on back or rescan button */
     function _cancelSelectedNetwork( ) {
-        setState({
-            ...state,
+        setSelectedNetwork({
+            ...selectedNetwork,
             file: "",
             apname: "",
             community: ""
@@ -29,18 +28,18 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
 
     return (
         <>
-            {state.apname  
+            {selectedNetwork.apname  
                 ? <SelectForm 
                     toggleForm={toggleForm} 
                     setExpectedHost={setExpectedHost} 
                     setExpectedNetwork={setExpectedNetwork}
-                    state={state} 
-                    setState={setState} 
+                    state={selectedNetwork} 
+                    setState={setSelectedNetwork} 
                     cancelSelectedNetwork={_cancelSelectedNetwork} 
                 />
                 : <ScanList
-                    state={state}
-                    setState={setState} 
+                    state={selectedNetwork}
+                    setState={setSelectedNetwork} 
                     cancelSelectedNetwork={_cancelSelectedNetwork} 
                     cancel={_cancel}
                 /> }

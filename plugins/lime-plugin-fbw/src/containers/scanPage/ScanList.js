@@ -15,12 +15,11 @@ import { RescanButton, CancelButton } from './components/buttons';
 
 
 export const ScanList = ({ 
-	state, 
-	setState, 
+	selectedNetwork, 
+	setSetSelectedNetwork, 
 	cancelSelectedNetwork, 
 	cancel, 
 }) => {
-
 
 	const [status, setStatus] = useState()		// Scan status
 	const [networks, setNetworks] = useState() 	// Configuration files downloaded
@@ -32,21 +31,17 @@ export const ScanList = ({
 
 	const [searchNetworks, { isLoading: isSubmitting, isError: isSeachNetworkError }] = useSearchNetworks()
 
-	useEffect(() => {
-		if (isSeachNetworkError) setStatus('error')
-	},[isSeachNetworkError])
-
 	/* Load scan results */
 	function _rescan() {
 		cancelSelectedNetwork()
 		searchNetworks(true);
 	}
 	
-	/* Change state after selectbox change event */
+	/* Change selectedNetwork after selectbox change event */
 	function selectNetwork(netIdx) {
 		const { config, file } = networks[netIdx];
-		setState({
-			...state,
+		setSetSelectedNetwork({
+			...selectedNetwork,
 			file,
 			apname: config.wifi.apname_ssid.split('/%H')[0],
 			community: config.wifi.ap_ssid
@@ -231,7 +226,7 @@ export const ScanList = ({
 		<div class="container container-padded">
 			<div>
 				<div>
-					{ status === 'scanning' && !state.apname ? (<Loading />): false }
+					{ status === 'scanning' && !selectedNetwork.apname ? (<Loading />): false }
 					{ scanned.length === 0 && status === 'scanned' ?
 						<span>
 							<h3 className="container-center">
@@ -247,7 +242,7 @@ export const ScanList = ({
 							</div>
 						</span>
 					: false} 
-					{ !state.apname ?
+					{ !selectedNetwork.apname ?
 					(<span>
 						<NetworksList /> 
 						<div class="row">
@@ -261,7 +256,7 @@ export const ScanList = ({
 					</span>) : null }
 				</div>
 			</div>
-			{state.error && <Toast text={<Trans>Error scanning networks</Trans>} />}
+			{isSeachNetworkError && <Toast text={<Trans>Error scanning networks</Trans>} />}
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
