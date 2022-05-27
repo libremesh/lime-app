@@ -35,6 +35,7 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
                     selectedNetwork={selectedNetwork} 
                     setSelectedNetwork={setSelectedNetwork} 
                     cancelSelectedNetwork={_cancelSelectedNetwork} 
+                    cancel={_cancel}
                 />
                 : <ScanList
                     selectedNetwork={selectedNetwork}

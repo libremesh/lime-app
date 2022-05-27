@@ -13,7 +13,8 @@ export const SelectForm = ({
     setExpectedNetwork,
     selectedNetwork,
     setSelectedNetwork,
-    cancelSelectedNetwork
+    cancelSelectedNetwork,
+	cancel
  }) => {
 
 	const [validHostnameError, setValidHostnameError] = useState(false)		// Scan status
@@ -67,18 +68,16 @@ export const SelectForm = ({
 									<label for="hostname"><Trans>Choose a name for this node</Trans></label>
 									<input id="hostname" type="text" placeholder={`Host name`} class="u-full-width" value={selectedNetwork.hostname} onInput={_changeHostName} />
 								</div>
+								<button
+										onClick={_setNetwork}
+										disabled={!isValidHostname(selectedNetwork.hostname) || isSetNetworkSubmitting}
+										class="u-full-width"
+									>
+									<Trans>Set network</Trans>
+								</button>
 								<div class="row">
-
-                                    <button
-											onClick={_setNetwork}
-											disabled={!isValidHostname(selectedNetwork.hostname) || isSetNetworkSubmitting}
-											class="u-full-width"
-										>
-                                        <Trans>Set network</Trans>
-                                    </button>
 									<div class="six columns">
-									    <CancelButton />
-
+									    <CancelButton cancel={cancel} />
 									</div>
 									<div class="six columns"> 
 										<BackButton goBack={cancelSelectedNetwork} />
