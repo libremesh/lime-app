@@ -107,7 +107,9 @@ describe('Fbw Join Network Page', () => {
 
     it('join to existing network from scan results', async () => {
         await advanceToJoinNetwork()
-        expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
+          });
         let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))        
         fireEvent.click(
             await tile.findByRole('button', { name: /Select/i })
@@ -135,31 +137,43 @@ describe('Fbw Join Network Page', () => {
 
     it('shows community name for results with successful config download', async () => { 
         await advanceToJoinNetwork()
-        expect(await screen.findByText('(quintana.libre.org.ar)')).toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(await screen.findByText('(quintana.libre.org.ar)')).toBeInTheDocument();
+        });
     });
 
     it('shows "Fetching name" when config community file is downloading', async () => {  
         await advanceToJoinNetwork()
-        expect(await screen.findByText('Fetching name')).toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(await screen.findByText('Fetching name')).toBeInTheDocument();
+        });
     });
 
     it('shows "Connection attempt not yet started" when a network is scanned but the config donwload is not started', async () => {  
         await advanceToJoinNetwork()
-        expect(await screen.findByText('Connection attempt not yet started')).toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(await screen.findByText('Connection attempt not yet started')).toBeInTheDocument();
+        });
     });
 
     it('shows "Error downloading lime community" when config file was not downloaded properly', async () => {  
         await advanceToJoinNetwork()
-        expect(await screen.findByText('Error downloading lime community')).toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(await screen.findByText('Error downloading lime community')).toBeInTheDocument();
+        });
     });
     it('shows "Error destination network is not configured yet" when destination node is not configured', async () => {  
         await advanceToJoinNetwork()
-        expect(await screen.findByText('Error destination network is not configured yet')).toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(await screen.findByText('Error destination network is not configured yet')).toBeInTheDocument();
+        });
     });
 
     it('shows "Error downloading lime assets" if error when downloading community assets', async () => {  
         await advanceToJoinNetwork()
-        expect(await screen.findByText('Error downloading lime assets')).toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(await screen.findByText('Error downloading lime assets')).toBeInTheDocument();
+        });
     });
 })
 
