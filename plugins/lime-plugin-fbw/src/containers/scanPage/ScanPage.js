@@ -1,3 +1,4 @@
+import { h, Fragment } from 'preact';
 import { ScanList } from './ScanList'
 import { SelectForm } from './SelectForm'
 import { useState } from 'preact/hooks';
@@ -26,7 +27,7 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
 	}
 
     return (
-        <>
+        <Fragment>
             {selectedNetwork.apname  
                 ? <SelectForm 
                     toggleForm={toggleForm} 
@@ -43,6 +44,6 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
                     cancelSelectedNetwork={_cancelSelectedNetwork} 
                     cancel={_cancel}
                 /> }
-        </>
+        </Fragment>
     );
 }

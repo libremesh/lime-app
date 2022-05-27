@@ -27,7 +27,7 @@ export const NetworkTile = ({
     };
 
     const statusMessage = () => {
-        console.debug(station, station?.status, hostname, status)
+        // console.debug(station, station?.status, hostname, status)
         // Case no scanned status or scanned is true but scan end
         if ((station.status == null 
             || (station?.status?.code === "downloaded_config" && hostname === undefined)
