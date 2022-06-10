@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from 'react-query';
 import queryCache from 'utils/queryCache';
-import { dismissFbw, createNetwork, searchNetworks, setNetwork }
+import { dismissFbw, createNetwork, setNetwork, scanStart, scanStatus, scanRestart, scanStop }
 	from './FbwApi';
 
 export function useDismissFbw() {
@@ -25,8 +25,21 @@ const _getBssid = ({ file = '' }) => {
 	return bssid;
 };
 
-async function _searchNetworks(rescan) {
-	let payload = await searchNetworks(rescan)
+
+export function useScanStart(params) {
+	return useMutation(scanStart, params)
+}
+
+export function useScanRestart(params) {
+	return useMutation(scanRestart, params)
+}
+
+export function useScanStop(params) {
+	return useMutation(scanStop, params)
+}
+
+async function _scanStatus() {
+	let payload = await scanStatus()
 	return {
 		scanned: payload.scanned || [],
 		networks: payload.networks.map(net => ({
@@ -38,19 +51,8 @@ async function _searchNetworks(rescan) {
 	};
 }
 
-export function useSearchNetworks(params) {
-	return useMutation( async (rescan) => await _searchNetworks(rescan), {
-		onSuccess: (payload) => {
-			queryCache.setQueryData(
-				['lime-fbw', 'search-networks'],
-				payload
-			)
-		},
-		...params});
-}
-
-export function useGetNetworks(params) {
-	return useQuery(['lime-fbw', 'search-networks'], async () => await _searchNetworks(false), params)
+export function useScanStatus(params) {
+	return useQuery(['lime-fbw', 'scan-status'], _scanStatus, params)
 }
 
 
