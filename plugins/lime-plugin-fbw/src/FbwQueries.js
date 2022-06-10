@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from 'react-query';
 import queryCache from 'utils/queryCache';
-import { dismissFbw, createNetwork, setNetwork, scanStart, scanStatus, scanRestart, scanStop }
+import { dismissFbw, createNetwork, setNetwork, scanStart, scanStatus, scanRestart, scanStop, getFbwStatus }
 	from './FbwApi';
 
 export function useDismissFbw() {
@@ -8,6 +8,14 @@ export function useDismissFbw() {
 		onSuccess: () => queryCache.setQueryData(['lime-fbw', 'status'], {lock: false})
 	});
 }
+
+export function useFbwStatus() {
+	return useQuery(['lime-fbw', 'status'], getFbwStatus, {
+		initialData: {lock: false},
+		initialStale: true
+	});
+}
+
 
 export function useCreateNetwork(params) {
 	return useMutation(createNetwork, params);
