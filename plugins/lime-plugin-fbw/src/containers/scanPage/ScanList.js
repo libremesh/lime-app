@@ -11,7 +11,6 @@ import { RescanButton, CancelButton } from './components/buttons';
 import { NetworkTile } from './components/networkTile';
 import style from '../../style.less';
 
-
 export const ScanList = ({ 
 	selectedNetwork, 
 	setSelectedNetwork, 
@@ -40,7 +39,10 @@ export const ScanList = ({
 
 	const { data: scanResults, isError: scanStatusError } = useScanStatus({
 		enabled: (getStatus) && (!startError && !restartError),
-		refetchInterval: 2000
+		refetchInterval: 2000,
+		onSuccess: (data) => {
+			if(data.status === 'scanned') setGetStatus(false)
+		}
 	});
 
 	const status  = scanResults?.status || null	  	// Scan status

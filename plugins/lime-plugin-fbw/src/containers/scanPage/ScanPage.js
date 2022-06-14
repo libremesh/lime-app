@@ -33,7 +33,8 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
             onSuccess: (val) => {
                 if(val) {
                     _cancelSelectedNetwork()
-                    // todo: this not working because toggle form change the screen and not show the toast
+                    // todo: this error message is not working because toggle form 
+                    // change the screen and not show the toast
                     setShowCancelError(false)
                     toggleForm(null)()
                 } 
