@@ -45,7 +45,6 @@ export const ScanList = ({
 					cancel()
 					setBackendError(false)
 				} else setBackendError(true)
-
 			}
 		})
 
@@ -132,20 +131,13 @@ export const ScanList = ({
 							<h3 className="container-center">
 								<Trans>No scan result</Trans>
 							</h3>
-							<div class="row">
-								<div class="six columns"> 
-									<RescanButton rescan={_rescan}  />
-								</div>
-								<div class="six columns"> 
-									<CancelButton cancel={_stop} />
-								</div>
-							</div>
 						</span>
 					: false} 
 					{ !selectedNetwork?.apname ?
 					(<span>
 						<NetworksList /> 
-						<div class="row">
+					</span>) : null }
+					<div class="row" style="min-height: 200px;">
 							<div class="six columns"> 
 								<RescanButton rescan={_rescan}  />
 							</div>
@@ -153,7 +145,6 @@ export const ScanList = ({
 								<CancelButton cancel={_stop} />
 							</div>
 						</div>
-					</span>) : null }
 				</div>
 			</div>
 			{startError || restartError || backendError && <Toast text={<Trans>Error scanning networks</Trans>} />}
