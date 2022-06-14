@@ -11,12 +11,11 @@ export function useDismissFbw() {
 
 export function useFbwStatus() {
 	return useQuery(['lime-fbw', 'status'], getFbwStatus, {
-		initialData: {lock: false},
-		initialStale: true
+			initialData: {lock: false},
+			initialStale: true
 	});
 }
-
-
+	
 export function useCreateNetwork(params) {
 	return useMutation(createNetwork, params);
 }
@@ -35,15 +34,19 @@ const _getBssid = ({ file = '' }) => {
 
 
 export function useScanStart(params) {
-	return useMutation(scanStart, params)
+	return useMutation(
+		async () => (await scanStart())['result'], params)
 }
 
 export function useScanRestart(params) {
-	return useMutation(scanRestart, params)
+	return useMutation(
+		async () => (await scanRestart())['result'], params)
+
 }
 
 export function useScanStop(params) {
-	return useMutation(scanStop, params)
+	return useMutation(
+		async () => (await scanStop())['result'], params)
 }
 
 async function _scanStatus() {

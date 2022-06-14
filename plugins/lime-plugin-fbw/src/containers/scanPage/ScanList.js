@@ -4,7 +4,7 @@ import { useState, useEffect } from 'preact/hooks';
 import { Trans } from '@lingui/macro';
 import { Loading } from 'components/loading';
 import Toast from 'components/toast';
-import { useGetNetworks, useSearchNetworks } from '../../FbwQueries';
+import { useScanStart, useScanStatus, useScanRestart, useScanStop } from '../../FbwQueries';
 import { List } from 'components/list';
 
 import { RescanButton, CancelButton } from './components/buttons';
@@ -20,22 +20,50 @@ export const ScanList = ({
 }) => {
 
 	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
+	const [getStatus, setGetStatus] = useState(false) 	// Activate get status
+	
+	const [scanStart, {isLoading: isStarting, isError: startError }] 
+		= useScanStart({onSuccess: setGetStatus})
+	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
+		= useScanRestart({onSuccess: setGetStatus})
+	const [scanStop,
+		// todo: implement errors
+		// { isLoading: isStopping, isError: stopError }
+	] 
+		= useScanStop({
+			onSuccess: () => {
+				setGetStatus(false)
+				cancelSelectedNetwork()
+				cancel();
+			}
+		})
 
-	const { data: payloadData } = useGetNetworks();
+	const { data: scanResults } = useScanStatus({
+		enabled: (getStatus) && (!startError && !restartError),
+		refetchInterval: 2000
+	});
 
-	const status  = payloadData?.status || null	  	// Scan status
-	const networks = payloadData?.networks || []	// Configuration files downloaded
-	const scanned  = payloadData?.scanned || []	 	// Scanned AP's
+	const status  = scanResults?.status || null	  	// Scan status
+	const networks = scanResults?.networks || []	// Configuration files downloaded
+	const scanned  = scanResults?.scanned || []	 	// Scanned AP's
 
-	const [searchNetworks, { isLoading: isSubmitting, isError: isSeachNetworkError }] = useSearchNetworks()
+	/* First execution start scanning */
+	useEffect(() => {
+		scanStart()
+	}, []);
 
-	/* Load scan results */
+	/* Rescan */
 	function _rescan() {
 		cancelSelectedNetwork()
-		searchNetworks(true);
+		scanRestart();
+	}
+
+	/* Stop scanning */ 
+	function _stop() {
+		scanStop()
 	}
 	
-	/* Change selectedNetwork after selectbox change event */
+	/* Select Network on the list of scanned networks */
 	function selectNetwork(netIdx) {
 		const { config, file } = networks[netIdx];
 		setSelectedNetwork({
@@ -44,27 +72,8 @@ export const ScanList = ({
 			apname: config.wifi.apname_ssid.split('/%H')[0],
 			community: config.wifi.ap_ssid
 		});
-
 	}
 
-	useEffect(() => {
-		let interval;
-		if (status === 'scanned') return;
-		else if (status === 'scanning') {
-			interval = setInterval(() => {
-				console.log('Key pulling the new status', status);
-				searchNetworks(false);
-			}, 2000);
-		}
-		else if (!status) {
-			searchNetworks(false);
-		}
-		return () => {
-			if (interval) clearInterval(interval);
-		};
-	}, [status, isSubmitting, searchNetworks]);
-
-	
 	const getNetworkFromBssid = (bssid) => {
 		for (let i = 0; i < networks.length; i++) {
 			if(networks[i].bssid === bssid) return {...networks[i], index: i}
@@ -103,7 +112,10 @@ export const ScanList = ({
 		<div class="container container-padded">
 			<div>
 				<div>
-					{ status === 'scanning' && !selectedNetwork?.apname ? (<Loading />): false }
+					{ 
+						(status === 'scanning' && !selectedNetwork?.apname) || (isStarting || isRestarting)
+						? (<Loading />) : false 
+					}
 					{ scanned.length === 0 && status === 'scanned' ?
 						<span>
 							<h3 className="container-center">
@@ -114,7 +126,7 @@ export const ScanList = ({
 									<RescanButton rescan={_rescan}  />
 								</div>
 								<div class="six columns"> 
-									<CancelButton cancel={cancel} />
+									<CancelButton cancel={_stop} />
 								</div>
 							</div>
 						</span>
@@ -127,13 +139,13 @@ export const ScanList = ({
 								<RescanButton rescan={_rescan}  />
 							</div>
 							<div class="six columns"> 
-								<CancelButton cancel={cancel} />
+								<CancelButton cancel={_stop} />
 							</div>
 						</div>
 					</span>) : null }
 				</div>
 			</div>
-			{isSeachNetworkError && <Toast text={<Trans>Error scanning networks</Trans>} />}
+			{startError || restartError && <Toast text={<Trans>Error scanning networks</Trans>} />}
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
