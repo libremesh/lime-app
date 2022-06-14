@@ -21,24 +21,35 @@ export const ScanList = ({
 
 	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
 	const [getStatus, setGetStatus] = useState(false) 	// Activate get status
+	const [backendError, setBackendError] = useState(false) 	// Activate get status
+
+	const _handleSetGetStatus = (val) => {
+		if(!val) {
+			setBackendError(true)
+		} else {
+			setGetStatus(true)
+			setBackendError(false)
+		}
+	}
 	
 	const [scanStart, {isLoading: isStarting, isError: startError }] 
-		= useScanStart({onSuccess: setGetStatus})
+		= useScanStart({onSuccess: _handleSetGetStatus})
 	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
-		= useScanRestart({onSuccess: setGetStatus})
-	const [scanStop,
-		// todo: implement errors
-		// { isLoading: isStopping, isError: stopError }
-	] 
+		= useScanRestart({onSuccess: _handleSetGetStatus})
+	const [scanStop, { isError: stopError }] 
 		= useScanStop({
-			onSuccess: () => {
-				setGetStatus(false)
-				cancelSelectedNetwork()
-				cancel();
+			onSuccess: (val) => {
+				if(val) {
+					setGetStatus(false)
+					cancelSelectedNetwork()
+					cancel()
+					setBackendError(false)
+				} else setBackendError(true)
+
 			}
 		})
 
-	const { data: scanResults } = useScanStatus({
+	const { data: scanResults, isError: scanStatusError } = useScanStatus({
 		enabled: (getStatus) && (!startError && !restartError),
 		refetchInterval: 2000
 	});
@@ -145,7 +156,9 @@ export const ScanList = ({
 					</span>) : null }
 				</div>
 			</div>
-			{startError || restartError && <Toast text={<Trans>Error scanning networks</Trans>} />}
+			{startError || restartError || backendError && <Toast text={<Trans>Error scanning networks</Trans>} />}
+			{scanStatusError && <Toast text={<Trans>Error getting scan results</Trans>} />}
+			{stopError && <Toast text={<Trans>Error stopping scan</Trans>} />}
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
