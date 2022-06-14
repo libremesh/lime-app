@@ -4,7 +4,7 @@ import { fireEvent, screen, within, act, cleanup } from '@testing-library/preact
 import '@testing-library/jest-dom';
 import { render, flushPromises } from 'utils/test_utils';
 import { AppContextProvider } from 'utils/app.context';
-import { createNetwork, setNetwork, scanStart, scanStatus} from './FbwApi';
+import { createNetwork, setNetwork, scanStart, scanStatus, scanStop} from './FbwApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { getBoardData } from 'utils/api';
 import waitForExpect from 'wait-for-expect';
@@ -98,7 +98,7 @@ describe('Fbw Join Network Page', () => {
     beforeAll(() => {
         getBoardData.mockImplementation(async() => boardData)
         scanStatus.mockImplementation(async () => allScanCases)
-        scanStart.mockImplementation(async () => startScanSuccess)
+        scanStart.mockImplementation(async () => scanActionSuccess)
     });
 
     afterEach(() => {
@@ -176,6 +176,53 @@ describe('Fbw Join Network Page', () => {
             expect(await screen.findByText('Error downloading lime assets')).toBeInTheDocument();
         });
     });
+
+    it('shows loader when status is scanning', async () => {
+        await advanceToJoinNetwork()
+        await waitForExpect(async () => {
+            expect(await screen.findByTestId('loading')).toBeInTheDocument();
+        });
+    })
+
+    it('not shows loader when status is scanning', async () => {
+        scanStatus.mockImplementation(async () => {
+            allScanCases.status = 'scanned'
+            return allScanCases
+        })
+
+        await advanceToJoinNetwork()
+        expect(await screen.findByTestId('loading')).not.toBeInTheDocument();
+    })
+
+    it('return to select action when cancel is pressed on scan list page', async () => {
+        scanStop.mockImplementation(async () => scanActionSuccess )
+
+        await advanceToJoinNetwork()
+        fireEvent.click(
+            await screen.findByRole('button', { name: /Cancel/i })
+        )
+
+        expect(await screen.findByText('Configure your network')).toBeInTheDocument();
+
+        expect(scanStop).toHaveBeenCalled()      
+    })
+
+    it('return to select action when cancel is pressed on join network page', async () => {
+        scanStop.mockImplementation(async () => scanActionSuccess )
+
+        await advanceToJoinNetwork()
+        let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))        
+        fireEvent.click(
+            await tile.findByRole('button', { name: /Select/i })
+        )
+        fireEvent.click(
+            await screen.findByRole('button', { name: /Cancel/i })
+        )
+        expect(await screen.findByText('Configure your network')).toBeInTheDocument();
+
+        expect(scanStop).toHaveBeenCalled()
+    })
+
 })
 
 
@@ -199,7 +246,7 @@ const boardData = JSON.parse(`{
   }`
 )
 
-const startScanSuccess = JSON.parse('{"result": true}')
+const scanActionSuccess = JSON.parse('{"result": true}')
 
 const allScanCases = JSON.parse(`{
     "status": "scanning",
