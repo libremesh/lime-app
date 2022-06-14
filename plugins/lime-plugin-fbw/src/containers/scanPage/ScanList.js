@@ -4,7 +4,7 @@ import { useState, useEffect } from 'preact/hooks';
 import { Trans } from '@lingui/macro';
 import { Loading } from 'components/loading';
 import Toast from 'components/toast';
-import { useScanStart, useScanStatus, useScanRestart, useScanStop } from '../../FbwQueries';
+import { useScanStart, useScanStatus, useScanRestart } from '../../FbwQueries';
 import { List } from 'components/list';
 
 import { RescanButton, CancelButton } from './components/buttons';
@@ -21,9 +21,10 @@ export const ScanList = ({
 
 	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
 	const [getStatus, setGetStatus] = useState(false) 	// Activate get status
-	const [backendError, setBackendError] = useState(false) 	// Activate get status
+	const [backendError, setBackendError] = useState(false) 	// Backend send false on perform an action
 
-	const _handleSetGetStatus = (val) => {
+	const _handleRestart = (val) => {
+		// Handle backend error on restart
 		if(!val) {
 			setBackendError(true)
 		} else {
@@ -33,20 +34,9 @@ export const ScanList = ({
 	}
 	
 	const [scanStart, {isLoading: isStarting, isError: startError }] 
-		= useScanStart({onSuccess: _handleSetGetStatus})
+		= useScanStart({onSuccess: () => setGetStatus(true)})
 	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
-		= useScanRestart({onSuccess: _handleSetGetStatus})
-	const [scanStop, { isError: stopError }] 
-		= useScanStop({
-			onSuccess: (val) => {
-				if(val) {
-					setGetStatus(false)
-					cancelSelectedNetwork()
-					cancel()
-					setBackendError(false)
-				} else setBackendError(true)
-			}
-		})
+		= useScanRestart({onSuccess: _handleRestart})
 
 	const { data: scanResults, isError: scanStatusError } = useScanStatus({
 		enabled: (getStatus) && (!startError && !restartError),
@@ -66,11 +56,6 @@ export const ScanList = ({
 	function _rescan() {
 		cancelSelectedNetwork()
 		scanRestart();
-	}
-
-	/* Stop scanning */ 
-	function _stop() {
-		scanStop()
 	}
 	
 	/* Select Network on the list of scanned networks */
@@ -142,14 +127,13 @@ export const ScanList = ({
 								<RescanButton rescan={_rescan}  />
 							</div>
 							<div class="six columns"> 
-								<CancelButton cancel={_stop} />
+								<CancelButton cancel={cancel} />
 							</div>
 						</div>
 				</div>
 			</div>
 			{startError || restartError || backendError && <Toast text={<Trans>Error scanning networks</Trans>} />}
 			{scanStatusError && <Toast text={<Trans>Error getting scan results</Trans>} />}
-			{stopError && <Toast text={<Trans>Error stopping scan</Trans>} />}
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
