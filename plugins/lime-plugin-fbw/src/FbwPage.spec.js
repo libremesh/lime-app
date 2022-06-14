@@ -4,7 +4,7 @@ import { fireEvent, screen, within, act, cleanup } from '@testing-library/preact
 import '@testing-library/jest-dom';
 import { render, flushPromises } from 'utils/test_utils';
 import { AppContextProvider } from 'utils/app.context';
-import { createNetwork, searchNetworks, setNetwork } from './FbwApi';
+import { createNetwork, setNetwork, scanStart, scanStatus} from './FbwApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { getBoardData } from 'utils/api';
 import waitForExpect from 'wait-for-expect';
@@ -51,6 +51,7 @@ const advanceToJoinNetwork = async () => {
     fireEvent.click(
         await screen.findByRole('button', { name: /Scan for existing networks/i })
     );
+
 }
 
 describe('Fbw Page', () => {
@@ -67,7 +68,6 @@ describe('Fbw Page', () => {
         jest.useRealTimers();
     })
 
-    
 
     it('asks to connect to the wifi network for this node if cannot get hostname', async () => {
         fetch.mockReject();
@@ -97,7 +97,8 @@ describe('Fbw Join Network Page', () => {
 
     beforeAll(() => {
         getBoardData.mockImplementation(async() => boardData)
-        searchNetworks.mockImplementation(async () => allScanCases)
+        scanStatus.mockImplementation(async () => allScanCases)
+        scanStart.mockImplementation(async () => startScanSuccess)
     });
 
     afterEach(() => {
@@ -177,6 +178,7 @@ describe('Fbw Join Network Page', () => {
     });
 })
 
+
 const setNetworkRes = JSON.parse(`{ 
     "status": "configuring"
 }`)
@@ -197,6 +199,7 @@ const boardData = JSON.parse(`{
   }`
 )
 
+const startScanSuccess = JSON.parse('{"result": true}')
 
 const allScanCases = JSON.parse(`{
     "status": "scanning",
