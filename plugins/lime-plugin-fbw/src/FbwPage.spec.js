@@ -191,7 +191,9 @@ describe('Fbw Join Network Page', () => {
         })
 
         await advanceToJoinNetwork()
-        expect(await screen.findByTestId('loading')).not.toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+        });
     })
 
     it('return to select action when cancel is pressed on scan list page', async () => {
