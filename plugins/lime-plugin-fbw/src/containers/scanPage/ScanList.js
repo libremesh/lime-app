@@ -19,23 +19,13 @@ export const ScanList = ({
 }) => {
 
 	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
-	const [backendError, setBackendError] = useState(false) 	// Backend send false on perform an action
 	const [pollingInterval, setPollingInterval] = useState(null);
 
-	const _handleRestart = (val) => {
-		// Handle backend error on restart
-		if(!val) {
-			setBackendError(true)
-		} else {
-			setBackendError(false)
-		}
-	}
-	
 	const [scanStart, {isLoading: isStarting, isError: startError }] 
 		= useScanStart({onSuccess: () => setPollingInterval(1000)})
 
 	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
-		= useScanRestart({onSuccess: _handleRestart})
+		= useScanRestart()
 
 	const { data: scanResults, isError: scanStatusError } = useScanStatus({
 		enabled: pollingInterval && (!startError && !restartError),
@@ -131,7 +121,7 @@ export const ScanList = ({
 						</div>
 				</div>
 			</div>
-			{startError || restartError || backendError && <Toast text={<Trans>Error scanning networks</Trans>} />}
+			{startError || restartError && <Toast text={<Trans>Error scanning networks</Trans>} />}
 			{scanStatusError && <Toast text={<Trans>Error getting scan results</Trans>} />}
 			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
