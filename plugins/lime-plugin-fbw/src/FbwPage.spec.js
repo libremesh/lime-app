@@ -184,7 +184,7 @@ describe('Fbw Join Network Page', () => {
         });
     })
 
-    it('not shows loader when status is scanning', async () => {
+    it('not shows loader when status is scanned', async () => {
         scanStatus.mockImplementation(async () => {
             allScanCases.status = 'scanned'
             return allScanCases
