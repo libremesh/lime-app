@@ -19,29 +19,29 @@ export const ScanList = ({
 }) => {
 
 	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
-	const [getStatus, setGetStatus] = useState(false) 	// Activate get status
 	const [backendError, setBackendError] = useState(false) 	// Backend send false on perform an action
+	const [pollingInterval, setPollingInterval] = useState(null);
 
 	const _handleRestart = (val) => {
 		// Handle backend error on restart
 		if(!val) {
 			setBackendError(true)
 		} else {
-			setGetStatus(true)
 			setBackendError(false)
 		}
 	}
 	
 	const [scanStart, {isLoading: isStarting, isError: startError }] 
-		= useScanStart({onSuccess: () => setGetStatus(true)})
+		= useScanStart({onSuccess: () => setPollingInterval(1000)})
+
 	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
 		= useScanRestart({onSuccess: _handleRestart})
 
 	const { data: scanResults, isError: scanStatusError } = useScanStatus({
-		enabled: (getStatus) && (!startError && !restartError),
-		refetchInterval: 2000,
+		enabled: pollingInterval && (!startError && !restartError),
+		refetchInterval: pollingInterval,
 		onSuccess: (data) => {
-			if(data.status === 'scanned') setGetStatus(false)
+			if(data.status === 'scanned') setPollingInterval(null)
 		}
 	});
 
@@ -49,18 +49,15 @@ export const ScanList = ({
 	const networks = scanResults?.networks || []	// Configuration files downloaded
 	const scanned  = scanResults?.scanned || []	 	// Scanned AP's
 
-	/* First execution start scanning */
 	useEffect(() => {
 		scanStart()
 	}, []);
 
-	/* Rescan */
 	function _rescan() {
 		cancelSelectedNetwork()
 		scanRestart();
 	}
 	
-	/* Select Network on the list of scanned networks */
 	function selectNetwork(netIdx) {
 		const { config, file } = networks[netIdx];
 		setSelectedNetwork({
