@@ -32,6 +32,22 @@ const _getBssid = ({ file = '' }) => {
 	return bssid;
 };
 
+async function _scanStatus() {
+	let payload = await scanStatus()
+	return {
+		scanned: payload.scanned || [],
+		networks: payload.networks.map(net => ({
+			...net,
+			ap: _getApName(net),
+			bssid: _getBssid(net)
+		})) || [],
+		status: payload.status || null
+	};
+}
+
+export function useScanStatus(params) {
+	return useQuery(['lime-fbw', 'scan-status'], _scanStatus, params)
+}
 
 export function useScanStart(params) {
 	return useMutation(
@@ -50,23 +66,6 @@ export function useScanRestart(params) {
 export function useScanStop(params) {
 	return useMutation(
 		async () => (await scanStop())['result'], params)
-}
-
-async function _scanStatus() {
-	let payload = await scanStatus()
-	return {
-		scanned: payload.scanned || [],
-		networks: payload.networks.map(net => ({
-			...net,
-			ap: _getApName(net),
-			bssid: _getBssid(net)
-		})) || [],
-		status: payload.status || null
-	};
-}
-
-export function useScanStatus(params) {
-	return useQuery(['lime-fbw', 'scan-status'], _scanStatus, params)
 }
 
 
