@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from 'react-query';
 import queryCache from 'utils/queryCache';
-import { dismissFbw, createNetwork, setNetwork, scanStart, scanStatus, scanRestart, scanStop, getFbwStatus }
+import { dismissFbw, createNetwork, setNetwork, scanStart, getStatus, scanRestart, scanStop }
 	from './FbwApi';
 
 export function useDismissFbw() {
@@ -10,7 +10,7 @@ export function useDismissFbw() {
 }
 
 export function useFbwStatus() {
-	return useQuery(['lime-fbw', 'status'], getFbwStatus, {
+	return useQuery(['lime-fbw', 'status'], getStatus, {
 			initialData: {lock: false},
 			initialStale: true
 	});
@@ -33,7 +33,7 @@ const _getBssid = ({ file = '' }) => {
 };
 
 async function _scanStatus() {
-	let payload = await scanStatus()
+	let payload = await getStatus()
 	return {
 		scanned: payload.scanned || [],
 		networks: payload.networks.map(net => ({
