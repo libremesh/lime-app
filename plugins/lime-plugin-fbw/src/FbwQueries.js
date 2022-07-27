@@ -51,13 +51,13 @@ export function useScanStatus(params) {
 
 export function useScanStart(params) {
 	return useMutation(
-		async () => (await scanStart())['result'], params)
+		async () => (await scanStart())['status'], params)
 }
 
 export function useScanRestart(params) {
 	return useMutation(
 		async () => {
-			if ((await scanRestart())['result']) return true
+			if ((await scanRestart())['status']) return true
 			throw("Backend restart error")
 		}, params)
 
@@ -65,7 +65,7 @@ export function useScanRestart(params) {
 
 export function useScanStop(params) {
 	return useMutation(
-		async () => (await scanStop())['result'], params)
+		async () => (await scanStop())['status'], params)
 }
 
 
