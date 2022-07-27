@@ -4,7 +4,7 @@ import { fireEvent, screen, within, act, cleanup } from '@testing-library/preact
 import '@testing-library/jest-dom';
 import { render, flushPromises } from 'utils/test_utils';
 import { AppContextProvider } from 'utils/app.context';
-import { createNetwork, setNetwork, scanStart, scanStatus, scanStop} from './FbwApi';
+import { createNetwork, setNetwork, scanStart, getStatus, scanStop} from './FbwApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { getBoardData } from 'utils/api';
 import waitForExpect from 'wait-for-expect';
@@ -97,7 +97,7 @@ describe('Fbw Join Network Page', () => {
 
     beforeAll(() => {
         getBoardData.mockImplementation(async() => boardData)
-        scanStatus.mockImplementation(async () => allScanCases)
+        getStatus.mockImplementation(async () => allScanCases)
         scanStart.mockImplementation(async () => scanActionSuccess)
     });
 
@@ -185,7 +185,7 @@ describe('Fbw Join Network Page', () => {
     })
 
     it('not shows loader when status is scanned', async () => {
-        scanStatus.mockImplementation(async () => {
+        getStatus.mockImplementation(async () => {
             allScanCases.status = 'scanned'
             return allScanCases
         })
@@ -200,12 +200,14 @@ describe('Fbw Join Network Page', () => {
         scanStop.mockImplementation(async () => scanActionSuccess )
 
         await advanceToJoinNetwork()
+        await waitForExpect(async () => {
+            expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
+          });
+
         fireEvent.click(
             await screen.findByRole('button', { name: /Cancel/i })
         )
-
         expect(await screen.findByText('Configure your network')).toBeInTheDocument();
-
         expect(scanStop).toHaveBeenCalled()      
     })
 
@@ -224,7 +226,6 @@ describe('Fbw Join Network Page', () => {
 
         expect(scanStop).toHaveBeenCalled()
     })
-
 })
 
 
@@ -248,9 +249,10 @@ const boardData = JSON.parse(`{
   }`
 )
 
-const scanActionSuccess = JSON.parse('{"result": true}')
+const scanActionSuccess = JSON.parse('{"status": true}')
 
 const allScanCases = JSON.parse(`{
+    "lock" : true,
     "status": "scanning",
     "networks": [
             {
