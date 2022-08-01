@@ -11,13 +11,11 @@ import { Trans } from '@lingui/macro';
 export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
     const { data: boardData } = useBoardData();
 
-	const [showCancelError, setShowCancelError] = useState(false) 	// Backend send false on perform an action
-
     const [selectedNetwork, setSelectedNetwork] = useState({
 		hostname: boardData?.hostname
 	});
 
-    /* Used to dismis previously selected network, ex: on back or rescan button */
+    /* Used to dismiss previously selected network, ex: on back or rescan button */
     function _cancelSelectedNetwork( ) {
         setSelectedNetwork({
             ...selectedNetwork,
@@ -27,19 +25,12 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
         });
     }
 
-    /* Mutatiion that stop the scan on backend */
     const [scanStop, { isError: stopError }] 
         = useScanStop({
-            onSuccess: (val) => {
-                if(val) {
-                    _cancelSelectedNetwork()
-                    // todo: this error message is not working because toggle form 
-                    // change the screen and not show the toast
-                    setShowCancelError(false)
-                    toggleForm(null)()
-                } 
-                else setShowCancelError(true)
-            }
+            onSuccess: () => {
+                _cancelSelectedNetwork()
+                toggleForm(null)()
+            },
         })
 
     /* Cancel and go back */
@@ -65,7 +56,7 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
                     cancelSelectedNetwork={_cancelSelectedNetwork} 
                     cancel={_cancel}
                 /> }
-            {(showCancelError || stopError) ? <Toast text={<Trans>Error stopping scan</Trans>} />  : null}
+            {(stopError) ? <Toast text={<Trans>Error stopping scan</Trans>} />  : null}
         </Fragment>
     );
 }

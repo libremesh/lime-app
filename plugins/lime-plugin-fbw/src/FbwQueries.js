@@ -49,23 +49,36 @@ export function useScanStatus(params) {
 	return useQuery(['lime-fbw', 'scan-status'], _scanStatus, params)
 }
 
+
+// Backend can return status false i some error is found doing 
+// start/stop/restart. 
+// This throw an error when status is false to be handled from the mutation 
+// onError API. 
+function _checkBackendResponseStatus (res) {
+	if (res['status']) return true
+	throw("Backend restart error")
+}
+
 export function useScanStart(params) {
 	return useMutation(
-		async () => (await scanStart())['status'], params)
+		async () => {
+			_checkBackendResponseStatus(await scanStart())
+		}, params)
 }
 
 export function useScanRestart(params) {
 	return useMutation(
 		async () => {
-			if ((await scanRestart())['status']) return true
-			throw("Backend restart error")
+			_checkBackendResponseStatus(await scanRestart())
 		}, params)
 
 }
 
 export function useScanStop(params) {
 	return useMutation(
-		async () => (await scanStop())['status'], params)
+		async () => {
+			_checkBackendResponseStatus(await scanStop())
+		}, params)
 }
 
 

@@ -226,6 +226,22 @@ describe('Fbw Join Network Page', () => {
 
         expect(scanStop).toHaveBeenCalled()
     })
+
+    it('shows an error toast when stop scan could not be completed', async () => {
+
+        scanStop.mockImplementation(async () => scanActionFailure )
+
+        await advanceToJoinNetwork()
+        await waitForExpect(async () => {
+            expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
+          });
+
+        fireEvent.click(
+            await screen.findByRole('button', { name: /Cancel/i })
+        )
+        expect(await screen.findByText('Error stopping scan')).toBeInTheDocument();
+        expect(scanStop).toHaveBeenCalled()  
+    })
 })
 
 
@@ -250,6 +266,7 @@ const boardData = JSON.parse(`{
 )
 
 const scanActionSuccess = JSON.parse('{"status": true}')
+const scanActionFailure = JSON.parse('{"status": false}')
 
 const allScanCases = JSON.parse(`{
     "lock" : true,
