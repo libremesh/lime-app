@@ -27,7 +27,7 @@ export const ScanList = ({
 	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
 		= useScanRestart()
 
-	const { data: scanResults, isError: scanStatusError } = useScanStatus({
+	const { data: scanResults, isError: scanStatusError, remove: removeScanStatus, isLoading: isLoadingScans } = useScanStatus({
 		enabled: pollingInterval && (!startError && !restartError),
 		refetchInterval: pollingInterval,
 		onSuccess: (data) => {
@@ -38,14 +38,19 @@ export const ScanList = ({
 	const status  = scanResults?.status || null	  	// Scan status
 	const networks = scanResults?.networks || []	// Configuration files downloaded
 	const scanned  = scanResults?.scanned || []	 	// Scanned AP's
+	const isLoading = isStarting || isRestarting || isLoadingScans
 
 	useEffect(() => {
-		scanStart()
+		if(scanResults === undefined) scanStart()
 	}, []);
 
 	function _rescan() {
 		cancelSelectedNetwork()
 		scanRestart();
+	}
+
+	function _cancel() {
+		cancel().then(() => removeScanStatus())
 	}
 	
 	function selectNetwork(netIdx) {
@@ -97,7 +102,7 @@ export const ScanList = ({
 			<div>
 				<div>
 					{ 
-						(status === 'scanning' && !selectedNetwork?.apname) || (isStarting || isRestarting)
+						(status === 'scanning' && !selectedNetwork?.apname) || isLoading
 						? (<Loading />) : false 
 					}
 					{ scanned.length === 0 && status === 'scanned' ?
@@ -116,14 +121,14 @@ export const ScanList = ({
 								<RescanButton rescan={_rescan}  />
 							</div>
 							<div class="six columns"> 
-								<CancelButton cancel={cancel} />
+								<CancelButton cancel={_cancel} />
 							</div>
 						</div>
 				</div>
 			</div>
 			{startError || restartError && <Toast text={<Trans>Error scanning networks</Trans>} />}
 			{scanStatusError && <Toast text={<Trans>Error getting scan results</Trans>} />}
-			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
+			{((status === 'scanning' || isLoading) && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
 };

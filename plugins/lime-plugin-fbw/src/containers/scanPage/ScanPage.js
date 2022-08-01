@@ -25,7 +25,7 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
         });
     }
 
-    const [scanStop, { isError: stopError }] 
+    const [scanStop, { isError: stopError, isLoading: stoppingScan }] 
         = useScanStop({
             onSuccess: () => {
                 _cancelSelectedNetwork()
@@ -35,7 +35,7 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
 
     /* Cancel and go back */
 	function _cancel() {
-        scanStop()
+        return scanStop()
 	}
 
     return (
@@ -57,6 +57,7 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
                     cancel={_cancel}
                 /> }
             {(stopError) ? <Toast text={<Trans>Error stopping scan</Trans>} />  : null}
+            {(stoppingScan) ? <Toast text={<Trans>Canceling</Trans>} />  : null}
         </Fragment>
     );
 }
