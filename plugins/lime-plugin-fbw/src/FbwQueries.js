@@ -8,13 +8,6 @@ export function useDismissFbw() {
 		onSuccess: () => queryCache.setQueryData(['lime-fbw', 'status'], {lock: false})
 	});
 }
-
-export function useFbwStatus() {
-	return useQuery(['lime-fbw', 'status'], getStatus, {
-			initialData: {lock: false},
-			initialStale: true
-	});
-}
 	
 export function useCreateNetwork(params) {
 	return useMutation(createNetwork, params);
@@ -41,11 +34,12 @@ async function _scanStatus() {
 			ap: _getApName(net),
 			bssid: _getBssid(net)
 		})) || [],
-		status: payload.status || null
+		status: payload.status || null,
+		lock: payload.lock
 	};
 }
 
-export function useScanStatus(params) {
+export function useFbwStatus(params) {
 	return useQuery(['lime-fbw', 'scan-status'], _scanStatus, params)
 }
 

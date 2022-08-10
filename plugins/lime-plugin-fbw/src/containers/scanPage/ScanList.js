@@ -4,7 +4,7 @@ import { useState, useEffect } from 'preact/hooks';
 import { Trans } from '@lingui/macro';
 import { Loading } from 'components/loading';
 import Toast from 'components/toast';
-import { useScanStart, useScanStatus, useScanRestart } from '../../FbwQueries';
+import { useScanStart, useFbwStatus, useScanRestart } from '../../FbwQueries';
 import { List } from 'components/list';
 
 import { RescanButton, CancelButton } from './components/buttons';
@@ -27,7 +27,7 @@ export const ScanList = ({
 	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
 		= useScanRestart()
 
-	const { data: scanResults, isError: scanStatusError, remove: removeScanStatus, isLoading: isLoadingScans } = useScanStatus({
+	const { data: scanResults, isError: scanStatusError, remove: removeScanStatus, isLoading: isLoadingScans } = useFbwStatus({
 		enabled: pollingInterval && (!startError && !restartError),
 		refetchInterval: pollingInterval,
 		onSuccess: (data) => {
