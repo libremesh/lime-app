@@ -4,7 +4,7 @@ import { fireEvent, screen, within, act, cleanup } from '@testing-library/preact
 import '@testing-library/jest-dom';
 import { render, flushPromises } from 'utils/test_utils';
 import { AppContextProvider } from 'utils/app.context';
-import { createNetwork, searchNetworks, setNetwork } from './FbwApi';
+import { createNetwork, setNetwork, scanStart, getStatus, scanStop} from './FbwApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
 import { getBoardData } from 'utils/api';
 import waitForExpect from 'wait-for-expect';
@@ -51,6 +51,7 @@ const advanceToJoinNetwork = async () => {
     fireEvent.click(
         await screen.findByRole('button', { name: /Scan for existing networks/i })
     );
+
 }
 
 describe('Fbw Page', () => {
@@ -67,7 +68,6 @@ describe('Fbw Page', () => {
         jest.useRealTimers();
     })
 
-    
 
     it('asks to connect to the wifi network for this node if cannot get hostname', async () => {
         fetch.mockReject();
@@ -97,7 +97,8 @@ describe('Fbw Join Network Page', () => {
 
     beforeAll(() => {
         getBoardData.mockImplementation(async() => boardData)
-        searchNetworks.mockImplementation(async () => allScanCases)
+        getStatus.mockImplementation(async () => allScanCases)
+        scanStart.mockImplementation(async () => scanActionSuccess)
     });
 
     afterEach(() => {
@@ -175,7 +176,74 @@ describe('Fbw Join Network Page', () => {
             expect(await screen.findByText('Error downloading lime assets')).toBeInTheDocument();
         });
     });
+
+    it('shows loader when status is scanning', async () => {
+        await advanceToJoinNetwork()
+        await waitForExpect(async () => {
+            expect(await screen.findByTestId('loading')).toBeInTheDocument();
+        });
+    })
+
+    it('not shows loader when status is scanned', async () => {
+        getStatus.mockImplementation(async () => {
+            allScanCases.status = 'scanned'
+            return allScanCases
+        })
+
+        await advanceToJoinNetwork()
+        await waitForExpect(async () => {
+            expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+        });
+    })
+
+    it('return to select action when cancel is pressed on scan list page', async () => {
+        scanStop.mockImplementation(async () => scanActionSuccess )
+
+        await advanceToJoinNetwork()
+        await waitForExpect(async () => {
+            expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
+          });
+
+        fireEvent.click(
+            await screen.findByRole('button', { name: /Cancel/i })
+        )
+        expect(await screen.findByText('Configure your network')).toBeInTheDocument();
+        expect(scanStop).toHaveBeenCalled()      
+    })
+
+    it('return to select action when cancel is pressed on join network page', async () => {
+        scanStop.mockImplementation(async () => scanActionSuccess )
+
+        await advanceToJoinNetwork()
+        let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))        
+        fireEvent.click(
+            await tile.findByRole('button', { name: /Select/i })
+        )
+        fireEvent.click(
+            await screen.findByRole('button', { name: /Cancel/i })
+        )
+        expect(await screen.findByText('Configure your network')).toBeInTheDocument();
+
+        expect(scanStop).toHaveBeenCalled()
+    })
+
+    it('shows an error toast when stop scan could not be completed', async () => {
+
+        scanStop.mockImplementation(async () => scanActionFailure )
+
+        await advanceToJoinNetwork()
+        await waitForExpect(async () => {
+            expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
+          });
+
+        fireEvent.click(
+            await screen.findByRole('button', { name: /Cancel/i })
+        )
+        expect(await screen.findByText('Error stopping scan')).toBeInTheDocument();
+        expect(scanStop).toHaveBeenCalled()  
+    })
 })
+
 
 const setNetworkRes = JSON.parse(`{ 
     "status": "configuring"
@@ -197,8 +265,11 @@ const boardData = JSON.parse(`{
   }`
 )
 
+const scanActionSuccess = JSON.parse('{"status": true}')
+const scanActionFailure = JSON.parse('{"status": false}')
 
 const allScanCases = JSON.parse(`{
+    "lock" : true,
     "status": "scanning",
     "networks": [
             {

@@ -3,15 +3,19 @@ import { ScanList } from './ScanList'
 import { SelectForm } from './SelectForm'
 import { useState } from 'preact/hooks';
 import { useBoardData } from 'utils/queries';
+import { useScanStop } from '../../FbwQueries';
+import Toast from 'components/toast';
+import { Trans } from '@lingui/macro';
 
 
 export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
     const { data: boardData } = useBoardData();
+
     const [selectedNetwork, setSelectedNetwork] = useState({
 		hostname: boardData?.hostname
 	});
 
-    /* Used to dismis previously selected network, ex: on back or rescan button */
+    /* Used to dismiss previously selected network, ex: on back or rescan button */
     function _cancelSelectedNetwork( ) {
         setSelectedNetwork({
             ...selectedNetwork,
@@ -21,9 +25,17 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
         });
     }
 
+    const [scanStop, { isError: stopError, isLoading: stoppingScan }] 
+        = useScanStop({
+            onSuccess: () => {
+                _cancelSelectedNetwork()
+                toggleForm(null)()
+            },
+        })
+
     /* Cancel and go back */
 	function _cancel() {
-        toggleForm(null)()
+        return scanStop()
 	}
 
     return (
@@ -44,6 +56,8 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
                     cancelSelectedNetwork={_cancelSelectedNetwork} 
                     cancel={_cancel}
                 /> }
+            {(stopError) ? <Toast text={<Trans>Error stopping scan</Trans>} />  : null}
+            {(stoppingScan) ? <Toast text={<Trans>Canceling</Trans>} />  : null}
         </Fragment>
     );
 }

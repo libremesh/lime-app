@@ -4,13 +4,12 @@ import { useState, useEffect } from 'preact/hooks';
 import { Trans } from '@lingui/macro';
 import { Loading } from 'components/loading';
 import Toast from 'components/toast';
-import { useGetNetworks, useSearchNetworks } from '../../FbwQueries';
+import { useScanStart, useFbwStatus, useScanRestart } from '../../FbwQueries';
 import { List } from 'components/list';
 
 import { RescanButton, CancelButton } from './components/buttons';
 import { NetworkTile } from './components/networkTile';
 import style from '../../style.less';
-
 
 export const ScanList = ({ 
 	selectedNetwork, 
@@ -20,22 +19,51 @@ export const ScanList = ({
 }) => {
 
 	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
+	const [pollingInterval, setPollingInterval] = useState(null);
 
-	const { data: payloadData } = useGetNetworks();
+	const [scanStart, {isLoading: isStarting, isError: startError }] 
+		= useScanStart({onSuccess: () => setPollingInterval(1000)})
 
-	const status  = payloadData?.status || null	  	// Scan status
-	const networks = payloadData?.networks || []	// Configuration files downloaded
-	const scanned  = payloadData?.scanned || []	 	// Scanned AP's
+	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
+		= useScanRestart({
+			onSuccess: () => {
+				setPollingInterval(1000)
+				refetchScanResults()
+			}
+		})
 
-	const [searchNetworks, { isLoading: isSubmitting, isError: isSeachNetworkError }] = useSearchNetworks()
+	const { 
+		data: scanResults, 
+		isError: scanStatusError, 
+		remove: removeScanStatus, 
+		isLoading: isLoadingScans,
+		refetch: refetchScanResults
+	} = useFbwStatus({
+		enabled: pollingInterval && (!startError && !restartError),
+		refetchInterval: pollingInterval,
+		onSuccess: (data) => {
+			if(data.status === 'scanned') setPollingInterval(null)
+		}
+	});
 
-	/* Load scan results */
+	const status  = scanResults?.status || null	  	// Scan status
+	const networks = scanResults?.networks || []	// Configuration files downloaded
+	const scanned  = scanResults?.scanned || []	 	// Scanned AP's
+	const isLoading = isStarting || isRestarting || isLoadingScans
+
+	useEffect(() => {
+		if(scanResults === undefined) scanStart()
+	}, []);
+
 	function _rescan() {
 		cancelSelectedNetwork()
-		searchNetworks(true);
+		scanRestart();
+	}
+
+	function _cancel() {
+		cancel().then(() => removeScanStatus())
 	}
 	
-	/* Change selectedNetwork after selectbox change event */
 	function selectNetwork(netIdx) {
 		const { config, file } = networks[netIdx];
 		setSelectedNetwork({
@@ -44,27 +72,8 @@ export const ScanList = ({
 			apname: config.wifi.apname_ssid.split('/%H')[0],
 			community: config.wifi.ap_ssid
 		});
-
 	}
 
-	useEffect(() => {
-		let interval;
-		if (status === 'scanned') return;
-		else if (status === 'scanning') {
-			interval = setInterval(() => {
-				console.log('Key pulling the new status', status);
-				searchNetworks(false);
-			}, 2000);
-		}
-		else if (!status) {
-			searchNetworks(false);
-		}
-		return () => {
-			if (interval) clearInterval(interval);
-		};
-	}, [status, isSubmitting, searchNetworks]);
-
-	
 	const getNetworkFromBssid = (bssid) => {
 		for (let i = 0; i < networks.length; i++) {
 			if(networks[i].bssid === bssid) return {...networks[i], index: i}
@@ -103,38 +112,38 @@ export const ScanList = ({
 		<div class="container container-padded">
 			<div>
 				<div>
-					{ status === 'scanning' && !selectedNetwork?.apname ? (<Loading />): false }
+					{ 
+						(status === 'scanning' && !selectedNetwork?.apname) || isLoading
+						? 
+						(<div style="margin: 20px;"> 
+							<Loading />
+						</div>)
+						 : false 
+					}
 					{ scanned.length === 0 && status === 'scanned' ?
 						<span>
 							<h3 className="container-center">
 								<Trans>No scan result</Trans>
 							</h3>
-							<div class="row">
-								<div class="six columns"> 
-									<RescanButton rescan={_rescan}  />
-								</div>
-								<div class="six columns"> 
-									<CancelButton cancel={cancel} />
-								</div>
-							</div>
 						</span>
 					: false} 
 					{ !selectedNetwork?.apname ?
 					(<span>
 						<NetworksList /> 
-						<div class="row">
+					</span>) : null }
+					<div class="row" style="min-height: 200px;">
 							<div class="six columns"> 
 								<RescanButton rescan={_rescan}  />
 							</div>
 							<div class="six columns"> 
-								<CancelButton cancel={cancel} />
+								<CancelButton cancel={_cancel} />
 							</div>
 						</div>
-					</span>) : null }
 				</div>
 			</div>
-			{isSeachNetworkError && <Toast text={<Trans>Error scanning networks</Trans>} />}
-			{(status === 'scanning' && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
+			{startError || restartError && <Toast text={<Trans>Error scanning networks</Trans>} />}
+			{scanStatusError && <Toast text={<Trans>Error getting scan results</Trans>} />}
+			{((status === 'scanning' || isLoading) && <Toast text={<Trans>Scanning for existing networks</Trans>} />)}
 		</div>
 	);
 };
