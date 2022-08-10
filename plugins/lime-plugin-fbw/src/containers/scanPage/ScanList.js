@@ -103,7 +103,11 @@ export const ScanList = ({
 				<div>
 					{ 
 						(status === 'scanning' && !selectedNetwork?.apname) || isLoading
-						? (<Loading />) : false 
+						? 
+						(<div style="margin: 20px;"> 
+							<Loading />
+						</div>)
+						 : false 
 					}
 					{ scanned.length === 0 && status === 'scanned' ?
 						<span>
