@@ -94,7 +94,7 @@ msgstr "Nodo autor: {author_node}"
 msgid "Available"
 msgstr "Disponible"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:339
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:34
 msgid "Back"
 msgstr "Volver"
 
@@ -102,7 +102,7 @@ msgstr "Volver"
 msgid "Background Color"
 msgstr "Color de Fondo"
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:36
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:38
 msgid "Best signal"
 msgstr "Mejor señal"
 
@@ -110,11 +110,16 @@ msgstr "Mejor señal"
 msgid "Calculating network path"
 msgstr "Cargando el recorrido en la red"
 
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:59
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:102
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:154
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:23
 #: src/components/banner/index.js:13
 msgid "Cancel"
 msgstr "Cancelar"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.js:60
+msgid "Canceling"
+msgstr "Cancelando"
 
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:66
 msgid "Cannot connect to the remote support server"
@@ -140,7 +145,7 @@ msgstr "Cambiar"
 msgid "Change Shared Password"
 msgstr "Cambiar Contraseña Compartida"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:267
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:117
 msgid "Channel"
 msgstr "Canal"
 
@@ -148,12 +153,12 @@ msgstr "Canal"
 msgid "Checking connection"
 msgstr "Comprobando conexión"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:299
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:89
 msgid "Choose a mesh node to join it's network:"
 msgstr "Elije un nodo mesh para unirse a su red"
 
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:85
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:319
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:69
 msgid "Choose a name for this node"
 msgstr "Elije el nombre para el nodo"
 
@@ -228,7 +233,7 @@ msgstr "Conectarse a Punto de Acceso Móvil"
 msgid "Connected"
 msgstr "Conectado"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:197
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:46
 msgid "Connection attempt not yet started"
 msgstr "Intento de conexión aún no iniciado"
 
@@ -253,6 +258,7 @@ msgstr "Crear Sesión"
 msgid "Create Voucher"
 msgstr "Crear Cupón"
 
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:47
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:94
 msgid "Create network"
 msgstr "Crear red"
@@ -301,6 +307,7 @@ msgid "Disabled"
 msgstr "Deshabilitado"
 
 #: plugins/lime-plugin-firmware/src/upgradeAvailable.js:65
+#: src/components/banner/banner_with_options.js:23
 #: src/components/banner/index.js:18
 msgid "Don't show this message again"
 msgstr "No volver a mostrar a este mensaje"
@@ -368,21 +375,37 @@ msgstr "Cifrado: {encryptionMethod}"
 msgid "Error"
 msgstr "Error"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:210
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:59
 msgid "Error destination network is not configured yet"
 msgstr "Error, la red de destino no está configurada aún"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:214
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:63
 msgid "Error downloading lime assets"
 msgstr "Error al descargar lime assets"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:206
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:55
 msgid "Error downloading lime community"
 msgstr "Error al descargar lime community"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:189
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:145
+msgid "Error getting scan results"
+msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:38
 msgid "Error reaching hostname!"
 msgstr "No se pudo obtener el nombre de host!"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:144
+msgid "Error scanning networks"
+msgstr "Error buscando redes"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:92
+msgid "Error setting network"
+msgstr "Error configurando red"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.js:59
+msgid "Error stopping scan"
+msgstr "Error deteniendo la búsqueda"
 
 #: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.js:26
 msgid "Error: Not Saved"
@@ -406,8 +429,8 @@ msgstr "Expirado <0/>"
 msgid "Expires <0/>"
 msgstr "Expira <0/>"
 
-#: plugins/lime-plugin-align/src/alignPage.js:30
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:225
+#: plugins/lime-plugin-align/src/alignPage.js:32
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:74
 #: plugins/lime-plugin-rx/src/rxPage.js:79
 msgid "Fetching name"
 msgstr "Consiguiendo nombre"
@@ -462,7 +485,6 @@ msgid "Hide Console"
 msgstr "Esconder Consola"
 
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:86
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:320
 msgid "Host name"
 msgstr "Nombre del nodo"
 
@@ -473,6 +495,14 @@ msgstr "No sé la contraseña compartida"
 #: plugins/lime-plugin-rx/src/rxPage.js:124
 msgid "IP Addresses"
 msgstr "Direcciones IP"
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:54
+msgid "If network has been already created, look it up to join"
+msgstr "Si la red ya fue creada, búscala para unirte a ella"
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:48
+msgid "If this is your network first node, you can create a new network"
+msgstr "Si este es el primer nodo de tu red, puedes crear una red nueva"
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:19
 msgid "If you invalidate this voucher no one will be able to use it anymore. This cannot be reverted."
@@ -518,12 +548,12 @@ msgstr "Está habilitado por defecto en {communityName}"
 msgid "It must start with https:// or http://"
 msgstr "Debe empezar con https:// o http://"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:316
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:66
 msgid "Join the mesh"
 msgstr "Unirse a la red"
 
-#: plugins/lime-plugin-align/src/alignPage.js:43
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:90
+#: plugins/lime-plugin-align/src/alignPage.js:45
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:92
 msgid "Last packet"
 msgstr "Último paquete"
 
@@ -595,9 +625,9 @@ msgstr "Más de 10 caracteres"
 msgid "Most Active"
 msgstr "Enlace más activo"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:369
-msgid "Must select a network and a valid hostname"
-msgstr "Debes elegir una red y un nombre de host valido"
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:93
+msgid "Must select a valid hostname"
+msgstr "Debes elegir un nombre de host valido"
 
 #: plugins/lime-plugin-network-admin/src/netAdminMenu.js:6
 msgid "Network Configuration"
@@ -611,7 +641,7 @@ msgstr "Nombre de Red: {ssid}"
 msgid "No password"
 msgstr "Sin contraseña"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:350
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:126
 msgid "No scan result"
 msgstr "Sin resultado de escaneo"
 
@@ -653,11 +683,11 @@ msgstr "Número de cupones"
 msgid "Ok"
 msgstr "Ok"
 
-#: plugins/lime-plugin-align/src/alignPage.js:38
+#: plugins/lime-plugin-align/src/alignPage.js:40
 msgid "On its radio {radioNumber}"
 msgstr "En su radio {radioNumber}"
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:85
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:87
 msgid "On its radio {toRadio}"
 msgstr "En su radio {radioNumber}"
 
@@ -673,6 +703,10 @@ msgstr "Abre el AP \"{apSsid}\" en este nodo"
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:100
 msgid "Or choose a firmware image from your device"
 msgstr "O elige una imagen de firmware desde tu dispositivo"
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:60
+msgid "Or if this node is already configured, you can skip this step"
+msgstr "O, si tu nodo ya está bien configurado, puedes saltear este paso"
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:172
 msgid "Or upgrade to latest release"
@@ -694,10 +728,6 @@ msgstr "Contraseña: {password}"
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:51
 msgid "Permanent"
 msgstr "Permanente"
-
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:30
-msgid "Please configure your network"
-msgstr "Por favor configure su conexión de red"
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:154
 msgid "Please select a .sh or .bin file"
@@ -728,7 +758,7 @@ msgstr "Por favor espere a que el dispositivo se reinicie y recargue la app"
 msgid "Please wait {time} seconds"
 msgstr "Por favor espere {time} segundos"
 
-#: plugins/lime-plugin-align/src/alignPage.js:101
+#: plugins/lime-plugin-align/src/alignPage.js:103
 msgid "Radio {radioNumber}"
 msgstr "Radio {radioNumber}"
 
@@ -766,7 +796,7 @@ msgstr "Soporte Remoto"
 msgid "Required"
 msgstr "Requerido"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:143
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:12
 msgid "Rescan"
 msgstr "Volver a escanear"
 
@@ -804,13 +834,17 @@ msgstr "Guardado"
 msgid "Scan for existing networks"
 msgstr "Buscar redes existentes"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:370
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:146
 msgid "Scanning for existing networks"
 msgstr "Buscando redes existentes"
 
 #: plugins/lime-plugin-pirania/src/screens/voucherList.js:47
 msgid "Search by"
 msgstr "Buscar por"
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:53
+msgid "Search network"
+msgstr "Buscar red"
 
 #: plugins/lime-plugin-metrics/src/metricsPage.js:96
 msgid "Searching gateway"
@@ -820,7 +854,7 @@ msgstr "Buscando tu salida a Internet"
 msgid "See More"
 msgstr "Ver más"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:279
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:126
 msgid "Select"
 msgstr "Selecciona"
 
@@ -837,11 +871,11 @@ msgstr "Seleccioná el archivo"
 msgid "Select new node"
 msgstr "Selecciona el nodo"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:317
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:67
 msgid "Selected network to join"
 msgstr "Red seleccionada para unirse"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:329
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:77
 msgid "Set network"
 msgstr "Sumarse a la red"
 
@@ -882,8 +916,8 @@ msgstr "La contraseña compartida se cambió correctamente"
 msgid "Show Console"
 msgstr "Ver consola"
 
-#: plugins/lime-plugin-align/src/alignPage.js:42
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:56
+#: plugins/lime-plugin-align/src/alignPage.js:44
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:58
 msgid "Signal lost"
 msgstr "Sin señal"
 
@@ -911,7 +945,7 @@ msgstr "El AP Comunitario está presente en todos los nodos permitiendo que las 
 msgid "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 msgstr "El Portal Comunitario permite mostrar una pantalla de bienvenida en el navegador a cualquier persona que se conecte a la red a través del AP Comunitario"
 
-#: plugins/lime-plugin-align/src/alignPage.js:116
+#: plugins/lime-plugin-align/src/alignPage.js:118
 msgid "The are not mesh interfaces available"
 msgstr "No hay interfaces mesh disponibles"
 
@@ -972,7 +1006,7 @@ msgstr "Hay una sesión de soporte remoto activa"
 msgid "There's no open session for remote support. Click at Create Session to begin one"
 msgstr "No hay una sesión de soporte remoto abierta. Haz click en Crear Sesión para empezar una"
 
-#: plugins/lime-plugin-align/src/alignPage.js:77
+#: plugins/lime-plugin-align/src/alignPage.js:79
 msgid "These are the nodes associated on this radio"
 msgstr "Estos son los nodos asociados a esta radio"
 
@@ -992,7 +1026,7 @@ msgstr "Este campo es requerido"
 msgid "This node is the gateway"
 msgstr "Este nodo es el gateway"
 
-#: plugins/lime-plugin-align/src/alignPage.js:82
+#: plugins/lime-plugin-align/src/alignPage.js:84
 msgid "This radio is not associated with other nodes"
 msgstr "Esta radio no está enlazada a otros nodos"
 
@@ -1020,7 +1054,7 @@ msgstr "Tráfico"
 msgid "Try reloading the app"
 msgstr "Intentar recargar la app"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:243
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:92
 msgid "Unknown error"
 msgstr "Error desconocido"
 
@@ -1082,6 +1116,10 @@ msgstr "Lista de Cupones"
 msgid "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 msgstr "Los cupones sirven para limitar el acceso a través del Portal Comunitario a quienes posean un código de autorización"
 
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:44
+msgid "Welcome to LimeApp"
+msgstr "Bienvenido/a a la LimeApp"
+
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:110
 msgid "Wellcome Screen"
 msgstr "Pantalla de Bienvenida"
@@ -1096,7 +1134,7 @@ msgstr "Al recargar la aplicación, se te pedirá que confirmes la actualizació
 msgid "Wifi Password"
 msgstr "Contraseña del Wifi"
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:83
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:85
 msgid "With radio {fromRadio} alignin with"
 msgstr "Con radio {fromRadio} alineando con"
 
@@ -1152,10 +1190,6 @@ msgstr "Intente conectarse a la red wifi {wifiSsid} para completar la instalaci�
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:46
 msgid "Your node has no internet connection"
 msgstr "Tu nodo no tiene conexión a internet"
-
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:31
-msgid "Your router has not yet been configured, you can use our wizard to incorporate it into an existing network or create a new one. If you ignore this message it will continue to work with the default configuration."
-msgstr "Su router aún no ha sido configurado, puede utilizar nuestro asistente para incorporarlo a una red existente o crear una nueva. Si ignora este mensaje, continuará funcionando con la configuración predeterminada."
 
 #: plugins/lime-plugin-locate/src/locatePage.js:185
 msgid "cancel"
