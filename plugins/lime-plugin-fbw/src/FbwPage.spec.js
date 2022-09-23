@@ -18,7 +18,7 @@ enableFetchMocks()
 
 const advanceToChecking = async () => {
     fireEvent.click(
-        await screen.findByRole('button', { name: /Create new network/i })
+        await screen.findByRole('button', { name: /Create network/i })
     );
     fireEvent.input(
         await screen.findByLabelText('Choose a name for your network'),
@@ -49,7 +49,7 @@ const advanceToChecking = async () => {
 
 const advanceToJoinNetwork = async () => {
     fireEvent.click(
-        await screen.findByRole('button', { name: /Scan for existing networks/i })
+        await screen.findByRole('button', { name: /Search network/i })
     );
 
 }
