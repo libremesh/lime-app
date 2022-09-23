@@ -14,7 +14,7 @@ export const Route = ({ path, children, ...childrenProps}) => {
 	});
 	const { fbwCanceled } = useAppContext();
 	const childrenWithProps = cloneElement(children, { ...childrenProps});
-	if (fbwStatus.lock && !fbwCanceled && path !== 'firmware' && path !== 'releaseInfo' && path !=='firstbootwizard') {
+	if (fbwStatus.lock && !fbwCanceled && path !== 'firmware' && path !== 'releaseInfo' && !path.startsWith('firstbootwizard')) {
 		return <FbwBanner />
 	}
 
