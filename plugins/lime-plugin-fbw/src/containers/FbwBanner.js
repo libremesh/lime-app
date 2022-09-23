@@ -5,6 +5,7 @@ import { Trans } from '@lingui/macro';
 import { useDismissFbw } from '../FbwQueries';
 import { route } from 'preact-router';
 import { useAppContext } from 'utils/app.context';
+import { h } from 'preact'
 
 export const FbwBanner = ({ toggleForm }) => {
 	const [notShowAgain, setnotShowAgain] = useState(false);
@@ -49,7 +50,7 @@ export const FbwBanner = ({ toggleForm }) => {
 	/>
 
 	const option2 = <BannerOptionButton 
-		btnText={<Trans>Search netowrk</Trans>} 
+		btnText={<Trans>Search network</Trans>} 
 		description={<Trans>If network has been already created, look it up to join</Trans>}
 		action={onSearchNetwork}
 	/>
