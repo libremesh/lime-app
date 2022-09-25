@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  ui:
+    image: node:18-alpine
+    working_dir: /app
+    command: npm run dev
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    ports:
+      - 8080:8080
+
+volumes:
+  node_modules:
