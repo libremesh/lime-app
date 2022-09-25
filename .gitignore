@@ -3,10 +3,9 @@
 .DS_Store
 /coverage
 /.idea
-yarn.lock
 storybook-static
 .vscode
 build
-package-lock.json
 i18n/*/messages.js
 i18n/_build
+core
