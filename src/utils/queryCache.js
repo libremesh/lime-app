@@ -1,12 +1,6 @@
-import { QueryCache, setConsole } from 'react-query';
+import { QueryClient } from '@tanstack/react-query'
 
-setConsole({
-	log: () => {},
-	warn: () => {},
-	error: () => {}
-})
-
-const queryCache = new QueryCache({
+const queryCache = new QueryClient({
 	defaultConfig: {
 		queries: {
 			staleTime: Infinity,

@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import queryCache from 'utils/queryCache';
 import { getUpgradeInfo, getNewVersion, getDownloadStatus,
 		 upgradeConfirm, upgradeRevert, downloadRelease,
