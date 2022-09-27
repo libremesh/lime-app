@@ -28,7 +28,8 @@ export const FbwBanner = ({ toggleForm }) => {
 
 	function onCancel() {
 		if (notShowAgain) {
-			dismissFbw();
+			dismissFbw().then(
+				() => cancelFbw());
 		}
 		else {
 			cancelFbw();
