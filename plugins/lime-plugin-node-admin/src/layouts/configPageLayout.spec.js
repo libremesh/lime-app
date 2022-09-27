@@ -1,36 +1,33 @@
+import "@testing-library/jest-dom";
+import { fireEvent, screen } from "@testing-library/preact";
+import { h } from "preact";
+import { route } from "preact-router";
 
-import { h } from 'preact';
+import { render } from "utils/test_utils";
 
-import { screen, fireEvent } from '@testing-library/preact';
-import '@testing-library/jest-dom';
+import ConfigPageLayout from "./configPageLayout";
 
-import { render } from 'utils/test_utils';
-import { route } from 'preact-router';
-import ConfigPageLayout from './configPageLayout';
+const findBackArrow = async () => screen.findByLabelText("back");
 
-const findBackArrow = async () =>
-    screen.findByLabelText('back');
-
-
-describe('config layout', () => {
-    it('renders the title for the config', async() => {
+describe("config layout", () => {
+    it("renders the title for the config", async () => {
         render(<ConfigPageLayout title={"My Config"} />);
-        expect(await screen.findByText('My Config')).toBeInTheDocument();
+        expect(await screen.findByText("My Config")).toBeInTheDocument();
     });
 
-    it('routes back to node admin when clicking on back arrow', async() => {
+    it("routes back to node admin when clicking on back arrow", async () => {
         render(<ConfigPageLayout />);
         fireEvent.click(await findBackArrow());
-        expect(route).toBeCalledWith('/nodeadmin');
+        expect(route).toHaveBeenCalledWith("/nodeadmin");
     });
 
-    it('shows a message on errors', async() => {
+    it("shows a message on errors", async () => {
         render(<ConfigPageLayout isError={true} />);
-        expect(await screen.findByText('Error: Not Saved')).toBeInTheDocument();
+        expect(await screen.findByText("Error: Not Saved")).toBeInTheDocument();
     });
 
-    it('shows a message on success', async() => {
+    it("shows a message on success", async () => {
         render(<ConfigPageLayout isSuccess={true} />);
-        expect(await screen.findByText('Saved')).toBeInTheDocument();
+        expect(await screen.findByText("Saved")).toBeInTheDocument();
     });
 });

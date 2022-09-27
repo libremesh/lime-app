@@ -1,14 +1,13 @@
 /* eslint-disable react/jsx-no-bind */
-import { h } from 'preact';
-import { storiesOf } from '@storybook/preact';
-import { action } from '@storybook/addon-actions';
+import { action } from "@storybook/addon-actions";
+import { storiesOf } from "@storybook/preact";
+import { h } from "preact";
 
-import { SelectAction } from './src/containers/SelectAction';
+import { SelectAction } from "./src/containers/SelectAction";
 
-storiesOf('Containers/First boot wizard', module)
-	
-	.add('Choose an option', () => (
-		<SelectAction
-			toggleForm={(data) => () => action('toggleForm')(data)}
-		/>
-	));
+storiesOf("Containers/First boot wizard", module).add(
+    "Choose an option",
+    () => (
+        <SelectAction toggleForm={(data) => () => action("toggleForm")(data)} />
+    )
+);

@@ -1,13 +1,13 @@
-import { h } from 'preact';
-import { Config } from 'plugins/lime-plugin-node-admin/src/components/config';
-import { usePortalConfig } from '../src/piraniaQueries';
-import { route } from 'preact-router';
-import { Trans } from '@lingui/macro';
+import { Trans } from "@lingui/macro";
+import { Config } from "plugins/lime-plugin-node-admin/src/components/config";
+import { h } from "preact";
+import { route } from "preact-router";
 
+import { usePortalConfig } from "../src/piraniaQueries";
 
 export const PortalConfigItem = () => {
     const { data: config, isLoading } = usePortalConfig();
-    let message = '';
+    let message = "";
     if (config) {
         if (config.activated && config.with_vouchers) {
             message = <Trans>Enabled, with vouchers</Trans>;
@@ -19,8 +19,13 @@ export const PortalConfigItem = () => {
             message = <Trans>Disabled</Trans>;
         }
     }
-    return <Config data-testid='portal-config-item' title={<Trans>Community Portal</Trans>}
-        onClick={() => route('/nodeadmin/communityPortal')}
-        value={message}
-        isLoading={isLoading} />
+    return (
+        <Config
+            data-testid="portal-config-item"
+            title={<Trans>Community Portal</Trans>}
+            onClick={() => route("/nodeadmin/communityPortal")}
+            value={message}
+            isLoading={isLoading}
+        />
+    );
 };

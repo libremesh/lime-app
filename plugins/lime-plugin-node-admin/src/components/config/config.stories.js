@@ -1,7 +1,7 @@
-import { Config } from './config';
+import { Config } from "./config";
 
 export default {
-    title: 'nodeAdmin/components/config'
-}
+    title: "nodeAdmin/components/config",
+};
 
-export const config = () => <Config title={'Title'} value={'value'} />
+export const config = () => <Config title={"Title"} value={"value"} />;

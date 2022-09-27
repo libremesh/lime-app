@@ -4,9 +4,9 @@ export const dateToLocalUnixTimestamp = (date, time) => {
     // param date: is like '2021-11-24'
     // param time: is like '23:59'
     // return: unix-timestamp
-    const utcDate = new Date(`${date  }T${time}:00.000Z`);
+    const utcDate = new Date(`${date}T${time}:00.000Z`);
     const utcTimestamp = utcDate.getTime();
-	const utcOffset = utcDate.getTimezoneOffset() * 60 * 1000;
+    const utcOffset = utcDate.getTimezoneOffset() * 60 * 1000;
     const localTimestamp = utcTimestamp + utcOffset;
     return Math.floor(localTimestamp / 1000);
-}
+};

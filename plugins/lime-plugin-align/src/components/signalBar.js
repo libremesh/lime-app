@@ -1,21 +1,29 @@
-import { h } from 'preact';
-import colorScale from 'simple-color-scale';
-import { useCommunitySettings } from 'utils/queries';
-import { useEffect } from 'preact/hooks';
+import { h } from "preact";
+import { useEffect } from "preact/hooks";
+import colorScale from "simple-color-scale";
 
-export const SignalBar = ({signal, className }) => {
-	const { data: communitySettings } = useCommunitySettings();
+import { useCommunitySettings } from "utils/queries";
 
-	useEffect(() => {
-		colorScale.setConfig({
-			outputStart: 1,
-			outputEnd: Number(communitySettings.bad_signal) * -1,
-			inputStart: Number(communitySettings.good_signal) * -1,
-			inputEnd: Number(communitySettings.bad_signal) * -1 + 10
-		});
-	}, [communitySettings])
+export const SignalBar = ({ signal, className }) => {
+    const { data: communitySettings } = useCommunitySettings();
 
-	return (
-		<span class={className} style={{ backgroundColor: signal ? colorScale.getColor(signal * -1) : "gray"}} />
-	)
+    useEffect(() => {
+        colorScale.setConfig({
+            outputStart: 1,
+            outputEnd: Number(communitySettings.bad_signal) * -1,
+            inputStart: Number(communitySettings.good_signal) * -1,
+            inputEnd: Number(communitySettings.bad_signal) * -1 + 10,
+        });
+    }, [communitySettings]);
+
+    return (
+        <span
+            class={className}
+            style={{
+                backgroundColor: signal
+                    ? colorScale.getColor(signal * -1)
+                    : "gray",
+            }}
+        />
+    );
 };

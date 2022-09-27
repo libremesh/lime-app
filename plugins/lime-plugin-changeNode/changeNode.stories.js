@@ -1,27 +1,25 @@
-import { h } from 'preact';
-import { action } from '@storybook/addon-actions';
-import { array } from '@storybook/addon-knobs';
+import { action } from "@storybook/addon-actions";
+import { array } from "@storybook/addon-knobs";
+import { h } from "preact";
 
-import { ChangeNode } from './src/changeNodePage';
+import { ChangeNode } from "./src/changeNodePage";
 
 const actions = {
-	loadStations: action('loadStations')
-	
+    loadStations: action("loadStations"),
 };
 
 export default {
-	title: 'Containers/ChangeNode',
-	component: ChangeNode
+    title: "Containers/ChangeNode",
+    component: ChangeNode,
 };
 
-
 export const changeNodeScreen = () => (
-	<ChangeNode
-		stations={array('Mesh hosts',[
-			'ql-anaymarcos',
-			'ql-graciela',
-			'ql-czuk-bbone'
-		])}
-		{...actions}
-	/>
+    <ChangeNode
+        stations={array("Mesh hosts", [
+            "ql-anaymarcos",
+            "ql-graciela",
+            "ql-czuk-bbone",
+        ])}
+        {...actions}
+    />
 );

@@ -1,21 +1,21 @@
-import { h } from "preact";
 import { Trans } from "@lingui/macro";
+import { h } from "preact";
 
 export const ErrorMsg = ({ children }) => (
-    <p style={{ color: "#923838" }}>
-        {children}
-    </p>
-)
+    <p style={{ color: "#923838" }}>{children}</p>
+);
 
 export const MaxLengthMsg = ({ length }) => (
     <Trans>Max. {length} characters</Trans>
 );
 
-export const MaxLengthErrorMsg = ({ length }) =>
-    <ErrorMsg><MaxLengthMsg length={length} /></ErrorMsg>
+export const MaxLengthErrorMsg = ({ length }) => (
+    <ErrorMsg>
+        <MaxLengthMsg length={length} />
+    </ErrorMsg>
+);
 
-export const RequiredMsg = () =>
-    <Trans>Required</Trans>
+export const RequiredMsg = () => <Trans>Required</Trans>;
 
 export const RequiredErrorMsg = () => (
     <ErrorMsg>

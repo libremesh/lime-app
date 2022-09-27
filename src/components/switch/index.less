@@ -3,7 +3,6 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 .toggles [type="checkbox"] {
     position: absolute;
     top: auto;
@@ -12,32 +11,32 @@
     width: 1px;
     height: 1px;
     white-space: nowrap;
-    }
-    
-    .toggles [type="checkbox"] + label {
+}
+
+.toggles [type="checkbox"] + label {
     display: block;
     position: relative;
     padding: 0.5em;
     padding-left: 4em;
     max-width: calc(100% - 2em);
-    }
-    
-    .toggles [type="checkbox"] + label::before,
-    .toggles [type="checkbox"] + label::after {
+}
+
+.toggles [type="checkbox"] + label::before,
+.toggles [type="checkbox"] + label::after {
     content: "";
     position: absolute;
     height: 1.6em; // 1.5 -> 1.6 due to skeleton.less
     transition: all 0.25s ease;
-    }
-    
-    .toggles [type="checkbox"] + label::before {
+}
+
+.toggles [type="checkbox"] + label::before {
     left: 0;
     top: 0.2em;
     width: 3em;
     border: 0.2em solid #767676;
     background: #767676;
     border-radius: 1.1em;
-    }
+}
 
 .toggles [type="checkbox"] + label::after {
     left: 0;

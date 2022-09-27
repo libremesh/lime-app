@@ -1,7 +1,8 @@
-import { h } from 'preact';
-
-import { Trans } from '@lingui/macro';
+import { Trans } from "@lingui/macro";
+import { h } from "preact";
 
 export const LocateMenu = () => (
-	<a href={'#/locate'}><Trans>Map</Trans></a>
+    <a href={"#/locate"}>
+        <Trans>Map</Trans>
+    </a>
 );

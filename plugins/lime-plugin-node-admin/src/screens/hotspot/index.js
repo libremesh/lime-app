@@ -1,1 +1,1 @@
-export { default as HotspotPage } from './src/hotspotPage';
+export { default as HotspotPage } from "./src/hotspotPage";

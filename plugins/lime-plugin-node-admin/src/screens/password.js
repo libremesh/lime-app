@@ -1,15 +1,19 @@
-import { h, Fragment } from 'preact';
-import { useForm } from 'react-hook-form';
-import { useAdminWifiData, useChangeAPPassword } from '../nodeAdminQueries';
-import ConfigPageLayout from '../layouts/configPageLayout';
-import Loading from 'components/loading';
-import switchStyle from 'components/switch';
-import { Trans } from '@lingui/macro';
+import { Trans } from "@lingui/macro";
+import { Fragment, h } from "preact";
+import { useForm } from "react-hook-form";
+
+import Loading from "components/loading";
+import switchStyle from "components/switch";
+
+import ConfigPageLayout from "../layouts/configPageLayout";
+import { useAdminWifiData, useChangeAPPassword } from "../nodeAdminQueries";
 
 const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
-    const { node_ap: { password, has_password } } = wifiData;
+    const {
+        node_ap: { password, has_password },
+    } = wifiData;
     const { register, handleSubmit, errors, watch } = useForm({
-        defaultValues: { password, enablePassword: has_password }
+        defaultValues: { password, enablePassword: has_password },
     });
     const enablePassword = watch("enablePassword");
 
@@ -21,63 +25,82 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
         <Fragment>
             <form class="flex-grow-1">
                 <div class={switchStyle.toggles}>
-                    <input type="checkbox"
+                    <input
+                        type="checkbox"
                         name="enablePassword"
                         id="enablePassword"
                         ref={register()}
                     />
-                    <label htmlFor="enablePassword"><Trans>Enable Password</Trans></label>
+                    <label htmlFor="enablePassword">
+                        <Trans>Enable Password</Trans>
+                    </label>
                 </div>
-                {enablePassword &&
+                {enablePassword && (
                     <div>
-                        <label htmlFor="password"><Trans>Wifi Password</Trans></label>
-                            <input type="text" name="password" id="password"
-                                ref={register({
-                                    validate: isValidPassword
-                                })}
-                                class="w-100" />
+                        <label htmlFor="password">
+                            <Trans>Wifi Password</Trans>
+                        </label>
+                        <input
+                            type="text"
+                            name="password"
+                            id="password"
+                            ref={register({
+                                validate: isValidPassword,
+                            })}
+                            class="w-100"
+                        />
                     </div>
-                }
-                {errors && errors.password &&
+                )}
+                {errors && errors.password && (
                     <p class="text-danger">
-                        <Trans>The password should have at least 8 characters</Trans>
+                        <Trans>
+                            The password should have at least 8 characters
+                        </Trans>
                     </p>
-                }
+                )}
             </form>
             <div class="d-flex">
                 <div class="ml-auto">
-                    {!isSubmitting &&
-                        <button onClick={handleSubmit(onSubmit)} class="ml-auto" >
+                    {!isSubmitting && (
+                        <button
+                            onClick={handleSubmit(onSubmit)}
+                            class="ml-auto"
+                        >
                             <Trans>Save</Trans>
                         </button>
-                    }
-                    {isSubmitting &&
-                        <Loading />
-                    }
+                    )}
+                    {isSubmitting && <Loading />}
                 </div>
             </div>
         </Fragment>
-    )
-}
+    );
+};
 
 const APPasswordPage = () => {
     const { data: wifiData, isLoading } = useAdminWifiData();
-    const [changeApNamePassword, { isLoading: isSubmitting, isSuccess, isError }] = useChangeAPPassword();
+    const [
+        changeApNamePassword,
+        { isLoading: isSubmitting, isSuccess, isError },
+    ] = useChangeAPPassword();
     function onSubmit({ password, enablePassword }) {
         return changeApNamePassword({
-            password: enablePassword ? password: "",
-            enablePassword
+            password: enablePassword ? password : "",
+            enablePassword,
         });
     }
 
     return (
-        <ConfigPageLayout {...{
-            isLoading, isSuccess, isError,
-            title: <Trans>Wifi Password</Trans>
-        }}>
-            <APPasswordPageForm {...{wifiData, onSubmit, isSubmitting}} />
-        </ConfigPageLayout >
-    )
-}
+        <ConfigPageLayout
+            {...{
+                isLoading,
+                isSuccess,
+                isError,
+                title: <Trans>Wifi Password</Trans>,
+            }}
+        >
+            <APPasswordPageForm {...{ wifiData, onSubmit, isSubmitting }} />
+        </ConfigPageLayout>
+    );
+};
 
 export default APPasswordPage;

@@ -1,7 +1,7 @@
-import Page from './src/FbwPage';
+import Page from "./src/FbwPage";
 
 export default {
-	name: 'firstbootwizard',
-	page: Page,
-	isCommunityProtected: true
+    name: "firstbootwizard",
+    page: Page,
+    isCommunityProtected: true,
 };

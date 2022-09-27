@@ -1,24 +1,30 @@
-import NodeAdminPage from './src/nodeAdminPage';
+import NodeAdminPage from "./src/nodeAdminPage";
 
 export default {
-    title: 'Containers/Node Configuration'
-}
+    title: "Containers/Node Configuration",
+};
 
-export const NodeAdmin = () => <NodeAdminPage />
+export const NodeAdmin = () => <NodeAdminPage />;
 NodeAdmin.args = {
     queries: [
-        [['lime-utils', 'get_wifi_data'], {
-            node_ap: {
-                has_password: false
+        [
+            ["lime-utils", "get_wifi_data"],
+            {
+                node_ap: {
+                    has_password: false,
+                },
+                community_ap: {
+                    community: { enabled: true },
+                    enabled: true,
+                    ssid: "quintana-libre.org.ar",
+                },
             },
-            community_ap: {
-                community: { enabled: true },
+        ],
+        [
+            ["lime-utils", "hotspot_wwan_get_status"],
+            {
                 enabled: true,
-                ssid: 'quintana-libre.org.ar',
-            }
-        }],
-        [['lime-utils', 'hotspot_wwan_get_status'], {
-            enabled: true
-        }]
-    ]
-}
+            },
+        ],
+    ],
+};

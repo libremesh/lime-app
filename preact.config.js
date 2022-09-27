@@ -1,15 +1,18 @@
+const path = require('path');
+
 require('dotenv').config();
-let path = require('path');
 
 /**
- * Function that mutates original webpack config.
- * Supports asynchronous changes when promise is returned.
+ * Function that mutates the original webpack config.
+ * Supports asynchronous changes when a promise is returned (or it's an async function).
  *
- * @param {object} config - original webpack config.
- * @param {object} env - options passed to CLI.
- * @param {WebpackConfigHelpers} helpers - object with useful helpers when working with config.
- **/
-export default function (config, env, helpers) {
+ * @param {import('preact-cli').Config} config - original webpack config
+ * @param {import('preact-cli').Env} env - current environment and options pass to the CLI
+ * @param {import('preact-cli').Helpers} helpers - object with useful helpers for working with the webpack config
+ * @param {Record<string, unknown>} options - this is mainly relevant for plugins (will always be empty in the config), default to an empty object
+ */
+ export default (config, env, helpers, options) => {
+
 	// Basepath of lime-app in the router: http://thisnode.info/app/
 	// This hack let us use less-modules at plugins/containers directories too
 	const { source, isProd } = env;
@@ -21,14 +24,17 @@ export default function (config, env, helpers) {
 		proxy: [
 			{
 				path: '/ubus',
-				target: `http://${host}/`
+				target: `http://${host}/`,
+				secure: false,
 			},
 			{
 				path: '/cgi-bin/**',
-				target: `http://${host}/`
+				target: `http://${host}/`,
+				secure: false,
 			}
 		]
-	} 
+	}
+
 	const loaderRules = helpers.getLoadersByName(config, 'css-loader');
 	loaderRules.forEach(({ rule }) => {
 		if (rule.include) {
@@ -40,6 +46,7 @@ export default function (config, env, helpers) {
 			rule.exclude.push(source('containers'));
 		}
 	});
+
 	// Add common imports aliases
 	config.resolve.alias.components = path.resolve(__dirname, 'src/components');
 	config.resolve.alias.containers = path.resolve(__dirname, 'src/containers');

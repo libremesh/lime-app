@@ -1,2 +1,3 @@
-import style from './index.less';
+import style from "./index.less";
+
 export default style;
