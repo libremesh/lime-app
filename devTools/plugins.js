@@ -47,7 +47,7 @@ export default ${componentName};
 
 const queriesContent = (name) =>
     `// Here you define queries and mutations which connects the api with your components
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { getSomething } from './${name}Api';
 
 export const useSomething = () => useQuery(['package', 'command'], getSomething);

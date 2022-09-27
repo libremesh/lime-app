@@ -4,7 +4,7 @@ import {
 	reboot, checkInternet, getChangesNeedReboot, setChangesNeedReboot
 } from './api';
 import { DEFAULT_COMMUNITY_SETTINGS } from './constants';
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import queryCache from './queryCache';
 
 export function useSession() {
@@ -44,7 +44,7 @@ export function useBatHost(mac, outgoingIface, queryConfig) {
 }
 
 export function useNeedReboot() {
-	return useQuery('changes-need-reboot', getChangesNeedReboot);
+	return useQuery(['changes-need-reboot'], getChangesNeedReboot);
 }
 
 export function useSetNeedReboot() {

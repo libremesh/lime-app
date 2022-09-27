@@ -263,7 +263,7 @@ Without further delay, let's implement them, each part is explained in the comme
 // Path: lime-plugin-remotesupport/src/remoteSupportQueries.js
 
 // Import react-query hooks
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 // Import the singleton instance of QueryCache.
 import queryCache from 'utils/queryCache';
 import { getSession, openSession, closeSession } from './remoteSupportApi'
