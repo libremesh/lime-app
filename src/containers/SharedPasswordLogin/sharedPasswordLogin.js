@@ -61,7 +61,7 @@ const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
 };
 
 const TryToLoginAutomatically = () => {
-	const [login, {isError}] = useLogin();
+	const { isError, mutate: login } = useLogin();
 
 	useEffect(() => {
 		login({username: 'root', password: ''});
