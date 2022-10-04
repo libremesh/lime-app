@@ -1,7 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
 import { action } from "@storybook/addon-actions";
-import { boolean, text } from "@storybook/addon-knobs";
-import { h } from "preact";
 
 import { Page } from "./src/notesPage";
 
@@ -15,10 +12,13 @@ export default {
     component: Page,
 };
 
-export const manageNote = () => (
+export const manageNote = (args) => (
     <Page
-        notes={text("Note", "This node works great")}
-        loading={boolean("Loading", false)}
         {...actions}
+        {...args}
     />
 );
+manageNote.args = {
+    notes: "This node works great",
+    loading: false,
+}

@@ -1,7 +1,4 @@
-/* eslint-disable react/jsx-no-bind */
 import { action } from "@storybook/addon-actions";
-import { boolean, object } from "@storybook/addon-knobs";
-import { h } from "preact";
 
 import Box from "./src/components/box";
 import { Metrics } from "./src/metricsPage";
@@ -47,13 +44,13 @@ const metricState = {
     gateway: "16:cc:20:ff:fe:ad:ae:c8 lapraviana si-vale lpl-ravelocasa",
 };
 
-const communitySettings = object("communitySettings", {
+const communitySettings = {
     bad_signal: "-82",
     acceptable_loss: "20",
     bad_bandwidth: "1",
     good_signal: "-65",
     good_bandwidth: "5",
-});
+};
 
 const nodeState = {
     internet: {
@@ -128,38 +125,50 @@ export default {
     component: Metrics,
 };
 
-export const fullPath = () => (
+export const fullPath = (args) => (
     <Metrics
-        metrics={object("Metrics state", metricState)}
-        node={object("Node status", nodeState)}
         {...actions}
+        {...args}
     />
 );
+fullPath.args = {
+    metrics: metricState,
+    node: nodeState,
+}
 
-export const runningMetrics = () => (
+export const runningMetrics = (args) => (
     <Metrics
-        metrics={object("Metrics state", metricsInProcess)}
-        node={object("Node status", nodeState)}
         {...actions}
+        {...args}
     />
 );
+runningMetrics.args = {
+    metrics: metricsInProcess,
+    node: nodeState,
+}
 
-export const metricsBox = () => (
+export const metricsBox = (args) => (
     <Box
         station={metricsInProcess.metrics[1]}
-        settings={communitySettings}
         loading={false}
         click={action("box click")}
         gateway={false}
+        {...args}
     />
 );
+metricsBox.args = {
+    settings: communitySettings,
+}
 
-export const metricsBoxLoading = () => (
+export const metricsBoxLoading = (args) => (
     <Box
-        station={object("Station data", metricsInProcess.metrics[1])}
-        settings={communitySettings}
-        loading={boolean("Is loading", true)}
         click={action("box click")}
         gateway={false}
+        {...args}
     />
 );
+metricsBoxLoading.args = {
+    station: metricsInProcess.metrics[1],
+    loading: true,
+    settings: communitySettings,
+}

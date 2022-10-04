@@ -1,12 +1,10 @@
 import { action } from "@storybook/addon-actions";
-import { withKnobs } from "@storybook/addon-knobs";
 
 import { LocatePage } from "./src/locatePage";
 
 export default {
     title: "Containers/Map",
     component: LocatePage,
-    decorators: [withKnobs],
 };
 
 const actions = {
