@@ -13,7 +13,7 @@ import switchStyle from "components/switch";
 const minDate = new Date().toISOString().substring(0, 10);
 
 const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
-    const { register, handleSubmit, errors, watch } = useForm({
+    const { register, handleSubmit, formState: { errors }, watch } = useForm({
         defaultValues: {
             duration_m: 1,
             qty: 1,
@@ -35,7 +35,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
                 <textarea
                     id="name"
                     name="name"
-                    ref={register({ required: true, maxLength: 100 })}
+                    {...register("name", { required: true, maxLength: 100 })}
                     class="w-100"
                 />
                 {errors.name?.type === "required" && <RequiredErrorMsg />}
@@ -47,7 +47,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
                         type="checkbox"
                         id="permanent"
                         name="permanent"
-                        ref={register}
+                        {...register("permanent")}
                         class="w-100"
                     />
                     <label for="permanent">
@@ -65,7 +65,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
                     id="duration_m"
                     name="duration_m"
                     disabled={isPermanent}
-                    ref={register}
+                    {...register("duration_m")}
                     class="w-100"
                     min={1}
                 />
@@ -76,7 +76,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
                     type="number"
                     id="quantity"
                     name="qty"
-                    ref={register}
+                    {...register("qty")}
                     class="w-100"
                     min={1}
                     max={10}
@@ -86,7 +86,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
                         type="checkbox"
                         id="with_activation_deadline"
                         name="with_activation_deadline"
-                        ref={register}
+                        {...register("with_activation_deadline")}
                         class="w-100"
                     />
                     <label for="with_activation_deadline">
@@ -100,7 +100,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
                     type="date"
                     id="activation_deadline"
                     name="activation_deadline"
-                    ref={register}
+                    {...register("activation_deadline")}
                     class="w-100"
                     disabled={!withActivationDeadline}
                     min={minDate}

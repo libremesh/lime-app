@@ -13,7 +13,7 @@ import Loading from "components/loading";
 import { useListVouchers, useRename } from "../piraniaQueries";
 
 const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
-    const { register, handleSubmit, errors } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: { name },
     });
     return (
@@ -28,7 +28,7 @@ const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
                 <textarea
                     id="name"
                     name="name"
-                    ref={register({ required: true, maxLength: 100 })}
+                    {...register("name", { required: true, maxLength: 100 })}
                     class="w-100"
                 />
                 {errors.name?.type === "required" && <RequiredErrorMsg />}
@@ -54,7 +54,7 @@ const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
 };
 
 const EditVoucher = ({ id }) => {
-    const [renameVoucher, { isLoading: isSubmitting, isSuccess, isError }] =
+    const { mutate: renameVoucher, isLoading: isSubmitting, isSuccess, isError, } =
         useRename();
     const { data: vouchers, isLoading } = useListVouchers();
     const voucher = vouchers && vouchers.filter((v) => v.id === id)[0];

@@ -39,7 +39,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                         type="checkbox"
                         name="activated"
                         id="activated"
-                        ref={register()}
+                        {...register("activated")}
                     />
                     <label htmlFor="activated">
                         <Trans>Enable Portal in Community AP</Trans>
@@ -64,7 +64,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                         type="checkbox"
                         name="with_vouchers"
                         id="with_vouchers"
-                        ref={register()}
+                        {...register("with_vouchers")}
                     />
                     <label htmlFor="with_vouchers">
                         <Trans>Use vouchers for access</Trans>
@@ -97,7 +97,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
 
 export const PortalConfigPage = () => {
     const { data: config, isLoading } = usePortalConfig();
-    const [setPortalConfig, { isLoading: isSubmitting, isSuccess, isError }] =
+    const { mutate: setPortalConfig, isLoading: isSubmitting, isSuccess, isError, } =
         useSetPortalConfig();
 
     return (

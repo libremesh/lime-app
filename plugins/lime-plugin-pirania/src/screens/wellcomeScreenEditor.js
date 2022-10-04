@@ -26,7 +26,7 @@ const WellcomeScreenEditorForm = ({
     onSubmit,
     isSubmitting,
 }) => {
-    const { register, handleSubmit, errors } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: { background_color: "#ffffff", ...content },
     });
     return (
@@ -40,10 +40,9 @@ const WellcomeScreenEditorForm = ({
                 </span>
                 <input
                     type="text"
-                    name="title"
                     id="title"
                     class="w-100"
-                    ref={register({ required: true, maxLength: 100 })}
+                    {...register("title", { required: true, maxLength: 100 })}
                 />
                 {errors.title?.type === "required" && <RequiredErrorMsg />}
                 {errors.title?.type === "maxLength" && (
@@ -57,10 +56,9 @@ const WellcomeScreenEditorForm = ({
                 </span>
                 <textarea
                     name="main_text"
-                    id="main_text"
                     class="w-100"
                     style={{ minHeight: "9em" }}
-                    ref={register({ required: true, maxLength: 500 })}
+                    {...register("main_text", { required: true, maxLength: 500 })}
                 />
                 {errors.main_text?.type === "required" && <RequiredErrorMsg />}
                 {errors.main_text?.type === "maxLength" && (
@@ -86,19 +84,17 @@ const WellcomeScreenEditorForm = ({
                     style={{ width: 0 }} // Hide the ugly builtin input
                     accept="image/*"
                     onInput={onLogoFileSelection}
-                    name="logo_file"
                     id="logo_file"
                     type="file"
-                    ref={register()}
+                    {...register("logo_file")}
                 />
                 <label for="background_color">
                     <Trans>Background Color</Trans>
                 </label>
                 <input
                     type="color"
-                    name="background_color"
                     id="background_color"
-                    ref={register({ required: true })}
+                    {...register("background_color", { required: true })}
                 />
                 {errors.background_color?.type === "required" && (
                     <RequiredErrorMsg />
@@ -120,10 +116,9 @@ const WellcomeScreenEditorForm = ({
                 </span>
                 <input
                     type="text"
-                    name="link_title"
                     id="link_title"
                     class="w-100"
-                    ref={register({ maxLength: 100 })}
+                    {...register("link_title", { maxLength: 100 })}
                 />
                 {errors.link_title?.type === "maxLength" && (
                     <MaxLengthErrorMsg length={100} />
@@ -136,10 +131,9 @@ const WellcomeScreenEditorForm = ({
                 </span>
                 <input
                     type="text"
-                    name="link_url"
                     id="link_url"
                     class="w-100"
-                    ref={register({ pattern: /^(http:\/\/|https:\/\/).*$/ })}
+                    {...register("link_url", { pattern: /^(http:\/\/|https:\/\/).*$/ })}
                 />
                 {errors.link_url?.type === "pattern" && (
                     <p style={{ color: "#923838" }}>
@@ -167,12 +161,13 @@ const WellcomeScreenEditorForm = ({
 
 export const WellcomeScreenEditor = () => {
     const { data: content, isLoading } = usePortalContent();
-    const [setPortalContent, setPortalStatus] = useSetPortalContent();
+    // const { mutate: setPortalContent, setPortalStatus } = useSetPortalContent();
+    const { mutate: setPortalContent, isLoading: isSubmitting, isSuccess, isError, } = useSetPortalContent();
     const { data: logoCompressed } = useLogoCompression();
-    const [createCompression, { isLoading: isCompressing }] =
+    const { mutate: createCompression, isLoading: isCompressing, } =
         useCreateCompression();
 
-    const { isLoading: isSubmitting, isSuccess, isError } = setPortalStatus;
+    // const { isLoading: isSubmitting, isSuccess, isError } = setPortalStatus;
 
     const onLogoFileSelection = (e) => {
         return createCompression(e.target.files[0]);

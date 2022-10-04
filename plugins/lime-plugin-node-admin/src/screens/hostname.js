@@ -13,8 +13,8 @@ import { useChangeHostname } from "../nodeAdminQueries";
 
 const HostnamePage = () => {
     const { data: boardData, isLoading } = useBoardData();
-    const { register, handleSubmit, reset, setValue, errors } = useForm();
-    const [changeHostname, { isLoading: isSubmitting, isSuccess, isError }] =
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+    const { mutate: changeHostname, isLoading: isSubmitting, isSuccess, isError, } =
         useChangeHostname();
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const HostnamePage = () => {
                     type="text"
                     name="hostname"
                     id="hostname"
-                    ref={register({
+                    {...register("hostname",{
                         required: true,
                         validate: {
                             validHostname: (v) => isValidHostname(v, true),

@@ -20,7 +20,7 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
                         type="checkbox"
                         name="enableRoamingAP"
                         id="enableRoamingAP"
-                        ref={register()}
+                        {...register("enableRoamingAP")}
                     />
                     <label htmlFor="enableRoamingAP">
                         <Trans>Enable Community Roaming AP</Trans>
@@ -46,7 +46,7 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
 
 const RoamingAPPage = () => {
     const { data: wifiData, isLoading } = useWifiData();
-    const [setupRoamingAP, { isLoading: isSubmitting, isSuccess, isError }] =
+    const { mutate: setupRoamingAP, isLoading: isSubmitting, isSuccess, isError, } =
         useSetupRoamingAP();
     const apSsid = wifiData?.community_ap?.ssid;
     const communityName = wifiData?.community_ap.ssid;

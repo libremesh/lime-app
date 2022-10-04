@@ -49,7 +49,7 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
     const versionName = newVersion && newVersion.version;
     const { data: downloadStatus } = useDownloadStatus({
         refetchInterval: pollingInterval,
-        enabled: versionName,
+        enabled: !versionName,
         onSuccess: (data) => {
             if (data.download_status === "downloading") {
                 setPollingInterval(1000);
@@ -60,9 +60,9 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
         },
     });
 
-    const [downloadRelease, { isLoading: submittingDownload }] =
+    const { mutate: downloadRelease, isLoading: submittingDownload, } =
         useDownloadRelease();
-    const [upgradeFirmware, { isLoading: submittingUpgrade }] =
+    const { mutate: upgradeFirmware, isLoading: submittingUpgrade, } =
         useUpgradeFirwmare();
     const filePath = downloadStatus && downloadStatus.fw_path;
     const status = downloadStatus && downloadStatus.download_status;
@@ -137,9 +137,8 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
 export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
     const { data: newVersion } = useNewVersion();
     const [invalidFirmwareError, setinvalidFirmwareError] = useState(false);
-    const { register, handleSubmit, errors, watch, formState } = useForm();
+    const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm();
     const file = watch("file");
-    const { isSubmitting } = formState;
 
     function onUpgrade(data) {
         setinvalidFirmwareError(false);
@@ -177,10 +176,11 @@ export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
                 </label>
                 <input
                     style={{ width: 0 }} // Hide the ugly builtin input
-                    name="file"
                     id="file"
                     type="file"
-                    ref={register({
+                    {...register(
+                        "file",
+                        {
                         required: true,
                         validate: { validExtname: isValidExtname },
                     })}

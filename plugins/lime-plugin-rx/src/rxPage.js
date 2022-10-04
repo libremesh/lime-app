@@ -81,7 +81,7 @@ const MostActiveBox = ({ node, changeNode }) => {
     const { data: bathost } = useBatHost(
         node.most_active && node.most_active.station_mac,
         node.most_active && node.most_active.iface,
-        { enabled: node.most_active }
+        { enabled: !node.most_active }
     );
 
     if (node.most_active === undefined) {

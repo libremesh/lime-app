@@ -32,7 +32,7 @@ const HotspotPageForm = ({
                         type="checkbox"
                         name="enabled"
                         id="enabled"
-                        ref={register()}
+                        {...register("enabled")}
                     />
                     <label htmlFor="enabled">
                         <Trans>Connect to a Mobile Hotspot</Trans>
@@ -169,10 +169,8 @@ const HotspotPage_ = ({
 
 const HotspotPage = () => {
     const { data: hotspotData, isLoading, refetch } = useHotspotData();
-    const [
-        toggle,
-        { error: submitError, isError, isLoading: isSubmitting, isSuccess },
-    ] = useToggleHotspot();
+    const { mutate: toggle, error: submitError, isError, isLoading: isSubmitting, isSuccess, }
+    = useToggleHotspot();
     const waitingRadioReset = hotspotData?.waitingForRadioReset;
 
     useEffect(() => {
