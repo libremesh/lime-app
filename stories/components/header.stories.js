@@ -1,26 +1,26 @@
-/* eslint-disable react/jsx-no-bind */
-import { h } from 'preact';
-
 import { Header } from 'components/header';
-import { Menu } from '../../src/containers/Menu';
+import { Menu } from 'containers/Menu';
 import { AppContext } from 'utils/app.context';
-import { boolean } from '@storybook/addon-knobs';
-
-const menuEnabled = boolean('menuEnabled', true);
 
 export default {
 	title: 'Header',
 	component: Header
 };
 
-export const withMenuDisabled = () => (
-	<AppContext.Provider value={{ menuEnabled: !menuEnabled }}>
+export const WithMenuDisabled = (args) => (
+	<AppContext.Provider value={args}>
 		<Header Menu={Menu} />
 	</AppContext.Provider>
 );
+WithMenuDisabled.args = {
+	menuEnabled: false,
+}
 
-export const withMenuEnabled = () => (
-	<AppContext.Provider value={{ menuEnabled }}>
+export const WithMenuEnabled = (args) => (
+	<AppContext.Provider value={args}>
 		<Header Menu={Menu} />
 	</AppContext.Provider>
 );
+WithMenuEnabled.args = {
+	menuEnabled: true,
+}

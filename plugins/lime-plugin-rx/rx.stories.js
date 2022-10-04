@@ -1,9 +1,6 @@
-/* eslint-disable react/jsx-no-bind */
-import { h } from 'preact';
-import { action } from '@storybook/addon-actions';
-import { object, boolean } from '@storybook/addon-knobs';
+import { action } from "@storybook/addon-actions";
 
-import { Page } from '../lime-plugin-rx/src/rxPage';
+import { Page } from "./src/rxPage";
 
 const nodeData =  {
 	internet: {
@@ -51,6 +48,10 @@ const nodeData =  {
 	}
 };
 
+const newVersionAvailable = {
+    version: "LibreRouter 1.5",
+};
+
 const actions = {
 	getNodeStatusTimer: action('getNodeStatusTimer'),
 	getNodeStatus: action('getNodeStatus'),
@@ -63,69 +64,74 @@ export default {
 	component: Page
 };
 
-export const withData = () => (
-	<Page
-		nodeData={object('Node data', nodeData)}
-		isLoading={boolean('Is loading', false)}
-		{...actions}
-	/>
-)
-withData.args = {
-	queries: [
-		[['bat-hosts', 'get_bathost', 'A8:40:41:1C:84:05', 'wlan1-adhoc'], {hostname: 'ql-graciela', iface: 'wlan2-adhoc'}]
-	]
-}
-
-export const loadingNodeData = () => (
-	<Page
-		nodeData={object('Node data', nodeData)}
-		isLoading={boolean('Is loading', true)}
-		{...actions}
-	/>
+export const withData = (args) => (
+    <Page
+        {...actions}
+        {...args}
+    />
 );
-
-const newVersionAvailable = {
-	version: 'LibreRouter 1.5'
-}
-
-
-export const newVersionIsAvailable = () => (
-	<Page
-		nodeData={object('Node data', nodeData)}
-		isLoading={boolean('Is loading', false)}
-		{...actions}
-	/>
-)
-newVersionIsAvailable.args = {
-	queries: [
-		[['eupgrade', 'is_new_version_available'], newVersionAvailable]
-	]
+withData.args = {
+    nodeData,
+    isLoading: false,
+    queries: [
+        [
+            ["bat-hosts", "get_bathost", "A8:40:41:1C:84:05", "wlan1-adhoc"],
+            { hostname: "ql-graciela", iface: "wlan2-adhoc" },
+        ],
+    ],
 };
 
-export const needToConfirmUpgrade = () => (
-	<Page
-		nodeData={object('Node data', {...nodeData, uptime: '60\n'})}
-		isLoading={boolean('Is loading', false)}
-		{...actions}
-	/>
-)
-needToConfirmUpgrade.args = {
-	queries: [
-		[['lime-utils', 'get_upgrade_info'], {
-			suCounter: 300
-		}]
-	]
+export const loadingNodeData = (args) => (
+    <Page
+        {...actions}
+        {...args}
+    />
+);
+loadingNodeData.args = {
+    nodeData,
+    isLoading: true,
 }
 
-export const changesNeedReboot = () => (
-	<Page
-		nodeData={object('Node data', {...nodeData, uptime: '60\n'})}
-		isLoading={boolean('Is loading', false)}
-		{...actions}
-	/>
-)
+
+export const newVersionIsAvailable = (args) => (
+    <Page
+        {...actions}
+        {...args}
+    />
+);
+newVersionIsAvailable.args = {
+    nodeData,
+    isLoading: false,
+    queries: [[["eupgrade", "is_new_version_available"], newVersionAvailable]],
+};
+
+export const needToConfirmUpgrade = (args) => (
+    <Page
+        {...actions}
+        {...args}
+    />
+);
+needToConfirmUpgrade.args = {
+    nodeData: { ...nodeData, uptime: "60\n" },
+    isLoading: false,
+    queries: [
+        [
+            ["lime-utils", "get_upgrade_info"],
+            {
+                suCounter: 300,
+            },
+        ],
+    ],
+};
+
+export const changesNeedReboot = (args) => (
+    <Page
+        {...actions}
+        {...args}
+    />
+);
 changesNeedReboot.args = {
-	queries: [
-		['changes-need-reboot', true]
-	]
-}
+    nodeData: { ...nodeData, uptime: "60\n" },
+    isLoading: false,
+    queries: [["changes-need-reboot", true]],
+};

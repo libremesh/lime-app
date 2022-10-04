@@ -1,52 +1,60 @@
-/* eslint-disable react/jsx-no-bind */
-import { h } from 'preact';
-import { action } from '@storybook/addon-actions';
-import { array } from '@storybook/addon-knobs';
+import { action } from "@storybook/addon-actions";
 
 import { Scan } from './src/containers/Scan';
 
+
+const networksScanning = [
+    {
+        config: {
+            wifi: {},
+        },
+        file: "",
+    },
+]
+
+const networkOptions = [
+    {
+        ap: "ql-graciela",
+        config: {
+            wifi: {
+                apname_ssid: "quintanalibre.org.ar/%H",
+                ap_ssid: "quintanalibre.org.ar",
+            },
+        },
+        file: "lime_default-ql-graciela",
+    },
+    {
+        ap: "ql-oncelotes",
+        config: {
+            wifi: {
+                apname_ssid: "quintanalibre.org.ar/%H",
+                ap_ssid: "quintanalibre.org.ar",
+            },
+        },
+        file: "lime_default-ql-oncelotes",
+    },
+]
+
 export default {
-	title: 'Containers/First boot wizard',
-	component: Scan
-};
+    title: "Containers/First boot wizard",
+}
 
-export const scanningForNetworks = () => (
-	<Scan
-		networks={[{ config: {
-			wifi: {}
-		}, file: '' }]}
-		status={'scanning'}
-		searchNetworks={action('searchNetworks')}
-		setNetwork={action('setNetwork')}
-		toggleForm={() => action('toggleForm')}
-	/>
-);
+export const ScanningForNetwork = () => (
+    <Scan
+        networks={networksScanning}
+        status={"scanning"}
+        searchNetworks={action("searchNetworks")}
+        setNetwork={action("setNetwork")}
+        toggleForm={() => action("toggleForm")}
+    />
+)
 
-export const selectNetworks = () => (
-	<Scan
-		networks={array('Hosts founded',[{
-			ap: 'ql-graciela',
-			config: {
-				wifi: {
-					apname_ssid: 'quintanalibre.org.ar/%H',
-					ap_ssid: 'quintanalibre.org.ar'
-				}
-			},
-			file: 'lime_default-ql-graciela'
-		},
-		{
-			ap: 'ql-oncelotes',
-			config: {
-				wifi: {
-					apname_ssid: 'quintanalibre.org.ar/%H',
-					ap_ssid: 'quintanalibre.org.ar'
-				}
-			},
-			file: 'lime_default-ql-oncelotes'
-		}])}
-		status={'scanned'}
-		searchNetworks={action('searchNetworks')}
-		setNetwork={action('setNetwork')}
-		toggleForm={(data) => () => action('toggleForm')(data)}
-	/>
-);
+export const SelectANetwork = () => (
+    <Scan
+        networks={networkOptions}
+        status={"scanned"}
+        searchNetworks={action("searchNetworks")}
+        setNetwork={action("setNetwork")}
+        toggleForm={(data) => () => action("toggleForm")(data)}
+    />
+)

@@ -1,14 +1,12 @@
-import { h } from 'preact';
-import '../src/style';
+import '~/style';
 
-import { ReactQueryCacheProvider, QueryCache } from 'react-query';
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { addDecorator } from '@storybook/preact';
-import { withKnobs } from '@storybook/addon-knobs';
 import { Header } from 'components/header';
-import { Menu } from '../src/containers/Menu';
+import { Menu } from 'containers/Menu';
 import { AppContext } from 'utils/app.context';
 import SubHeader from 'containers/SubHeader';
-import i18n, { dynamicActivate } from '../src/i18n';
+import i18n, { dynamicActivate } from '~/i18n';
 import { I18nProvider } from '@lingui/react'
 import { fromNavigator } from "@lingui/detect-locale";
 
@@ -46,7 +44,7 @@ function queryCacheFactory(queries = []) {
 		...defaultQueries,
 		...customQueries
 	}
-	const queryCache = new QueryCache({
+	const queryCache = new QueryClient({
 		defaultConfig: {
 			queries: {
 				initialStale: Infinity,
@@ -63,9 +61,9 @@ function queryCacheFactory(queries = []) {
 }
 
 const withQueryCache = (Story, context) => (
-	<ReactQueryCacheProvider queryCache={queryCacheFactory(context.args.queries)}>
+	<QueryClientProvider client={queryCacheFactory(context.args.queries)}>
 		<Story />
-	</ReactQueryCacheProvider>
+	</QueryClientProvider>
 )
 
 const withI18n = (Story) => (
@@ -110,8 +108,6 @@ export const globalTypes = {
 	},
 };
 
-
-addDecorator(withKnobs);
 addDecorator(withinAppContext);
 addDecorator(withQueryCache);
 addDecorator(withI18n);
