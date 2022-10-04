@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
-import { Fragment, h } from "preact";
+import { Fragment } from "preact";
 import { useForm } from "react-hook-form";
 
 import {

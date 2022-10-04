@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro";
 import path from "path";
-import { h } from "preact";
+
 import { useEffect, useState } from "preact/hooks";
 import { useForm } from "react-hook-form";
 

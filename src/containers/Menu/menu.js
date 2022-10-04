@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/macro";
-import { h } from "preact";
 import { useState } from "preact/hooks";
 
 import { plugins } from "../../config";

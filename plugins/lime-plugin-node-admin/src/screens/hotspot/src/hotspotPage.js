@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { Fragment, h } from "preact";
+import { Fragment } from "preact";
 import { useEffect } from "preact/hooks";
 import { useForm } from "react-hook-form";
 

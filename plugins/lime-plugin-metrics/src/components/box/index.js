@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { h } from "preact";
+
 import colorScale from "simple-color-scale";
 
 import Loading from "components/loading";

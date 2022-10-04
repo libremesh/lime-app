@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { h } from "preact";
+
 
 const PiraniaMenu = () => (
     <a href={"#/access"}>

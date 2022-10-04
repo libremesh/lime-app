@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { act, cleanup, fireEvent, screen } from "@testing-library/preact";
-import { h } from "preact";
+
 import waitForExpect from "wait-for-expect";
 
 import queryCache from "utils/queryCache";

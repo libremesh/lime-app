@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/macro";
-import { h } from "preact";
 
 export const SelectAction = ({ toggleForm }) => (
     <div class="container container-padded">

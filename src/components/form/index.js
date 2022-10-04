@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { h } from "preact";
+
 
 export const ErrorMsg = ({ children }) => (
     <p style={{ color: "#923838" }}>{children}</p>

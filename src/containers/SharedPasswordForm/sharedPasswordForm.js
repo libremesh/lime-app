@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { h } from "preact";
+
 
 function passwordHasLength(password) {
     // Check there is at least 10 characters in the string

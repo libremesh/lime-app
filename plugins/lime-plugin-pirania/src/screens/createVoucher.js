@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro";
 import ConfigPageLayout from "plugins/lime-plugin-node-admin/src/layouts/configPageLayout";
-import { h } from "preact";
+
 import { useState } from "preact/hooks";
 
 import { dateToLocalUnixTimestamp } from "utils/time";

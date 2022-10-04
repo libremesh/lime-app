@@ -1,5 +1,5 @@
 import { Trans, t } from "@lingui/macro";
-import { h } from "preact";
+
 import { useState } from "preact/hooks";
 
 import { isValidHostname, slugify } from "utils/isValidHostname";
@@ -7,7 +7,7 @@ import { isValidHostname, slugify } from "utils/isValidHostname";
 import {
     ValidationMessages,
     isValidPassword,
-} from "../../../../src/containers/SharedPasswordForm";
+} from "containers/SharedPasswordForm";
 import { useCreateNetwork } from "../FbwQueries";
 import "../style.less";
 
@@ -23,7 +23,7 @@ export const NetworkForm = ({
         passwordConfirmation: "",
     });
 
-    const [createNetwork, { isLoading: isSubmitting }] = useCreateNetwork({
+    const {mutate: createNetwork, isLoading: isSubmitting } = useCreateNetwork({
         onSuccess: () => {
             setExpectedHost(state.hostName);
             setExpectedNetwork(state.communityName);

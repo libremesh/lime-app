@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { h } from "preact";
+
 
 export const ChangeNodeMenu = () => (
     <a href={"#/changenode"}>

@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/preact";
 import each from "jest-each";
-import { h } from "preact";
+
 import { route } from "preact-router";
 import * as timeago from "timeago.js";
 import waitForExpect from "wait-for-expect";

@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { h } from "preact";
+
 import { useEffect, useState } from "preact/hooks";
 
 import ProgressBar from "components/progressbar";

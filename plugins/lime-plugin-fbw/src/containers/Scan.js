@@ -1,5 +1,4 @@
 import { Trans, t } from "@lingui/macro";
-import { h } from "preact";
 import { useEffect, useState } from "preact/hooks";
 
 import { Loading } from "components/loading";
@@ -28,15 +27,9 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 
     const { data: payloadData } = useGetNetworks();
 
-    const [
-        searchNetworks,
-        { isLoading: isSubmitting, isError: isSeachNetworkError },
-    ] = useSearchNetworks();
+    const { mutate: searchNetworks, isLoading: isSubmitting, isError: isSeachNetworkError, } = useSearchNetworks();
 
-    const [
-        setNetwork,
-        { isLoading: isSetNetworkSubmitting, isError: isSetNetworkError },
-    ] = useSetNetwork({
+    const { mutate: setNetwork, isLoading: isSetNetworkSubmitting, isError: isSetNetworkError, } = useSetNetwork({
         onSuccess: () => {
             setExpectedHost(state.hostname);
             setExpectedNetwork(state.community);

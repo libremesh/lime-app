@@ -1,7 +1,7 @@
 import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { render as tlRender } from "@testing-library/preact";
-import { h } from "preact";
+
 
 import queryCache from "utils/queryCache";
 

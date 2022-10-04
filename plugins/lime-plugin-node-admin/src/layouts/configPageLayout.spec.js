@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/preact";
-import { h } from "preact";
+
 import { route } from "preact-router";
 
 import { render } from "utils/test_utils";

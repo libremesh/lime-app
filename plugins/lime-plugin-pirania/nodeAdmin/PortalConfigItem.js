@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { Config } from "plugins/lime-plugin-node-admin/src/components/config";
-import { h } from "preact";
+
 import { route } from "preact-router";
 
 import { usePortalConfig } from "../src/piraniaQueries";

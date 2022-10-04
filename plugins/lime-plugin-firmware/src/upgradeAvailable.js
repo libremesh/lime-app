@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { Fragment, h } from "preact";
+import { Fragment } from "preact";
 import { route } from "preact-router";
 import Match from "preact-router/match";
 

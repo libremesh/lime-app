@@ -1,7 +1,7 @@
 import { i18n } from "@lingui/core";
 import { Plural, Trans } from "@lingui/macro";
 import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
-import { h } from "preact";
+
 import { route } from "preact-router";
 
 import Copy from "../components/copy";
