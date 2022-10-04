@@ -1,5 +1,3 @@
-
-
 export const Box = ({ title, children }) => (
     <div style={{ marginBottom: "10px" }}>
         <div

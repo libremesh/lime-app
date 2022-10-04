@@ -2,7 +2,6 @@ import { action } from "@storybook/addon-actions";
 
 import { Scan } from "./src/containers/Scan";
 
-
 const networksScanning = [
     {
         config: {
@@ -10,7 +9,7 @@ const networksScanning = [
         },
         file: "",
     },
-]
+];
 
 const networkOptions = [
     {
@@ -33,11 +32,11 @@ const networkOptions = [
         },
         file: "lime_default-ql-oncelotes",
     },
-]
+];
 
 export default {
     title: "Containers/First boot wizard",
-}
+};
 
 export const ScanningForNetwork = () => (
     <Scan
@@ -47,7 +46,7 @@ export const ScanningForNetwork = () => (
         setNetwork={action("setNetwork")}
         toggleForm={() => action("toggleForm")}
     />
-)
+);
 
 export const SelectANetwork = () => (
     <Scan
@@ -57,4 +56,4 @@ export const SelectANetwork = () => (
         setNetwork={action("setNetwork")}
         toggleForm={(data) => () => action("toggleForm")(data)}
     />
-)
+);

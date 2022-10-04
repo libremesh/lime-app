@@ -1,6 +1,5 @@
 import { Trans } from "@lingui/macro";
 
-
 import style from "./style";
 
 export const Banner = ({

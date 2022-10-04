@@ -1,8 +1,9 @@
 import { Trans } from "@lingui/macro";
-import ConfigPageLayout from "plugins/lime-plugin-node-admin/src/layouts/configPageLayout";
 import { Fragment } from "preact";
 import { route } from "preact-router";
 import { useForm } from "react-hook-form";
+
+import ConfigPageLayout from "plugins/lime-plugin-node-admin/src/layouts/configPageLayout";
 
 import Loading from "components/loading";
 import switchStyle from "components/switch";
@@ -97,8 +98,12 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
 
 export const PortalConfigPage = () => {
     const { data: config, isLoading } = usePortalConfig();
-    const { mutate: setPortalConfig, isLoading: isSubmitting, isSuccess, isError, } =
-        useSetPortalConfig();
+    const {
+        mutate: setPortalConfig,
+        isLoading: isSubmitting,
+        isSuccess,
+        isError,
+    } = useSetPortalConfig();
 
     return (
         <ConfigPageLayout

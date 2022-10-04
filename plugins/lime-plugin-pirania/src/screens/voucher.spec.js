@@ -2,7 +2,6 @@ import { i18n } from "@lingui/core";
 import "@testing-library/jest-dom";
 import { act, fireEvent, screen } from "@testing-library/preact";
 import each from "jest-each";
-
 import { route } from "preact-router";
 import waitForExpect from "wait-for-expect";
 

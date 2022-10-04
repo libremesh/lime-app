@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import { act, cleanup, fireEvent, screen } from "@testing-library/preact";
-import { getPortalConfig } from "plugins/lime-plugin-pirania/src/piraniaApi";
-
 import { route } from "preact-router";
+
+import { getPortalConfig } from "plugins/lime-plugin-pirania/src/piraniaApi";
 
 import { getBoardData } from "utils/api";
 import queryCache from "utils/queryCache";

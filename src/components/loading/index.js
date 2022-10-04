@@ -1,4 +1,3 @@
-
 import style from "./style.less";
 
 export const Loading = ({ color }) => {

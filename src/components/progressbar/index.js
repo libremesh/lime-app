@@ -1,4 +1,3 @@
-
 import style from "./style.less";
 
 const ProgressBar = ({ color = "#38927f", progress = 0 }) => (

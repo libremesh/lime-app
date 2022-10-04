@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/macro";
-
 import colorScale from "simple-color-scale";
 
 import Loading from "components/loading";

@@ -1,6 +1,5 @@
 import { i18n } from "@lingui/core";
 import { Trans, defineMessage } from "@lingui/macro";
-
 import { useEffect } from "preact/hooks";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";

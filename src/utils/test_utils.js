@@ -2,7 +2,6 @@ import { I18nProvider } from "@lingui/react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { render as tlRender } from "@testing-library/preact";
 
-
 import queryCache from "utils/queryCache";
 
 import SubHeader from "../containers/SubHeader";

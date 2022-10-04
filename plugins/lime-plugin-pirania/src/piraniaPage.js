@@ -1,5 +1,3 @@
-
-
 import { Loading } from "components/loading";
 
 import { useListVouchers } from "./piraniaQueries";

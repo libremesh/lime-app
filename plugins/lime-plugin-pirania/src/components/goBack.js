@@ -1,4 +1,3 @@
-
 import { route } from "preact-router";
 
 const GoBack = ({ url }) => (

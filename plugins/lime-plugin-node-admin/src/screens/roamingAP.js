@@ -46,8 +46,12 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
 
 const RoamingAPPage = () => {
     const { data: wifiData, isLoading } = useWifiData();
-    const { mutate: setupRoamingAP, isLoading: isSubmitting, isSuccess, isError, } =
-        useSetupRoamingAP();
+    const {
+        mutate: setupRoamingAP,
+        isLoading: isSubmitting,
+        isSuccess,
+        isError,
+    } = useSetupRoamingAP();
     const apSsid = wifiData?.community_ap?.ssid;
     const communityName = wifiData?.community_ap.ssid;
 

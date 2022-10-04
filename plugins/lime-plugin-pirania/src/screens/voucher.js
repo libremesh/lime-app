@@ -1,8 +1,8 @@
 import { i18n } from "@lingui/core";
 import { Plural, Trans } from "@lingui/macro";
-import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
-
 import { route } from "preact-router";
+
+import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
 
 import Copy from "../components/copy";
 import { useListVouchers } from "../piraniaQueries";

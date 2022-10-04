@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/macro";
-
 import { route } from "preact-router";
 
 import Loading from "components/loading";

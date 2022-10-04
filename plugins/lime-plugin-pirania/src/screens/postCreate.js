@@ -1,6 +1,5 @@
 import { i18n } from "@lingui/core";
 import { Plural, Trans } from "@lingui/macro";
-
 import { route } from "preact-router";
 
 import Copy from "../components/copy";

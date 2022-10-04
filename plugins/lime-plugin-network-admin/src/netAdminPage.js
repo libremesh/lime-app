@@ -1,5 +1,4 @@
 import { Trans, t } from "@lingui/macro";
-
 import { useState } from "preact/hooks";
 
 import Loading from "components/loading";

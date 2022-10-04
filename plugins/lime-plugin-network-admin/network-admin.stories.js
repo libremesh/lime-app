@@ -6,15 +6,12 @@ const submitSharedPassword = action("setSharedPassword");
 
 export default {
     title: "Containers/Network Configuration screen",
-}
+};
 
 export const ChangeSharedPassword = (args) => (
-    <NetAdmin
-        submitSharedPassword={submitSharedPassword}
-        {...args}
-    />
-)
+    <NetAdmin submitSharedPassword={submitSharedPassword} {...args} />
+);
 ChangeSharedPassword.args = {
     submitting: false,
     success: false,
-}
+};

@@ -1,5 +1,3 @@
-
-
 import style from "./style.less";
 
 export const List = ({ children }) => <div class={style.list}>{children}</div>;

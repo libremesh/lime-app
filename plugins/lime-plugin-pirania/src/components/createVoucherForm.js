@@ -13,7 +13,12 @@ import switchStyle from "components/switch";
 const minDate = new Date().toISOString().substring(0, 10);
 
 const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        watch,
+    } = useForm({
         defaultValues: {
             duration_m: 1,
             qty: 1,

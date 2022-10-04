@@ -11,16 +11,7 @@ export default {
     component: ChangeNode,
 };
 
-export const changeNodeScreen = (args) => (
-    <ChangeNode
-        {...actions}
-        {...args}
-    />
-);
+export const changeNodeScreen = (args) => <ChangeNode {...actions} {...args} />;
 changeNodeScreen.args = {
-    stations: [
-        "ql-anaymarcos",
-        "ql-graciela",
-        "ql-czuk-bbone",
-    ],
-}
+    stations: ["ql-anaymarcos", "ql-graciela", "ql-czuk-bbone"],
+};

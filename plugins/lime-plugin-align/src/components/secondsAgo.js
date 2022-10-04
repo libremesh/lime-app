@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/macro";
-
 import { useEffect, useState } from "preact/hooks";
 import { useInterval } from "react-use";
 

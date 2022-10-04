@@ -1,4 +1,3 @@
-
 import { useState } from "preact/hooks";
 
 import { Loading } from "components/loading";

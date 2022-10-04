@@ -1,6 +1,5 @@
 import { Trans } from "@lingui/macro";
 
-
 import Loading from "components/loading";
 
 import { useCheckInternet } from "utils/queries";

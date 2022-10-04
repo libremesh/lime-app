@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/preact";
-
 import { route } from "preact-router";
 import waitForExpect from "wait-for-expect";
 

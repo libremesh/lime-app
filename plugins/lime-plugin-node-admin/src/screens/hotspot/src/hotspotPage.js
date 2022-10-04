@@ -169,8 +169,13 @@ const HotspotPage_ = ({
 
 const HotspotPage = () => {
     const { data: hotspotData, isLoading, refetch } = useHotspotData();
-    const { mutate: toggle, error: submitError, isError, isLoading: isSubmitting, isSuccess, }
-    = useToggleHotspot();
+    const {
+        mutate: toggle,
+        error: submitError,
+        isError,
+        isLoading: isSubmitting,
+        isSuccess,
+    } = useToggleHotspot();
     const waitingRadioReset = hotspotData?.waitingForRadioReset;
 
     useEffect(() => {

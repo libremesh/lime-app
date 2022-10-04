@@ -64,12 +64,7 @@ export default {
     component: Page,
 };
 
-export const withData = (args) => (
-    <Page
-        {...actions}
-        {...args}
-    />
-);
+export const withData = (args) => <Page {...actions} {...args} />;
 withData.args = {
     nodeData,
     isLoading: false,
@@ -81,36 +76,20 @@ withData.args = {
     ],
 };
 
-export const loadingNodeData = (args) => (
-    <Page
-        {...actions}
-        {...args}
-    />
-);
+export const loadingNodeData = (args) => <Page {...actions} {...args} />;
 loadingNodeData.args = {
     nodeData,
     isLoading: true,
-}
+};
 
-
-export const newVersionIsAvailable = (args) => (
-    <Page
-        {...actions}
-        {...args}
-    />
-);
+export const newVersionIsAvailable = (args) => <Page {...actions} {...args} />;
 newVersionIsAvailable.args = {
     nodeData,
     isLoading: false,
     queries: [[["eupgrade", "is_new_version_available"], newVersionAvailable]],
 };
 
-export const needToConfirmUpgrade = (args) => (
-    <Page
-        {...actions}
-        {...args}
-    />
-);
+export const needToConfirmUpgrade = (args) => <Page {...actions} {...args} />;
 needToConfirmUpgrade.args = {
     nodeData: { ...nodeData, uptime: "60\n" },
     isLoading: false,
@@ -124,12 +103,7 @@ needToConfirmUpgrade.args = {
     ],
 };
 
-export const changesNeedReboot = (args) => (
-    <Page
-        {...actions}
-        {...args}
-    />
-);
+export const changesNeedReboot = (args) => <Page {...actions} {...args} />;
 changesNeedReboot.args = {
     nodeData: { ...nodeData, uptime: "60\n" },
     isLoading: false,

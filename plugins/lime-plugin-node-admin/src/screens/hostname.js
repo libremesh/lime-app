@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/macro";
-
 import { useEffect } from "preact/hooks";
 import { useForm } from "react-hook-form";
 
@@ -13,9 +12,19 @@ import { useChangeHostname } from "../nodeAdminQueries";
 
 const HostnamePage = () => {
     const { data: boardData, isLoading } = useBoardData();
-    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
-    const { mutate: changeHostname, isLoading: isSubmitting, isSuccess, isError, } =
-        useChangeHostname();
+    const {
+        register,
+        handleSubmit,
+        reset,
+        setValue,
+        formState: { errors },
+    } = useForm();
+    const {
+        mutate: changeHostname,
+        isLoading: isSubmitting,
+        isSuccess,
+        isError,
+    } = useChangeHostname();
 
     useEffect(() => {
         reset({ hostname: boardData && boardData.hostname });
@@ -42,7 +51,7 @@ const HostnamePage = () => {
                     type="text"
                     name="hostname"
                     id="hostname"
-                    {...register("hostname",{
+                    {...register("hostname", {
                         required: true,
                         validate: {
                             validHostname: (v) => isValidHostname(v, true),

@@ -1,7 +1,8 @@
 import { Trans } from "@lingui/macro";
-import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
 import { Fragment } from "preact";
 import { useForm } from "react-hook-form";
+
+import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
 
 import {
     MaxLengthErrorMsg,
@@ -13,7 +14,11 @@ import Loading from "components/loading";
 import { useListVouchers, useRename } from "../piraniaQueries";
 
 const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
         defaultValues: { name },
     });
     return (
@@ -54,8 +59,12 @@ const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
 };
 
 const EditVoucher = ({ id }) => {
-    const { mutate: renameVoucher, isLoading: isSubmitting, isSuccess, isError, } =
-        useRename();
+    const {
+        mutate: renameVoucher,
+        isLoading: isSubmitting,
+        isSuccess,
+        isError,
+    } = useRename();
     const { data: vouchers, isLoading } = useListVouchers();
     const voucher = vouchers && vouchers.filter((v) => v.id === id)[0];
 

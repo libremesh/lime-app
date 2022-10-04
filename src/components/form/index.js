@@ -1,6 +1,5 @@
 import { Trans } from "@lingui/macro";
 
-
 export const ErrorMsg = ({ children }) => (
     <p style={{ color: "#923838" }}>{children}</p>
 );

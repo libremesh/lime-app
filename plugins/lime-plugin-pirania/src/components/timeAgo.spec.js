@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom";
 import { screen } from "@testing-library/preact";
-
 import * as timeago from "timeago.js";
 
 import { render } from "utils/test_utils";

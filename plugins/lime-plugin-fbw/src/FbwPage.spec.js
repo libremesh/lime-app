@@ -2,7 +2,6 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/preact";
 import { enableFetchMocks } from "jest-fetch-mock";
 
-
 import { AppContextProvider } from "utils/app.context";
 import { flushPromises, render } from "utils/test_utils";
 

@@ -125,27 +125,17 @@ export default {
     component: Metrics,
 };
 
-export const fullPath = (args) => (
-    <Metrics
-        {...actions}
-        {...args}
-    />
-);
+export const fullPath = (args) => <Metrics {...actions} {...args} />;
 fullPath.args = {
     metrics: metricState,
     node: nodeState,
-}
+};
 
-export const runningMetrics = (args) => (
-    <Metrics
-        {...actions}
-        {...args}
-    />
-);
+export const runningMetrics = (args) => <Metrics {...actions} {...args} />;
 runningMetrics.args = {
     metrics: metricsInProcess,
     node: nodeState,
-}
+};
 
 export const metricsBox = (args) => (
     <Box
@@ -158,17 +148,13 @@ export const metricsBox = (args) => (
 );
 metricsBox.args = {
     settings: communitySettings,
-}
+};
 
 export const metricsBoxLoading = (args) => (
-    <Box
-        click={action("box click")}
-        gateway={false}
-        {...args}
-    />
+    <Box click={action("box click")} gateway={false} {...args} />
 );
 metricsBoxLoading.args = {
     station: metricsInProcess.metrics[1],
     loading: true,
     settings: communitySettings,
-}
+};

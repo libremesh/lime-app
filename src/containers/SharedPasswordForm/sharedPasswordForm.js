@@ -1,6 +1,5 @@
 import { Trans } from "@lingui/macro";
 
-
 function passwordHasLength(password) {
     // Check there is at least 10 characters in the string
     return password.match("^(?=.{10,}$).*$");

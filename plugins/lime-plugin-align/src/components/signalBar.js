@@ -1,4 +1,3 @@
-
 import { useEffect } from "preact/hooks";
 import colorScale from "simple-color-scale";
 

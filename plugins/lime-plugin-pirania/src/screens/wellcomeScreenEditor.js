@@ -1,7 +1,8 @@
 import { Trans } from "@lingui/macro";
-import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
 import { Fragment } from "preact";
 import { useForm } from "react-hook-form";
+
+import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
 
 import {
     MaxLengthErrorMsg,
@@ -26,7 +27,11 @@ const WellcomeScreenEditorForm = ({
     onSubmit,
     isSubmitting,
 }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
         defaultValues: { background_color: "#ffffff", ...content },
     });
     return (
@@ -58,7 +63,10 @@ const WellcomeScreenEditorForm = ({
                     name="main_text"
                     class="w-100"
                     style={{ minHeight: "9em" }}
-                    {...register("main_text", { required: true, maxLength: 500 })}
+                    {...register("main_text", {
+                        required: true,
+                        maxLength: 500,
+                    })}
                 />
                 {errors.main_text?.type === "required" && <RequiredErrorMsg />}
                 {errors.main_text?.type === "maxLength" && (
@@ -133,7 +141,9 @@ const WellcomeScreenEditorForm = ({
                     type="text"
                     id="link_url"
                     class="w-100"
-                    {...register("link_url", { pattern: /^(http:\/\/|https:\/\/).*$/ })}
+                    {...register("link_url", {
+                        pattern: /^(http:\/\/|https:\/\/).*$/,
+                    })}
                 />
                 {errors.link_url?.type === "pattern" && (
                     <p style={{ color: "#923838" }}>
@@ -162,9 +172,14 @@ const WellcomeScreenEditorForm = ({
 export const WellcomeScreenEditor = () => {
     const { data: content, isLoading } = usePortalContent();
     // const { mutate: setPortalContent, setPortalStatus } = useSetPortalContent();
-    const { mutate: setPortalContent, isLoading: isSubmitting, isSuccess, isError, } = useSetPortalContent();
+    const {
+        mutate: setPortalContent,
+        isLoading: isSubmitting,
+        isSuccess,
+        isError,
+    } = useSetPortalContent();
     const { data: logoCompressed } = useLogoCompression();
-    const { mutate: createCompression, isLoading: isCompressing, } =
+    const { mutate: createCompression, isLoading: isCompressing } =
         useCreateCompression();
 
     // const { isLoading: isSubmitting, isSuccess, isError } = setPortalStatus;

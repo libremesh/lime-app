@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom";
 import { act, cleanup, fireEvent, screen } from "@testing-library/preact";
 
-
 import { getBatHost, getCommunitySettings } from "utils/api";
 import { DEFAULT_COMMUNITY_SETTINGS } from "utils/constants";
 import queryCache from "utils/queryCache";

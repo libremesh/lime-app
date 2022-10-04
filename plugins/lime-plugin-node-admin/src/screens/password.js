@@ -12,7 +12,12 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
     const {
         node_ap: { password, has_password },
     } = wifiData;
-    const { register, handleSubmit, formState: { errors }, watch } = useForm({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        watch,
+    } = useForm({
         defaultValues: { password, enablePassword: has_password },
     });
     const enablePassword = watch("enablePassword");
@@ -78,8 +83,12 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
 
 const APPasswordPage = () => {
     const { data: wifiData, isLoading } = useAdminWifiData();
-    const 
-        { mutate: changeApNamePassword, isLoading: isSubmitting, isSuccess, isError, } = useChangeAPPassword();
+    const {
+        mutate: changeApNamePassword,
+        isLoading: isSubmitting,
+        isSuccess,
+        isError,
+    } = useChangeAPPassword();
     function onSubmit({ password, enablePassword }) {
         return changeApNamePassword({
             password: enablePassword ? password : "",

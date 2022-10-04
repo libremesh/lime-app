@@ -27,9 +27,17 @@ export const Scan = ({ toggleForm, setExpectedHost, setExpectedNetwork }) => {
 
     const { data: payloadData } = useGetNetworks();
 
-    const { mutate: searchNetworks, isLoading: isSubmitting, isError: isSeachNetworkError, } = useSearchNetworks();
+    const {
+        mutate: searchNetworks,
+        isLoading: isSubmitting,
+        isError: isSeachNetworkError,
+    } = useSearchNetworks();
 
-    const { mutate: setNetwork, isLoading: isSetNetworkSubmitting, isError: isSetNetworkError, } = useSetNetwork({
+    const {
+        mutate: setNetwork,
+        isLoading: isSetNetworkSubmitting,
+        isError: isSetNetworkError,
+    } = useSetNetwork({
         onSuccess: () => {
             setExpectedHost(state.hostname);
             setExpectedNetwork(state.community);

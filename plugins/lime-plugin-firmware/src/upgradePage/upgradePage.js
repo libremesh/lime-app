@@ -1,6 +1,5 @@
 import { Trans } from "@lingui/macro";
 import path from "path";
-
 import { useEffect, useState } from "preact/hooks";
 import { useForm } from "react-hook-form";
 
@@ -60,9 +59,9 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
         },
     });
 
-    const { mutate: downloadRelease, isLoading: submittingDownload, } =
+    const { mutate: downloadRelease, isLoading: submittingDownload } =
         useDownloadRelease();
-    const { mutate: upgradeFirmware, isLoading: submittingUpgrade, } =
+    const { mutate: upgradeFirmware, isLoading: submittingUpgrade } =
         useUpgradeFirwmare();
     const filePath = downloadStatus && downloadStatus.fw_path;
     const status = downloadStatus && downloadStatus.download_status;
@@ -137,7 +136,12 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
 export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
     const { data: newVersion } = useNewVersion();
     const [invalidFirmwareError, setinvalidFirmwareError] = useState(false);
-    const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isSubmitting },
+    } = useForm();
     const file = watch("file");
 
     function onUpgrade(data) {
@@ -178,9 +182,7 @@ export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
                     style={{ width: 0 }} // Hide the ugly builtin input
                     id="file"
                     type="file"
-                    {...register(
-                        "file",
-                        {
+                    {...register("file", {
                         required: true,
                         validate: { validExtname: isValidExtname },
                     })}

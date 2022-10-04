@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/macro";
-
 import { useEffect, useState } from "preact/hooks";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";

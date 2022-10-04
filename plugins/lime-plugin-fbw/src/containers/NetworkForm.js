@@ -1,13 +1,13 @@
 import { Trans, t } from "@lingui/macro";
-
 import { useState } from "preact/hooks";
-
-import { isValidHostname, slugify } from "utils/isValidHostname";
 
 import {
     ValidationMessages,
     isValidPassword,
 } from "containers/SharedPasswordForm";
+
+import { isValidHostname, slugify } from "utils/isValidHostname";
+
 import { useCreateNetwork } from "../FbwQueries";
 import "../style.less";
 
@@ -23,16 +23,18 @@ export const NetworkForm = ({
         passwordConfirmation: "",
     });
 
-    const {mutate: createNetwork, isLoading: isSubmitting } = useCreateNetwork({
-        onSuccess: () => {
-            setExpectedHost(state.hostName);
-            setExpectedNetwork(state.communityName);
-            toggleForm("setting")();
-        },
-        onError: () => {
-            toggleForm("create")();
-        },
-    });
+    const { mutate: createNetwork, isLoading: isSubmitting } = useCreateNetwork(
+        {
+            onSuccess: () => {
+                setExpectedHost(state.hostName);
+                setExpectedNetwork(state.communityName);
+                toggleForm("setting")();
+            },
+            onError: () => {
+                toggleForm("create")();
+            },
+        }
+    );
 
     function _changeName(e) {
         const end = e.type === "change";

@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
-import { CommunityPortalConfig } from "plugins/lime-plugin-pirania/nodeAdmin";
-
 import { route } from "preact-router";
+
+import { CommunityPortalConfig } from "plugins/lime-plugin-pirania/nodeAdmin";
 
 import { List } from "components/list";
 

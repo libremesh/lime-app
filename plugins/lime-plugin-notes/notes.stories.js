@@ -12,13 +12,8 @@ export default {
     component: Page,
 };
 
-export const manageNote = (args) => (
-    <Page
-        {...actions}
-        {...args}
-    />
-);
+export const manageNote = (args) => <Page {...actions} {...args} />;
 manageNote.args = {
     notes: "This node works great",
     loading: false,
-}
+};
