@@ -10,8 +10,8 @@ import { Trans } from '@lingui/macro';
 
 const HostnamePage = () => {
     const { data: boardData, isLoading } = useBoardData();
-    const { register, handleSubmit, reset, setValue, errors } = useForm();
-    const [changeHostname, { isLoading: isSubmitting, isSuccess, isError }] = useChangeHostname();
+    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+    const { mutate: changeHostname, isLoading: isSubmitting, isSuccess, isError } = useChangeHostname();
 
     useEffect(() => {
         reset({ hostname: boardData && boardData.hostname });
@@ -28,8 +28,8 @@ const HostnamePage = () => {
         }}>
             <form class="flex-grow-1">
                 <label class="d-none" htmlFor="hostname"><Trans>Node Name</Trans></label>
-                <input type="text" name="hostname" id="hostname"
-                    ref={register({
+                <input type="text" id="hostname"
+                    {...register("hostname",{
                         required: true,
                         validate: { validHostname: (v) => isValidHostname(v, true) }
                     })}

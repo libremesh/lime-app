@@ -16,7 +16,7 @@ import Loading from 'components/loading';
 const WellcomeScreenEditorForm = (
     { content, logoCompressed, isCompressing,
         onLogoFileSelection, onSubmit, isSubmitting }) => {
-    const { register, handleSubmit, errors } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: { background_color: '#ffffff', ...content }
     });
     return (
@@ -24,15 +24,15 @@ const WellcomeScreenEditorForm = (
             <form>
                 <label for="title"><Trans>Title</Trans></label>
                 <span><RequiredMsg /> (<MaxLengthMsg length={100} />)</span>
-                <input type="text" name="title" id="title" class="w-100"
-                    ref={register({ required: true, maxLength: 100 })}
+                <input type="text" id="title" class="w-100"
+                    {...register("title", { required: true, maxLength: 100 })}
                  />
                 {errors.title?.type === 'required' && <RequiredErrorMsg />}
                 {errors.title?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
                 <label for="main_text"><Trans>Main Text</Trans></label>
                 <span><RequiredMsg /> (<MaxLengthMsg length={500} />)</span>
-                <textarea name="main_text" id="main_text" class="w-100" style={{ minHeight: '9em' }}
-                    ref={register({ required: true, maxLength: 500 })}
+                <textarea  id="main_text" class="w-100" style={{ minHeight: '9em' }}
+                    {...register("main_text", { required: true, maxLength: 500 })}
                  />
                 {errors.main_text?.type === 'required' && <RequiredErrorMsg />}
                 {errors.main_text?.type === 'maxLength' && <MaxLengthErrorMsg length={500} />}
@@ -49,24 +49,24 @@ const WellcomeScreenEditorForm = (
                 <input style={{ width: 0 }} // Hide the ugly builtin input
                     accept="image/*"
                     onInput={onLogoFileSelection}
-                    name="logo_file" id="logo_file" type="file" ref={register()} />
+                    id="logo_file" type="file" {...register("logo_file")} />
                 <label for="background_color"><Trans>Background Color</Trans></label>
-                <input type="color" name="background_color" id="background_color"
-                    ref={register({ required: true })}
+                <input type="color"  id="background_color"
+                    {...register("background_color", { required: true })}
                  />
                 {errors.background_color?.type === 'required' && <RequiredErrorMsg />}
                 <h4><Trans>Local services link</Trans></h4>
                 <p><Trans>If your community network has local services, you can point a link to them.</Trans></p>
                 <label for="link_title"><Trans>Link Title</Trans></label>
                 <span><MaxLengthMsg length={100} /></span>
-                <input type="text" name="link_title" id="link_title" class="w-100"
-                    ref={register({ maxLength: 100 })}
+                <input type="text" id="link_title" class="w-100"
+                    {...register("link_title", { maxLength: 100 })}
                  />
                 {errors.link_title?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
                 <label for="link_url"><Trans>Link URL</Trans></label>
                 <span><Trans>It must start with https:// or http://</Trans></span>
-                <input type="text" name="link_url" id="link_url" class="w-100"
-                    ref={register({ pattern: /^(http:\/\/|https:\/\/).*$/ })}
+                <input type="text" id="link_url" class="w-100"
+                    {...register("link_url", { pattern: /^(http:\/\/|https:\/\/).*$/ })}
                  />
                 {errors.link_url?.type === 'pattern' &&
                     <p style={{ color: "#923838" }}><Trans>It must start with https:// or http://</Trans></p>
@@ -90,11 +90,9 @@ const WellcomeScreenEditorForm = (
 
 export const WellcomeScreenEditor = () => {
     const { data: content, isLoading } = usePortalContent();
-    const [setPortalContent, setPortalStatus] = useSetPortalContent();
+    const {mutate: setPortalContent, isLoading: isSubmitting, isSuccess, isError } = useSetPortalContent();
     const { data: logoCompressed } = useLogoCompression();
-    const [createCompression, { isLoading: isCompressing }] = useCreateCompression();
-
-    const { isLoading: isSubmitting, isSuccess, isError } = setPortalStatus;
+    const { mutate: createCompression, isLoading: isCompressing } = useCreateCompression();
 
     const onLogoFileSelection = (e) => {
         return createCompression(e.target.files[0]);

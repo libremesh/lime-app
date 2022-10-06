@@ -8,7 +8,7 @@ import { Trans } from '@lingui/macro';
 
 const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
     const { node_ap: { password, has_password } } = wifiData;
-    const { register, handleSubmit, errors, watch } = useForm({
+    const { register, handleSubmit, formState: { errors }, watch } = useForm({
         defaultValues: { password, enablePassword: has_password }
     });
     const enablePassword = watch("enablePassword");
@@ -22,17 +22,16 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
             <form class="flex-grow-1">
                 <div class={switchStyle.toggles}>
                     <input type="checkbox"
-                        name="enablePassword"
                         id="enablePassword"
-                        ref={register()}
+                        {...register("enablePassword")}
                     />
                     <label htmlFor="enablePassword"><Trans>Enable Password</Trans></label>
                 </div>
                 {enablePassword &&
                     <div>
                         <label htmlFor="password"><Trans>Wifi Password</Trans></label>
-                            <input type="text" name="password" id="password"
-                                ref={register({
+                            <input type="text" id="password"
+                                {...register("password", {
                                     validate: isValidPassword
                                 })}
                                 class="w-100" />
@@ -62,7 +61,7 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
 
 const APPasswordPage = () => {
     const { data: wifiData, isLoading } = useAdminWifiData();
-    const [changeApNamePassword, { isLoading: isSubmitting, isSuccess, isError }] = useChangeAPPassword();
+    const { mutate: changeApNamePassword, isLoading: isSubmitting, isSuccess, isError } = useChangeAPPassword();
     function onSubmit({ password, enablePassword }) {
         return changeApNamePassword({
             password: enablePassword ? password: "",

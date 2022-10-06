@@ -7,7 +7,7 @@ import { ConfigPageLayout } from 'plugins/lime-plugin-node-admin/src/layouts';
 import { useForm } from 'react-hook-form';
 
 const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
-	const { register, handleSubmit, errors } = useForm({
+	const { register, handleSubmit, formState: { errors } } = useForm({
 		defaultValues: { name },
 	});
 	return (
@@ -15,8 +15,8 @@ const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
 			<form class="flex-grow-1">
 				<label for="name"><Trans>Description</Trans></label>
 				<span><MaxLengthMsg length={100} /></span>
-				<textarea id="name" name="name"
-					ref={register({ required: true, maxLength: 100 })} class="w-100"
+				<textarea id="name"
+					{...register("name", { required: true, maxLength: 100 })} class="w-100"
 				/>
 				{errors.name?.type === 'required' && <RequiredErrorMsg />}
 				{errors.name?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
@@ -38,9 +38,9 @@ const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
 };
 
 const EditVoucher = ({ id }) => {
-	const [renameVoucher,
-		{ isLoading: isSubmitting, isSuccess, isError }
-	] = useRename();
+	const
+		{ mutate: renameVoucher, isLoading: isSubmitting, isSuccess, isError }
+	= useRename();
 	const { data: vouchers, isLoading } = useListVouchers();
 	const voucher = vouchers && (
 		vouchers.filter((v) => v.id === id)[0]
