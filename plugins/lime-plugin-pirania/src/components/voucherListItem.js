@@ -1,4 +1,4 @@
-import { h } from "preact";
+
 import { route } from "preact-router";
 import TimeAgo from "./timeAgo";
 import Copy from "./copy";

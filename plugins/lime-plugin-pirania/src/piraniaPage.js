@@ -1,4 +1,4 @@
-import { h } from "preact";
+
 import { useListVouchers } from "./piraniaQueries";
 import { Loading } from "components/loading";
 import VoucherList from "./screens/voucherList";

@@ -1,4 +1,4 @@
-import { h, Fragment } from "preact";
+import { Fragment } from "preact";
 import { Trans } from '@lingui/macro';
 import Loading from "components/loading";
 import { useListVouchers, useRename } from "../piraniaQueries";

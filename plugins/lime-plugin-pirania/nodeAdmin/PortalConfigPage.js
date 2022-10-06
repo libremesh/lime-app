@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { route } from 'preact-router';
 import { useForm } from 'react-hook-form';
 import { usePortalConfig, useSetPortalConfig } from '../src/piraniaQueries';

@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { QueryClientProvider } from '@tanstack/react-query';
 import { render as tlRender } from '@testing-library/preact';
 import queryCache from 'utils/queryCache';

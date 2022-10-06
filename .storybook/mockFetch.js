@@ -1,4 +1,4 @@
-import { h, Component } from 'preact'
+import { Component } from 'preact'
 import fetchMock from 'fetch-mock/esm/client'
 
 class FetchStory extends Component {

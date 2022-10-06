@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { useEffect } from 'preact/hooks';
 import { i18n } from '@lingui/core';
 import { bindActionCreators } from 'redux';

@@ -1,4 +1,4 @@
-import { h, Fragment } from "preact";
+import { Fragment } from "preact";
 import { Trans } from '@lingui/macro';
 
 import { ConfigPageLayout } from 'plugins/lime-plugin-node-admin/src/layouts';

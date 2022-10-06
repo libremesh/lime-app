@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import path from 'path';
 
 import { Trans } from '@lingui/macro';

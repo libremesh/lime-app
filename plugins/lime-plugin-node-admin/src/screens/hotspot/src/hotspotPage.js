@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { useForm } from 'react-hook-form';
 import { useToggleHotspot, useHotspotData } from './hotspotQueries';
 import {

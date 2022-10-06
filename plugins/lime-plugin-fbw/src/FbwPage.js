@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 
 import './style.less';

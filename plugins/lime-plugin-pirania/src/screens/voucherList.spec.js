@@ -1,5 +1,5 @@
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "selectFilterOption", "findExpectedVouchers"] }] */
-import { h } from "preact";
+
 import { fireEvent, screen, act, cleanup } from "@testing-library/preact";
 import { render } from "utils/test_utils";
 import "@testing-library/jest-dom";

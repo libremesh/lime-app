@@ -1,4 +1,4 @@
-import { h } from "preact";
+
 import { Trans, Plural } from '@lingui/macro';
 import { route } from "preact-router";
 import Copy from "../components/copy";

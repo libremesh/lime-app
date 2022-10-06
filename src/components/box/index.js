@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 
 export const Box = ({ title, children }) => (
 	<div style={{ marginBottom: '10px' }}>

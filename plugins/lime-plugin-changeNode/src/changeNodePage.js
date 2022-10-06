@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { useState, useEffect } from 'preact/hooks';
 
 import { connect } from 'react-redux';

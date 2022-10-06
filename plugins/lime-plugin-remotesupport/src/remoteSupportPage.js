@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { route } from 'preact-router';
 import { useSession, useOpenSession, useCloseSession } from './remoteSupportQueries';
 import { useCheckInternet } from 'utils/queries';

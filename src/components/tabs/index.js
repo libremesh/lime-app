@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import style from './style.less';
 
 const Tabs = ({tabs, current, onChange}) => (

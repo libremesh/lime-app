@@ -1,4 +1,3 @@
-import { h } from 'preact';
 
 import AlignPage from './src/alignPage';
 import { render } from 'utils/test_utils';

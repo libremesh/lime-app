@@ -1,4 +1,4 @@
-import { h } from "preact";
+
 import { route } from "preact-router";
 import { Match } from 'preact-router/match';
 import { Trans } from '@lingui/macro';

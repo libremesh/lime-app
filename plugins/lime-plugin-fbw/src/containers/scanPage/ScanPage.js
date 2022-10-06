@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { ScanList } from './ScanList'
 import { SelectForm } from './SelectForm'
 import { useState } from 'preact/hooks';

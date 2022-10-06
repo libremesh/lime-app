@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { useSession } from './remoteSupportQueries';
 import { useEffect, useState } from 'preact/hooks';
 import Loading from 'components/loading';

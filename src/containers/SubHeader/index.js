@@ -1,4 +1,4 @@
-import { h } from "preact";
+
 import { RebootBanner } from '../RebootBanner';
 import { SafeUpgradeCountdown, UpgradeAvailableBanner } from '../../../plugins/lime-plugin-firmware';
 import { useSession, useNeedReboot } from 'utils/queries';

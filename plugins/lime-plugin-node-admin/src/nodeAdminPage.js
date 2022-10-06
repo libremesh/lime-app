@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { Config } from './components/config';
 import { useWifiData } from './nodeAdminQueries';
 import { useHotspotData } from './screens/hotspot/src/hotspotQueries';

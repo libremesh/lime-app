@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 
 import { screen, fireEvent, cleanup, act } from '@testing-library/preact';
 import '@testing-library/jest-dom';

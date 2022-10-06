@@ -1,5 +1,5 @@
 /* eslint-disable react/sort-comp */
-import { h } from "preact";
+
 import { createContext, Component } from 'preact';
 import { useContext } from 'preact/hooks';
 

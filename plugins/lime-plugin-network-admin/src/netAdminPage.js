@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { Trans, t } from '@lingui/macro';
 
 import { useState } from 'preact/hooks';

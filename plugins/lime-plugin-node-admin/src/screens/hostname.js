@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'preact/hooks';
 import { isValidHostname, slugify } from 'utils/isValidHostname';

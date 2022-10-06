@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 
 import colorScale from 'simple-color-scale';
 
