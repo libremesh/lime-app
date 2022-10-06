@@ -94,11 +94,15 @@ msgstr "Author node: {author_node}"
 msgid "Available"
 msgstr "Available"
 
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:34
+msgid "Back"
+msgstr "Back"
+
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:53
 msgid "Background Color"
 msgstr "Background Color"
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:36
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:38
 msgid "Best signal"
 msgstr ""
 
@@ -106,11 +110,16 @@ msgstr ""
 msgid "Calculating network path"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:95
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:139
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:59
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:102
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:23
 #: src/components/banner/index.js:13
 msgid "Cancel"
 msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.js:60
+msgid "Canceling"
+msgstr "Canceling"
 
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:66
 msgid "Cannot connect to the remote support server"
@@ -136,20 +145,28 @@ msgstr ""
 msgid "Change Shared Password"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:95
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:117
+msgid "Channel"
+msgstr "Channel"
+
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:94
 msgid "Checking connection"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:78
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:114
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:89
+msgid "Choose a mesh node to join it's network:"
+msgstr "Choose a mesh node to join it's network:"
+
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:85
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:69
 msgid "Choose a name for this node"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:68
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:75
 msgid "Choose a name for your network"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:70
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:77
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:40
 msgid "Choose a shared password for network administration"
 msgstr ""
@@ -185,7 +202,7 @@ msgstr "Community Portal"
 msgid "Community Roaming AP"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:69
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:76
 msgid "Community name"
 msgstr ""
 
@@ -193,7 +210,7 @@ msgstr ""
 msgid "Configure your network"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:67
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:74
 msgid "Configure your new community network"
 msgstr ""
 
@@ -201,7 +218,7 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:108
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:107
 msgid "Congratulations"
 msgstr ""
 
@@ -215,6 +232,10 @@ msgstr "Connect to a Mobile Hotspot"
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:69
 msgid "Connected"
 msgstr "Connected"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:46
+msgid "Connection attempt not yet started"
+msgstr "Connection attempt not yet started"
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:38
 msgid "Connection to the cellphone"
@@ -237,7 +258,8 @@ msgstr ""
 msgid "Create Voucher"
 msgstr "Create Voucher"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:87
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:47
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:94
 msgid "Create network"
 msgstr ""
 
@@ -285,6 +307,7 @@ msgid "Disabled"
 msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradeAvailable.js:65
+#: src/components/banner/banner_with_options.js:23
 #: src/components/banner/index.js:18
 msgid "Don't show this message again"
 msgstr ""
@@ -352,6 +375,38 @@ msgstr "Encryption: {encryptionMethod}"
 msgid "Error"
 msgstr ""
 
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:59
+msgid "Error destination network is not configured yet"
+msgstr "Error destination network is not configured yet"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:63
+msgid "Error downloading lime assets"
+msgstr "Error downloading lime assets"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:55
+msgid "Error downloading lime community"
+msgstr "Error downloading lime community"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:145
+msgid "Error getting scan results"
+msgstr "Error getting scan results"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:38
+msgid "Error reaching hostname!"
+msgstr "Error reaching hostname!"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:144
+msgid "Error scanning networks"
+msgstr "Error scanning networks"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:92
+msgid "Error setting network"
+msgstr "Error setting network"
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.js:59
+msgid "Error stopping scan"
+msgstr "Error stopping scan"
+
 #: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.js:26
 msgid "Error: Not Saved"
 msgstr ""
@@ -374,7 +429,8 @@ msgstr "Expired <0/>"
 msgid "Expires <0/>"
 msgstr "Expires <0/>"
 
-#: plugins/lime-plugin-align/src/alignPage.js:30
+#: plugins/lime-plugin-align/src/alignPage.js:32
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:74
 #: plugins/lime-plugin-rx/src/rxPage.js:79
 msgid "Fetching name"
 msgstr ""
@@ -428,18 +484,25 @@ msgstr ""
 msgid "Hide Console"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:79
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:115
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:86
 msgid "Host name"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:48
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:49
 msgid "I don't know the shared password"
 msgstr ""
 
 #: plugins/lime-plugin-rx/src/rxPage.js:124
 msgid "IP Addresses"
 msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:54
+msgid "If network has been already created, look it up to join"
+msgstr "If network has been already created, look it up to join"
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:48
+msgid "If this is your network first node, you can create a new network"
+msgstr "If this is your network first node, you can create a new network"
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:19
 msgid "If you invalidate this voucher no one will be able to use it anymore. This cannot be reverted."
@@ -485,12 +548,12 @@ msgstr ""
 msgid "It must start with https:// or http://"
 msgstr "It must start with https:// or http://"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:108
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:66
 msgid "Join the mesh"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:43
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:90
+#: plugins/lime-plugin-align/src/alignPage.js:45
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:92
 msgid "Last packet"
 msgstr ""
 
@@ -514,11 +577,11 @@ msgstr ""
 msgid "Local services link"
 msgstr "Local services link"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:55
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:56
 msgid "Logging in"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:46
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:47
 msgid "Login"
 msgstr ""
 
@@ -562,9 +625,9 @@ msgstr ""
 msgid "Most Active"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:150
-msgid "Must select a network and a valid hostname"
-msgstr ""
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:93
+msgid "Must select a valid hostname"
+msgstr "Must select a valid hostname"
 
 #: plugins/lime-plugin-network-admin/src/netAdminMenu.js:6
 msgid "Network Configuration"
@@ -574,13 +637,13 @@ msgstr ""
 msgid "Network Name: {ssid}"
 msgstr "Network Name: {ssid}"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:106
-msgid "No network found, try realigning your node and rescanning."
-msgstr ""
-
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:23
 msgid "No password"
 msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:126
+msgid "No scan result"
+msgstr "No scan result"
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:29
 #: src/containers/RebootPage/RebootPage.js:31
@@ -620,11 +683,11 @@ msgstr "Number of vouchers"
 msgid "Ok"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:38
+#: plugins/lime-plugin-align/src/alignPage.js:40
 msgid "On its radio {radioNumber}"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:85
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:87
 msgid "On its radio {toRadio}"
 msgstr ""
 
@@ -641,6 +704,10 @@ msgstr ""
 msgid "Or choose a firmware image from your device"
 msgstr ""
 
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:60
+msgid "Or if this node is already configured, you can skip this step"
+msgstr "Or if this node is already configured, you can skip this step"
+
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:172
 msgid "Or upgrade to latest release"
 msgstr ""
@@ -649,7 +716,7 @@ msgstr ""
 msgid "Packet loss"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:71
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:78
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:41
 msgid "Password"
 msgstr ""
@@ -661,10 +728,6 @@ msgstr "Password: {password}"
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:51
 msgid "Permanent"
 msgstr "Permanent"
-
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:30
-msgid "Please configure your network"
-msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:154
 msgid "Please select a .sh or .bin file"
@@ -691,20 +754,20 @@ msgstr ""
 msgid "Please wait while the device reboots, and reload the app"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:86
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:85
 msgid "Please wait {time} seconds"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:101
+#: plugins/lime-plugin-align/src/alignPage.js:103
 msgid "Radio {radioNumber}"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:74
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:81
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:46
 msgid "Re-enter Password"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:73
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:80
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:45
 msgid "Re-enter the shared password"
 msgstr ""
@@ -721,7 +784,7 @@ msgstr ""
 msgid "Reload"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:112
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:111
 msgid "Reload page"
 msgstr ""
 
@@ -733,7 +796,7 @@ msgstr ""
 msgid "Required"
 msgstr "Required"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:132
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:12
 msgid "Rescan"
 msgstr ""
 
@@ -771,13 +834,17 @@ msgstr ""
 msgid "Scan for existing networks"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:151
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:146
 msgid "Scanning for existing networks"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/voucherList.js:47
 msgid "Search by"
 msgstr "Search by"
+
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:53
+msgid "Search network"
+msgstr "Search network"
 
 #: plugins/lime-plugin-metrics/src/metricsPage.js:96
 msgid "Searching gateway"
@@ -787,9 +854,9 @@ msgstr ""
 msgid "See More"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:109
-msgid "Select a network to join"
-msgstr ""
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:126
+msgid "Select"
+msgstr "Select"
 
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:56
 msgid "Select another node and use the LimeApp as you were there"
@@ -804,15 +871,15 @@ msgstr ""
 msgid "Select new node"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:111
-msgid "Select one"
-msgstr ""
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:67
+msgid "Selected network to join"
+msgstr "Selected network to join"
 
-#: plugins/lime-plugin-fbw/src/containers/Scan.js:124
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:77
 msgid "Set network"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:83
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:82
 msgid "Setting network"
 msgstr ""
 
@@ -836,7 +903,7 @@ msgstr ""
 msgid "Share your mobile connection by connecting the node to a mobile hotspost"
 msgstr "Share your mobile connection by connecting the node to a mobile hotspost"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:40
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:41
 msgid "Shared Password"
 msgstr ""
 
@@ -849,8 +916,8 @@ msgstr ""
 msgid "Show Console"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:42
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:56
+#: plugins/lime-plugin-align/src/alignPage.js:44
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:58
 msgid "Signal lost"
 msgstr ""
 
@@ -878,7 +945,7 @@ msgstr ""
 msgid "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 msgstr "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 
-#: plugins/lime-plugin-align/src/alignPage.js:116
+#: plugins/lime-plugin-align/src/alignPage.js:118
 msgid "The are not mesh interfaces available"
 msgstr ""
 
@@ -906,7 +973,7 @@ msgstr ""
 msgid "The password should have:"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:76
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:83
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:50
 msgid "The passwords do not match!"
 msgstr ""
@@ -919,7 +986,7 @@ msgstr "The radio needs to be restarted..."
 msgid "The selected image is not valid for the target device"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:50
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:51
 msgid "The shared password has been chosen by the community when the network was created. You can ask other community members for it."
 msgstr ""
 
@@ -939,7 +1006,7 @@ msgstr ""
 msgid "There's no open session for remote support. Click at Create Session to begin one"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:77
+#: plugins/lime-plugin-align/src/alignPage.js:79
 msgid "These are the nodes associated on this radio"
 msgstr ""
 
@@ -959,7 +1026,7 @@ msgstr "This field is required"
 msgid "This node is the gateway"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:82
+#: plugins/lime-plugin-align/src/alignPage.js:84
 msgid "This radio is not associated with other nodes"
 msgstr ""
 
@@ -986,6 +1053,10 @@ msgstr ""
 #: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:12
 msgid "Try reloading the app"
 msgstr ""
+
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:92
+msgid "Unknown error"
+msgstr "Unknown error"
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:157
 msgid "Upgrade"
@@ -1045,6 +1116,10 @@ msgstr "Voucher list"
 msgid "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 msgstr "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:44
+msgid "Welcome to LimeApp"
+msgstr "Welcome to LimeApp"
+
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:110
 msgid "Wellcome Screen"
 msgstr "Wellcome Screen"
@@ -1059,7 +1134,7 @@ msgstr ""
 msgid "Wifi Password"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:83
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:85
 msgid "With radio {fromRadio} alignin with"
 msgstr ""
 
@@ -1067,7 +1142,7 @@ msgstr ""
 msgid "With this second cell phone create an access point or hotspot with this data:"
 msgstr "With this second cell phone create an access point or hotspot with this data:"
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:43
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:44
 msgid "Wrong password, try again"
 msgstr ""
 
@@ -1076,11 +1151,11 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:98
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:97
 msgid "You are connected to another node in the network, try connecting to"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:111
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:110
 msgid "You are now part of"
 msgstr ""
 
@@ -1100,25 +1175,21 @@ msgstr ""
 msgid "You don't go through any paths to get here."
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:110
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:109
 msgid "You have successfuly connected to"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:39
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:40
 msgid "You need to know the shared password to enter this page"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:99
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:98
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr ""
 
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:46
 msgid "Your node has no internet connection"
 msgstr "Your node has no internet connection"
-
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:31
-msgid "Your router has not yet been configured, you can use our wizard to incorporate it into an existing network or create a new one. If you ignore this message it will continue to work with the default configuration."
-msgstr ""
 
 #: plugins/lime-plugin-locate/src/locatePage.js:185
 msgid "cancel"

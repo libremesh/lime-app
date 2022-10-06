@@ -4,7 +4,6 @@ import { useEffect, useState } from 'preact/hooks';
 import { useBatHost } from 'utils/queries';
 import { useAssocList, useMeshIfaces } from './alignQueries';
 import { ifaceToRadioNumber } from './utils';
-import { SignalBar } from './components/signalBar';
 import { SecondsAgo } from './components/secondsAgo';
 import { Trans } from '@lingui/macro';
 
@@ -13,6 +12,9 @@ import { List, ListItem } from 'components/list';
 import Tabs from 'components/tabs';
 import style from './style.less';
 import { route } from 'preact-router';
+
+import { SignalBar } from 'components/signalbar';
+import signalStyle from 'components/signalbar/style.less';
 
 export const AssocRow = ({station, iface}) => {
 	const { data: bathost, isLoading, isError } = useBatHost(station.mac, iface);
@@ -45,17 +47,17 @@ export const AssocRow = ({station, iface}) => {
 				)}
 			</div>
 			{station.inactive >= 3000 ? (
-				<div class={style.signal}>
+				<div class={signalStyle.signal}>
 					X
-					<SignalBar signal={null} className={style.bar} />
+					<SignalBar signal={null} className={signalStyle.bar} />
 				</div>
 			): (
-				<div class={style.signal}>
+				<div class={signalStyle.signal}>
 					<div class="d-flex flex-grow-1 align-items-baseline">
 						<div>{ station.signal }</div>
 						<div class={style.unit}>dBm</div>
 					</div>
-					<SignalBar signal={station.signal} className={style.bar} />
+					<SignalBar signal={station.signal} className={signalStyle.bar} />
 				</div>
 			)}
 		</ListItem>

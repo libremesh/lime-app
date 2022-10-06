@@ -144,11 +144,13 @@ Once we have the component tests we can get into the component implementation it
 
 > Tip: Using `it.skip(...)` we can mark the tests so that they are not executed, and gradually unmark from the simplest to the most complex, as we advance in the implementation.
 
+> Tip: be careful if you are using the `render()` function from `utils/test_utils`, it include the `ReactQueryCacheProvider`, which have to be clear `afterEach` test in order to reset the query cache. See the example above. 
 
 To run the tests we do:
 ```
 npm run test plugins/lime-plugin-remotesupport/remoteSupport.spec.js
 ```
+
 
 #### API endpoints tests
 After having created the tests of the component, surely we already have more confidence in what data and what actions each one of the API endpoints should perform. We can discuss the API with whoever developed the `backend` and settle it down on the tests.

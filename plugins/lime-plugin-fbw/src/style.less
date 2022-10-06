@@ -1,3 +1,30 @@
 button:disabled {
     opacity: 0.3;
 }
+
+.fetchingName {
+	font-size: 2rem;
+}
+
+.itemHidden{
+	overflow: hidden;
+	max-height: 0;
+	transition: all linear 0.5s;
+}
+  
+.itemActive {
+	max-height: 100px;
+	transition: all linear 0.5s 0.3s;
+	font-size: 0.9em;
+}
+
+.netItemRight {
+	margin-left: auto;
+	margin-bottom: auto;
+}
+
+.netItemRight > button {
+	margin-top: auto;
+	margin-right: 15px;
+	padding: 0 20px;
+}

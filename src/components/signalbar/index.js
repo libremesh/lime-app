@@ -9,9 +9,9 @@ export const SignalBar = ({signal, className }) => {
 	useEffect(() => {
 		colorScale.setConfig({
 			outputStart: 1,
-			outputEnd: Number(communitySettings.bad_signal) * -1,
-			inputStart: Number(communitySettings.good_signal) * -1,
-			inputEnd: Number(communitySettings.bad_signal) * -1 + 10
+			outputEnd: Number(communitySettings?.bad_signal) * -1,
+			inputStart: Number(communitySettings?.good_signal) * -1,
+			inputEnd: Number(communitySettings?.bad_signal) * -1 + 10
 		});
 	}, [communitySettings])
 

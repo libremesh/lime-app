@@ -8,10 +8,13 @@ import { useFbwStatus } from '../../plugins/lime-plugin-fbw/src/FbwQueries';
 import { FbwBanner } from '../../plugins/lime-plugin-fbw/src/containers/FbwBanner';
 
 export const Route = ({ path, children, ...childrenProps}) => {
-	const { data: fbwStatus } = useFbwStatus();
+	const { data: fbwStatus } = useFbwStatus({
+		initialData: {lock: false},
+		initialStale: true
+	});
 	const { fbwCanceled } = useAppContext();
 	const childrenWithProps = cloneElement(children, { ...childrenProps});
-	if (fbwStatus.lock && !fbwCanceled && path !== 'firmware' && path !== 'releaseInfo' && path !=='firstbootwizard') {
+	if (fbwStatus.lock && !fbwCanceled && path !== 'firmware' && path !== 'releaseInfo' && !path.startsWith('firstbootwizard')) {
 		return <FbwBanner />
 	}
 

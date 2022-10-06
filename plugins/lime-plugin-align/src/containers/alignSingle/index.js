@@ -4,11 +4,13 @@ import { route } from "preact-router";
 import { Trans } from '@lingui/macro';
 import { useAssocList } from "../../alignQueries";
 import { ifaceToRadioNumber } from "../../utils";
-import { SignalBar } from "../../components/signalBar";
 import { SecondsAgo } from "../../components/secondsAgo";
 import { SignalSpeech } from "../../components/signalSpeech";
 import Loading from 'components/loading';
 import style from './style.less';
+
+import { SignalBar } from 'components/signalbar';
+import signalStyle from 'components/signalbar/style.less';
 
 function getStation(assoclist, mac) {
 	const station = assoclist.filter(sta => sta.mac === mac);
@@ -48,15 +50,15 @@ const SignalBox = ({signal}) => (
 		<div class="d-flex flex-column">
 			<div class="d-flex">
 				{signal &&
-					<div class={style.signal}>
+					<div class={signalStyle.signal}>
 						{signal}
-						<span class={style.unit}>dBm</span>
+						<span class={signalStyle.unit}>dBm</span>
 					</div>
 				}
 				{!signal && <div class={style.notAssociated}><Trans>Signal lost</Trans></div>}
 				{signal && <SignalSpeech signal={signal} className={style.speech} />}
 			</div>
-			<SignalBar signal={signal} className={style.bar} />
+			<SignalBar signal={signal} className={signalStyle.bar} />
 		</div>
 	</div>
 );
