@@ -6,7 +6,7 @@ import { useInvalidate } from '../piraniaQueries';
 import Loading from 'components/loading';
 
 const InvalidateVoucher = ({id}) => {
-	const [invalidate, { isLoading }] = useInvalidate();
+	const { mutate: invalidate, isLoading } = useInvalidate();
 
 	const onInvalidate = () => {
 		return invalidate(id).then(

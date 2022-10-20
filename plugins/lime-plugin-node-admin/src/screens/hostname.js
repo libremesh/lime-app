@@ -10,7 +10,7 @@ import { Trans } from '@lingui/macro';
 
 const HostnamePage = () => {
     const { data: boardData, isLoading } = useBoardData();
-    const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, setValue, formState: { errors }, getValues } = useForm();
     const { mutate: changeHostname, isLoading: isSubmitting, isSuccess, isError } = useChangeHostname();
 
     useEffect(() => {
@@ -27,19 +27,21 @@ const HostnamePage = () => {
             title: <Trans>Node Name</Trans>
         }}>
             <form class="flex-grow-1">
-                <label class="d-none" htmlFor="hostname"><Trans>Node Name</Trans></label>
+                <label class="d-none" for="hostname"><Trans>Node Name</Trans></label>
                 <input type="text" id="hostname"
                     {...register("hostname",{
                         required: true,
-                        validate: { validHostname: (v) => isValidHostname(v, true) }
+                        validate: {
+                            validHostname: (v) => isValidHostname(v, true),
+                        },
                     })}
                     onChange={(v) => setValue("hostname", slugify(v.target.value.toLowerCase()))}
                     class="w-100" />
-                {errors && errors.hostname &&
+                {errors.hostname && (
                     <p class="text-danger">
                         <Trans>The name should have at least 3 characters</Trans>
                     </p>
-                }
+                )}
             </form>
             <div class="d-flex">
                 <div class="ml-auto">

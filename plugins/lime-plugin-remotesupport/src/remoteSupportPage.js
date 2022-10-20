@@ -11,8 +11,8 @@ const RemoteSupportPage = () => {
 	const {data: session, isLoading: loadingSession, isError} = useSession({
 		refetchInterval: 10000
 	});
-	const [openSession, openStatus] = useOpenSession();
-	const [closeSession, closeStatus] = useCloseSession();
+	const { mutate: openSession, isError: openError, isLoading: openLoading } = useOpenSession();
+	const { mutate: closeSession, isLoading: closeLoading } = useCloseSession();
 
 	function onShowConsole() {
 		route('console');
@@ -33,8 +33,8 @@ const RemoteSupportPage = () => {
 	}
 
 	return <RemoteSupportPage_
-		session={session} openError={openStatus.isError}
-		isSubmitting={openStatus.isLoading || closeStatus.isLoading}
+		session={session} openError={openError}
+		isSubmitting={openLoading || closeLoading}
 		onOpenSession={openSession} onCloseSession={closeSession} onShowConsole={onShowConsole} />;
 };
 

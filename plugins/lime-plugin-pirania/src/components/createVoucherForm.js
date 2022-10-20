@@ -28,7 +28,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
 				{errors.name?.type === 'required' && <RequiredErrorMsg />}
 				{errors.name?.type === 'maxLength' && <MaxLengthErrorMsg length={100} />}
 				<div class={switchStyle.toggles}>
-					<input type="checkbox"  name="permanent"
+					<input type="checkbox"  name="permanent" id="permanent"
 						{...register("permanent")} class="w-100"
 					/>
 					<label for="permanent"><Trans>Is permanent</Trans></label>

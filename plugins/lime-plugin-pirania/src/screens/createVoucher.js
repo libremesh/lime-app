@@ -9,7 +9,7 @@ import { dateToLocalUnixTimestamp } from 'utils/time';
 
 const CreateVoucher = () => {
 	const [createdVouchers, setCreatedVouchers] = useState(null);
-	const [addVoucher, { isLoading: isSubmitting, isSuccess, isError }] = useAddVoucher();
+	const { mutate: addVoucher, isLoading: isSubmitting, isSuccess, isError } = useAddVoucher();
 	const submitVoucher = async (formData) => {
 		let deadline = null;
 
