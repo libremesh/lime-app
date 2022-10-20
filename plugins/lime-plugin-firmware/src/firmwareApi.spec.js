@@ -16,7 +16,7 @@ describe('upgradeInfo', () => {
 			}));
 		let data = await getUpgradeInfo();
 		expect(data.suCounter).toEqual(-1);
-		expect(data.is_upgrade_confirm_supported).toBeTrue();
+		expect(data.is_upgrade_confirm_supported).toBeTruthy();
 		api.call.mockImplementation(async () => (
 			{
 				status: 'ok',

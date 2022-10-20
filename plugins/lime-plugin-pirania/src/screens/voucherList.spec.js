@@ -7,7 +7,7 @@ import waitForExpect from "wait-for-expect";
 import { route } from "preact-router";
 import VoucherList from "./voucherList";
 import { listVouchers } from "../piraniaApi";
-import { getBoardData } from "utils/api";
+import { getBoardData, getSession, getChangesNeedReboot, } from "utils/api";
 import userEvent from "@testing-library/user-event";
 import queryCache from 'utils/queryCache';
 
@@ -138,6 +138,12 @@ describe("voucher list", () => {
 		getBoardData.mockImplementation(async () => ({
 			hostname: 'conteiner'
 		}));
+		getSession.mockImplementation(async () => ({
+			username: "root",
+    }));
+		getChangesNeedReboot.mockImplementation(async () => ({
+			"need-reboot": "no",
+		}));
 	});
 
 	afterEach(() => {
@@ -175,7 +181,7 @@ describe("voucher list", () => {
 		render(<VoucherList />);
 		await findExpectedVouchers(createdInThisNode);
 		const option = await screen.findByRole('option', { name: 'Created in this node' });
-		expect(option.selected).toBeTrue();
+		expect(option.selected).toBeTruthy();
 	});
 
 	it("let you filter by all vouchers", async () => {

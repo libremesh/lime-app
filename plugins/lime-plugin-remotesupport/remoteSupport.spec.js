@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { render } from "utils/test_utils";
 import RemoteSupportPage from './src/remoteSupportPage';
 import { getSession, openSession, closeSession } from './src/remoteSupportApi';
-import { checkInternet } from 'utils/api';
+import { getBoardData, getChangesNeedReboot, getSession as getSessionAccess, checkInternet } from 'utils/api';
 import queryCache from 'utils/queryCache';
 import waitForExpect from 'wait-for-expect';
 import { route } from 'preact-router';
@@ -18,9 +18,15 @@ describe('remote support page', () => {
 	})
 
 	beforeEach(() => {
-		getSession.mockImplementation(async () =>
-			({ rw_ssh: 'ssh -p2222 test_rw_token@test_host', ro_ssh: 'ssh -p2222 test_ro_token@test_host' })
-		);
+		getBoardData.mockImplementation(async () => ({
+			hostname: "node-hostname",
+		}));
+		getChangesNeedReboot.mockImplementation(async () => ({
+				"need-reboot": "no",
+		}));
+		getSessionAccess.mockImplementation(async () => ({
+			username: "root",
+		}));
 		openSession.mockImplementation(async () => null);
 		closeSession.mockImplementation(async () => null);
 		checkInternet.mockImplementation(async () => ({ connected: true }));

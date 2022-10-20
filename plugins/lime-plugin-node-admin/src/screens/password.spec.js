@@ -1,16 +1,18 @@
 
 
 
-import { screen, fireEvent, cleanup, act } from '@testing-library/preact';
+import { screen, fireEvent, cleanup, act, waitFor } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 
 import { render } from 'utils/test_utils';
 import queryCache from 'utils/queryCache';
+import { getChangesNeedReboot, getSession } from "utils/api";
 
 import APPasswordPage from './password';
 import { changeApNamePassword, getAdminApsData } from '../nodeAdminApi';
 
+jest.mock("utils/api");
 jest.mock('../nodeAdminApi');
 
 const withoutPasswordMock = async () => ({
@@ -22,22 +24,23 @@ const withPasswordMock = async () => ({
 });
 
 const findPasswordUsageCheckbox = async () =>
-    screen.findByLabelText("Enable Password");
+    await screen.findByLabelText("Enable Password");
 
 const findPasswordInput = async () =>
-    screen.findByLabelText("Wifi Password");
+    await screen.findByLabelText("Wifi Password");
 
 const findSubmitButton = async () =>
-    screen.findByRole('button', { name: "Save" });
+    await screen.findByRole('button', { name: "Save" });
 
 describe('ap password config', () => {
     beforeEach(() => {
-        // getChangesNeedReboot.mockImplementation(false);
+        getChangesNeedReboot.mockImplementation(async () => false);
+        getSession.mockImplementation(async () => ({
+            username: "root",
+        }));
         getAdminApsData.mockImplementation(withoutPasswordMock);
-        changeApNamePassword.mockClear();
         changeApNamePassword.mockImplementation(async () => null);
     });
-
 
     afterEach(() => {
         cleanup();
@@ -71,22 +74,21 @@ describe('ap password config', () => {
     });
 
     it('shows password input when password usage is switched on', async () => {
+        getAdminApsData.mockImplementation(withPasswordMock);
         render(<APPasswordPage />);
-        fireEvent.click(await findPasswordUsageCheckbox());
-        await waitForExpect(async () => {
-            expect(await findPasswordInput()).toBeVisible();
-        });
+        expect(await findPasswordInput()).toBeVisible();
     });
 
     it('hides password input when password usage is switched off', async () => {
         getAdminApsData.mockImplementation(withPasswordMock);
         render(<APPasswordPage />);
         fireEvent.click(await findPasswordUsageCheckbox());
-        expect(screen.queryByLabelText("Wifi Password")).toBeNull();
+        expect(await findPasswordInput()).toBeNull();
     });
 
 
     it('calls api endpoint for disabling password when switched off', async () => {
+        getChangesNeedReboot.mockImplementation(async () => true);
         render(<APPasswordPage />);
         fireEvent.click(await findSubmitButton());
         await waitForExpect(() => {
