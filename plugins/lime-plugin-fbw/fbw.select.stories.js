@@ -2,13 +2,12 @@
 import { h } from 'preact';
 import { storiesOf } from '@storybook/preact';
 import { action } from '@storybook/addon-actions';
-
-import { SelectAction } from './src/containers/SelectAction';
+import {FbwBanner} from "./src/containers/FbwBanner";
 
 storiesOf('Containers/First boot wizard', module)
-	
+
 	.add('Choose an option', () => (
-		<SelectAction
+		<FbwBanner
 			toggleForm={(data) => () => action('toggleForm')(data)}
 		/>
 	));
