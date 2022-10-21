@@ -117,9 +117,11 @@ const selectFilterOption = async (option) => {
 const findExpectedVouchers = async (expectedVouchers) => {
 	for (let i = 0; i < expectedVouchers.length; i++) {
 		const v = expectedVouchers[i];
-		expect(
-			await screen.findByTestId(`voucher-item-${v.id}`)
-		).toBeInTheDocument();
+        await waitForExpect(async () => {
+            expect(
+                await screen.findByTestId(`voucher-item-${v.id}`)
+            ).toBeInTheDocument();
+        });
 	}
 	const otherVouchers = vouchers.filter(
 		v => expectedVouchers.indexOf(v) === -1
