@@ -80,7 +80,7 @@
     "jest-each": "^24.9.0",
     "leaflet.gridlayer.googlemutant": "0.13.4",
     "preact": "10.5.7",
-    "preact-cli": "3.0.0",
+    "preact-cli": "3.4.1",
     "preact-i18nline": "2.0.0",
     "preact-router": "3.2.1",
     "react-hook-form": "6.9.2",
