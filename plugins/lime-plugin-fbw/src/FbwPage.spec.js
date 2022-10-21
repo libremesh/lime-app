@@ -85,12 +85,12 @@ describe('Fbw Page', () => {
         expect(await screen
             .findByText('You are connected to another node in the network, try connecting to ournetwork/mynode'))
             .toBeInTheDocument();
-    });    
+    });
 })
 
 
 describe('Fbw Join Network Page', () => {
-    
+
     beforeEach(() => {
         render(<AppContextProvider><FbwPage /></AppContextProvider>);
     })
@@ -111,7 +111,7 @@ describe('Fbw Join Network Page', () => {
         await waitForExpect(async () => {
             expect(await screen.findByText('ql-refu-bbone')).toBeInTheDocument();
           });
-        let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))        
+        let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))
         fireEvent.click(
             await tile.findByRole('button', { name: /Select/i })
         )
@@ -120,7 +120,7 @@ describe('Fbw Join Network Page', () => {
             { target: { value: 'mynode' } }
         );
         setNetwork.mockImplementation(async () => setNetworkRes)
-        
+
         fireEvent.click(
             await screen.findByRole('button', { name: /Set network/i })
         )
@@ -136,41 +136,41 @@ describe('Fbw Join Network Page', () => {
     });
 
 
-    it('shows community name for results with successful config download', async () => { 
+    it('shows community name for results with successful config download', async () => {
         await advanceToJoinNetwork()
         await waitForExpect(async () => {
             expect(await screen.findByText('(quintana.libre.org.ar)')).toBeInTheDocument();
         });
     });
 
-    it('shows "Fetching name" when config community file is downloading', async () => {  
+    it('shows "Fetching name" when config community file is downloading', async () => {
         await advanceToJoinNetwork()
         await waitForExpect(async () => {
             expect(await screen.findByText('Fetching name')).toBeInTheDocument();
         });
     });
 
-    it('shows "Connection attempt not yet started" when a network is scanned but the config donwload is not started', async () => {  
+    it('shows "Connection attempt not yet started" when a network is scanned but the config donwload is not started', async () => {
         await advanceToJoinNetwork()
         await waitForExpect(async () => {
             expect(await screen.findByText('Connection attempt not yet started')).toBeInTheDocument();
         });
     });
 
-    it('shows "Error downloading lime community" when config file was not downloaded properly', async () => {  
+    it('shows "Error downloading lime community" when config file was not downloaded properly', async () => {
         await advanceToJoinNetwork()
         await waitForExpect(async () => {
             expect(await screen.findByText('Error downloading lime community')).toBeInTheDocument();
         });
     });
-    it('shows "Error destination network is not configured yet" when destination node is not configured', async () => {  
+    it('shows "Error destination network is not configured yet" when destination node is not configured', async () => {
         await advanceToJoinNetwork()
         await waitForExpect(async () => {
             expect(await screen.findByText('Error destination network is not configured yet')).toBeInTheDocument();
         });
     });
 
-    it('shows "Error downloading lime assets" if error when downloading community assets', async () => {  
+    it('shows "Error downloading lime assets" if error when downloading community assets', async () => {
         await advanceToJoinNetwork()
         await waitForExpect(async () => {
             expect(await screen.findByText('Error downloading lime assets')).toBeInTheDocument();
@@ -207,22 +207,22 @@ describe('Fbw Join Network Page', () => {
         fireEvent.click(
             await screen.findByRole('button', { name: /Cancel/i })
         )
-        expect(await screen.findByText('Configure your network')).toBeInTheDocument();
-        expect(scanStop).toHaveBeenCalled()      
+        expect(await screen.findByText('Welcome to LimeApp')).toBeInTheDocument();
+        expect(scanStop).toHaveBeenCalled()
     })
 
     it('return to select action when cancel is pressed on join network page', async () => {
         scanStop.mockImplementation(async () => scanActionSuccess )
 
         await advanceToJoinNetwork()
-        let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))        
+        let tile = within(await screen.findByTestId('38:AB:C0:C1:D6:70'.replaceAll(":", "_")))
         fireEvent.click(
             await tile.findByRole('button', { name: /Select/i })
         )
         fireEvent.click(
             await screen.findByRole('button', { name: /Cancel/i })
         )
-        expect(await screen.findByText('Configure your network')).toBeInTheDocument();
+        expect(await screen.findByText('Welcome to LimeApp')).toBeInTheDocument();
 
         expect(scanStop).toHaveBeenCalled()
     })
@@ -240,12 +240,12 @@ describe('Fbw Join Network Page', () => {
             await screen.findByRole('button', { name: /Cancel/i })
         )
         expect(await screen.findByText('Error stopping scan')).toBeInTheDocument();
-        expect(scanStop).toHaveBeenCalled()  
+        expect(scanStop).toHaveBeenCalled()
     })
 })
 
 
-const setNetworkRes = JSON.parse(`{ 
+const setNetworkRes = JSON.parse(`{
     "status": "configuring"
 }`)
 
@@ -350,7 +350,7 @@ const allScanCases = JSON.parse(`{
             "bssid": "38:AB:C0:C1:D6:74",
             "channel": 1,
             "signal": -58
-          }, 
+          },
           {
             "status": {"retval": false, "code" : "error_download_lime_assets"},
             "quality": 60,
@@ -360,7 +360,7 @@ const allScanCases = JSON.parse(`{
             "channel": 1,
             "signal": -60
           }
-        
+
     ]
 }`
 )
