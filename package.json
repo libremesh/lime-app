@@ -45,6 +45,7 @@
     "@trivago/prettier-plugin-sort-imports": "^3.3.0",
     "babel-jest": "^29.2.0",
     "babel-plugin-jsx-pragmatic": "^1.0.2",
+    "babel-plugin-macros": "^3.1.0",
     "babel-preset-preact": "^2.0.0",
     "dotenv": "^16.0.2",
     "eslint": "^8.24.0",
@@ -58,6 +59,8 @@
     "gh-pages": "^4.0.0",
     "husky": "^8.0.1",
     "jest": "^27.5.1",
+    "jest-environment-jsdom": "^27.5.1",
+    "jest-extended": "^3.1.0",
     "jest-fetch-mock": "^3.0.3",
     "jest-localstorage-mock": "^2.4.22",
     "jest-preset-preact": "^4.0.5",
@@ -81,7 +84,6 @@
     "preact": "^10.11.0",
     "preact-i18nline": "^2.0.0",
     "preact-router": "^4.1.0",
-    "react": "^18.2.0",
     "react-hook-form": "^7.36.1",
     "react-redux": "^8.0.4",
     "react-router-redux": "^4.0.8",
@@ -99,5 +101,9 @@
   "lint-staged": {
     "*.js": "eslint --fix",
     "*.{js,ts,css,less}": "prettier --write"
+  },
+  "overrides": {
+    "react": "npm:@preact/compat",
+    "react-dom": "npm:@preact/compat"
   }
 }
