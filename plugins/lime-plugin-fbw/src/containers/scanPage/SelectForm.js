@@ -20,7 +20,7 @@ export const SelectForm = ({
 	const [validHostnameError, setValidHostnameError] = useState(false)		// Scan status
 
 
-	const [setNetwork, { isLoading: isSetNetworkSubmitting, isError: isSetNetworkError }] = useSetNetwork({
+	const { mutate: setNetwork, isLoading: isSetNetworkSubmitting, isError: isSetNetworkError } = useSetNetwork({
 		onSuccess: () => {
 			setExpectedHost(selectedNetwork.hostname)
 			setExpectedNetwork(selectedNetwork.community)

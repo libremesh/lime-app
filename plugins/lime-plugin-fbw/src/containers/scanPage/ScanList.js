@@ -20,10 +20,10 @@ export const ScanList = ({
 	const [expandedAps, setExpandedAps] = useState([]) 	// Expand scanned lists
 	const [pollingInterval, setPollingInterval] = useState(null);
 
-	const [scanStart, {isLoading: isStarting, isError: startError }] 
+	const { mutate: scanStart, isLoading: isStarting, isError: startError }
 		= useScanStart({onSuccess: () => setPollingInterval(1000)})
 
-	const [scanRestart, { isLoading: isRestarting, isError: restartError }] 
+	const  { mutate: scanRestart, isLoading: isRestarting, isError: restartError }
 		= useScanRestart({
 			onSuccess: () => {
 				setPollingInterval(1000)
@@ -38,7 +38,7 @@ export const ScanList = ({
 		isLoading: isLoadingScans,
 		refetch: refetchScanResults
 	} = useFbwStatus({
-		enabled: pollingInterval && (!startError && !restartError),
+		enabled: pollingInterval !== null && (!startError && !restartError),
 		refetchInterval: pollingInterval,
 		onSuccess: (data) => {
 			if(data.status === 'scanned') setPollingInterval(null)

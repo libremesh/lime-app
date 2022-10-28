@@ -8,7 +8,7 @@ import { useAppContext } from 'utils/app.context';
 
 export const FbwBanner = ({ toggleForm }) => {
 	const [notShowAgain, setnotShowAgain] = useState(false);
-	const [dismissFbw] = useDismissFbw();
+	const { mutate: dismissFbw } = useDismissFbw();
 	const { cancelFbw } = useAppContext();
 
 	const fbwRoute = 'firstbootwizard'

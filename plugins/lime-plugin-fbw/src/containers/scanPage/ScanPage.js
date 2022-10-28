@@ -25,7 +25,7 @@ export const ScanPage = ({ toggleForm, setExpectedHost, setExpectedNetwork }) =>
         });
     }
 
-    const [scanStop, { isError: stopError, isLoading: stoppingScan }] 
+    const { mutate: scanStop, isError: stopError, isLoading: stoppingScan }
         = useScanStop({
             onSuccess: () => {
                 _cancelSelectedNetwork()
