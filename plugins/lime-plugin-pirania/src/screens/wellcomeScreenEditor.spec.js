@@ -1,5 +1,5 @@
 
-import { fireEvent, act, screen } from '@testing-library/preact';
+import { fireEvent, act, screen, waitFor } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 import { render, flushPromises } from "utils/test_utils";
@@ -18,7 +18,10 @@ const findSubmitButton = async () =>
 
 const selectInputFile = (inputElem) => {
     const file = new File(['(⌐□_□)'], 'our_logo.png');
-    userEvent.upload(inputElem, file)
+    // userEvent.upload(inputElem, file)
+    fireEvent.change(inputElem, {
+		target: { files: [file] },
+	});
     return file;
 }
 
@@ -46,7 +49,7 @@ const fillLinkData = async (url) => {
 };
 
 const fillLogo = async () => {
-    const input = await screen.findByLabelText('Community Logo');
+    const input = await screen.findByLabelText('Select file');
     expect(input).toBeInTheDocument();
     const file = selectInputFile(input);
     return file;
@@ -64,9 +67,11 @@ const defaultContentMock = {
 describe('portal wellcome screen', () => {
     beforeEach(() => {
         getPortalContent.mockImplementation(async () => defaultContentMock);
-        setPortalContent.mockClear();
-        setPortalContent.mockImplementation(async () => { });
-        createCompression.mockImplementation(async () => INPUT_COMPRESSED_BASE64);
+        setPortalContent.mockImplementation(async () => {});
+        createCompression.mockImplementation(async () => {
+            console.log("DENTRO");
+            return INPUT_COMPRESSED_BASE64;
+        });
     });
 
     afterEach(() => {
@@ -95,8 +100,10 @@ describe('portal wellcome screen', () => {
     it('shows an input to change the logo that updates thumbnail', async () => {
         render(<WellcomeScreenEditor />);
         const file = await fillLogo();
-        await waitForExpect(() => {
+        await waitFor(() => {
             expect(createCompression).toBeCalledWith(file);
+        });
+        await waitFor(() => {
             const preview = screen.getByAltText('logo-preview');
             expect(preview.src).toEqual(INPUT_COMPRESSED_BASE64);
         });
@@ -111,7 +118,9 @@ describe('portal wellcome screen', () => {
             }));
         render(<WellcomeScreenEditor />);
         await fillLogo();
-        expect(await screen.findByTestId('loading')).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.queryByTestId('loading')).toBeInTheDocument();
+        })
         expect(await findSubmitButton()).toBeDisabled();
         act(() => {
             jest.advanceTimersByTime(2000);
@@ -155,7 +164,7 @@ describe('portal wellcome screen', () => {
         render(<WellcomeScreenEditor />);
         const button = await findSubmitButton();
         fireEvent.click(button);
-        await waitForExpect(() => {
+        await waitFor(() => {
             expect(setPortalContent).toBeCalledWith(defaultContentMock);
         });
         expect(await screen.findByText('Saved')).toBeInTheDocument();
@@ -166,12 +175,12 @@ describe('portal wellcome screen', () => {
         const title = await fillTitle();
         const mainText = await fillMainText();
         const [linkTitle, linkURL] = await fillLinkData();
-        await fillLogo();
-        await waitForExpect(() => {
+        // await fillLogo();
+        await waitFor(() => {
             expect(screen.getByRole('button', { name: "Save" })).toBeEnabled();
         });
         fireEvent.click(screen.getByRole('button', { name: "Save" }));
-        await waitForExpect(() => {
+        await waitFor(() => {
             expect(setPortalContent).toBeCalledWith(
                 {
                     title,
@@ -192,8 +201,8 @@ describe('portal wellcome screen', () => {
         await fillTitle();
         await fillMainText();
         await fillLinkData();
-        await fillLogo();
-        await waitForExpect(() => {
+        // await fillLogo();
+        await waitFor(() => {
             expect(screen.getByRole('button', { name: "Save" })).toBeEnabled();
         });
         const submitButton = await findSubmitButton();

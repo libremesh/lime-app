@@ -1,6 +1,6 @@
 
-import { fireEvent, cleanup, act, screen } from '@testing-library/preact';
-import { render } from 'utils/test_utils';
+import { fireEvent, cleanup, act, screen, waitFor } from '@testing-library/preact';
+import { render, flushPromises } from 'utils/test_utils';
 import '@testing-library/jest-dom';
 import waitForExpect from 'wait-for-expect';
 
@@ -17,13 +17,12 @@ const secureRollbackText =
 const noSecureRollbackText =
 	/this device does not support secure rollback to previous version if something goes wrong/i;
 
-function flushPromises() {
-	return new Promise(resolve => setImmediate(resolve));
-}
-
 async function stepSelectFile(fileName='test.bin') {
+	const file = new File(["(⌐□_□)"], fileName);
 	const fileInput = await screen.findByLabelText(/select file/i);
-	const file = new File(['(⌐□_□)'], fileName);
+	fireEvent.change(fileInput, {
+		target: { files: [file] },
+	});
 	Object.defineProperty(fileInput, 'files', {
 		value: [file]
 	});
@@ -35,11 +34,11 @@ async function stepSelectFile(fileName='test.bin') {
 
 async function stepSubmit() {
 	const submitButton = await screen.findByRole('button', {name: /upgrade/i});
-	fireEvent.submit(submitButton);
+	fireEvent.click(submitButton);
 }
 
 async function triggerUpgrade() {
-	const file = stepSelectFile();
+	const file = await stepSelectFile();
 	await stepSubmit()
 	return file;
 }
@@ -122,7 +121,7 @@ describe('firmware form', () => {
 	it('calls uploadFile to upload the file', async () => {
 		render(<FirmwarePage />);
 		const file = await triggerUpgrade();
-		await waitForExpect(() => {
+		await waitFor(() => {
 			expect(uploadFile).toBeCalledWith(file);
 		})
 	});
@@ -131,7 +130,7 @@ describe('firmware form', () => {
 		uploadFile.mockImplementation(async () => '/tmp/some/given/path');
 		render(<FirmwarePage />);
 		triggerUpgrade();
-		await waitForExpect(() => {
+		await waitFor(() => {
 			expect(upgradeFirmware).toHaveBeenCalledWith('/tmp/some/given/path');
 		})
 	});
@@ -195,6 +194,9 @@ describe('firmware form', () => {
 	it('calls downdloadRelease when selecting download option', async () => {
 		getNewVersion.mockImplementation(async () => ({
 			version: 'SomeNewVersionName'
+		}));
+		getDownloadStatus.mockImplementation(async () => ({
+			download_status: 'not-initiated'
 		}));
 		render(<FirmwarePage />)
 		downloadRelease.mockImplementation(() =>
@@ -286,7 +288,6 @@ describe('firmware form', () => {
 	})
 });
 
-
 describe('firmware confirm', () => {
 	beforeEach(() => {
 		// Reset default mock implementations
@@ -296,6 +297,7 @@ describe('firmware confirm', () => {
 		})));
 		upgradeConfirm.mockImplementation(jest.fn(async () => true));
 		upgradeRevert.mockImplementation(jest.fn(async () => true));
+		getNewVersion.mockImplementation(async () => ({}))
 	});
 
 	afterEach(() => {

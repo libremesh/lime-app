@@ -1,6 +1,6 @@
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "selectFilterOption", "findExpectedVouchers"] }] */
 
-import { fireEvent, screen, act, cleanup } from "@testing-library/preact";
+import { fireEvent, screen, act, cleanup, waitFor } from "@testing-library/preact";
 import { render } from "utils/test_utils";
 import "@testing-library/jest-dom";
 import waitForExpect from "wait-for-expect";
@@ -126,15 +126,17 @@ const findExpectedVouchers = async (expectedVouchers) => {
 	);
 	for (let i = 0; i < otherVouchers.length; i++) {
 		const v = otherVouchers[i];
-		expect(
-			screen.queryByTestId(`voucher-item-${v.id}`)
-		).toBeNull();
+		await waitFor(() => {
+			expect(
+				screen.queryByTestId(`voucher-item-${v.id}`)
+			).toBeNull();
+		})
 	}
 }
 
 describe("voucher list", () => {
 	beforeEach(() => {
-		listVouchers.mockImplementation(async () => vouchers);
+		listVouchers.mockImplementation(async () => [...vouchers]);
 		getBoardData.mockImplementation(async () => ({
 			hostname: 'conteiner'
 		}));
@@ -218,9 +220,11 @@ describe("voucher list", () => {
 		listVouchers.mockImplementation(async () => [...availableVouchers]);
 		render(<VoucherList />);
 		await selectFilterOption('Expired');
-		expect(
-			screen.getByText("There are no vouchers matching the current criteria")
-		).toBeInTheDocument();
+		await waitFor(() => {
+			expect(
+				screen.getByText("There are no vouchers matching the current criteria")
+			).toBeInTheDocument();
+		})
 	});
 
 	it("shows a text field with label search by", async () => {

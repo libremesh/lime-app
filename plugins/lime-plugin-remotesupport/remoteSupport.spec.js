@@ -1,5 +1,5 @@
 
-import { fireEvent, cleanup, act, screen } from '@testing-library/preact';
+import { fireEvent, cleanup, act, screen, waitFor } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import { render } from "utils/test_utils";
 import RemoteSupportPage from './src/remoteSupportPage';
@@ -24,9 +24,16 @@ describe('remote support page', () => {
 		getChangesNeedReboot.mockImplementation(async () => ({
 				"need-reboot": "no",
 		}));
-		getSessionAccess.mockImplementation(async () => ({
+		getSession.mockImplementation(async () => ({
 			username: "root",
 		}));
+		// getSessionAccess.mockImplementation(async () => ({
+		// 	status: 'ok',
+    //   session: {
+		// 		rw_ssh: 'ssh -p2222 pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io',
+		// 		ro_ssh: 'ssh -p2222 pL2qpxKQvPP9f9GPWjG2WkfrM@ny1.tmate.io',
+		// 	},
+		// }));
 		openSession.mockImplementation(async () => null);
 		closeSession.mockImplementation(async () => null);
 		checkInternet.mockImplementation(async () => ({ connected: true }));
@@ -55,7 +62,7 @@ describe('remote support page', () => {
 		render(<RemoteSupportPage />);
 		const button = await screen.findByRole('button', {name: 'Setup Hotspot'});
 		fireEvent.click(button);
-		await waitForExpect(() => {
+		await waitFor(() => {
 			expect(route).toHaveBeenCalledWith('/nodeadmin/hotspot');
 		})
 	})
@@ -67,6 +74,9 @@ describe('remote support page', () => {
 	});
 
 	it('shows rw session token when there is an open session', async () => {
+		getSession
+			.mockImplementation(async () =>
+				({ rw_ssh: 'ssh -p2222 test_rw_token@test_host', ro_ssh: 'ssh -p2222 test_ro_token@test_host' }));
 		render(<RemoteSupportPage />);
 		expect(await screen.findByText('ssh -p2222 test_rw_token@test_host')).toBeInTheDocument();
 	})

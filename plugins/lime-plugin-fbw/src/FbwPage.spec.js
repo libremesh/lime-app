@@ -1,14 +1,15 @@
 
 import FbwPage from './FbwPage';
-import { fireEvent, screen, within, act, cleanup } from '@testing-library/preact';
+import { fireEvent, screen, within, act } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import { render, flushPromises } from 'utils/test_utils';
 import { AppContextProvider } from 'utils/app.context';
 import { createNetwork, setNetwork, scanStart, getStatus, scanStop} from './FbwApi';
 import { enableFetchMocks } from 'jest-fetch-mock';
-import { getBoardData } from 'utils/api';
+import { getBoardData, getSession, getChangesNeedReboot, getCommunitySettings } from 'utils/api';
 import waitForExpect from 'wait-for-expect';
 import queryCache from 'utils/queryCache';
+import { DEFAULT_COMMUNITY_SETTINGS } from 'utils/constants';
 
 
 
@@ -58,6 +59,11 @@ describe('Fbw Page', () => {
     beforeEach(() => {
         fetch.resetMocks();
         createNetwork.mockImplementation(async () => ({ status: 'done' }));
+        getCommunitySettings.mockImplementation(async () => DEFAULT_COMMUNITY_SETTINGS);
+        getChangesNeedReboot.mockImplementation(async () => false);
+        getSession.mockImplementation(async () => ({
+            username: "root",
+        }));
     })
 
     beforeAll(() => {
@@ -92,17 +98,23 @@ describe('Fbw Page', () => {
 describe('Fbw Join Network Page', () => {
     
     beforeEach(() => {
+        getBoardData.mockImplementation(async() => boardData)
+        getStatus.mockImplementation(async () => allScanCases)
+        scanStart.mockImplementation(async () => scanActionSuccess);
+        getCommunitySettings.mockImplementation(async () => DEFAULT_COMMUNITY_SETTINGS);
+        getChangesNeedReboot.mockImplementation(async () => false);
+        getSession.mockImplementation(async () => ({
+            username: "root",
+        }));
         render(<AppContextProvider><FbwPage /></AppContextProvider>);
     })
 
-    beforeAll(() => {
-        getBoardData.mockImplementation(async() => boardData)
-        getStatus.mockImplementation(async () => allScanCases)
-        scanStart.mockImplementation(async () => scanActionSuccess)
-    });
+    // beforeAll(() => {
+        
+    // });
 
     afterEach(() => {
-		cleanup();
+		// cleanup();
 		act(() => queryCache.clear());
     })
 

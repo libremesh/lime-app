@@ -1,12 +1,12 @@
 
 import AlignPage from './src/alignPage';
-import { render } from 'utils/test_utils';
-import { screen, fireEvent, act, cleanup } from '@testing-library/preact';
+import { render, flushPromises } from 'utils/test_utils';
+import { screen, fireEvent, act } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import queryCache from 'utils/queryCache';
 
 import { getMeshIfaces, getAssocList } from './src/alignApi';
-import { getBatHost, getCommunitySettings} from 'utils/api';
+import { getBatHost, getCommunitySettings, getChangesNeedReboot, getSession} from 'utils/api';
 import { DEFAULT_COMMUNITY_SETTINGS } from 'utils/constants';
 
 jest.mock('./src/alignApi');
@@ -47,9 +47,6 @@ async function findNeighbors() {
 	return neighs.map(n => n.textContent);
 }
 
-function flushPromises() {
-	return new Promise(resolve => setImmediate(resolve));
-}
 describe('align page', () => {
 
 	beforeAll(() => {
@@ -65,10 +62,13 @@ describe('align page', () => {
 		getAssocList.mockClear().mockImplementation(mockAssocList);
 		getBatHost.mockImplementation(mockBatHost);
 		getCommunitySettings.mockImplementation(async () => DEFAULT_COMMUNITY_SETTINGS);
+		getChangesNeedReboot.mockImplementation(async () => true);
+		getSession.mockImplementation(async () => ({
+				username: "root",
+		}));
 	})
 
 	afterEach(() => {
-		cleanup();
 		act(() => queryCache.clear());
 	});
 
