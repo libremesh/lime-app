@@ -48,7 +48,7 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
     const versionName = newVersion && newVersion.version;
     const { data: downloadStatus } = useDownloadStatus({
         refetchInterval: pollingInterval,
-        enabled: !versionName,
+        enabled: !!versionName,
         onSuccess: (data) => {
             if (data.download_status === "downloading") {
                 setPollingInterval(1000);
