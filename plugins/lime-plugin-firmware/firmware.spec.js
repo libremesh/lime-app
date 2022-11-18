@@ -6,6 +6,7 @@ import {
     screen,
     waitFor,
 } from "@testing-library/preact";
+import userEvent from "@testing-library/user-event";
 import { route } from "preact-router";
 import waitForExpect from "wait-for-expect";
 
@@ -80,6 +81,7 @@ describe("firmware form", () => {
 
     afterEach(() => {
         cleanup();
+        jest.restoreAllMocks();
         act(() => queryCache.clear());
     });
 
@@ -342,11 +344,12 @@ describe("firmware form", () => {
             .mockImplementationOnce(async () => ({
                 download_status: "downloaded",
             }));
+        const user = userEvent.setup({ delay: null });
         render(<FirmwarePage />);
         const downloadButton = await screen.findByRole("button", {
             name: /Download/i,
         });
-        fireEvent.click(downloadButton);
+        await user.click(downloadButton);
         expect(await screen.findByText("Downloading")).toBeInTheDocument();
         act(() => {
             jest.advanceTimersByTime(12000);
@@ -359,12 +362,13 @@ describe("firmware form", () => {
         act(() => {
             jest.advanceTimersByTime(12000);
         });
-        // await flushPromises();
-        expect(
-            await screen.findByRole("button", {
-                name: /Upgrade to SomeNewVersionName/i,
-            })
-        ).toBeEnabled();
+        await waitFor(async () => {
+            expect(
+                await screen.findByRole("button", {
+                    name: /Upgrade to SomeNewVersionName/i,
+                })
+            ).toBeEnabled();
+        });
     });
 });
 

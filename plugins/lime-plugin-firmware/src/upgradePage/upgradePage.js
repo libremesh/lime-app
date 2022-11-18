@@ -49,14 +49,6 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
     const { data: downloadStatus } = useDownloadStatus({
         refetchInterval: pollingInterval,
         enabled: !!versionName,
-        onSuccess: (data) => {
-            if (data.download_status === "downloading") {
-                setPollingInterval(1000);
-            } else {
-                setPollingInterval(null);
-            }
-            return data;
-        },
     });
 
     const { mutate: downloadRelease, isLoading: submittingDownload } =
@@ -65,6 +57,17 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
         useUpgradeFirwmare();
     const filePath = downloadStatus && downloadStatus.fw_path;
     const status = downloadStatus && downloadStatus.download_status;
+
+    useEffect(() => {
+        if (
+            downloadStatus &&
+            downloadStatus.download_status === "downloading"
+        ) {
+            setPollingInterval(1000);
+        } else {
+            setPollingInterval(null);
+        }
+    }, [downloadStatus]);
 
     function onDownload() {
         downloadRelease();
