@@ -74,8 +74,7 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
     }
 
     async function onUpgrade() {
-        await upgradeFirmware(filePath);
-        onUpgrading;
+        upgradeFirmware(filePath).then(onUpgrading);
     }
 
     if (!versionName) return;
