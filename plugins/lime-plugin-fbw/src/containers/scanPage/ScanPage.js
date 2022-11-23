@@ -44,7 +44,12 @@ export const ScanPage = ({
 
     /* Cancel and go back */
     async function _cancel() {
-        return await scanStop();
+        try {
+            await scanStop();
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     return (

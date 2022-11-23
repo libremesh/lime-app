@@ -65,8 +65,9 @@ export const ScanList = ({
     }
 
     async function _cancel() {
-        await cancel();
-        removeScanStatus();
+        if (await cancel()) {
+            removeScanStatus();
+        }
     }
 
     function selectNetwork(netIdx) {
