@@ -5,6 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/preact";
 import { messages } from "i18n/en/messages";
 import { en } from "make-plural/plurals";
+import { setImmediate } from "timers";
 
 import queryCache from "utils/queryCache";
 
@@ -33,10 +34,9 @@ const AllTheProviders = ({ children }) => {
 const customRender = (ui, options) =>
     render(ui, { wrapper: AllTheProviders, ...options });
 
-export const flushPromises = () =>
-    // Flush all pending resolved promise handlers.
-    // Usefull when testing some scenarios with async tasks.
-    new Promise((resolve) => setImmediate(resolve));
+// Flush all pending resolved promise handlers.
+// Usefull when testing some scenarios with async tasks.
+export const flushPromises = () => new Promise(setImmediate);
 
 // re-export everything
 export * from "@testing-library/preact";

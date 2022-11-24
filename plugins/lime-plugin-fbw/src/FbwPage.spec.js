@@ -67,6 +67,7 @@ const advanceToJoinNetwork = async () => {
 
 describe("Fbw Page", () => {
     beforeEach(() => {
+        jest.useFakeTimers();
         fetch.resetMocks();
         createNetwork.mockImplementation(async () => ({ status: "done" }));
         getCommunitySettings.mockImplementation(
@@ -78,11 +79,8 @@ describe("Fbw Page", () => {
         }));
     });
 
-    beforeAll(() => {
-        jest.useFakeTimers();
-    });
-
-    afterAll(() => {
+    afterEach(() => {
+        jest.clearAllTimers();
         jest.useRealTimers();
     });
 

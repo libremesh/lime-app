@@ -24,6 +24,7 @@
     "storybook:build": "build-storybook -c .storybook",
     "storybook:deploy": "gh-pages -d storybook-static",
     "test": "jest",
+    "clear-jest": "jest --clearCache",
     "create-plugin": "node ./devTools/plugins create",
     "prepare": "husky install"
   },
