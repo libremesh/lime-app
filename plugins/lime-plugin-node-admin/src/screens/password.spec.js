@@ -7,7 +7,6 @@ import {
     waitFor,
 } from "@testing-library/preact";
 import userEvent from "@testing-library/user-event";
-import waitForExpect from "wait-for-expect";
 
 import { getChangesNeedReboot, getSession } from "utils/api";
 import queryCache from "utils/queryCache";
@@ -47,6 +46,7 @@ describe("ap password config", () => {
 
     afterEach(() => {
         cleanup();
+        jest.clearAllMocks();
         act(() => queryCache.clear());
     });
 
@@ -102,8 +102,8 @@ describe("ap password config", () => {
     it("calls api endpoint for disabling password when switched off", async () => {
         getChangesNeedReboot.mockImplementation(async () => true);
         render(<APPasswordPage />);
-        userEvent.click(await findSubmitButton());
-        await waitForExpect(() => {
+        await userEvent.click(await findSubmitButton());
+        await waitFor(() => {
             expect(changeApNamePassword).toHaveBeenCalledWith({
                 password: "",
                 enablePassword: false,
@@ -114,12 +114,14 @@ describe("ap password config", () => {
 
     it("calls api endpoint for enabling password when switched on", async () => {
         render(<APPasswordPage />);
+        expect(screen.queryByTestId("changes-need-reboot")).toBe(null);
+        getChangesNeedReboot.mockImplementation(async () => true);
+
         await userEvent.click(await findPasswordUsageCheckbox());
-        fireEvent.input(await findPasswordInput(), {
-            target: { value: "12345678" },
-        });
+        await userEvent.type(await findPasswordInput(), "12345678");
         await userEvent.click(await findSubmitButton());
-        await waitForExpect(() => {
+
+        await waitFor(() => {
             expect(changeApNamePassword).toHaveBeenCalledWith({
                 password: "12345678",
                 enablePassword: true,
