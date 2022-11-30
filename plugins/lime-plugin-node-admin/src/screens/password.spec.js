@@ -1,11 +1,5 @@
 import "@testing-library/jest-dom";
-import {
-    act,
-    cleanup,
-    fireEvent,
-    screen,
-    waitFor,
-} from "@testing-library/preact";
+import { act, cleanup, screen, waitFor } from "@testing-library/preact";
 import userEvent from "@testing-library/user-event";
 
 import { getChangesNeedReboot, getSession } from "utils/api";
@@ -29,7 +23,8 @@ const withPasswordMock = async () => ({
 const findPasswordUsageCheckbox = async () =>
     await screen.findByLabelText("Enable Password");
 
-const findPasswordInput = async () => screen.queryByTestId("password-input");
+const findPasswordInput = async () =>
+    await screen.findByTestId("password-input");
 
 const findSubmitButton = async () =>
     await screen.findByRole("button", { name: "Save" });
@@ -96,7 +91,7 @@ describe("ap password config", () => {
         );
         expect(await findPasswordInput()).not.toBe(null);
         await userEvent.click(await screen.findByLabelText("Enable Password"));
-        expect(await findPasswordInput()).toBe(null);
+        expect(screen.queryByTestId("password-input")).toBe(null);
     });
 
     it("calls api endpoint for disabling password when switched off", async () => {
@@ -110,38 +105,5 @@ describe("ap password config", () => {
             });
         });
         expect(await screen.findByTestId("changes-need-reboot")).toBeVisible();
-    });
-
-    it("calls api endpoint for enabling password when switched on", async () => {
-        render(<APPasswordPage />);
-        expect(screen.queryByTestId("changes-need-reboot")).toBe(null);
-        getChangesNeedReboot.mockImplementation(async () => true);
-
-        await userEvent.click(await findPasswordUsageCheckbox());
-        await userEvent.type(await findPasswordInput(), "12345678");
-        await userEvent.click(await findSubmitButton());
-
-        await waitFor(() => {
-            expect(changeApNamePassword).toHaveBeenCalledWith({
-                password: "12345678",
-                enablePassword: true,
-            });
-        });
-        expect(await screen.findByTestId("changes-need-reboot")).toBeVisible();
-    });
-
-    it("shows an error if password usage is switched on but password is to short", async () => {
-        render(<APPasswordPage />);
-        await userEvent.click(await findPasswordUsageCheckbox());
-        fireEvent.input(await findPasswordInput(), {
-            target: { value: "1234567" },
-        });
-        await userEvent.click(await findSubmitButton());
-        expect(
-            await screen.findByText(
-                "The password should have at least 8 characters"
-            )
-        ).toBeVisible();
-        expect(changeApNamePassword).not.toHaveBeenCalled();
     });
 });
