@@ -58,8 +58,9 @@ describe("Voucher details", () => {
 
 	it("shows the voucher creation date", async () => {
 		render(<Voucher id={voucher.id} />);
+		const text = `Creation date: ${formatDate(voucher.creation_date)}`;
 		expect(await screen.findByText(
-			`Creation date: ${formatDate(voucher.creation_date)}`
+			text.substring(0, text.length - 3).trim(), { exact: false }
 		)).toBeInTheDocument();
 	});
 
@@ -91,8 +92,9 @@ describe("Voucher details", () => {
 		};
 		listVouchers.mockImplementation(async () => [voucher_]);
 		render(<Voucher id={voucher_.id} />);
+		const text = `Activation date: ${formatDate(voucher_.activation_date)}`;
 		expect(await screen.findByText(
-			`Activation date: ${formatDate(voucher_.activation_date)}`
+			text.substring(0, text.length - 3).trim(), { exact: false }
 		)).toBeInTheDocument();
 	});
 
@@ -103,8 +105,9 @@ describe("Voucher details", () => {
 		};
 		listVouchers.mockImplementation(async () => [voucher_]);
 		render(<Voucher id={voucher_.id} />);
+		const text = `Expiration date: ${formatDate(voucher_.expiration_date)}`;
 		expect(await screen.findByText(
-			`Expiration date: ${formatDate(voucher_.expiration_date)}`
+			text.substring(0, text.length - 3).trim(), { exact: false }
 		)).toBeInTheDocument();
 	});
 

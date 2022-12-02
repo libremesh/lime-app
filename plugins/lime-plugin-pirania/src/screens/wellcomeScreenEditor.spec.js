@@ -1,12 +1,10 @@
 
 import { fireEvent, act, screen, waitFor } from '@testing-library/preact';
 import '@testing-library/jest-dom';
-import waitForExpect from 'wait-for-expect';
 import { render, flushPromises } from "utils/test_utils";
 import { WellcomeScreenEditor } from './wellcomeScreenEditor.js';
 import { getPortalContent, setPortalContent, createCompression } from '../piraniaApi';
 import queryCache from 'utils/queryCache';
-import userEvent from '@testing-library/user-event';
 
 jest.mock('../piraniaApi');
 
@@ -22,6 +20,12 @@ const selectInputFile = (inputElem) => {
     fireEvent.change(inputElem, {
 		target: { files: [file] },
 	});
+    Object.defineProperty(inputElem, "files", {
+        value: [file],
+    });
+    Object.defineProperty(inputElem, "value", {
+        value: file.name,
+    });
     return file;
 }
 
@@ -100,6 +104,7 @@ describe('portal wellcome screen', () => {
     it('shows an input to change the logo that updates thumbnail', async () => {
         render(<WellcomeScreenEditor />);
         const file = await fillLogo();
+        console.warn("SPAM", file);
         await waitFor(() => {
             expect(createCompression).toBeCalledWith(file);
         });

@@ -73,8 +73,9 @@ describe("voucher post create screen", () => {
 		const date = new Date(vouchers_[0].activation_deadline * 1000);
 		const deadlineText = i18n.date(date, { dateStyle: "medium", timeStyle: "medium" });
 		render(<PostCreate vouchers={vouchers_} />);
+		const text = `Activation deadline: ${deadlineText}`;
 		expect(await screen.findByText(
-			`Activation deadline: ${deadlineText}`
+			text.substring(0, text.length - 3).trim(), { exact: false }
 		)).toBeInTheDocument();
 	});
 
