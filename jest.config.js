@@ -5,7 +5,7 @@ module.exports = {
     preset: "jest-preset-preact",
     testMatch: [
         "<rootDir>/plugins/**/__tests__/**/*.{mjs,js,jsx,ts,tsx}",
-        "<rootDir>/{plugins, src,test,tests}/**/*.{spec,test}.{mjs,js,jsx,ts,tsx}",
+        "<rootDir>/{plugins,src,test,tests}/**/*.{spec,test}.{mjs,js,jsx,ts,tsx}",
     ],
     setupFilesAfterEnv: ["jest-extended/all"],
     setupFiles: ["core-js", "jest-localstorage-mock"],
