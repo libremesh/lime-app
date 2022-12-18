@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 
 const queryCache = new QueryClient({
-    defaultConfig: {
+    defaultOptions: {
         queries: {
             staleTime: Infinity,
             refetchOnMount: false,

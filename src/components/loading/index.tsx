@@ -1,7 +1,11 @@
 import style from "./style.less";
 
-export const Loading = ({ color }) => {
-    const styleOverride = color ? { backgroundColor: color } : "";
+type LoadingProps = {
+    color?: string
+}
+
+export const Loading = ({ color } : LoadingProps) => {
+    const styleOverride = color ? { backgroundColor: color } : undefined;
     return (
         <div
             className={style.spinner}

@@ -35,6 +35,7 @@ export function useBoardData(config) {
 }
 
 export function useCommunitySettings() {
+    // @ts-ignore
     return useQuery(
         ["lime-utils", "get_community_settings"],
         getCommunitySettings,
@@ -63,7 +64,7 @@ export function useNeedReboot() {
 export function useSetNeedReboot() {
     return useMutation(setChangesNeedReboot, {
         onSuccess: () => {
-            queryCache.invalidateQueries("changes-need-reboot");
+            queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
         },
     });
 }
@@ -72,7 +73,7 @@ export function useReboot() {
     return useMutation(reboot, {
         onSuccess: () => {
             setChangesNeedReboot("no");
-            queryCache.invalidateQueries("changes-need-reboot");
+            queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
         },
     });
 }

@@ -8,9 +8,13 @@ register("es", es);
 register("pt", pt);
 register("it", it);
 
-export const TimeAgo = ({ date }) => {
+type TimeAgoProps = {
+    timestamp: number;
+}
+
+export const TimeAgo = ({ timestamp }: TimeAgoProps) => {
     const { i18n } = useLingui();
-    return format(date * 1000, i18n.locale);
+    return format(timestamp * 1000, i18n.locale);
 };
 
 export default TimeAgo;

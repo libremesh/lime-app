@@ -10,6 +10,13 @@ import { useScanStop } from "../../FbwQueries";
 import { ScanList } from "./ScanList";
 import { SelectForm } from "./SelectForm";
 
+interface SelectedNetwork {
+    hostname: string;
+    file?: any;
+    apname?: string;
+    community?: string;
+}
+
 export const ScanPage = ({
     toggleForm,
     setExpectedHost,
@@ -17,7 +24,7 @@ export const ScanPage = ({
 }) => {
     const { data: boardData } = useBoardData();
 
-    const [selectedNetwork, setSelectedNetwork] = useState({
+    const [selectedNetwork, setSelectedNetwork] = useState<SelectedNetwork>({
         hostname: boardData?.hostname,
     });
 

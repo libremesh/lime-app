@@ -12,6 +12,7 @@ const api = {
 
 export default (initialState, rootEpics, rootReducers) => {
     const composeEnhancers =
+        // @ts-ignore
         window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
     const reduxRouterMiddleware = routerMiddleware(history);

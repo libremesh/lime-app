@@ -44,14 +44,17 @@ export class UhttpdService {
         };
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), timeout || 15000);
-        return fetch(this.url, {
-            method: "POST",
-            body: JSON.stringify(body),
-            signal: controller.signal,
-        })
-            .then((response) => response.json())
-            .then(parseResult)
-            .finally(clearTimeout(id));
+        return (
+            fetch(this.url, {
+                method: "POST",
+                body: JSON.stringify(body),
+                signal: controller.signal,
+            })
+                .then((response) => response.json())
+                .then(parseResult)
+                // @ts-ignore
+                .finally(clearTimeout(id))
+        );
     }
 
     login(username, password) {

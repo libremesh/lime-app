@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 const preactPreset = require("jest-preset-preact");
 
 /** @returns {Promise<import('jest').Config>} */

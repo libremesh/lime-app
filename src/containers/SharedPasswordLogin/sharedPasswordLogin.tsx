@@ -3,10 +3,10 @@ import { useEffect, useState } from "preact/hooks";
 
 import { useLogin } from "utils/queries";
 
-import Loading from "../../components/loading";
+import Loading from "components/loading";
 
 const loadingBoxStyle = {
-    position: "fixed",
+    position: "fixed" as const,
     marginTop: "30vh",
     zIndex: "5555",
     background: "rgb(255, 255, 255)",
@@ -16,12 +16,12 @@ const loadingBoxStyle = {
     borderRadius: "11px",
     padding: "15px",
     boxShadow: "1px 1px 6px rgba(0,0,0,0.5)",
-    textAlign: "center",
+    textAlign: "center" as const,
 };
 
 const SharedPasswordLogin = ({ submitting, error, submitLogin }) => {
     const [password, setPassword] = useState("");
-    const [showHelp, setShowHelp] = useState("");
+    const [showHelp, setShowHelp] = useState<boolean | undefined>(undefined);
 
     function toogleHelp(e) {
         e.preventDefault();
@@ -96,7 +96,7 @@ const TryToLoginAutomatically = () => {
         return <SharedPasswordLoginHOC />;
     }
     return (
-        <div class="container container-center">
+        <div className="container container-center">
             <Loading />
         </div>
     );

@@ -16,4 +16,4 @@ export default {
         selector,
         constants,
     },
-};
+} as LimePlugin;

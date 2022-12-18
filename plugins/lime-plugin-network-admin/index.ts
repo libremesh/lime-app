@@ -6,4 +6,4 @@ export default {
     page: NetAdmin,
     menu: NetAdminMenu,
     isCommunityProtected: true,
-};
+} as LimePlugin;

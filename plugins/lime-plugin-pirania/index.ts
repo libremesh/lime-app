@@ -18,4 +18,4 @@ export default {
         ["access/edit/:id", EditVoucher],
         ["access/invalidate/:id", InvalidateVoucher],
     ],
-};
+} as LimePlugin;

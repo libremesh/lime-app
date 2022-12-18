@@ -1,19 +1,19 @@
 import style from "./style.less";
 
 const Tabs = ({ tabs, current, onChange }) => (
-    <div class={style.tabs} role="tablist">
-        {tabs.map((tab, index) => (
-            <div class={style.tabWrapper} key={index}>
+    <div className={style.tabs} role="tablist">
+        {tabs.map((tab) => (
+            <div className={style.tabWrapper} key={tab.key}>
                 <div
                     role="tab"
-                    class={`${style.tab} ${
+                    className={`${style.tab} ${
                         current === tab.key ? style.tabActive : ""
                     }`}
                     onClick={() => onChange(tab.key)}
                 >
                     {tab.repr}
                 </div>
-                <span class={style.separator} />
+                <span className={style.separator} />
             </div>
         ))}
     </div>

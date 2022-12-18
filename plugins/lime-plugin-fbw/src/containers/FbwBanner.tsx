@@ -12,9 +12,13 @@ import { useAppContext } from "utils/app.context";
 
 import { useDismissFbw } from "../FbwQueries";
 
-export const FbwBanner = ({ toggleForm }) => {
+type FbwBannerProps = {
+    toggleForm?: (route: string) => () => void;
+}
+
+export const FbwBanner = ({ toggleForm }: FbwBannerProps) => {
     const [notShowAgain, setnotShowAgain] = useState(false);
-    const { mutate: dismissFbw } = useDismissFbw();
+    const { mutateAsync: dismissFbw } = useDismissFbw();
     const { cancelFbw } = useAppContext();
 
     const fbwRoute = "firstbootwizard";

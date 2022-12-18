@@ -4,7 +4,7 @@ import { useEffect, useState } from "preact/hooks";
 import ProgressBar from "components/progressbar";
 
 export const UpgradeSuccess = ({ onReload, upgradeConfirmAvailable }) => (
-    <div class="container container-padded container-center">
+    <div className="container container-padded container-center">
         <h3>
             <Trans>The upgrade should be done</Trans>
         </h3>
@@ -27,7 +27,7 @@ export const UpgradeProgress = ({ elapsedTime, totalTime }) => {
     const remainingTime = totalTime - elapsedTime;
     const progress = (elapsedTime / totalTime) * 100;
     return (
-        <div class="container container-padded container-center">
+        <div className="container container-padded container-center">
             <h3>
                 <Trans>The firmware is being upgraded...</Trans>
             </h3>
@@ -57,6 +57,7 @@ export const UpgradingPage = ({ upgradeConfirmAvailable }) => {
     }, [elapsedTime, setElapsedTime]);
 
     function onReload() {
+        // @ts-ignore
         window.location = window.origin;
     }
 

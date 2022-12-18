@@ -4,7 +4,12 @@ const transformConfig = require("preact-cli/lib/lib/webpack/transform-config");
 
 module.exports = {
     framework: "@storybook/preact",
-    stories: ["../stories/**/*stories.js", "../plugins/**/*stories.js"],
+    stories: [
+        "../stories/**/*stories.js",
+        "../stories/**/*stories.ts",
+        "../plugins/**/*stories.js",
+        "../plugins/**/*stories.ts",
+    ],
     addons: [
         "@storybook/addon-actions",
         "@storybook/addon-controls",

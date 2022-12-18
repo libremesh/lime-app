@@ -1,5 +1,7 @@
-require("dotenv").config();
-let path = require("path");
+import * as dotenv from "dotenv";
+import * as path from "path";
+
+dotenv.config();
 
 /**
  * Function that mutates original webpack config.

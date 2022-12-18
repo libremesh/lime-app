@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/macro";
 
-import style from "./style";
+import style from "./style.less";
 
 export const Banner = ({
     onOk,
@@ -20,7 +20,7 @@ export const Banner = ({
                 <Trans>Cancel</Trans>
             </button>
         </div>
-        <div class={style.dontShowAgain}>
+        <div className={style.dontShowAgain}>
             <label>
                 <input
                     type="checkbox"

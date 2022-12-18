@@ -14,7 +14,7 @@ export const BannerWithOptions = ({
             return <div key={i}>{option}</div>;
         })}
         {cancelOption}
-        <div class={style.dontShowAgain}>
+        <div className={style.dontShowAgain}>
             <label>
                 <input
                     type="checkbox"

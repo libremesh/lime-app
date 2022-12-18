@@ -15,7 +15,7 @@ export const useChangeHostname = () =>
     useMutation(changeHostname, {
         onSuccess: () => {
             setChangesNeedReboot("yes");
-            queryCache.invalidateQueries("changes-need-reboot");
+            queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
         },
     });
 
@@ -29,7 +29,7 @@ export const useChangeAPPassword = () =>
     useMutation(changeApNamePassword, {
         onSuccess: () => {
             setChangesNeedReboot("yes");
-            queryCache.invalidateQueries("changes-need-reboot");
+            queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
             queryCache.invalidateQueries(["lime-utils", "get_wifi_data"]);
             queryCache.invalidateQueries(["lime-utils-admin", "get_wifi_data"]);
         },
@@ -39,7 +39,7 @@ export const useSetupRoamingAP = () =>
     useMutation(setupRoamingAP, {
         onSuccess: () => {
             setChangesNeedReboot("yes");
-            queryCache.invalidateQueries("changes-need-reboot");
+            queryCache.invalidateQueries({ queryKey: ["changes-need-reboot"] });
             queryCache.invalidateQueries(["lime-utils", "get_wifi_data"]);
             queryCache.invalidateQueries(["lime-utils-admin", "get_wifi_data"]);
         },

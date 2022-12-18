@@ -10,17 +10,18 @@ import { useBoardData, useLogin, useSession } from "utils/queries";
 import queryCache from "utils/queryCache";
 
 import { plugins } from "../config";
-import { Menu } from "../containers/Menu";
-import { RebootPage } from "../containers/RebootPage";
-import SubHeader from "../containers/SubHeader";
+import { Menu } from "containers/Menu";
+import { RebootPage } from "containers/RebootPage";
+import SubHeader from "containers/SubHeader";
 import i18n, { dynamicActivate } from "../i18n";
 import { store } from "../store";
 import { history } from "../store/history";
-import { AppContextProvider } from "../utils/app.context";
-import { CommunityProtectedRoute, Redirect, Route } from "../utils/routes";
+import { AppContextProvider } from "utils/app.context";
+import { CommunityProtectedRoute, Redirect, Route } from "utils/routes";
 import { Header } from "./header";
 
 const Routes = () => (
+    // @ts-ignore
     <Router history={history}>
         {/* Public pages, don't need to be authenticated */}
         {plugins
@@ -64,6 +65,7 @@ const Routes = () => (
         <CommunityProtectedRoute path={"/reboot"}>
             <RebootPage />
         </CommunityProtectedRoute>
+        {/* @ts-ignore */}
         <Redirect default path={"/"} to={"rx"} />
     </Router>
 );
@@ -99,13 +101,15 @@ const App = () => {
 
 const AppDefault = () => {
     useEffect(() => {
-        dynamicActivate(fromNavigator().split("-")[0]);
+        dynamicActivate(fromNavigator().split("-")[0] as Locales);
     }, []);
     return (
         <I18nProvider i18n={i18n}>
             <QueryClientProvider client={queryCache}>
+                {/* @ts-ignore */}
                 <AppContextProvider>
                     <Provider store={store}>
+                        {/* @ts-ignore */}
                         <App />
                     </Provider>
                 </AppContextProvider>

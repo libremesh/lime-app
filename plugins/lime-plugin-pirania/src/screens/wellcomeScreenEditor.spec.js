@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-empty-function: "off" */
 import "@testing-library/jest-dom";
 import { act, fireEvent, screen, waitFor } from "@testing-library/preact";
 
@@ -78,10 +79,9 @@ describe("portal wellcome screen", () => {
     beforeEach(() => {
         getPortalContent.mockImplementation(async () => defaultContentMock);
         setPortalContent.mockImplementation(async () => {});
-        createCompression.mockImplementation(async () => {
-            console.log("DENTRO");
-            return INPUT_COMPRESSED_BASE64;
-        });
+        createCompression.mockImplementation(
+            async () => INPUT_COMPRESSED_BASE64
+        );
     });
 
     afterEach(() => {

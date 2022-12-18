@@ -18,6 +18,7 @@ class WebsocketAPI {
             this.responses[data.id](data);
             delete this.responses[data.id];
         } else if (x.type === "open") {
+            // @ts-ignore
             this.responses.conect(true);
         }
     }
@@ -25,7 +26,8 @@ class WebsocketAPI {
     conect(url) {
         this.socket = this._wss.connect(url);
         this.socket.subscribe(this.register.bind(this));
-        let observable = Observable.create((obs) => {
+        let observable = new Observable((obs) => {
+            // @ts-ignore
             this.responses.conect = obs.next.bind(obs);
         });
         return observable;

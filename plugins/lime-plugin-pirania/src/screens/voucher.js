@@ -1,10 +1,10 @@
-import { i18n } from "@lingui/core";
 import { Plural, Trans } from "@lingui/macro";
 import { route } from "preact-router";
 
 import { ConfigPageLayout } from "plugins/lime-plugin-node-admin/src/layouts";
 
 import Copy from "../components/copy";
+import TimeAgo from "../components/timeAgo";
 import { useListVouchers } from "../piraniaQueries";
 import style from "../style.less";
 
@@ -14,13 +14,6 @@ const statusMsgs = {
     active: <Trans>Active</Trans>,
     invalidated: <Trans>Invalidated</Trans>,
 };
-
-const formatDate = (date) =>
-    Number.isInteger(date) &&
-    i18n.date(new Date(date * 1000), {
-        dateStyle: "medium",
-        timeStyle: "medium",
-    });
 
 const Duration = ({ days }) => (
     <Trans>
@@ -41,11 +34,12 @@ const VoucherDetails = ({
     permanent,
     author_node,
 }) => {
+    // @ts-ignore
     const durationInDays = duration_m && parseInt(duration_m / (24 * 60), 10);
     return (
-        <div class="d-flex flex-grow-1 flex-column container-padded">
-            <div class="d-flex flex-grow-1 flex-column">
-                <div class="text-center">
+        <div className="d-flex flex-grow-1 flex-column container-padded">
+            <div className="d-flex flex-grow-1 flex-column">
+                <div className="text-center">
                     <Copy text={code} className={style.voucherCode} />
                 </div>
                 <div>
@@ -55,7 +49,9 @@ const VoucherDetails = ({
                     <Trans>Author node: {author_node}</Trans>
                 </div>
                 <div>
-                    <Trans>Creation date: {formatDate(creation_date)}</Trans>
+                    <Trans>
+                        Creation date: {TimeAgo({ timestamp: creation_date })}
+                    </Trans>
                 </div>
                 <div>
                     {!permanent && <Duration days={durationInDays} />}
@@ -67,14 +63,16 @@ const VoucherDetails = ({
                 {status === "expired" && (
                     <div>
                         <Trans>
-                            Expiration date: {formatDate(expiration_date)}
+                            Expiration date:{" "}
+                            {TimeAgo({ timestamp: expiration_date })}
                         </Trans>
                     </div>
                 )}
                 {status === "active" && (
                     <div>
                         <Trans>
-                            Activation date: {formatDate(activation_date)}
+                            Activation date:{" "}
+                            {TimeAgo({ timestamp: activation_date })}
                         </Trans>
                     </div>
                 )}
@@ -82,7 +80,7 @@ const VoucherDetails = ({
                     <div>
                         <Trans>
                             Activation deadline:{" "}
-                            {formatDate(activation_deadline)}
+                            {TimeAgo({ timestamp: activation_deadline })}
                         </Trans>
                     </div>
                 )}
@@ -92,7 +90,7 @@ const VoucherDetails = ({
             </button>
             {(status == "available" || status == "active") && (
                 <button
-                    class="text-danger"
+                    className="text-danger"
                     onClick={() => route(`/access/invalidate/${id}`)}
                 >
                     <Trans>Invalidate</Trans>

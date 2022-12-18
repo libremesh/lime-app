@@ -31,11 +31,15 @@ export const AssocRow = ({ station, iface }) => {
         <ListItem onClick={goToAlignSingle}>
             <div>
                 {isLoading || isError ? (
-                    <div class={`${style.fetchingName} withLoadingEllipsis`}>
+                    <div
+                        className={`${style.fetchingName} withLoadingEllipsis`}
+                    >
                         <Trans>Fetching name</Trans>
                     </div>
                 ) : (
-                    <div class={style.stationHostname}>{bathost.hostname}</div>
+                    <div className={style.stationHostname}>
+                        {bathost.hostname}
+                    </div>
                 )}
                 {bathost && bathost.iface && (
                     <div>
@@ -55,15 +59,15 @@ export const AssocRow = ({ station, iface }) => {
                 )}
             </div>
             {station.inactive >= 3000 ? (
-                <div class={signalStyle.signal}>
+                <div className={signalStyle.signal}>
                     X
                     <SignalBar signal={null} className={signalStyle.bar} />
                 </div>
             ) : (
-                <div class={signalStyle.signal}>
-                    <div class="d-flex flex-grow-1 align-items-baseline">
+                <div className={signalStyle.signal}>
+                    <div className="d-flex flex-grow-1 align-items-baseline">
                         <div>{station.signal}</div>
-                        <div class={style.unit}>dBm</div>
+                        <div className={style.unit}>dBm</div>
                     </div>
                     <SignalBar
                         signal={station.signal}
@@ -91,7 +95,7 @@ export const AssocList = ({ iface }) => {
     return (
         <List>
             {assoclist.length > 0 && (
-                <div class={style.assoclistHeader}>
+                <div className={style.assoclistHeader}>
                     <Trans>These are the nodes associated on this radio</Trans>
                 </div>
             )}
@@ -144,7 +148,7 @@ export const Align = ({}) => {
     }
 
     return (
-        <div class="d-flex flex-column flex-grow-1 overflow-auto">
+        <div className="d-flex flex-column flex-grow-1 overflow-auto">
             <Tabs
                 tabs={tabs}
                 current={selectedIface}

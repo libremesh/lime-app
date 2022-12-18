@@ -47,7 +47,6 @@ const Page = ({ ...props }) => {
             )}
             {form === "setting" && (
                 <Setting
-                    toggleForm={toggleForm}
                     expectedHost={expectedHost}
                     expectedNetwork={expectedNetwork}
                 />

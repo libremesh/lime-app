@@ -1,7 +1,7 @@
-const path = require("path");
-const fs = require("fs");
-const yargs = require("yargs/yargs");
-const { hideBin } = require("yargs/helpers");
+import * as fs from "fs";
+import * as path from "path";
+import { hideBin } from "yargs/helpers";
+import * as yargs from "yargs/yargs";
 
 const indexContent = (name, isCommunityProtected) =>
     `import Page from './src/${name}Page';

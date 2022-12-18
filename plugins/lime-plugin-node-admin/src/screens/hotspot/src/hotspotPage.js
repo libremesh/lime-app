@@ -26,8 +26,8 @@ const HotspotPageForm = ({
     });
     return (
         <Fragment>
-            <form class="flex-grow-1">
-                <div class={switchStyle.toggles}>
+            <form className="flex-grow-1">
+                <div className={switchStyle.toggles}>
                     <input
                         type="checkbox"
                         id="enabled"
@@ -38,12 +38,12 @@ const HotspotPageForm = ({
                     </label>
                 </div>
             </form>
-            <div class="d-flex">
-                <div class="ml-auto">
+            <div className="d-flex">
+                <div className="ml-auto">
                     {!isSubmitting && !waitingRadioReset && (
                         <button
                             onClick={handleSubmit(onSubmit)}
-                            class="ml-auto"
+                            className="ml-auto"
                         >
                             <Trans>Save</Trans>
                         </button>
@@ -75,7 +75,7 @@ const CellPhoneInstructions = () => {
                     </Trans>
                 </li>
             </ol>
-            <div class="container-center">
+            <div className="container-center">
                 <div>
                     <b>
                         <Trans>Network Name: {ssid}</Trans>
@@ -97,7 +97,7 @@ const CellPhoneInstructions = () => {
 };
 
 const WaitingRadioResetMessage = () => (
-    <div class="d-flex flex-column text-right">
+    <div className="d-flex flex-column text-right">
         <div>
             <Trans>The radio needs to be restarted...</Trans>
         </div>
@@ -110,7 +110,7 @@ const WaitingRadioResetMessage = () => (
 const SubmitError = ({ error }) => (
     <div>
         {error && error === "hotspot ap not found" && (
-            <span class="text-danger">
+            <span className="text-danger">
                 <Trans>
                     The hotspot couldn’t be found, please review the
                     instructions above.
@@ -118,7 +118,7 @@ const SubmitError = ({ error }) => (
             </span>
         )}
         {error && error === "radio has mesh ifaces" && (
-            <span class="text-danger">
+            <span className="text-danger">
                 <Trans>
                     Cannot use Radio 0, it's being used for mesh links
                 </Trans>
@@ -133,7 +133,7 @@ const HotspotPage_ = ({
     isSubmitting,
     waitingRadioReset,
 }) => (
-    <div class="d-flex flex-column container container-padded">
+    <div className="d-flex flex-column container container-padded">
         <p>
             <Trans>
                 Share your mobile connection by connecting the node to a mobile
@@ -147,7 +147,7 @@ const HotspotPage_ = ({
             <CellPhoneInstructions />
         </Collapsible>
         {submitError && <SubmitError error={submitError} />}
-        <div class="mt-1">
+        <div className="mt-1">
             <HotspotPageForm
                 {...{ hotspotData, onSubmit, isSubmitting, waitingRadioReset }}
             />
@@ -155,10 +155,10 @@ const HotspotPage_ = ({
         {waitingRadioReset && <WaitingRadioResetMessage />}
         {hotspotData?.enabled && !waitingRadioReset && (
             <div>
-                <div class="mt-1">
+                <div className="mt-1">
                     <ConnectionToThePhone />
                 </div>
-                <div class="mt-1">
+                <div className="mt-1">
                     <ConnectionToTheInternet />
                 </div>
             </div>

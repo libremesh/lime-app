@@ -18,4 +18,4 @@ export default {
         ["nodeadmin/communityPortal", PortalConfigPage],
         ["nodeadmin/hotspot", HotspotPage],
     ],
-};
+} as LimePlugin;

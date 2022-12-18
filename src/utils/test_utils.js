@@ -19,10 +19,9 @@ i18n.loadLocaleData({
 });
 
 const AllTheProviders = ({ children }) => {
-    // dynamicActivate("en");
     i18n.activate("en");
     return (
-        <I18nProvider i18n={i18n} language="en">
+        <I18nProvider i18n={i18n}>
             <QueryClientProvider client={queryCache}>
                 <SubHeader />
                 {children}

@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-empty-function: "off" */
 import "@testing-library/jest-dom";
 import { act, fireEvent, screen } from "@testing-library/preact";
 import { route } from "preact-router";
