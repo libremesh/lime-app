@@ -13,7 +13,7 @@ const InvalidateVoucher = ({ id }) => {
         return route(`/access/view/${id}`);
     };
     return (
-        <div class={`container container-padded container-center`}>
+        <div className={`container container-padded container-center`}>
             <p>
                 <Trans>
                     If you invalidate this voucher no one will be able to use it

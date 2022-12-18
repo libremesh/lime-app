@@ -7,7 +7,7 @@ import { usePortalConfig } from "../src/piraniaQueries";
 
 export const PortalConfigItem = () => {
     const { data: config, isLoading } = usePortalConfig();
-    let message = "";
+    let message: React.ReactNode = "";
     if (config) {
         if (config.activated && config.with_vouchers) {
             message = <Trans>Enabled, with vouchers</Trans>;

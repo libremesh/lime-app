@@ -12,8 +12,8 @@ import {
     upgradeRevert,
 } from "./firmwareApi";
 
-export function useUpgradeInfo() {
-    return useQuery(["lime-utils", "get_upgrade_info"], getUpgradeInfo, {});
+export function useUpgradeInfo(params) {
+    return useQuery(["lime-utils", "get_upgrade_info"], getUpgradeInfo, params);
 }
 
 function resetSuCounter() {
@@ -35,16 +35,16 @@ export function useUpgradeRevert() {
     });
 }
 
-export function useNewVersion() {
-    return useQuery(["eupgrade", "is_new_version_available"], getNewVersion);
+export function useNewVersion(params) {
+    return useQuery(
+        ["eupgrade", "is_new_version_available"],
+        getNewVersion,
+        params
+    );
 }
 
-export function useDownloadStatus(queryConfig) {
-    return useQuery(
-        ["eupgrade", "download_status"],
-        getDownloadStatus,
-        queryConfig
-    );
+export function useDownloadStatus(params) {
+    return useQuery(["eupgrade", "download_status"], getDownloadStatus, params);
 }
 
 export function useDownloadRelease() {

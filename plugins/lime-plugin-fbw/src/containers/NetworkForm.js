@@ -77,23 +77,23 @@ export const NetworkForm = ({
     }
 
     return (
-        <div class="container container-padded">
+        <div className="container container-padded">
             <h4>
                 <span>
                     <Trans>Configure your new community network</Trans>
                 </span>
             </h4>
-            <label for="community_name">
+            <label htmlFor="community_name">
                 <Trans>Choose a name for your network</Trans>
             </label>
             <input
                 id="community_name"
                 type="text"
                 placeholder={t`Community name`}
-                class="u-full-width"
+                className="u-full-width"
                 onInput={_changeName}
             />
-            <label for="shared_password">
+            <label htmlFor="shared_password">
                 <Trans>
                     Choose a shared password for network administration
                 </Trans>
@@ -102,19 +102,19 @@ export const NetworkForm = ({
                 id="shared_password"
                 type="password"
                 placeholder={t`Password`}
-                class="u-full-width"
+                className="u-full-width"
                 value={state.password}
                 onInput={_changePassword}
             />
             <ValidationMessages password={state.password} />
-            <label for="shared_password_confirm">
+            <label htmlFor="shared_password_confirm">
                 <Trans>Re-enter the shared password</Trans>
             </label>
             <input
                 id="shared_password_confirm"
                 type="password"
                 placeholder={t`Re-enter Password`}
-                class="u-full-width"
+                className="u-full-width"
                 value={state.passwordConfirmation}
                 onInput={_changePasswordConfirmation}
             />
@@ -124,29 +124,29 @@ export const NetworkForm = ({
                         <Trans>The passwords do not match!</Trans>
                     </p>
                 )}
-            <label for="hostname">
+            <label htmlFor="hostname">
                 <Trans>Choose a name for this node</Trans>
             </label>
             <input
                 id="hostname"
                 type="text"
                 placeholder={t`Host name`}
-                class="u-full-width"
+                className="u-full-width"
                 value={state.hostName}
                 onInput={_changeHostName}
             />
-            <div class="row">
-                <div class="six columns">
+            <div className="row">
+                <div className="six columns">
                     <button
-                        class="u-full-width"
+                        className="u-full-width"
                         disabled={!_isValidForm() || isSubmitting}
                         onClick={_createNetwork}
                     >
                         <Trans>Create network</Trans>
                     </button>
                 </div>
-                <div class="six columns">
-                    <button class="u-full-width" onClick={toggleForm(null)}>
+                <div className="six columns">
+                    <button className="u-full-width" onClick={toggleForm(null)}>
                         <Trans>Cancel</Trans>
                     </button>
                 </div>

@@ -92,7 +92,7 @@ export const ScanList = ({
         return (
             <List>
                 {scanned.length > 0 && (
-                    <div class={style.assoclistHeader}>
+                    <div className={style.assoclistHeader}>
                         <Trans>Choose a mesh node to join it's network:</Trans>
                     </div>
                 )}
@@ -115,12 +115,12 @@ export const ScanList = ({
     };
 
     return (
-        <div class="container container-padded">
+        <div className="container container-padded">
             <div>
                 <div>
                     {(status === "scanning" && !selectedNetwork?.apname) ||
                     isLoading ? (
-                        <div style="margin: 20px;">
+                        <div style={{ margin: "20px" }}>
                             <Loading />
                         </div>
                     ) : (
@@ -140,11 +140,11 @@ export const ScanList = ({
                             <NetworksList />
                         </span>
                     ) : null}
-                    <div class="row" style="min-height: 200px;">
-                        <div class="six columns">
+                    <div className="row" style={{ minHeight: "200px" }}>
+                        <div className="six columns">
                             <RescanButton rescan={_rescan} />
                         </div>
-                        <div class="six columns">
+                        <div className="six columns">
                             <CancelButton cancel={_cancel} />
                         </div>
                     </div>

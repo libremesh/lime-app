@@ -13,7 +13,7 @@ import {
 
 const getNotesEpic = (action$, _state$, { wsAPI }) =>
     action$.pipe(
-        ofType(...[NOTES_GET, NOTES_SET_SUCCESS]),
+        ofType(NOTES_GET, NOTES_SET_SUCCESS),
         mergeMap(() => getNotes(wsAPI)),
         map((notes) => ({ type: NOTES_GET_SUCCESS, payload: notes })),
         catchError((error) => [{ type: NOTES_GET_ERROR, payload: error }])

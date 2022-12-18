@@ -14,7 +14,7 @@ export const SafeUpgradeCountdown = ({ counter }) => {
 
     return (
         <div
-            class="subheader-notification"
+            className="subheader-notification"
             style={{ backgroundColor: "#f7a336" }}
         >
             <div>

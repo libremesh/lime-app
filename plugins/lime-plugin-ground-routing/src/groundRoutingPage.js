@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { getGroundRouting } from "./groundRoutingActions";
-import "./style";
+import "./style.less";
 
 const Page = ({ getGroundRouting, loading, configuration }) => {
     useEffect(() => {
@@ -19,7 +19,7 @@ const Page = ({ getGroundRouting, loading, configuration }) => {
     };
 
     return (
-        <div class="container" style={{ paddingTop: "100px" }}>
+        <div className="container" style={{ paddingTop: "100px" }}>
             <h4>
                 <Trans>Ground Routing configuration</Trans>
             </h4>

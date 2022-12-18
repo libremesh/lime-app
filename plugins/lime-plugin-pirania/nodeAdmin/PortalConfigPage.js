@@ -27,7 +27,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
 
     return (
         <Fragment>
-            <form class="flex-grow-1">
+            <form className="flex-grow-1">
                 <p>
                     <Trans>
                         The Community Portal enables a welcome screen to be
@@ -35,7 +35,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                         network using the Community AP
                     </Trans>
                 </p>
-                <div class={switchStyle.toggles}>
+                <div className={switchStyle.toggles}>
                     <input
                         type="checkbox"
                         id="activated"
@@ -59,7 +59,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                         Community Portal to those who have an authorization code
                     </Trans>
                 </p>
-                <div class={switchStyle.toggles}>
+                <div className={switchStyle.toggles}>
                     <input
                         type="checkbox"
                         id="with_vouchers"
@@ -77,12 +77,12 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                     </p>
                 )}
             </form>
-            <div class="d-flex">
-                <div class="ml-auto">
+            <div className="d-flex">
+                <div className="ml-auto">
                     {!isSubmitting && (
                         <button
                             onClick={handleSubmit(onSubmit)}
-                            class="ml-auto"
+                            className="ml-auto"
                         >
                             <Trans>Save</Trans>
                         </button>

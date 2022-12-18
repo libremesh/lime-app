@@ -40,7 +40,6 @@ export const SelectForm = ({
             setNetwork({
                 file: selectedNetwork.file,
                 hostname: selectedNetwork.hostname,
-                network: selectedNetwork.community,
             });
         } else {
             setValidHostnameError(true);
@@ -62,12 +61,12 @@ export const SelectForm = ({
     }
 
     return (
-        <div class="container container-padded">
+        <div className="container container-padded">
             <div>
                 <div>
                     {selectedNetwork.apname ? (
                         <div>
-                            <div class="container">
+                            <div className="container">
                                 <div>
                                     <h4>
                                         <Trans>Join the mesh</Trans>
@@ -78,10 +77,10 @@ export const SelectForm = ({
                                     <input
                                         type="text"
                                         disabled={true}
-                                        class="u-full-width"
+                                        className="u-full-width"
                                         value={selectedNetwork.apname}
                                     />
-                                    <label for="hostname">
+                                    <label htmlFor="hostname">
                                         <Trans>
                                             Choose a name for this node
                                         </Trans>
@@ -90,7 +89,7 @@ export const SelectForm = ({
                                         id="hostname"
                                         type="text"
                                         placeholder={`Host name`}
-                                        class="u-full-width"
+                                        className="u-full-width"
                                         value={selectedNetwork.hostname}
                                         onInput={_changeHostName}
                                     />
@@ -102,15 +101,15 @@ export const SelectForm = ({
                                             selectedNetwork.hostname
                                         ) || isSetNetworkSubmitting
                                     }
-                                    class="u-full-width"
+                                    className="u-full-width"
                                 >
                                     <Trans>Set network</Trans>
                                 </button>
-                                <div class="row">
-                                    <div class="six columns">
+                                <div className="row">
+                                    <div className="six columns">
                                         <CancelButton cancel={cancel} />
                                     </div>
-                                    <div class="six columns">
+                                    <div className="six columns">
                                         <BackButton
                                             goBack={cancelSelectedNetwork}
                                         />

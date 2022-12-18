@@ -1,12 +1,12 @@
-import { i18n } from "@lingui/core";
 import { Plural, Trans } from "@lingui/macro";
 import { route } from "preact-router";
 
 import Copy from "../components/copy";
+import TimeAgo from "../components/timeAgo";
 import style from "../style.less";
 
 const CodesText = ({ vouchers }) => (
-    <div class="text-center">
+    <div className="text-center">
         {vouchers.map((v) => (
             <div key={v.id}>{v.code}</div>
         ))}
@@ -27,16 +27,10 @@ const Duration = ({ days }) => {
 const PostCreate = ({ vouchers }) => {
     const { name, duration_m, activation_deadline } = vouchers[0];
     const durationInDays = duration_m && parseInt(duration_m / (24 * 60), 10);
-    const deadlineText =
-        activation_deadline &&
-        i18n.date(activation_deadline * 1000, {
-            dateStyle: "medium",
-            timeStyle: "medium",
-        });
     return (
-        <div class="d-flex flex-grow-1 flex-column container-padded">
-            <div class="d-flex flex-grow-1 flex-column">
-                <div class="d-flex justify-content-center">
+        <div className="d-flex flex-grow-1 flex-column container-padded">
+            <div className="d-flex flex-grow-1 flex-column">
+                <div className="d-flex justify-content-center">
                     <h3>
                         <Trans>Created vouchers</Trans>
                     </h3>
@@ -45,7 +39,7 @@ const PostCreate = ({ vouchers }) => {
                     text={<CodesText vouchers={vouchers} />}
                     className={style.voucherCode}
                 />
-                <div class="container-padded">
+                <div className="container-padded">
                     <div>
                         <Trans>Description: {name}</Trans>
                     </div>
@@ -54,7 +48,10 @@ const PostCreate = ({ vouchers }) => {
                     </div>
                     {activation_deadline && (
                         <div>
-                            <Trans>Activation deadline: {deadlineText}</Trans>
+                            <Trans>
+                                Activation deadline:{" "}
+                                {TimeAgo({ timestamp: activation_deadline })}
+                            </Trans>
                         </div>
                     )}
                 </div>

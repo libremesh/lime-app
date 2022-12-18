@@ -10,15 +10,29 @@ import {
 import Loading from "components/loading";
 import switchStyle from "components/switch";
 
+type CreateVoucherFormProps = {
+    submitVoucher: () => void;
+    isSubmitting: boolean;
+}
+
+type VoucherForm = {
+    name: string;
+    duration_m: number;
+    qty: number;
+    activation_deadline: string;
+    permanent: boolean;
+    with_activation_deadline: boolean;
+}
+
 const minDate = new Date().toISOString().substring(0, 10);
 
-const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
+const CreateVoucherForm = ({ submitVoucher, isSubmitting }: CreateVoucherFormProps) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
         watch,
-    } = useForm({
+    } = useForm<VoucherForm>({
         defaultValues: {
             duration_m: 1,
             qty: 1,
@@ -30,8 +44,8 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
 
     return (
         <Fragment>
-            <form class="flex-grow-1">
-                <label for="name">
+            <form className="flex-grow-1">
+                <label htmlFor="name">
                     <Trans>Voucher group description</Trans>
                 </label>
                 <span>
@@ -40,78 +54,77 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }) => {
                 <textarea
                     id="name"
                     {...register("name", { required: true, maxLength: 100 })}
-                    class="w-100"
+                    className="w-100"
                 />
                 {errors.name?.type === "required" && <RequiredErrorMsg />}
                 {errors.name?.type === "maxLength" && (
                     <MaxLengthErrorMsg length={100} />
                 )}
-                <div class={switchStyle.toggles}>
+                <div className={switchStyle.toggles}>
                     <input
                         type="checkbox"
-                        name="permanent"
                         id="permanent"
                         {...register("permanent")}
-                        class="w-100"
+                        className="w-100"
                     />
-                    <label for="permanent">
+                    <label htmlFor="permanent">
                         <Trans>Is permanent</Trans>
                     </label>
                 </div>
                 <label
                     style={{ opacity: isPermanent ? 0.3 : 1 }}
-                    for="duration_m"
+                    htmlFor="duration_m"
                 >
                     <Trans>Voucher duration in days</Trans>
                 </label>
                 <input
                     type="number"
                     id="duration_m"
-                    disabled={isPermanent}
+                    disabled={!!isPermanent}
                     {...register("duration_m")}
-                    class="w-100"
+                    className="w-100"
                     min={1}
                 />
-                <label for="quantity">
+                <label htmlFor="quantity">
                     <Trans>Number of vouchers</Trans>
                 </label>
                 <input
                     type="number"
                     id="quantity"
                     {...register("qty")}
-                    class="w-100"
+                    className="w-100"
                     min={1}
                     max={10}
                 />
-                <div class={switchStyle.toggles}>
+                <div className={switchStyle.toggles}>
                     <input
                         type="checkbox"
                         id="with_activation_deadline"
                         {...register("with_activation_deadline")}
-                        class="w-100"
+                        className="w-100"
                     />
-                    <label for="with_activation_deadline">
+                    <label htmlFor="with_activation_deadline">
                         <Trans>Setup activation deadline</Trans>
                     </label>
                 </div>
-                <label for="activation_deadline">
+                <label htmlFor="activation_deadline">
                     <Trans>Activation deadline</Trans>
                 </label>
                 <input
                     type="date"
                     id="activation_deadline"
                     {...register("activation_deadline")}
-                    class="w-100"
+                    className="w-100"
                     disabled={!withActivationDeadline}
                     min={minDate}
                 />
             </form>
-            <div class="d-flex">
-                <div class="ml-auto">
+            <div className="d-flex">
+                <div className="ml-auto">
                     {!isSubmitting && (
                         <button
                             onClick={handleSubmit(submitVoucher)}
-                            class="ml-auto"
+                            className="ml-auto"
                         >
                             <Trans>Create</Trans>
                         </button>

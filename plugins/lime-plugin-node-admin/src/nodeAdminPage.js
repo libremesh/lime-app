@@ -75,8 +75,8 @@ export const Hotspot = () => {
 
 const NodeAdmin = () => {
     return (
-        <div class="container container-padded">
-            <div class="text-center">
+        <div className="container container-padded">
+            <div className="text-center">
                 <h4>
                     <Trans>Node Configuration</Trans>
                 </h4>

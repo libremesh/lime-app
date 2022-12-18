@@ -3,6 +3,14 @@ import Loading from "components/loading";
 
 import style from "./config.style.less";
 
+type ConfigProps = {
+    title: React.ReactNode,
+    subtitle?: React.ReactNode,
+    value: React.ReactNode,
+    onClick: () => void,
+    isLoading: boolean,
+}
+
 export const Config = ({
     title,
     subtitle,
@@ -10,22 +18,22 @@ export const Config = ({
     onClick,
     isLoading,
     ...props
-}) => {
+}: ConfigProps) => {
     return (
         <ListItem onClick={onClick} {...props}>
-            <div class="d-flex flex-grow-1">
+            <div className="d-flex flex-grow-1">
                 <div>
-                    <div class={style.title}> {title} </div>
+                    <div className={style.title}> {title} </div>
                     {isLoading && <Loading />}
                     {!isLoading && (
                         <div>
-                            <div class={style.subtitle}> {subtitle} </div>
-                            <div class={style.value}> {value} </div>
+                            {subtitle && <div className={style.subtitle}> {subtitle} </div>}
+                            <div className={style.value}> {value} </div>
                         </div>
                     )}
                 </div>
-                <div class={style.arrowWrapper}>
-                    <div class={style.arrow}>›</div>
+                <div className={style.arrowWrapper}>
+                    <div className={style.arrow}>›</div>
                 </div>
             </div>
         </ListItem>

@@ -2,7 +2,9 @@ import { createRef } from "preact";
 import { useState } from "preact/hooks";
 
 function selectText(node) {
+    // @ts-ignore
     if (document.body.createTextRange) {
+        // @ts-ignore
         const range = document.body.createTextRange();
         range.moveToElementText(node);
         range.select();
@@ -44,7 +46,7 @@ const Copy = ({ text, className }) => {
     };
 
     return (
-        <div class={className}>
+        <div className={className}>
             <div onClick={handleCopyClick}>
                 <span ref={ref} style={{ marginRight: 10, cursor: "pointer" }}>
                     {text}

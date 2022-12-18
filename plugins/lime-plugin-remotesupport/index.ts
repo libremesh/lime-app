@@ -8,4 +8,4 @@ export default {
     menu: Menu,
     isCommunityProtected: true,
     additionalProtectedRoutes: [["console", ConsoleView]],
-};
+} as LimePlugin;

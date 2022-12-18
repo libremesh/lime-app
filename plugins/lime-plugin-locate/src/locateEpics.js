@@ -15,7 +15,7 @@ import {
 // LOAD INTERFACES -> Dispatch success and stations loads
 const locateLoad = (action$, _state$, { wsAPI }) =>
     action$.pipe(
-        ofType(...[LOCATION_LOAD, LOCATION_CHANGE_SUCCESS]),
+        ofType(LOCATION_LOAD, LOCATION_CHANGE_SUCCESS),
         mergeMap(() => getLocation(wsAPI)),
         map((payload) => ({ type: LOCATION_LOAD_SUCCESS, payload }))
     );
@@ -29,7 +29,7 @@ const locateChange = (action$, _state$, { wsAPI }) =>
 
 const locateLoadlinks = (action$, _state$, { wsAPI }) =>
     action$.pipe(
-        ofType(...[LOCATION_LOAD_LINKS]),
+        ofType(LOCATION_LOAD_LINKS),
         mergeMap(() => getNodesandlinks(wsAPI)),
         map((payload = {}) =>
             payload.result

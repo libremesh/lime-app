@@ -71,7 +71,7 @@ export const Setting = ({ expectedHost, expectedNetwork, delay = 1000 }) => {
     }, delay);
 
     return (
-        <div class="container container-padded">
+        <div className="container container-padded">
             {state.action !== "finish" ? (
                 <div>
                     {state.action === "setting" ? (

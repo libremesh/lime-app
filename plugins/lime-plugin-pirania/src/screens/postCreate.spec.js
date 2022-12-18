@@ -1,7 +1,7 @@
-import { i18n } from "@lingui/core";
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/preact";
 import { route } from "preact-router";
+import * as timeago from "timeago.js";
 import waitForExpect from "wait-for-expect";
 
 import { render } from "utils/test_utils";
@@ -74,13 +74,11 @@ describe("voucher post create screen", () => {
                 { ...v, activation_deadline: 1637952217 },
             ];
         });
-        const date = new Date(vouchers_[0].activation_deadline * 1000);
-        const deadlineText = i18n.date(date, {
-            dateStyle: "medium",
-            timeStyle: "medium",
-        });
+        const timeAgo = timeago.format(
+            new Date(vouchers_[0].activation_deadline * 1000)
+        );
         render(<PostCreate vouchers={vouchers_} />);
-        const text = `Activation deadline: ${deadlineText}`;
+        const text = `Activation deadline: ${timeAgo}`;
         expect(
             await screen.findByText(text.substring(0, text.length - 3).trim(), {
                 exact: false,

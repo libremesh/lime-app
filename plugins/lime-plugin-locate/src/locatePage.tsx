@@ -17,7 +17,8 @@ import {
     toogleEdit,
 } from "./locateActions";
 import { getLat, getLon, isCommunityLocation } from "./locateSelectors";
-import style from "./style";
+import style from "./style.less";
+import L from "leaflet";
 
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
@@ -26,6 +27,7 @@ const openStreetMapAttribution =
 function setupMap() {
     /** Initialize the leaflet map */
     const map = L.map("map-container");
+    // @ts-ignore
     window.map = map;
     // Load layers
     require("leaflet.gridlayer.googlemutant");
@@ -51,6 +53,7 @@ function setupMap() {
     return map;
 }
 
+
 function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
     /** Create a Leaflet layer with community nodes and links to be added to the map*/
     if (nodesData[nodeHostname]) {
@@ -71,6 +74,19 @@ function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
     return layer;
 }
 
+type LocatePageType = {
+    editting: boolean;
+    submitting: boolean;
+    stationLat?: number;
+    stationLon?: number;
+    nodesData: Object;
+    isCommunityLocation: boolean;
+    loadLocation?: () => void;
+    loadLocationLinks?: () => void;
+    changeLocation?: ({ lat, lon }: { lat: number, lon: number}) => {} ;
+    toogleEdit?: (b: boolean) => {} ;
+}
+
 export const LocatePage = ({
     editting,
     submitting,
@@ -82,7 +98,7 @@ export const LocatePage = ({
     loadLocationLinks,
     changeLocation,
     toogleEdit,
-}) => {
+}: LocatePageType) => {
     const { data: boardData } = useBoardData();
     const [loading, setLoading] = useState(true);
     const [assetError, setAssetError] = useState(false);
@@ -106,6 +122,7 @@ export const LocatePage = ({
                 nodeMarker.setLatLng([lat, lon]);
             } else {
                 const marker = L.marker([lat, lon], {
+                    // @ts-ignore
                     icon: L.icon(homeIcon),
                     alt: "node marker",
                 }).addTo(map);
@@ -147,7 +164,7 @@ export const LocatePage = ({
         const position = map.getCenter();
         const lat = position.lat_neg ? position.lat * -1 : position.lat;
         const lon = position.lng_neg ? position.lng * -1 : position.lng;
-        changeLocation({ lat, lon });
+        if (changeLocation) changeLocation({ lat, lon });
         if (communityLayer) {
             // Hide the community view, to avoid outdated links
             toogleCommunityLayer();
@@ -177,11 +194,11 @@ export const LocatePage = ({
     const hasLocation = stationLat && !isCommunityLocation;
 
     function toogleEditFalse() {
-        toogleEdit(false);
+        if (toogleEdit) toogleEdit(false);
     }
 
     function toogleEditTrue() {
-        toogleEdit(true);
+        if (toogleEdit) toogleEdit(true);
     }
 
     if (assetError) {
@@ -249,6 +266,7 @@ export const LocatePage = ({
     );
 };
 
+
 const mapStateToProps = (state) => ({
     stationLat: getLat(state),
     stationLon: getLon(state),
@@ -257,6 +275,7 @@ const mapStateToProps = (state) => ({
     submitting: state.locate.submitting,
     editting: state.locate.editting,
 });
+
 
 const mapDispatchToProps = (dispatch) => ({
     loadLocation: bindActionCreators(loadLocation, dispatch),

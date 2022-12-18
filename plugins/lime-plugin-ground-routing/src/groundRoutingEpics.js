@@ -13,7 +13,7 @@ import {
 
 const getGroundRoutingEpic = (action$, state$, { wsAPI }) =>
     action$.pipe(
-        ofType(...[GROUNDROUTING_GET, GROUNDROUTING_SET_SUCCESS]),
+        ofType(GROUNDROUTING_GET, GROUNDROUTING_SET_SUCCESS),
         mergeMap(() => getGroundRouting(wsAPI, state$.value.meta.sid)),
         map((groundRouting) => ({
             type: GROUNDROUTING_GET_SUCCESS,

@@ -3,12 +3,13 @@ import { route } from "preact-router";
 import Match from "preact-router/match";
 
 export const RebootBanner = () => (
+    // @ts-ignore
     <Match>
         {({ path }) =>
             path !== "/reboot" && (
                 <div
                     data-testid="changes-need-reboot"
-                    class="subheader-notification"
+                    className="subheader-notification"
                     style={{ backgroundColor: "#f7a336" }}
                 >
                     <Trans>A reboot is needed to apply changes</Trans>

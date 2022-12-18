@@ -35,7 +35,7 @@ const RemoteSupportPage = () => {
 
     if (isError) {
         return (
-            <div class="container container-center">
+            <div className="container container-center">
                 Please check that ubus-tmate package is installed
             </div>
         );
@@ -43,7 +43,7 @@ const RemoteSupportPage = () => {
 
     if (loadingInternetStatus || loadingSession) {
         return (
-            <div class="container container-center">
+            <div className="container container-center">
                 <Loading />
             </div>
         );
@@ -66,11 +66,11 @@ const RemoteSupportPage = () => {
 };
 
 export const WithoutInternet_ = () => (
-    <div class="d-flex flex-grow-1 flex-column container container-padded">
+    <div className="d-flex flex-grow-1 flex-column container container-padded">
         <h4>
             <Trans>Ask for remote support</Trans>
         </h4>
-        <p class="bg-error p-05">
+        <p className="bg-error p-05">
             <Trans>Your node has no internet connection</Trans>{" "}
         </p>
         <p>
@@ -100,7 +100,7 @@ export const RemoteSupportPage_ = ({
     onCloseSession,
     onShowConsole,
 }) => (
-    <div class="d-flex flex-grow-1 flex-column container container-padded">
+    <div className="d-flex flex-grow-1 flex-column container container-padded">
         <h4>
             <Trans>Ask for remote support</Trans>
         </h4>
@@ -118,7 +118,7 @@ export const RemoteSupportPage_ = ({
             </div>
         )}
         {openError && (
-            <div class={style.noteError}>
+            <div className={style.noteError}>
                 <b>
                     <Trans>Cannot connect to the remote support server</Trans>
                 </b>
@@ -148,10 +148,10 @@ export const RemoteSupportPage_ = ({
                         give them access to your node
                     </Trans>
                 </p>
-                <div class={style.token}>
+                <div className={style.token}>
                     <pre>{session.rw_ssh}</pre>
                 </div>
-                <div class={style.section}>
+                <div className={style.section}>
                     <h5>
                         <Trans>Show Console</Trans>
                     </h5>
@@ -165,7 +165,7 @@ export const RemoteSupportPage_ = ({
                         <Trans>Show Console</Trans>
                     </button>
                 </div>
-                <div class={style.section}>
+                <div className={style.section}>
                     <h5>
                         <Trans>Close Session</Trans>
                     </h5>
@@ -176,7 +176,10 @@ export const RemoteSupportPage_ = ({
                             with this token again
                         </Trans>
                     </p>
-                    <button class={style.btnDanger} onClick={onCloseSession}>
+                    <button
+                        className={style.btnDanger}
+                        onClick={onCloseSession}
+                    >
                         <Trans>Close Session</Trans>
                     </button>
                 </div>
