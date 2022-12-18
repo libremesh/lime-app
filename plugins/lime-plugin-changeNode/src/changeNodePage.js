@@ -45,7 +45,7 @@ export const ChangeNode = ({ stations, loadStations }) => {
     }
 
     return (
-        <div class="container container-padded">
+        <div className="container container-padded">
             <h4>
                 <Trans>Visit a neighboring node</Trans>
             </h4>
@@ -60,7 +60,7 @@ export const ChangeNode = ({ stations, loadStations }) => {
                         <Trans>Select new node</Trans>
                     </label>
                     <select
-                        class="u-full-width"
+                        className="u-full-width"
                         onChange={handleChange}
                         value={state.station}
                     >
@@ -71,7 +71,7 @@ export const ChangeNode = ({ stations, loadStations }) => {
                         ))}
                     </select>
                 </p>
-                <button class="button block" type="submit">
+                <button className="button block" type="submit">
                     <Trans>Visit</Trans>
                 </button>
             </form>

@@ -6,38 +6,47 @@ import Toast from "components/toast";
 
 import { useTimeoutToggle } from "../hooks/timeoutToggle";
 
+type ConfigPageLayoutProps = {
+    title: React.ReactNode,
+    children: React.ReactNode,
+    isLoading?: boolean,
+    isSuccess?: boolean,
+    isError?: boolean,
+    backUrl?: string,
+}
+
 const ConfigPageLayout = ({
-    isLoading,
     title,
+    isLoading,
     isSuccess,
     isError,
     children,
     backUrl = "/nodeadmin",
-}) => {
+} : ConfigPageLayoutProps) => {
     const showSuccess = useTimeoutToggle(isSuccess, 1500);
     const showError = useTimeoutToggle(isError, 1500);
 
     if (isLoading) {
         return (
-            <div class="container container-center">
+            <div className="container container-center">
                 <Loading />
             </div>
         );
     }
 
     return (
-        <div class="container container-padded d-flex flex-column flex-grow-1">
-            <div class="d-flex">
+        <div className="container container-padded d-flex flex-column flex-grow-1">
+            <div className="d-flex">
                 <div
-                    class="clickable"
+                    className="clickable"
                     aria-label="back"
                     onClick={() => route(backUrl)}
                 >
                     ❮
                 </div>
-                <h4 class="flex-grow-1 text-center">{title}</h4>
+                <h4 className="flex-grow-1 text-center">{title}</h4>
             </div>
-            <div class="d-flex flex-grow-1 flex-column">{children}</div>
+            <div className="d-flex flex-grow-1 flex-column">{children}</div>
             {showSuccess && (
                 <Toast type="success" text={<Trans>Saved</Trans>} />
             )}

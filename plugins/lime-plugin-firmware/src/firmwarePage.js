@@ -14,7 +14,7 @@ const FirmwarePage = ({}) => {
 
     if (isLoading) {
         return (
-            <div class="container container-center">
+            <div className="container container-center">
                 <Loading />
             </div>
         );

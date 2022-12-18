@@ -5,7 +5,7 @@ import {
     pt as ptPlurals,
 } from "make-plural/plurals";
 
-export async function dynamicActivate(locale) {
+export async function dynamicActivate(locale: Locales) {
     let catalog;
     try {
         catalog = await import(`@lingui/loader!../i18n/${locale}/messages.po`);

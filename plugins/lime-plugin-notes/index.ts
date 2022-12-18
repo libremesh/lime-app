@@ -14,4 +14,4 @@ export default {
         reducer,
         constants,
     },
-};
+} as LimePlugin;

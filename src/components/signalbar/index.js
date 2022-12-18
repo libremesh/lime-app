@@ -17,7 +17,7 @@ export const SignalBar = ({ signal, className }) => {
 
     return (
         <span
-            class={className}
+            className={className}
             style={{
                 backgroundColor: signal
                     ? colorScale.getColor(signal * -1)

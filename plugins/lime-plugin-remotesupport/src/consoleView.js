@@ -8,9 +8,11 @@ import { useSession } from "./remoteSupportQueries";
 import style from "./style.less";
 
 export const ConsoleView_ = ({ sessionSrc, goBack }) => (
-    <div class="d-flex flex-column flex-grow-1">
-        <iframe class="flex-grow-1" src={sessionSrc} />
-        <div class={`d-flex justify-content-center ${style.consoleButtons}`}>
+    <div className="d-flex flex-column flex-grow-1">
+        <iframe className="flex-grow-1" src={sessionSrc} />
+        <div
+            className={`d-flex justify-content-center ${style.consoleButtons}`}
+        >
             <button onClick={goBack}>
                 <Trans>Hide Console</Trans>
             </button>
@@ -44,7 +46,7 @@ const ConsoleView = () => {
 
     if (isLoading) {
         return (
-            <div class="container container-center">
+            <div className="container container-center">
                 <Loading />
             </div>
         );

@@ -4,7 +4,7 @@ import { useState } from "preact/hooks";
 import { useBoardData } from "utils/queries";
 
 import { useAppContext } from "../../utils/app.context";
-import style from "./style";
+import style from "./style.less";
 
 export const Header = ({ Menu }) => {
     const { data: boardData } = useBoardData();
@@ -17,7 +17,7 @@ export const Header = ({ Menu }) => {
 
     return (
         <Fragment>
-            <header class={style.header}>
+            <header className={style.header}>
                 {boardData && <h1>{boardData.hostname}</h1>}
                 {boardData && menuEnabled && (
                     <div

@@ -20,7 +20,7 @@ export const Menu = ({ opened, toggle }) => {
                 opened ? style.menuOpened : style.menuClosed
             } d-flex flex-column`}
         >
-            <nav class={style.menuItemsWrapper} onClick={toggle}>
+            <nav className={style.menuItemsWrapper} onClick={toggle}>
                 {plugins
                     .map((plugin) => ({
                         ...plugin,
@@ -38,10 +38,10 @@ export const Menu = ({ opened, toggle }) => {
                     ))}
             </nav>
             {hasCommunityPlugins() && (
-                <nav class={style.viewSwitchWrapper}>
+                <nav className={style.viewSwitchWrapper}>
                     <a
                         href="#0"
-                        class={style.viewSwitch}
+                        className={style.viewSwitch}
                         onClick={changeCurrentView}
                     >
                         {currentView === "node" && (

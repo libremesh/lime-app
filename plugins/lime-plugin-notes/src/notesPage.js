@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-empty-function: "off" */
 import { Trans } from "@lingui/macro";
 import { useEffect, useState } from "preact/hooks";
 import { connect } from "react-redux";
@@ -7,7 +8,7 @@ import { useBoardData } from "utils/queries";
 
 import { getNotes, setNotes } from "./notesActions";
 import { getNotesState } from "./notesSelectors";
-import style from "./style";
+import style from "./style.less";
 
 export const Page = ({ setNotes, getNotes, notes, loading }) => {
     const { data: boardData } = useBoardData();

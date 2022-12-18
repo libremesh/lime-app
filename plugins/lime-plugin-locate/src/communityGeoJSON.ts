@@ -1,3 +1,21 @@
+import type { GeoJsonObject } from "geojson";
+
+interface NodeData {
+    [key: string]: {
+        bleachTTL: number;
+        data: {
+            hostname: string;
+            coordinates: {
+                lon: string;
+                lat: string;
+            };
+            macs: string[];
+            links: string[];
+        };
+        author: string;
+    };
+}
+
 const isObject = (obj) => typeof obj === "object" && obj !== null;
 const coordsToPoint = (coordinates, properties = {}) => ({
     type: "Feature",
@@ -34,9 +52,12 @@ const removeDuplicates = (collection, getIdentifier) => {
     });
 };
 
-export function getCommunityGeoJSON(nodesData, keepClean = null) {
+export function getCommunityGeoJSON(
+    nodesData: NodeData,
+    keepClean = null
+): GeoJsonObject {
     // nodes: {..., {hostname, coordinates, macs, links}} Nodes with potential links
-    let nodes = Object.values(nodesData)
+    const nodes = Object.values(nodesData)
         .map((nodeData) => nodeData.data)
         .filter((n) => isObject(n)) // Filter completely corrupted nodes
         .filter(
@@ -47,18 +68,18 @@ export function getCommunityGeoJSON(nodesData, keepClean = null) {
         .filter((n) => n.macs.length); // Filter nodes without a macs list
 
     // geomac: {mac: [lat, lon]} Coordinates for each mac address
-    let geomac = nodes.map((node) =>
+    const geomac_ = nodes.map((node) =>
         node.macs.map((mac) => [
             mac,
             [Number(node.coordinates.lon), Number(node.coordinates.lat)],
         ])
     );
-    geomac = Object.fromEntries(geomac.flat());
+    const geomac = Object.fromEntries(geomac_.flat());
 
-    let macLinks = nodes.map((node) =>
+    const macLinks_ = nodes.map((node) =>
         node.macs.map((mac) => [mac, node.links])
     );
-    macLinks = Object.fromEntries(macLinks.flat());
+    const macLinks = Object.fromEntries(macLinks_.flat());
 
     // geolink: [..., [[lat,lon], [lat,lon]]] All links as pair of coordinates
     let geolinks = nodes
@@ -88,13 +109,13 @@ export function getCommunityGeoJSON(nodesData, keepClean = null) {
     }
 
     // linksfeatures: [..., GeoJSONFeature:LineString]
-    let linksfeatures = geolinks.map(coordspairToLineString);
+    const linksfeatures = geolinks.map(coordspairToLineString);
 
-    let features = [...nodefeatures, ...linksfeatures];
+    const features = [...nodefeatures, ...linksfeatures];
 
-    let geoJSON = {
+    const geoJSON = {
         type: "FeatureCollection",
         features,
     };
-    return geoJSON;
+    return geoJSON as GeoJsonObject;
 }

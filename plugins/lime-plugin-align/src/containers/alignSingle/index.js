@@ -36,13 +36,13 @@ export const BestSignal = ({ signal }) => {
     if (!bestSignal) return;
 
     return (
-        <div class={style.section}>
+        <div className={style.section}>
             <span>
                 <Trans>Best signal</Trans>:
             </span>
-            <span class={style.bestSignal}>
+            <span className={style.bestSignal}>
                 {bestSignal}
-                <span class={style.unit}>dBm</span>
+                <span className={style.unit}>dBm</span>
             </span>
             <SecondsAgo initialMs={Date.now() - bestSignalTimestamp} />
         </div>
@@ -50,17 +50,17 @@ export const BestSignal = ({ signal }) => {
 };
 
 const SignalBox = ({ signal }) => (
-    <div class="d-flex justify-content-center">
-        <div class="d-flex flex-column">
-            <div class="d-flex">
+    <div className="d-flex justify-content-center">
+        <div className="d-flex flex-column">
+            <div className="d-flex">
                 {signal && (
-                    <div class={signalStyle.signal}>
+                    <div className={signalStyle.signal}>
                         {signal}
-                        <span class={signalStyle.unit}>dBm</span>
+                        <span className={signalStyle.unit}>dBm</span>
                     </div>
                 )}
                 {!signal && (
-                    <div class={style.notAssociated}>
+                    <div className={style.notAssociated}>
                         <Trans>Signal lost</Trans>
                     </div>
                 )}
@@ -91,20 +91,23 @@ const AlignSingle = ({ iface, mac }) => {
     }
 
     return (
-        <div class="d-flex flex-grow-1 flex-column container-padded">
-            <div class="d-flex">
-                <button class={style.backArrow} onClick={() => route("/align")}>
+        <div className="d-flex flex-grow-1 flex-column container-padded">
+            <div className="d-flex">
+                <button
+                    className={style.backArrow}
+                    onClick={() => route("/align")}
+                >
                     ←
                 </button>
             </div>
             <SignalBox
                 signal={station && station.associated && station.signal}
             />
-            <div class={style.section}>
+            <div className={style.section}>
                 <div>
                     <Trans>With radio {fromRadio} alignin with</Trans>
                 </div>
-                <div class={style.hostname}>{bathost.hostname}</div>
+                <div className={style.hostname}>{bathost.hostname}</div>
                 {toRadio && (
                     <div>
                         <Trans>On its radio {toRadio}</Trans>
@@ -113,7 +116,7 @@ const AlignSingle = ({ iface, mac }) => {
             </div>
             <BestSignal signal={station && station.signal} />
             {station && !station.associated && (
-                <div class={style.section}>
+                <div className={style.section}>
                     <span>
                         <Trans>Last packet</Trans>:{" "}
                         <SecondsAgo initialMs={station.inactive} isStatic />

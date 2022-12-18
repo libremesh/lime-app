@@ -7,6 +7,7 @@ class FetchStory extends Component {
     }
 
     componentWillUnmount() {
+        // @ts-ignore
         if (fetchMock.__prevProxy === this) {
             this.unmock();
         }
@@ -18,6 +19,7 @@ class FetchStory extends Component {
 
         const mocks = this.props.mocks;
         if (mocks) {
+            // @ts-ignore
             mocks.forEach((mock) => {
                 fetchMock.mock({
                     ...mock,
@@ -57,8 +59,10 @@ class FetchStory extends Component {
 
             // Allow unmocked requests to fall through
             fetchMock.catch((...args) =>
+                // @ts-ignore
                 fetchMock.realFetch.apply(window, args)
             );
+            // @ts-ignore
             fetchMock.__prevProxy = this;
         }
     }
@@ -66,6 +70,7 @@ class FetchStory extends Component {
     unmock() {
         if (typeof fetchMock.restore === "function") {
             fetchMock.restore();
+            // @ts-ignore
             delete fetchMock.__prevProxy;
         }
     }

@@ -1,8 +1,8 @@
-import { i18n } from "@lingui/core";
 import "@testing-library/jest-dom";
 import { act, fireEvent, screen } from "@testing-library/preact";
 import each from "jest-each";
 import { route } from "preact-router";
+import * as timeago from "timeago.js";
 import waitForExpect from "wait-for-expect";
 
 import queryCache from "utils/queryCache";
@@ -21,12 +21,6 @@ const voucher = {
     creation_date: now - 700e3,
     status: "available",
     author_node: "ml-luandro",
-};
-
-const formatDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    const text = i18n.date(date, { dateStyle: "medium", timeStyle: "medium" });
-    return text;
 };
 
 describe("Voucher details", () => {
@@ -59,7 +53,8 @@ describe("Voucher details", () => {
 
     it("shows the voucher creation date", async () => {
         render(<Voucher id={voucher.id} />);
-        const text = `Creation date: ${formatDate(voucher.creation_date)}`;
+        const timeAgo = timeago.format(new Date(voucher.creation_date * 1000));
+        const text = `Creation date: ${timeAgo}`;
         expect(
             await screen.findByText(text.substring(0, text.length - 3).trim(), {
                 exact: false,
@@ -96,7 +91,10 @@ describe("Voucher details", () => {
         };
         listVouchers.mockImplementation(async () => [voucher_]);
         render(<Voucher id={voucher_.id} />);
-        const text = `Activation date: ${formatDate(voucher_.activation_date)}`;
+        const timeAgo = timeago.format(
+            new Date(voucher_.activation_date * 1000)
+        );
+        const text = `Activation date: ${timeAgo}`;
         expect(
             await screen.findByText(text.substring(0, text.length - 3).trim(), {
                 exact: false,
@@ -112,7 +110,10 @@ describe("Voucher details", () => {
         };
         listVouchers.mockImplementation(async () => [voucher_]);
         render(<Voucher id={voucher_.id} />);
-        const text = `Expiration date: ${formatDate(voucher_.expiration_date)}`;
+        const timeAgo = timeago.format(
+            new Date(voucher_.expiration_date * 1000)
+        );
+        const text = `Expiration date: ${timeAgo}`;
         expect(
             await screen.findByText(text.substring(0, text.length - 3).trim(), {
                 exact: false,

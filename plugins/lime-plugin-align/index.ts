@@ -10,4 +10,4 @@ export default {
         name: "align",
     },
     additionalRoutes: [["align-single/:iface/:mac", AlignSingle]],
-};
+} as LimePlugin;

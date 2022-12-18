@@ -8,7 +8,7 @@ export default {
     menu: Menu,
     isCommunityProtected: true,
     additionalRoutes: [["releaseInfo", UpgradeAvailabeInfo]],
-};
+} as LimePlugin;
 
 export { SafeUpgradeCountdown } from "./src/upgradeCountdown";
 export { UpgradeAvailableBanner } from "./src/upgradeAvailable";
