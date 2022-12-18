@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import { ComponentChildren } from "preact";
 
+=======
+>>>>>>> 7089250 (fix(typescript): Fix typescript no strict mode)
 import { ListItem } from "components/list";
 import Loading from "components/loading";
 
@@ -29,12 +32,7 @@ export const Config = ({
                     {isLoading && <Loading />}
                     {!isLoading && (
                         <div>
-                            {subtitle && (
-                                <div className={style.subtitle}>
-                                    {" "}
-                                    {subtitle}{" "}
-                                </div>
-                            )}
+                            {subtitle && <div className={style.subtitle}> {subtitle} </div>}
                             <div className={style.value}> {value} </div>
                         </div>
                     )}
