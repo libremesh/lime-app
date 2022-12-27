@@ -1,6 +1,4 @@
-
-
-import { Trans } from '@lingui/macro';
+import { Trans } from "@lingui/macro";
 
 export const RxMenu = () => (
 	<span>
