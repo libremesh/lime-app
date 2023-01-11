@@ -40,7 +40,7 @@ const style = {
     },
 };
 
-const Box = ({ station, gateway, loading, updateImLoading }) => {
+const Box = ({ station, gateway, loading }) => {
     const {
         data: metrics,
         isFetching: metricsIsLoading,
@@ -49,12 +49,6 @@ const Box = ({ station, gateway, loading, updateImLoading }) => {
     } = useMetrics(station.ip, {
         refetchOnWindowFocus: false,
         enabled: true,
-        onSuccess: () => {
-            updateImLoading(station.ip, false);
-        },
-        onError: () => {
-            updateImLoading(station.ip, false);
-        },
     });
 
     const { data: settings } = useCommunitySettings();
@@ -70,7 +64,6 @@ const Box = ({ station, gateway, loading, updateImLoading }) => {
     }
 
     function onClick() {
-        updateImLoading(station.ip, true);
         getMetrics();
     }
 

@@ -1,6 +1,5 @@
 import { i18n } from "@lingui/core";
 import { Trans, defineMessage } from "@lingui/macro";
-import { useState } from "preact/hooks";
 
 import { useBoardData } from "utils/queries";
 import queryCache from "utils/queryCache";
@@ -43,29 +42,6 @@ const style = {
 
 export const Metrics = () => {
     const { data: boardData } = useBoardData();
-    const [measuresAreLoading, setMeasuresAreLoading] = useState([]);
-
-    const updateMeasureIsLoading = (ip, isLoading) => {
-        if (measuresAreLoading.length > 0) {
-            const next = measuresAreLoading.map((station) => {
-                if (station.ip === ip) {
-                    return {
-                        ...station,
-                        isLoading,
-                    };
-                }
-                return station;
-            });
-            setMeasuresAreLoading(next);
-        }
-    };
-
-    const isAMeasureLoading = () => {
-        for (const m of measuresAreLoading) {
-            if (m.isLoading === true) return true;
-        }
-        return false;
-    };
 
     const {
         data: internet,
@@ -83,14 +59,6 @@ export const Metrics = () => {
     } = usePath({
         refetchOnWindowFocus: false,
         enabled: false,
-        onSuccess: (path) => {
-            setMeasuresAreLoading(
-                path?.map((station) => ({
-                    ip: station.ip,
-                    isLoading: true,
-                }))
-            );
-        },
     });
 
     const {
@@ -119,10 +87,10 @@ export const Metrics = () => {
             msg = defineMessage({
                 message: "Calculating network path",
             });
-        } else if (isAMeasureLoading()) {
-            msg = defineMessage({
-                message: "Measuring links",
-            });
+            // } else if (isAMeasureLoading()) {
+            //     msg = defineMessage({
+            //         message: "Measuring links",
+            //     });
         } else if (gatewayNotFound || internetError) {
             msg = defineMessage({
                 message: "Load last known Internet path",
@@ -160,7 +128,7 @@ export const Metrics = () => {
         return hostname === gateway;
     }
 
-    const isLoading = gatewayIsLoading || pathIsLoading || isAMeasureLoading();
+    const isLoading = gatewayIsLoading || pathIsLoading;
 
     return (
         <div class="container container-padded" style={{ textAlign: "center" }}>
@@ -175,7 +143,6 @@ export const Metrics = () => {
                         station={station}
                         gateway={isGateway(station.ip, gateway.ip)}
                         loading={isLoading}
-                        updateImLoading={updateMeasureIsLoading}
                     />
                 ))}
             <div style={style.box}>
