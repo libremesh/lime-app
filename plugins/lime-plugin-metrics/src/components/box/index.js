@@ -1,87 +1,128 @@
+import { Trans } from "@lingui/macro";
+import colorScale from "simple-color-scale";
 
+import Loading from "components/loading";
 
-import colorScale from 'simple-color-scale';
+import { useCommunitySettings } from "utils/queries";
 
-import { Trans } from '@lingui/macro';
-
-import Loading from 'components/loading';
+import { useMetrics } from "../../metricsQueries";
 
 const style = {
-	box: {
-		margin: '3px',
-		padding: '10px',
-		background: '#f5f5f5',
-		textAalign: 'center',
-		transition: 'height 04s ease',
-		overflow: 'hidden',
-		height: 'auto',
-		cursor: 'pointer'
-	},
-	loading: {
-		margin: '3px',
-		padding: '10px',
-		background: '#f5f5f5',
-		textAalign: 'center',
-		overflow: 'hidden',
-		height: '34px',
-		transition: 'height 04s ease'
-	},
-	line: {
-		margin: '0 auto',
-		height: '8px',
-		backgroundColor: '#ccc'
-	},
-	gateway: {
-		marginButtom: '0px',
-		marginTop: '-9px',
-		fontSize: '2.4rem',
-		lineHeight: '1.35'
-	}
+    box: {
+        margin: "3px",
+        padding: "10px",
+        background: "#f5f5f5",
+        textAalign: "center",
+        transition: "height 04s ease",
+        overflow: "hidden",
+        height: "auto",
+        cursor: "pointer",
+    },
+    loading: {
+        margin: "3px",
+        padding: "10px",
+        background: "#f5f5f5",
+        textAalign: "center",
+        overflow: "hidden",
+        height: "auto",
+        transition: "height 04s ease",
+    },
+    line: {
+        margin: "0 auto",
+        height: "8px",
+        backgroundColor: "#ccc",
+    },
+    gateway: {
+        marginButtom: "0px",
+        marginTop: "-9px",
+        fontSize: "2.4rem",
+        lineHeight: "1.35",
+    },
 };
 
+const Box = ({ station, gateway, loading, updateImLoading }) => {
+    const {
+        data: metrics,
+        isFetching: metricsIsLoading,
+        // isError: metricsIsError,
+        refetch: getMetrics,
+    } = useMetrics(station.ip, {
+        refetchOnWindowFocus: false,
+        enabled: true,
+        onSuccess: () => {
+            updateImLoading(station.ip, false);
+        },
+        onError: () => {
+            updateImLoading(station.ip, false);
+        },
+    });
 
-const Box = ({ station, settings, loading, click, gateway }) => {
-	function barStyle(loss) {
-		return Object.assign({},style.line,{
-			width: `${((station.bandwidth*100/settings.good_bandwidth) || 3).toString()}%`,
-			maxWidth: '100%',
-			backgroundColor: colorScale.getColor(loss)
-		});
-	}
+    const { data: settings } = useCommunitySettings();
 
-	function isGateway(gateway, hostname){
-		return (gateway === true)? `${hostname  } (Gateway)` : hostname;
-	}
+    function barStyle(loss) {
+        return Object.assign({}, style.line, {
+            width: `${(
+                (metrics.bandwidth * 100) / settings.good_bandwidth || 3
+            ).toString()}%`,
+            maxWidth: "100%",
+            backgroundColor: colorScale.getColor(loss),
+        });
+    }
 
-	function onClick() {
-		click(station.host.ip);
-	}
+    function onClick() {
+        updateImLoading(station.ip, true);
+        getMetrics();
+    }
 
-	colorScale.setConfig({
-		outputStart: 1,
-		outputEnd: 100,
-		inputStart: 0,
-		inputEnd: settings.acceptable_loss
-	});
-	return (
-		<div style={(station.loading && !loading)? style.loading: style.box} onClick={onClick} >
-			<span>
-				<b>{isGateway(gateway, station.host.hostname)}
-					{ Number(station.bandwidth || '0') === 0 && station.loss
-						? <b> (<Trans>Error</Trans>)</b>
-						:false}
-				</b><br /></span>
-			{loading
-				? (<Loading />)
-				: station.bandwidth
-					? (<div>
-						{station.bandwidth} Mbps / <span><Trans>Packet loss</Trans></span> {station.loss}%<br />
-						<div style={barStyle(station.loss)} />
-					</div>)
-					:false
-			}
-		</div>
-	);
+    // colorScale.setConfig({
+    // 	outputStart: 1,
+    // 	outputEnd: 100,
+    // 	inputStart: 0,
+    // 	inputEnd: settings.acceptable_loss
+    // });
+    const stationName = station.hostname === "" ? station.ip : station.hostname;
+
+    const loadingMetrics = metrics === undefined || metricsIsLoading;
+
+    return (
+        <div
+            style={loadingMetrics && !loading ? style.loading : style.box}
+            onClick={onClick}
+        >
+            <span>
+                <b>
+                    {gateway === true
+                        ? `${stationName} (Gateway)`
+                        : stationName}
+                    {metrics !== undefined &&
+                    Number(metrics.bandwidth || "0") === 0 &&
+                    metrics.loss ? (
+                        <b>
+                            {" "}
+                            (<Trans>Error</Trans>)
+                        </b>
+                    ) : (
+                        false
+                    )}
+                </b>
+                <br />
+            </span>
+            {loadingMetrics ? (
+                <Loading />
+            ) : metrics !== undefined && metrics.bandwidth ? (
+                <div>
+                    {metrics.bandwidth} Mbps /{" "}
+                    <span>
+                        <Trans>Packet loss</Trans>
+                    </span>{" "}
+                    {metrics.loss}%<br />
+                    <div style={barStyle(metrics.loss)} />
+                </div>
+            ) : (
+                false
+            )}
+        </div>
+    );
 };
 
 export default Box;

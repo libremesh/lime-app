@@ -1,22 +1,15 @@
 import { i18n } from "@lingui/core";
 import { Trans, defineMessage } from "@lingui/macro";
-import { useEffect } from "preact/hooks";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import colorScale from "simple-color-scale";
+import { useState } from "preact/hooks";
 
-import { Box } from "components/box";
-
-import { useBoardData, useCommunitySettings } from "utils/queries";
+import { useBoardData } from "utils/queries";
+import queryCache from "utils/queryCache";
 
 import { useInternetStatus } from "../../lime-plugin-rx/src/rxQueries";
 import MetricsBox from "./components/box";
-import {
-    getMetrics,
-    getMetricsAll,
-    getMetricsGateway,
-    getNodeMetrics,
-} from "./metricsActions";
+import { InternetStatus } from "./components/internetStatus";
+import { ShowPathButton } from "./components/showPathButton";
+import { useGateway, usePath } from "./metricsQueries";
 
 const style = {
     textLoading: {
@@ -48,204 +41,156 @@ const style = {
     },
 };
 
-export const Metrics = ({
-    getNodeMetrics,
-    getMetricsAll,
-    getMetricsGateway,
-    metrics,
-}) => {
+export const Metrics = () => {
     const { data: boardData } = useBoardData();
-    const { data: communitySettings } = useCommunitySettings();
+    const [measuresAreLoading, setMeasuresAreLoading] = useState([]);
+
+    const updateMeasureIsLoading = (ip, isLoading) => {
+        if (measuresAreLoading.length > 0) {
+            const next = measuresAreLoading.map((station) => {
+                if (station.ip === ip) {
+                    return {
+                        ...station,
+                        isLoading,
+                    };
+                }
+                return station;
+            });
+            setMeasuresAreLoading(next);
+        }
+    };
+
+    const isAMeasureLoading = () => {
+        for (const m of measuresAreLoading) {
+            if (m.isLoading === true) return true;
+        }
+        return false;
+    };
+
     const {
         data: internet,
-        isLoading: loadingInternet,
+        isLoading: isInternetLoading,
         refetch: getInternetStatus,
     } = useInternetStatus();
 
-    function clickGateway(gateway) {
-        return () => {
-            getMetricsGateway(gateway);
-            getInternetStatus();
-        };
-    }
+    const internetError =
+        !internet?.IPv4?.working ?? !internet?.IPv6?.working ?? true;
 
-    function showButton(loading) {
-        if (!loading) {
-            return !isGateway(boardData.hostname, metrics.gateway) ? (
-                <div class="row">
-                    <br />
-                    <button
-                        class="button block u-full-width"
-                        type="submit"
-                        onClick={clickGateway(metrics.gateway)}
-                    >
-                        <Trans>Only gateway</Trans>
-                    </button>
-                    <button
-                        class="button block u-full-width"
-                        type="submit"
-                        onClick={getMetricsAll}
-                    >
-                        <Trans>Full path metrics</Trans>
-                    </button>
-                </div>
-            ) : (
-                <div class="row">
-                    <br />
-                    <p>
-                        <b>
-                            <Trans>This node is the gateway</Trans>
-                        </b>
-                        <br />
-                        <Trans>
-                            You don't go through any paths to get here.
-                        </Trans>
-                    </p>
-                </div>
+    const {
+        data: path,
+        isFetching: pathIsLoading,
+        refetch: getPath,
+    } = usePath({
+        refetchOnWindowFocus: false,
+        enabled: false,
+        onSuccess: (path) => {
+            setMeasuresAreLoading(
+                path?.map((station) => ({
+                    ip: station.ip,
+                    isLoading: true,
+                }))
             );
-        }
-        return <div />;
-    }
+        },
+    });
+
+    const {
+        data: gateway,
+        isFetching: gatewayIsLoading,
+        isError: gatewayNotFound,
+        refetch: getMetricsGateway,
+    } = useGateway({
+        refetchOnWindowFocus: false,
+        enabled: true,
+        onSuccess: getPath,
+        onError: getPath,
+    });
 
     function showLoading(loading) {
         if (!loading) {
             return;
         }
 
-        const loadingMessages = {
-            metrics_status_gateway: defineMessage({
+        let msg = "";
+        if (gatewayIsLoading) {
+            msg = defineMessage({
                 message: "Searching gateway",
-            }),
-            metrics_status_path: defineMessage({
+            });
+        } else if (pathIsLoading) {
+            msg = defineMessage({
                 message: "Calculating network path",
-            }),
-            metrics_status_stations: defineMessage({
+            });
+        } else if (isAMeasureLoading()) {
+            msg = defineMessage({
                 message: "Measuring links",
-            }),
-            load_last_known_internet_path: defineMessage({
+            });
+        } else if (gatewayNotFound || internetError) {
+            msg = defineMessage({
                 message: "Load last known Internet path",
-            }),
-        };
-
-        return (
-            <p style={style.textLoading}>
-                {i18n._(loadingMessages[metrics.status])}
-            </p>
-        );
-    }
-
-    function showInternetStatus() {
-        if (!loadingInternet) {
-            return (
-                <Box
-                    title={<Trans>Internet connection</Trans>}
-                    style={{ marginTop: "15px" }}
-                >
-                    <span>
-                        <b>
-                            {" "}
-                            {internet.IPv4.working === true ? (
-                                <span style={{ color: "green" }}>✔</span>
-                            ) : (
-                                <span style={{ color: "red" }}>✘</span>
-                            )}{" "}
-                            IPv4{" "}
-                        </b>
-                        <b>
-                            {" "}
-                            {internet.IPv6.working === true ? (
-                                <span style={{ color: "green" }}>✔</span>
-                            ) : (
-                                <span style={{ color: "red" }}>✘</span>
-                            )}{" "}
-                            IPv6{" "}
-                        </b>
-                        <b>
-                            {" "}
-                            {internet.DNS.working === true ? (
-                                <span style={{ color: "green" }}>✔</span>
-                            ) : (
-                                <span style={{ color: "red" }}>✘</span>
-                            )}{" "}
-                            DNS{" "}
-                        </b>
-                    </span>
-                </Box>
-            );
+            });
         }
-        return <div />;
+
+        return <p style={style.textLoading}>{i18n._(msg)}</p>;
     }
 
-    function showError(error) {
-        if (error !== null) {
+    function showError() {
+        if (gatewayNotFound || internetError) {
             return (
                 <p style={style.textError}>
                     <Trans>This your last working path to the Internet</Trans>
                 </p>
             );
         }
-        return;
+    }
+
+    async function getAllMetrics() {
+        await getMetricsGateway();
+        await queryCache.invalidateQueries({
+            queryKey: ["lime-metrics", "get_metrics"],
+        });
+    }
+
+    async function getGatewayMetrics() {
+        getInternetStatus();
+        await queryCache.invalidateQueries({
+            queryKey: ["lime-metrics", "get_metrics", gateway?.ip],
+        });
     }
 
     function isGateway(hostname, gateway) {
         return hostname === gateway;
     }
 
-    useEffect(() => {
-        if (!boardData.hostname) return;
-        getMetricsGateway(boardData.hostname);
-        getInternetStatus();
-        colorScale.setConfig({
-            outputStart: 1,
-            outputEnd: 100,
-            inputStart: 0,
-            inputEnd: 30,
-        });
-        return () => {};
-    }, [boardData, getMetricsGateway, getInternetStatus]);
+    const isLoading = gatewayIsLoading || pathIsLoading || isAMeasureLoading();
 
     return (
         <div class="container container-padded" style={{ textAlign: "center" }}>
-            {metrics.loading
-                ? showLoading(metrics.loading)
-                : metrics.error.map((x) => showError(x))}
+            {isLoading ? showLoading(isLoading) : showError()}
             <div style={style.box}>
                 <Trans>From</Trans> {boardData.hostname}
             </div>
-            {metrics.metrics.map((station, key) => (
-                <MetricsBox
-                    settings={communitySettings}
-                    station={station}
-                    gateway={isGateway(station.host.hostname, metrics.gateway)}
-                    loading={
-                        metrics.loading &&
-                        station.loading &&
-                        (key === 0 ||
-                            metrics.metrics[key - 1].loading === false)
-                    }
-                    click={getNodeMetrics}
-                    key={key}
-                />
-            ))}
+            {path &&
+                path.map((station, key) => (
+                    <MetricsBox
+                        key={key}
+                        station={station}
+                        gateway={isGateway(station.ip, gateway.ip)}
+                        loading={isLoading}
+                        updateImLoading={updateMeasureIsLoading}
+                    />
+                ))}
             <div style={style.box}>
                 <Trans>To Internet</Trans>
             </div>
-            {showInternetStatus(metrics.loading)}
-            {showButton(metrics.loading)}
+            <InternetStatus isLoading={isInternetLoading} internet={internet} />
+            <ShowPathButton
+                isLoading={isLoading}
+                isGateway={isGateway(boardData?.hostname, gateway?.hostname)}
+                getMetricsAll={getAllMetrics}
+                getGatewayMetrics={getGatewayMetrics}
+            />
             <br />
         </div>
     );
 };
 
-const mapStateToProps = (state) => ({
-    metrics: state.metrics,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    getMetrics: bindActionCreators(getMetrics, dispatch),
-    getMetricsGateway: bindActionCreators(getMetricsGateway, dispatch),
-    getMetricsAll: bindActionCreators(getMetricsAll, dispatch),
-    getNodeMetrics: bindActionCreators(getNodeMetrics, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Metrics);
+export default Metrics;

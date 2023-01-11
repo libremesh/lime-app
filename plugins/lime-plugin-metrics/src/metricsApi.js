@@ -1,13 +1,10 @@
-import { map } from 'rxjs/operators';
+import api from "utils/uhttpd.service";
 
-export const getMetrics = (api, params) => api.call('lime-metrics', 'get_metrics', params).pipe(
-	map(result => Object.assign({}, result, { target: params.target }))
-);
+export const getMetrics = (ip) =>
+    api.call("lime-metrics", "get_metrics", { target: ip });
 
-export const getAllMetrics = (api, params) => params.targets.map(x => getMetrics(api, { target: x }));
+export const getGateway = () =>
+    api.call("lime-metrics", "get_gateway", {}).then((res) => res.gateway);
 
-export const getGateway = (api) => api.call('lime-metrics', 'get_gateway', {});
-
-export const getPath = (api, params) => api.call('lime-metrics', 'get_path', params);
-
-export const getLastKnownPath = (api, params) => api.call('lime-metrics', 'get_last_internet_path', params);
+export const getPath = () =>
+    api.call("lime-metrics", "get_path", {}).then((res) => res.path);
