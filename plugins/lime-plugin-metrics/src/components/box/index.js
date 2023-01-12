@@ -44,11 +44,10 @@ const Box = ({ station, gateway, loading }) => {
     const {
         data: metrics,
         isFetching: metricsIsLoading,
-        // isError: metricsIsError,
         refetch: getMetrics,
     } = useMetrics(station.ip, {
         refetchOnWindowFocus: false,
-        enabled: true,
+        enabled: false,
     });
 
     const { data: settings } = useCommunitySettings();
@@ -75,7 +74,7 @@ const Box = ({ station, gateway, loading }) => {
     // });
     const stationName = station.hostname === "" ? station.ip : station.hostname;
 
-    const loadingMetrics = metrics === undefined || metricsIsLoading;
+    const loadingMetrics = metrics?.status === "fetching" || metricsIsLoading;
 
     return (
         <div

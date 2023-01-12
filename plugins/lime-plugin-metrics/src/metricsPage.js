@@ -1,5 +1,6 @@
 import { i18n } from "@lingui/core";
 import { Trans, defineMessage } from "@lingui/macro";
+import { useEffect } from "preact/hooks";
 
 import { useBoardData } from "utils/queries";
 import queryCache from "utils/queryCache";
@@ -8,7 +9,7 @@ import { useInternetStatus } from "../../lime-plugin-rx/src/rxQueries";
 import MetricsBox from "./components/box";
 import { InternetStatus } from "./components/internetStatus";
 import { ShowPathButton } from "./components/showPathButton";
-import { useGateway, usePath } from "./metricsQueries";
+import { useAllMetrics, useGateway, usePath } from "./metricsQueries";
 
 const style = {
     textLoading: {
@@ -61,6 +62,19 @@ export const Metrics = () => {
         enabled: false,
     });
 
+    const { refetch: getAllMetrics, isFetching: metricsIsLoading } =
+        useAllMetrics(path?.map((station) => station.ip) ?? [], {
+            refetchOnWindowFocus: false,
+            enabled: false,
+            initialData: [],
+        });
+
+    useEffect(() => {
+        if (path) {
+            getAllMetrics();
+        }
+    }, [path]);
+
     const {
         data: gateway,
         isFetching: gatewayIsLoading,
@@ -87,10 +101,10 @@ export const Metrics = () => {
             msg = defineMessage({
                 message: "Calculating network path",
             });
-            // } else if (isAMeasureLoading()) {
-            //     msg = defineMessage({
-            //         message: "Measuring links",
-            //     });
+        } else if (metricsIsLoading) {
+            msg = defineMessage({
+                message: "Measuring links",
+            });
         } else if (gatewayNotFound || internetError) {
             msg = defineMessage({
                 message: "Load last known Internet path",
@@ -110,16 +124,14 @@ export const Metrics = () => {
         }
     }
 
-    async function getAllMetrics() {
+    async function refetchGetAllMetrics() {
         await getMetricsGateway();
-        await queryCache.invalidateQueries({
-            queryKey: ["lime-metrics", "get_metrics"],
-        });
+        await getAllMetrics();
     }
 
     async function getGatewayMetrics() {
         getInternetStatus();
-        await queryCache.invalidateQueries({
+        await queryCache.fetchQuery({
             queryKey: ["lime-metrics", "get_metrics", gateway?.ip],
         });
     }
@@ -128,7 +140,7 @@ export const Metrics = () => {
         return hostname === gateway;
     }
 
-    const isLoading = gatewayIsLoading || pathIsLoading;
+    const isLoading = gatewayIsLoading || pathIsLoading || metricsIsLoading;
 
     return (
         <div class="container container-padded" style={{ textAlign: "center" }}>
@@ -152,7 +164,7 @@ export const Metrics = () => {
             <ShowPathButton
                 isLoading={isLoading}
                 isGateway={isGateway(boardData?.hostname, gateway?.hostname)}
-                getMetricsAll={getAllMetrics}
+                getMetricsAll={refetchGetAllMetrics}
                 getGatewayMetrics={getGatewayMetrics}
             />
             <br />
