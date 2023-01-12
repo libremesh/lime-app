@@ -44,6 +44,7 @@ const Box = ({ station, gateway, loading }) => {
     const {
         data: metrics,
         isFetching: metricsIsLoading,
+        isError,
         refetch: getMetrics,
     } = useMetrics(station.ip, {
         refetchOnWindowFocus: false,
@@ -74,7 +75,7 @@ const Box = ({ station, gateway, loading }) => {
     // });
     const stationName = station.hostname === "" ? station.ip : station.hostname;
 
-    const loadingMetrics = metrics?.status === "fetching" || metricsIsLoading;
+    const loadingMetrics = metricsIsLoading;
 
     return (
         <div
@@ -86,9 +87,10 @@ const Box = ({ station, gateway, loading }) => {
                     {gateway === true
                         ? `${stationName} (Gateway)`
                         : stationName}
-                    {metrics !== undefined &&
-                    Number(metrics.bandwidth || "0") === 0 &&
-                    metrics.loss ? (
+                    {(metrics !== undefined &&
+                        Number(metrics.bandwidth || "0") === 0 &&
+                        metrics.loss) ||
+                    isError ? (
                         <b>
                             {" "}
                             (<Trans>Error</Trans>)
