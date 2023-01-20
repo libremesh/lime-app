@@ -1,14 +1,10 @@
 import { Trans, plural } from "@lingui/macro";
-import { useEffect, useState } from "preact/hooks";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
 
 import { Box } from "components/box";
 
 import { useBatHost, useBoardData } from "utils/queries";
 
-import { getNodeStatus, getNodeStatusTimer, stopTimer } from "./rxActions";
-import { getNodeData, isLoading } from "./rxSelectors";
+import { useInternetStatus, useNodeStatus } from "./rxQueries";
 
 function stripIface(hostIface) {
     return hostIface.split("_wlan")[0].replace("_", "-");
@@ -37,20 +33,11 @@ const toHHMMSS = (seconds, plus) => {
 };
 
 const SystemBox = ({ uptime, firmwareVersion, boardModel }) => {
-    const [count, setCount] = useState(0);
+    // The plus was used because the refetch interval was every two seconds for trying to not refetch timer every two sec.
+    // But, this is buggie and advance the timer more that what is needed. At my opinion (kon) is better to refetch every
+    // two seconds and check a more elegant way to resolve this
+    let actualUptime = toHHMMSS(uptime, 0);
 
-    useEffect(() => {
-        const interval = setInterval(async () => {
-            setCount((prevCount) => prevCount + 1);
-        }, 1000);
-        return () => clearInterval(interval);
-    }, []);
-
-    let actualUptime = "?";
-    if (typeof uptime !== "undefined") {
-        actualUptime = toHHMMSS(uptime, count);
-    }
-    actualUptime = toHHMMSS(uptime, count);
     return (
         <Box title={<Trans>System</Trans>}>
             <span>
@@ -125,14 +112,11 @@ const MostActiveBox = ({ node, changeNode }) => {
     );
 };
 
-export const Page = ({
-    getNodeStatusTimer,
-    getNodeStatus,
-    stopTimer,
-    isLoading,
-    nodeData,
-}) => {
+const Page = ({}) => {
     const { data: boardData, isLoading: loadingBoardData } = useBoardData();
+
+    const { data: nodeStatusData, isLoading } = useNodeStatus({});
+    const { data: internet } = useInternetStatus();
 
     function loading(option, nodeData) {
         if (!option && !loadingBoardData) {
@@ -165,7 +149,7 @@ export const Page = ({
                         <span>
                             <b>
                                 {" "}
-                                {node.internet.IPv4.working === true ? (
+                                {internet.IPv4.working === true ? (
                                     <span style={{ color: "#38927f" }}>✔</span>
                                 ) : (
                                     <span style={{ color: "#b11" }}>✘</span>
@@ -174,7 +158,7 @@ export const Page = ({
                             </b>
                             <b>
                                 {" "}
-                                {node.internet.IPv6.working === true ? (
+                                {internet.IPv6.working === true ? (
                                     <span style={{ color: "#38927f" }}>✔</span>
                                 ) : (
                                     <span style={{ color: "#b11" }}>✘</span>
@@ -183,7 +167,7 @@ export const Page = ({
                             </b>
                             <b>
                                 {" "}
-                                {node.internet.DNS.working === true ? (
+                                {internet.DNS.working === true ? (
                                     <span style={{ color: "#38927f" }}>✔</span>
                                 ) : (
                                     <span style={{ color: "#b11" }}>✘</span>
@@ -209,28 +193,24 @@ export const Page = ({
         }
     }
 
-    useEffect(() => {
-        getNodeStatusTimer();
-        getNodeStatus();
-        return stopTimer;
-    }, [getNodeStatusTimer, getNodeStatus, stopTimer]);
-
     return (
         <div className="container container-padded">
-            {loading(isLoading, nodeData)}
+            {loading(isLoading, nodeStatusData)}
         </div>
     );
 };
 
-export const mapStateToProps = (state) => ({
-    nodeData: getNodeData(state),
-    isLoading: isLoading(state),
-});
+export default Page;
 
-export const mapDispatchToProps = (dispatch) => ({
-    getNodeStatusTimer: bindActionCreators(getNodeStatusTimer, dispatch),
-    getNodeStatus: bindActionCreators(getNodeStatus, dispatch),
-    stopTimer: bindActionCreators(stopTimer, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
+// export const mapStateToProps = (state) => ({
+//     nodeData: getNodeData(state),
+//     isLoading: isLoading(state),
+// });
+//
+// export const mapDispatchToProps = (dispatch) => ({
+//     getNodeStatusTimer: bindActionCreators(getNodeStatusTimer, dispatch),
+//     getNodeStatus: bindActionCreators(getNodeStatus, dispatch),
+//     stopTimer: bindActionCreators(stopTimer, dispatch),
+// });
+//
+// export default connect(mapStateToProps, mapDispatchToProps)(Page);
