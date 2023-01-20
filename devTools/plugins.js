@@ -16,8 +16,7 @@ export default {
 `
 
 const menuContent = (name, menuName) =>
-    `import { h } from 'preact';
-import { Trans } from '@lingui/macro';
+    `import { Trans } from '@lingui/macro';
 
 const Menu = () => (
 	<a href={'#/${name.toLowerCase()}'}><Trans>${menuName || name}</Trans></a>
@@ -30,7 +29,6 @@ const pageContent = (name) => {
     const componentName = name.charAt(0).toUpperCase() + name.slice(1);
     return (
         `// ${componentName} will be rendered when navigating to this plugin
-import { h } from 'preact';
 import style from './${name}Style.less';
 import { useSomething } from './${name}Queries';
 
@@ -47,7 +45,7 @@ export default ${componentName};
 
 const queriesContent = (name) =>
     `// Here you define queries and mutations which connects the api with your components
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { getSomething } from './${name}Api';
 
 export const useSomething = () => useQuery(['package', 'command'], getSomething);
@@ -87,7 +85,6 @@ const specContent = (name) => {
         `// Here you define tests that closely resemble how your component is used
 // Using the testing-library: https://testing-library.com
 
-import { h } from 'preact';
 import { screen, cleanup, act } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import { render } from 'utils/test_utils';

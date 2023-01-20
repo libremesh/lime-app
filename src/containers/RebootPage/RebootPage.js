@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { route } from 'preact-router';
 import { Trans } from '@lingui/macro';
 
@@ -6,8 +6,8 @@ import { useReboot, useSetNeedReboot } from 'utils/queries';
 import Loading from 'components/loading';
 
 const RebootPage = () => {
-	const [ reboot, { isLoading, isSuccess }] = useReboot();
-	const [ setNeedReboot ] = useSetNeedReboot();
+	const { mutate: reboot, isLoading, isSuccess } = useReboot();
+	const { mutate: setNeedReboot } = useSetNeedReboot();
 
 	function cancel() {
 		setNeedReboot('no');

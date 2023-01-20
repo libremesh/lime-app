@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { useEffect, useState } from 'preact/hooks';
 
 import { useBatHost } from 'utils/queries';

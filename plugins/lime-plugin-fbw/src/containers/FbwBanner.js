@@ -5,11 +5,10 @@ import { Trans } from '@lingui/macro';
 import { useDismissFbw } from '../FbwQueries';
 import { route } from 'preact-router';
 import { useAppContext } from 'utils/app.context';
-import { h } from 'preact'
 
 export const FbwBanner = ({ toggleForm }) => {
 	const [notShowAgain, setnotShowAgain] = useState(false);
-	const [dismissFbw] = useDismissFbw();
+	const { mutate: dismissFbw } = useDismissFbw();
 	const { cancelFbw } = useAppContext();
 
 	const fbwRoute = 'firstbootwizard'

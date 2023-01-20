@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import style from './config.style.less';
 import Loading from 'components/loading';
 import { ListItem } from 'components/list';

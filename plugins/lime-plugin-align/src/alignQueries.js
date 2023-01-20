@@ -1,6 +1,6 @@
 import { getAssocList, getMeshIfaces } from './alignApi';
 import { sortBySignal, markAssociated } from './utils';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export function useMeshIfaces(queryConfig) {
 	return useQuery(['lime-utils', 'get_mesh_ifaces'], getMeshIfaces, queryConfig);

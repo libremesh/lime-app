@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { useEffect } from 'preact/hooks';
 
 import './style';

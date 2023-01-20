@@ -4,7 +4,7 @@ export default {
     title: 'Containers/Node Configuration'
 }
 
-export const NodeAdmin = () => <NodeAdminPage />
+export const NodeAdmin = (args) => <NodeAdminPage {...args} />;
 NodeAdmin.args = {
     queries: [
         [['lime-utils', 'get_wifi_data'], {

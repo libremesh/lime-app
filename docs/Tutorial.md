@@ -78,8 +78,6 @@ Now we are ready to define the tests of the component. Each part is explained in
 ```javascript
 // File at: lime-plugin-remotesupport/remoteSupport.spec.js
 
-// Import Preact pragma, needed to render components using jsx.
-import { h } from 'preact';
 // Import utils from the Testing Library
 import { fireEvent, cleanup, act, screen } from '@testing-library/preact';
 import '@testing-library/jest-dom';
@@ -263,7 +261,7 @@ Without further delay, let's implement them, each part is explained in the comme
 // Path: lime-plugin-remotesupport/src/remoteSupportQueries.js
 
 // Import react-query hooks
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 // Import the singleton instance of QueryCache.
 import queryCache from 'utils/queryCache';
 import { getSession, openSession, closeSession } from './remoteSupportApi'
@@ -303,7 +301,6 @@ Let's see how our component that passes the tests is implemented.
 
 ```javascript
 // File Path: lime-plugin-remotesupport/src/remoteSupportPage.js
-import { h } from 'preact';
 import { useSession, useOpenSession, useCloseSession } from './remoteSupportQueries';
 import Loading from 'components/loading';
 // We use lingui for internazionalization
@@ -484,7 +481,6 @@ To add a link to our new screen in the mesnu, we have to define an index.js file
 
 ```javascript
 // Path: lime-plugin-remotesupport/index.js
-import { h } from 'preact';
 import { Trans } from '@lingui/macro';
 import RemoteSupportPage from './src/remoteSupportPage';
 

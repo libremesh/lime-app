@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { useForm } from 'react-hook-form';
 import { useWifiData, useSetupRoamingAP } from '../nodeAdminQueries';
 import ConfigPageLayout from '../layouts/configPageLayout';
@@ -15,9 +15,8 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
             <form class="flex-grow-1">
                 <div class={switchStyle.toggles}>
                     <input type="checkbox"
-                        name="enableRoamingAP"
                         id="enableRoamingAP"
-                        ref={register()}
+                        {...register("enableRoamingAP")}
                     />
                     <label htmlFor="enableRoamingAP"><Trans>Enable Community Roaming AP</Trans></label>
                 </div>
@@ -40,7 +39,7 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
 
 const RoamingAPPage = () => {
     const { data: wifiData, isLoading } = useWifiData();
-    const [setupRoamingAP, { isLoading: isSubmitting, isSuccess, isError }] = useSetupRoamingAP();
+    const { mutate: setupRoamingAP, isLoading: isSubmitting, isSuccess, isError } = useSetupRoamingAP();
     const apSsid = wifiData?.community_ap?.ssid;
     const communityName = wifiData?.community_ap.ssid;
 

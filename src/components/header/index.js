@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { useState } from 'preact/hooks';
 import { useAppContext } from '../../utils/app.context';
 import style from './style';

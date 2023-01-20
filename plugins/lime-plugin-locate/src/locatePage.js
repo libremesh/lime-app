@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { h } from 'preact';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { useState, useEffect } from 'preact/hooks';

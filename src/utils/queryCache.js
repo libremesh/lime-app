@@ -1,19 +1,19 @@
-import { QueryCache, setConsole } from 'react-query';
+import { QueryClient } from "@tanstack/react-query";
 
-setConsole({
-	log: () => {},
-	warn: () => {},
-	error: () => {}
-})
-
-const queryCache = new QueryCache({
-	defaultConfig: {
-		queries: {
-			staleTime: Infinity,
-			refetchOnMount: false,
-			retry: 0
-		}
-	}
+const queryCache = new QueryClient({
+    defaultConfig: {
+        queries: {
+            staleTime: Infinity,
+            refetchOnMount: false,
+            retry: 0,
+        },
+    },
+    logger: {
+        log: console.log,
+        warn: console.warn,
+        // ✅ no more errors on the console for tests
+        error: process.env.NODE_ENV === "test" ? () => {} : console.error,
+    },
 });
 
 export default queryCache;

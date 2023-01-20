@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { screen, cleanup, act, fireEvent } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 import { render } from 'utils/test_utils';
@@ -6,10 +6,10 @@ import queryCache from 'utils/queryCache';
 
 import { ConnectionToThePhone, ConnectionToTheInternet } from './testBoxes';
 import { getStatus } from '../hotspotApi';
-import { checkInternet } from 'utils/api';
+import { getChangesNeedReboot, getSession, checkInternet } from 'utils/api';
 
-jest.mock('../hotspotApi');
 jest.mock('utils/api');
+jest.mock('../hotspotApi');
 
 describe('ConnectionToThePhone TestBox', () => {
     beforeAll(() => {
@@ -21,11 +21,17 @@ describe('ConnectionToThePhone TestBox', () => {
     });
 
     beforeEach(() => {
-        getStatus.mockImplementation(async () => ({ enabled: true, connected: false }));
+        getChangesNeedReboot.mockImplementation(async () => false);
+        getSession.mockImplementation(async () => ({
+            username: "root",
+        }));
+        getStatus.mockImplementation(async () => ({
+            enabled: true,
+            connected: false,
+        }));
     });
 
     afterEach(() => {
-        getStatus.mockClear();
         cleanup();
         act(() => queryCache.clear());
     });
@@ -71,11 +77,18 @@ describe('ConnectionToThePhone TestBox', () => {
 
 describe('ConnectionToTheInternet TestBox', () => {
     beforeEach(() => {
-        checkInternet.mockImplementation(async () => ({ connected: false }));
+        getChangesNeedReboot.mockImplementation(async () => ({
+            "need-reboot": "no",
+        }));
+        getSession.mockImplementation(async () => ({
+            username: "root",
+        }));
+        checkInternet.mockImplementation(async () => ({
+            connected: false,
+        }));
     });
 
     afterEach(() => {
-        checkInternet.mockClear();
         cleanup();
         act(() => queryCache.clear());
     });

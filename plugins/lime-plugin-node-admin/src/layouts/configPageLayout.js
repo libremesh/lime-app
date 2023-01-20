@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { useTimeoutToggle } from '../hooks/timeoutToggle';
 import { route } from 'preact-router';
 import Loading from 'components/loading';

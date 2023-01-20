@@ -1,4 +1,4 @@
-import { h } from "preact";
+
 import Loading from 'components/loading';
 import { useHotspotData } from '../hotspotQueries';
 import { useCheckInternet } from 'utils/queries';

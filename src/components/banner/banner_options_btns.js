@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import style from './style.less';
 
 export const BannerOptionCancelButton = ({description, action, btnText}) => (

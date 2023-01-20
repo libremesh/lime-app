@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { useState } from 'preact/hooks';
 
 import '../style.less';
@@ -17,7 +17,7 @@ export const NetworkForm = ({toggleForm, setExpectedHost, setExpectedNetwork}) =
 		passwordConfirmation: ''
 	});
 
-	const [createNetwork, { isLoading: isSubmitting}] = useCreateNetwork({
+	const { mutate: createNetwork, isLoading: isSubmitting } = useCreateNetwork({
 		onSuccess: () => {
 			setExpectedHost(state.hostName)
 			setExpectedNetwork(state.communityName)

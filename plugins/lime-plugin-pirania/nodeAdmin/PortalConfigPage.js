@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { route } from 'preact-router';
 import { useForm } from 'react-hook-form';
 import { usePortalConfig, useSetPortalConfig } from '../src/piraniaQueries';
@@ -35,9 +35,8 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                 </p>
                 <div class={switchStyle.toggles}>
                     <input type="checkbox"
-                        name="activated"
                         id="activated"
-                        ref={register()}
+                        {...register("activated")}
                     />
                     <label htmlFor="activated"><Trans>Enable Portal in Community AP</Trans></label>
                 </div>
@@ -54,9 +53,8 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                 </p>
                 <div class={switchStyle.toggles}>
                     <input type="checkbox"
-                        name="with_vouchers"
                         id="with_vouchers"
-                        ref={register()}
+                        {...register("with_vouchers")}
                     />
                     <label htmlFor="with_vouchers"><Trans>Use vouchers for access</Trans></label>
                 </div>
@@ -84,7 +82,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
 
 export const PortalConfigPage = () => {
     const { data: config, isLoading } = usePortalConfig();
-    const [setPortalConfig, { isLoading: isSubmitting, isSuccess, isError }] = useSetPortalConfig();
+    const { mutate: setPortalConfig, isLoading: isSubmitting, isSuccess, isError } = useSetPortalConfig();
 
     return (
         <ConfigPageLayout {...{

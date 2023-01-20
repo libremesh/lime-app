@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { render } from "utils/test_utils";
 import { getPortalConfig } from '../src/piraniaApi';
 import { PortalConfigItem } from './PortalConfigItem';

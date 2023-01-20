@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from 'react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { enable, disable, getStatus } from './hotspotApi';
 import queryCache from 'utils/queryCache';
 

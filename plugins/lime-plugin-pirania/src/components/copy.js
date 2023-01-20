@@ -1,4 +1,4 @@
-import { h, createRef } from "preact";
+import { createRef } from "preact";
 import { useState } from "preact/hooks";
 
 function selectText(node) {

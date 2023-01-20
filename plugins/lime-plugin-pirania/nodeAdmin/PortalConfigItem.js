@@ -1,4 +1,4 @@
-import { h } from 'preact';
+
 import { Config } from 'plugins/lime-plugin-node-admin/src/components/config';
 import { usePortalConfig } from '../src/piraniaQueries';
 import { route } from 'preact-router';

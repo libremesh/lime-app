@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { Collapsible } from 'components/collapsible';
 
 export default {
@@ -18,18 +17,26 @@ const Content = () => (
     </p>
 );
 
-export const collapsed = () => (
+export const Collapsed = (args) => (
     <div style={{ padding: '20px' }}>
-        <Collapsible title={'SomeTitle'} initCollapsed={true}>
+        <Collapsible {...args}>
             <Content />
         </Collapsible>
     </div>
 );
+Collapsed.args = {
+    title: 'Some Title',
+    initCollapsed: true,
+}
 
-export const nonCollapsed = () => (
+export const NonCollapsed = (args) => (
     <div style={{ padding: '20px' }}>
-        <Collapsible title={'SomeTitle'} initCollapsed={false}>
+        <Collapsible {...args}>
             <Content />
         </Collapsible>
     </div>
 );
+NonCollapsed.args = {
+    title: 'Some Title',
+    initCollapsed: false,
+}

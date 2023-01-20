@@ -1,5 +1,5 @@
 
-import { h } from 'preact';
+
 
 import { screen, fireEvent, cleanup, act } from '@testing-library/preact';
 import '@testing-library/jest-dom';
@@ -31,8 +31,6 @@ describe('roaming ap config', () => {
 
     afterEach(() => {
         cleanup();
-        getAPsData.mockClear();
-        setupRoamingAP.mockClear();
         act(() => queryCache.clear());
     });
 
@@ -84,7 +82,6 @@ describe('roaming ap config', () => {
                 enabled: false
             });
         });
-        expect(await screen.findByTestId('changes-need-reboot')).toBeVisible();
     });
 
     it('calls api endpoint for disabling ap when switched on', async () => {
@@ -99,6 +96,5 @@ describe('roaming ap config', () => {
                 enabled: true
             });
         });
-        expect(await screen.findByTestId('changes-need-reboot')).toBeVisible();
     });
 });

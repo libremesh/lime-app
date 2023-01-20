@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { SignalBar } from 'components/signalbar';
 import signalStyle from 'components/signalbar/style.less';
 import { ListItem } from 'components/list';

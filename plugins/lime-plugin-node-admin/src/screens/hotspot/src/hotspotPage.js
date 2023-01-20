@@ -1,4 +1,4 @@
-import { h, Fragment } from 'preact';
+import { Fragment } from 'preact';
 import { useForm } from 'react-hook-form';
 import { useToggleHotspot, useHotspotData } from './hotspotQueries';
 import {
@@ -22,9 +22,8 @@ const HotspotPageForm = ({ hotspotData, onSubmit, isSubmitting, waitingRadioRese
             <form class="flex-grow-1">
                 <div class={switchStyle.toggles}>
                     <input type="checkbox"
-                        name="enabled"
                         id="enabled"
-                        ref={register()}
+                        {...register("enabled")}
                     />
                     <label htmlFor="enabled">
                         <Trans>Connect to a Mobile Hotspot</Trans>
@@ -127,7 +126,7 @@ const HotspotPage_ = ({ submitError, hotspotData, onSubmit, isSubmitting, waitin
 
 const HotspotPage = () => {
     const { data: hotspotData, isLoading, refetch } = useHotspotData();
-    const [toggle, { error: submitError, isError, isLoading: isSubmitting, isSuccess }] = useToggleHotspot();
+    const { mutate: toggle, error: submitError, isError, isLoading: isSubmitting, isSuccess } = useToggleHotspot();
     const waitingRadioReset = hotspotData?.waitingForRadioReset;
 
     useEffect(() => {

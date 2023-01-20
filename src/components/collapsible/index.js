@@ -1,4 +1,4 @@
-import { h } from "preact";
+
 import { useToggle } from 'react-use';
 import style from './style.less';
 

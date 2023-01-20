@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import style from './style.less';
 import { Trans } from '@lingui/macro';
 

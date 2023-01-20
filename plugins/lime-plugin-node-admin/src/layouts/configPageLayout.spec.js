@@ -1,20 +1,28 @@
-
-import { h } from 'preact';
-
 import { screen, fireEvent } from '@testing-library/preact';
 import '@testing-library/jest-dom';
 
 import { render } from 'utils/test_utils';
 import { route } from 'preact-router';
 import ConfigPageLayout from './configPageLayout';
+import { getChangesNeedReboot, getSession } from "utils/api";
+
+jest.mock("utils/api");
 
 const findBackArrow = async () =>
     screen.findByLabelText('back');
 
-
 describe('config layout', () => {
+    beforeEach(() => {
+        getChangesNeedReboot.mockImplementation(async () => ({
+            "need-reboot": "no",
+        }));
+        getSession.mockImplementation(async () => ({
+			username: "root",
+        }));
+    });
+
     it('renders the title for the config', async() => {
-        render(<ConfigPageLayout title={"My Config"} />);
+        render(<ConfigPageLayout title="My Config" />);
         expect(await screen.findByText('My Config')).toBeInTheDocument();
     });
 

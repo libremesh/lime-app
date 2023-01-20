@@ -1,6 +1,4 @@
-import { h } from 'preact';
-import { action } from '@storybook/addon-actions';
-import { array } from '@storybook/addon-knobs';
+import { action } from "@storybook/addon-actions";
 
 import { ChangeNode } from './src/changeNodePage';
 
@@ -14,14 +12,16 @@ export default {
 	component: ChangeNode
 };
 
-
-export const changeNodeScreen = () => (
-	<ChangeNode
-		stations={array('Mesh hosts',[
-			'ql-anaymarcos',
-			'ql-graciela',
-			'ql-czuk-bbone'
-		])}
-		{...actions}
-	/>
+export const changeNodeScreen = (args) => (
+    <ChangeNode
+        {...actions}
+        {...args}
+    />
 );
+changeNodeScreen.args = {
+    stations: [
+        "ql-anaymarcos",
+        "ql-graciela",
+        "ql-czuk-bbone",
+    ],
+}

@@ -1,7 +1,7 @@
-import { h } from 'preact';
+
 import Router from 'preact-router';
-import { ReactQueryCacheProvider } from 'react-query';
-import { ReactQueryDevtools } from 'react-query-devtools';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import { Provider } from 'react-redux';
 import { store } from '../store';
@@ -73,9 +73,9 @@ const Routes = () => (
 
 const App = () => {
 	const { data: session } = useSession();
-	const [login] = useLogin();
+	const { mutate: login } = useLogin();
 	const { data: boardData } = useBoardData(
-		{enabled: session && session.username}
+		{enabled: session && session.username !== undefined}
 	);
 
 	useEffect(() => {
@@ -107,13 +107,13 @@ const AppDefault = () => {
 	}, []);
 	return (
 		<I18nProvider i18n={i18n} >
-			<ReactQueryCacheProvider queryCache={queryCache}>
+			<QueryClientProvider client={queryCache}>
 				<AppContextProvider>
 					<Provider store={store}>
 						<App />
 					</Provider>
 				</AppContextProvider>
-			</ReactQueryCacheProvider>
+			</QueryClientProvider>
 		</I18nProvider >
 	);
 };
