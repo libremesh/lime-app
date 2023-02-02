@@ -1,18 +1,15 @@
-
-
-import { screen, fireEvent, cleanup, act, waitFor } from '@testing-library/preact';
-import '@testing-library/jest-dom';
-import waitForExpect from 'wait-for-expect';
+import "@testing-library/jest-dom";
+import { act, fireEvent, screen, waitFor } from "@testing-library/preact";
 
 import { getBoardData, getChangesNeedReboot, getSession } from "utils/api";
-import { render } from 'utils/test_utils';
-import queryCache from 'utils/queryCache';
+import queryCache from "utils/queryCache";
+import { render } from "utils/test_utils";
 
-import HostnamePage from './hostname';
-import { changeHostname } from '../nodeAdminApi';
+import { changeHostname } from "../nodeAdminApi";
+import HostnamePage from "./hostname";
 
 jest.mock("utils/api");
-jest.mock('../nodeAdminApi');
+jest.mock("../nodeAdminApi");
 
 const fillAndSubmitForm = async (hostname, expectHostname = undefined) => {
     expectHostname = expectHostname === undefined ? hostname : expectHostname;
@@ -22,7 +19,7 @@ const fillAndSubmitForm = async (hostname, expectHostname = undefined) => {
     fireEvent.click(await screen.findByRole("button", { name: /save/i }));
 };
 
-describe('hostname config', () => {
+describe("hostname config", () => {
     beforeEach(() => {
         getBoardData.mockImplementation(async () => ({
             hostname: "node-hostname",
@@ -38,15 +35,15 @@ describe('hostname config', () => {
         act(() => queryCache.clear());
     });
 
-    it('lets you change the hostname', async () => {
+    it("lets you change the hostname", async () => {
         render(<HostnamePage />);
         await fillAndSubmitForm("new-hostname");
         await waitFor(() => {
-            expect(changeHostname).toBeCalledWith('new-hostname');
+            expect(changeHostname).toHaveBeenCalledWith("new-hostname");
         });
     });
 
-    it('shows an error message when hostname length is less than 3', async () => {
+    it("shows an error message when hostname length is less than 3", async () => {
         render(<HostnamePage />);
         await fillAndSubmitForm("fo");
         // await waitFor(() => {
@@ -54,14 +51,14 @@ describe('hostname config', () => {
         //         screen.getByText(/the name should have at least 3 characters/i)
         //     ).toBeInTheDocument();
         // });
-        expect(changeHostname).not.toBeCalled();
+        expect(changeHostname).not.toHaveBeenCalled();
     });
 
-    it('slugifies users input', async () => {
+    it("slugifies users input", async () => {
         render(<HostnamePage />);
         await fillAndSubmitForm("foo_foo foo", "foo-foo-foo");
         await waitFor(() => {
-            expect(changeHostname).toBeCalledWith('foo-foo-foo');
+            expect(changeHostname).toHaveBeenCalledWith("foo-foo-foo");
         });
     });
 });

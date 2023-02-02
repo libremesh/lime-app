@@ -1,32 +1,31 @@
 header {
-  flex: 0 1 auto;
-  display: flex;
-	height: 56px;
-	padding: 0;
-	background: #38927f	;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-
-	h1 {
-    flex: auto;
-		margin: 0;
-		padding: 0 15px;
-		font-size: 24px;
-		line-height: 56px;
-		font-weight: 400;
-		color: #FFF;
-  }
-
-	.menuIcon {
     flex: 0 1 auto;
-		display: block;
-		margin-left: auto;
-		cursor: pointer;
-		padding: 15px;
-		color: #fff;
-		font-weight: bolder;
-	}
-}
+    display: flex;
+    height: 56px;
+    padding: 0;
+    background: #38927f;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 
+    h1 {
+        flex: auto;
+        margin: 0;
+        padding: 0 15px;
+        font-size: 24px;
+        line-height: 56px;
+        font-weight: 400;
+        color: #fff;
+    }
+
+    .menuIcon {
+        flex: 0 1 auto;
+        display: block;
+        margin-left: auto;
+        cursor: pointer;
+        padding: 15px;
+        color: #fff;
+        font-weight: bolder;
+    }
+}
 
 /* -----------------------------------------------------------------------------
   HAMBURGER ICONS COMPONENT
@@ -35,12 +34,12 @@ header {
 
 // vars
 
-@button-width: 35px;                    // The width of the button area
-@button-height: 35px;                   // The height of the button area
-@bar-thickness: 2px;                    // The thickness of the button bars
-@button-pad: 7px;                      // The left/right padding between button area and bars.
-@button-bar-space: 5px;                // The spacing between button bars
-@button-transistion-duration: 0.3s;     // The transition duration
+@button-width: 35px; // The width of the button area
+@button-height: 35px; // The height of the button area
+@bar-thickness: 2px; // The thickness of the button bars
+@button-pad: 7px; // The left/right padding between button area and bars.
+@button-bar-space: 5px; // The spacing between button bars
+@button-transistion-duration: 0.3s; // The transition duration
 
 /**
  * Toggle Switch Globals
@@ -51,100 +50,101 @@ header {
  */
 
 .hamburger {
-  display: block;
-  float:right;
-  position: relative;
-  overflow: hidden;
-  margin: 10px;
-  padding: 0;
-  width: @button-width;
-  height: @button-height;
-  font-size: 0;
-  text-indent: -9999px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  box-shadow: none;
-  border-radius: none;
-  border: none;
-  cursor: pointer;
+    display: block;
+    float: right;
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    padding: 0;
+    width: @button-width;
+    height: @button-height;
+    font-size: 0;
+    text-indent: -9999px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    box-shadow: none;
+    border-radius: none;
+    border: none;
+    cursor: pointer;
 }
 
 .hamburger:focus {
-  outline: none;
+    outline: none;
 }
 
 .hamburger span {
-  display: block;
-  position: absolute;
-  top: (@button-height / 2) - (@bar-thickness / 2);
-  left: @button-pad;
-  right: @button-pad;
-  height: @bar-thickness;
-  background: rgb(255,255,255);
+    display: block;
+    position: absolute;
+    top: (@button-height / 2) - (@bar-thickness / 2);
+    left: @button-pad;
+    right: @button-pad;
+    height: @bar-thickness;
+    background: rgb(255, 255, 255);
 }
 
 .hamburger span::before,
 .hamburger span::after {
-  position: absolute;
-  display: block;
-  left: 0;
-  width: 100%;
-  height: @bar-thickness;
-  background-color: #fff;
-  content: "";
+    position: absolute;
+    display: block;
+    left: 0;
+    width: 100%;
+    height: @bar-thickness;
+    background-color: #fff;
+    content: "";
 }
 
 .hamburger span::before {
-  top: -@bar-thickness - @button-bar-space;
+    top: -@bar-thickness - @button-bar-space;
 }
 
 .hamburger span::after {
-  bottom: -@bar-thickness - @button-bar-space;
+    bottom: -@bar-thickness - @button-bar-space;
 }
 
 .hamburger {
-  background-color: #325850;
+    background-color: #325850;
 }
 
 .hamburger span {
-  transition: background 0s @button-transistion-duration;
+    transition: background 0s @button-transistion-duration;
 }
 
 .hamburger span::before,
 .hamburger span::after {
-  transition-duration: @button-transistion-duration, @button-transistion-duration;
-  transition-delay: @button-transistion-duration, 0s;
+    transition-duration: @button-transistion-duration,
+        @button-transistion-duration;
+    transition-delay: @button-transistion-duration, 0s;
 }
 
 .hamburger span::before {
-  transition-property: top, transform;
+    transition-property: top, transform;
 }
 
 .hamburger span::after {
-  transition-property: bottom, transform;
+    transition-property: bottom, transform;
 }
 
 /* active state, i.e. menu open */
 
 .isActive {
-  background-color: darken(#325850, 20%);
+    background-color: darken(#325850, 20%);
 }
 
 .isActive span {
-  background: none;
+    background: none;
 }
 
 .isActive span::before {
-  top: 0;
-  transform: rotate(45deg);
+    top: 0;
+    transform: rotate(45deg);
 }
 
 .isActive span::after {
-  bottom: 0;
-  transform: rotate(-45deg);
+    bottom: 0;
+    transform: rotate(-45deg);
 }
 
 .isActive span::before,
 .isActive span::after {
-  transition-delay: 0s, @button-transistion-duration;
+    transition-delay: 0s, @button-transistion-duration;
 }

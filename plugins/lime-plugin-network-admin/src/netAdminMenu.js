@@ -1,7 +1,7 @@
-
-
-import { Trans } from '@lingui/macro';
+import { Trans } from "@lingui/macro";
 
 export const NetAdminMenu = () => (
-	<a href='#/netadmin'><Trans>Network Configuration</Trans></a>
+    <a href="#/netadmin">
+        <Trans>Network Configuration</Trans>
+    </a>
 );

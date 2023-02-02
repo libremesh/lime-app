@@ -1,1 +1,1 @@
-export { default as RebootPage } from './RebootPage';
+export { default as RebootPage } from "./RebootPage";

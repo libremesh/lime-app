@@ -1,15 +1,15 @@
 {
-  "trailingComma": "es5",
-  "tabWidth": 4,
-  "semi": true,
-  "importOrder": [
-    "^components/(.*)$",
-    "^containers/(.*)$",
-    "^plugins/(.*)$",
-    "^utils/(.*)$",
-    "^~/(.*)$",
-    "^[./]"
-  ],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "importOrder": [
+        "^components/(.*)$",
+        "^containers/(.*)$",
+        "^plugins/(.*)$",
+        "^utils/(.*)$",
+        "^~/(.*)$",
+        "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
 }

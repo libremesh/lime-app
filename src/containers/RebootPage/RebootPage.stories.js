@@ -1,7 +1,7 @@
-import { RebootPage } from './';
+import { RebootPage } from "./";
 
 export default {
-    title: 'Containers/Reboot'
-}
+    title: "Containers/Reboot",
+};
 
 export const rebootPage = () => <RebootPage />;

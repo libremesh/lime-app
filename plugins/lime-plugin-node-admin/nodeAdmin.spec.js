@@ -34,7 +34,7 @@ describe("nodeAdmin", () => {
             "need-reboot": "no",
         }));
         getSession.mockImplementation(async () => ({
-			username: "root",
+            username: "root",
         }));
         getPortalConfig.mockImplementation(async () => "some config");
         getHotspotStatus.mockImplementation(async () => ({

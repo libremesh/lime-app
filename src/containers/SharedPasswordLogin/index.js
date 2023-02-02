@@ -1,1 +1,1 @@
-export { default as SharedPasswordLogin } from './sharedPasswordLogin';
+export { default as SharedPasswordLogin } from "./sharedPasswordLogin";

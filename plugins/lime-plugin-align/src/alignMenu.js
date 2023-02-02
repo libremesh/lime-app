@@ -1,6 +1,7 @@
-
-import { Trans } from '@lingui/macro';
+import { Trans } from "@lingui/macro";
 
 export const AlignMenu = () => (
-	<a href={'#/align'}><Trans>Align</Trans></a>
+    <a href={"#/align"}>
+        <Trans>Align</Trans>
+    </a>
 );

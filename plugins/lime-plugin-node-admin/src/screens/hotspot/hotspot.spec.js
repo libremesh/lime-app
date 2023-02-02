@@ -110,7 +110,7 @@ describe("hotspot", () => {
         fireEvent.click(await findSubmitButton());
         expect(
             await screen.findByText(
-                "Cannot use Radio 0," + " it's being used for mesh links"
+                "Cannot use Radio 0, it's being used for mesh links"
             )
         ).toBeInTheDocument();
     });

@@ -1,1 +1,1 @@
-export { PortalConfigItem as CommunityPortalConfig } from './PortalConfigItem';
+export { PortalConfigItem as CommunityPortalConfig } from "./PortalConfigItem";

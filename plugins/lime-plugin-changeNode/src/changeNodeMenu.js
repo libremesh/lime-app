@@ -1,7 +1,7 @@
-
-
-import { Trans } from '@lingui/macro';
+import { Trans } from "@lingui/macro";
 
 export const ChangeNodeMenu = () => (
-	<a href={'#/changenode'}><Trans>Visit a neighboring node</Trans></a>
+    <a href={"#/changenode"}>
+        <Trans>Visit a neighboring node</Trans>
+    </a>
 );
