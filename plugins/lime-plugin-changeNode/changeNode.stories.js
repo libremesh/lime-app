@@ -1,27 +1,17 @@
 import { action } from "@storybook/addon-actions";
 
-import { ChangeNode } from './src/changeNodePage';
+import { ChangeNode } from "./src/changeNodePage";
 
 const actions = {
-	loadStations: action('loadStations')
-	
+    loadStations: action("loadStations"),
 };
 
 export default {
-	title: 'Containers/ChangeNode',
-	component: ChangeNode
+    title: "Containers/ChangeNode",
+    component: ChangeNode,
 };
 
-export const changeNodeScreen = (args) => (
-    <ChangeNode
-        {...actions}
-        {...args}
-    />
-);
+export const changeNodeScreen = (args) => <ChangeNode {...actions} {...args} />;
 changeNodeScreen.args = {
-    stations: [
-        "ql-anaymarcos",
-        "ql-graciela",
-        "ql-czuk-bbone",
-    ],
-}
+    stations: ["ql-anaymarcos", "ql-graciela", "ql-czuk-bbone"],
+};

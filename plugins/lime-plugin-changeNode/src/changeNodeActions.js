@@ -1,8 +1,5 @@
-import {
-	LOAD_NEIGHBORS
-} from './changeNodeConstants';
+import { LOAD_NEIGHBORS } from "./changeNodeConstants";
 
 export const loadStations = () => ({
-	type: LOAD_NEIGHBORS
+    type: LOAD_NEIGHBORS,
 });
-

@@ -1,1 +1,1 @@
-export {isValidPassword, ValidationMessages} from './sharedPasswordForm';
+export { isValidPassword, ValidationMessages } from "./sharedPasswordForm";

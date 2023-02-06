@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect, useState } from "preact/hooks";
 
-export function useTimeoutToggle (onWhen, offAfterMs) {
+export function useTimeoutToggle(onWhen, offAfterMs) {
     const [activated, setActivated] = useState(false);
 
     useEffect(() => {
         let id = null;
-        if(onWhen) {
+        if (onWhen) {
             setActivated(true);
             id = setTimeout(() => {
                 setActivated(false);
@@ -13,7 +13,7 @@ export function useTimeoutToggle (onWhen, offAfterMs) {
         }
         return () => {
             id && clearTimeout(id);
-        }
-    }, [onWhen, offAfterMs])
+        };
+    }, [onWhen, offAfterMs]);
     return activated;
 }
