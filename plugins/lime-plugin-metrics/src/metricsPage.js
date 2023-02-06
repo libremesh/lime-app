@@ -1,6 +1,5 @@
 import { i18n } from "@lingui/core";
 import { Trans, defineMessage } from "@lingui/macro";
-import { useEffect } from "preact/hooks";
 
 import { useBoardData } from "utils/queries";
 import queryCache from "utils/queryCache";
@@ -68,12 +67,6 @@ export const Metrics = () => {
             enabled: false,
             initialData: [],
         });
-
-    useEffect(() => {
-        if (path) {
-            getAllMetrics();
-        }
-    }, [path]);
 
     const {
         data: gateway,
