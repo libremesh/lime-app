@@ -5,8 +5,13 @@
       "include": ["src", "plugins"]
    }],
    "format": "po",
+   "compileNamespace": "ts",
    "extractBabelOptions": {
-       "presets": ["preact"]
+       "presets": [
+         "preact",
+         "@babel/preset-typescript",
+         "@lingui/babel-preset-react"
+      ]
    },
    "sourceLocale": "en",
    "fallbackLocales": {
