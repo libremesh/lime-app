@@ -1,9 +1,11 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { enable, disable, getStatus } from './hotspotApi';
-import queryCache from 'utils/queryCache';
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+import queryCache from "utils/queryCache";
+
+import { disable, enable, getStatus } from "./hotspotApi";
 
 export const useHotspotData = (queryConfig) =>
-    useQuery(['lime-utils', 'hotspot_wwan_get_status'], getStatus, queryConfig);
+    useQuery(["lime-utils", "hotspot_wwan_get_status"], getStatus, queryConfig);
 
 async function toggle(enabled) {
     if (enabled) {
@@ -14,7 +16,9 @@ async function toggle(enabled) {
 
 export const useToggleHotspot = () =>
     useMutation(toggle, {
-        onSuccess: (enabled) => queryCache.setQueryData(
-            ['lime-utils', 'hotspot_wwan_get_status'],
-            { enabled, waitingForRadioReset: true })
+        onSuccess: (enabled) =>
+            queryCache.setQueryData(["lime-utils", "hotspot_wwan_get_status"], {
+                enabled,
+                waitingForRadioReset: true,
+            }),
     });
