@@ -1,11 +1,20 @@
 {
-  "plugins": ["testing-library", "jest"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "testing-library",
+    "jest"
+  ],
   "extends": [
-    // "eslint-config-synacor",
+    "preact",
+    "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended",
     "plugin:testing-library/react",
-    "plugin:jest/recommended",
-    "preact"
-  ]
+    "plugin:jest/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-empty-function": "off"
+  }
 }
