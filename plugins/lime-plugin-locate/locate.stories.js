@@ -16,6 +16,8 @@ export const nodeAndCommunityNotLocated = () => (
     <LocatePage
         editting={false}
         submitting={false}
+        stationLat={false}
+        stationLon={false}
         nodesData={{}}
         isCommunityLocation={false}
         {...actions}
