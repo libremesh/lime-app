@@ -26,6 +26,7 @@ const Duration = ({ days }) => {
 
 const PostCreate = ({ vouchers }) => {
     const { name, duration_m, activation_deadline } = vouchers[0];
+    // @ts-ignore
     const durationInDays = duration_m && parseInt(duration_m / (24 * 60), 10);
     return (
         <div className="d-flex flex-grow-1 flex-column container-padded">

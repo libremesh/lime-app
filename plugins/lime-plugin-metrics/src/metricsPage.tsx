@@ -87,29 +87,35 @@ export const Metrics = () => {
 
         let msg = "";
         if (gatewayIsLoading) {
+            // @ts-ignore
             msg = defineMessage({
                 message: "Searching gateway",
             });
         } else if (pathIsLoading) {
+            // @ts-ignore
             msg = defineMessage({
                 message: "Calculating network path",
             });
         } else if (metricsIsLoading) {
+            // @ts-ignore
             msg = defineMessage({
                 message: "Measuring links",
             });
         } else if (gatewayNotFound || internetError) {
+            // @ts-ignore
             msg = defineMessage({
                 message: "Load last known Internet path",
             });
         }
 
+        // @ts-ignore
         return <p style={style.textLoading}>{i18n._(msg)}</p>;
     }
 
     function showError() {
         if (gatewayNotFound || internetError) {
             return (
+                // @ts-ignore
                 <p style={style.textError}>
                     <Trans>This your last working path to the Internet</Trans>
                 </p>
@@ -136,7 +142,10 @@ export const Metrics = () => {
     const isLoading = gatewayIsLoading || pathIsLoading || metricsIsLoading;
 
     return (
-        <div class="container container-padded" style={{ textAlign: "center" }}>
+        <div
+            className="container container-padded"
+            style={{ textAlign: "center" }}
+        >
             {isLoading ? showLoading(isLoading) : showError()}
             <div style={style.box}>
                 <Trans>From</Trans> {boardData.hostname}
