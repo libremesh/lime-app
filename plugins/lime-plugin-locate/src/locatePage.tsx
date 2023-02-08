@@ -147,7 +147,7 @@ export const LocatePage = ({
 
     function onAssetsLoad() {
         // A promise to avoid raise condition between loadLocation and onAssetLoad
-        return new Promise((resolve) => {
+        return new Promise<void>((resolve) => {
             const map = setupMap();
             setLoading(false);
             setMap(map);
