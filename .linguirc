@@ -5,7 +5,7 @@
       "include": ["src", "plugins"]
    }],
    "format": "po",
-   "compileNamespace": "ts",
+   "compileNamespace": "cjs",
    "extractBabelOptions": {
        "presets": [
          "preact",
