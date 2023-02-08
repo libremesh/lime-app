@@ -110,7 +110,7 @@ const VoucherList = () => {
                 </div>
             </div>
             <div
-                class={`d-flex justify-content-center align-items-center p-t-sm ${style.listBottomAction}`}
+                className={`d-flex justify-content-center align-items-center p-t-sm ${style.listBottomAction}`}
             >
                 <button onClick={() => route("/access/create")}>
                     <Trans>Create</Trans>

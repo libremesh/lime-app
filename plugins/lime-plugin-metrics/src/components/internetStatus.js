@@ -8,6 +8,7 @@ export const InternetStatus = ({ isLoading, internet }) => {
     ) : (
         <Box
             title={<Trans>Internet connection</Trans>}
+            // @ts-ignore
             style={{ marginTop: "15px" }}
         >
             <span>
