@@ -13,660 +13,674 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:50
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:67
 msgid "A new firmware version has been released"
 msgstr ""
 
-#: src/containers/RebootBanner/rebootBanner.js:11
+#: src/containers/RebootBanner/rebootBanner.js:15
 msgid "A reboot is needed to apply changes"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/piraniaMenu.js:5
+#: plugins/lime-plugin-pirania/src/piraniaMenu.js:18
 msgid "Access Vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:47
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:54
 msgid "Access vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:62
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:73
 msgid "Activation date: {0}"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:56
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:111
 msgid "Activation deadline"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:62
-msgid "Activation deadline: <0/>"
-msgstr ""
+#~ msgid "Activation deadline: <0/>"
+#~ msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:67
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:79
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:52
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:81
 msgid "Activation deadline: {0}"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/postCreate.js:41
-msgid "Activation deadline: {deadlineText}"
-msgstr ""
+#~ msgid "Activation deadline: {deadlineText}"
+#~ msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:25
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:13
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:60
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:14
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:85
 msgid "Active"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignMenu.js:6
+#: plugins/lime-plugin-align/src/alignMenu.js:18
 msgid "Align"
 msgstr "Allineare"
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:58
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:79
 msgid "All Vouchers"
 msgstr ""
 
-#: src/containers/RebootPage/RebootPage.js:29
+#: src/containers/RebootPage/RebootPage.js:39
 msgid "Are you sure you want to reboot?"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:26
+#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:24
 msgid "Are you sure?"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:45
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:57
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:71
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:105
 msgid "Ask for remote support"
 msgstr ""
 
-#: src/containers/SharedPasswordForm/sharedPasswordForm.js:42
+#: src/containers/SharedPasswordForm/sharedPasswordForm.js:47
 msgid "At least one alphanumeric character"
 msgstr ""
 
-#: src/containers/SharedPasswordForm/sharedPasswordForm.js:41
+#: src/containers/SharedPasswordForm/sharedPasswordForm.js:44
 msgid "At least one number"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:44
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:49
 msgid "Author node: {author_node}"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:23
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:11
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:59
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:12
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:82
 msgid "Available"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:34
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:22
 msgid "Back"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:53
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:100
 msgid "Background Color"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:38
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:41
 msgid "Best signal"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:97
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:96
 msgid "Calculating network path"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:59
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:102
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:23
-#: src/components/banner/index.js:13
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:83
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:150
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:14
+#: src/components/banner/index.js:20
 msgid "Cancel"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.js:60
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.tsx:85
 msgid "Canceling"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:66
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:123
 msgid "Cannot connect to the remote support server"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.js:163
+#: plugins/lime-plugin-locate/src/locatePage.tsx:207
 msgid "Cannot load map, check your internet connection"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:98
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:122
 msgid "Cannot use Radio 0, it's being used for mesh links"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:113
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:145
 msgid "Cellphone Instructions"
 msgstr ""
 
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:56
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:76
 msgid "Change"
 msgstr "Modifica"
 
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:39
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:40
 msgid "Change Shared Password"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:117
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:123
 msgid "Channel"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:94
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:100
 msgid "Checking connection"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:89
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:96
 msgid "Choose a mesh node to join it's network:"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:85
-#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:69
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:128
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:84
 msgid "Choose a name for this node"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:75
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:87
 msgid "Choose a name for your network"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:77
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:40
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:97
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:43
 msgid "Choose a shared password for network administration"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:93
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:173
 msgid "Click at Close Session to end the remote support session. No one will be able to access your node with this token again"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:88
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:159
 msgid "Click at Show Console to follow the remote support session."
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:92
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:94
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:170
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:183
 msgid "Close Session"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradeCountdown.js:22
+#: plugins/lime-plugin-firmware/src/upgradeCountdown.js:21
 msgid "Cofirm upgrade before {_counter} seconds or it will be reverted"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:39
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:76
 msgid "Community Logo"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:22
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:92
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:25
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:112
 msgid "Community Portal"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:33
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:54
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:47
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:67
 msgid "Community Roaming AP"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:76
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:92
 msgid "Community name"
 msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/SelectAction.js:6
-msgid "Configure your network"
-msgstr ""
+#~ msgid "Configure your network"
+#~ msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:74
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:83
 msgid "Configure your new community network"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:10
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:11
 msgid "Confirm"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:107
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:127
 msgid "Congratulations"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:45
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:30
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:148
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:68
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:37
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:198
 msgid "Connect to a Mobile Hotspot"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:44
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:69
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:60
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:92
 msgid "Connected"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:46
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:48
 msgid "Connection attempt not yet started"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:38
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:51
 msgid "Connection to the cellphone"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:63
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:83
 msgid "Connection to the internet"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:67
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:81
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:129
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:116
 msgid "Create"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:61
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:116
 msgid "Create Session"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/createVoucher.js:44
+#: plugins/lime-plugin-pirania/src/screens/createVoucher.js:53
 msgid "Create Voucher"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:47
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:94
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:58
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:145
 msgid "Create network"
 msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/SelectAction.js:17
-msgid "Create new network"
-msgstr ""
+#~ msgid "Create new network"
+#~ msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:66
-msgid "Created <0/>"
-msgstr ""
+#~ msgid "Created <0/>"
+#~ msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:57
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:76
 msgid "Created in this node"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:33
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:36
 msgid "Created vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:45
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:87
+msgid "Created {0}"
+msgstr ""
+
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:52
 msgid "Creation date: {0}"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:51
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:69
 msgid "Currently your node has version:"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:16
+#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:28
 msgid "Description"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:37
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:43
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:45
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:46
 msgid "Description: {name}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:53
+#: plugins/lime-plugin-rx/src/rxPage.js:51
 msgid "Device"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:19
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:52
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:69
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:19
 msgid "Disabled"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:65
-#: src/components/banner/banner_with_options.js:23
-#: src/components/banner/index.js:18
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:97
+#: src/components/banner/banner_with_options.js:24
+#: src/components/banner/index.js:30
 msgid "Don't show this message again"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:73
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:96
 msgid "Download"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:80
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:103
 msgid "Downloading"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:16
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:51
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:18
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:58
 msgid "Duration: is permanent"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:18
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:21
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:21
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:19
 msgid "Duration: {days, plural, one {# day} other {# days}}"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:72
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:89
 msgid "Edit"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:61
+#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:83
 msgid "Edit Voucher"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:45
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:50
 msgid "Edit wellcome screen"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:22
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:25
 msgid "Enable Community Roaming AP"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/password.js:29
+#: plugins/lime-plugin-node-admin/src/screens/password.js:39
 msgid "Enable Password"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:42
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:45
 msgid "Enable Portal in Community AP"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:46
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:50
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:69
 msgid "Enabled"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:13
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:13
 msgid "Enabled, with vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.js:16
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:16
 msgid "Enabled, without vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:73
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:91
 msgid "Encryption: {encryptionMethod}"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/components/box/index.js:71
+#: plugins/lime-plugin-metrics/src/components/box/index.js:96
 msgid "Error"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:59
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:61
 msgid "Error destination network is not configured yet"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:63
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:67
 msgid "Error downloading lime assets"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:55
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:57
 msgid "Error downloading lime community"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:145
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:158
 msgid "Error getting scan results"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:38
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:40
 msgid "Error reaching hostname!"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:144
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:155
 msgid "Error scanning networks"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:92
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:126
 msgid "Error setting network"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.js:59
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.tsx:83
 msgid "Error stopping scan"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.js:26
+#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.tsx:54
 msgid "Error: Not Saved"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:57
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:65
 msgid "Expiration date: {0}"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:24
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:12
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:61
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:13
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:88
 msgid "Expired"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:59
-msgid "Expired <0/>"
+#~ msgid "Expired <0/>"
+#~ msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:71
+msgid "Expired {0}"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:55
-msgid "Expires <0/>"
+#~ msgid "Expires <0/>"
+#~ msgstr ""
+
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:63
+msgid "Expires {0}"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:32
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:74
-#: plugins/lime-plugin-rx/src/rxPage.js:79
+#: plugins/lime-plugin-align/src/alignPage.js:37
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
+#: plugins/lime-plugin-rx/src/rxPage.js:92
 msgid "Fetching name"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:146
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:201
 msgid "Filename"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:51
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:67
 msgid "Filter by"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/firmwareMenu.js:3
-#: plugins/lime-plugin-rx/src/rxPage.js:56
+#: plugins/lime-plugin-firmware/src/firmwareMenu.js:18
+#: plugins/lime-plugin-rx/src/rxPage.js:58
 msgid "Firmware"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:152
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:151
 msgid "From"
 msgstr "Da"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:71
+#: plugins/lime-plugin-metrics/src/components/showPathButton.js:37
 msgid "Full path metrics"
 msgstr "Dettagli sulla rotta"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:58
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:66
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr ""
 
-#: src/containers/Menu/menu.js:30
+#: src/containers/Menu/menu.js:48
 msgid "Go to Community View"
 msgstr ""
 
-#: src/containers/Menu/menu.js:33
+#: src/containers/Menu/menu.js:51
 msgid "Go to Node View"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradeCountdown.js:23
+#: plugins/lime-plugin-firmware/src/upgradeCountdown.js:27
 msgid "Go!"
 msgstr ""
 
-#: plugins/lime-plugin-ground-routing/src/groundRoutingMenu.js:6
+#: plugins/lime-plugin-ground-routing/src/groundRoutingMenu.js:5
 msgid "Ground Routing"
 msgstr ""
 
-#: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:28
+#: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:24
 msgid "Ground Routing configuration"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/consoleView.js:13
+#: plugins/lime-plugin-remotesupport/src/consoleView.js:17
 msgid "Hide Console"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:86
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:133
 msgid "Host name"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:49
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:67
 msgid "I don't know the shared password"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:124
+#: plugins/lime-plugin-rx/src/rxPage.js:180
 msgid "IP Addresses"
 msgstr "Indirizzi IP"
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:54
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:73
 msgid "If network has been already created, look it up to join"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:48
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:60
 msgid "If this is your network first node, you can create a new network"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:19
+#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:18
 msgid "If you invalidate this voucher no one will be able to use it anymore. This cannot be reverted."
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:59
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:114
 msgid "If your community network has local services, you can point a link to them."
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:82
+#: plugins/lime-plugin-rx/src/rxPage.js:97
 msgid "Interface"
 msgstr "Interfaccia"
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:110
-#: plugins/lime-plugin-rx/src/rxPage.js:116
+#: plugins/lime-plugin-metrics/src/components/internetStatus.js:10
+#: plugins/lime-plugin-rx/src/rxPage.js:148
 msgid "Internet connection"
 msgstr "Connessione a Internet"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:76
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:96
 msgid "Invalidate"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:26
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:14
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:62
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:15
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:91
 msgid "Invalidated"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:34
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:71
 msgid "Is permanent"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:65
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:81
 msgid "It is disabled by default in {communityName}"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:70
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:86
 msgid "It is enabled by default in {communityName}"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:67
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:72
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:138
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:150
 msgid "It must start with https:// or http://"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:66
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:72
 msgid "Join the mesh"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:45
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:92
+#: plugins/lime-plugin-align/src/alignPage.js:55
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:121
 msgid "Last packet"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:60
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:120
 msgid "Link Title"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:66
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:135
 msgid "Link URL"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:99
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:106
 msgid "Load last known Internet path"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:98
+#: plugins/lime-plugin-rx/src/rxPage.js:127
 msgid "Loading node status..."
 msgstr "Caricando lo stato del nodo..."
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:58
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:111
 msgid "Local services link"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:56
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:81
 msgid "Logging in"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:47
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:63
 msgid "Login"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:32
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:57
 msgid "Main Text"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:65
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:75
 msgid "Manage Vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMenu.js:6
+#: plugins/lime-plugin-locate/src/locateMenu.js:18
 msgid "Map"
 msgstr ""
 
-#: src/components/form/index.js:11
+#: src/components/form/index.js:8
 msgid "Max. {length} characters"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:98
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:101
 msgid "Measuring links"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsMenu.js:6
+#: plugins/lime-plugin-metrics/src/metricsMenu.js:18
 msgid "Metrics"
 msgstr "Metriche"
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:57
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:79
 msgid "More details on the release can be found at:"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:95
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:127
 msgid "More info at:"
 msgstr ""
 
-#: src/containers/SharedPasswordForm/sharedPasswordForm.js:40
+#: src/containers/SharedPasswordForm/sharedPasswordForm.js:41
 msgid "More than 10 characters"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:74
+#: plugins/lime-plugin-rx/src/rxPage.js:79
 msgid "Most Active"
 msgstr "Più attivi"
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:93
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:129
 msgid "Must select a valid hostname"
 msgstr ""
 
 #: plugins/lime-plugin-network-admin/src/netAdminMenu.js:6
-msgid "Network Configuration"
-msgstr ""
+#~ msgid "Network Configuration"
+#~ msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:71
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:81
 msgid "Network Name: {ssid}"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:23
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:33
 msgid "No password"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:126
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:132
 msgid "No scan result"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:29
-#: src/containers/RebootPage/RebootPage.js:31
+#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:30
+#: src/containers/RebootPage/RebootPage.js:45
 msgid "No, cancel"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:5
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:55
+#: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:28
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:81
 msgid "Node Configuration"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:14
-#: plugins/lime-plugin-node-admin/src/screens/hostname.js:27
-#: plugins/lime-plugin-node-admin/src/screens/hostname.js:30
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:19
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:43
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
 msgid "Node Name"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:53
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:74
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:71
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:99
 msgid "Not Connected"
 msgstr ""
 
-#: plugins/lime-plugin-notes/src/notesMenu.js:6
+#: plugins/lime-plugin-notes/src/notesMenu.js:18
 msgid "Notes"
 msgstr "Note"
 
@@ -674,109 +688,109 @@ msgstr "Note"
 msgid "Notes of"
 msgstr "Note di"
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:44
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:89
 msgid "Number of vouchers"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:46
-#: src/components/banner/index.js:12
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:61
+#: src/components/banner/index.js:17
 msgid "Ok"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:40
+#: plugins/lime-plugin-align/src/alignPage.js:46
 msgid "On its radio {radioNumber}"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:87
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:113
 msgid "On its radio {toRadio}"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:68
+#: plugins/lime-plugin-metrics/src/components/showPathButton.js:30
 msgid "Only gateway"
 msgstr "Solo porta di connessione"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:35
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:56
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:55
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:71
 msgid "Opens the \"{apSsid}\" AP in this node"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:100
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:136
 msgid "Or choose a firmware image from your device"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:60
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:85
 msgid "Or if this node is already configured, you can skip this step"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:172
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:244
 msgid "Or upgrade to latest release"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/components/box/index.js:78
+#: plugins/lime-plugin-metrics/src/components/box/index.js:110
 msgid "Packet loss"
 msgstr "Perdita di pacchetti"
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:78
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:41
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:104
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:49
 msgid "Password"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:72
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:86
 msgid "Password: {password}"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:51
+#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:58
 msgid "Permanent"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:154
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:220
 msgid "Please select a .sh or .bin file"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:151
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:215
 msgid "Please select a file"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:82
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:105
 msgid "Please stay connected to the wifi network"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:67
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:126
 msgid "Please verify your internet connection"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:29
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:36
 msgid "Please wait patiently for {remainingTime} seconds and do not disconnect the device."
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:25
-#: src/containers/RebootPage/RebootPage.js:22
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:36
+#: src/containers/RebootPage/RebootPage.js:28
 msgid "Please wait while the device reboots, and reload the app"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:85
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:90
 msgid "Please wait {time} seconds"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:103
+#: plugins/lime-plugin-align/src/alignPage.js:125
 msgid "Radio {radioNumber}"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:81
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:46
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:116
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:60
 msgid "Re-enter Password"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:80
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:45
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:111
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:56
 msgid "Re-enter the shared password"
 msgstr ""
 
-#: src/containers/RebootBanner/rebootBanner.js:12
+#: src/containers/RebootBanner/rebootBanner.js:17
 msgid "Reboot"
 msgstr ""
 
-#: src/containers/RebootPage/RebootPage.js:21
+#: src/containers/RebootPage/RebootPage.js:25
 msgid "Rebooting"
 msgstr ""
 
@@ -784,86 +798,86 @@ msgstr ""
 msgid "Reload"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:111
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:139
 msgid "Reload page"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:4
+#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:18
 msgid "Remote Support"
 msgstr ""
 
-#: src/components/form/index.js:18
+#: src/components/form/index.js:17
 msgid "Required"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:12
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:6
 msgid "Rescan"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:87
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:116
 msgid "Retry"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:12
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:17
 msgid "Revert"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:24
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:33
 msgid "Reverting to previous version"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:38
-#: plugins/lime-plugin-node-admin/src/screens/password.js:51
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:29
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:73
-#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:28
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:79
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:82
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:48
+#: plugins/lime-plugin-node-admin/src/screens/password.js:73
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:36
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:87
+#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:50
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:162
 msgid "Save"
 msgstr ""
 
-#: plugins/lime-plugin-notes/src/notesPage.js:43
+#: plugins/lime-plugin-notes/src/notesPage.js:51
 msgid "Save notes"
 msgstr "Salvare le note"
 
-#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.js:25
+#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.tsx:51
 msgid "Saved"
 msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/SelectAction.js:12
-msgid "Scan for existing networks"
-msgstr ""
+#~ msgid "Scan for existing networks"
+#~ msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:146
+#: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:161
 msgid "Scanning for existing networks"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:47
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:56
 msgid "Search by"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:53
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:71
 msgid "Search network"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:96
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:91
 msgid "Searching gateway"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:22
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:34
 msgid "See More"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:126
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:130
 msgid "Select"
 msgstr ""
 
-#: plugins/lime-plugin-changeNode/src/changeNodePage.js:56
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:53
 msgid "Select another node and use the LimeApp as you were there"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:140
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:48
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:186
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:89
 msgid "Select file"
 msgstr ""
 
@@ -871,182 +885,183 @@ msgstr ""
 msgid "Select new node"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:67
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:75
 msgid "Selected network to join"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:77
+#: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:106
 msgid "Set network"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:82
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:80
 msgid "Setting network"
 msgstr ""
 
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:62
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:82
 msgid "Setting up new password"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:51
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:90
 msgid "Setup Hotspot"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:54
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:107
 msgid "Setup activation deadline"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:84
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:146
 msgid "Share the following command with whoever you want to give them access to your node"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:108
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:138
 msgid "Share your mobile connection by connecting the node to a mobile hotspost"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:41
+#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:18
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:48
 msgid "Shared Password"
 msgstr ""
 
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:67
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:87
 msgid "Shared Password changed successfully"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:87
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:89
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:156
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:165
 msgid "Show Console"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:44
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:58
+#: plugins/lime-plugin-align/src/alignPage.js:52
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:64
 msgid "Signal lost"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:147
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:207
 msgid "Size"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxMenu.js:6
+#: plugins/lime-plugin-rx/src/rxMenu.js:18
 msgid "Status"
 msgstr "Stato"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:54
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:61
 msgid "Status: {0}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:48
+#: plugins/lime-plugin-rx/src/rxPage.js:42
 msgid "System"
 msgstr "Sistema"
 
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:58
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:74
 msgid "The Community AP is present in every node allowing people to move around the network territory without losing connection"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:29
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:32
 msgid "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:118
+#: plugins/lime-plugin-align/src/alignPage.js:145
 msgid "The are not mesh interfaces available"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:86
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:113
 msgid "The download failed"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:26
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:32
 msgid "The firmware is being upgraded..."
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:90
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:114
 msgid "The hotspot couldn’t be found, please review the instructions above."
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hostname.js:40
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:69
 msgid "The name should have at least 3 characters"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/password.js:43
+#: plugins/lime-plugin-node-admin/src/screens/password.js:60
 msgid "The password should have at least 8 characters"
 msgstr ""
 
-#: src/containers/SharedPasswordForm/sharedPasswordForm.js:39
+#: src/containers/SharedPasswordForm/sharedPasswordForm.js:38
 msgid "The password should have:"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:83
-#: plugins/lime-plugin-network-admin/src/netAdminPage.js:50
+#: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:124
+#: plugins/lime-plugin-network-admin/src/netAdminPage.js:67
 msgid "The passwords do not match!"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:81
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:102
 msgid "The radio needs to be restarted..."
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:167
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:236
 msgid "The selected image is not valid for the target device"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:51
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:71
 msgid "The shared password has been chosen by the community when the network was created. You can ask other community members for it."
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:10
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:9
 msgid "The upgrade should be done"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:74
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:104
 msgid "There are no vouchers matching the current criteria"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:72
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:132
 msgid "There's an active remote support session"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:60
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:110
 msgid "There's no open session for remote support. Click at Create Session to begin one"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:79
+#: plugins/lime-plugin-align/src/alignPage.js:99
 msgid "These are the nodes associated on this radio"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:27
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:35
 msgid "This device does not support secure rollback to previous version if something goes wrong"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:22
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:27
 msgid "This device supports secure rollback to previous version if something goes wrong"
 msgstr ""
 
-#: src/components/form/index.js:22
+#: src/components/form/index.js:21
 msgid "This field is required"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:79
+#: plugins/lime-plugin-metrics/src/components/showPathButton.js:16
 msgid "This node is the gateway"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/alignPage.js:84
+#: plugins/lime-plugin-align/src/alignPage.js:107
 msgid "This radio is not associated with other nodes"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:127
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:120
 msgid "This your last working path to the Internet"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:25
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:41
 msgid "Title"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:162
+#: plugins/lime-plugin-metrics/src/metricsPage.tsx:163
 msgid "To Internet"
 msgstr "All'Internet"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:48
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:78
 msgid "To enable remote access an internet connection is needed"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:83
+#: plugins/lime-plugin-rx/src/rxPage.js:102
 msgid "Traffic"
 msgstr "Traffico di dati"
 
@@ -1054,188 +1069,188 @@ msgstr "Traffico di dati"
 msgid "Try reloading the app"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:92
+#: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:100
 msgid "Unknown error"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:157
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:225
 msgid "Upgrade"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:68
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:101
 msgid "Upgrade Now"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:70
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:85
 msgid "Upgrade to lastest firmware version"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:81
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:91
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:106
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:122
 msgid "Upgrade to {versionName}"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:138
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:181
 msgid "Upload firmware image from your device"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:50
+#: plugins/lime-plugin-rx/src/rxPage.js:45
 msgid "Uptime"
 msgstr "Tempo di attività"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:61
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:69
 msgid "Use vouchers for access"
 msgstr ""
 
-#: plugins/lime-plugin-changeNode/src/changeNodePage.js:65
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:75
 msgid "Visit"
 msgstr ""
 
-#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:6
-#: plugins/lime-plugin-changeNode/src/changeNodePage.js:54
+#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:18
+#: plugins/lime-plugin-changeNode/src/changeNodePage.js:50
 msgid "Visit a neighboring node"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:89
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:110
 msgid "Voucher Details"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:37
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:78
 msgid "Voucher duration in days"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.js:23
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:49
 msgid "Voucher group description"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:43
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:50
 msgid "Voucher list"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:49
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:57
 msgid "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/FbwBanner.js:44
+#: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:54
 msgid "Welcome to LimeApp"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:110
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:196
 msgid "Wellcome Screen"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:15
+#: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:17
 msgid "When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:22
-#: plugins/lime-plugin-node-admin/src/screens/password.js:33
-#: plugins/lime-plugin-node-admin/src/screens/password.js:76
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
+#: plugins/lime-plugin-node-admin/src/screens/password.js:45
+#: plugins/lime-plugin-node-admin/src/screens/password.js:104
 msgid "Wifi Password"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:85
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:108
 msgid "With radio {fromRadio} alignin with"
 msgstr ""
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:64
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:72
 msgid "With this second cell phone create an access point or hotspot with this data:"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:44
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:58
 msgid "Wrong password, try again"
 msgstr ""
 
-#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:28
-#: src/containers/RebootPage/RebootPage.js:30
+#: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:27
+#: src/containers/RebootPage/RebootPage.js:42
 msgid "Yes"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:97
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:105
 msgid "You are connected to another node in the network, try connecting to"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:110
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:135
 msgid "You are now part of"
 msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/SelectAction.js:7
-msgid "You can search for mesh networks around you to add or to create a new one."
-msgstr ""
+#~ msgid "You can search for mesh networks around you to add or to create a new one."
+#~ msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:49
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:83
 msgid "You can share your mobile connection to the node by setting up a mobile hotspot"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:53
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:73
 msgid "You can upgrade to:"
 msgstr ""
 
-#: plugins/lime-plugin-metrics/src/metricsPage.js:80
+#: plugins/lime-plugin-metrics/src/components/showPathButton.js:19
 msgid "You don't go through any paths to get here."
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:109
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:131
 msgid "You have successfuly connected to"
 msgstr ""
 
-#: src/containers/SharedPasswordLogin/sharedPasswordLogin.js:40
+#: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:43
 msgid "You need to know the shared password to enter this page"
 msgstr ""
 
-#: plugins/lime-plugin-fbw/src/containers/Setting.js:98
+#: plugins/lime-plugin-fbw/src/containers/Setting.js:113
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:46
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:74
 msgid "Your node has no internet connection"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.js:185
+#: plugins/lime-plugin-locate/src/locatePage.tsx:240
 msgid "cancel"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.js:182
+#: plugins/lime-plugin-locate/src/locatePage.tsx:235
 msgid "confirm location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.js:189
+#: plugins/lime-plugin-locate/src/locatePage.tsx:246
 msgid "edit location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.js:197
+#: plugins/lime-plugin-locate/src/locatePage.tsx:257
 msgid "hide community"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.js:192
+#: plugins/lime-plugin-locate/src/locatePage.tsx:251
 msgid "locate my node"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/components/secondsAgo.js:19
+#: plugins/lime-plugin-align/src/components/secondsAgo.js:21
 msgid "more than a minute ago"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locatePage.js:199
+#: plugins/lime-plugin-locate/src/locatePage.tsx:259
 msgid "show community"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:11
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:14
 msgid "to keep the current configuration. Or ..."
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:13
+#: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:20
 msgid "to the previous configuration"
 msgstr ""
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:76
+#: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:136
 msgid "{0, plural, =0 {No one has joined yet.} one {One person has joined.} other {# people have joined.}}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:24
+#: plugins/lime-plugin-rx/src/rxPage.js:20
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:25
+#: plugins/lime-plugin-rx/src/rxPage.js:23
 msgid "{hours, plural, one {# hour} other {# hours}}"
 msgstr ""
 
@@ -1243,15 +1258,15 @@ msgstr ""
 msgid "{mins, plural, one {# minute} other {# minutes}}"
 msgstr ""
 
-#: plugins/lime-plugin-align/src/components/secondsAgo.js:21
+#: plugins/lime-plugin-align/src/components/secondsAgo.js:23
 msgid "{secondsAmount} seconds ago"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:27
+#: plugins/lime-plugin-rx/src/rxPage.js:29
 msgid "{secs, plural, one {# second} other {# seconds}}"
 msgstr ""
 
-#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:21
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:71
+#: plugins/lime-plugin-firmware/src/upgradeAvailable.js:32
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:88
 msgid "{versionName} is now available"
 msgstr ""
