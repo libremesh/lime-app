@@ -202,16 +202,3 @@ const Page = ({}) => {
 };
 
 export default Page;
-
-// export const mapStateToProps = (state) => ({
-//     nodeData: getNodeData(state),
-//     isLoading: isLoading(state),
-// });
-//
-// export const mapDispatchToProps = (dispatch) => ({
-//     getNodeStatusTimer: bindActionCreators(getNodeStatusTimer, dispatch),
-//     getNodeStatus: bindActionCreators(getNodeStatus, dispatch),
-//     stopTimer: bindActionCreators(stopTimer, dispatch),
-// });
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(Page);
