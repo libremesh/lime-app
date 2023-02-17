@@ -1,24 +1,26 @@
 import { ComponentChildren, FunctionalComponent } from "preact";
 
 interface SectionTitleProps {
-    children: ComponentChildren;
-    icon: {
-        id: string;
-        viewBox: string;
-    };
+    children?: ComponentChildren;
+    icon: ComponentChildren;
 }
 
-export const SectionTitle = ({ children, icon }: SectionTitleProps) => {
+export const SectionTitle: FunctionalComponent<SectionTitleProps> = ({
+    children,
+    icon,
+}) => {
     return (
-        <div>
-            {children}
-            {/*<div className="flex items-center">*/}
-            {/*    <svg className="w-6 h-6 mr-2" viewBox={icon.viewBox}>*/}
-            {/*        <use xlinkHref={`#${icon.id}`} />*/}
-            {/*    </svg>*/}
-            {/*    <h2 className="text-lg font-semibold">as</h2>*/}
-            {/*    {children}*/}
-            {/*</div>*/}
+        <div className="flex">
+            {icon}
+            <h1 className="text-4xl font-bold text-center mb-8">{children}</h1>
+        </div>
+    );
+};
+
+export const Section = ({ ...props }) => {
+    return (
+        <div className="flex-1 bg-gray-200">
+            <div className="container mx-auto px-4 py-8">{props.children}</div>
         </div>
     );
 };

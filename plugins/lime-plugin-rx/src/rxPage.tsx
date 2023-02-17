@@ -1,10 +1,22 @@
-import { SectionTitle } from "plugins/lime-plugin-rx/src/components/components";
+import { Fragment } from "preact";
+
+import { Alignment } from "plugins/lime-plugin-rx/src/sections/alignment";
+import { InternetPath } from "plugins/lime-plugin-rx/src/sections/internetPath";
+import { Wired } from "plugins/lime-plugin-rx/src/sections/wired";
 
 const Page = ({}) => {
     return (
-        <>
-            <SectionTitle icon={{ id: "my-icon", viewBox: "0 0 20 20" }}>Hello World</SectionTitle>
-        </>
+        <Fragment>
+            <div
+                className={
+                    "container container-padded flex flex-col h-screen items-center"
+                }
+            >
+                <InternetPath />
+                <Alignment />
+                <Wired />
+            </div>
+        </Fragment>
     );
 };
 
