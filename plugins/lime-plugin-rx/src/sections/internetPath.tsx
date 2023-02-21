@@ -11,8 +11,10 @@ import LineChart from "../components/path";
 
 const data = [
     { ip: "10.219.105.28", hostname: "nodo11s" },
-    { ip: "10.1.61.129", hostname: "" },
-    { ip: "10.75.0.1", hostname: "" },
+    { ip: "20.1.61.129", hostname: "" },
+    { ip: "30.75.0.1", hostname: "" },
+    { ip: "40.75.0.1", hostname: "" },
+    { ip: "50.75.0.1", hostname: "" },
 ];
 
 export const InternetPath = () => {
@@ -21,7 +23,7 @@ export const InternetPath = () => {
             <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
             </SectionTitle>
-            <LineChart data={data} />
+            <LineChart nodes={data} internet={true} />
         </Section>
     );
 };
