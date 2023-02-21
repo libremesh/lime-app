@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 
 import {
+    IconsClassName,
     Section,
     SectionTitle,
 } from "plugins/lime-plugin-rx/src/components/components";
@@ -17,10 +18,10 @@ const data = [
 export const InternetPath = () => {
     return (
         <Section>
-            <SectionTitle icon={<PathIcon className={"h-16 w-16"}/>}>
+            <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
-                <LineChart data={data} />
             </SectionTitle>
+            <LineChart data={data} />
         </Section>
     );
 };

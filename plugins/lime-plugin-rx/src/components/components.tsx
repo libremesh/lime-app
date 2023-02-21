@@ -1,5 +1,7 @@
 import { ComponentChildren, FunctionalComponent } from "preact";
 
+export const IconsClassName = "h-14 w-14";
+
 interface SectionTitleProps {
     children?: ComponentChildren;
     icon: ComponentChildren;
@@ -10,9 +12,9 @@ export const SectionTitle: FunctionalComponent<SectionTitleProps> = ({
     icon,
 }) => {
     return (
-        <div className="flex ">
+        <div className="flex items-center gap-x-4">
             <span className={"text-primary-dark fill-current"}>{icon}</span>
-            <h1 className="text-4xl font-bold text-left mb-8">{children}</h1>
+            <h1 className="text-4xl font-bold text-left">{children}</h1>
         </div>
     );
 };
