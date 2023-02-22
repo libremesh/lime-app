@@ -1,5 +1,7 @@
 import { Trans } from "@lingui/macro";
 
+import { Button } from "components/elements/button";
+
 import {
     IconsClassName,
     Section,
@@ -23,7 +25,17 @@ export const InternetPath = () => {
             <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
             </SectionTitle>
-            <LineChart nodes={data} internet={true} />
+            <div className="flex flex-row items-start justify-center space-x-6 p-8">
+                <LineChart nodes={data} internet={true} />
+                <div className="flex flex-col justify-center gap-8">
+                    <Button>
+                        <Trans>Diagnose</Trans>
+                    </Button>
+                    <Button>
+                        <Trans>Map</Trans>
+                    </Button>
+                </div>
+            </div>
         </Section>
     );
 };

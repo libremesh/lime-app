@@ -15,6 +15,9 @@ module.exports = {
                     light: "#6BC3AE",
                     dark: "#006453",
                 },
+                button: {
+                    primary: "#1BC47D",
+                },
                 danger: "#EB7575",
                 info: "#EAAB7E",
                 success: "#76BD7D",
