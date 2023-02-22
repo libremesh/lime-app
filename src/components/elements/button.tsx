@@ -1,14 +1,32 @@
 interface ButtonProps {
     onClick?: () => void;
     children?: string;
+    size?: "sm" | "md" | "lg";
 }
 
-export const Button = ({ onClick, children, ...props }: ButtonProps) => {
-    const cls =
-        "bg-button-primary text-white font-semibold rounded-xl px-4 py-2 justify-center border-0";
+export const Button = ({
+    size = "md",
+    onClick,
+    children,
+    ...props
+}: ButtonProps) => {
+    let sizeClasses = "";
+    switch (size) {
+        case "sm":
+            sizeClasses = "py-2 px-4 text-sm";
+            break;
+        case "md":
+            sizeClasses = "py-4 px-6  min-w-[theme('spacing[52]')]";
+            break;
+        case "lg":
+            sizeClasses = "py-6 px-8";
+            break;
+    }
+
+    const cls = `bg-button-primary text-white font-semibold rounded-xl text-center place-content-center justify-center border-0 ${sizeClasses}`;
     return (
-        <button type="button" onClick={onClick} className={cls} {...props}>
+        <div type="button" onClick={onClick} className={cls} {...props}>
             {children}
-        </button>
+        </div>
     );
 };
