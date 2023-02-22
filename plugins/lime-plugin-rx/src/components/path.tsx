@@ -31,9 +31,9 @@ const Circle = ({
 }: CircleProps) => {
     const innerCircleRadius = circleRadius - 6;
     const textSpacingY = (index: number) =>
-        index * circleSpacing + circleSpacing + 5;
+        index * circleSpacing + circleRadius + 5;
     const textSpacingX = circleSpacing * 1.5;
-    const cy = index * circleSpacing + circleSpacing;
+    const cy = index * circleSpacing + circleRadius;
 
     return (
         <g key={index}>
@@ -101,11 +101,11 @@ function LineChart({ nodes, internet }: Props) {
     const circleRadius = 10; // Size of the circle
     const circleSpacing = 40; // Distance between circles
     const totalHeight = internet
-        ? (nodes.length + 2) * circleSpacing
-        : (nodes.length + 1) * circleSpacing; // Height of the SVG
+        ? (nodes.length + 1) * circleSpacing - circleRadius * 2
+        : nodes.length * circleSpacing - circleRadius * 2; // Height of the SVG
     const totalGreenLine = internet // Height of the green line
-        ? (nodes.length + 1) * circleSpacing
-        : nodes.length * circleSpacing;
+        ? (nodes.length - 1) * circleSpacing
+        : (nodes.length - 2) * circleSpacing;
 
     // For some reason the stirng interpolation did not work well here.
     // So is need to declare each variable
@@ -117,13 +117,14 @@ function LineChart({ nodes, internet }: Props) {
     const internetPathColor = "fill-internet";
 
     return (
-        <svg height={totalHeight} className={"-translate-y-12 -translate-x-10"}>
+        // <svg height={totalHeight} className={"-translate-y-12 -translate-x-10"}>
+        <svg height={totalHeight}>
             {/*Green line*/}
             <line
                 x1={circleSpacing}
-                y1={circleSpacing + circleRadius}
+                y1={0}
                 x2={circleSpacing}
-                y2={totalGreenLine - circleSpacing - circleRadius}
+                y2={totalGreenLine}
                 className={goodPathStroke}
                 strokeWidth="3"
             />
@@ -131,9 +132,9 @@ function LineChart({ nodes, internet }: Props) {
             {!internet && (
                 <line
                     x1={circleSpacing}
-                    y1={totalGreenLine - circleSpacing + circleRadius}
+                    y1={totalGreenLine + circleRadius * 2}
                     x2={circleSpacing}
-                    y2={totalGreenLine}
+                    y2={totalGreenLine + circleSpacing}
                     className={badPathStroke}
                     strokeWidth="3"
                 />
@@ -160,9 +161,9 @@ function LineChart({ nodes, internet }: Props) {
                     {/*Last line with internet*/}
                     <line
                         x1={circleSpacing}
-                        y1={totalGreenLine - circleSpacing + circleRadius}
+                        y1={totalGreenLine + circleRadius * 2}
                         x2={circleSpacing}
-                        y2={totalGreenLine - circleRadius}
+                        y2={totalGreenLine + circleSpacing}
                         className={internetStroke}
                         strokeWidth="3"
                     />
