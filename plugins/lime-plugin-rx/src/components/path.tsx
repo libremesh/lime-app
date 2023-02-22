@@ -117,7 +117,7 @@ function LineChart({ nodes, internet }: Props) {
     const internetPathColor = "fill-internet";
 
     return (
-        <svg height={totalHeight}>
+        <svg height={totalHeight} className={"-translate-y-12 -translate-x-10"}>
             {/*Green line*/}
             <line
                 x1={circleSpacing}
