@@ -30,7 +30,7 @@ export const InternetStatus = ({ data }: { data: IGetInternetStatus }) => {
                             ) : (
                                 <XmarkIcon className={xmarkIconClass} />
                             )}
-                            <div class="text-center text-gray-500 text-lg ">
+                            <div class="text-center text-disabled text-lg ">
                                 {key}
                             </div>
                         </div>
