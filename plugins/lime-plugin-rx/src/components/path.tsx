@@ -98,6 +98,8 @@ const InternetIcon = ({
 };
 
 function LineChart({ nodes, internet }: Props) {
+    if (nodes === undefined) return;
+
     const circleRadius = 10; // Size of the circle
     const circleSpacing = 40; // Distance between circles
     const totalHeight = internet
@@ -115,7 +117,6 @@ function LineChart({ nodes, internet }: Props) {
     const badPathColor = "fill-danger";
     const internetStroke = "stroke-internet";
     const internetPathColor = "fill-internet";
-
     return (
         // <svg height={totalHeight} className={"-translate-y-12 -translate-x-10"}>
         <svg height={totalHeight}>
