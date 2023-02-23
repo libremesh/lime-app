@@ -1,3 +1,5 @@
+const colors = require("tailwindcss/colors");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     // mode: "jit",
@@ -22,6 +24,7 @@ module.exports = {
                 info: "#EAAB7E",
                 success: "#76BD7D",
                 internet: "#5F65FF",
+                disabled: colors.gray["500"],
             },
         },
     },
