@@ -53,6 +53,7 @@ export interface IGetInternetStatus {
     DNS: { working: boolean };
     IPv6: { working: boolean };
     IPv4: { working: boolean };
+    status: string;
 }
 
 export const getNodeStatus = async (): Promise<StatusResponse> => {
