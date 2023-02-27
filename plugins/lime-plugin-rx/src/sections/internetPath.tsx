@@ -50,10 +50,10 @@ export const InternetPath = () => {
                     <LineChart nodes={path} internet={true} />
                 )}
                 <div className="flex flex-col justify-center gap-8">
-                    <Button>
+                    <Button href={"#/metrics"}>
                         <Trans>Diagnose</Trans>
                     </Button>
-                    <Button>
+                    <Button href={"#/locate"}>
                         <Trans>Map</Trans>
                     </Button>
                 </div>
