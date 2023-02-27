@@ -2,12 +2,14 @@ interface ButtonProps {
     onClick?: () => void;
     children?: string;
     size?: "sm" | "md" | "lg";
+    href?: string;
 }
 
 export const Button = ({
     size = "md",
     onClick,
     children,
+    href,
     ...props
 }: ButtonProps) => {
     let sizeClasses = "";
@@ -23,10 +25,23 @@ export const Button = ({
             break;
     }
 
-    const cls = `bg-button-primary text-white font-semibold rounded-xl text-center place-content-center justify-center border-0 ${sizeClasses}`;
-    return (
-        <div type="button" onClick={onClick} className={cls} {...props}>
+    const cls = `cursor-pointer bg-button-primary text-white font-semibold rounded-xl text-center place-content-center justify-center border-0 ${sizeClasses}`;
+    const Btn = () => (
+        <div
+            type="button"
+            onClick={onClick}
+            className={cls}
+            {...props}
+            tabindex="0"
+        >
             {children}
         </div>
+    );
+    return href ? (
+        <a href={href}>
+            <Btn />
+        </a>
+    ) : (
+        <Btn />
     );
 };
