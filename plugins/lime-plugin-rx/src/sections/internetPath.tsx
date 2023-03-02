@@ -2,7 +2,10 @@ import { Trans } from "@lingui/macro";
 
 import { Button } from "components/elements/button";
 
-import { usePath } from "plugins/lime-plugin-metrics/src/metricsQueries";
+import {
+    usePath,
+    usePathLoose,
+} from "plugins/lime-plugin-metrics/src/metricsQueries";
 import {
     IconsClassName,
     Section,
@@ -31,6 +34,21 @@ export const InternetPath = () => {
         enabled: true,
     });
 
+    const workingInternet = internet.IPv4.working || internet.IPv6.working;
+
+    const { data: looseData } = usePathLoose(
+        path
+            ?.map((station) => {
+                return { ip: station.ip };
+            })
+            .slice()
+            .reverse() ?? [],
+        {
+            refetchOnWindowFocus: false,
+            enabled: !workingInternet && !!path,
+        }
+    );
+
     return (
         <Section
             className={"border border-primary-dark rounded-md -translate-y-8"}
@@ -47,7 +65,7 @@ export const InternetPath = () => {
                         </Trans>
                     </div>
                 ) : (
-                    <LineChart nodes={path} internet={true} />
+                    <LineChart nodes={path} internet={workingInternet} />
                 )}
                 <div className="flex flex-col justify-center gap-8">
                     <Button href={"#/metrics"}>
