@@ -43,33 +43,46 @@ export function usePath(params) {
     return useQuery(["lime-metrics", "get_path"], getPath, params);
 }
 
-export const getAllLoose = async (path) => {
-    const queryKey = ["lime-metrics", "get_loose", path];
-    let newData = path;
-    for (const node of path) {
-        const loose = await getLoose(node.ip);
-        newData = await queryCache.setQueryData(queryKey, (oldData) => {
-            const data = oldData.slice() ?? path.slice();
-            data.map((oldNode) => {
-                if (oldNode.ip === node.ip) {
-                    node["loose"] = loose.loose;
-                }
-            });
-            return data.slice();
-        });
-        if (loose.loose < 100) return newData;
+export function useLoose(ip, params) {
+    return useQuery(["lime-metrics", "get_loose", ip], () => getLoose(ip), {
+        retry: false,
+        ...params,
+    });
+}
+
+export const getAllLoose = async (nodes) => {
+    let looses = [];
+    for (const node of nodes) {
+        // @ts-ignore
+        const { loose } = await queryCache.fetchQuery([
+            "lime-metrics",
+            "get_loose",
+            node.ip,
+        ]);
+
+        looses = await queryCache.setQueryData(
+            ["lime-metrics", "get_loose", nodes],
+            (oldData) => {
+                const data = oldData?.slice() ?? nodes.slice();
+                return data.map((oldNode) => {
+                    if (oldNode.ip === node.ip) {
+                        oldNode.loose = loose;
+                    }
+                    return oldNode;
+                });
+            }
+        );
+        // if (loose < 100) break;
     }
-    return newData;
+    return looses.slice();
 };
 
-export function usePathLoose(path, params) {
-    console.log("usePathLoose", path);
+export function usePathLoose(nodes, params) {
     return useQuery(
-        ["lime-metrics", "get_loose", path],
+        ["lime-metrics", "get_loose", nodes],
         (query) => getAllLoose(query.queryKey[2]),
         {
             retry: false,
-            placeholderData: path,
             ...params,
         }
     );
