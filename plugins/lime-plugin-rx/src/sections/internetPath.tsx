@@ -16,7 +16,7 @@ import { PathIcon } from "plugins/lime-plugin-rx/src/icons/pathIcon";
 import { IGetInternetStatus } from "plugins/lime-plugin-rx/src/rxApi";
 import { useInternetStatus } from "plugins/lime-plugin-rx/src/rxQueries";
 
-import LineChart from "../components/path";
+import LineChart from "../components/internetPathChart";
 
 export const InternetPath = () => {
     const {
