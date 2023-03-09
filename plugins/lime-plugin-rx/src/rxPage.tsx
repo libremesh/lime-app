@@ -9,7 +9,7 @@ const Page = ({}) => {
         <Fragment>
             <div
                 className={
-                    "container container-padded flex flex-col h-screen items-center"
+                    "my-0 mx-auto flex flex-col h-screen items-center -translate-y-6"
                 }
             >
                 <InternetPath />
