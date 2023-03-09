@@ -21,7 +21,7 @@ export const SectionTitle: FunctionalComponent<SectionTitleProps> = ({
 
 export const Section = ({ ...props }) => {
     return (
-        <div className="w-full">
+        <div className={"w-full container "}>
             <div className="w-full" {...props}>
                 {props.children}
             </div>

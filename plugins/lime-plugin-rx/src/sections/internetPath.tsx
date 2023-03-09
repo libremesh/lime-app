@@ -50,9 +50,7 @@ export const InternetPath = () => {
     );
 
     return (
-        <Section
-            className={"border border-primary-dark rounded-md -translate-y-8"}
-        >
+        <Section className={"border border-primary-dark rounded-md mx-4"}>
             <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
             </SectionTitle>
