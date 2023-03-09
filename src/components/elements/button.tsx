@@ -2,17 +2,20 @@ interface ButtonProps {
     onClick?: () => void;
     children?: string;
     size?: "sm" | "md" | "lg";
+    color?: "primary" | "secondary";
     href?: string;
 }
 
 export const Button = ({
     size = "md",
+    color = "primary",
     onClick,
     children,
     href,
     ...props
 }: ButtonProps) => {
-    let sizeClasses = "";
+    let sizeClasses = "",
+        colorClasses = "";
     switch (size) {
         case "sm":
             sizeClasses = "py-2 px-4 text-sm";
@@ -25,7 +28,17 @@ export const Button = ({
             break;
     }
 
-    const cls = `cursor-pointer bg-button-primary text-white font-semibold rounded-xl text-center place-content-center justify-center border-0 ${sizeClasses}`;
+    switch (color) {
+        case "primary":
+            colorClasses = "bg-button-primary";
+            break;
+        case "secondary":
+            colorClasses = "bg-button-secondary";
+            break;
+    }
+
+    const cls = `cursor-pointer text-white font-semibold rounded-xl text-center place-content-center
+    justify-center border-0 ${sizeClasses}  ${colorClasses}`;
     const Btn = () => (
         <div
             type="button"
