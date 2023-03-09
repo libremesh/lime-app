@@ -30,11 +30,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
             1024
     );
     return (
-        <div
-            className={
-                "flex flex-row mt-6"
-            }
-        >
+        <div className={"flex flex-row mt-6"}>
             <div className={"flex-1 text-7xl text-center text-primary"}>
                 <div className={"font-bold"}>{status.most_active.signal}</div>
                 <div className={"text-3xl"}>
@@ -66,7 +62,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                 </div>
             </div>
             <div className={"flex-1 flex justify-center"}>
-                <Button size={"lg"} color={"secondary"}>
+                <Button size={"lg"} color={"secondary"} href={"#/align"}>
                     Revisar
                     <br />
                     Alineación
@@ -80,15 +76,25 @@ export const Alignment = () => {
     const { data: status, isLoading } = useNodeStatus();
 
     return (
-        <Section>
-            <SectionTitle icon={<AlignIcon className={IconsClassName} />}>
-                <Trans>Your Alignment</Trans>
-            </SectionTitle>
-            {isLoading ? (
-                <span>Loading...</span>
-            ) : (
-                <AlignmentCard status={status} />
-            )}
-        </Section>
+        <div
+            className={
+                "w-full min-h-min bg-primary-card border-b-2 border-primary-dark pb-10 pr-2"
+            }
+        >
+            <Section>
+                <div>
+                    <SectionTitle
+                        icon={<AlignIcon className={IconsClassName} />}
+                    >
+                        <Trans>Your Alignment</Trans>
+                    </SectionTitle>
+                    {isLoading ? (
+                        <span>Loading...</span>
+                    ) : (
+                        <AlignmentCard status={status} />
+                    )}
+                </div>
+            </Section>
+        </div>
     );
 };

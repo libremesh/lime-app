@@ -16,6 +16,7 @@ module.exports = {
                     DEFAULT: "#38927f",
                     light: "#6BC3AE",
                     dark: "#006453",
+                    card: "#DBE5E0",
                 },
                 button: {
                     primary: "#1BC47D",
