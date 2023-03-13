@@ -3,6 +3,7 @@ import { Fragment } from "preact";
 import { Alignment } from "plugins/lime-plugin-rx/src/sections/alignment";
 import { InternetPath } from "plugins/lime-plugin-rx/src/sections/internetPath";
 import { Wired } from "plugins/lime-plugin-rx/src/sections/wired";
+import {Footer} from "plugins/lime-plugin-rx/src/components/footer";
 
 const Page = ({}) => {
     return (
@@ -15,6 +16,7 @@ const Page = ({}) => {
                 <InternetPath />
                 <Alignment />
                 <Wired />
+                <Footer />
             </div>
         </Fragment>
     );
