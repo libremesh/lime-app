@@ -7,6 +7,7 @@ import {
     Section,
     SectionTitle,
 } from "plugins/lime-plugin-rx/src/components/components";
+import { SignalColor } from "plugins/lime-plugin-rx/src/components/signalColor";
 import { AlignIcon } from "plugins/lime-plugin-rx/src/icons/alignIcon";
 import { StatusResponse } from "plugins/lime-plugin-rx/src/rxApi";
 import { useNodeStatus } from "plugins/lime-plugin-rx/src/rxQueries";
@@ -32,9 +33,21 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
     return (
         <div className={"flex flex-row mt-6"}>
             <div className={"flex-1 text-7xl text-center text-primary"}>
-                <div className={"font-bold"}>{status.most_active.signal}</div>
+                <SignalColor
+                    className={"font-bold"}
+                    signal={+status.most_active.signal}
+                />
                 <div className={"text-3xl"}>
-                    {status.most_active.chains.join("/")}
+                    {status.most_active.chains.map((chain, i) => (
+                        <span key={i}>
+                            <SignalColor
+                                className={"font-bold"}
+                                signal={chain}
+                            />
+                            {i !== status.most_active.chains.length - 1 &&
+                                " / "}
+                        </span>
+                    ))}
                 </div>
             </div>
             <div className={"flex-1 flex flex-col text-xl "}>
