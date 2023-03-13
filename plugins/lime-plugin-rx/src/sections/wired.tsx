@@ -19,9 +19,8 @@ const Ports = ({ status }: { status: StatusResponse }) => {
         return acc;
     }, {});
 
-    console.log(ports);
     return (
-        <div className={"flex flex-row"}>
+        <div className={"flex flex-row px-10"}>
             {" "}
             {Object.keys(ports).map((role) => {
                 if (
@@ -34,7 +33,7 @@ const Ports = ({ status }: { status: StatusResponse }) => {
                                 {role.toUpperCase()}
                             </h2>
                             <h2>{ports[role][0].device.toLowerCase()}</h2>
-                            <div className={"flex flex-row gap-5"}>
+                            <div className={"flex flex-row gap-5 "}>
                                 {ports[role].map((port) => {
                                     const link =
                                         port.link.toLowerCase() === "up"
