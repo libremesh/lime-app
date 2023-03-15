@@ -20,7 +20,7 @@ const Ports = ({ status }: { status: StatusResponse }) => {
     }, {});
 
     return (
-        <div className={"flex flex-row px-10"}>
+        <div className={"flex flex-row px-10"} data-testid="ports-container">
             {" "}
             {Object.keys(ports).map((role) => {
                 if (
