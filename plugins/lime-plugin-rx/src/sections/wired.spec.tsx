@@ -47,7 +47,9 @@ describe("align page", () => {
     });
 });
 
-const mock_node_status: StatusResponse = {
+// Used on other tests
+// eslint-disable-next-line jest/no-export
+export const mock_node_status: StatusResponse = {
     ips: [
         {
             version: "4",
