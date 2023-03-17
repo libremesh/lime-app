@@ -26,13 +26,23 @@ export const InternetStatus = ({ data }: { data: IGetInternetStatus }) => {
                         <div
                             class="flex justify-center items-center mr-4 mb-4 flex-1 gap-3 mt-4"
                             key={key}
+                            data-testid={`internet-${key}`}
                         >
                             {value.working === null ? (
-                                <Circle className={loadiIconClass} />
+                                <Circle
+                                    className={loadiIconClass}
+                                    dataTestId={`internet-status-${key}`}
+                                />
                             ) : value.working ? (
-                                <CirclecheckIcon className={checkIconClass} />
+                                <CirclecheckIcon
+                                    className={checkIconClass}
+                                    dataTestId={`internet-status-${key}`}
+                                />
                             ) : (
-                                <XmarkIcon className={xmarkIconClass} />
+                                <XmarkIcon
+                                    className={xmarkIconClass}
+                                    dataTestId={`internet-status-${key}`}
+                                />
                             )}
                             <div class="text-center text-disabled text-lg ">
                                 {key}
