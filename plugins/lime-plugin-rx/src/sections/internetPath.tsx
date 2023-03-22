@@ -20,7 +20,25 @@ import LineChart from "../components/internetPathChart";
 
 export const InternetPath = () => {
     const { data: internet, isLoading: internetStatusLoading } =
-        useInternetStatus();
+        useInternetStatus({
+            structuralSharing: (
+                oldData: IGetInternetStatus,
+                newData: IGetInternetStatus
+            ) => {
+                if (
+                    // If is the first execution and there are no internet
+                    (!oldData &&
+                        !(newData.IPv4.working || newData.IPv6.working)) ||
+                    // If the old data and new data are different
+                    (oldData &&
+                        (oldData.IPv4.working || oldData.IPv6.working) !==
+                            (newData.IPv4.working || newData.IPv6.working))
+                ) {
+                    refetchLosses();
+                }
+                return newData;
+            },
+        });
 
     const { data: path, isLoading: pathIsLoading } = usePath({
         refetchOnWindowFocus: false,
@@ -39,15 +57,14 @@ export const InternetPath = () => {
             .slice()
             .reverse() ?? [];
 
-    const { refetch: refetchLooses } = usePathLoss(pathLoss, {
+    const { refetch: refetchLosses } = usePathLoss(pathLoss, {
         refetchOnWindowFocus: false,
-        // enabled: !workingInternet && !!path,
         enabled: false,
         initialData: [],
     });
 
     const checkLosses = async () => {
-        refetchLooses();
+        refetchLosses();
     };
 
     return (
