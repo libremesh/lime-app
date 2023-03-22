@@ -3,7 +3,7 @@ import React from "react";
 
 import LoadingDots from "components/loading/loading-dots";
 
-import { useLoose } from "plugins/lime-plugin-metrics/src/metricsQueries";
+import { useLoss } from "plugins/lime-plugin-metrics/src/metricsQueries";
 
 type Node = {
     ip: string;
@@ -110,9 +110,10 @@ const Circle = ({
 };
 
 const NodeHop = ({ ip, index, text }: CircleProps) => {
-    const { data: loose, isFetching } = useLoose(ip, {
+    const { data: loss, isFetching } = useLoss(ip, {
         refetchOnWindowFocus: false,
         enabled: false,
+        initialData: 0,
     });
 
     // For some reason the stirng interpolation did not work well here.
@@ -122,8 +123,8 @@ const NodeHop = ({ ip, index, text }: CircleProps) => {
     const badPathStroke = "stroke-danger";
     const badPathColor = "fill-danger";
 
-    const circleColor = loose?.loose === 100 ? badPathColor : goodPathColor;
-    const lineColor = loose?.loose === 100 ? badPathStroke : goodPathStroke;
+    const circleColor = loss === 100 ? badPathColor : goodPathColor;
+    const lineColor = loss === 100 ? badPathStroke : goodPathStroke;
 
     const { y1, y2 } = calcLinePositionByIndex(index - 1);
     return (
@@ -159,7 +160,7 @@ const InternetLastHop = ({
     index: number;
     internet: boolean;
 }) => {
-    const { isFetching } = useLoose(ip, {
+    const { isFetching } = useLoss(ip, {
         refetchOnWindowFocus: false,
         enabled: false,
     });

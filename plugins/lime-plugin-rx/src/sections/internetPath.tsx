@@ -4,7 +4,7 @@ import { Button } from "components/elements/button";
 
 import {
     usePath,
-    usePathLoose,
+    usePathLoss,
 } from "plugins/lime-plugin-metrics/src/metricsQueries";
 import {
     IconsClassName,
@@ -19,35 +19,36 @@ import { useInternetStatus } from "plugins/lime-plugin-rx/src/rxQueries";
 import LineChart from "../components/internetPathChart";
 
 export const InternetPath = () => {
-    const {
-        data: internet,
-        isLoading: isInternetLoading,
-        refetch: getInternetStatus,
-    } = useInternetStatus();
+    const { data: internet, isLoading: internetStatusLoading } =
+        useInternetStatus();
 
-    const {
-        data: path,
-        isFetching: pathIsLoading,
-        refetch: getPath,
-    } = usePath({
+    const { data: path, isLoading: pathIsLoading } = usePath({
         refetchOnWindowFocus: false,
         enabled: true,
     });
 
-    const workingInternet = internet.IPv4.working || internet.IPv6.working;
+    const workingInternet =
+        !internetStatusLoading &&
+        (internet.IPv4.working || internet.IPv6.working);
 
-    const { data: looseData } = usePathLoose(
+    const pathLoss =
         path
             ?.map((station) => {
                 return { ip: station.ip };
             })
             .slice()
-            .reverse() ?? [],
-        {
-            refetchOnWindowFocus: false,
-            enabled: !workingInternet && !!path,
-        }
-    );
+            .reverse() ?? [];
+
+    const { refetch: refetchLooses } = usePathLoss(pathLoss, {
+        refetchOnWindowFocus: false,
+        // enabled: !workingInternet && !!path,
+        enabled: false,
+        initialData: [],
+    });
+
+    const checkLosses = async () => {
+        refetchLooses();
+    };
 
     return (
         <Section className={"border border-primary-dark rounded-md mx-4"}>
@@ -63,7 +64,9 @@ export const InternetPath = () => {
                         </Trans>
                     </div>
                 ) : (
-                    <LineChart nodes={path} internet={workingInternet} />
+                    <span onclick={checkLosses}>
+                        <LineChart nodes={path} internet={workingInternet} />
+                    </span>
                 )}
                 <div className="flex flex-col justify-center gap-8">
                     <Button href={"#/metrics"}>

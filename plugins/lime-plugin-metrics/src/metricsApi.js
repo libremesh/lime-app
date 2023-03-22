@@ -10,7 +10,7 @@ export const getGateway = () =>
 export const getPath = async () =>
     api.call("lime-metrics", "get_path", {}).then((res) => res.path);
 
-export const getLoose = async (ip) =>
+export const getLoss = async (ip) =>
     api
-        .call("lime-metrics", "get_loose", { target: ip })
-        .then((res) => res.loose);
+        .call("lime-metrics", "get_loss", { target: ip })
+        .then((res) => +res.loss);
