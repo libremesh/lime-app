@@ -160,7 +160,7 @@ const InternetLastHop = ({
     index: number;
     internet: boolean;
 }) => {
-    const { isFetching } = useLoss(ip, {
+    const { isFetching, data: loss } = useLoss(ip, {
         refetchOnWindowFocus: false,
         enabled: false,
     });
@@ -174,12 +174,12 @@ const InternetLastHop = ({
 
     const internetIcon = internet
         ? goodIconColor
-        : !internet && isFetching
+        : !internet && loss === 100
         ? badIconColor
         : disabledIconColor;
     const internetPath = internet
         ? goodPathColor
-        : !internet && isFetching
+        : !internet && loss === 100
         ? badPathColor
         : disabledPathColor;
 
