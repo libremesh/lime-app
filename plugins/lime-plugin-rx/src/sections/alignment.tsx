@@ -38,16 +38,17 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                     signal={+status.most_active.signal}
                 />
                 <div className={"text-3xl"}>
-                    {status.most_active.chains.map((chain, i) => (
-                        <span key={i}>
-                            <SignalColor
-                                className={"font-bold"}
-                                signal={chain}
-                            />
-                            {i !== status.most_active.chains.length - 1 &&
-                                " / "}
-                        </span>
-                    ))}
+                    {status.most_active?.chains &&
+                        status.most_active.chains.map((chain, i) => (
+                            <span key={i}>
+                                <SignalColor
+                                    className={"font-bold"}
+                                    signal={chain}
+                                />
+                                {i !== status.most_active.chains.length - 1 &&
+                                    " / "}
+                            </span>
+                        ))}
                 </div>
             </div>
             <div className={"flex-1 flex flex-col text-xl "}>
