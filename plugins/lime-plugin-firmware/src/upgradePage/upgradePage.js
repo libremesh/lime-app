@@ -170,7 +170,7 @@ export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
 
     function isValidExtname(value) {
         const extname = path.extname(value[0].name);
-        return extname === ".sh" || extname === ".bin";
+        return extname === ".sh" || extname === ".bin" || extname === ".itb";
     }
 
     return (
@@ -217,7 +217,7 @@ export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
                 )}
                 {errors.file && errors.file.type === "validExtname" && (
                     <p style={{ color: "#923838" }}>
-                        <Trans>Please select a .sh or .bin file</Trans>
+                        <Trans>Please select a .sh, .bin or .itb file</Trans>
                     </p>
                 )}
                 <div>
