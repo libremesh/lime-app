@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { Trans } from "@lingui/macro";
+import L from "leaflet";
 import { useEffect, useState } from "preact/hooks";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -18,7 +19,6 @@ import {
 } from "./locateActions";
 import { getLat, getLon, isCommunityLocation } from "./locateSelectors";
 import style from "./style.less";
-import L from "leaflet";
 
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
@@ -30,9 +30,6 @@ function setupMap() {
     // @ts-ignore
     window.map = map;
     // Load layers
-    require("leaflet.gridlayer.googlemutant");
-    const satellite = L.gridLayer.googleMutant({ type: "satellite" });
-    const hybrid = L.gridLayer.googleMutant({ type: "hybrid" });
     const osm = L.tileLayer(openStreetMapTileString, {
         attribution: openStreetMapAttribution,
     });
@@ -41,8 +38,6 @@ function setupMap() {
         .layers(
             {
                 "Open Street Map": osm,
-                "Google Maps Satellite": satellite,
-                "Google Maps Hybrid": hybrid,
             },
             {},
             { position: "bottomright" }
@@ -53,7 +48,6 @@ function setupMap() {
     return map;
 }
 
-
 function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
     /** Create a Leaflet layer with community nodes and links to be added to the map*/
     if (nodesData[nodeHostname]) {
@@ -63,7 +57,7 @@ function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
         };
     }
     // Get community GeoJSON, filter out nodes in same location as station host.
-    let geoJSON = getCommunityGeoJSON(nodesData, [stationLon, stationLat]);
+    const geoJSON = getCommunityGeoJSON(nodesData, [stationLon, stationLat]);
     const layer = L.geoJSON(geoJSON, {
         onEachFeature: (feature, layer) => {
             if (feature.properties && feature.properties.name) {
@@ -79,13 +73,13 @@ type LocatePageType = {
     submitting: boolean;
     stationLat?: number;
     stationLon?: number;
-    nodesData: Object;
+    nodesData: any;
     isCommunityLocation: boolean;
     loadLocation?: () => void;
     loadLocationLinks?: () => void;
-    changeLocation?: ({ lat, lon }: { lat: number, lon: number}) => {} ;
-    toogleEdit?: (b: boolean) => {} ;
-}
+    changeLocation?: ({ lat, lon }: { lat: number; lon: number }) => {};
+    toogleEdit?: (b: boolean) => {};
+};
 
 export const LocatePage = ({
     editting,
@@ -266,7 +260,6 @@ export const LocatePage = ({
     );
 };
 
-
 const mapStateToProps = (state) => ({
     stationLat: getLat(state),
     stationLon: getLon(state),
@@ -275,7 +268,6 @@ const mapStateToProps = (state) => ({
     submitting: state.locate.submitting,
     editting: state.locate.editting,
 });
-
 
 const mapDispatchToProps = (dispatch) => ({
     loadLocation: bindActionCreators(loadLocation, dispatch),
