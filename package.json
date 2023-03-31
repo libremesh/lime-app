@@ -91,6 +91,7 @@
         "preact-i18nline": "^2.0.0",
         "preact-router": "^4.1.0",
         "react-hook-form": "^7.36.1",
+        "react-leaflet": "^4.2.1",
         "react-redux": "^8.0.4",
         "react-router-redux": "^4.0.8",
         "react-use": "^17.4.0",

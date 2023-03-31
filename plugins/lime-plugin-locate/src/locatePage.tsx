@@ -1,52 +1,34 @@
 /* eslint-disable no-undef */
 import { Trans } from "@lingui/macro";
-import L from "leaflet";
-import { useEffect, useState } from "preact/hooks";
+import L, { LatLngExpression, icon } from "leaflet";
+import { useEffect, useRef, useState } from "preact/hooks";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import { Loading } from "components/loading";
 
-import { useBoardData } from "utils/queries";
-
-import { homeIcon, loadGoogleMapsApi, loadLeafLet } from "./assetsUtils";
-import { getCommunityGeoJSON } from "./communityGeoJSON";
 import {
-    changeLocation,
     loadLocation,
     loadLocationLinks,
     toogleEdit,
-} from "./locateActions";
-import { getLat, getLon, isCommunityLocation } from "./locateSelectors";
+} from "plugins/lime-plugin-locate/src/locateActions";
+import { changeLocation } from "plugins/lime-plugin-locate/src/locateApi";
+import {
+    getLat,
+    getLon,
+    isCommunityLocation,
+} from "plugins/lime-plugin-locate/src/locateSelectors";
+
+import { useBoardData } from "utils/queries";
+
+import { getCommunityGeoJSON } from "./communityGeoJSON";
+import { homeIcon, loadLeafLet } from "./leafletUtils";
 import style from "./style.less";
 
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
-
-function setupMap() {
-    /** Initialize the leaflet map */
-    const map = L.map("map-container");
-    // @ts-ignore
-    window.map = map;
-    // Load layers
-    const osm = L.tileLayer(openStreetMapTileString, {
-        attribution: openStreetMapAttribution,
-    });
-    // Add layers controller on bottom right corner
-    L.control
-        .layers(
-            {
-                "Open Street Map": osm,
-            },
-            {},
-            { position: "bottomright" }
-        )
-        .addTo(map);
-    // Setup Open Street Map as base layer
-    osm.addTo(map);
-    return map;
-}
 
 function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
     /** Create a Leaflet layer with community nodes and links to be added to the map*/
@@ -58,14 +40,13 @@ function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
     }
     // Get community GeoJSON, filter out nodes in same location as station host.
     const geoJSON = getCommunityGeoJSON(nodesData, [stationLon, stationLat]);
-    const layer = L.geoJSON(geoJSON, {
+    return L.geoJSON(geoJSON, {
         onEachFeature: (feature, layer) => {
             if (feature.properties && feature.properties.name) {
                 layer.bindTooltip(feature.properties.name).openTooltip();
             }
         },
     });
-    return layer;
 }
 
 type LocatePageType = {
@@ -77,7 +58,9 @@ type LocatePageType = {
     isCommunityLocation: boolean;
     loadLocation?: () => void;
     loadLocationLinks?: () => void;
+    // eslint-disable-next-line @typescript-eslint/ban-types
     changeLocation?: ({ lat, lon }: { lat: number; lon: number }) => {};
+    // eslint-disable-next-line @typescript-eslint/ban-types
     toogleEdit?: (b: boolean) => {};
 };
 
@@ -96,13 +79,14 @@ export const LocatePage = ({
     const { data: boardData } = useBoardData();
     const [loading, setLoading] = useState(true);
     const [assetError, setAssetError] = useState(false);
-    const [map, setMap] = useState(null);
-    const [nodeMarker, setNodeMarker] = useState(null);
+    const [nodeMarker, setNodeMarker] = useState<LatLngExpression>(null);
     const [communityLayer, setCommunityLayer] = useState(null);
+
+    const mapRef = useRef<L.Map | null>();
 
     // Load third parties assests in component mount
     useEffect(() => {
-        Promise.all([loadLeafLet(), loadGoogleMapsApi()])
+        Promise.all([loadLeafLet()])
             .then(onAssetsLoad) // Setup the map
             .catch(onAssetsError)
             .then(loadLocation) // Load node location
@@ -112,39 +96,28 @@ export const LocatePage = ({
     // Set map position when map is available or location gets updated
     useEffect(() => {
         function updateNodeMarker(lat, lon) {
-            if (nodeMarker) {
-                nodeMarker.setLatLng([lat, lon]);
-            } else {
-                const marker = L.marker([lat, lon], {
-                    // @ts-ignore
-                    icon: L.icon(homeIcon),
-                    alt: "node marker",
-                }).addTo(map);
-                setNodeMarker(marker);
-            }
+            setNodeMarker([lat, lon]);
         }
+        const mapInstance = mapRef.current;
 
-        if (map && stationLat) {
-            map.setView([stationLat, stationLon], 13);
+        if (!loading && mapInstance && stationLat) {
+            mapInstance.setView([stationLat, stationLon], 13);
             updateNodeMarker(stationLat, stationLon);
-        } else if (map) {
-            map.setView([-30, -60], 3);
         }
-    }, [stationLat, stationLon, map, nodeMarker]);
+    }, [stationLat, stationLon, loading]);
 
     // Center the map on the node also when editting is turned on
     useEffect(() => {
+        const map = mapRef.current;
         if (map && stationLat) {
             editting && map.setView([stationLat, stationLon], 13);
         }
-    }, [map, editting, stationLat, stationLon]);
+    }, [mapRef, editting, stationLat, stationLon]);
 
     function onAssetsLoad() {
         // A promise to avoid raise condition between loadLocation and onAssetLoad
-        return new Promise((resolve) => {
-            const map = setupMap();
+        return new Promise<void>((resolve) => {
             setLoading(false);
-            setMap(map);
             resolve();
         });
     }
@@ -155,9 +128,9 @@ export const LocatePage = ({
     }
 
     function onConfirmLocation() {
-        const position = map.getCenter();
-        const lat = position.lat_neg ? position.lat * -1 : position.lat;
-        const lon = position.lng_neg ? position.lng * -1 : position.lng;
+        const position = mapRef.current.getCenter();
+        const lat = position.lat;
+        const lon = position.lng;
         if (changeLocation) changeLocation({ lat, lon });
         if (communityLayer) {
             // Hide the community view, to avoid outdated links
@@ -167,7 +140,7 @@ export const LocatePage = ({
 
     function toogleCommunityLayer() {
         if (communityLayer) {
-            map.removeLayer(communityLayer);
+            mapRef.current.removeLayer(communityLayer);
             setCommunityLayer(null);
         } else {
             const layer = getCommunityLayer(
@@ -176,7 +149,7 @@ export const LocatePage = ({
                 stationLon,
                 nodesData
             );
-            layer.addTo(map);
+            layer.addTo(mapRef.current);
             setCommunityLayer(layer);
         }
     }
@@ -187,12 +160,8 @@ export const LocatePage = ({
 
     const hasLocation = stationLat && !isCommunityLocation;
 
-    function toogleEditFalse() {
-        if (toogleEdit) toogleEdit(false);
-    }
-
-    function toogleEditTrue() {
-        if (toogleEdit) toogleEdit(true);
+    function toogleEdition() {
+        if (toogleEdit) toogleEdit(!editting);
     }
 
     if (assetError) {
@@ -204,45 +173,43 @@ export const LocatePage = ({
     }
 
     return (
-        <div>
-            <div id="map-container" className={style.mapContainer}>
-                {(!isReady() || submitting) && (
-                    <div
-                        id="loading-container"
-                        className={style.loadingContainer}
-                    >
-                        <Loading />
-                    </div>
-                )}
-                {editting && (
-                    <div
-                        id="location-marker"
-                        className={style.locationMarker}
+        <>
+            {(!isReady() || submitting) && (
+                <div id="loading-container" className={style.loadingContainer}>
+                    <Loading />
+                </div>
+            )}
+            {isReady() && (
+                <MapContainer
+                    center={[-30, -60]}
+                    zoom={3}
+                    scrollWheelZoom={true}
+                    className={style.mapContainer}
+                    ref={mapRef}
+                >
+                    <TileLayer
+                        attribution={openStreetMapAttribution}
+                        url={openStreetMapTileString}
                     />
-                )}
-            </div>
+                    {nodeMarker && (
+                        <Marker
+                            position={nodeMarker}
+                            icon={icon({ ...homeIcon })}
+                        />
+                    )}
+                    {editting && (
+                        <div
+                            id="location-marker"
+                            className={style.locationMarker}
+                        />
+                    )}
+                </MapContainer>
+            )}
             {isReady() && (
                 <div id="edit-action" className={style.editAction}>
-                    {/* Actions while editting */}
                     {editting && (
                         <button onClick={onConfirmLocation}>
                             <Trans>confirm location</Trans>
-                        </button>
-                    )}
-                    {editting && (
-                        <button onClick={toogleEditFalse}>
-                            <Trans>cancel</Trans>
-                        </button>
-                    )}
-                    {/* Actions while not editting */}
-                    {!editting && hasLocation && (
-                        <button onClick={toogleEditTrue}>
-                            <Trans>edit location</Trans>
-                        </button>
-                    )}
-                    {!editting && !hasLocation && (
-                        <button onClick={toogleEditTrue}>
-                            <Trans>locate my node</Trans>
                         </button>
                     )}
                     {!editting && (
@@ -254,9 +221,19 @@ export const LocatePage = ({
                             )}
                         </button>
                     )}
+
+                    <button onClick={toogleEdition}>
+                        {editting && <Trans>cancel</Trans>}
+                        {!editting && hasLocation && (
+                            <Trans>edit location</Trans>
+                        )}
+                        {!editting && !hasLocation && (
+                            <Trans>locate my node</Trans>
+                        )}
+                    </button>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 
