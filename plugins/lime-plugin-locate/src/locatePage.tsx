@@ -2,7 +2,7 @@
 import { Trans } from "@lingui/macro";
 import L, { LatLngExpression, icon } from "leaflet";
 import { useEffect, useRef, useState } from "preact/hooks";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { LayersControl, MapContainer, Marker, TileLayer } from "react-leaflet";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
@@ -29,6 +29,10 @@ import style from "./style.less";
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+
+const gmSatellite = "https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}";
+const gmHybrid = "https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}";
+const gmSubdomains = ["mt0", "mt1", "mt2", "mt3"];
 
 function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
     /** Create a Leaflet layer with community nodes and links to be added to the map*/
@@ -187,10 +191,32 @@ export const LocatePage = ({
                     className={style.mapContainer}
                     ref={mapRef}
                 >
-                    <TileLayer
-                        attribution={openStreetMapAttribution}
-                        url={openStreetMapTileString}
-                    />
+                    <LayersControl position="bottomright">
+                        <LayersControl.BaseLayer name="Open Street Map">
+                            <TileLayer
+                                attribution={openStreetMapAttribution}
+                                url={openStreetMapTileString}
+                            />
+                        </LayersControl.BaseLayer>
+                        <LayersControl.BaseLayer
+                            checked
+                            name="Google Maps Satellite"
+                        >
+                            <TileLayer
+                                url={gmSatellite}
+                                subdomains={gmSubdomains}
+                            />
+                        </LayersControl.BaseLayer>
+                        <LayersControl.BaseLayer
+                            checked
+                            name="Google Maps Hybrid"
+                        >
+                            <TileLayer
+                                url={gmHybrid}
+                                subdomains={gmSubdomains}
+                            />
+                        </LayersControl.BaseLayer>
+                    </LayersControl>
                     {nodeMarker && (
                         <Marker
                             position={nodeMarker}
