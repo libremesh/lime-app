@@ -12,7 +12,9 @@ import {
 } from "plugins/lime-plugin-locate/src/locateActions";
 import {
     useChangeLocation,
+    useLoadLeaflet,
     useLocation,
+    useNodesandlinks,
 } from "plugins/lime-plugin-locate/src/locateQueries";
 
 import { useBoardData } from "utils/queries";
@@ -76,15 +78,29 @@ export const LocatePage = () =>
     // toogleEdit,
     // LocatePageType
     {
-        console.log("REPAINTING"); // todo: No se cargan bien los assets despues de la migracion a react query. Ver xk, poner los assets dentro de una query y hacer q dependa?
         const { data: boardData } = useBoardData();
+        const {
+            isError: isAssetError,
+            isFetchedAfterMount: assetsLoaded,
+            isLoading: isLoadingAssets,
+        } = useLoadLeaflet({
+            refetchOnWindowFocus: false,
+        });
 
-        const { data: nodesData, isLoading: submitting } = useChangeLocation(
-            {}
-        );
+        const {
+            data: nodeLocation,
+            isLoading: isLoadingLocation,
+            isFetched: locationLoaded,
+        } = useLocation({
+            enabled: assetsLoaded,
+        });
+        const { data: nodesData, isLoading: submitting } = useNodesandlinks({
+            enabled: locationLoaded,
+        });
+
         const { mutate: changeLocation } = useChangeLocation({});
-        const { data: nodeLocation, isLoading: isLoadingLocation } =
-            useLocation({});
+
+        const loading = isLoadingLocation || isLoadingAssets;
         const isCommunityLocation = nodeLocation.default;
         const stationLat =
             nodeLocation.location.lat !== "FIXME"
@@ -92,25 +108,15 @@ export const LocatePage = () =>
                 : null;
         const stationLon =
             nodeLocation.location.lon !== "FIXME"
-                ? nodeLocation.location.lat
+                ? nodeLocation.location.lon
                 : null;
+        const hasLocation = stationLat && !isCommunityLocation;
 
-        const [loadingAssets, setLoadingAssets] = useState(true);
-        const [assetError, setAssetError] = useState(false);
         const [editting, setEditting] = useState(false);
         const [nodeMarker, setNodeMarker] = useState<LatLngExpression>(null);
         const [communityLayer, setCommunityLayer] = useState(null);
 
         const mapRef = useRef<L.Map | null>();
-
-        // Load third parties assests in component mount
-        useEffect(() => {
-            Promise.all([loadLeafLet()])
-                .then(onAssetsLoad) // Set up the map
-                .catch(onAssetsError)
-                .then(loadLocation) // Load node location
-                .then(loadLocationLinks); // Load community locations
-        }, [loadLocation, loadLocationLinks]);
 
         // Set map position when map is available or location gets updated
         useEffect(() => {
@@ -119,11 +125,11 @@ export const LocatePage = () =>
             }
             const mapInstance = mapRef.current;
 
-            if (!isLoadingLocation && mapInstance && stationLat) {
+            if (!loading && mapInstance && stationLat) {
                 mapInstance.setView([+stationLat, +stationLon], 13);
                 updateNodeMarker(stationLat, stationLon);
             }
-        }, [stationLat, stationLon, isLoadingLocation]);
+        }, [stationLat, stationLon, loading]);
 
         // Center the map on the node also when editting is turned on
         useEffect(() => {
@@ -133,24 +139,12 @@ export const LocatePage = () =>
             }
         }, [mapRef, editting, stationLat, stationLon]);
 
-        function onAssetsLoad() {
-            // A promise to avoid raise condition between loadLocation and onAssetLoad
-            return new Promise<void>((resolve) => {
-                setLoadingAssets(false);
-                resolve();
-            });
-        }
-
-        function onAssetsError() {
-            setLoadingAssets(false);
-            setAssetError(true);
-        }
-
         function onConfirmLocation() {
             const position = mapRef.current.getCenter();
+            console.log("CENTER!", position);
             const lat = position.lat;
             const lon = position.lng;
-            if (changeLocation) changeLocation({ lat, lon });
+            changeLocation({ lat, lon });
             if (communityLayer) {
                 // Hide the community view, to avoid outdated links
                 toogleCommunityLayer();
@@ -174,16 +168,14 @@ export const LocatePage = () =>
         }
 
         function isReady() {
-            return !isLoadingLocation && typeof stationLat !== "undefined";
+            return !loading && typeof stationLat !== "undefined";
         }
-
-        const hasLocation = stationLat && !isCommunityLocation;
 
         function toogleEdition() {
             setEditting(!editting);
         }
 
-        if (assetError) {
+        if (isAssetError) {
             return (
                 <div id="map-container" className={style.hasAssetError}>
                     <Trans>
