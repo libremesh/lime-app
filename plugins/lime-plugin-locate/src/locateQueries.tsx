@@ -60,3 +60,9 @@ export function useChangeLocation(params) {
         ...params,
     });
 }
+
+export function useLoadLeaflet(params) {
+    return useQuery(["lime-location", "load_leaflet"], loadLeafLet, {
+        ...params,
+    });
+}
