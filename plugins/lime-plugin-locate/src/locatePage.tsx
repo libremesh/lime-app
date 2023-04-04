@@ -7,10 +7,6 @@ import { LayersControl, MapContainer, Marker, TileLayer } from "react-leaflet";
 import { Loading } from "components/loading";
 
 import {
-    loadLocation,
-    loadLocationLinks,
-} from "plugins/lime-plugin-locate/src/locateActions";
-import {
     useChangeLocation,
     useLoadLeaflet,
     useLocation,
@@ -20,7 +16,7 @@ import {
 import { useBoardData } from "utils/queries";
 
 import { getCommunityGeoJSON } from "./communityGeoJSON";
-import { homeIcon, loadLeafLet } from "./leafletUtils";
+import { homeIcon } from "./leafletUtils";
 import style from "./style.less";
 
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
@@ -50,243 +46,195 @@ function getCommunityLayer(nodeHostname, stationLat, stationLon, nodesData) {
     });
 }
 
-// type LocatePageType = {
-//     editting: boolean;
-//     submitting: boolean;
-//     stationLat?: number;
-//     stationLon?: number;
-//     nodesData: any;
-//     isCommunityLocation: boolean;
-//     loadLocation?: () => void;
-//     loadLocationLinks?: () => void;
-//     // eslint-disable-next-line @typescript-eslint/ban-types
-//     changeLocation?: ({ lat, lon }: { lat: number; lon: number }) => {};
-//     // eslint-disable-next-line @typescript-eslint/ban-types
-//     toogleEdit?: (b: boolean) => {};
-// };
+export const LocatePage = () => {
+    const { data: boardData } = useBoardData();
+    const {
+        isError: isAssetError,
+        isFetchedAfterMount: assetsLoaded,
+        isLoading: isLoadingAssets,
+    } = useLoadLeaflet({
+        refetchOnWindowFocus: false,
+    });
 
-export const LocatePage = () =>
-    // editting,
-    // submitting,
-    // stationLat,
-    // stationLon,
-    // nodesData,
-    // isCommunityLocation,
-    // loadLocation,
-    // loadLocationLinks,
-    // changeLocation,
-    // toogleEdit,
-    // LocatePageType
-    {
-        const { data: boardData } = useBoardData();
-        const {
-            isError: isAssetError,
-            isFetchedAfterMount: assetsLoaded,
-            isLoading: isLoadingAssets,
-        } = useLoadLeaflet({
-            refetchOnWindowFocus: false,
-        });
+    const {
+        data: nodeLocation,
+        isLoading: isLoadingLocation,
+        isFetched: locationLoaded,
+    } = useLocation({
+        enabled: assetsLoaded,
+    });
 
-        const {
-            data: nodeLocation,
-            isLoading: isLoadingLocation,
-            isFetched: locationLoaded,
-        } = useLocation({
-            enabled: assetsLoaded,
-        });
-        const { data: nodesData, isLoading: submitting } = useNodesandlinks({
-            enabled: locationLoaded,
-        });
+    const { data: nodesData } = useNodesandlinks({
+        enabled: locationLoaded,
+    });
 
-        const { mutate: changeLocation } = useChangeLocation({});
-
-        const loading = isLoadingLocation || isLoadingAssets;
-        const isCommunityLocation = nodeLocation.default;
-        const stationLat =
-            nodeLocation.location.lat !== "FIXME"
-                ? nodeLocation.location.lat
-                : null;
-        const stationLon =
-            nodeLocation.location.lon !== "FIXME"
-                ? nodeLocation.location.lon
-                : null;
-        const hasLocation = stationLat && !isCommunityLocation;
-
-        const [editting, setEditting] = useState(false);
-        const [nodeMarker, setNodeMarker] = useState<LatLngExpression>(null);
-        const [communityLayer, setCommunityLayer] = useState(null);
-
-        const mapRef = useRef<L.Map | null>();
-
-        // Set map position when map is available or location gets updated
-        useEffect(() => {
-            function updateNodeMarker(lat, lon) {
-                setNodeMarker([lat, lon]);
-            }
-            const mapInstance = mapRef.current;
-
-            if (!loading && mapInstance && stationLat) {
-                mapInstance.setView([+stationLat, +stationLon], 13);
-                updateNodeMarker(stationLat, stationLon);
-            }
-        }, [stationLat, stationLon, loading]);
-
-        // Center the map on the node also when editting is turned on
-        useEffect(() => {
-            const map = mapRef.current;
-            if (map && stationLat) {
-                editting && map.setView([+stationLat, +stationLon], 13);
-            }
-        }, [mapRef, editting, stationLat, stationLon]);
-
-        function onConfirmLocation() {
-            const position = mapRef.current.getCenter();
-            console.log("CENTER!", position);
-            const lat = position.lat;
-            const lon = position.lng;
-            changeLocation({ lat, lon });
-            if (communityLayer) {
-                // Hide the community view, to avoid outdated links
-                toogleCommunityLayer();
-            }
+    const { mutate: changeLocation, isLoading: submitting } = useChangeLocation(
+        {
+            onSettled: () => {
+                toogleEdition();
+            },
         }
+    );
 
-        function toogleCommunityLayer() {
-            if (communityLayer) {
-                mapRef.current.removeLayer(communityLayer);
-                setCommunityLayer(null);
-            } else {
-                const layer = getCommunityLayer(
-                    boardData.hostname,
-                    stationLat,
-                    stationLon,
-                    nodesData
-                );
-                layer.addTo(mapRef.current);
-                setCommunityLayer(layer);
-            }
+    const loading = isLoadingLocation || isLoadingAssets;
+    const isCommunityLocation = nodeLocation.default;
+    const stationLat =
+        nodeLocation.location.lat !== "FIXME"
+            ? nodeLocation.location.lat
+            : null;
+    const stationLon =
+        nodeLocation.location.lon !== "FIXME"
+            ? nodeLocation.location.lon
+            : null;
+    const hasLocation = stationLat && !isCommunityLocation;
+
+    const [editting, setEditting] = useState(false);
+    const [nodeMarker, setNodeMarker] = useState<LatLngExpression>(null);
+    const [communityLayer, setCommunityLayer] = useState(null);
+
+    const mapRef = useRef<L.Map | null>();
+
+    // Set map position when map is available or location gets updated
+    useEffect(() => {
+        function updateNodeMarker(lat, lon) {
+            setNodeMarker([lat, lon]);
         }
+        const mapInstance = mapRef.current;
 
-        function isReady() {
-            return !loading && typeof stationLat !== "undefined";
+        if (!loading && mapInstance && stationLat) {
+            mapInstance.setView([+stationLat, +stationLon], 13);
+            updateNodeMarker(stationLat, stationLon);
         }
+    }, [stationLat, stationLon, loading]);
 
-        function toogleEdition() {
-            setEditting(!editting);
+    // Center the map on the node also when editting is turned on
+    useEffect(() => {
+        const map = mapRef.current;
+        if (map && stationLat) {
+            editting && map.setView([+stationLat, +stationLon], 13);
         }
+    }, [mapRef, editting, stationLat, stationLon]);
 
-        if (isAssetError) {
-            return (
-                <div id="map-container" className={style.hasAssetError}>
-                    <Trans>
-                        Cannot load map, check your internet connection
-                    </Trans>
-                </div>
+    function onConfirmLocation() {
+        const position = mapRef.current.getCenter();
+        changeLocation({ lat: position.lat, lon: position.lng });
+        if (communityLayer) {
+            // Hide the community view, to avoid outdated links
+            toogleCommunityLayer();
+        }
+    }
+
+    function toogleCommunityLayer() {
+        if (communityLayer) {
+            mapRef.current.removeLayer(communityLayer);
+            setCommunityLayer(null);
+        } else {
+            const layer = getCommunityLayer(
+                boardData.hostname,
+                stationLat,
+                stationLon,
+                nodesData
             );
+            layer.addTo(mapRef.current);
+            setCommunityLayer(layer);
         }
+    }
 
+    function isReady() {
+        return !loading && typeof stationLat !== "undefined";
+    }
+
+    function toogleEdition() {
+        setEditting(!editting);
+    }
+
+    if (isAssetError) {
         return (
-            <>
-                {(!isReady() || submitting) && (
-                    <div
-                        id="loading-container"
-                        className={style.loadingContainer}
-                    >
-                        <Loading />
-                    </div>
-                )}
-                {isReady() && (
-                    <MapContainer
-                        center={[-30, -60]}
-                        zoom={3}
-                        scrollWheelZoom={true}
-                        className={style.mapContainer}
-                        ref={mapRef}
-                    >
-                        <LayersControl position="bottomright">
-                            <LayersControl.BaseLayer
-                                checked
-                                name="Open Street Map"
-                            >
-                                <TileLayer
-                                    attribution={openStreetMapAttribution}
-                                    url={openStreetMapTileString}
-                                />
-                            </LayersControl.BaseLayer>
-                            <LayersControl.BaseLayer name="Google Maps Satellite">
-                                <TileLayer
-                                    url={gmSatellite}
-                                    subdomains={gmSubdomains}
-                                />
-                            </LayersControl.BaseLayer>
-                            <LayersControl.BaseLayer name="Google Maps Hybrid">
-                                <TileLayer
-                                    url={gmHybrid}
-                                    subdomains={gmSubdomains}
-                                />
-                            </LayersControl.BaseLayer>
-                        </LayersControl>
-                        {nodeMarker && (
-                            <Marker
-                                position={nodeMarker}
-                                icon={icon({ ...homeIcon })}
-                            />
-                        )}
-                        {editting && (
-                            <div
-                                id="location-marker"
-                                className={style.locationMarker}
-                            />
-                        )}
-                    </MapContainer>
-                )}
-                {isReady() && (
-                    <div id="edit-action" className={style.editAction}>
-                        {editting && (
-                            <button onClick={onConfirmLocation}>
-                                <Trans>confirm location</Trans>
-                            </button>
-                        )}
-                        {/*{!editting && (*/}
-                        {/*    <button onClick={toogleCommunityLayer}>*/}
-                        {/*        {communityLayer ? (*/}
-                        {/*            <Trans>hide community</Trans>*/}
-                        {/*        ) : (*/}
-                        {/*            <Trans>show community</Trans>*/}
-                        {/*        )}*/}
-                        {/*    </button>*/}
-                        {/*)}*/}
+            <div id="map-container" className={style.hasAssetError}>
+                <Trans>Cannot load map, check your internet connection</Trans>
+            </div>
+        );
+    }
 
-                        <button onClick={toogleEdition}>
-                            {editting && <Trans>cancel</Trans>}
-                            {!editting && hasLocation && (
-                                <Trans>edit location</Trans>
-                            )}
-                            {!editting && !hasLocation && (
-                                <Trans>locate my node</Trans>
+    return (
+        <>
+            {(!isReady() || submitting) && (
+                <div id="loading-container" className={style.loadingContainer}>
+                    <Loading />
+                </div>
+            )}
+            {isReady() && (
+                <MapContainer
+                    center={[-30, -60]}
+                    zoom={3}
+                    scrollWheelZoom={true}
+                    className={style.mapContainer}
+                    ref={mapRef}
+                >
+                    <LayersControl position="bottomright">
+                        <LayersControl.BaseLayer checked name="Open Street Map">
+                            <TileLayer
+                                attribution={openStreetMapAttribution}
+                                url={openStreetMapTileString}
+                            />
+                        </LayersControl.BaseLayer>
+                        <LayersControl.BaseLayer name="Google Maps Satellite">
+                            <TileLayer
+                                url={gmSatellite}
+                                subdomains={gmSubdomains}
+                            />
+                        </LayersControl.BaseLayer>
+                        <LayersControl.BaseLayer name="Google Maps Hybrid">
+                            <TileLayer
+                                url={gmHybrid}
+                                subdomains={gmSubdomains}
+                            />
+                        </LayersControl.BaseLayer>
+                    </LayersControl>
+                    {nodeMarker && (
+                        <Marker
+                            position={nodeMarker}
+                            icon={icon({ ...homeIcon })}
+                        />
+                    )}
+                    {editting && (
+                        <div
+                            id="location-marker"
+                            className={style.locationMarker}
+                        />
+                    )}
+                </MapContainer>
+            )}
+            {isReady() && (
+                <div id="edit-action" className={style.editAction}>
+                    {editting && (
+                        <button onClick={onConfirmLocation}>
+                            <Trans>confirm location</Trans>
+                        </button>
+                    )}
+                    {!editting && (
+                        <button onClick={toogleCommunityLayer}>
+                            {communityLayer ? (
+                                <Trans>hide community</Trans>
+                            ) : (
+                                <Trans>show community</Trans>
                             )}
                         </button>
-                    </div>
-                )}
-            </>
-        );
-    };
+                    )}
 
-// const mapStateToProps = (state) => ({
-//     stationLat: getLat(state),
-//     stationLon: getLon(state),
-//     isCommunityLocation: isCommunityLocation(state),
-//     nodesData: state.locate.nodesData,
-//     submitting: state.locate.submitting,
-//     editting: state.locate.editting,
-// });
-//
-// const mapDispatchToProps = (dispatch) => ({
-//     loadLocation: bindActionCreators(loadLocation, dispatch),
-//     loadLocationLinks: bindActionCreators(loadLocationLinks, dispatch),
-//     changeLocation: bindActionCreators(changeLocation, dispatch),
-//     toogleEdit: bindActionCreators(toogleEdit, dispatch),
-// });
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(LocatePage);
+                    <button onClick={toogleEdition}>
+                        {editting && <Trans>cancel</Trans>}
+                        {!editting && hasLocation && (
+                            <Trans>edit location</Trans>
+                        )}
+                        {!editting && !hasLocation && (
+                            <Trans>locate my node</Trans>
+                        )}
+                    </button>
+                </div>
+            )}
+        </>
+    );
+};
+
 export default LocatePage;
