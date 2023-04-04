@@ -1,10 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import { loadLeafLet } from "plugins/lime-plugin-locate/src/leafletUtils";
 import {
     changeLocation,
     getLocation,
     getNodesandlinks,
 } from "plugins/lime-plugin-locate/src/locateApi";
+
+import queryCache from "utils/queryCache";
 
 export interface INodeLocation {
     location: {
@@ -23,18 +26,6 @@ export function useLocation(params) {
                 lat: "FIXME",
             },
         },
-        // select: (res) => {
-        //     // Neither community nor node has location configured
-        //     const latlong = res.location;
-        //     if (latlong["lon"] === "FIXME" || latlong["lat"] === "FIXME") {
-        //         latlong = null;
-        //     }
-        //     // return latlong;
-        //     return {
-        //         station: payload.location || payload,
-        //         isCommunity: payload.default || false,
-        //     };
-        // },
         ...params,
     });
 }
@@ -57,6 +48,21 @@ interface IChangeUserParams {
 export function useChangeLocation(params) {
     return useMutation<void, unknown, IChangeUserParams, unknown>({
         mutationFn: changeLocation,
+        onSuccess: (data: { lat: string; lon: string }) => {
+            queryCache.setQueryData(
+                ["lime-location", "get"],
+                (oldData: INodeLocation) =>
+                    oldData
+                        ? {
+                              ...oldData,
+                              location: {
+                                  lat: data.lat,
+                                  lon: data.lon,
+                              },
+                          }
+                        : oldData
+            );
+        },
         ...params,
     });
 }
