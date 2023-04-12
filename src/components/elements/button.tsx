@@ -1,6 +1,6 @@
 interface ButtonProps {
     onClick?: () => void;
-    children?: string;
+    children?: any; // type error with Trans component
     size?: "sm" | "md" | "lg";
     color?: "primary" | "secondary";
     href?: string;
@@ -40,13 +40,8 @@ export const Button = ({
     const cls = `cursor-pointer text-white font-semibold rounded-xl text-center place-content-center
     justify-center border-0 ${sizeClasses}  ${colorClasses}`;
     const Btn = () => (
-        <div
-            type="button"
-            onClick={onClick}
-            className={cls}
-            {...props}
-            tabindex="0"
-        >
+        // @ts-ignore
+        <div type="button" onClick={onClick} className={cls} {...props}>
             {children}
         </div>
     );

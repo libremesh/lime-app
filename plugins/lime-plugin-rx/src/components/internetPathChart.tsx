@@ -54,7 +54,7 @@ interface CircleProps {
     key?: number;
     ip: string;
     index: number;
-    text: string;
+    text: any; // type error with Trans component
     internet?: boolean;
     isLoading?: boolean;
     className?: string;
@@ -103,7 +103,9 @@ const Circle = ({
                 y={textSpacingY(index)}
                 className={className}
             >
-                {text} {isLoading && <LoadingDots />}
+                <>
+                    {text} {isLoading && <LoadingDots />}
+                </>
             </text>
         </g>
     );
@@ -185,6 +187,8 @@ const InternetLastHop = ({
 
     const { y1, y2 } = calcLinePositionByIndex(index - 1);
 
+    const internetText = <Trans>Internet</Trans>;
+
     return (
         <>
             <line
@@ -199,7 +203,7 @@ const InternetLastHop = ({
                 ip={ip}
                 index={index}
                 className={internetIcon}
-                text={<Trans>Internet</Trans>}
+                text={internetText}
                 internet={true}
             />
         </>

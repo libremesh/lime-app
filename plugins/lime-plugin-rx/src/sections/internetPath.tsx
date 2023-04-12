@@ -81,7 +81,7 @@ export const InternetPath = () => {
                         </Trans>
                     </div>
                 ) : (
-                    <span onclick={checkLosses}>
+                    <span onClick={checkLosses}>
                         <LineChart nodes={path} internet={workingInternet} />
                     </span>
                 )}

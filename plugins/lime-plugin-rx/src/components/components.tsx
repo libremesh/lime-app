@@ -13,7 +13,9 @@ export const SectionTitle: FunctionalComponent<SectionTitleProps> = ({
 }) => {
     return (
         <div className="flex items-center gap-x-4 ml-6 mt-6">
+            {/*@ts-ignore*/}
             <span className={"text-primary-dark fill-current"}>{icon}</span>
+            {/*@ts-ignore*/}
             <h1 className="text-4xl font-bold text-left">{children}</h1>
         </div>
     );
