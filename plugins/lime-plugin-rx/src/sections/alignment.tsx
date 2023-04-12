@@ -59,7 +59,7 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                     {bathost && bathost.hostname ? (
                         <span>{stripIface(bathost.hostname)}</span>
                     ) : (
-                        <span class="withLoadingEllipsis">
+                        <span className="withLoadingEllipsis">
                             <Trans>Fetching name</Trans>
                         </span>
                     )}
