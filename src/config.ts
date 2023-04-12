@@ -3,7 +3,6 @@ import ChangeNode from "plugins/lime-plugin-changeNode";
 import Fbw from "plugins/lime-plugin-fbw";
 import Firmware from "plugins/lime-plugin-firmware";
 import Locate from "plugins/lime-plugin-locate";
-import MeshWide from "plugins/lime-plugin-meshWide";
 import Metrics from "plugins/lime-plugin-metrics";
 import NetworkAdmin from "plugins/lime-plugin-network-admin";
 import NodeAdmin from "plugins/lime-plugin-node-admin";
@@ -17,7 +16,6 @@ export const plugins: LimePlugin[] = [
     Rx,
     Align,
     Locate,
-    MeshWide,
     Metrics,
     Notes,
     NodeAdmin,
