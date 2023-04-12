@@ -12,8 +12,8 @@ export const InternetStatus = ({ data }: { data: IGetInternetStatus }) => {
     const loadiIconClass = "h-10 w-10 stroke-disabled";
 
     return (
-        <div class="w-full flex items-center flex-row p-4 gap-6">
-            <h2 class="text-end flex-1">
+        <div className="w-full flex items-center flex-row p-4 gap-6">
+            <h2 className="text-end flex-1">
                 <Trans>
                     Internet
                     <br />
@@ -24,7 +24,7 @@ export const InternetStatus = ({ data }: { data: IGetInternetStatus }) => {
                 if (key !== "status") {
                     return (
                         <div
-                            class="flex justify-center items-center mr-4 mb-4 flex-1 gap-3 mt-4"
+                            className="flex justify-center items-center mr-4 mb-4 flex-1 gap-3 mt-4"
                             key={key}
                             data-testid={`internet-${key}`}
                         >
@@ -44,7 +44,7 @@ export const InternetStatus = ({ data }: { data: IGetInternetStatus }) => {
                                     dataTestId={`internet-status-${key}`}
                                 />
                             )}
-                            <div class="text-center text-disabled text-lg ">
+                            <div className="text-center text-disabled text-lg ">
                                 {key}
                             </div>
                         </div>
