@@ -1,0 +1,84 @@
+@surface: #fff;
+@onSurface: #191919;
+@onSurfaceSecondary: #666;
+@surfaceThumbBar: #ddd;
+@surfaceHover: #eee;
+
+.BottomSheetStyled {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    background: @surface;
+    box-shadow: 0 1px 8px rgb(0 0 0 / 30%);
+    border-radius: 8px;
+    margin: auto;
+    max-width: 560px;
+    width: 100%;
+    height: 100%;
+}
+
+.CloseButton {
+    height: 40px;
+    background: @surface;
+    cursor: pointer;
+    border: none;
+    padding: 8px;
+    border-radius: 100%;
+    position: absolute;
+    right: 16px;
+    &:hover {
+        background: @surfaceHover;
+    }
+}
+
+.DebugLog {
+    color: @onSurface;
+}
+
+.Header {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    padding-bottom: 16px;
+}
+
+.HeaderTitle {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    & h1 {
+        color: @onSurface;
+        font-size: 1.125rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+    & h2 {
+        color: @onSurfaceSecondary;
+        font-size: 0.875rem;
+        line-height: 1;
+        font-weight: 600;
+        margin: 0;
+    }
+}
+
+.SheetBody {
+    overflow-y: auto;
+    width: 100%;
+    transition: height 200ms;
+}
+
+.ThumbBarWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    cursor: move; /* fallback if grab cursor is unsupported */
+}
+
+.ThumbBar {
+    background: @surfaceThumbBar;
+    width: 64px;
+    margin: 8px auto;
+    height: 0.25rem;
+    border-radius: 4px;
+}
