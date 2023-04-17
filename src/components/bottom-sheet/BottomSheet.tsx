@@ -58,6 +58,10 @@ type TBottomSheetProps = {
      * Optional Title for the BottomSheet
      */
     title?: string;
+    /**
+     * Element to be shown either if the sheet is expanded at all or not
+     */
+    footer?: JSX.Element;
 };
 
 export const BottomSheet: React.FC<TBottomSheetProps> = ({
@@ -70,6 +74,7 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
     onStatusChange,
     subtitle,
     title,
+    footer,
 }) => {
     // STATE
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -273,6 +278,14 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
                     </div>
                 </div>
             </animated.div>
+            {bodyHeight > 0 && (
+                <div
+                    className={style.FooterWrapper}
+                    style={{ maxWidth: `${maxWidth}px` }}
+                >
+                    {footer}
+                </div>
+            )}
         </>
     );
 };
