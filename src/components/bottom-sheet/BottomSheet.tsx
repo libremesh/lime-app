@@ -31,6 +31,10 @@ type TBottomSheetProps = {
      */
     closeButtonAriaLabel?: string;
     /**
+     * Activate close button
+     */
+    closeButton?: boolean;
+    /**
      * Custom initial expanded height
      */
     initialDrawerDistanceTop?: number;
@@ -67,6 +71,7 @@ type TBottomSheetProps = {
 export const BottomSheet: React.FC<TBottomSheetProps> = ({
     children,
     closeButtonAriaLabel = "Close",
+    closeButton = true,
     initialDrawerDistanceTop = INITIAL_DRAWER_DISTANCE_FROM_TOP,
     isOpen,
     maxWidth = MAX_WIDTH,
@@ -255,17 +260,19 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
                                 )}
                                 {subtitle && <h2>{subtitle}</h2>}
                             </div>
-                            <button
-                                className={style.CloseButton}
-                                role="button"
-                                onClick={() => {
-                                    onClose();
-                                    handleStatusChange("dismissed");
-                                }}
-                                aria-label={closeButtonAriaLabel}
-                            >
-                                X
-                            </button>
+                            {closeButton && (
+                                <button
+                                    className={style.CloseButton}
+                                    role="button"
+                                    onClick={() => {
+                                        onClose();
+                                        handleStatusChange("dismissed");
+                                    }}
+                                    aria-label={closeButtonAriaLabel}
+                                >
+                                    X
+                                </button>
+                            )}
                         </div>
                     </div>
                     <div
