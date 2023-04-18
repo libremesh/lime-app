@@ -84,7 +84,6 @@ const MeshWidePage = () => {
                         onClose={() => {
                             setIsOpen(false);
                         }}
-                        // initialDrawerDistanceTop={650}
                         footer={<BottomSheetFooter synced={synced} />}
                     >
                         <div className={"px-10"}>

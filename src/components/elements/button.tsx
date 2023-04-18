@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ButtonProps {
+export interface ButtonProps {
     onClick?: () => void;
     children?: any; // type error with Trans component
     size?: "sm" | "md" | "lg";
@@ -35,21 +35,21 @@ export const Button = ({
     switch (color) {
         case "primary":
             colorClasses = outline
-                ? "border-2 border-button-primary text-button-primary"
-                : "bg-button-primary text-white";
+                ? "border-2 border-button-primary text-button-primary hover:bg-button-primary hover:text-white"
+                : "bg-button-primary text-white hover:bg-button-secondary";
             break;
         case "secondary":
             colorClasses = outline
-                ? "border-2 border-button-secondary text-button-secondary"
-                : "bg-button-secondary text-white";
+                ? "border-2 border-button-secondary text-button-secondary hover:bg-button-secondary hover:text-white"
+                : "bg-button-secondary text-white hover:bg-button-primary ";
             break;
         case "danger":
             colorClasses = outline
-                ? "border-2 border-danger text-danger"
-                : "bg-danger text-white";
+                ? "border-2 border-danger text-danger hover:bg-danger hover:text-white"
+                : "bg-danger text-white border-2 border-danger hover:text-danger hover:bg-white";
     }
 
-    const cls = `cursor-pointer font-semibold rounded-xl text-center place-content-center
+    const cls = `cursor-pointer font-semibold rounded-xl text-center place-content-center transition-all duration-300
     justify-center border-0 ${sizeClasses}  ${colorClasses}`;
     const Btn = () => (
         // @ts-ignore
