@@ -2,11 +2,11 @@ import { Trans } from "@lingui/macro";
 import L, { LeafletMouseEvent, Map } from "leaflet";
 import { useState } from "preact/hooks";
 import React, { Component } from "react";
-import { LayersControl, MapContainer, TileLayer } from "react-leaflet";
-import { useMap } from "react-leaflet";
+import { LayersControl, MapContainer, TileLayer, useMap } from "react-leaflet";
 
 import { BottomSheet } from "components/bottom-sheet";
 import FloatingButton from "components/buttons/floatting-button";
+import { Button } from "components/elements/button";
 import Loading from "components/loading";
 
 import { useLoadLeaflet } from "plugins/lime-plugin-locate/src/locateQueries";
@@ -18,11 +18,29 @@ const openStreetMapAttribution =
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 
 const BottomSheetFooter = ({ synced }: { synced?: boolean }) => {
-    return (
-        <div className={"text-center bg-white py-5"}>
-            <span className={"text-success"}>✓</span>
+    const containerClasses =
+        "flex items-center justify-center text-center bg-white py-5";
+    return synced ? (
+        <div className={containerClasses}>
+            <span className={"text-success text-4xl"}>✓</span>
             <Trans>Same status as in the reference state</Trans>
         </div>
+    ) : (
+        <>
+            <div className={`${containerClasses} flex-col`}>
+                <div className={"flex flex-row"}>
+                    <span
+                        className={
+                            "rounded-full border-2 border-danger text-danger w-8 h-8 flex items-center justify-center mx-2"
+                        }
+                    >
+                        !
+                    </span>
+                    <Trans>In the reference state this node is on</Trans>
+                </div>
+                <Button>Update this node on reference state</Button>
+            </div>
+        </>
     );
 };
 
@@ -38,6 +56,7 @@ const MeshWidePage = () => {
     // const loading = isLoadingAssets;
 
     const [isOpen, setIsOpen] = useState(true);
+    const synced = false;
     const loading = false;
     return (
         <>
@@ -65,16 +84,15 @@ const MeshWidePage = () => {
                         onClose={() => {
                             setIsOpen(false);
                         }}
-                        initialDrawerDistanceTop={650}
-                        footer={<BottomSheetFooter />}
+                        // initialDrawerDistanceTop={650}
+                        footer={<BottomSheetFooter synced={synced} />}
                     >
                         <div className={"px-10"}>
-                            <NodeDetail />
+                            <NodeDetail synced={synced} />
                         </div>
                     </BottomSheet>
                     <FloatingButton
                         onClick={() => {
-                            console.log("AAAA");
                             setIsOpen(!isOpen);
                         }}
                     />

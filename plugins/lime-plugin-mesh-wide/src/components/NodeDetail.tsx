@@ -27,7 +27,7 @@ const Row = ({ children }: { children: any }) => {
     );
 };
 
-export const NodeDetail = () => {
+export const NodeDetail = ({ synced }: { synced: boolean }) => {
     const nodeName = "ql-arbol";
     const uptime = "1 week";
     const firmware = "e93615c947-x86-64";
@@ -44,9 +44,16 @@ export const NodeDetail = () => {
                 </Button>
             </Row>
             <Row>
-                <TitleAndText title={<Trans>Uptime</Trans>}>
-                    {uptime}
-                </TitleAndText>
+                {synced ? (
+                    <TitleAndText title={<Trans>Uptime</Trans>}>
+                        {uptime}
+                    </TitleAndText>
+                ) : (
+                    <TitleAndText title={<Trans>Downtime</Trans>}>
+                        {uptime}
+                    </TitleAndText>
+                )}
+
                 <TitleAndText title={<Trans>Firmware version</Trans>}>
                     {firmware}
                 </TitleAndText>
