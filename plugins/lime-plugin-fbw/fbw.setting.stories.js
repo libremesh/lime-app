@@ -3,7 +3,7 @@ import { Setting } from "./src/containers/Setting";
 
 export default {
     title: "Containers/First boot wizard",
-}
+};
 
 export const ApplyingConfigurationCorrectNetwork = () => (
     <FetchStory
@@ -26,7 +26,7 @@ export const ApplyingConfigurationCorrectNetwork = () => (
             expectedNetwork={"quintanalibre.org.ar"}
         />
     </FetchStory>
-)
+);
 
 export const ApplyingConfigurationIncorrectNetwork = () => (
     <FetchStory
@@ -50,4 +50,4 @@ export const ApplyingConfigurationIncorrectNetwork = () => (
             expectedNetwork={"quintanalibre.org.ar"}
         />
     </FetchStory>
-)
+);

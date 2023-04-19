@@ -1,1 +1,1 @@
-export { default as ConfigPageLayout } from './configPageLayout';
+export { default as ConfigPageLayout } from "./configPageLayout";
