@@ -146,7 +146,7 @@ export const Metrics = () => {
                     <MetricsBox
                         key={key}
                         station={station}
-                        gateway={isGateway(station.ip, gateway.ip)}
+                        gateway={isGateway(station.ip, gateway?.ip ?? "")}
                         loading={isLoading}
                     />
                 ))}
