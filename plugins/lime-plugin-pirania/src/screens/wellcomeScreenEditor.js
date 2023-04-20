@@ -155,6 +155,7 @@ const WellcomeScreenEditorForm = ({
                 <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
                             className="ml-auto"
                             disabled={isCompressing}

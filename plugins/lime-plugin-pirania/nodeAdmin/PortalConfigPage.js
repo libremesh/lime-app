@@ -81,6 +81,7 @@ const PortalConfigForm = ({ config, onSubmit, isSubmitting }) => {
                 <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
                             className="ml-auto"
                         >

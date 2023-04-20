@@ -181,7 +181,11 @@ export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
                     <Trans>Upload firmware image from your device</Trans>
                 </b>
             </h5>
-            <form id="file-upload-form" onSubmit={handleSubmit(onUpgrade)}>
+            <form
+                id="file-upload-form"
+                // @ts-ignore
+                onSubmit={handleSubmit(onUpgrade)}
+            >
                 <label className="button" htmlFor="file">
                     <Trans>Select file</Trans>
                 </label>

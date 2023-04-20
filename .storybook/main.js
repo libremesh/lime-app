@@ -69,21 +69,4 @@ module.exports = {
 
         return config;
     },
-    babel: async (options) => {
-        options.plugins.slice(-1);
-        options.plugins = [
-            ...options.plugins,
-            ["@babel/plugin-transform-react-jsx", { pragma: "h" }],
-            [
-                "babel-plugin-jsx-pragmatic",
-                {
-                    module: "preact",
-                    import: "h",
-                    export: "h",
-                },
-            ],
-        ];
-
-        return options;
-    },
 };

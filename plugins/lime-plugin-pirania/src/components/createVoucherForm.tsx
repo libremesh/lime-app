@@ -13,7 +13,7 @@ import switchStyle from "components/switch";
 type CreateVoucherFormProps = {
     submitVoucher: () => void;
     isSubmitting: boolean;
-}
+};
 
 type VoucherForm = {
     name: string;
@@ -22,11 +22,14 @@ type VoucherForm = {
     activation_deadline: string;
     permanent: boolean;
     with_activation_deadline: boolean;
-}
+};
 
 const minDate = new Date().toISOString().substring(0, 10);
 
-const CreateVoucherForm = ({ submitVoucher, isSubmitting }: CreateVoucherFormProps) => {
+const CreateVoucherForm = ({
+    submitVoucher,
+    isSubmitting,
+}: CreateVoucherFormProps) => {
     const {
         register,
         handleSubmit,
@@ -42,6 +45,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }: CreateVoucherFormPro
     const isPermanent = watch("permanent");
     const withActivationDeadline = watch("with_activation_deadline");
 
+    // @ts-ignore
     return (
         <Fragment>
             <form className="flex-grow-1">
@@ -123,6 +127,7 @@ const CreateVoucherForm = ({ submitVoucher, isSubmitting }: CreateVoucherFormPro
                 <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(submitVoucher)}
                             className="ml-auto"
                         >

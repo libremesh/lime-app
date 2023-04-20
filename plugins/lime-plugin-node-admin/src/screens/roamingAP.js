@@ -30,6 +30,7 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
                 <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
                             className="ml-auto"
                         >

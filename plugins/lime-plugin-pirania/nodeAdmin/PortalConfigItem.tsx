@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/macro";
+import { ComponentChildren } from "preact";
 import { route } from "preact-router";
 
 import { Config } from "plugins/lime-plugin-node-admin/src/components/config";
@@ -7,7 +8,7 @@ import { usePortalConfig } from "../src/piraniaQueries";
 
 export const PortalConfigItem = () => {
     const { data: config, isLoading } = usePortalConfig();
-    let message: React.ReactNode = "";
+    let message: ComponentChildren = "";
     if (config) {
         if (config.activated && config.with_vouchers) {
             message = <Trans>Enabled, with vouchers</Trans>;

@@ -59,6 +59,7 @@ const HostnamePage = () => {
                     onChange={(v) =>
                         setValue(
                             "hostname",
+                            // @ts-ignore
                             slugify(v.target.value.toLowerCase())
                         )
                     }
@@ -76,6 +77,7 @@ const HostnamePage = () => {
                 <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
                             className="ml-auto"
                         >

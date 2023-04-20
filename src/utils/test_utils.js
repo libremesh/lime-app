@@ -22,6 +22,7 @@ const AllTheProviders = ({ children }) => {
     i18n.activate("en");
     return (
         <I18nProvider i18n={i18n}>
+            {/* @ts-ignore */}
             <QueryClientProvider client={queryCache}>
                 <SubHeader />
                 {children}

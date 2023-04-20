@@ -6,18 +6,19 @@ import Router from "preact-router";
 import { useEffect } from "preact/hooks";
 import { Provider } from "react-redux";
 
-import { useBoardData, useLogin, useSession } from "utils/queries";
-import queryCache from "utils/queryCache";
-
-import { plugins } from "../config";
 import { Menu } from "containers/Menu";
 import { RebootPage } from "containers/RebootPage";
 import SubHeader from "containers/SubHeader";
+
+import { AppContextProvider } from "utils/app.context";
+import { useBoardData, useLogin, useSession } from "utils/queries";
+import queryCache from "utils/queryCache";
+import { CommunityProtectedRoute, Redirect, Route } from "utils/routes";
+
+import { plugins } from "../config";
 import i18n, { dynamicActivate } from "../i18n";
 import { store } from "../store";
 import { history } from "../store/history";
-import { AppContextProvider } from "utils/app.context";
-import { CommunityProtectedRoute, Redirect, Route } from "utils/routes";
 import { Header } from "./header";
 
 const Routes = () => (
@@ -105,6 +106,7 @@ const AppDefault = () => {
     }, []);
     return (
         <I18nProvider i18n={i18n}>
+            {/*@ts-ignore*/}
             <QueryClientProvider client={queryCache}>
                 {/* @ts-ignore */}
                 <AppContextProvider>

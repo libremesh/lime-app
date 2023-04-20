@@ -1,12 +1,14 @@
+import { ComponentChildren } from "preact";
+
 import style from "./style.less";
 
 type ToastType = "success" | "error" | "info";
 
 type ToastProps = {
-    text: React.ReactNode;
+    text: ComponentChildren;
     type?: ToastType;
     onHide?: () => void;
-}
+};
 
 const getStyle = (type: ToastType) => {
     switch (type) {

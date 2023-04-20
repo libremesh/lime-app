@@ -59,6 +59,7 @@ const VoucherList = () => {
                             type="text"
                             id="search-by"
                             className="w-100"
+                            // @ts-ignore
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
@@ -69,6 +70,7 @@ const VoucherList = () => {
                         <select
                             id="filter-by"
                             className="w-100"
+                            // @ts-ignore
                             onChange={(e) => setFilterSelection(e.target.value)}
                             value={filterSelection}
                         >

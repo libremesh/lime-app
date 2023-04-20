@@ -1,11 +1,13 @@
+import { ComponentChildren } from "preact";
+
 import style from "./style.less";
 
 type OptionButtonProps = {
-    description: React.ReactNode;
+    description: ComponentChildren;
     action: () => void;
-    btnText: React.ReactNode;
+    btnText: ComponentChildren;
     isCancelButton?: boolean;
-}
+};
 
 export const BannerOptionCancelButton = ({ description, action, btnText }) => (
     <OptionButton
@@ -20,7 +22,12 @@ export const BannerOptionButton = ({ description, action, btnText }) => (
     <OptionButton description={description} action={action} btnText={btnText} />
 );
 
-const OptionButton = ({ description, action, btnText, isCancelButton }: OptionButtonProps) => (
+const OptionButton = ({
+    description,
+    action,
+    btnText,
+    isCancelButton,
+}: OptionButtonProps) => (
     <div className={isCancelButton ? style.bannerButtonCancel : ""}>
         <div className={style.description}>{description}</div>
         <div>

@@ -18,6 +18,7 @@ const Duration = ({ days }) => {
         return <Trans>Duration: is permanent</Trans>;
     }
     return (
+        // @ts-ignore
         <Trans>
             Duration: <Plural value={days} one="# day" other="# days" />
         </Trans>

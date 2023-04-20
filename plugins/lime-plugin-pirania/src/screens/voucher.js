@@ -16,6 +16,7 @@ const statusMsgs = {
 };
 
 const Duration = ({ days }) => (
+    // @ts-ignore
     <Trans>
         Duration: <Plural value={days} one="# day" other="# days" />
     </Trans>

@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/macro";
+import { ComponentChildren } from "preact";
 import { route } from "preact-router";
 
 import Loading from "components/loading";
@@ -7,13 +8,13 @@ import Toast from "components/toast";
 import { useTimeoutToggle } from "../hooks/timeoutToggle";
 
 type ConfigPageLayoutProps = {
-    title: React.ReactNode,
-    children: React.ReactNode,
-    isLoading?: boolean,
-    isSuccess?: boolean,
-    isError?: boolean,
-    backUrl?: string,
-}
+    title: ComponentChildren;
+    children: ComponentChildren;
+    isLoading?: boolean;
+    isSuccess?: boolean;
+    isError?: boolean;
+    backUrl?: string;
+};
 
 const ConfigPageLayout = ({
     title,
@@ -22,7 +23,7 @@ const ConfigPageLayout = ({
     isError,
     children,
     backUrl = "/nodeadmin",
-} : ConfigPageLayoutProps) => {
+}: ConfigPageLayoutProps) => {
     const showSuccess = useTimeoutToggle(isSuccess, 1500);
     const showError = useTimeoutToggle(isError, 1500);
 

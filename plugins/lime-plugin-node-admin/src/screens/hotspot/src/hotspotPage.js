@@ -42,6 +42,7 @@ const HotspotPageForm = ({
                 <div className="ml-auto">
                     {!isSubmitting && !waitingRadioReset && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
                             className="ml-auto"
                         >

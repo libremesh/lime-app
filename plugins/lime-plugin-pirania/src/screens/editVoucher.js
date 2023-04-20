@@ -44,6 +44,7 @@ const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
                 <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(submitVoucher)}
                             className="ml-auto"
                         >
