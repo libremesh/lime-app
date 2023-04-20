@@ -53,7 +53,6 @@ export const NodeDetail = ({ synced }: { synced: boolean }) => {
                         {uptime}
                     </TitleAndText>
                 )}
-
                 <TitleAndText title={<Trans>Firmware version</Trans>}>
                     {firmware}
                 </TitleAndText>
