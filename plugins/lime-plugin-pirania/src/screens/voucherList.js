@@ -43,32 +43,34 @@ const VoucherList = () => {
         });
 
     return (
-        <div class="d-flex flex-column flex-grow-1">
-            <div class="flex-grow-1 overflow-auto container-padded">
-                <div class="text-center">
+        <div className="d-flex flex-column flex-grow-1">
+            <div className="flex-grow-1 overflow-auto container-padded">
+                <div className="text-center">
                     <h2>
                         <Trans>Voucher list</Trans>
                     </h2>
                 </div>
                 <div>
                     <div>
-                        <label for="search-by">
+                        <label htmlFor="search-by">
                             <Trans>Search by</Trans>
                         </label>
                         <input
                             type="text"
                             id="search-by"
-                            class="w-100"
+                            className="w-100"
+                            // @ts-ignore
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label for="filter-by">
+                        <label htmlFor="filter-by">
                             <Trans>Filter by</Trans>
                         </label>
                         <select
                             id="filter-by"
-                            class="w-100"
+                            className="w-100"
+                            // @ts-ignore
                             onChange={(e) => setFilterSelection(e.target.value)}
                             value={filterSelection}
                         >
@@ -93,10 +95,10 @@ const VoucherList = () => {
                         </select>
                     </div>
                 </div>
-                <div class="d-flex flex-column flex-grow-1">
-                    {filteredVoucher.map((voucher, index) => (
-                        <div class="p-y-sm" key={index}>
-                            <VoucherListItem {...voucher} key={voucher.id} />
+                <div className="d-flex flex-column flex-grow-1">
+                    {filteredVoucher.map((voucher) => (
+                        <div className="p-y-sm" key={voucher.id}>
+                            <VoucherListItem {...voucher} />
                         </div>
                     ))}
                     {filteredVoucher.length === 0 && (
@@ -110,7 +112,7 @@ const VoucherList = () => {
                 </div>
             </div>
             <div
-                class={`d-flex justify-content-center align-items-center p-t-sm ${style.listBottomAction}`}
+                className={`d-flex justify-content-center align-items-center p-t-sm ${style.listBottomAction}`}
             >
                 <button onClick={() => route("/access/create")}>
                     <Trans>Create</Trans>

@@ -28,8 +28,8 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
 
     return (
         <Fragment>
-            <form class="flex-grow-1">
-                <div class={switchStyle.toggles}>
+            <form className="flex-grow-1">
+                <div className={switchStyle.toggles}>
                     <input
                         type="checkbox"
                         id="enablePassword"
@@ -51,24 +51,25 @@ const APPasswordPageForm = ({ wifiData, onSubmit, isSubmitting }) => {
                             {...register("password", {
                                 validate: isValidPassword,
                             })}
-                            class="w-100"
+                            className="w-100"
                         />
                     </div>
                 )}
                 {errors && errors.password && (
-                    <p class="text-danger">
+                    <p className="text-danger">
                         <Trans>
                             The password should have at least 8 characters
                         </Trans>
                     </p>
                 )}
             </form>
-            <div class="d-flex">
-                <div class="ml-auto">
+            <div className="d-flex">
+                <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
-                            class="ml-auto"
+                            className="ml-auto"
                         >
                             <Trans>Save</Trans>
                         </button>

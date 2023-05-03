@@ -6,7 +6,7 @@ import Loading from "components/loading";
 import { useReboot, useSetNeedReboot } from "utils/queries";
 
 const RebootPage = () => {
-    const { mutate: reboot, isLoading, isSuccess } = useReboot();
+    const { mutate: setReboot, isLoading, isSuccess } = useReboot();
     const { mutate: setNeedReboot } = useSetNeedReboot();
 
     function cancel() {
@@ -14,9 +14,13 @@ const RebootPage = () => {
         route("/");
     }
 
+    function reboot() {
+        setReboot();
+    }
+
     if (isSuccess) {
         return (
-            <div class={`container container-padded container-center`}>
+            <div className={`container container-padded container-center`}>
                 <h3>
                     <Trans>Rebooting</Trans>
                 </h3>
@@ -30,7 +34,7 @@ const RebootPage = () => {
     }
 
     return (
-        <div class={`container container-padded container-center`}>
+        <div className={`container container-padded container-center`}>
             <p>
                 <Trans>Are you sure you want to reboot?</Trans>
             </p>

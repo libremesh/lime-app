@@ -23,7 +23,7 @@ export const SafeUpgradeBadge = () => {
     return (
         <div>
             {isAvailable === true && (
-                <div class={`${style.note} ${style.notePositive}`}>
+                <div className={`${style.note} ${style.notePositive}`}>
                     <Trans>
                         This device supports secure rollback to previous version
                         if something goes wrong
@@ -31,7 +31,7 @@ export const SafeUpgradeBadge = () => {
                 </div>
             )}
             {isAvailable === false && (
-                <div class={`${style.note} ${style.noteWarning}`}>
+                <div className={`${style.note} ${style.noteWarning}`}>
                     <Trans>
                         This device does not support secure rollback to previous
                         version if something goes wrong
@@ -80,7 +80,7 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
     if (!versionName) return;
 
     return (
-        <div class="container container-padded">
+        <div className="container container-padded">
             <h5>
                 <Trans>Upgrade to lastest firmware version</Trans>
             </h5>
@@ -99,7 +99,7 @@ const UpgradeFromRelease = ({ onUpgrading, onSwitch }) => {
             {(submittingDownload || submittingUpgrade) && <Loading />}
             {status === "downloading" && (
                 <div>
-                    <div class="withLoadingEllipsis">
+                    <div className="withLoadingEllipsis">
                         <Trans>Downloading</Trans>
                     </div>
                     <button disabled>
@@ -174,15 +174,19 @@ export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
     }
 
     return (
-        <div class="container container-padded">
+        <div className="container container-padded">
             <SafeUpgradeBadge />
             <h5>
                 <b>
                     <Trans>Upload firmware image from your device</Trans>
                 </b>
             </h5>
-            <form id="file-upload-form" onSubmit={handleSubmit(onUpgrade)}>
-                <label class="button" htmlFor="file">
+            <form
+                id="file-upload-form"
+                // @ts-ignore
+                onSubmit={handleSubmit(onUpgrade)}
+            >
+                <label className="button" htmlFor="file">
                     <Trans>Select file</Trans>
                 </label>
                 <input
@@ -232,7 +236,7 @@ export const UpgradeFromFile = ({ onUpgrading, onSwitch }) => {
                 </div>
             )}
             {invalidFirmwareError && (
-                <div class={`${style.note} ${style.noteError}`}>
+                <div className={`${style.note} ${style.noteError}`}>
                     <Trans>
                         The selected image is not valid for the target device
                     </Trans>
@@ -256,6 +260,7 @@ export const UpgradePage = ({ onUpgrading }) => {
     useEffect(() => {
         const defaultSrc =
             newVersion && newVersion.version ? "fromRelease" : "fromFile";
+        // @ts-ignore
         setfwSource(defaultSrc);
     }, [newVersion]);
 
@@ -266,7 +271,7 @@ export const UpgradePage = ({ onUpgrading }) => {
 
     if (isLoading) {
         return (
-            <div class="container container-padded">
+            <div className="container container-padded">
                 <Loading />
             </div>
         );

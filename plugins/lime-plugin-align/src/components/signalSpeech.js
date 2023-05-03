@@ -34,7 +34,7 @@ export const SignalSpeech = ({ signal, className, initialMuted = true }) => {
     }
 
     return (
-        <div class={className} onClick={toogleMuted}>
+        <div className={className} onClick={toogleMuted}>
             {!muted && <span>🔊</span>}
             {muted && <span>🔇</span>}
         </div>

@@ -1,21 +1,24 @@
-import { useNeedReboot, useSession } from "utils/queries";
-
 import {
     SafeUpgradeCountdown,
     UpgradeAvailableBanner,
-} from "../../../plugins/lime-plugin-firmware";
+} from "plugins/lime-plugin-firmware";
 import {
     useNewVersion,
     useUpgradeInfo,
-} from "../../../plugins/lime-plugin-firmware/src/firmwareQueries";
+} from "plugins/lime-plugin-firmware/src/firmwareQueries";
+
+import { useNeedReboot, useSession } from "utils/queries";
+
 import { RebootBanner } from "../RebootBanner";
 
 const SubHeader = () => {
     const { data: session } = useSession();
     const { data: upgradeInfo } = useUpgradeInfo({
-        enabled: session?.username,
+        enabled: session?.username !== undefined,
     });
-    const { data: newVersion } = useNewVersion({ enabled: session?.username });
+    const { data: newVersion } = useNewVersion({
+        enabled: session?.username !== undefined,
+    });
     const { data: changesNeedReboot } = useNeedReboot();
     const showSuCountdown = upgradeInfo && upgradeInfo.suCounter > 0;
     const showNeedReboot = !showSuCountdown && changesNeedReboot;

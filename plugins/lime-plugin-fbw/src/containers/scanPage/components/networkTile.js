@@ -36,7 +36,7 @@ export const NetworkTile = ({
             status === "scanned"
         ) {
             return (
-                <div class={`${style.fetchingName}`}>
+                <div className={`${style.fetchingName}`}>
                     <Trans>Error reaching hostname!</Trans>
                 </div>
             );
@@ -44,7 +44,7 @@ export const NetworkTile = ({
         // Case configuration download not started yet
         else if (station.status == null) {
             return (
-                <div class={`${style.fetchingName} withLoadingEllipsis`}>
+                <div className={`${style.fetchingName} withLoadingEllipsis`}>
                     <Trans>Connection attempt not yet started</Trans>
                 </div>
             );
@@ -67,14 +67,16 @@ export const NetworkTile = ({
                     msg = <Trans>Error downloading lime assets</Trans>;
                     break;
             }
-            return <div class={`${style.fetchingName}`}>{msg}</div>;
+            return <div className={`${style.fetchingName}`}>{msg}</div>;
         }
         // Case scan retval is true
         else if (station.status.retval === true) {
             // Is downloading
             if (station.status.code == "downloading_config") {
                 return (
-                    <div class={`${style.fetchingName} withLoadingEllipsis`}>
+                    <div
+                        className={`${style.fetchingName} withLoadingEllipsis`}
+                    >
                         <Trans>Fetching name</Trans>
                     </div>
                 );
@@ -83,8 +85,10 @@ export const NetworkTile = ({
             else if (station.status.code === "downloaded_config" && hostname) {
                 return (
                     <span>
-                        <div style={"font-size: 2rem;"}>{hostname}</div>
-                        <div style={"font-size: 1.5rem; padding-right: 10px;"}>
+                        <div style={{ fontSize: "2rem" }}>{hostname}</div>
+                        <div
+                            style={{ fontSize: "1.5rem", paddingRight: "10px" }}
+                        >
                             {`(${network.config.wifi.ap_ssid})`}
                         </div>
                     </span>
@@ -92,7 +96,7 @@ export const NetworkTile = ({
             }
         }
         return (
-            <div class={`${style.fetchingName}`}>
+            <div className={`${style.fetchingName}`}>
                 <Trans>Unknown error</Trans>
             </div>
         );
@@ -101,14 +105,14 @@ export const NetworkTile = ({
     return (
         <ListItem
             onClick={setExpanded}
-            style={"padding-left: 0.5em; padding-right:0.5em;"}
+            style={{ paddingLeft: "0.5em", paddingRight: "0.5em" }}
             key={listKey}
             data-testid={listKey}
         >
             <div>
                 {statusMessage()}
                 <div
-                    class={
+                    className={
                         expandedAps.includes(listKey)
                             ? style.itemActive
                             : style.itemHidden
@@ -120,15 +124,18 @@ export const NetworkTile = ({
                     </div>
                 </div>
             </div>
-            <div class={`${style.netItemRight} d-flex`}>
+            <div className={`${style.netItemRight} d-flex`}>
                 {hostname && station?.status?.code == "downloaded_config" && (
                     <button onClick={() => onSelect(network.index)}>
                         <Trans>Select</Trans>
                     </button>
                 )}
 
-                <div class={signalStyle.signal} style={"margin-bottom:auto;"}>
-                    <div class="d-flex flex-grow-1 align-items-baseline">
+                <div
+                    className={signalStyle.signal}
+                    style={{ marginBottom: "auto" }}
+                >
+                    <div className="d-flex flex-grow-1 align-items-baseline">
                         <div>{station.signal}</div>
                     </div>
                     <SignalBar

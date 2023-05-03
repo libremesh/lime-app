@@ -19,13 +19,14 @@ export const UpgradeAvailableBanner = () => {
     if (!newVersion || hideReleaseBannerPlease === versionName) return;
 
     return (
+        // @ts-ignore
         <Match>
             {({ path }) =>
                 !["firmware", "releaseInfo"].includes(
                     path.replace("/", "")
                 ) && (
                     <div
-                        class="subheader-notification"
+                        className="subheader-notification"
                         style={{ backgroundColor: "#923853", color: "#fff" }}
                     >
                         <Trans>{versionName} is now available</Trans>

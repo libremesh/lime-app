@@ -43,8 +43,8 @@ const HostnamePage = () => {
                 title: <Trans>Node Name</Trans>,
             }}
         >
-            <form class="flex-grow-1">
-                <label class="d-none" for="hostname">
+            <form className="flex-grow-1">
+                <label className="d-none" htmlFor="hostname">
                     <Trans>Node Name</Trans>
                 </label>
                 <input
@@ -59,25 +59,27 @@ const HostnamePage = () => {
                     onChange={(v) =>
                         setValue(
                             "hostname",
+                            // @ts-ignore
                             slugify(v.target.value.toLowerCase())
                         )
                     }
-                    class="w-100"
+                    className="w-100"
                 />
                 {errors.hostname && (
-                    <p class="text-danger">
+                    <p className="text-danger">
                         <Trans>
                             The name should have at least 3 characters
                         </Trans>
                     </p>
                 )}
             </form>
-            <div class="d-flex">
-                <div class="ml-auto">
+            <div className="d-flex">
+                <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
-                            class="ml-auto"
+                            className="ml-auto"
                         >
                             <Trans>Save</Trans>
                         </button>

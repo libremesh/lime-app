@@ -9,7 +9,7 @@ import {
     ValidationMessages,
     isValidPassword,
 } from "../../../src/containers/SharedPasswordForm";
-import style from "./style";
+import style from "./style.less";
 
 export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
     const [password, setPassword] = useState("");
@@ -35,7 +35,7 @@ export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
     }
 
     return (
-        <div class="container container-padded">
+        <div className="container container-padded">
             <h4>
                 <Trans>Change Shared Password</Trans>
             </h4>
@@ -47,7 +47,7 @@ export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
             <input
                 type="password"
                 placeholder={t`Password`}
-                class="u-full-width"
+                className="u-full-width"
                 value={password}
                 onInput={changePassword}
             />
@@ -58,7 +58,7 @@ export const NetAdmin = ({ submitting, success, submitSharedPassword }) => {
             <input
                 type="password"
                 placeholder={t`Re-enter Password`}
-                class="u-full-width"
+                className="u-full-width"
                 value={passwordConfirmation}
                 onInput={changePasswordConfirmation}
             />

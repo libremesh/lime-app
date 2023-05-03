@@ -3,6 +3,7 @@ import { Component, createContext } from "preact";
 import { useContext } from "preact/hooks";
 
 /** Context used to pass application wise data and services to nested components */
+// @ts-ignore
 export const AppContext = createContext();
 
 export class AppContextProvider extends Component {

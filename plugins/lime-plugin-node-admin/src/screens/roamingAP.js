@@ -14,8 +14,8 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
     });
     return (
         <Fragment>
-            <form class="flex-grow-1">
-                <div class={switchStyle.toggles}>
+            <form className="flex-grow-1">
+                <div className={switchStyle.toggles}>
                     <input
                         type="checkbox"
                         id="enableRoamingAP"
@@ -26,12 +26,13 @@ const RoamingAPForm = ({ wifiData, onSubmit, isSubmitting }) => {
                     </label>
                 </div>
             </form>
-            <div class="d-flex">
-                <div class="ml-auto">
+            <div className="d-flex">
+                <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
-                            class="ml-auto"
+                            className="ml-auto"
                         >
                             <Trans>Save</Trans>
                         </button>

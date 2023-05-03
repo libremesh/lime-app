@@ -6,7 +6,7 @@ import Loading from "components/loading";
 import { useUpgradeConfirm, useUpgradeRevert } from "../firmwareQueries";
 
 export const ConfirmChoices = ({ onConfirm, onRevert, submitting }) => (
-    <div class={`container container-padded container-center`}>
+    <div className={`container container-padded container-center`}>
         <button onClick={onConfirm}>
             <Trans>Confirm</Trans>
         </button>
@@ -28,7 +28,7 @@ export const ConfirmChoices = ({ onConfirm, onRevert, submitting }) => (
 );
 
 export const Reverted = () => (
-    <div class={`container container-padded container-center`}>
+    <div className={`container container-padded container-center`}>
         <h3>
             <Trans>Reverting to previous version</Trans>
         </h3>

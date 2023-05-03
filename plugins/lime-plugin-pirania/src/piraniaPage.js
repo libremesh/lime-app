@@ -4,15 +4,15 @@ import { useListVouchers } from "./piraniaQueries";
 import VoucherList from "./screens/voucherList";
 
 const PiraniaPage = ({}) => {
-    const { data, isLoading } = useListVouchers();
+    const { isLoading } = useListVouchers();
     if (isLoading) {
         return (
-            <div class="container container-center">
+            <div className="container container-center">
                 <Loading />
             </div>
         );
     }
-    return <VoucherList vouchers={data} />;
+    return <VoucherList />;
 };
 
 export default PiraniaPage;

@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+      /* Basic Options */
+      "target": "ES5",
+      "allowJs": true,
+      "checkJs": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+      "jsxImportSource": "preact",
+      "noEmit": true,
+
+      /* Strict Type-Checking Options */
+      "strict": false,
+
+      /* Module Resolution Options */
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "baseUrl": "./",
+      "paths": {
+          "react/*": ["./node_modules/preact/compat/*"],
+          "react-dom/*": ["./node_modules/preact/compat/*"],
+          "components/*": ["./src/components/*"],
+          "containers/*": ["./src/containers/*"],
+          "utils/*": ["./src/utils/*"],
+          "plugins/*": ["./plugins/*"]
+      },
+      "allowSyntheticDefaultImports": true,
+
+      /* Advanced Options */
+      "skipLibCheck": true
+  },
+  "include": ["plugins/**/*", "src/**/*", "stories/**/*"],
+  "exclude": [
+    "node_modules/**/*",
+    "build/**/*",
+    "**/*.spec.js",
+    "**/*.stories.js"
+  ]
+}

@@ -9,7 +9,7 @@ export const ShowPathButton = ({
     return isLoading ? (
         <div />
     ) : isGateway ? (
-        <div class="row">
+        <div className="row">
             <br />
             <p>
                 <b>
@@ -20,17 +20,17 @@ export const ShowPathButton = ({
             </p>
         </div>
     ) : (
-        <div class="row">
+        <div className="row">
             <br />
             <button
-                class="button block u-full-width"
+                className="button block u-full-width"
                 type="submit"
                 onClick={getGatewayMetrics}
             >
                 <Trans>Only gateway</Trans>
             </button>
             <button
-                class="button block u-full-width"
+                className="button block u-full-width"
                 type="submit"
                 onClick={getMetricsAll}
             >

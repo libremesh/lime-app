@@ -23,8 +23,8 @@ const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
     });
     return (
         <Fragment>
-            <form class="flex-grow-1">
-                <label for="name">
+            <form className="flex-grow-1">
+                <label htmlFor="name">
                     <Trans>Description</Trans>
                 </label>
                 <span>
@@ -33,19 +33,20 @@ const EditVoucherForm = ({ name, submitVoucher, isSubmitting }) => {
                 <textarea
                     id="name"
                     {...register("name", { required: true, maxLength: 100 })}
-                    class="w-100"
+                    className="w-100"
                 />
                 {errors.name?.type === "required" && <RequiredErrorMsg />}
                 {errors.name?.type === "maxLength" && (
                     <MaxLengthErrorMsg length={100} />
                 )}
             </form>
-            <div class="d-flex">
-                <div class="ml-auto">
+            <div className="d-flex">
+                <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(submitVoucher)}
-                            class="ml-auto"
+                            className="ml-auto"
                         >
                             <Trans>Save</Trans>
                         </button>

@@ -37,7 +37,7 @@ const WellcomeScreenEditorForm = ({
     return (
         <Fragment>
             <form>
-                <label for="title">
+                <label htmlFor="title">
                     <Trans>Title</Trans>
                 </label>
                 <span>
@@ -46,14 +46,14 @@ const WellcomeScreenEditorForm = ({
                 <input
                     type="text"
                     id="title"
-                    class="w-100"
+                    className="w-100"
                     {...register("title", { required: true, maxLength: 100 })}
                 />
                 {errors.title?.type === "required" && <RequiredErrorMsg />}
                 {errors.title?.type === "maxLength" && (
                     <MaxLengthErrorMsg length={100} />
                 )}
-                <label for="main_text">
+                <label htmlFor="main_text">
                     <Trans>Main Text</Trans>
                 </label>
                 <span>
@@ -61,7 +61,7 @@ const WellcomeScreenEditorForm = ({
                 </span>
                 <textarea
                     id="main_text"
-                    class="w-100"
+                    className="w-100"
                     style={{ minHeight: "9em" }}
                     {...register("main_text", {
                         required: true,
@@ -72,7 +72,7 @@ const WellcomeScreenEditorForm = ({
                 {errors.main_text?.type === "maxLength" && (
                     <MaxLengthErrorMsg length={500} />
                 )}
-                <label for="logo_file">
+                <label htmlFor="logo_file">
                     <Trans>Community Logo</Trans>
                 </label>
                 <div>
@@ -80,12 +80,12 @@ const WellcomeScreenEditorForm = ({
                     {!isCompressing && (
                         <img
                             src={logoCompressed}
-                            class="border border-primary rounded .container-padded"
+                            className="border border-primary rounded .container-padded"
                             alt="logo-preview"
                         />
                     )}
                 </div>
-                <label class="button" htmlFor="logo_file">
+                <label className="button" htmlFor="logo_file">
                     <Trans>Select file</Trans>
                 </label>
                 <input
@@ -96,7 +96,7 @@ const WellcomeScreenEditorForm = ({
                     type="file"
                     {...register("logo_file")}
                 />
-                <label for="background_color">
+                <label htmlFor="background_color">
                     <Trans>Background Color</Trans>
                 </label>
                 <input
@@ -116,7 +116,7 @@ const WellcomeScreenEditorForm = ({
                         point a link to them.
                     </Trans>
                 </p>
-                <label for="link_title">
+                <label htmlFor="link_title">
                     <Trans>Link Title</Trans>
                 </label>
                 <span>
@@ -125,13 +125,13 @@ const WellcomeScreenEditorForm = ({
                 <input
                     type="text"
                     id="link_title"
-                    class="w-100"
+                    className="w-100"
                     {...register("link_title", { maxLength: 100 })}
                 />
                 {errors.link_title?.type === "maxLength" && (
                     <MaxLengthErrorMsg length={100} />
                 )}
-                <label for="link_url">
+                <label htmlFor="link_url">
                     <Trans>Link URL</Trans>
                 </label>
                 <span>
@@ -140,7 +140,7 @@ const WellcomeScreenEditorForm = ({
                 <input
                     type="text"
                     id="link_url"
-                    class="w-100"
+                    className="w-100"
                     {...register("link_url", {
                         pattern: /^(http:\/\/|https:\/\/).*$/,
                     })}
@@ -151,12 +151,13 @@ const WellcomeScreenEditorForm = ({
                     </p>
                 )}
             </form>
-            <div class="d-flex">
-                <div class="ml-auto">
+            <div className="d-flex">
+                <div className="ml-auto">
                     {!isSubmitting && (
                         <button
+                            // @ts-ignore
                             onClick={handleSubmit(onSubmit)}
-                            class="ml-auto"
+                            className="ml-auto"
                             disabled={isCompressing}
                         >
                             <Trans>Save</Trans>

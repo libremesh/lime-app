@@ -34,25 +34,25 @@ const VoucherListItem = ({
 
     return (
         <div
-            class={`flex-grow-1 d-flex flex-column container-padded ${style.voucherItem}`}
+            className={`flex-grow-1 d-flex flex-column container-padded ${style.voucherItem}`}
             data-testid={`voucher-item-${id}`}
             onClick={goToVoucherView}
         >
-            <div class="d-flex align-items-center">
+            <div className="d-flex align-items-center">
                 <div>
                     <Copy text={code} className={style.voucherCode} />
                 </div>
                 <div
-                    class={`${style.voucherStatus} ${statusClassName[status]}`}
+                    className={`${style.voucherStatus} ${statusClassName[status]}`}
                 >
                     {statusMsgs[status]}
                 </div>
             </div>
-            <div class={style.voucherDescription}>
+            <div className={style.voucherDescription}>
                 {author_node}: {name}
             </div>
-            <div class="d-flex">
-                <div class={`flex-grow-1 ${style.voucherDateLeft}`}>
+            <div className="d-flex">
+                <div className={`flex-grow-1 ${style.voucherDateLeft}`}>
                     {status === "active" && permanent && (
                         <span>
                             <Trans>Permanent</Trans>
@@ -61,14 +61,16 @@ const VoucherListItem = ({
                     {status === "active" && expiration_date && (
                         <span>
                             <Trans>
-                                Expires <TimeAgo date={expiration_date} />
+                                Expires{" "}
+                                {TimeAgo({ timestamp: expiration_date })}
                             </Trans>
                         </span>
                     )}
                     {status === "expired" && (
                         <span>
                             <Trans>
-                                Expired <TimeAgo date={expiration_date} />
+                                Expired{" "}
+                                {TimeAgo({ timestamp: expiration_date })}
                             </Trans>
                         </span>
                     )}
@@ -76,14 +78,14 @@ const VoucherListItem = ({
                         <span>
                             <Trans>
                                 Activation deadline:{" "}
-                                <TimeAgo date={activation_deadline} />
+                                {TimeAgo({ timestamp: activation_deadline })}
                             </Trans>
                         </span>
                     )}
                 </div>
-                <div class="ml-auto">
+                <div className="ml-auto">
                     <Trans>
-                        Created <TimeAgo date={creation_date} />
+                        Created {TimeAgo({ timestamp: creation_date })}
                     </Trans>
                 </div>
             </div>
