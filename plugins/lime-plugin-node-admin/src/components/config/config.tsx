@@ -1,15 +1,17 @@
+import { ComponentChildren } from "preact";
+
 import { ListItem } from "components/list";
 import Loading from "components/loading";
 
 import style from "./config.style.less";
 
 type ConfigProps = {
-    title: React.ReactNode,
-    subtitle?: React.ReactNode,
-    value: React.ReactNode,
-    onClick: () => void,
-    isLoading: boolean,
-}
+    title: ComponentChildren;
+    subtitle?: ComponentChildren;
+    value: ComponentChildren;
+    onClick: () => void;
+    isLoading: boolean;
+};
 
 export const Config = ({
     title,
@@ -27,7 +29,12 @@ export const Config = ({
                     {isLoading && <Loading />}
                     {!isLoading && (
                         <div>
-                            {subtitle && <div className={style.subtitle}> {subtitle} </div>}
+                            {subtitle && (
+                                <div className={style.subtitle}>
+                                    {" "}
+                                    {subtitle}{" "}
+                                </div>
+                            )}
                             <div className={style.value}> {value} </div>
                         </div>
                     )}
