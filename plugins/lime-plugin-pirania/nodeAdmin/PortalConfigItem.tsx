@@ -21,6 +21,7 @@ export const PortalConfigItem = () => {
         }
     }
     return (
+        // @ts-ignore
         <Config
             data-testid="portal-config-item"
             title={<Trans>Community Portal</Trans>}
