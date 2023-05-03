@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { Trans } from "@lingui/macro";
 import L, { LatLngExpression, icon } from "leaflet";
 import { useEffect, useRef, useState } from "preact/hooks";

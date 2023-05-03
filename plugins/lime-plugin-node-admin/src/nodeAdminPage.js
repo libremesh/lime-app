@@ -15,6 +15,7 @@ const Hostname = () => {
     const { data: boardData, isLoading } = useBoardData();
     const hostname = boardData && boardData.hostname;
     return (
+        // @ts-ignore
         <Config
             title={<Trans>Node Name</Trans>}
             value={hostname}
@@ -28,6 +29,7 @@ const ApPassword = () => {
     const { data: wifiData, isLoading } = useWifiData();
     const has_password = wifiData && wifiData.node_ap.has_password;
     return (
+        // @ts-ignore
         <Config
             title={<Trans>Wifi Password</Trans>}
             value={has_password ? "********" : <Trans>No password</Trans>}
@@ -63,6 +65,7 @@ export const Hotspot = () => {
     const { data, isLoading } = useHotspotData();
     const enabled = data?.enabled;
     return (
+        // @ts-ignore
         <Config
             data-testid={"hotspot-config-item"}
             title={<Trans>Connect to a Mobile Hotspot</Trans>}
