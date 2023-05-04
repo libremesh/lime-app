@@ -99,6 +99,7 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
 
     // HANDLERS
     const handlePointerDown = (
+        // @ts-ignore
         e: React.TouchEvent<HTMLDivElement> | React.MouseEvent<HTMLDivElement>
     ) => {
         // @ts-ignore

@@ -1,9 +1,10 @@
+import { ComponentChildren } from "preact";
 import React from "react";
 
 import { Button, ButtonProps } from "components/elements/button";
 
 interface FloatingButtonProps {
-    children?: React.ReactNode | string;
+    children?: ComponentChildren | string;
 }
 
 const FloatingButton = ({
