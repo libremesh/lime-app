@@ -2,14 +2,18 @@ import * as geojson from "geojson";
 import L, { Layer } from "leaflet";
 import { GeoJSON, Marker } from "react-leaflet";
 
+import { SelectedLater } from "plugins/lime-plugin-mesh-wide/src/components/Map";
+
 import style from "./style.less";
 
 export const CommunityLayer = ({
     geoJsonData,
     setSelectedLayer,
+    selectedLayer,
 }: {
     geoJsonData: geojson.GeoJsonObject;
-    setSelectedLayer: (layer: Layer | null) => void;
+    setSelectedLayer: (layer: SelectedLater | null) => void;
+    selectedLayer: SelectedLater;
 }) => {
     const pointToLayer = (feature: any, latlng: any) => {
         const marker = L.marker(latlng, {
@@ -33,7 +37,17 @@ export const CommunityLayer = ({
                     html: `<span class="${style.defaultMarker} ${style.activeMarker} "  />`,
                 }),
             }).addTo(featureGroup);
-
+            if (selectedLayer) {
+                selectedLayer.onRemove();
+            }
+            console.log("marker click", markerTemp);
+            setSelectedLayer({
+                layer: markerTemp,
+                onRemove: () => {
+                    console.log("ONREMOVE MARKER");
+                    markerTemp.remove();
+                },
+            });
             // markerTemp.on("mouseout", function (e) {
             //     markerTemp.remove();
             // });
@@ -52,9 +66,22 @@ export const CommunityLayer = ({
                 // }
                 // layer.setStyle(selectedStyle);
                 L.DomEvent.stopPropagation(event);
-                console.log("clicked! ", layer, feature);
+                console.log("line click! ", layer, feature);
                 // layer.setStyle(selectedStyle);
-                setSelectedLayer(layer);
+                if (selectedLayer) {
+                    selectedLayer.onRemove();
+                }
+                layer.setStyle({
+                    color: "#0000ff",
+                });
+                setSelectedLayer({
+                    layer,
+                    onRemove: () => {
+                        console.log("ONREMOVE LINE");
+
+                        layer.setStyle(geoJsonStyle);
+                    },
+                });
             },
             mouseover: (event: any) => {
                 const l = event.target;
