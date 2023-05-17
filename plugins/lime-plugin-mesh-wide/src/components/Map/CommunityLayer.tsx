@@ -2,26 +2,27 @@ import { FeatureCollection } from "geojson";
 import L from "leaflet";
 import { Marker, Polyline, Tooltip } from "react-leaflet";
 
+import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 import { SelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 import style from "./style.less";
 
 export const CommunityLayer = ({
     geoJsonData,
-    setSelectedFeature,
-    selectedFeature,
 }: {
     geoJsonData: FeatureCollection;
-    setSelectedFeature: (layer: SelectedMapFeature | null) => void;
-    selectedFeature: SelectedMapFeature;
 }) => {
+    const { selectedMapFeature, setSelectedMapFeature } =
+        useSelectedMapFeature();
     return (
         <>
             {geoJsonData &&
                 geoJsonData.features.map((f, i) => {
                     if (f.geometry.type === "LineString") {
                         const lineColor =
-                            selectedFeature?.id === i ? "#f000ff" : "#ff0000";
+                            selectedMapFeature?.id === i
+                                ? "#f000ff"
+                                : "#ff0000";
                         return (
                             <Polyline
                                 key={i}
@@ -36,7 +37,7 @@ export const CommunityLayer = ({
                                 eventHandlers={{
                                     click: (e) => {
                                         L.DomEvent.stopPropagation(e);
-                                        setSelectedFeature({
+                                        setSelectedMapFeature({
                                             id: i,
                                             feature: f,
                                         });
@@ -58,7 +59,7 @@ export const CommunityLayer = ({
                         );
                     } else if (f.geometry.type === "Point") {
                         const selected = `${
-                            selectedFeature?.id === i && style.activeMarker
+                            selectedMapFeature?.id === i && style.activeMarker
                         }`;
                         return (
                             <Marker
@@ -72,7 +73,7 @@ export const CommunityLayer = ({
                                 eventHandlers={{
                                     click: (e) => {
                                         L.DomEvent.stopPropagation(e);
-                                        setSelectedFeature({
+                                        setSelectedMapFeature({
                                             id: i,
                                             feature: f,
                                         });

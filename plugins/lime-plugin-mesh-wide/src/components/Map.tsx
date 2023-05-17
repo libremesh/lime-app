@@ -5,7 +5,10 @@ import { MapContainer, TileLayer } from "react-leaflet";
 
 import { getCommunityGeoJSON } from "plugins/lime-plugin-locate/src/communityGeoJSON";
 import { CommunityLayer } from "plugins/lime-plugin-mesh-wide/src/components/Map/CommunityLayer";
-import { useMeshWide } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
+import {
+    useMeshWide,
+    useSelectedMapFeature,
+} from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 import { SelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 import { radioDataResponse } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 
@@ -17,24 +20,28 @@ export const MeshWideMap = () => {
     const [communityLayer, setCommunityLayer] =
         useState<FeatureCollection>(null);
 
-    const [selectedFeature, setSelectedFeature] =
-        useState<SelectedMapFeature | null>(null);
+    // const [selectedFeature, setSelectedFeature] =
+    //     useState<SelectedMapFeature | null>(null);
+
+    const { selectedMapFeature, setSelectedMapFeature } =
+        // const { data: selectedMapFeature, mutate: setSelectedMapFeature} =
+        useSelectedMapFeature();
 
     const mapRef = useRef<L.Map | null>();
 
     useEffect(() => {
         if (mapRef) {
             mapRef.current.on("click", () => {
-                if (selectedFeature !== null) {
-                    setSelectedFeature(null);
+                if (selectedMapFeature !== null) {
+                    setSelectedMapFeature(null);
                 }
             });
         }
-    }, [mapRef, selectedFeature]);
+    }, [mapRef, selectedMapFeature]);
 
     useEffect(() => {
-        console.log("SelectedFeature", selectedFeature);
-    }, [selectedFeature]);
+        console.log("SelectedFeature", selectedMapFeature);
+    }, [selectedMapFeature]);
 
     const { data: meshWideStatus } = useMeshWide({
         onSuccess: (res) => {
@@ -58,11 +65,7 @@ export const MeshWideMap = () => {
                 attribution={openStreetMapAttribution}
                 url={openStreetMapTileString}
             />
-            <CommunityLayer
-                setSelectedFeature={setSelectedFeature}
-                selectedFeature={selectedFeature}
-                geoJsonData={communityLayer}
-            />
+            <CommunityLayer geoJsonData={communityLayer} />
         </MapContainer>
     );
 };
