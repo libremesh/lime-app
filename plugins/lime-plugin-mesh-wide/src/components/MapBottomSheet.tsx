@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import React from "react";
 
 import { BottomSheet } from "components/bottom-sheet";
@@ -7,6 +7,7 @@ import FloatingButton from "components/buttons/floatting-button";
 import { Button } from "components/elements/button";
 
 import { NodeDetail } from "plugins/lime-plugin-mesh-wide/src/components/NodeDetail";
+import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
 const BottomSheetFooter = ({ synced }: { synced?: boolean }) => {
     const containerClasses =
@@ -39,6 +40,16 @@ export const MapBottomSheet = () => {
     const [isOpen, setIsOpen] = useState(false);
     const synced = false;
 
+    const { selectedMapFeature } = useSelectedMapFeature();
+    const name =
+        selectedMapFeature?.feature?.properties?.name ??
+        selectedMapFeature?.id ??
+        "";
+
+    useEffect(() => {
+        if (selectedMapFeature == null) setIsOpen(false);
+    }, [selectedMapFeature]);
+
     return (
         <>
             <BottomSheet
@@ -50,12 +61,12 @@ export const MapBottomSheet = () => {
                 footer={<BottomSheetFooter synced={synced} />}
             >
                 <div className={"px-10"}>
-                    <NodeDetail synced={synced} />
+                    <NodeDetail synced={synced} name={name} />
                 </div>
             </BottomSheet>
             <FloatingButton
                 onClick={() => {
-                    setIsOpen(!isOpen);
+                    if (selectedMapFeature) setIsOpen(!isOpen);
                 }}
             />
         </>

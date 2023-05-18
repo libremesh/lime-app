@@ -27,8 +27,14 @@ const Row = ({ children }: { children: any }) => {
     );
 };
 
-export const NodeDetail = ({ synced }: { synced: boolean }) => {
-    const nodeName = "ql-arbol";
+export const NodeDetail = ({
+    name,
+    synced,
+}: {
+    name: string;
+    synced: boolean;
+}) => {
+    // const nodeName = "ql-arbol";
     const uptime = "1 week";
     const firmware = "e93615c947-x86-64";
     const ipv6 = "fe80::42:cff:fecf:bfff";
@@ -38,7 +44,7 @@ export const NodeDetail = ({ synced }: { synced: boolean }) => {
     return (
         <>
             <Row>
-                <div className={"text-3xl"}>{nodeName}</div>
+                <div className={"text-3xl"}>{name}</div>
                 <Button color={"danger"} outline={true} size={"sm"}>
                     <PowerIcon />
                 </Button>
