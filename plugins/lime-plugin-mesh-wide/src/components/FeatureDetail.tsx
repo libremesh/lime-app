@@ -3,6 +3,7 @@ import { VNode } from "preact";
 
 import { Button } from "components/elements/button";
 
+import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import {
     ILinkDetailFeature,
@@ -158,9 +159,6 @@ export const BottomSheetFooter = ({
 }) => {
     if (!selectedFeature) return;
 
-    const containerClasses =
-        "flex items-center justify-center text-center bg-white py-5";
-
     const type = selectedFeature.feature.geometry.type;
 
     const Synced = () => {
@@ -171,12 +169,7 @@ export const BottomSheetFooter = ({
             txt = <Trans>Same status as in the reference state</Trans>;
         }
 
-        return (
-            <div className={containerClasses}>
-                <span className={"text-success text-4xl"}>✓</span>
-                {txt}
-            </div>
-        );
+        return <StatusAndButton isError={false}>{txt}</StatusAndButton>;
     };
 
     const UpdateReference = () => {
@@ -185,37 +178,25 @@ export const BottomSheetFooter = ({
         if (type === "LineString") {
             txt = (
                 <Trans>
-                    This link has 5dB
+                    This link has 5dB difference
                     {/*{*/}
                     {/*    (*/}
                     {/*        selectedFeature.feature*/}
                     {/*            .properties as ILinkDetailFeature*/}
                     {/*    ).gain*/}
                     {/*}{" "}*/}
-                    difference with the reference state
+                    <br /> with the reference state
                 </Trans>
             );
             btn = <Trans>Update this link on reference state</Trans>;
         } else if (type === "Point") {
-            txt = <Trans>Same status as in the reference state</Trans>;
+            txt = <Trans>In the reference state this node is on</Trans>;
             btn = <Trans>Update this node on reference state</Trans>;
         }
         return (
-            <>
-                <div className={`${containerClasses} flex-col`}>
-                    <div className={"flex flex-row px-10"}>
-                        <span
-                            className={
-                                "rounded-full border-2 border-danger text-danger w-8 h-8 flex items-center justify-center mx-2"
-                            }
-                        >
-                            !
-                        </span>
-                        <Trans>{txt}</Trans>
-                    </div>
-                    <Button>{btn}</Button>
-                </div>
-            </>
+            <StatusAndButton isError={true} btn={btn}>
+                {txt}
+            </StatusAndButton>
         );
     };
 
