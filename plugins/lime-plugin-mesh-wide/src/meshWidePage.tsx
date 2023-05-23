@@ -1,5 +1,7 @@
+import { route } from "preact-router";
 import React from "react";
 
+import FloatingButton from "components/buttons/floatting-button";
 import Loading from "components/loading";
 
 import { useLoadLeaflet } from "plugins/lime-plugin-locate/src/locateQueries";
@@ -28,6 +30,7 @@ const MeshWidePage = () => {
                 <>
                     <MeshWideMap />
                     <MapBottomSheet />
+                    <FloatingButton onClick={() => route("/meshwide/config")} />
                 </>
             )}
         </>

@@ -2,7 +2,6 @@ import { useEffect, useState } from "preact/hooks";
 import React from "react";
 
 import { BottomSheet } from "components/bottom-sheet";
-import FloatingButton from "components/buttons/floatting-button";
 
 import {
     BottomSheetFooter,
@@ -17,7 +16,7 @@ export const MapBottomSheet = () => {
     const { selectedMapFeature } = useSelectedMapFeature();
 
     useEffect(() => {
-        if (selectedMapFeature == null) setIsOpen(false);
+        selectedMapFeature == null ? setIsOpen(false) : setIsOpen(true);
     }, [selectedMapFeature]);
 
     return (
@@ -43,11 +42,6 @@ export const MapBottomSheet = () => {
                     />
                 </div>
             </BottomSheet>
-            <FloatingButton
-                onClick={() => {
-                    if (selectedMapFeature) setIsOpen(!isOpen);
-                }}
-            />
         </>
     );
 };
