@@ -18,14 +18,6 @@ export const FullScreenModal = ({
     isLoading?: boolean;
     backUrl?: string;
 }) => {
-    if (isLoading) {
-        return (
-            <div className="container container-center">
-                <Loading />
-            </div>
-        );
-    }
-
     return (
         <div className="flex flex-col min-h-screen w-full">
             <div className="fixed top-0 left-0 right-0 bg-white z-50 py-7 px-4 flex items-center font-medium">
@@ -37,7 +29,13 @@ export const FullScreenModal = ({
                 </div>
                 <div className={"text-4xl text-black"}>{title}</div>
             </div>
-            <div className={"pt-2 bg-white w-full"}>{children}</div>
+            {isLoading ? (
+                <div class="flex items-center h-full items-center justify-center">
+                    <Loading />
+                </div>
+            ) : (
+                <div className={"pt-2 bg-white w-full px-4"}>{children}</div>
+            )}
         </div>
     );
 };
