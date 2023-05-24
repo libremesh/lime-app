@@ -1,9 +1,15 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { UseQueryOptions } from "@tanstack/react-query/src/types";
 
-import { upgradeConfirm } from "plugins/lime-plugin-firmware/src/firmwareApi";
-import { SelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
-import { getRadioData } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
+import {
+    IMeshWideConfig,
+    IMeshWideStatusResponse,
+    SelectedMapFeature,
+} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+import {
+    getMeshWideConfig,
+    getRadioData,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 
 import queryCache from "utils/queryCache";
 
@@ -12,6 +18,17 @@ export function useMeshWide(params: UseQueryOptions) {
     return useQuery(["lime-meshwide", "get_mesh_info"], getRadioData, {
         ...params,
     });
+}
+
+// todo(kon): this is a mock
+export function useMeshWideConfig(params) {
+    return useQuery<IMeshWideConfig>(
+        ["lime-meshwide", "get_mesh_config"],
+        getMeshWideConfig,
+        {
+            ...params,
+        }
+    );
 }
 
 /**

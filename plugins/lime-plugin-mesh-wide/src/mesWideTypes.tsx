@@ -39,3 +39,8 @@ export interface ILinkDetailFeature {
     gain: string;
     linkType: string;
 }
+
+export type IMeshWideConfig = {
+    name: string;
+    options: { [key: string]: string };
+}[];
