@@ -1,6 +1,6 @@
 import { VNode } from "preact";
 
-import { Button } from "components/elements/button";
+import { Button } from "components/buttons/button";
 
 interface IStatusMessage {
     isError: boolean;

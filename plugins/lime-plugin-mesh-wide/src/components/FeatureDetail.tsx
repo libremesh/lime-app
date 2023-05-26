@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { VNode } from "preact";
 
-import { Button } from "components/elements/button";
+import { Button } from "components/buttons/button";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";

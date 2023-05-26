@@ -1,7 +1,7 @@
 import { ComponentChildren } from "preact";
 import React from "react";
 
-import { Button, ButtonProps } from "components/elements/button";
+import { Button, ButtonProps } from "components/buttons/button";
 
 interface FloatingButtonProps {
     children?: ComponentChildren | string;
