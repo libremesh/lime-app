@@ -4,7 +4,7 @@ export interface ButtonProps {
     onClick?: () => void;
     children?: any; // type error with Trans component
     size?: "sm" | "md" | "lg";
-    color?: "primary" | "secondary" | "danger";
+    color?: "primary" | "secondary" | "danger" | "info";
     href?: string;
     outline?: boolean;
 }
@@ -47,12 +47,17 @@ export const Button = ({
             colorClasses = outline
                 ? "border-2 border-danger text-danger hover:bg-danger hover:text-white"
                 : "bg-danger text-white border-2 border-danger hover:text-danger hover:bg-white";
+            break;
+        case "info":
+            colorClasses = outline
+                ? "border-2 border-button-info text-button-info hover:bg-button-info hover:text-white"
+                : "bg-button-info text-white border-2 border-button-info hover:text-button-info hover:bg-white";
+            break;
     }
 
     const cls = `cursor-pointer font-semibold rounded-xl text-center place-content-center transition-all duration-300
     justify-center border-0 ${sizeClasses}  ${colorClasses}`;
     const Btn = () => (
-        // @ts-ignore
         <div type="button" onClick={onClick} className={cls} {...props}>
             {children}
         </div>

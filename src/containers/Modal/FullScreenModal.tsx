@@ -34,7 +34,9 @@ export const FullScreenModal = ({
                     <Loading />
                 </div>
             ) : (
-                <div className={"pt-2 bg-white w-full px-4"}>{children}</div>
+                <div className={"pt-2 bg-white w-full h-full px-4"}>
+                    {children}
+                </div>
             )}
         </div>
     );

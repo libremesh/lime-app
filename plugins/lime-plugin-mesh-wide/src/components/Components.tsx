@@ -1,6 +1,8 @@
 import { VNode } from "preact";
 
 import { Button } from "components/buttons/button";
+import { BinIcon } from "components/icons/bin";
+import { EditIcon } from "components/icons/edit";
 
 interface IStatusMessage {
     isError: boolean;
@@ -46,5 +48,18 @@ export const StatusMessage = ({
             <span className={"text-success text-4xl"}>✓</span>
         )}
         {children}
+    </div>
+);
+
+export const EditOrDelete = ({
+    onEdit,
+    onDelete,
+}: {
+    onEdit: (e) => void;
+    onDelete: (e) => void;
+}) => (
+    <div className={"flex flex-row gap-3"}>
+        <EditIcon className={"cursor-pointer"} onClick={onEdit} />
+        <BinIcon className={"cursor-pointer"} onClick={onDelete} />
     </div>
 );

@@ -2,7 +2,12 @@ import { useToggle } from "react-use";
 
 import { ChevronDown, ChevronUp } from "components/icons/teenny/chevrons";
 
-export const Collapsible = ({ title, children, initCollapsed }) => {
+export const Collapsible = ({
+    title,
+    children,
+    initCollapsed,
+    optionsComponent = null,
+}) => {
     const [collapsed, toggleCollapsed] = useToggle(initCollapsed);
 
     return (
@@ -12,7 +17,8 @@ export const Collapsible = ({ title, children, initCollapsed }) => {
                 onClick={toggleCollapsed}
             >
                 <div className="font-semibold">{title}</div>
-                <div className={""}>
+                <div className={"flex flex-row gap-4"}>
+                    {optionsComponent}
                     {collapsed ? <ChevronDown /> : <ChevronUp />}
                 </div>
             </div>

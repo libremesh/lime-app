@@ -21,6 +21,7 @@ module.exports = {
                 button: {
                     primary: "#1BC47D",
                     secondary: "#6BC3AE",
+                    info: "#00ADEE",
                 },
                 danger: "#EB7575",
                 info: "#EAAB7E",
