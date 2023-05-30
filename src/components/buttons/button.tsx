@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface ButtonProps {
-    onClick?: () => void;
+    onClick?: (e) => void;
     children?: any; // type error with Trans component
     size?: "sm" | "md" | "lg";
     color?: "primary" | "secondary" | "danger" | "info";

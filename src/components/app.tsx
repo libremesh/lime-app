@@ -7,6 +7,7 @@ import { useEffect } from "preact/hooks";
 import { Provider } from "react-redux";
 
 import { Menu } from "containers/Menu";
+import { UseModalProvider } from "containers/Modal/Modal";
 import { RebootPage } from "containers/RebootPage";
 import SubHeader from "containers/SubHeader";
 
@@ -111,8 +112,10 @@ const AppDefault = () => {
                 {/* @ts-ignore */}
                 <AppContextProvider>
                     <Provider store={store}>
-                        {/* @ts-ignore */}
-                        <App />
+                        <UseModalProvider>
+                            {/* @ts-ignore */}
+                            <App />
+                        </UseModalProvider>
                     </Provider>
                 </AppContextProvider>
             </QueryClientProvider>

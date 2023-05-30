@@ -1,0 +1,165 @@
+import { Trans } from "@lingui/macro";
+import { ComponentChildren, createContext } from "preact";
+import { useContext, useState } from "preact/hooks";
+import { useCallback } from "react";
+
+import { Button } from "components/buttons/button";
+import Divider from "components/divider";
+
+interface ModalContextProps {
+    isModalOpen: boolean;
+    toggleModal: () => void;
+    setModalState: (state?: ModalState) => void;
+}
+
+interface ModalState {
+    content?: ComponentChildren;
+    title: ComponentChildren | string;
+    cancelBtn?: boolean;
+    successCb?: (e) => void;
+    successBtnText?: ComponentChildren;
+    deleteCb?: (e) => void;
+    deleteBtnText?: ComponentChildren;
+}
+
+const ModalContext = createContext<ModalContextProps>({
+    isModalOpen: false,
+    toggleModal: () => {},
+    setModalState: () => {},
+});
+
+export const useModal = () => useContext(ModalContext);
+
+export type ModalActions = "success" | "delete";
+
+export const UseModalProvider = ({ children }) => {
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [modalState, setModalState] = useState<ModalState>({
+        content: <></>,
+        title: "",
+        cancelBtn: false,
+        successCb: () => {},
+        successBtnText: <Trans>Success</Trans>,
+        deleteCb: () => {},
+        deleteBtnText: <Trans>Cancel</Trans>,
+    });
+
+    const toggleModal = useCallback(() => {
+        setModalOpen((prevIsModalOpen) => !prevIsModalOpen);
+    }, [isModalOpen]);
+
+    return (
+        <ModalContext.Provider
+            value={{
+                isModalOpen,
+                toggleModal,
+                setModalState,
+            }}
+        >
+            {children}
+            <Modal
+                isModalOpen={isModalOpen}
+                toggleModal={toggleModal}
+                title={modalState.title}
+                cancelBtn={modalState.cancelBtn}
+                successCb={modalState.successCb}
+                successBtnText={modalState.successBtnText}
+                deleteCb={modalState.deleteCb}
+                deleteBtnText={modalState.deleteBtnText}
+            >
+                {modalState.content}
+            </Modal>
+        </ModalContext.Provider>
+    );
+};
+
+const Modal = ({
+    isModalOpen,
+    toggleModal,
+    children,
+    title,
+    cancelBtn = true,
+    successCb,
+    successBtnText = <Trans>Success</Trans>,
+    deleteCb,
+    deleteBtnText = <Trans>Cancel</Trans>,
+}: {
+    isModalOpen: boolean;
+    toggleModal: () => void;
+    children?: ComponentChildren;
+} & ModalState) => {
+    const stopPropagation = (e) => {
+        e.stopPropagation();
+    };
+    return (
+        <>
+            <div
+                className={`${
+                    isModalOpen
+                        ? "fixed z-[90] inset-0 overflow-y-auto"
+                        : "hidden"
+                }`}
+            >
+                <div
+                    className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0"
+                    onClick={toggleModal}
+                >
+                    <div
+                        className="fixed inset-0 transition-opacity"
+                        aria-hidden="true"
+                    >
+                        <div className="absolute inset-0 bg-gray-500 opacity-75" />
+                    </div>
+
+                    <div
+                        onClick={stopPropagation}
+                        className="flex flex-col px-6 justify-between w-full md:w-10/12 h-96 md:mx-24 self-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all "
+                    >
+                        <div className="bg-white pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div className="mt-3 text-start sm:mt-0 sm:text-left">
+                                {title && (
+                                    <h3 className="text-4xl text-gray-900 mb-7">
+                                        {title}
+                                    </h3>
+                                )}
+                                <div className="mt-2">{children}</div>
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            <div class="flex justify-center">
+                                <Divider color={"gray"} />
+                            </div>
+                            <div className="pb-5 pt-2 sm:px-6 flex flex-row-reverse gap-3">
+                                {/*<div className="px-4 py-3 sm:px-6 flex flex-col md:flex md:flex-row-reverse gap-3">*/}
+                                {successCb && (
+                                    <Button
+                                        color={"primary"}
+                                        onClick={successCb}
+                                    >
+                                        {successBtnText}
+                                    </Button>
+                                )}
+                                {deleteCb && (
+                                    <Button color={"danger"} onClick={deleteCb}>
+                                        {deleteBtnText}
+                                    </Button>
+                                )}
+                                {cancelBtn && (
+                                    <Button
+                                        color={"info"}
+                                        outline={true}
+                                        onClick={toggleModal}
+                                    >
+                                        <Trans>Close</Trans>
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default Modal;
