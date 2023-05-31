@@ -1,28 +1,32 @@
 import { Trans } from "@lingui/macro";
-import { ComponentChild } from "preact";
-import { useState } from "preact/hooks";
-import { FieldValues, Path, SubmitHandler, useForm } from "react-hook-form";
-import { UseFormRegister } from "react-hook-form/dist/types/form";
-import { RegisterOptions } from "react-hook-form/dist/types/validator";
+import { useCallback } from "preact/compat";
+import { to } from "react-spring";
 
 import { Button } from "components/buttons/button";
 import { Collapsible } from "components/collapsible";
 import Divider from "components/divider";
-import { BinIcon } from "components/icons/bin";
-import { EditIcon } from "components/icons/edit";
-import InputField from "components/inputs/InputField";
 
 import { FullScreenModal } from "containers/Modal/FullScreenModal";
+import { useModal } from "containers/Modal/Modal";
 
 import {
     EditOrDelete,
     StatusAndButton,
 } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import { OptionContainer } from "plugins/lime-plugin-mesh-wide/src/components/configPage/OptionForm";
+import {
+    useDeletePropModal,
+    useEditPropModal,
+} from "plugins/lime-plugin-mesh-wide/src/components/modals";
 import { useMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
 const MeshWideConfigPage = () => {
     const { data: meshWideConfig, isLoading } = useMeshWideConfig({});
+    const { toggleModal: toggleDeleteModal, actionModal: deletePropModal } =
+        useDeletePropModal();
+    const { toggleModal: toggleEditModal, actionModal: editProperty } =
+        useEditPropModal();
+
     return (
         <>
             <FullScreenModal
@@ -39,8 +43,30 @@ const MeshWideConfigPage = () => {
                                     initCollapsed={true}
                                     optionsComponent={
                                         <EditOrDelete
-                                            onEdit={() => {}}
-                                            onDelete={() => {}}
+                                            onEdit={(e) => {
+                                                e.stopPropagation();
+                                                editProperty(
+                                                    dropdown.name,
+                                                    () => {
+                                                        console.log(
+                                                            "edit stuff"
+                                                        );
+                                                        toggleEditModal();
+                                                    }
+                                                );
+                                            }}
+                                            onDelete={(e) => {
+                                                e.stopPropagation();
+                                                deletePropModal(
+                                                    dropdown.name,
+                                                    () => {
+                                                        console.log(
+                                                            "delete stuff"
+                                                        );
+                                                        toggleDeleteModal();
+                                                    }
+                                                );
+                                            }}
                                         />
                                     }
                                 >
@@ -55,7 +81,10 @@ const MeshWideConfigPage = () => {
                                     )}
                                 </Collapsible>
                             ))}
-                            <Button color={"info"}>
+                            <Button
+                                color={"info"}
+                                // onClick={openModalWithContent}
+                            >
                                 <Trans>Add new section</Trans>
                             </Button>
                         </div>

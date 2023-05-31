@@ -7,6 +7,7 @@ import Divider from "components/divider";
 import InputField from "components/inputs/InputField";
 
 import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
+import { useDeletePropModal } from "plugins/lime-plugin-mesh-wide/src/components/modals";
 
 const EditOptionForm = ({
     keyString,
@@ -62,6 +63,9 @@ export const OptionContainer = ({
 
     const toggleIsEditing = () => setIsEditing(!isEditing);
 
+    const { toggleModal: toggleDeleteModal, actionModal: deletePropModal } =
+        useDeletePropModal();
+
     return (
         <div class={"px-4"}>
             <div className={"flex justify-center"}>
@@ -78,7 +82,13 @@ export const OptionContainer = ({
                             <div>{keyString}</div>
                             <EditOrDelete
                                 onEdit={toggleIsEditing}
-                                onDelete={() => {}}
+                                onDelete={(e) => {
+                                    e.stopPropagation();
+                                    deletePropModal(keyString, () => {
+                                        console.log("delete stuff");
+                                        toggleDeleteModal();
+                                    });
+                                }}
                             />
                         </div>
                         <div>{value}</div>
