@@ -7,6 +7,7 @@ import { useEffect } from "preact/hooks";
 import { Provider } from "react-redux";
 
 import { UseModalProvider } from "components/Modal/Modal";
+import { ToastProvider } from "components/toast/toastProvider";
 
 import { Menu } from "containers/Menu";
 import { RebootPage } from "containers/RebootPage";
@@ -114,8 +115,10 @@ const AppDefault = () => {
                 <AppContextProvider>
                     <Provider store={store}>
                         <UseModalProvider>
-                            {/* @ts-ignore */}
-                            <App />
+                            <ToastProvider>
+                                {/* @ts-ignore */}
+                                <App />
+                            </ToastProvider>
                         </UseModalProvider>
                     </Provider>
                 </AppContextProvider>

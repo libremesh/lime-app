@@ -1,20 +1,26 @@
 .toastWrapper {
-	width: 100%;
-	position: fixed;
-	z-index: 99990;
-	bottom: 0px;
-	right: 0px;
+    width: 100%;
+    position: fixed;
+    z-index: 99990;
+    bottom: 40px;
+    right: 0px;
 }
 
 .toast {
-	background: #000;
-	margin: 2em 2em;
-	text-align: center;
+    background: #313033;
+    margin: 2em 2em;
     transition: all 250ms ease-in;
-	color: #FFF;
-	cursor: pointer;
-	padding: 0.5em;
-};
+    color: #fff;
+    cursor: pointer;
+    padding: 14px 16px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .success {
     background: #389256;
