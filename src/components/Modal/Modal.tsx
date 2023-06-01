@@ -28,7 +28,13 @@ const ModalContext = createContext<ModalContextProps>({
     setModalState: () => {},
 });
 
-export const useModal = () => useContext(ModalContext);
+export const useModal = () => {
+    const context = useContext(ModalContext);
+    if (context === undefined) {
+        throw new Error("useModal must be used within a UseModalProvider");
+    }
+    return context;
+};
 
 export type ModalActions = "success" | "delete";
 

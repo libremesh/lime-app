@@ -6,8 +6,9 @@ import Router from "preact-router";
 import { useEffect } from "preact/hooks";
 import { Provider } from "react-redux";
 
+import { UseModalProvider } from "components/Modal/Modal";
+
 import { Menu } from "containers/Menu";
-import { UseModalProvider } from "containers/Modal/Modal";
 import { RebootPage } from "containers/RebootPage";
 import SubHeader from "containers/SubHeader";
 

@@ -2,7 +2,7 @@ import { Trans } from "@lingui/macro";
 import { ComponentChildren } from "preact";
 import { useCallback } from "preact/compat";
 
-import { ModalActions, useModal } from "containers/Modal/Modal";
+import { ModalActions, useModal } from "components/Modal/Modal";
 
 const useActionModal = (
     title: ComponentChildren,

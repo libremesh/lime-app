@@ -2,6 +2,7 @@ import { Trans } from "@lingui/macro";
 import { useCallback } from "preact/compat";
 import { to } from "react-spring";
 
+import { FullScreenModal } from "components/Modal/FullScreenModal";
 import { Button } from "components/buttons/button";
 import { Collapsible } from "components/collapsible";
 import Divider from "components/divider";
