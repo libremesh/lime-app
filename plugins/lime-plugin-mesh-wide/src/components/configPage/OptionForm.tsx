@@ -5,9 +5,13 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "components/buttons/button";
 import Divider from "components/divider";
 import InputField from "components/inputs/InputField";
+import { useToast } from "components/toast/toastProvider";
 
 import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
-import { useDeletePropModal } from "plugins/lime-plugin-mesh-wide/src/components/modals";
+import {
+    useDeletePropModal,
+    useEditPropModal,
+} from "plugins/lime-plugin-mesh-wide/src/components/modals";
 
 const EditOptionForm = ({
     keyString,
@@ -65,6 +69,9 @@ export const OptionContainer = ({
 
     const { toggleModal: toggleDeleteModal, actionModal: deletePropModal } =
         useDeletePropModal();
+    const { toggleModal: toggleEditModal, actionModal: editPropertyModal } =
+        useEditPropModal();
+    const { showToast, hideToast } = useToast();
 
     return (
         <div class={"px-4"}>
@@ -87,6 +94,18 @@ export const OptionContainer = ({
                                     deletePropModal(keyString, () => {
                                         console.log("delete stuff");
                                         toggleDeleteModal();
+                                        showToast({
+                                            text: (
+                                                <>
+                                                    <Trans>Deleted</Trans>{" "}
+                                                    {keyString}
+                                                </>
+                                            ),
+                                            duration: 5000,
+                                            onAction: () => {
+                                                console.log("Undo action");
+                                            },
+                                        });
                                     });
                                 }}
                             />
@@ -98,7 +117,19 @@ export const OptionContainer = ({
                         keyString={keyString}
                         value={value}
                         onSubmit={(data) => {
-                            toggleIsEditing();
+                            editPropertyModal(keyString, () => {
+                                console.log("edited stuff");
+                                toggleEditModal();
+                                toggleIsEditing();
+                                showToast({
+                                    text: (
+                                        <>
+                                            <Trans>Edited </Trans> {keyString}
+                                        </>
+                                    ),
+                                    duration: 5000,
+                                });
+                            });
                         }}
                     />
                 )}
