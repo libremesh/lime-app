@@ -40,7 +40,9 @@ export interface ILinkDetailFeature {
     linkType: string;
 }
 
-export type IMeshWideConfig = {
+export interface IMeshWideSection {
     name: string;
     options: { [key: string]: string };
-}[];
+}
+
+export type IMeshWideConfig = [IMeshWideSection];
