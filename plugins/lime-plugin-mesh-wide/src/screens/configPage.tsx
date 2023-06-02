@@ -1,14 +1,10 @@
 import { Trans } from "@lingui/macro";
-import { useCallback } from "preact/compat";
-import { to } from "react-spring";
 
 import { FullScreenModal } from "components/Modal/FullScreenModal";
 import { Button } from "components/buttons/button";
 import { Collapsible } from "components/collapsible";
 import Divider from "components/divider";
-
-import { FullScreenModal } from "containers/Modal/FullScreenModal";
-import { useModal } from "containers/Modal/Modal";
+import { useToast } from "components/toast/toastProvider";
 
 import {
     EditOrDelete,
@@ -16,6 +12,7 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import { OptionContainer } from "plugins/lime-plugin-mesh-wide/src/components/configPage/OptionForm";
 import {
+    useAddNewSectionModal,
     useDeletePropModal,
     useEditPropModal,
 } from "plugins/lime-plugin-mesh-wide/src/components/modals";
@@ -25,8 +22,12 @@ const MeshWideConfigPage = () => {
     const { data: meshWideConfig, isLoading } = useMeshWideConfig({});
     const { toggleModal: toggleDeleteModal, actionModal: deletePropModal } =
         useDeletePropModal();
-    const { toggleModal: toggleEditModal, actionModal: editProperty } =
+    const { toggleModal: toggleEditModal, actionModal: editPropertyModal } =
         useEditPropModal();
+    const { toggleModal: toggleNewSectionModal, actionModal: addSectionModal } =
+        useAddNewSectionModal();
+
+    const { showToast, hideToast } = useToast();
 
     return (
         <>
@@ -46,13 +47,33 @@ const MeshWideConfigPage = () => {
                                         <EditOrDelete
                                             onEdit={(e) => {
                                                 e.stopPropagation();
-                                                editProperty(
+                                                editPropertyModal(
                                                     dropdown.name,
                                                     () => {
                                                         console.log(
                                                             "edit stuff"
                                                         );
                                                         toggleEditModal();
+                                                        showToast({
+                                                            text: (
+                                                                <>
+                                                                    <Trans>
+                                                                        Edited
+                                                                    </Trans>
+                                                                    {
+                                                                        dropdown.name
+                                                                    }
+                                                                    {" - "}
+                                                                    {new Date().toDateString()}
+                                                                </>
+                                                            ),
+                                                            duration: 5000,
+                                                            onAction: () => {
+                                                                console.log(
+                                                                    "Undo action"
+                                                                );
+                                                            },
+                                                        });
                                                     }
                                                 );
                                             }}
@@ -65,6 +86,26 @@ const MeshWideConfigPage = () => {
                                                             "delete stuff"
                                                         );
                                                         toggleDeleteModal();
+                                                        showToast({
+                                                            text: (
+                                                                <>
+                                                                    <Trans>
+                                                                        Deleted
+                                                                    </Trans>{" "}
+                                                                    {
+                                                                        dropdown.name
+                                                                    }
+                                                                    {" - "}
+                                                                    {new Date().toDateString()}
+                                                                </>
+                                                            ),
+                                                            duration: 5000,
+                                                            onAction: () => {
+                                                                console.log(
+                                                                    "Undo action"
+                                                                );
+                                                            },
+                                                        });
                                                     }
                                                 );
                                             }}
@@ -84,14 +125,48 @@ const MeshWideConfigPage = () => {
                             ))}
                             <Button
                                 color={"info"}
-                                // onClick={openModalWithContent}
+                                onClick={() => {
+                                    addSectionModal((data) => {
+                                        console.log(`Added`, data);
+                                        toggleNewSectionModal();
+                                        showToast({
+                                            text: (
+                                                <>
+                                                    <Trans>
+                                                        Added section{" "}
+                                                    </Trans>{" "}
+                                                    {data.name}
+                                                    {" - "}
+                                                    {new Date().toDateString()}
+                                                </>
+                                            ),
+                                            duration: 5000,
+                                        });
+                                    });
+                                }}
                             >
                                 <Trans>Add new section</Trans>
                             </Button>
                         </div>
                         <div className="z-50 fixed bottom-0 w-full flex flex-col items-center bg-white px-10">
                             <Divider />
-                            <StatusAndButton isError={false} btn={"Update"}>
+                            <StatusAndButton
+                                isError={false}
+                                btn={"Update"}
+                                onClick={() => {
+                                    showToast({
+                                        text: (
+                                            <>
+                                                <Trans>
+                                                    Updating shared state
+                                                </Trans>{" "}
+                                                {new Date().toDateString()}
+                                            </>
+                                        ),
+                                        duration: 5000,
+                                    });
+                                }}
+                            >
                                 <div className={"flex flex-col "}>
                                     <Trans>
                                         10 of 12 node are ready to update
