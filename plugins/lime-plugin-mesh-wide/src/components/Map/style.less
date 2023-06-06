@@ -1,21 +1,46 @@
-.defaultMarker {
-    background-color: #583470;
-    width: 3rem;
-    height: 3rem;
-    display: block;
-    left: -1.5rem;
-    top: -1.5rem;
-    position: relative;
-    border-radius: 3rem 3rem 0;
-    transform: rotate(45deg);
-    border: 1px solid #ffffff;
+@good: #76bd7d;
+@warning: #eaab7e;
+@bad: #eb7575;
+
+//Delete a leaflet strange div
+.leaflet-div-custom-icon {
+    background: none !important;
+    border: none !important;
 }
 
-.defaultMarker:hover {
+// Default Marker shape
+.defaultMarker {
+    position: absolute;
+    left: -1.4rem;
+    top: -1.5rem;
+    border-radius: 50% 50% 50% 0;
+    width: 3rem;
+    height: 3rem;
+    transform: rotate(-45deg);
+}
+.defaultMarker::after {
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    top: 55%;
+    left: 56%;
+    margin-left: -6px;
+    margin-top: -5px;
     background-color: #fff;
 }
 
-.activeMarker {
-    //.defaultMarker:active {
-    background-color: green !important;
+// Marker status colors
+.syncedMarker {
+    background-color: @good;
+}
+.notSyncedMarker {
+    background-color: @bad;
+}
+
+// Selected marker feature
+.selectedMarker,
+.defaultMarker:hover {
+    border: 2px solid black;
 }

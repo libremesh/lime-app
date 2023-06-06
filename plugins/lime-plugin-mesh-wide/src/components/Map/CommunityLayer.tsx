@@ -18,6 +18,8 @@ export const CommunityLayer = ({
         <>
             {geoJsonData &&
                 geoJsonData.features.map((f, i) => {
+                    const synced: boolean = Math.random() < 0.5;
+
                     if (f.geometry.type === "LineString") {
                         const lineColor =
                             selectedMapFeature?.id === i
@@ -58,17 +60,22 @@ export const CommunityLayer = ({
                             />
                         );
                     } else if (f.geometry.type === "Point") {
-                        const selected = `${
-                            selectedMapFeature?.id === i && style.activeMarker
+                        const markerClasses = `${
+                            selectedMapFeature?.id === i && style.selectedMarker
+                        } ${
+                            synced ? style.syncedMarker : style.notSyncedMarker
                         }`;
                         return (
                             <Marker
                                 key={i}
                                 position={f.geometry.coordinates.reverse()}
                                 icon={L.divIcon({
+                                    className: style.leafletDivCustomIcon,
                                     iconAnchor: [0, 24],
                                     popupAnchor: [0, -36],
-                                    html: `<span class="${style.defaultMarker} ${selected}" />`,
+                                    // html: `<span class="${style.selectedMarker} ${syncedClass} ${selected}" />`,
+                                    // html: `<span class="${markerClasses}" />`,
+                                    html: `<span class="${style.defaultMarker} ${markerClasses}" />`,
                                 })}
                                 eventHandlers={{
                                     click: (e) => {
