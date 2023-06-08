@@ -45,7 +45,7 @@ export const MeshWideMap = () => {
 
     const { data: meshWideStatus } = useMeshWide({
         onSuccess: (res) => {
-            const geoJson = getCommunityGeoJSON(radioDataResponse.result); // todo(kon): the locate page makes a correction with the own node if is modified
+            const geoJson = getCommunityGeoJSON(res.result); // todo(kon): the locate page makes a correction with the own node if is modified
             setCommunityLayer(geoJson as FeatureCollection);
         },
     });

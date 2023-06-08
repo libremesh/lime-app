@@ -14,10 +14,14 @@ import {
 import queryCache from "utils/queryCache";
 
 // todo(kon): this is a mock
-export function useMeshWide(params: UseQueryOptions) {
-    return useQuery(["lime-meshwide", "get_mesh_info"], getRadioData, {
-        ...params,
-    });
+export function useMeshWide(params) {
+    return useQuery<IMeshWideStatusResponse>(
+        ["lime-meshwide", "get_mesh_info"],
+        getRadioData,
+        {
+            ...params,
+        }
+    );
 }
 
 // todo(kon): this is a mock
