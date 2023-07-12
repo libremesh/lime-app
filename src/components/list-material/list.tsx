@@ -34,7 +34,7 @@ export const ListItem = ({
                 )}
                 <div className="flex justify-start w-full">
                     <div className="flex flex-col flex-grow flex-shrink-0 flex-basis-0 w-full">
-                        <h3 className="font-semibold">{title}</h3>
+                        <div className="font-semibold">{title}</div>
                         {description && (
                             <p className="text-gray-600">{description}</p>
                         )}
