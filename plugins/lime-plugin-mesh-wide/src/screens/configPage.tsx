@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
 
 import { FullScreenModal } from "components/Modal/FullScreenModal";
-import Divider from "components/divider";
 
 import {
     AddNewSectionBtn,
@@ -30,10 +29,7 @@ const MeshWideConfigPage = () => {
                             ))}
                             <AddNewSectionBtn />
                         </div>
-                        <div className="z-50 fixed bottom-0 w-full flex flex-col bg-white px-2">
-                            <Divider />
-                            <MeshStatus />
-                        </div>
+                        <MeshStatus />
                     </>
                 )}
             </FullScreenModal>

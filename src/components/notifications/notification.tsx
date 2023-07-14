@@ -16,7 +16,7 @@ const Notification = ({
     children: ComponentChildren;
     right?: string | ComponentChildren;
     onClick?: () => void;
-    type: NotificationType;
+    type?: NotificationType;
 }) => {
     let icon;
     switch (type) {
