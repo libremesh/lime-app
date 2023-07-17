@@ -1,14 +1,10 @@
 import Notification from "components/notifications/notification";
 
 import NextStepFooter from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nextStepFooter";
-import NodeUpgradeInfo from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo";
+import NodeUpgradeInfoItem from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo";
 import { useMeshWideUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
 
 const MeshWideUpgrade = () => {
-    const title = "Your Title";
-    const description = "Your Description";
-    const info = "info";
-
     const { data } = useMeshWideUpgradeInfo({});
 
     return (
@@ -27,7 +23,7 @@ const MeshWideUpgrade = () => {
                         ([key, nodeInfo], index) => {
                             return (
                                 <div key={index}>
-                                    <NodeUpgradeInfo
+                                    <NodeUpgradeInfoItem
                                         name={key}
                                         info={nodeInfo}
                                     />

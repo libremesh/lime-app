@@ -8,8 +8,8 @@ interface IListItemProps {
     leftComponent?: ComponentChildren;
     rightComponent?: ComponentChildren;
     title: string;
-    description?: string;
-    rightText?: string;
+    description?: string | ComponentChildren;
+    rightText?: string | ComponentChildren;
     onClick?: (ev) => void;
 }
 
@@ -26,7 +26,7 @@ export const ListItem = ({
             className={`flex flex-col ${onClick && "cursor-pointer"}`}
             onClick={onClick}
         >
-            <div className="flex py-3 px-5 justify-between items-start space-x-3">
+            <div className="flex py-3 px-5 justify-between items-center space-x-3">
                 {leftComponent && (
                     <div className="flex items-center h-full">
                         <div className="mr-4"> {leftComponent} </div>
