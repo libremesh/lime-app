@@ -9,8 +9,6 @@ import {
     useMeshWide,
     useSelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
-import { SelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
-import { radioDataResponse } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
@@ -23,7 +21,7 @@ export const MeshWideMap = () => {
     // const [selectedFeature, setSelectedFeature] =
     //     useState<SelectedMapFeature | null>(null);
 
-    const { selectedMapFeature, setSelectedMapFeature } =
+    const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         // const { data: selectedMapFeature, mutate: setSelectedMapFeature} =
         useSelectedMapFeature();
 

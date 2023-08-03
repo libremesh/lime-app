@@ -11,7 +11,7 @@ export const CommunityLayer = ({
 }: {
     geoJsonData: FeatureCollection;
 }) => {
-    const { selectedMapFeature, setSelectedMapFeature } =
+    const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
     return (
         <>

@@ -13,7 +13,7 @@ export const MapBottomSheet = () => {
     const [isOpen, setIsOpen] = useState(false);
     const synced: boolean = Math.random() < 0.5;
 
-    const { selectedMapFeature } = useSelectedMapFeature();
+    const { data: selectedMapFeature } = useSelectedMapFeature();
 
     useEffect(() => {
         selectedMapFeature == null ? setIsOpen(false) : setIsOpen(true);

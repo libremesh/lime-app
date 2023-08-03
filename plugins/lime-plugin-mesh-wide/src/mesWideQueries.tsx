@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { UseQueryOptions } from "@tanstack/react-query/src/types";
 
 import {
     IMeshWideConfig,
@@ -11,7 +10,7 @@ import {
     getRadioData,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 
-import queryCache from "utils/queryCache";
+import { useSharedData } from "utils/useSharedData";
 
 // todo(kon): this is a mock
 export function useMeshWide(params) {
@@ -41,14 +40,18 @@ export function useMeshWideConfig(params) {
  * Used to store the state between components.
  */
 export const useSelectedMapFeature = () => {
-    const { data: selectedMapFeature } = useQuery<SelectedMapFeature | null>(
-        ["lime-meshwide", "select_map_feature"],
-        () => null
-    );
-    const setSelectedMapFeature = (selected: SelectedMapFeature) =>
-        queryCache.setQueryData(
-            ["lime-meshwide", "select_map_feature"],
-            selected
-        );
-    return { selectedMapFeature, setSelectedMapFeature };
+    // const { data: selectedMapFeature } = useQuery<SelectedMapFeature | null>(
+    //     ["lime-meshwide", "select_map_feature"],
+    //     () => null
+    // );
+    // const setSelectedMapFeature = (selected: SelectedMapFeature) =>
+    //     queryCache.setQueryData(
+    //         ["lime-meshwide", "select_map_feature"],
+    //         selected
+    //     );
+    // return { selectedMapFeature, setSelectedMapFeature };
+    return useSharedData<SelectedMapFeature>([
+        "lime-meshwide",
+        "select_map_feature",
+    ]);
 };
