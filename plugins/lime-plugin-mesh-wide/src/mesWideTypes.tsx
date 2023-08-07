@@ -77,4 +77,4 @@ export interface IMeshWideSection {
     options: { [key: string]: string };
 }
 
-export type IMeshWideConfig = [IMeshWideSection];
+export type IMeshWideConfig = IMeshWideSection[];

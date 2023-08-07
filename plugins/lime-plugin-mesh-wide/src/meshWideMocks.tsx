@@ -1,13 +1,14 @@
 import {
+    IMeshWideConfig,
     INodes,
     IWifiLinks,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
-const nodesReferenceState: INodes = {
+export const nodesReferenceState: INodes = {
     "LiMe-462895": {
         coordinates: {
-            lon: "-123.1216",
-            lat: "49.2827",
+            lon: "-64.42703",
+            lat: "-31.80874",
         },
         macs: ["a0:f3:c1:46:28:96", "a0:f3:c1:46:28:97", "a0:f3:c1:46:28:97"],
         ipv4: "192.168.1.1",
@@ -18,8 +19,8 @@ const nodesReferenceState: INodes = {
     },
     "LiMe-da4eaa": {
         coordinates: {
-            lon: "-74.0060",
-            lat: "40.7128",
+            lon: "-64.42703",
+            lat: "-31.80874",
         },
         macs: ["14:cc:20:da:4e:ab", "14:cc:20:da:4e:ac", "14:cc:20:da:4e:ac"],
         ipv4: "192.168.1.2",
@@ -30,8 +31,8 @@ const nodesReferenceState: INodes = {
     },
     primero: {
         coordinates: {
-            lon: "42.3601",
-            lat: "-71.0589",
+            lon: "-64.41609",
+            lat: "-31.80461",
         },
         macs: ["a8:40:41:1d:f9:35", "a8:40:41:1d:f9:35"],
         ipv4: "192.168.1.3",
@@ -42,7 +43,7 @@ const nodesReferenceState: INodes = {
     },
 };
 
-const linksReferenceState: IWifiLinks = {
+export const linksReferenceState: IWifiLinks = {
     primero: {
         bleachTTL: 30,
         data: [
@@ -129,7 +130,7 @@ const linksReferenceState: IWifiLinks = {
 
 // Use the same as on the reference state deleting a specific node
 const nodeName = "LiMe-462895";
-const links = (): IWifiLinks => {
+export const links = (): IWifiLinks => {
     // Create a deep copy of the state to avoid mutating the original object
     const newState = JSON.parse(JSON.stringify(linksReferenceState));
 
@@ -150,44 +151,43 @@ const links = (): IWifiLinks => {
     return newState;
 };
 
-const nodes = (): IWifiLinks => {
+export const nodes = (): INodes => {
     const newState = JSON.parse(JSON.stringify(linksReferenceState));
     delete newState[nodeName];
     return newState;
 };
 
-// import { IMeshWideStatusResponse } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+export const getMeshWideConfig = async () => meshWideConfig;
 //
+const options = {
+    primary_interface: "eth0",
+    main_ipv4_address: "10.170.128.0/16/17",
+};
+
+const meshWideConfig: IMeshWideConfig = [
+    {
+        name: "lime system",
+        options,
+    },
+    {
+        name: "lime network",
+        options,
+    },
+    {
+        name: "lime wifi",
+        options,
+    },
+    {
+        name: "generic_uci_config prometheus",
+        options,
+    },
+    {
+        name: "run_asset prometheus_enable",
+        options,
+    },
+];
 // export const getRadioData = async () => radioDataResponse_simplified;
-// export const getMeshWideConfig = async () => meshWideConfig;
-//
-// const options = {
-//     primary_interface: "eth0",
-//     main_ipv4_address: "10.170.128.0/16/17",
-// };
-//
-// const meshWideConfig = [
-//     {
-//         name: "lime sytem",
-//         options,
-//     },
-//     {
-//         name: "lime network",
-//         options,
-//     },
-//     {
-//         name: "lime wifi",
-//         options,
-//     },
-//     {
-//         name: "generic_uci_config prometheus",
-//         options,
-//     },
-//     {
-//         name: "run_asset prometheus_enable",
-//         options,
-//     },
-// ];
+
 //
 // export const radioDataResponse_simplified: IMeshWideStatusResponse = {
 //     result: {

@@ -1,29 +1,54 @@
 import { useQuery } from "@tanstack/react-query";
 
 import {
+    getMeshWideLinks,
+    getMeshWideLinksReference,
+    getMeshWideNodes,
+    getMeshWideNodesReference,
+} from "plugins/lime-plugin-mesh-wide/src/mesWideApi";
+import {
     IMeshWideConfig,
-    IMeshWideStatusResponse,
+    INodes,
+    IWifiLinks,
     SelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
-import {
-    getMeshWideConfig,
-    getRadioData,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
+import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 
 import { useSharedData } from "utils/useSharedData";
 
 // todo(kon): this is a mock
-export function useMeshWide(params) {
-    return useQuery<IMeshWideStatusResponse>(
-        ["lime-meshwide", "get_mesh_info"],
-        getRadioData,
+export function useMeshWideLinksReference(params) {
+    return useQuery<IWifiLinks>(
+        ["lime-meshwide", "links_reference"],
+        getMeshWideLinksReference,
         {
             ...params,
         }
     );
 }
 
-// todo(kon): this is a mock
+export function useMeshWideLinks(params) {
+    return useQuery<IWifiLinks>(["lime-meshwide", "links"], getMeshWideLinks, {
+        ...params,
+    });
+}
+
+export function useMeshWideNodesReference(params) {
+    return useQuery<INodes>(
+        ["lime-meshwide", "nodes_reference"],
+        getMeshWideNodesReference,
+        {
+            ...params,
+        }
+    );
+}
+
+export function useMeshWideNodes(params) {
+    return useQuery<INodes>(["lime-meshwide", "nodes"], getMeshWideNodes, {
+        ...params,
+    });
+}
+
 export function useMeshWideConfig(params) {
     return useQuery<IMeshWideConfig>(
         ["lime-meshwide", "get_mesh_config"],
@@ -40,16 +65,6 @@ export function useMeshWideConfig(params) {
  * Used to store the state between components.
  */
 export const useSelectedMapFeature = () => {
-    // const { data: selectedMapFeature } = useQuery<SelectedMapFeature | null>(
-    //     ["lime-meshwide", "select_map_feature"],
-    //     () => null
-    // );
-    // const setSelectedMapFeature = (selected: SelectedMapFeature) =>
-    //     queryCache.setQueryData(
-    //         ["lime-meshwide", "select_map_feature"],
-    //         selected
-    //     );
-    // return { selectedMapFeature, setSelectedMapFeature };
     return useSharedData<SelectedMapFeature>([
         "lime-meshwide",
         "select_map_feature",
