@@ -1,4 +1,10 @@
-import { Feature, GeometryObject } from "geojson";
+// todo(kon): Two nodes could have more than one active link, we should merge this into somehow to show it on
+// the ui
+export type LocatedWifiLinkData = {
+    [key: string]: IWifiLinkData & {
+        coordinates: Coordinates;
+    };
+};
 
 export interface IWifiLinkData {
     tx_rate: number;
@@ -17,11 +23,13 @@ export interface IWifiLinks {
     };
 }
 
+export type Coordinates = {
+    lat: string;
+    lon: string;
+};
+
 export interface INodeInfo {
-    coordinates: {
-        lat: string;
-        lon: string;
-    };
+    coordinates: Coordinates;
     macs: string[];
     ipv4: string;
     ipv6: string;
@@ -33,8 +41,9 @@ export interface INodeInfo {
 export type INodes = { [key: string]: INodeInfo };
 
 export interface SelectedMapFeature {
-    feature: Feature<GeometryObject, { [p: string]: any }>;
-    id: number;
+    // feature: Feature<GeometryObject, { [p: string]: any }>;
+    feature: INodeInfo | IWifiLinkData;
+    id: number | string;
 }
 
 // export interface MeshWideStatus {

@@ -19,8 +19,8 @@ export const nodesReferenceState: INodes = {
     },
     "LiMe-da4eaa": {
         coordinates: {
-            lon: "-64.42703",
-            lat: "-31.80874",
+            lon: "-64.42315",
+            lat: "-31.80461",
         },
         macs: ["14:cc:20:da:4e:ab", "14:cc:20:da:4e:ac", "14:cc:20:da:4e:ac"],
         ipv4: "192.168.1.2",
@@ -152,7 +152,7 @@ export const links = (): IWifiLinks => {
 };
 
 export const nodes = (): INodes => {
-    const newState = JSON.parse(JSON.stringify(linksReferenceState));
+    const newState = JSON.parse(JSON.stringify(nodesReferenceState));
     delete newState[nodeName];
     return newState;
 };
