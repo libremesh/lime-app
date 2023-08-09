@@ -11,7 +11,10 @@ import {
     INodeInfo,
     LocatedWifiLinkData,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
-import { mergeLinksAndCoordinates } from "plugins/lime-plugin-mesh-wide/src/utils/getLinksCoordinates";
+import {
+    PontToPointLink,
+    mergeLinksAndCoordinates,
+} from "plugins/lime-plugin-mesh-wide/src/utils/getLinksCoordinates";
 
 const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
@@ -46,7 +49,7 @@ const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
     );
 };
 
-const LinkLine = ({ link }: { link: LocatedWifiLinkData }) => {
+const LinkLine = ({ link }: { link: PontToPointLink }) => {
     // const isSelected = selectedMapFeature?.id === i;
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
@@ -60,13 +63,14 @@ const LinkLine = ({ link }: { link: LocatedWifiLinkData }) => {
         };
     };
 
-    const coordinates = Object.values(link).map((entry) => entry.coordinates);
+    const coordinates = link.coordinates.map((c) => [c.lat, c.lon]);
 
     return (
         <Polyline
-            // positions={f.geometry.coordinates.map((p) => [...p].reverse())}
             positions={coordinates}
+            // todo(kon): redefine selected map feature stuff
             // pathOptions={getPathOpts(isSelected)}
+            pathOptions={getPathOpts(false)}
             eventHandlers={{
                 click: (e) => {
                     L.DomEvent.stopPropagation(e);
@@ -98,12 +102,10 @@ export const NodesAndLinks = () => {
     const { data: meshWideLinks } = useMeshWideLinksReference({});
     const { data: meshWideNodes } = useMeshWideNodesReference({});
 
-    let locatedLinks: LocatedWifiLinkData[] = [];
+    let locatedLinks: LocatedWifiLinkData;
     if (meshWideNodes && meshWideLinks) {
         locatedLinks = mergeLinksAndCoordinates(meshWideNodes, meshWideLinks);
     }
-
-    // console.log("AAAAAA ", locatedLinks[0][0]);
 
     return (
         <>
@@ -111,9 +113,9 @@ export const NodesAndLinks = () => {
                 Object.entries(meshWideNodes).map(([k, v], i) => {
                     return <NodeMarker key={i} info={v} name={k} />;
                 })}
-            {locatedLinks?.length &&
-                locatedLinks.map((link, i) => {
-                    return <LinkLine key={i} link={link} />;
+            {locatedLinks &&
+                Object.entries(locatedLinks).map((link, i) => {
+                    return <LinkLine key={i} link={link[1]} />;
                 })}
         </>
     );

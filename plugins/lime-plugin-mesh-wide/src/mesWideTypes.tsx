@@ -1,11 +1,26 @@
-// todo(kon): Two nodes could have more than one active link, we should merge this into somehow to show it on
-// the ui
-export type LocatedWifiLinkData = {
+import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/utils/getLinksCoordinates";
+
+/**
+ * Describe a link with a coordinates
+ */
+export type ILocatedLink = {
     [key: string]: IWifiLinkData & {
         coordinates: Coordinates;
     };
 };
 
+/**
+ * List of located links. Are grouped by id based on their coordinates
+ *
+ * The array of classes contain an indeterminated number of links that are from certain point to another.
+ */
+export type LocatedWifiLinkData = {
+    [key: string]: PontToPointLink;
+};
+
+/**
+ * Link info retrieved from the API
+ */
 export interface IWifiLinkData {
     tx_rate: number;
     dst_mac: string;
@@ -15,6 +30,9 @@ export interface IWifiLinkData {
     src_mac: string;
 }
 
+/**
+ * List of Link info retrieved from the API
+ */
 export interface IWifiLinks {
     [key: string]: {
         bleachTTL: number;
