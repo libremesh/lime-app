@@ -39,7 +39,8 @@ const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
                     L.DomEvent.stopPropagation(e);
                     setSelectedMapFeature({
                         id: name,
-                        feature: info,
+                        feature: { ...info, name },
+                        type: "node",
                     });
                 },
             }}
@@ -50,9 +51,10 @@ const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
 };
 
 const LinkLine = ({ link }: { link: PontToPointLink }) => {
-    // const isSelected = selectedMapFeature?.id === i;
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
+    const isSelected = selectedMapFeature?.id === link.id;
+
     const synced: boolean = Math.random() < 0.5;
 
     const getPathOpts = (isSelected) => {
@@ -68,17 +70,15 @@ const LinkLine = ({ link }: { link: PontToPointLink }) => {
     return (
         <Polyline
             positions={coordinates}
-            // todo(kon): redefine selected map feature stuff
-            // pathOptions={getPathOpts(isSelected)}
-            pathOptions={getPathOpts(false)}
+            pathOptions={getPathOpts(isSelected)}
             eventHandlers={{
                 click: (e) => {
                     L.DomEvent.stopPropagation(e);
-                    // todo(kon): redefine selected map feature stuff
-                    // setSelectedMapFeature({
-                    //     id: i,
-                    //     feature: f,
-                    // });
+                    setSelectedMapFeature({
+                        id: link.id,
+                        feature: link,
+                        type: "link",
+                    });
                 },
                 mouseover: (e) => {
                     const l = e.target;
@@ -86,9 +86,7 @@ const LinkLine = ({ link }: { link: PontToPointLink }) => {
                 },
                 mouseout: (event) => {
                     const l = event.target;
-                    // l.setStyle(getPathOpts(isSelected));
-                    // todo
-                    l.setStyle(getPathOpts(false));
+                    l.setStyle(getPathOpts(isSelected));
                 },
             }}
         />
@@ -96,9 +94,6 @@ const LinkLine = ({ link }: { link: PontToPointLink }) => {
 };
 
 export const NodesAndLinks = () => {
-    // const { data: selectedMapFeature, setData: setSelectedMapFeature } =
-    //     useSelectedMapFeature();
-
     const { data: meshWideLinks } = useMeshWideLinksReference({});
     const { data: meshWideNodes } = useMeshWideNodesReference({});
 

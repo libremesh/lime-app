@@ -6,10 +6,10 @@ import { Button } from "components/buttons/button";
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import {
-    ILinkDetailFeature,
-    INodeDetailFeature,
+    INamedNodeInfo,
     SelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/utils/getLinksCoordinates";
 
 const TitleAndText = ({
     title,
@@ -38,10 +38,10 @@ const LinkDetails = ({
     linkDetails,
     selectedFeature,
 }: {
-    linkDetails: ILinkDetailFeature;
+    linkDetails: PontToPointLink;
     selectedFeature: SelectedMapFeature;
 }) => {
-    const name = linkDetails?.name ?? selectedFeature?.id ?? "";
+    const name = linkDetails?.names ?? selectedFeature?.id ?? "";
     const gain = "5 dB";
     const linkType = "Primary";
 
@@ -71,7 +71,7 @@ const NodeDetails = ({
     selectedFeature,
     synced,
 }: {
-    nodeDetail: INodeDetailFeature;
+    nodeDetail: INamedNodeInfo;
     selectedFeature: SelectedMapFeature;
     synced: boolean;
 }) => {
@@ -125,22 +125,18 @@ export const FeatureDetail = ({
     synced: boolean;
 }) => {
     if (!selectedFeature) return;
-    switch (selectedFeature.feature.geometry.type) {
-        case "LineString":
+    switch (selectedFeature.type) {
+        case "link":
             return (
                 <LinkDetails
-                    linkDetails={
-                        selectedFeature.feature.properties as ILinkDetailFeature
-                    }
+                    linkDetails={selectedFeature.feature as PontToPointLink}
                     selectedFeature={selectedFeature}
                 />
             );
-        case "Point":
+        case "node":
             return (
                 <NodeDetails
-                    nodeDetail={
-                        selectedFeature.feature.properties as INodeDetailFeature
-                    }
+                    nodeDetail={selectedFeature.feature as INamedNodeInfo}
                     selectedFeature={selectedFeature}
                     synced={synced}
                 />
@@ -159,13 +155,13 @@ export const BottomSheetFooter = ({
 }) => {
     if (!selectedFeature) return;
 
-    const type = selectedFeature.feature.geometry.type;
+    const type = selectedFeature.type;
 
     const Synced = () => {
         let txt: VNode;
-        if (type === "LineString") {
+        if (type === "link") {
             txt = <Trans>Same status as in the reference state</Trans>;
-        } else if (type === "Point") {
+        } else if (type === "node") {
             txt = <Trans>Same status as in the reference state</Trans>;
         }
 
@@ -175,7 +171,7 @@ export const BottomSheetFooter = ({
     const UpdateReference = () => {
         let txt: VNode;
         let btn: VNode;
-        if (type === "LineString") {
+        if (type === "link") {
             txt = (
                 <Trans>
                     This link has 5dB difference
@@ -189,7 +185,7 @@ export const BottomSheetFooter = ({
                 </Trans>
             );
             btn = <Trans>Update this link on reference state</Trans>;
-        } else if (type === "Point") {
+        } else if (type === "node") {
             txt = <Trans>In the reference state this node is on</Trans>;
             btn = <Trans>Update this node on reference state</Trans>;
         }

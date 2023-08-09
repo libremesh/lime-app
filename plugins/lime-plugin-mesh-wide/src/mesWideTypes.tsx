@@ -56,48 +56,19 @@ export interface INodeInfo {
     device: string;
 }
 
+export type INamedNodeInfo = {
+    name: string;
+} & INodeInfo;
+
 export type INodes = { [key: string]: INodeInfo };
 
+type FeatureType = "node" | "link";
+
 export interface SelectedMapFeature {
-    // feature: Feature<GeometryObject, { [p: string]: any }>;
-    feature: INodeInfo | IWifiLinkData;
+    feature: INamedNodeInfo | PontToPointLink;
+    type: FeatureType;
     id: number | string;
 }
-
-// export interface MeshWideStatus {
-//     [key: string]: {
-//         bleachTTL: number;
-//         data: {
-//             hostname: string;
-//             coordinates: {
-//                 lon: string;
-//                 lat: string;
-//             };
-//             macs: string[];
-//             links: string[];
-//         };
-//         author: string;
-//     };
-// }
-//
-// export interface IMeshWideStatusResponse {
-//     result: MeshWideStatus;
-// }
-
-// export interface INodeDetailFeature {
-//     name: string;
-//     uptime: string;
-//     firmware: string;
-//     ipv6: string;
-//     ipv4: string;
-//     device: string;
-// }
-//
-// export interface ILinkDetailFeature {
-//     name: string;
-//     gain: string;
-//     linkType: string;
-// }
 
 export interface IMeshWideSection {
     name: string;

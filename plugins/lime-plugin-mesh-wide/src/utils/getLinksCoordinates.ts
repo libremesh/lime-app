@@ -74,6 +74,15 @@ export class PontToPointLink {
         this.links.push(link);
     }
 
+    get names() {
+        return [
+            ...this._links.reduce((acc, link) => {
+                Object.keys(link).forEach((key) => acc.add(key));
+                return acc;
+            }, new Set()),
+        ];
+    }
+
     get links() {
         return this._links;
     }
