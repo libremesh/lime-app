@@ -3,6 +3,7 @@ import { Marker, Polyline, Tooltip } from "react-leaflet";
 
 import style from "plugins/lime-plugin-mesh-wide/src/components/Map/style.less";
 import {
+    useMeshWideLinks,
     useMeshWideLinksReference,
     useMeshWideNodesReference,
     useSelectedMapFeature,
@@ -50,10 +51,16 @@ const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
     );
 };
 
-const LinkLine = ({ link }: { link: PontToPointLink }) => {
+const LinkLine = ({
+    referenceLink,
+    actualLink,
+}: {
+    referenceLink: PontToPointLink;
+    actualLink: PontToPointLink | undefined;
+}) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
-    const isSelected = selectedMapFeature?.id === link.id;
+    const isSelected = selectedMapFeature?.id === referenceLink.id;
 
     const synced: boolean = Math.random() < 0.5;
 
@@ -62,10 +69,11 @@ const LinkLine = ({ link }: { link: PontToPointLink }) => {
             color: synced ? "#76bd7d" : "#eb7575",
             weight: isSelected ? 7 : 5,
             opacity: isSelected ? 1 : 0.8,
+            dashArray: actualLink ? null : "7 10",
         };
     };
 
-    const coordinates = link.coordinates.map((c) => [c.lat, c.lon]);
+    const coordinates = referenceLink.coordinates.map((c) => [c.lat, c.lon]);
 
     return (
         <Polyline
@@ -75,8 +83,8 @@ const LinkLine = ({ link }: { link: PontToPointLink }) => {
                 click: (e) => {
                     L.DomEvent.stopPropagation(e);
                     setSelectedMapFeature({
-                        id: link.id,
-                        feature: link,
+                        id: referenceLink.id,
+                        feature: referenceLink,
                         type: "link",
                     });
                 },
@@ -94,24 +102,51 @@ const LinkLine = ({ link }: { link: PontToPointLink }) => {
 };
 
 export const NodesAndLinks = () => {
-    const { data: meshWideLinks } = useMeshWideLinksReference({});
-    const { data: meshWideNodes } = useMeshWideNodesReference({});
+    const { data: meshWideLinksReference } = useMeshWideLinksReference({});
+    const { data: meshWideLinks } = useMeshWideLinks({});
+    const { data: meshWideNodesReference } = useMeshWideNodesReference({});
+
+    let locatedLinksReference: LocatedWifiLinkData;
+    if (meshWideNodesReference && meshWideLinksReference) {
+        locatedLinksReference = mergeLinksAndCoordinates(
+            meshWideNodesReference,
+            meshWideLinksReference
+        );
+    }
 
     let locatedLinks: LocatedWifiLinkData;
-    if (meshWideNodes && meshWideLinks) {
-        locatedLinks = mergeLinksAndCoordinates(meshWideNodes, meshWideLinks);
+    if (meshWideNodesReference && meshWideLinks) {
+        locatedLinks = mergeLinksAndCoordinates(
+            meshWideNodesReference,
+            meshWideLinks
+        );
     }
 
     return (
         <>
-            {meshWideNodes &&
-                Object.entries(meshWideNodes).map(([k, v], i) => {
+            {meshWideNodesReference &&
+                Object.entries(meshWideNodesReference).map(([k, v], i) => {
                     return <NodeMarker key={i} info={v} name={k} />;
                 })}
-            {locatedLinks &&
-                Object.entries(locatedLinks).map((link, i) => {
-                    return <LinkLine key={i} link={link[1]} />;
-                })}
+            {locatedLinksReference &&
+                locatedLinks &&
+                Object.entries(locatedLinksReference).map(
+                    (referenceLink, i) => {
+                        const actualLink: PontToPointLink = Object.values(
+                            locatedLinks
+                        ).find((value) => value.id === referenceLink[0]);
+
+                        console.log("Reference", referenceLink[0]);
+                        console.log("actual", actualLink.id);
+                        return (
+                            <LinkLine
+                                key={i}
+                                referenceLink={referenceLink[1]}
+                                actualLink={actualLink}
+                            />
+                        );
+                    }
+                )}
         </>
     );
 };
