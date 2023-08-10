@@ -129,15 +129,14 @@ export const NodesAndLinks = () => {
                     return <NodeMarker key={i} info={v} name={k} />;
                 })}
             {locatedLinksReference &&
-                locatedLinks &&
                 Object.entries(locatedLinksReference).map(
                     (referenceLink, i) => {
-                        const actualLink: PontToPointLink = Object.values(
-                            locatedLinks
-                        ).find((value) => value.id === referenceLink[0]);
-
-                        console.log("Reference", referenceLink[0]);
-                        console.log("actual", actualLink.id);
+                        let actualLink: PontToPointLink;
+                        if (locatedLinks) {
+                            actualLink = Object.values(locatedLinks).find(
+                                (value) => value.id === referenceLink[0]
+                            );
+                        }
                         return (
                             <LinkLine
                                 key={i}

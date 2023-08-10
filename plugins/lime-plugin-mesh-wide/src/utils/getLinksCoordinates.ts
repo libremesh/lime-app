@@ -8,45 +8,69 @@ import {
 
 export const mergeLinksAndCoordinates = (
     nodes: INodes,
-    links: IWifiLinks
+    wifiLinks: IWifiLinks
 ): LocatedWifiLinkData => {
-    if (!nodes || !links) return {};
+    if (!nodes || !wifiLinks) return {};
     const result: LocatedWifiLinkData = {};
 
-    for (const pointId in links) {
-        for (const data of links[pointId].data) {
-            const dstPointId = Object.keys(nodes).find((pid) => {
-                return nodes[pid].macs.filter((nodeMac) =>
-                    nodeMac.toLowerCase().includes(data.dst_mac.toLowerCase())
+    // for every node check all links
+    for (const wifiNodeName in wifiLinks) {
+        for (const wifiLinkData of wifiLinks[wifiNodeName].data) {
+            // Get the nodeName of the destination node
+            const dstNodeName = Object.keys(nodes).find((pid) => {
+                return nodes[pid].macs.find(
+                    (mac) =>
+                        mac.toLowerCase() === wifiLinkData.dst_mac.toLowerCase()
                 );
             });
 
-            if (dstPointId && dstPointId !== pointId) {
+            if (dstNodeName && dstNodeName !== wifiNodeName) {
+                // Generate a unique id of the point to point link based on the coordinates
                 const linkKey = PontToPointLink.generateId(
-                    nodes[pointId].coordinates,
-                    nodes[dstPointId!].coordinates
+                    nodes[wifiNodeName].coordinates,
+                    nodes[dstNodeName!].coordinates
                 );
 
+                // If this point to point link no exists, instantiate it
                 if (!result[linkKey]) {
                     result[linkKey] = new PontToPointLink(
-                        nodes[pointId].coordinates,
-                        nodes[dstPointId!].coordinates
+                        nodes[wifiNodeName].coordinates,
+                        nodes[dstNodeName!].coordinates
                     );
                 }
+                // Else if the link is not already added don't do it.
+                else if (
+                    result[linkKey].linkExists(
+                        wifiLinkData.src_mac,
+                        wifiLinkData.dst_mac
+                    ) ||
+                    !wifiLinks[dstNodeName]
+                ) {
+                    continue;
+                }
+
+                // Get the destination link info
+                const destPointData = wifiLinks[dstNodeName].data.find(
+                    (data) =>
+                        data.dst_mac.toLowerCase() ===
+                            wifiLinkData.src_mac.toLowerCase() &&
+                        data.src_mac.toLowerCase() ===
+                            wifiLinkData.dst_mac.toLowerCase()
+                );
 
                 const entry: ILocatedLink = {
-                    [pointId]: {
-                        ...data,
-                        coordinates: nodes[pointId].coordinates,
+                    [wifiNodeName]: {
+                        ...wifiLinkData,
+                        coordinates: nodes[wifiNodeName].coordinates,
                     },
-                    [dstPointId!]: {
-                        tx_rate: data.tx_rate,
-                        dst_mac: data.src_mac,
-                        chains: data.chains,
-                        src_mac: data.dst_mac,
-                        rx_rate: data.rx_rate,
-                        signal: data.signal,
-                        coordinates: nodes[dstPointId!].coordinates,
+                    [dstNodeName]: {
+                        tx_rate: destPointData.tx_rate,
+                        dst_mac: destPointData.src_mac,
+                        chains: destPointData.chains,
+                        src_mac: destPointData.dst_mac,
+                        rx_rate: destPointData.rx_rate,
+                        signal: destPointData.signal,
+                        coordinates: nodes[dstNodeName].coordinates,
                     },
                 };
                 result[linkKey].addLink(entry);
@@ -72,6 +96,29 @@ export class PontToPointLink {
 
     addLink(link: ILocatedLink) {
         this.links.push(link);
+    }
+
+    /**
+     * For a given two macs check if any of the links on the _links array contain a node with this macs. (which should
+     * mean that the link is already added on the array).
+     * @param mac1
+     * @param mac2
+     */
+    linkExists(mac1: string, mac2: string) {
+        for (const link of this._links) {
+            // Just needed to check the first node of the link object becouse the other till have the same macs but reversed
+            const node = link[Object.keys(link)[0]];
+            if (
+                node &&
+                (node.dst_mac.toLowerCase() === mac1.toLowerCase() ||
+                    node.src_mac.toLowerCase() === mac1.toLowerCase()) &&
+                (node.dst_mac.toLowerCase() === mac2.toLowerCase() ||
+                    node.src_mac.toLowerCase() === mac2.toLowerCase())
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     get names() {

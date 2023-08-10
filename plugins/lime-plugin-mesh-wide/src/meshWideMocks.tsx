@@ -132,11 +132,13 @@ export const linksReferenceState: IWifiLinks = {
 const nodeName = "LiMe-462895";
 export const links = (): IWifiLinks => {
     // Create a deep copy of the state to avoid mutating the original object
-    const newState = JSON.parse(JSON.stringify(linksReferenceState));
+    const newState: IWifiLinks = JSON.parse(
+        JSON.stringify(linksReferenceState)
+    );
 
     // Get source_macs from the node to be removed
-    const source_macs_to_remove = newState[nodeName].data.map(
-        (item: any) => item.src_mac
+    const source_macs_to_remove = newState[nodeName].data.map((item: any) =>
+        item.src_mac.toLowerCase()
     );
 
     // Remove the specified node
@@ -144,10 +146,11 @@ export const links = (): IWifiLinks => {
 
     // Remove data items with matching dest_mac in other objects
     Object.keys(newState).forEach((key: string) => {
-        newState[key].data = newState[key].data.filter((item: any) => {
-            return !source_macs_to_remove.includes(item.dst_mac);
+        newState[key].data = newState[key].data.filter((item) => {
+            return !source_macs_to_remove.includes(item.dst_mac.toLowerCase());
         });
     });
+
     return newState;
 };
 
