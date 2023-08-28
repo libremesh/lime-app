@@ -121,19 +121,24 @@ export class PontToPointLink {
         return false;
     }
 
-    get names() {
+    get names(): string[] {
         return [
             ...this._links.reduce((acc, link) => {
                 Object.keys(link).forEach((key) => acc.add(key));
                 return acc;
             }, new Set()),
-        ];
+        ] as string[];
     }
 
     get links() {
         return this._links;
     }
 
+    /**
+     * Generate a deterministic unique id based on the coordinates of a node.
+     * @param coord1
+     * @param coord2
+     */
     static generateId(coord1: Coordinates, coord2: Coordinates): string {
         const _prepareCoord = (coord: string) =>
             parseFloat(coord.replace("-", "").replace(".", ""));
