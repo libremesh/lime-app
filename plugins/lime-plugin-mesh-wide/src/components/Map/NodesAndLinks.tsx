@@ -1,4 +1,5 @@
 import L from "leaflet";
+import { useMemo } from "preact/compat";
 import { Marker, Polyline, Tooltip } from "react-leaflet";
 
 import style from "plugins/lime-plugin-mesh-wide/src/components/Map/style.less";
@@ -106,21 +107,23 @@ export const NodesAndLinks = () => {
     const { data: meshWideLinks } = useMeshWideLinks({});
     const { data: meshWideNodesReference } = useMeshWideNodesReference({});
 
-    let locatedLinksReference: LocatedWifiLinkData;
-    if (meshWideNodesReference && meshWideLinksReference) {
-        locatedLinksReference = mergeLinksAndCoordinates(
-            meshWideNodesReference,
-            meshWideLinksReference
-        );
-    }
+    const locatedLinksReference: LocatedWifiLinkData = useMemo(() => {
+        if (meshWideNodesReference && meshWideLinksReference) {
+            return mergeLinksAndCoordinates(
+                meshWideNodesReference,
+                meshWideLinksReference
+            );
+        }
+    }, [meshWideNodesReference, meshWideLinksReference]);
 
-    let locatedLinks: LocatedWifiLinkData;
-    if (meshWideNodesReference && meshWideLinks) {
-        locatedLinks = mergeLinksAndCoordinates(
-            meshWideNodesReference,
-            meshWideLinks
-        );
-    }
+    const locatedLinks: LocatedWifiLinkData = useMemo(() => {
+        if (meshWideNodesReference && meshWideLinks) {
+            return mergeLinksAndCoordinates(
+                meshWideNodesReference,
+                meshWideLinks
+            );
+        }
+    }, [meshWideNodesReference, meshWideLinks]);
 
     return (
         <>

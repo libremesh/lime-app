@@ -65,15 +65,15 @@ export const mergeLinksAndCoordinates = (
                     },
                     [dstNodeName]: {
                         tx_rate: destPointData.tx_rate,
-                        dst_mac: destPointData.src_mac,
+                        dst_mac: destPointData.dst_mac,
                         chains: destPointData.chains,
-                        src_mac: destPointData.dst_mac,
+                        src_mac: destPointData.src_mac,
                         rx_rate: destPointData.rx_rate,
                         signal: destPointData.signal,
                         coordinates: nodes[dstNodeName].coordinates,
                     },
                 };
-                result[linkKey].addLink(entry);
+                result[linkKey].addLink(new LinkDetail(entry));
             }
         }
     }
@@ -85,7 +85,7 @@ export const mergeLinksAndCoordinates = (
  * This class should store a group of links between the same geo coordinates.
  */
 export class PontToPointLink {
-    private _links: ILocatedLink[] = [];
+    private _links: LinkDetail[] = [];
     public readonly id: string;
     public readonly coordinates: Coordinates[] = [];
 
@@ -94,7 +94,7 @@ export class PontToPointLink {
         this.coordinates.push(coord1, coord2);
     }
 
-    addLink(link: ILocatedLink) {
+    addLink(link: LinkDetail) {
         this.links.push(link);
     }
 
@@ -106,8 +106,8 @@ export class PontToPointLink {
      */
     linkExists(mac1: string, mac2: string) {
         for (const link of this._links) {
-            // Just needed to check the first node of the link object becouse the other till have the same macs but reversed
-            const node = link[Object.keys(link)[0]];
+            // Just needed to check the first node of the link object becouse the other will have the same macs but reversed
+            const node = link.data[Object.keys(link.data)[0]];
             if (
                 node &&
                 (node.dst_mac.toLowerCase() === mac1.toLowerCase() ||
@@ -151,5 +151,42 @@ export class PontToPointLink {
         ];
 
         return allCoordinates.sort((a, b) => a - b).toString();
+    }
+}
+
+export class LinkDetail {
+    private _data: ILocatedLink;
+    private _id: string;
+
+    constructor(data: ILocatedLink) {
+        this._data = data;
+        // this._id = LinkDetail.generateId(data);
+        this._id = LinkDetail.generateId(data);
+    }
+
+    /**
+     * Deterministically generation of a unique id using the macs of this link
+     * @param data
+     */
+    static generateId(data: ILocatedLink): string {
+        return [
+            ...Object.entries(data).map(([k, v]) => {
+                return v.src_mac.toLowerCase().replace(/:/g, "");
+            }),
+        ]
+            .sort()
+            .join("");
+    }
+
+    get id() {
+        return this._id;
+    }
+
+    get data() {
+        return this._data;
+    }
+
+    get names(): string[] {
+        return [...Object.keys(this._data)];
     }
 }
