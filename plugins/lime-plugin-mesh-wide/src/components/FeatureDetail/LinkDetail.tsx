@@ -11,13 +11,12 @@ import {
     LinkDetailData,
     PontToPointLink,
 } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
+import { bytesToMB } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 
 import { Row, TitleAndText } from "./index";
 
 const SelectedLink = ({ linkDetail }: { linkDetail: LinkDetailData }) => {
     const names = linkDetail?.names;
-    const gain = "5 dB";
-    const linkType = "Primary";
 
     return (
         <>
@@ -25,7 +24,8 @@ const SelectedLink = ({ linkDetail }: { linkDetail: LinkDetailData }) => {
                 {names && (
                     <div className={"text-3xl"}>
                         <Trans>
-                            Link from {names[0]} to {names[1]}
+                            Link from <strong>{names[0]}</strong> to{" "}
+                            <strong>{names[1]}</strong>
                         </Trans>
                     </div>
                 )}
@@ -33,12 +33,32 @@ const SelectedLink = ({ linkDetail }: { linkDetail: LinkDetailData }) => {
                     <PowerIcon />
                 </Button>
             </Row>
-            <Row>
-                <TitleAndText title={<Trans>Gain</Trans>}>{gain}</TitleAndText>
-                <TitleAndText title={<Trans>Link type</Trans>}>
-                    {linkType}
-                </TitleAndText>
-            </Row>
+            {names.map((name, i) => {
+                const node = linkDetail.linkByName(name);
+                return (
+                    <div key={i}>
+                        <Row>
+                            <strong>{name}</strong>
+                        </Row>
+                        <Row>
+                            <TitleAndText title={<Trans>Signal</Trans>}>
+                                {node.signal.toString()}
+                            </TitleAndText>
+                            <TitleAndText title={<Trans>Chains</Trans>}>
+                                {node.chains.toString()}
+                            </TitleAndText>
+                        </Row>
+                        <Row>
+                            <TitleAndText title={<Trans>TxRate</Trans>}>
+                                {`${bytesToMB(node.tx_rate).toString()}MB`}
+                            </TitleAndText>
+                            <TitleAndText title={<Trans>RxRate</Trans>}>
+                                {`${bytesToMB(node.rx_rate).toString()}MB`}
+                            </TitleAndText>
+                        </Row>
+                    </div>
+                );
+            })}
         </>
     );
 };

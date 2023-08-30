@@ -1,6 +1,7 @@
 import {
     Coordinates,
     ILocatedLink,
+    IWifiLinkData,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 /**
@@ -110,5 +111,9 @@ export class LinkDetailData {
 
     get names(): string[] {
         return [...Object.keys(this._data)];
+    }
+
+    linkByName(name: string): IWifiLinkData {
+        return this._data[name];
     }
 }
