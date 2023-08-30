@@ -1,7 +1,9 @@
 import { Trans } from "@lingui/macro";
 import { VNode } from "preact";
+import { useState } from "preact/hooks";
 
 import { Button } from "components/buttons/button";
+import Tabs from "components/tabs";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
@@ -9,7 +11,10 @@ import {
     INamedNodeInfo,
     SelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
-import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/utils/getLinksCoordinates";
+import {
+    LinkDetail,
+    PontToPointLink,
+} from "plugins/lime-plugin-mesh-wide/src/utils/getLinksCoordinates";
 
 const TitleAndText = ({
     title,
@@ -34,24 +39,21 @@ const Row = ({ children }: { children: any }) => {
     );
 };
 
-const LinkDetails = ({
-    linkDetails,
-    selectedFeature,
-}: {
-    linkDetails: PontToPointLink;
-    selectedFeature: SelectedMapFeature;
-}) => {
-    const name = linkDetails?.names ?? selectedFeature?.id ?? "";
+const SelectedLink = ({ linkDetail }: { linkDetail: LinkDetail }) => {
+    const names = linkDetail?.names;
     const gain = "5 dB";
     const linkType = "Primary";
 
     return (
         <>
             <Row>
-                <div className={"text-3xl"}>
-                    <Trans>Link</Trans>
-                    {name}
-                </div>
+                {names && (
+                    <div className={"text-3xl"}>
+                        <Trans>
+                            Link from {names[0]} to {names[1]}
+                        </Trans>
+                    </div>
+                )}
                 <Button color={"danger"} outline={true} size={"sm"}>
                     <PowerIcon />
                 </Button>
@@ -62,6 +64,36 @@ const LinkDetails = ({
                     {linkType}
                 </TitleAndText>
             </Row>
+        </>
+    );
+};
+
+const LinkDetails = ({ linkDetails }: { linkDetails: PontToPointLink }) => {
+    const [selectedLink, setSelectedLink] = useState(0);
+
+    const tabs = linkDetails.links.map((link: LinkDetail, i) => {
+        return {
+            key: i,
+            repr: <Trans>Link {i + 1}</Trans>,
+        };
+    });
+
+    return (
+        <>
+            <div className="d-flex flex-column flex-grow-1 overflow-auto gap-6">
+                {tabs.length > 1 && (
+                    <Tabs
+                        tabs={tabs}
+                        current={selectedLink}
+                        onChange={setSelectedLink}
+                    />
+                )}
+                {selectedLink !== null && (
+                    <SelectedLink
+                        linkDetail={linkDetails.links[selectedLink]}
+                    />
+                )}
+            </div>
         </>
     );
 };
@@ -130,7 +162,6 @@ export const FeatureDetail = ({
             return (
                 <LinkDetails
                     linkDetails={selectedFeature.feature as PontToPointLink}
-                    selectedFeature={selectedFeature}
                 />
             );
         case "node":
