@@ -4,14 +4,14 @@ import React from "react";
 import { BottomSheet } from "components/bottom-sheet";
 
 import {
-    BottomSheetFooter,
     FeatureDetail,
+    FeatureReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
-export const MapBottomSheet = () => {
+export const SelectedFeatureBottomSheet = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const synced: boolean = Math.random() < 0.5;
+    const hasError: boolean = Math.random() < 0.5;
 
     const { data: selectedMapFeature } = useSelectedMapFeature();
 
@@ -29,15 +29,15 @@ export const MapBottomSheet = () => {
                 }}
                 initialDrawerDistanceTop={600}
                 footer={
-                    <BottomSheetFooter
-                        synced={synced}
+                    <FeatureReferenceStatus
+                        hasError={hasError}
                         selectedFeature={selectedMapFeature}
                     />
                 }
             >
                 <div className={"px-10"}>
                     <FeatureDetail
-                        synced={synced}
+                        hasError={hasError}
                         selectedFeature={selectedMapFeature}
                     />
                 </div>

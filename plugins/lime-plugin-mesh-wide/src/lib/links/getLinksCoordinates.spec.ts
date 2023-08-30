@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom/extend-expect";
 
+import { mergeLinksAndCoordinates } from "plugins/lime-plugin-mesh-wide/src/lib/links/getLinksCoordinates";
 import {
     linksReferenceState,
     nodesReferenceState,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
-import { mergeLinksAndCoordinates } from "plugins/lime-plugin-mesh-wide/src/utils/getLinksCoordinates";
 
 describe("tests for the algorithm that merge point and links data types", () => {
     beforeEach(() => {});

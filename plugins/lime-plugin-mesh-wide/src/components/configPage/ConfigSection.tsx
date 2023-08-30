@@ -10,7 +10,7 @@ import {
     useAddNewSectionModal,
     useDeletePropModal,
     useEditPropModal,
-} from "plugins/lime-plugin-mesh-wide/src/components/modals";
+} from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
 import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 export const ConfigSection = ({ dropdown }: { dropdown: IMeshWideSection }) => {

@@ -5,8 +5,8 @@ import FloatingButton from "components/buttons/floatting-button";
 import Loading from "components/loading";
 
 import { useLoadLeaflet } from "plugins/lime-plugin-locate/src/locateQueries";
-import { MeshWideMap } from "plugins/lime-plugin-mesh-wide/src/components/Map";
-import { MapBottomSheet } from "plugins/lime-plugin-mesh-wide/src/components/MapBottomSheet";
+import { MeshWideMap } from "plugins/lime-plugin-mesh-wide/src/containers/Map/Map";
+import { SelectedFeatureBottomSheet } from "plugins/lime-plugin-mesh-wide/src/containers/SelectedFeatureBottomSheet";
 
 const MeshWidePage = () => {
     const {
@@ -29,7 +29,7 @@ const MeshWidePage = () => {
             {!loading && (
                 <>
                     <MeshWideMap />
-                    <MapBottomSheet />
+                    <SelectedFeatureBottomSheet />
                     <FloatingButton onClick={() => route("/meshwide/config")} />
                 </>
             )}

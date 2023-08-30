@@ -2,7 +2,7 @@ import L from "leaflet";
 import { useEffect, useRef } from "preact/hooks";
 import { MapContainer, TileLayer } from "react-leaflet";
 
-import { NodesAndLinks } from "plugins/lime-plugin-mesh-wide/src/components/Map/NodesAndLinks";
+import { NodesAndLinksLayer } from "plugins/lime-plugin-mesh-wide/src/containers/Map/NodesAndLinksLayer";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
@@ -44,7 +44,7 @@ export const MeshWideMap = () => {
 
     return (
         <MapContainer
-            // center={center}2
+            // center={center}
             // center={[-30, -60]}
             // zoom={13}
             center={[-31.81854, -64.40097]}
@@ -57,8 +57,7 @@ export const MeshWideMap = () => {
                 attribution={openStreetMapAttribution}
                 url={openStreetMapTileString}
             />
-            <NodesAndLinks />
-            {/*<CommunityLayer geoJsonData={communityLayer} />*/}
+            <NodesAndLinksLayer />
         </MapContainer>
     );
 };

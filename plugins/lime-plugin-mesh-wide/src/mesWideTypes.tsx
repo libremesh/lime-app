@@ -1,4 +1,4 @@
-import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/utils/getLinksCoordinates";
+import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 
 /**
  * Describe a link with a coordinates

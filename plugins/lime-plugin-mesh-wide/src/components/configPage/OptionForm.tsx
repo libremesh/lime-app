@@ -11,7 +11,7 @@ import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Compo
 import {
     useDeletePropModal,
     useEditPropModal,
-} from "plugins/lime-plugin-mesh-wide/src/components/modals";
+} from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
 
 const EditOptionForm = ({
     keyString,
