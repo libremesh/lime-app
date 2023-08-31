@@ -1,7 +1,6 @@
 import { useMemo } from "preact/compat";
 
 import LinkLine from "plugins/lime-plugin-mesh-wide/src/components/Map/LinkLine";
-import NodeMarker from "plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { mergeLinksAndCoordinates } from "plugins/lime-plugin-mesh-wide/src/lib/links/getLinksCoordinates";
 import {
@@ -11,7 +10,7 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 import { LocatedWifiLinkData } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
-export const NodesAndLinksLayer = () => {
+export const LinksLayer = () => {
     const { data: meshWideLinksReference } = useMeshWideLinksReference({});
     const { data: meshWideLinks } = useMeshWideLinks({});
     const { data: meshWideNodesReference } = useMeshWideNodesReference({});
@@ -36,10 +35,6 @@ export const NodesAndLinksLayer = () => {
 
     return (
         <>
-            {meshWideNodesReference &&
-                Object.entries(meshWideNodesReference).map(([k, v], i) => {
-                    return <NodeMarker key={i} info={v} name={k} />;
-                })}
             {locatedLinksReference &&
                 Object.entries(locatedLinksReference).map(
                     (referenceLink, i) => {
