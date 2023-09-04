@@ -10,7 +10,9 @@ export type ILocatedLink = {
 };
 
 /**
- * List of located links. Are grouped by id based on their coordinates
+ * List of located links.
+ *
+ * Are grouped by id based on their coordinates
  *
  * The array of classes contain an indeterminated number of links that are from certain point to another.
  */
@@ -83,3 +85,30 @@ export interface IMeshWideSection {
 }
 
 export type IMeshWideConfig = IMeshWideSection[];
+
+export enum WifiLinkErrorCodes {
+    LINK_DOWN = "LINK_DOWN",
+    SIGNAL_LOSS = "SIGNAL_LOSS",
+    CHAIN_LOSS = "CHAIN_LOSS",
+}
+
+/**
+ * Store the error for every wifi node data. Use the ids for the point to point and mac to mac as dictionary
+ */
+export type ILinkErrors = {
+    [macToMacKey: MacToMacLinkId]: {
+        [nodeName: string]: WifiLinkErrorCodes[];
+    };
+};
+
+/**
+ * Type to store the link detail id, created deterministically by the
+ * two macs of this link
+ */
+export type MacToMacLinkId = string;
+
+/**
+ * Type to store a point to point link detail id, created deterministically by the
+ * two geo points of this link
+ */
+export type PointToPointLinkId = string;
