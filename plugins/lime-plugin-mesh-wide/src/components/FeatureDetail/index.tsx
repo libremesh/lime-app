@@ -3,9 +3,9 @@ import Links, {
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail";
 import NodeDetails from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail";
 import { NodeReferenceStatus } from "plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker";
-import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import {
     INamedNodeInfo,
+    LinkMapFeature,
     SelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
@@ -44,7 +44,10 @@ export const FeatureDetail = ({
         case "link":
             return (
                 <Links
-                    linkDetails={selectedFeature.feature as PontToPointLink}
+                    actual={(selectedFeature.feature as LinkMapFeature).actual}
+                    reference={
+                        (selectedFeature.feature as LinkMapFeature).reference
+                    }
                 />
             );
         case "node":
@@ -74,7 +77,9 @@ export const FeatureReferenceStatus = ({
         return (
             <LinkReferenceStatus
                 hasError={hasError}
-                selectedFeature={selectedFeature.feature as PontToPointLink}
+                selectedFeature={
+                    (selectedFeature.feature as LinkMapFeature).reference
+                }
             />
         );
     } else if (type === "node") {

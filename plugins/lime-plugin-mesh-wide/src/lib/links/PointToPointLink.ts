@@ -2,14 +2,18 @@ import {
     Coordinates,
     ILocatedLink,
     IWifiLinkData,
+    MacToMacLinkId,
+    PointToPointLinkId,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 /**
  * This class should store a group of links between the same geo coordinates.
+ *
+ * Could store two links between same geo but with different macs
  */
 export class PontToPointLink {
-    private _links: LinkDetailData[] = [];
-    public readonly id: string;
+    private _links: MacToMacLink[] = [];
+    public readonly id: PointToPointLinkId;
     public readonly coordinates: Coordinates[] = [];
 
     constructor(coord1: Coordinates, coord2: Coordinates) {
@@ -17,7 +21,7 @@ export class PontToPointLink {
         this.coordinates.push(coord1, coord2);
     }
 
-    addLink(link: LinkDetailData) {
+    addLink(link: MacToMacLink) {
         this.links.push(link);
     }
 
@@ -77,21 +81,24 @@ export class PontToPointLink {
     }
 }
 
-export class LinkDetailData {
+/**
+ * Store link info between two macs
+ */
+export class MacToMacLink {
     private _data: ILocatedLink;
-    private _id: string;
+    private _id: MacToMacLinkId;
 
     constructor(data: ILocatedLink) {
         this._data = data;
-        // this._id = LinkDetail.generateId(data);
-        this._id = LinkDetailData.generateId(data);
+        this._id = MacToMacLink.generateId(data);
     }
 
     /**
-     * Deterministically generation of a unique id using the macs of this link
+     * Deterministically generation of a unique id using the macs of this link. Concatenate the sorted macs that
+     * are involved on this link
      * @param data
      */
-    static generateId(data: ILocatedLink): string {
+    static generateId(data: ILocatedLink): MacToMacLinkId {
         return [
             ...Object.entries(data).map(([k, v]) => {
                 return v.src_mac.toLowerCase().replace(/:/g, "");

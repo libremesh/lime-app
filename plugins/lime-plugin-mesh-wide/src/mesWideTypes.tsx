@@ -64,8 +64,15 @@ export type INodes = { [key: string]: INodeInfo };
 
 type FeatureType = "node" | "link";
 
+export type LinkMapFeature = {
+    actual: PontToPointLink;
+    reference: PontToPointLink;
+};
+
+type MapFeature = INamedNodeInfo | LinkMapFeature;
+
 export interface SelectedMapFeature {
-    feature: INamedNodeInfo | PontToPointLink;
+    feature: MapFeature;
     type: FeatureType;
     id: number | string;
 }

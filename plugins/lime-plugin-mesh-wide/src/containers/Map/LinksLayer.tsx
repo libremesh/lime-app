@@ -33,9 +33,11 @@ export const LinksLayer = () => {
         }
     }, [meshWideNodesReference, meshWideLinks]);
 
+    const linksLoaded = !!locatedLinksReference && !!locatedLinks;
+
     return (
         <>
-            {locatedLinksReference &&
+            {linksLoaded &&
                 Object.entries(locatedLinksReference).map(
                     (referenceLink, i) => {
                         let actualLink: PontToPointLink;

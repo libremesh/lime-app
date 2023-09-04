@@ -1,5 +1,5 @@
 import {
-    LinkDetailData,
+    MacToMacLink,
     PontToPointLink,
 } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import {
@@ -76,7 +76,7 @@ export const mergeLinksAndCoordinates = (
                         coordinates: nodes[dstNodeName].coordinates,
                     },
                 };
-                result[linkKey].addLink(new LinkDetailData(entry));
+                result[linkKey].addLink(new MacToMacLink(entry));
             }
         }
     }

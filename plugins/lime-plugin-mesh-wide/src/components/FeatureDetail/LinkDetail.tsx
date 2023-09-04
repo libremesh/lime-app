@@ -8,14 +8,21 @@ import Tabs from "components/tabs";
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import {
-    LinkDetailData,
+    MacToMacLink,
     PontToPointLink,
 } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { bytesToMB } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 
 import { Row, TitleAndText } from "./index";
 
-const SelectedLink = ({ linkDetail }: { linkDetail: LinkDetailData }) => {
+const SelectedLink = ({ linkDetail }: { linkDetail: MacToMacLink }) => {
+    if (linkDetail === undefined)
+        return (
+            <div>
+                <Trans>This link seems down</Trans>
+            </div>
+        );
+
     const names = linkDetail?.names;
 
     return (
@@ -63,10 +70,16 @@ const SelectedLink = ({ linkDetail }: { linkDetail: LinkDetailData }) => {
     );
 };
 
-const Links = ({ linkDetails }: { linkDetails: PontToPointLink }) => {
+const Links = ({
+    actual,
+    reference,
+}: {
+    actual: PontToPointLink;
+    reference: PontToPointLink;
+}) => {
     const [selectedLink, setSelectedLink] = useState(0);
 
-    const tabs = linkDetails.links.map((link: LinkDetailData, i) => {
+    const tabs = reference.links.map((link: MacToMacLink, i) => {
         return {
             key: i,
             repr: <Trans>Link {i + 1}</Trans>,
@@ -76,7 +89,7 @@ const Links = ({ linkDetails }: { linkDetails: PontToPointLink }) => {
     return (
         <>
             <div className="d-flex flex-column flex-grow-1 overflow-auto gap-6">
-                {tabs.length > 1 && (
+                {tabs?.length > 1 && (
                     <Tabs
                         tabs={tabs}
                         current={selectedLink}
@@ -84,9 +97,7 @@ const Links = ({ linkDetails }: { linkDetails: PontToPointLink }) => {
                     />
                 )}
                 {selectedLink !== null && (
-                    <SelectedLink
-                        linkDetail={linkDetails.links[selectedLink]}
-                    />
+                    <SelectedLink linkDetail={actual?.links[selectedLink]} />
                 )}
             </div>
         </>
