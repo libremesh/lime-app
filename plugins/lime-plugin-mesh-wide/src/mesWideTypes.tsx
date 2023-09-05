@@ -95,10 +95,22 @@ export enum WifiLinkErrorCodes {
 /**
  * Store the error for every wifi node data. Use the ids for the point to point and mac to mac as dictionary
  */
-export type ILinkErrors = {
-    [macToMacKey: MacToMacLinkId]: {
-        [nodeName: string]: WifiLinkErrorCodes[];
+export type ILinkPtoPErrors = {
+    macToMacErrors: {
+        [macToMacKey: MacToMacLinkId]: {
+            linkErrors: {
+                [nodeName: string]: WifiLinkErrorCodes[];
+            };
+            hasErrors: boolean;
+            linkUp: boolean;
+        };
     };
+    hasErrors: boolean;
+    linkUp: boolean;
+};
+
+export type ILinkErrors = {
+    [pointToPointKey: MacToMacLinkId]: ILinkPtoPErrors;
 };
 
 /**

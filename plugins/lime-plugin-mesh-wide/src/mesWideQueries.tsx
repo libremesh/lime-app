@@ -7,11 +7,9 @@ import {
     getMeshWideNodesReference,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideApi";
 import {
-    ILinkErrors,
     IMeshWideConfig,
     INodes,
     IWifiLinks,
-    PointToPointLinkId,
     SelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
@@ -71,11 +69,4 @@ export const useSelectedMapFeature = () => {
         "lime-meshwide",
         "select_map_feature",
     ]);
-};
-
-/**
- * Store list of link error codes for every source node.
- */
-export const useLinkErrors = (linkId: PointToPointLinkId) => {
-    return useSharedData<ILinkErrors>(["lime-meshwide", "wifi_link", linkId]);
 };

@@ -1,39 +1,23 @@
 import L from "leaflet";
-import { useMemo } from "preact/compat";
-import { useEffect } from "preact/hooks";
 import { Polyline } from "react-leaflet";
 
+import { useLocatedLinks } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
-import { compareLinks } from "plugins/lime-plugin-mesh-wide/src/lib/links/processErrors";
-import {
-    useLinkErrors,
-    useSelectedMapFeature,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
+import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
 interface ILinkLineProps {
     referenceLink: PontToPointLink;
     actualLink: PontToPointLink | undefined;
 }
 
-const LinkPolyLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
+export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
     const isSelected = selectedMapFeature?.id === referenceLink.id;
-    const { data: linkErrors } = useLinkErrors(referenceLink.id);
+    const { linksErrors } = useLocatedLinks();
 
-    const linkDown: boolean = actualLink != null;
-
-    const hasError: boolean = useMemo(() => {
-        if (linkDown) return true;
-        for (const macToMacKey in linkErrors) {
-            for (const nodeName in linkErrors[macToMacKey]) {
-                if (linkErrors[macToMacKey][nodeName].length > 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }, [linkErrors]);
+    const hasError = linksErrors[referenceLink.id].hasErrors;
+    const linkUp = linksErrors[referenceLink.id].linkUp;
 
     const _setSelectedFeature = () => {
         setSelectedMapFeature({
@@ -48,7 +32,7 @@ const LinkPolyLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
             color: hasError ? "#eb7575" : "#76bd7d",
             weight: isSelected ? 7 : 5,
             opacity: isSelected ? 1 : 0.8,
-            dashArray: linkDown ? null : "7 10",
+            dashArray: linkUp ? null : "7 10",
         };
     };
 
@@ -73,21 +57,6 @@ const LinkPolyLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
                 },
             }}
         />
-    );
-};
-
-const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
-    const { data, setData: setLinkError } = useLinkErrors(referenceLink.id);
-
-    useEffect(() => {
-        if (referenceLink) {
-            const errors = compareLinks({ referenceLink, actualLink });
-            setLinkError(errors);
-        }
-    }, [referenceLink, actualLink, setLinkError]);
-
-    return (
-        <LinkPolyLine referenceLink={referenceLink} actualLink={actualLink} />
     );
 };
 

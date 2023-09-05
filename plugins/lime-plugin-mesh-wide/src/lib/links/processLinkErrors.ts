@@ -1,6 +1,6 @@
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import {
-    ILinkErrors,
+    ILinkPtoPErrors,
     IWifiLinkData,
     WifiLinkErrorCodes,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
@@ -48,21 +48,44 @@ export const compareLinks = ({
     referenceLink: PontToPointLink;
     actualLink: PontToPointLink | undefined;
 }) => {
-    const errors: ILinkErrors = {};
+    if (!referenceLink) return;
+
+    const ptoPErrors: ILinkPtoPErrors = {
+        macToMacErrors: {},
+        hasErrors: false,
+        linkUp: true,
+    };
 
     referenceLink.links.forEach((macToMacReference) => {
         const macToMacActual = actualLink?.links.find(
             (actual) => actual.id === macToMacReference.id
         );
 
-        errors[macToMacReference.id] = {};
+        const isUp = !!actualLink;
+        if (!isUp) ptoPErrors.linkUp = isUp;
+
+        ptoPErrors.macToMacErrors[macToMacReference.id] = {
+            hasErrors: false,
+            linkErrors: {},
+            linkUp: isUp,
+        };
         Object.entries(macToMacReference.data).forEach(
             ([nodeNameReference, wifiDataReference]) => {
                 const wifiDataActual = macToMacActual?.data[nodeNameReference];
-                errors[macToMacReference.id][nodeNameReference] =
-                    compareWifiData(wifiDataReference, wifiDataActual);
+                const wifiErrors = compareWifiData(
+                    wifiDataReference,
+                    wifiDataActual
+                );
+                ptoPErrors.macToMacErrors[macToMacReference.id].linkErrors[
+                    nodeNameReference
+                ] = wifiErrors;
+                if (wifiErrors.length) {
+                    ptoPErrors.macToMacErrors[macToMacReference.id].hasErrors =
+                        true;
+                    ptoPErrors.hasErrors = true;
+                }
             }
         );
     });
-    return errors;
+    return ptoPErrors;
 };
