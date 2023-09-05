@@ -41,6 +41,18 @@ export const nodesReferenceState: INodes = {
         uptime: "345600",
         device: "Hub",
     },
+    segundo: {
+        coordinates: {
+            lon: "-64.42609",
+            lat: "-31.80461",
+        },
+        macs: ["a8:40:41:1d:f9:ff", "a8:40:41:1d:f9:aa"],
+        ipv4: "192.168.1.3",
+        ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7336",
+        firmware_version: "1.0.2",
+        uptime: "345600",
+        device: "Hub",
+    },
 };
 
 export const linksReferenceState: IWifiLinks = {
@@ -66,6 +78,28 @@ export const linksReferenceState: IWifiLinks = {
         ],
         author: "primero",
     },
+    segundo: {
+        bleachTTL: 30,
+        data: [
+            {
+                tx_rate: 150000,
+                dst_mac: "A0:F3:C1:46:28:97",
+                chains: [-63, -59],
+                signal: -58,
+                rx_rate: 180000,
+                src_mac: "a8:40:41:1d:f9:ff",
+            },
+            {
+                tx_rate: 162000,
+                dst_mac: "14:CC:20:DA:4E:AC",
+                chains: [-57, -51],
+                signal: -50,
+                rx_rate: 240000,
+                src_mac: "a8:40:41:1d:f9:aa",
+            },
+        ],
+        author: "segundo",
+    },
     "LiMe-da4eaa": {
         bleachTTL: 30,
         data: [
@@ -88,6 +122,14 @@ export const linksReferenceState: IWifiLinks = {
             {
                 tx_rate: 243000,
                 dst_mac: "A8:40:41:1D:F9:35",
+                chains: [-75, -64],
+                src_mac: "14:cc:20:da:4e:ac",
+                rx_rate: 162000,
+                signal: -64,
+            },
+            {
+                tx_rate: 243000,
+                dst_mac: "A8:40:41:1D:F9:aa",
                 chains: [-75, -64],
                 src_mac: "14:cc:20:da:4e:ac",
                 rx_rate: 162000,
@@ -123,13 +165,23 @@ export const linksReferenceState: IWifiLinks = {
                 rx_rate: 135000,
                 signal: -65,
             },
+            {
+                tx_rate: 240000,
+                dst_mac: "A8:40:41:1D:F9:ff",
+                chains: [-77, -65],
+                src_mac: "a0:f3:c1:46:28:97",
+                rx_rate: 135000,
+                signal: -65,
+            },
         ],
         author: "LiMe-462895",
     },
 };
 
 // Use the same as on the reference state deleting a specific node
-const nodeName = "LiMe-462895";
+// const nodeName = "LiMe-462895";
+const nodeName = "primero";
+
 export const links = (): IWifiLinks => {
     // Create a deep copy of the state to avoid mutating the original object
     const newState: IWifiLinks = JSON.parse(

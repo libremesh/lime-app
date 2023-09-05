@@ -67,12 +67,12 @@ export const mergeLinksAndCoordinates = (
                         coordinates: nodes[wifiNodeName].coordinates,
                     },
                     [dstNodeName]: {
-                        tx_rate: destPointData.tx_rate,
-                        dst_mac: destPointData.dst_mac,
-                        chains: destPointData.chains,
-                        src_mac: destPointData.src_mac,
-                        rx_rate: destPointData.rx_rate,
-                        signal: destPointData.signal,
+                        tx_rate: destPointData?.tx_rate,
+                        dst_mac: destPointData?.dst_mac,
+                        chains: destPointData?.chains,
+                        src_mac: destPointData?.src_mac,
+                        rx_rate: destPointData?.rx_rate,
+                        signal: destPointData?.signal,
                         coordinates: nodes[dstNodeName].coordinates,
                     },
                 };

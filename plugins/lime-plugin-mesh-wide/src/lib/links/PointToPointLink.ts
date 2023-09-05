@@ -101,7 +101,7 @@ export class MacToMacLink {
     static generateId(data: ILocatedLink): MacToMacLinkId {
         return [
             ...Object.entries(data).map(([k, v]) => {
-                return v.src_mac.toLowerCase().replace(/:/g, "");
+                return v.src_mac?.toLowerCase().replace(/:/g, "");
             }),
         ]
             .sort()
