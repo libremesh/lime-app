@@ -1,4 +1,5 @@
 import L from "leaflet";
+import { useMemo } from "preact/compat";
 import { useEffect } from "preact/hooks";
 import { Polyline } from "react-leaflet";
 
@@ -18,11 +19,21 @@ const LinkPolyLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
     const isSelected = selectedMapFeature?.id === referenceLink.id;
-    const { data: linksErrors, setData: setLinkError } = useLinkErrors(
-        referenceLink.id
-    );
+    const { data: linkErrors } = useLinkErrors(referenceLink.id);
 
-    const hasError: boolean = Math.random() < 0.5;
+    const linkDown: boolean = actualLink != null;
+
+    const hasError: boolean = useMemo(() => {
+        if (linkDown) return true;
+        for (const macToMacKey in linkErrors) {
+            for (const nodeName in linkErrors[macToMacKey]) {
+                if (linkErrors[macToMacKey][nodeName].length > 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }, [linkErrors]);
 
     const _setSelectedFeature = () => {
         setSelectedMapFeature({
@@ -37,17 +48,9 @@ const LinkPolyLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
             color: hasError ? "#eb7575" : "#76bd7d",
             weight: isSelected ? 7 : 5,
             opacity: isSelected ? 1 : 0.8,
-            dashArray: actualLink ? null : "7 10",
+            dashArray: linkDown ? null : "7 10",
         };
     };
-
-    useEffect(() => {
-        if (referenceLink) {
-            for (const l of Object.values(referenceLink.links)) {
-                l.id;
-            }
-        }
-    }, [actualLink, referenceLink]);
 
     const coordinates = referenceLink.coordinates.map((c) => [c.lat, c.lon]);
 
