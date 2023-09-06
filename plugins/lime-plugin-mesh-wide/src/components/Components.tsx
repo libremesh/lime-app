@@ -4,6 +4,9 @@ import { Button } from "components/buttons/button";
 import { BinIcon } from "components/icons/bin";
 import { EditIcon } from "components/icons/edit";
 
+import SuccessIcon from "plugins/lime-plugin-mesh-wide/src/icons/SuccessIcon";
+import ErrorIcon from "plugins/lime-plugin-mesh-wide/src/icons/errorIcon";
+
 interface IStatusMessage {
     isError: boolean;
     children: VNode | string;
@@ -36,17 +39,7 @@ export const StatusMessage = ({
     <div
         className={`flex flex-row gap-3 ${classes} items-center justify-center text-center`}
     >
-        {isError ? (
-            <span
-                className={
-                    "rounded-full border-2 border-danger text-danger w-8 h-8 flex items-center justify-center mx-2"
-                }
-            >
-                !
-            </span>
-        ) : (
-            <span className={"text-success text-4xl"}>✓</span>
-        )}
+        {isError ? <ErrorIcon /> : <SuccessIcon />}
         {children}
     </div>
 );
