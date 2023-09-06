@@ -47,12 +47,11 @@ const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
 };
 
 export const NodeReferenceStatus = ({
-    hasError,
     selectedFeature,
 }: {
-    hasError?: boolean;
     selectedFeature: INamedNodeInfo;
 }) => {
+    const hasError: boolean = Math.random() < 0.5;
     const txt: VNode = hasError ? (
         <Trans>In the reference state this node is on</Trans>
     ) : (

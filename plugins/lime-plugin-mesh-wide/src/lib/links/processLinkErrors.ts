@@ -26,12 +26,11 @@ const compareWifiData = (reference: IWifiLinkData, actual: IWifiLinkData) => {
     }
 
     if (
-        actual.signal - DEFAULT_COMMUNITY_SETTINGS.mw_link_signal_threshold <
-        reference.signal
+        reference.signal - actual.signal >
+        DEFAULT_COMMUNITY_SETTINGS.mw_link_signal_threshold
     ) {
         errors.push(WifiLinkErrorCodes.SIGNAL_LOSS);
     }
-
     if (
         Math.abs(actual.chains[0] - actual.chains[1]) >
         DEFAULT_COMMUNITY_SETTINGS.mw_link_chain_threshold

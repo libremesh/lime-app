@@ -6,17 +6,27 @@ import { Button } from "components/buttons/button";
 import Tabs from "components/tabs";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
+import { usePointToPointErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
+import ErrorIcon from "plugins/lime-plugin-mesh-wide/src/icons/errorIcon";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
+import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
+import { readableBytes } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
-    MacToMacLink,
-    PontToPointLink,
-} from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
-import { bytesToMB } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
+    ILinkMtoMErrors,
+    LinkMapFeature,
+    WifiLinkErrorCodes,
+} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 import { Row, TitleAndText } from "./index";
 
-const SelectedLink = ({ linkDetail }: { linkDetail: MacToMacLink }) => {
-    if (linkDetail === undefined)
+const SelectedLink = ({
+    linkDetail,
+    errors,
+}: {
+    linkDetail: MacToMacLink;
+    errors: ILinkMtoMErrors;
+}) => {
+    if (linkDetail === undefined || !errors.linkUp)
         return (
             <div>
                 <Trans>This link seems down</Trans>
@@ -42,25 +52,53 @@ const SelectedLink = ({ linkDetail }: { linkDetail: MacToMacLink }) => {
             </Row>
             {names.map((name, i) => {
                 const node = linkDetail.linkByName(name);
+                const errorsArray = errors.linkErrors[name];
                 return (
                     <div key={i}>
                         <Row>
-                            <strong>{name}</strong>
+                            <div className={"flex"}>
+                                <strong>{name}</strong>{" "}
+                                {errorsArray.length > 0 && <ErrorIcon />}
+                            </div>
                         </Row>
                         <Row>
-                            <TitleAndText title={<Trans>Signal</Trans>}>
+                            <TitleAndText
+                                title={<Trans>Signal</Trans>}
+                                error={
+                                    errorsArray.includes(
+                                        WifiLinkErrorCodes.SIGNAL_LOSS
+                                    ) ? (
+                                        <Trans>
+                                            The signal is X below the reference
+                                            state
+                                        </Trans>
+                                    ) : null
+                                }
+                            >
                                 {node.signal.toString()}
                             </TitleAndText>
-                            <TitleAndText title={<Trans>Chains</Trans>}>
+                            <TitleAndText
+                                title={<Trans>Chains</Trans>}
+                                error={
+                                    errorsArray.includes(
+                                        WifiLinkErrorCodes.CHAIN_LOSS
+                                    ) ? (
+                                        <Trans>
+                                            The difference between chains is too
+                                            big
+                                        </Trans>
+                                    ) : null
+                                }
+                            >
                                 {node.chains.toString()}
                             </TitleAndText>
                         </Row>
                         <Row>
                             <TitleAndText title={<Trans>TxRate</Trans>}>
-                                {`${bytesToMB(node.tx_rate).toString()}MB`}
+                                {`${readableBytes(node.tx_rate)}`}
                             </TitleAndText>
                             <TitleAndText title={<Trans>RxRate</Trans>}>
-                                {`${bytesToMB(node.rx_rate).toString()}MB`}
+                                {`${readableBytes(node.rx_rate)}`}
                             </TitleAndText>
                         </Row>
                     </div>
@@ -70,19 +108,23 @@ const SelectedLink = ({ linkDetail }: { linkDetail: MacToMacLink }) => {
     );
 };
 
-const Links = ({
-    actual,
-    reference,
-}: {
-    actual: PontToPointLink;
-    reference: PontToPointLink;
-}) => {
+const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
     const [selectedLink, setSelectedLink] = useState(0);
+    const { errors } = usePointToPointErrors({ id: reference.id });
 
     const tabs = reference.links.map((link: MacToMacLink, i) => {
         return {
             key: i,
-            repr: <Trans>Link {i + 1}</Trans>,
+            repr: (
+                <div className={"flex"}>
+                    <Trans>
+                        Link {i + 1}{" "}
+                        {errors.macToMacErrors[link.id].hasErrors ? (
+                            <ErrorIcon />
+                        ) : null}
+                    </Trans>
+                </div>
+            ),
         };
     });
 
@@ -97,25 +139,27 @@ const Links = ({
                     />
                 )}
                 {selectedLink !== null && (
-                    <SelectedLink linkDetail={actual?.links[selectedLink]} />
+                    <SelectedLink
+                        linkDetail={actual?.links[selectedLink]}
+                        errors={
+                            errors.macToMacErrors[
+                                actual?.links[selectedLink]?.id
+                            ]
+                        }
+                    />
                 )}
             </div>
         </>
     );
 };
 
-export const LinkReferenceStatus = ({
-    hasError,
-    selectedFeature,
-}: {
-    hasError?: boolean;
-    selectedFeature: PontToPointLink;
-}) => {
+export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
+    const { errors } = usePointToPointErrors({ id: reference.id });
+
+    const hasError = errors.hasErrors;
+
     const txt: VNode = hasError ? (
-        <Trans>
-            This link has 5dB difference
-            <br /> with the reference state
-        </Trans>
+        <Trans>This link has errors</Trans>
     ) : (
         <Trans>Same status as in the reference state</Trans>
     );
@@ -129,4 +173,4 @@ export const LinkReferenceStatus = ({
     );
 };
 
-export default Links;
+export default LinkFeatureDetail;

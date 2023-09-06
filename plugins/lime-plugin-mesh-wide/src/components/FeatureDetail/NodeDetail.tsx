@@ -15,12 +15,11 @@ import {
 const NodeDetails = ({
     nodeDetail,
     selectedFeature,
-    hasError,
 }: {
     nodeDetail: INamedNodeInfo;
     selectedFeature: SelectedMapFeature;
-    hasError: boolean;
 }) => {
+    const hasError: boolean = Math.random() < 0.5;
     const name = nodeDetail?.name ?? selectedFeature?.id ?? "";
     const uptime = "1 week";
     const firmware = "e93615c947-x86-64";

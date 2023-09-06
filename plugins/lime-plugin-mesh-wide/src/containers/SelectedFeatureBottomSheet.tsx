@@ -11,7 +11,6 @@ import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWide
 
 export const SelectedFeatureBottomSheet = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const hasError: boolean = Math.random() < 0.5;
 
     const { data: selectedMapFeature } = useSelectedMapFeature();
 
@@ -30,16 +29,12 @@ export const SelectedFeatureBottomSheet = () => {
                 initialDrawerDistanceTop={600}
                 footer={
                     <FeatureReferenceStatus
-                        hasError={hasError}
                         selectedFeature={selectedMapFeature}
                     />
                 }
             >
                 <div className={"px-10"}>
-                    <FeatureDetail
-                        hasError={hasError}
-                        selectedFeature={selectedMapFeature}
-                    />
+                    <FeatureDetail selectedFeature={selectedMapFeature} />
                 </div>
             </BottomSheet>
         </>

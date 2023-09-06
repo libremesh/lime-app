@@ -11,6 +11,7 @@ import {
 import {
     ILinkErrors,
     LocatedWifiLinkData,
+    PointToPointLinkId,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 export const useLocatedLinks = () => {
@@ -60,4 +61,9 @@ export const useLocatedLinks = () => {
     }, [locatedLinksReference, locatedLinks]);
 
     return { locatedLinks, locatedLinksReference, linksLoaded, linksErrors };
+};
+
+export const usePointToPointErrors = ({ id }: { id: PointToPointLinkId }) => {
+    const { linksErrors } = useLocatedLinks();
+    return { errors: linksErrors[id] };
 };

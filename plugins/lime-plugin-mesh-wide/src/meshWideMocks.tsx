@@ -10,7 +10,7 @@ export const nodesReferenceState: INodes = {
             lon: "-64.42703",
             lat: "-31.80874",
         },
-        macs: ["a0:f3:c1:46:28:96", "a0:f3:c1:46:28:97"],
+        macs: ["a0:f3:c1:46:28:96", "a0:f3:c1:46:28:97", "a0:f3:c1:46:11:97"],
         ipv4: "192.168.1.1",
         ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
         firmware_version: "1.0.0",
@@ -43,8 +43,8 @@ export const nodesReferenceState: INodes = {
     },
     segundo: {
         coordinates: {
-            lon: "-64.42609",
-            lat: "-31.80461",
+            lon: "-64.43209",
+            lat: "-31.79461",
         },
         macs: ["a8:40:41:1d:f9:ff", "a8:40:41:1d:f9:aa"],
         ipv4: "192.168.1.3",
@@ -83,8 +83,8 @@ export const linksReferenceState: IWifiLinks = {
         data: [
             {
                 tx_rate: 150000,
-                dst_mac: "A0:F3:C1:46:28:97",
-                chains: [-63, -59],
+                dst_mac: "A0:F3:C1:46:11:97",
+                chains: [-58, -59],
                 signal: -58,
                 rx_rate: 180000,
                 src_mac: "a8:40:41:1d:f9:ff",
@@ -92,7 +92,7 @@ export const linksReferenceState: IWifiLinks = {
             {
                 tx_rate: 162000,
                 dst_mac: "14:CC:20:DA:4E:AC",
-                chains: [-57, -51],
+                chains: [-52, -51],
                 signal: -50,
                 rx_rate: 240000,
                 src_mac: "a8:40:41:1d:f9:aa",
@@ -106,7 +106,7 @@ export const linksReferenceState: IWifiLinks = {
             {
                 tx_rate: 65000,
                 dst_mac: "A0:F3:C1:46:28:96",
-                chains: [-25, -43],
+                chains: [-25, -25],
                 src_mac: "14:cc:20:da:4e:ab",
                 rx_rate: 65000,
                 signal: -25,
@@ -144,7 +144,7 @@ export const linksReferenceState: IWifiLinks = {
             {
                 tx_rate: 78000,
                 dst_mac: "14:CC:20:DA:4E:AB",
-                chains: [2, -46],
+                chains: [-43, -46],
                 src_mac: "a0:f3:c1:46:28:96",
                 rx_rate: 78000,
                 signal: 2,
@@ -168,8 +168,8 @@ export const linksReferenceState: IWifiLinks = {
             {
                 tx_rate: 240000,
                 dst_mac: "A8:40:41:1D:F9:ff",
-                chains: [-77, -65],
-                src_mac: "a0:f3:c1:46:28:97",
+                chains: [-64, -65],
+                src_mac: "a0:f3:c1:46:11:97",
                 rx_rate: 135000,
                 signal: -65,
             },

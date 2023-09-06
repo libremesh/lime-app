@@ -1,4 +1,6 @@
-import Links, {
+import { VNode } from "preact";
+
+import LinkFeatureDetail, {
     LinkReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail";
 import NodeDetails from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail";
@@ -12,14 +14,17 @@ import {
 export const TitleAndText = ({
     title,
     children,
+    error,
 }: {
-    title: any; // todo(kon): error with trans component
+    title: VNode | string;
     children: string;
+    error?: VNode | string;
 }) => {
     return (
         <div className={"flex flex-column"}>
             <div className={"text-lg"}>{title}</div>
             <div className={"text-3xl"}>{children}</div>
+            {error && <div className={"text-lg text-danger"}>{error}</div>}
         </div>
     );
 };
@@ -34,20 +39,15 @@ export const Row = ({ children }: { children: any }) => {
 
 export const FeatureDetail = ({
     selectedFeature,
-    hasError,
 }: {
     selectedFeature: SelectedMapFeature;
-    hasError: boolean;
 }) => {
     if (!selectedFeature) return;
     switch (selectedFeature.type) {
         case "link":
             return (
-                <Links
-                    actual={(selectedFeature.feature as LinkMapFeature).actual}
-                    reference={
-                        (selectedFeature.feature as LinkMapFeature).reference
-                    }
+                <LinkFeatureDetail
+                    {...(selectedFeature.feature as LinkMapFeature)}
                 />
             );
         case "node":
@@ -55,7 +55,6 @@ export const FeatureDetail = ({
                 <NodeDetails
                     nodeDetail={selectedFeature.feature as INamedNodeInfo}
                     selectedFeature={selectedFeature}
-                    hasError={hasError}
                 />
             );
         default:
@@ -64,10 +63,8 @@ export const FeatureDetail = ({
 };
 
 export const FeatureReferenceStatus = ({
-    hasError,
     selectedFeature,
 }: {
-    hasError?: boolean;
     selectedFeature: SelectedMapFeature;
 }) => {
     if (!selectedFeature) return;
@@ -76,16 +73,12 @@ export const FeatureReferenceStatus = ({
     if (type === "link") {
         return (
             <LinkReferenceStatus
-                hasError={hasError}
-                selectedFeature={
-                    (selectedFeature.feature as LinkMapFeature).reference
-                }
+                {...(selectedFeature.feature as LinkMapFeature)}
             />
         );
     } else if (type === "node") {
         return (
             <NodeReferenceStatus
-                hasError={hasError}
                 selectedFeature={selectedFeature.feature as INamedNodeInfo}
             />
         );
