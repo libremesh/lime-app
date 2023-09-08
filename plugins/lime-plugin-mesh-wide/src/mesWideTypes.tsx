@@ -49,13 +49,19 @@ export type Coordinates = {
 };
 
 export interface INodeInfo {
-    coordinates: Coordinates;
-    macs: string[];
-    ipv4: string;
-    ipv6: string;
-    firmware_version: string;
-    uptime: string;
-    device: string;
+    bleachTTL: number;
+    author: string;
+    data: {
+        coordinates: Coordinates;
+        board: string;
+        device: string;
+        macs: string[];
+        hostname: string;
+        ipv4: string;
+        ipv6: string;
+        firmware_version: string;
+        uptime: number;
+    };
 }
 
 export type INamedNodeInfo = {

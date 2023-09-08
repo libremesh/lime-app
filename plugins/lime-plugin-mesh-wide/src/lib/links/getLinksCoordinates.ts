@@ -21,7 +21,7 @@ export const mergeLinksAndCoordinates = (
         for (const wifiLinkData of wifiLinks[wifiNodeName].data) {
             // Get the nodeName of the destination node
             const dstNodeName = Object.keys(nodes).find((pid) => {
-                return nodes[pid].macs.find(
+                return nodes[pid].data.macs.find(
                     (mac) =>
                         mac.toLowerCase() === wifiLinkData.dst_mac.toLowerCase()
                 );
@@ -30,15 +30,15 @@ export const mergeLinksAndCoordinates = (
             if (dstNodeName && dstNodeName !== wifiNodeName) {
                 // Generate a unique id of the point to point link based on the coordinates
                 const linkKey = PontToPointLink.generateId(
-                    nodes[wifiNodeName].coordinates,
-                    nodes[dstNodeName!].coordinates
+                    nodes[wifiNodeName].data.coordinates,
+                    nodes[dstNodeName!].data.coordinates
                 );
 
                 // If this point to point link no exists, instantiate it
                 if (!result[linkKey]) {
                     result[linkKey] = new PontToPointLink(
-                        nodes[wifiNodeName].coordinates,
-                        nodes[dstNodeName!].coordinates
+                        nodes[wifiNodeName].data.coordinates,
+                        nodes[dstNodeName!].data.coordinates
                     );
                 }
                 // Else if the link is not already added don't do it.
@@ -64,7 +64,7 @@ export const mergeLinksAndCoordinates = (
                 const entry: ILocatedLink = {
                     [wifiNodeName]: {
                         ...wifiLinkData,
-                        coordinates: nodes[wifiNodeName].coordinates,
+                        coordinates: nodes[wifiNodeName].data.coordinates,
                     },
                     [dstNodeName]: {
                         tx_rate: destPointData?.tx_rate,
@@ -73,7 +73,7 @@ export const mergeLinksAndCoordinates = (
                         src_mac: destPointData?.src_mac,
                         rx_rate: destPointData?.rx_rate,
                         signal: destPointData?.signal,
-                        coordinates: nodes[dstNodeName].coordinates,
+                        coordinates: nodes[dstNodeName].data.coordinates,
                     },
                 };
                 result[linkKey].addLink(new MacToMacLink(entry));

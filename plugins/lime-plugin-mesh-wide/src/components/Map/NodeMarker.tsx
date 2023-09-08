@@ -23,7 +23,7 @@ const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
 
     return (
         <Marker
-            position={[info.coordinates.lat, info.coordinates.lon]}
+            position={[info.data.coordinates.lat, info.data.coordinates.lon]}
             icon={L.divIcon({
                 className: style.leafletDivCustomIcon,
                 iconAnchor: [0, 24],
