@@ -40,6 +40,12 @@ const compareWifiData = (reference: IWifiLinkData, actual: IWifiLinkData) => {
     return errors;
 };
 
+/**
+ * Function that receive 2 PontToPointLink and iterate over every mac to mac link and its data executing a function
+ * to compare the wifi data.
+ * @param referenceLink
+ * @param actualLink
+ */
 export const compareLinks = ({
     referenceLink,
     actualLink,

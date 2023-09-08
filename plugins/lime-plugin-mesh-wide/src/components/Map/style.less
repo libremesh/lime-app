@@ -35,8 +35,19 @@
 .syncedMarker {
     background-color: @good;
 }
-.notSyncedMarker {
+.errorMarker {
     background-color: @bad;
+}
+.notUpMarker {
+    opacity: 0.8;
+    background-size: 10px 10px;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #fff 0,
+        #fff 1px,
+        @bad 0,
+        @bad 50%
+    );
 }
 
 // Selected marker feature

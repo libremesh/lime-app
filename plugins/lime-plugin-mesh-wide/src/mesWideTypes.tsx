@@ -98,6 +98,11 @@ export enum WifiLinkErrorCodes {
     CHAIN_LOSS = "CHAIN_LOSS",
 }
 
+export enum NodeErrorCodes {
+    NODE_DOWN = "NODE_DOWN",
+    LOW_UPTIME = "LOW_UPTIME",
+}
+
 /**
  * Store the error for every wifi node data. Use the ids for the point to point and mac to mac as dictionary
  */

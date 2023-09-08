@@ -4,26 +4,44 @@ import { VNode } from "preact";
 import { Marker, Tooltip } from "react-leaflet";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
+import { processNodeErrors } from "plugins/lime-plugin-mesh-wide/src/lib/nodes/processErrors";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 import {
     INamedNodeInfo,
     INodeInfo,
+    NodeErrorCodes,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 import style from "./style.less";
 
-const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
+const NodeMarker = ({
+    name,
+    actual,
+    reference,
+}: {
+    name: string;
+    reference: INodeInfo;
+    actual: INodeInfo;
+}) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
-    const synced: boolean = Math.random() < 0.5;
+
+    const errors = processNodeErrors(reference, actual);
+    const hasErrors = errors.length > 0;
+    const isDown = errors.includes(NodeErrorCodes.NODE_DOWN);
 
     const markerClasses = `${
         selectedMapFeature?.id === name && style.selectedMarker
-    } ${synced ? style.syncedMarker : style.notSyncedMarker}`;
+    } ${hasErrors ? style.errorMarker : style.syncedMarker} ${
+        isDown && style.notUpMarker
+    }`;
 
     return (
         <Marker
-            position={[info.data.coordinates.lat, info.data.coordinates.lon]}
+            position={[
+                reference.data.coordinates.lat,
+                reference.data.coordinates.lon,
+            ]}
             icon={L.divIcon({
                 className: style.leafletDivCustomIcon,
                 iconAnchor: [0, 24],
@@ -35,7 +53,7 @@ const NodeMarker = ({ name, info }: { name: string; info: INodeInfo }) => {
                     L.DomEvent.stopPropagation(e);
                     setSelectedMapFeature({
                         id: name,
-                        feature: { ...info, name },
+                        feature: { ...reference, name },
                         type: "node",
                     });
                 },

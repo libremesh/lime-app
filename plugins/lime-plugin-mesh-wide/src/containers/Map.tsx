@@ -2,8 +2,8 @@ import L from "leaflet";
 import { useEffect, useRef } from "preact/hooks";
 import { MapContainer, TileLayer } from "react-leaflet";
 
-import { LinksLayer } from "plugins/lime-plugin-mesh-wide/src/containers/Map/LinksLayer";
-import NodesLayer from "plugins/lime-plugin-mesh-wide/src/containers/Map/NodesLayer";
+import { LinksLayer } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayer";
+import NodesLayer from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/NodesLayer";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
 const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
