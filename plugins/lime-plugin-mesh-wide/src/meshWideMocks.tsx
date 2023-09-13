@@ -4,6 +4,8 @@ import {
     IWifiLinks,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
+// todo(kon): if a mac disappear from mac list and a link with this mac as src mac disappear also, is not shown on the map.
+
 export const nodesReferenceState: INodes = {
     "LiMe-462895": {
         bleachTTL: 12,
@@ -193,14 +195,15 @@ export const linksReferenceState: IWifiLinks = {
                 rx_rate: 135000,
                 signal: -65,
             },
-            {
-                tx_rate: 240000,
-                dst_mac: "A8:40:41:1D:F9:ff",
-                chains: [-64, -65],
-                src_mac: "a0:f3:c1:46:11:97",
-                rx_rate: 135000,
-                signal: -65,
-            },
+            // todo(kon): if a link disappear from one of the nodes and not from the other, is not drawed on the map. And should be.
+            // {
+            //     tx_rate: 240000,
+            //     dst_mac: "A8:40:41:1D:F9:ff",
+            //     chains: [-64, -65],
+            //     src_mac: "a0:f3:c1:46:11:97",
+            //     rx_rate: 135000,
+            //     signal: -65,
+            // },
         ],
         author: "LiMe-462895",
     },
@@ -209,6 +212,13 @@ export const linksReferenceState: IWifiLinks = {
 // Use the same as on the reference state deleting a specific node
 // const nodeName = "LiMe-462895";
 const nodeName = "primero";
+
+// Used to delete a mac from a node. To see what happend if the returning list is different
+const macToDelete = "";
+// const macToDelete = "a0:f3:c1:46:11:97";
+// delete a link where the src_mac is
+// const linkToDelete = macToDelete;
+const linkToDelete = "a0:f3:c1:46:11:97";
 
 export const links = (): IWifiLinks => {
     // Create a deep copy of the state to avoid mutating the original object
@@ -227,7 +237,12 @@ export const links = (): IWifiLinks => {
     // Remove data items with matching dest_mac in other objects
     Object.keys(newState).forEach((key: string) => {
         newState[key].data = newState[key].data.filter((item) => {
-            return !source_macs_to_remove.includes(item.dst_mac.toLowerCase());
+            return (
+                !source_macs_to_remove.includes(item.dst_mac.toLowerCase()) ||
+                // Added to delete a specific link of a node and not an entire node
+                item.src_mac.toLowerCase() === linkToDelete.toLowerCase() ||
+                item.dst_mac.toLowerCase() === linkToDelete.toLowerCase()
+            );
         });
     });
 
@@ -235,8 +250,16 @@ export const links = (): IWifiLinks => {
 };
 
 export const nodes = (): INodes => {
-    const newState = JSON.parse(JSON.stringify(nodesReferenceState));
+    const newState = JSON.parse(JSON.stringify(nodesReferenceState)) as INodes;
+
+    // This only delete a particular mac from the list of macs
+    for (const [k, v] of Object.entries(newState)) {
+        v.data.macs = v.data.macs.filter((mac) => mac !== macToDelete);
+    }
+
+    // This delete an entire node
     delete newState[nodeName];
+
     return newState;
 };
 
