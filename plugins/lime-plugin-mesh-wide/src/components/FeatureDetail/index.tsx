@@ -3,11 +3,12 @@ import { VNode } from "preact";
 import LinkFeatureDetail, {
     LinkReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail";
-import NodeDetails from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail";
-import { NodeReferenceStatus } from "plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker";
+import NodeDetails, {
+    NodeReferenceStatus,
+} from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail";
 import {
-    INamedNodeInfo,
     LinkMapFeature,
+    NodeMapFeature,
     SelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
@@ -52,10 +53,7 @@ export const FeatureDetail = ({
             );
         case "node":
             return (
-                <NodeDetails
-                    nodeDetail={selectedFeature.feature as INamedNodeInfo}
-                    selectedFeature={selectedFeature}
-                />
+                <NodeDetails {...(selectedFeature.feature as NodeMapFeature)} />
             );
         default:
             return <></>;
@@ -79,7 +77,7 @@ export const FeatureReferenceStatus = ({
     } else if (type === "node") {
         return (
             <NodeReferenceStatus
-                selectedFeature={selectedFeature.feature as INamedNodeInfo}
+                {...(selectedFeature.feature as NodeMapFeature)}
             />
         );
     }

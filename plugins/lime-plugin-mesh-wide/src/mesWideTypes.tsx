@@ -77,7 +77,13 @@ export type LinkMapFeature = {
     reference: PontToPointLink;
 };
 
-type MapFeature = INamedNodeInfo | LinkMapFeature;
+export type NodeMapFeature = {
+    actual: INodeInfo;
+    reference: INodeInfo;
+    name: string;
+};
+
+type MapFeature = NodeMapFeature | LinkMapFeature;
 
 export interface SelectedMapFeature {
     feature: MapFeature;

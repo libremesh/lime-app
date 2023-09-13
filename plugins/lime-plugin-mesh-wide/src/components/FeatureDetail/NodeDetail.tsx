@@ -1,31 +1,24 @@
 import { Trans } from "@lingui/macro";
+import { VNode } from "preact";
 
 import { Button } from "components/buttons/button";
 
+import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import {
     Row,
     TitleAndText,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
+import { useNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodeErrors";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
-import {
-    INamedNodeInfo,
-    SelectedMapFeature,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+import { NodeMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
-const NodeDetails = ({
-    nodeDetail,
-    selectedFeature,
-}: {
-    nodeDetail: INamedNodeInfo;
-    selectedFeature: SelectedMapFeature;
-}) => {
-    const hasError: boolean = Math.random() < 0.5;
-    const name = nodeDetail?.name ?? selectedFeature?.id ?? "";
-    const uptime = "1 week";
-    const firmware = "e93615c947-x86-64";
-    const ipv6 = "fe80::42:cff:fecf:bfff";
-    const ipv4 = "192.168.1.47";
-    const device = "LibreRouter";
+const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
+    const uptime = reference.data.uptime;
+    const firmware = reference.data.firmware_version;
+    const ipv6 = reference.data.ipv6;
+    const ipv4 = reference.data.ipv4;
+    const device = reference.data.device;
+    const { errors, hasErrors, isDown } = useNodeErrors({ actual, reference });
 
     return (
         <>
@@ -36,13 +29,13 @@ const NodeDetails = ({
                 </Button>
             </Row>
             <Row>
-                {!hasError ? (
+                {!isDown ? (
                     <TitleAndText title={<Trans>Uptime</Trans>}>
-                        {uptime}
+                        {uptime.toString()}
                     </TitleAndText>
                 ) : (
                     <TitleAndText title={<Trans>Downtime</Trans>}>
-                        {uptime}
+                        todo
                     </TitleAndText>
                 )}
                 <TitleAndText title={<Trans>Firmware version</Trans>}>
@@ -59,6 +52,26 @@ const NodeDetails = ({
                 </TitleAndText>
             </Row>
         </>
+    );
+};
+
+export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
+    const { errors, hasErrors, isDown } = useNodeErrors({ actual, reference });
+
+    const txt: VNode = isDown ? (
+        <Trans>In the reference state this node is on</Trans>
+    ) : (
+        <Trans>Same status as in the reference state</Trans>
+    );
+    return (
+        <StatusAndButton
+            isError={hasErrors}
+            btn={
+                hasErrors && <Trans>Update this node on reference state</Trans>
+            }
+        >
+            {txt}
+        </StatusAndButton>
     );
 };
 

@@ -1,15 +1,11 @@
-import { Trans } from "@lingui/macro";
 import L from "leaflet";
-import { VNode } from "preact";
 import { Marker, Tooltip } from "react-leaflet";
 
-import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
-import { processNodeErrors } from "plugins/lime-plugin-mesh-wide/src/lib/nodes/processErrors";
+import { useNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodeErrors";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 import {
-    INamedNodeInfo,
     INodeInfo,
-    NodeErrorCodes,
+    NodeMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 import style from "./style.less";
@@ -26,9 +22,7 @@ const NodeMarker = ({
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
 
-    const errors = processNodeErrors(reference, actual);
-    const hasErrors = errors.length > 0;
-    const isDown = errors.includes(NodeErrorCodes.NODE_DOWN);
+    const { hasErrors, isDown } = useNodeErrors({ actual, reference });
 
     const markerClasses = `${
         selectedMapFeature?.id === name && style.selectedMarker
@@ -53,7 +47,7 @@ const NodeMarker = ({
                     L.DomEvent.stopPropagation(e);
                     setSelectedMapFeature({
                         id: name,
-                        feature: { ...reference, name },
+                        feature: { actual, reference, name } as NodeMapFeature,
                         type: "node",
                     });
                 },
@@ -61,27 +55,6 @@ const NodeMarker = ({
         >
             <Tooltip>{name}</Tooltip>
         </Marker>
-    );
-};
-
-export const NodeReferenceStatus = ({
-    selectedFeature,
-}: {
-    selectedFeature: INamedNodeInfo;
-}) => {
-    const hasError: boolean = Math.random() < 0.5;
-    const txt: VNode = hasError ? (
-        <Trans>In the reference state this node is on</Trans>
-    ) : (
-        <Trans>Same status as in the reference state</Trans>
-    );
-    return (
-        <StatusAndButton
-            isError={hasError}
-            btn={hasError && <Trans>Update this node on reference state</Trans>}
-        >
-            {txt}
-        </StatusAndButton>
     );
 };
 
