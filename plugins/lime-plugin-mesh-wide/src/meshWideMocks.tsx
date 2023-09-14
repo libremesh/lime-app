@@ -69,9 +69,13 @@ export const nodesReferenceState: INodes = {
         bleachTTL: 12,
         author: "segundo",
         data: {
+            // coordinates: {
+            //     lon: "-64.43209",
+            //     lat: "-31.79461",
+            // },
             coordinates: {
-                lon: "-64.43209",
-                lat: "-31.79461",
+                lon: "FIXME",
+                lat: "FIXME",
             },
             macs: ["a8:40:41:1d:f9:ff", "a8:40:41:1d:f9:aa"],
             ipv4: "192.168.1.3",
@@ -195,15 +199,14 @@ export const linksReferenceState: IWifiLinks = {
                 rx_rate: 135000,
                 signal: -65,
             },
-            // todo(kon): if a link disappear from one of the nodes and not from the other, is not drawed on the map. And should be.
-            // {
-            //     tx_rate: 240000,
-            //     dst_mac: "A8:40:41:1D:F9:ff",
-            //     chains: [-64, -65],
-            //     src_mac: "a0:f3:c1:46:11:97",
-            //     rx_rate: 135000,
-            //     signal: -65,
-            // },
+            {
+                tx_rate: 240000,
+                dst_mac: "A8:40:41:1D:F9:ff",
+                chains: [-64, -65],
+                src_mac: "a0:f3:c1:46:11:97",
+                rx_rate: 135000,
+                signal: -65,
+            },
         ],
         author: "LiMe-462895",
     },
@@ -215,12 +218,12 @@ const nodeName = "primero";
 
 // Used to delete a mac from a node. To see what happend if the returning list is different
 // This will delete a mac from the node macs list
-// const macToDelete = "";
-const macToDelete = "a0:f3:c1:46:11:97";
+const macToDelete = "";
+// const macToDelete = "a0:f3:c1:46:11:97";
 // delete a link where the src_mac is
 // const linkToDelete = macToDelete;
-// const linkToDelete = "a0:f3:c1:46:11:97";
-const linkToDelete = "";
+const linkToDelete = "a0:f3:c1:46:11:97";
+// const linkToDelete = "";
 
 export const links = (): IWifiLinks => {
     // Create a deep copy of the state to avoid mutating the original object

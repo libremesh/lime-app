@@ -27,7 +27,11 @@ export const mergeLinksAndCoordinates = (
                 );
             });
 
-            if (dstNodeName && dstNodeName !== wifiNodeName) {
+            if (
+                dstNodeName &&
+                dstNodeName !== wifiNodeName &&
+                nodes[wifiNodeName] // If is the link for a non geolocated node
+            ) {
                 // Generate a unique id of the point to point link based on the coordinates
                 const linkKey = PontToPointLink.generateId(
                     nodes[wifiNodeName].data.coordinates,

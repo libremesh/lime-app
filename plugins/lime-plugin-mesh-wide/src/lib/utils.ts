@@ -19,3 +19,16 @@ export const readableBytes = (bytes: number) => {
 export const getArrayDifference = (array1: string[], array2: string[]) => {
     return array1.filter((item) => !array2.includes(item));
 };
+
+export const isValidCoordinate = (
+    lat: number | string,
+    lng: number | string
+) => {
+    return (
+        (!isNaN(Number(lat)) || !isNaN(Number(lng))) &&
+        lat >= -90 &&
+        lat <= 90 &&
+        lng >= -180 &&
+        lng <= 180
+    );
+};

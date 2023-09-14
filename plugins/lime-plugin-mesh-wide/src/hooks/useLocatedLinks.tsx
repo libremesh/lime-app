@@ -1,12 +1,12 @@
 import { useMemo } from "preact/compat";
 
+import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { mergeLinksAndCoordinates } from "plugins/lime-plugin-mesh-wide/src/lib/links/getLinksCoordinates";
 import { compareLinks } from "plugins/lime-plugin-mesh-wide/src/lib/links/processLinkErrors";
 import {
     useMeshWideLinks,
     useMeshWideLinksReference,
-    useMeshWideNodesReference,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 import {
     ILinkErrors,
@@ -17,7 +17,8 @@ import {
 export const useLocatedLinks = () => {
     const { data: meshWideLinksReference } = useMeshWideLinksReference({});
     const { data: meshWideLinks } = useMeshWideLinks({});
-    const { data: meshWideNodesReference } = useMeshWideNodesReference({});
+
+    const { geolocatedNodesReference: meshWideNodesReference } = useNodes();
 
     const locatedLinksReference: LocatedWifiLinkData = useMemo(() => {
         if (meshWideNodesReference && meshWideLinksReference) {

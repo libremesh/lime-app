@@ -52,7 +52,7 @@ export interface INodeInfo {
     bleachTTL: number;
     author: string;
     data: {
-        coordinates: Coordinates;
+        coordinates?: Coordinates; // Coordinates may not be set
         board: string;
         device: string;
         macs: string[];

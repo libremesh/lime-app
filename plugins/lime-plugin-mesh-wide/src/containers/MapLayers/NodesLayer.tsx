@@ -1,13 +1,12 @@
 import NodeMarker from "plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker";
-import {
-    useMeshWideNodes,
-    useMeshWideNodesReference,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
+import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { INodeInfo } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 const NodesLayer = () => {
-    const { data: meshWideNodesReference } = useMeshWideNodesReference({});
-    const { data: meshWideNodesActual } = useMeshWideNodes({});
+    const {
+        geolocatedNodesReference: meshWideNodesReference,
+        geolocatedNodesActual: meshWideNodesActual,
+    } = useNodes();
 
     return (
         <>
