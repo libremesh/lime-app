@@ -62,12 +62,16 @@ export const compareLinks = ({
     };
 
     referenceLink.links.forEach((macToMacReference) => {
+        const setLinkIsDown = () => {
+            ptoPErrors.linkUp = false;
+        };
+
         const macToMacActual = actualLink?.links.find(
             (actual) => actual.id === macToMacReference.id
         );
 
         const isUp = !!actualLink;
-        if (!isUp) ptoPErrors.linkUp = isUp;
+        if (!isUp) setLinkIsDown();
 
         ptoPErrors.macToMacErrors[macToMacReference.id] = {
             hasErrors: false,
@@ -89,6 +93,8 @@ export const compareLinks = ({
                         true;
                     ptoPErrors.hasErrors = true;
                 }
+                if (wifiErrors.includes(WifiLinkErrorCodes.LINK_DOWN))
+                    setLinkIsDown();
             }
         );
     });

@@ -22,8 +22,12 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const ipv6 = reference.data.ipv6;
     const ipv4 = reference.data.ipv4;
     const device = reference.data.device;
-    const macs = actual.data.macs;
     const { errors, hasErrors, isDown } = useNodeErrors({ actual, reference });
+
+    if (isDown) {
+        return <Trans>This node seems down</Trans>;
+    }
+    const macs = actual.data.macs;
 
     return (
         <>

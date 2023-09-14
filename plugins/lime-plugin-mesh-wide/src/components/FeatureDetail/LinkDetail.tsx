@@ -75,7 +75,7 @@ const SelectedLink = ({
                                     ) : null
                                 }
                             >
-                                {node.signal.toString()}
+                                {node?.signal?.toString() ?? "0"}
                             </TitleAndText>
                             <TitleAndText
                                 title={<Trans>Chains</Trans>}
@@ -90,7 +90,7 @@ const SelectedLink = ({
                                     ) : null
                                 }
                             >
-                                {node.chains.toString()}
+                                {node?.chains?.toString() ?? "0/0"}
                             </TitleAndText>
                         </Row>
                         <Row>
