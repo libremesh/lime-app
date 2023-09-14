@@ -10,3 +10,12 @@ export const readableBytes = (bytes: number) => {
 
     return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${sizes[i]}`;
 };
+
+/**
+ * Get the strings that appear on the first array but not on the second one
+ * @param array1
+ * @param array2
+ */
+export const getArrayDifference = (array1: string[], array2: string[]) => {
+    return array1.filter((item) => !array2.includes(item));
+};

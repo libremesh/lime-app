@@ -6,5 +6,4 @@ export const DEFAULT_COMMUNITY_SETTINGS = {
     good_bandwidth: "5",
     mw_link_signal_threshold: 10,
     mw_link_chain_threshold: 3,
-    mw_node_low_uptime: 40,
 };

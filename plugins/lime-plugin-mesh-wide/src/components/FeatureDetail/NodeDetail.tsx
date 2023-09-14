@@ -10,7 +10,11 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
 import { useNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodeErrors";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
-import { NodeMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
+import {
+    NodeErrorCodes,
+    NodeMapFeature,
+} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const uptime = reference.data.uptime;
@@ -18,6 +22,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const ipv6 = reference.data.ipv6;
     const ipv4 = reference.data.ipv4;
     const device = reference.data.device;
+    const macs = actual.data.macs;
     const { errors, hasErrors, isDown } = useNodeErrors({ actual, reference });
 
     return (
@@ -50,6 +55,31 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                 <TitleAndText title={<Trans>Device</Trans>}>
                     {device}
                 </TitleAndText>
+            </Row>
+            <Row>
+                <TitleAndText title={<Trans>Macs</Trans>}>
+                    <>
+                        {macs.map((mac, k) => (
+                            <div key={k}>{mac}</div>
+                        ))}
+                    </>
+                </TitleAndText>
+                {errors.includes(NodeErrorCodes.MACS_MISSMATCH) && (
+                    <TitleAndText
+                        title={<Trans>Macs not found</Trans>}
+                        error={
+                            <Trans>This macs are not on the actual state</Trans>
+                        }
+                    >
+                        <>
+                            {getArrayDifference(reference.data.macs, macs).map(
+                                (mac, k) => (
+                                    <div key={k}>{mac}</div>
+                                )
+                            )}
+                        </>
+                    </TitleAndText>
+                )}
             </Row>
         </>
     );

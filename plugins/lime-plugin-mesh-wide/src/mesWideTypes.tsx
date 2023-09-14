@@ -106,7 +106,7 @@ export enum WifiLinkErrorCodes {
 
 export enum NodeErrorCodes {
     NODE_DOWN = "NODE_DOWN",
-    LOW_UPTIME = "LOW_UPTIME",
+    MACS_MISSMATCH = "MACS_MISSMATCH",
 }
 
 /**

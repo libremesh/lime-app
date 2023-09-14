@@ -214,11 +214,13 @@ export const linksReferenceState: IWifiLinks = {
 const nodeName = "primero";
 
 // Used to delete a mac from a node. To see what happend if the returning list is different
-const macToDelete = "";
-// const macToDelete = "a0:f3:c1:46:11:97";
+// This will delete a mac from the node macs list
+// const macToDelete = "";
+const macToDelete = "a0:f3:c1:46:11:97";
 // delete a link where the src_mac is
 // const linkToDelete = macToDelete;
-const linkToDelete = "a0:f3:c1:46:11:97";
+// const linkToDelete = "a0:f3:c1:46:11:97";
+const linkToDelete = "";
 
 export const links = (): IWifiLinks => {
     // Create a deep copy of the state to avoid mutating the original object

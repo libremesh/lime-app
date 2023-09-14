@@ -18,7 +18,7 @@ export const TitleAndText = ({
     error,
 }: {
     title: VNode | string;
-    children: string;
+    children: VNode | string;
     error?: VNode | string;
 }) => {
     return (
