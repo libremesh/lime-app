@@ -4,8 +4,10 @@ import { INodeInfo } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 const NodesLayer = () => {
     const {
-        geolocatedNodesReference: meshWideNodesReference,
-        geolocatedNodesActual: meshWideNodesActual,
+        locatedNodes: {
+            locatedNodesReference: meshWideNodesReference,
+            locatedNodesActual: meshWideNodesActual,
+        },
     } = useNodes();
 
     return (

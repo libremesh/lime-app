@@ -18,7 +18,9 @@ export const useLocatedLinks = () => {
     const { data: meshWideLinksReference } = useMeshWideLinksReference({});
     const { data: meshWideLinks } = useMeshWideLinks({});
 
-    const { geolocatedNodesReference: meshWideNodesReference } = useNodes();
+    const {
+        locatedNodes: { locatedNodesReference: meshWideNodesReference },
+    } = useNodes();
 
     const locatedLinksReference: LocatedWifiLinkData = useMemo(() => {
         if (meshWideNodesReference && meshWideLinksReference) {
