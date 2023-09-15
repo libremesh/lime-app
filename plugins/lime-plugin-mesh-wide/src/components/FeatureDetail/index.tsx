@@ -1,5 +1,6 @@
 import { VNode } from "preact";
 
+import { InvalidNodesDetail } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/InvalidNodesDetail";
 import LinkFeatureDetail, {
     LinkReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail";
@@ -7,6 +8,7 @@ import NodeDetails, {
     NodeReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail";
 import {
+    InvalidNodes,
     LinkMapFeature,
     NodeMapFeature,
     SelectedMapFeature,
@@ -54,6 +56,12 @@ export const FeatureDetail = ({
         case "node":
             return (
                 <NodeDetails {...(selectedFeature.feature as NodeMapFeature)} />
+            );
+        case "invalidNodes":
+            return (
+                <InvalidNodesDetail
+                    nodes={selectedFeature.feature as InvalidNodes}
+                />
             );
         default:
             return <></>;

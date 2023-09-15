@@ -70,7 +70,7 @@ export type INamedNodeInfo = {
 
 export type INodes = { [key: string]: INodeInfo };
 
-type FeatureType = "node" | "link";
+type FeatureType = "node" | "link" | "invalidNodes";
 
 export type LinkMapFeature = {
     actual: PontToPointLink;
@@ -83,7 +83,9 @@ export type NodeMapFeature = {
     name: string;
 };
 
-type MapFeature = NodeMapFeature | LinkMapFeature;
+export type InvalidNodes = Set<string>;
+
+type MapFeature = NodeMapFeature | LinkMapFeature | InvalidNodes;
 
 export interface SelectedMapFeature {
     feature: MapFeature;
