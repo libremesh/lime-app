@@ -1,5 +1,4 @@
 import { useEffect, useState } from "preact/hooks";
-import React from "react";
 
 import { BottomSheet } from "components/bottom-sheet";
 
@@ -19,7 +18,7 @@ export const SelectedFeatureBottomSheet = () => {
     }, [selectedMapFeature]);
 
     return (
-        <>
+        <div>
             <BottomSheet
                 closeButton={false}
                 isOpen={isOpen}
@@ -37,6 +36,6 @@ export const SelectedFeatureBottomSheet = () => {
                     <FeatureDetail selectedFeature={selectedMapFeature} />
                 </div>
             </BottomSheet>
-        </>
+        </div>
     );
 };

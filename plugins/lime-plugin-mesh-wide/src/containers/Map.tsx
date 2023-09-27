@@ -12,12 +12,6 @@ const openStreetMapAttribution =
     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
 
 export const MeshWideMap = () => {
-    // const [communityLayer, setCommunityLayer] =
-    //     useState<FeatureCollection>(null);
-
-    // const [selectedFeature, setSelectedFeature] =
-    //     useState<SelectedMapFeature | null>(null);
-
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
 
@@ -32,10 +26,6 @@ export const MeshWideMap = () => {
             });
         }
     }, [mapRef, selectedMapFeature]);
-
-    // useEffect(() => {
-    //     console.log("SelectedFeature", selectedMapFeature);
-    // }, [selectedMapFeature]);
 
     // const { data: meshWideStatus } = useMeshWide({
     //     onSuccess: (res) => {

@@ -30,7 +30,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const macs = actual.data.macs;
 
     return (
-        <>
+        <div>
             <Row>
                 <div className={"text-3xl"}>{name}</div>
                 <Button color={"danger"} outline={true} size={"sm"}>
@@ -62,11 +62,11 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
             </Row>
             <Row>
                 <TitleAndText title={<Trans>Macs</Trans>}>
-                    <>
+                    <div>
                         {macs.map((mac, k) => (
                             <div key={k}>{mac}</div>
                         ))}
-                    </>
+                    </div>
                 </TitleAndText>
                 {errors.includes(NodeErrorCodes.MACS_MISSMATCH) && (
                     <TitleAndText
@@ -85,7 +85,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                     </TitleAndText>
                 )}
             </Row>
-        </>
+        </div>
     );
 };
 

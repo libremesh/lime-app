@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "preact/hooks";
 import { animated, useSpring } from "react-spring";
 
 import style from "./style.less";
@@ -83,11 +83,11 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
 }) => {
     // STATE
     const scrollRef = useRef<HTMLDivElement>(null);
-    const [bottom, setBottom] = React.useState(-DRAWER_HEIGHT);
-    const [draggingPosition, setDraggingPosition] = React.useState<
-        number | null
-    >(null);
-    const [debugLog, setDebugLog] = React.useState<string>("");
+    const [bottom, setBottom] = useState(-DRAWER_HEIGHT);
+    const [draggingPosition, setDraggingPosition] = useState<number | null>(
+        null
+    );
+    const [debugLog, setDebugLog] = useState<string>("");
 
     // ANIMATION
     const prefersReducedMotion = useReduceMotion();
@@ -112,7 +112,7 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
         setDraggingPosition(newDraggingPosition);
     };
 
-    const handlePointerMove = React.useCallback(
+    const handlePointerMove = useCallback(
         (e: TouchEvent | MouseEvent) => {
             // @ts-ignore
             const event = e?.touches != null ? e?.touches[0] : e;
@@ -133,7 +133,7 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
         }
     };
 
-    const handleStatusChange = React.useCallback(
+    const handleStatusChange = useCallback(
         (status: TBottomSheetEventsKey) => {
             const newStatus = bottomSheetEvents[status];
             const newDebugLog =
@@ -211,7 +211,7 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
         (title || subtitle ? COLLAPSED_HEIGHT : THUMB_HEIGHT);
 
     return (
-        <>
+        <div>
             <animated.div
                 style={{
                     maxWidth: `${maxWidth}px`,
@@ -281,6 +281,7 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
                         ref={scrollRef}
                         tabIndex={0}
                         style={{ height: bodyHeight }}
+                        data-testid="bottom-sheet-body"
                     >
                         {children}
                     </div>
@@ -294,6 +295,6 @@ export const BottomSheet: React.FC<TBottomSheetProps> = ({
                     {footer}
                 </div>
             )}
-        </>
+        </div>
     );
 };

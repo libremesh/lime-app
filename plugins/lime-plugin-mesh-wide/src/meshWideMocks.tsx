@@ -69,13 +69,9 @@ export const nodesReferenceState: INodes = {
         bleachTTL: 12,
         author: "segundo",
         data: {
-            // coordinates: {
-            //     lon: "-64.43209",
-            //     lat: "-31.79461",
-            // },
             coordinates: {
-                lon: "FIXME",
-                lat: "FIXME",
+                lon: "-64.43209",
+                lat: "-31.79461",
             },
             macs: ["a8:40:41:1d:f9:ff", "a8:40:41:1d:f9:aa"],
             ipv4: "192.168.1.3",

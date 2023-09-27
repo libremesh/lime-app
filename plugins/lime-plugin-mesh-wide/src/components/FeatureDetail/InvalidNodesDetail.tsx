@@ -5,7 +5,7 @@ import { InvalidNodes } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 export const InvalidNodesDetail = ({ nodes }: { nodes: InvalidNodes }) => {
     return (
-        <>
+        <div>
             <Row>
                 <div className={"text-3xl"}>
                     <Trans>Invalid Nodes</Trans>
@@ -20,6 +20,6 @@ export const InvalidNodesDetail = ({ nodes }: { nodes: InvalidNodes }) => {
             {[...nodes].map((name, k) => (
                 <div key={k}>{name}</div>
             ))}
-        </>
+        </div>
     );
 };
