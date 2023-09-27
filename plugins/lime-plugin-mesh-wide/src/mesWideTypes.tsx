@@ -70,8 +70,6 @@ export type INamedNodeInfo = {
 
 export type INodes = { [key: string]: INodeInfo };
 
-type FeatureType = "node" | "link" | "invalidNodes";
-
 export type LinkMapFeature = {
     actual: PontToPointLink;
     reference: PontToPointLink;
@@ -85,13 +83,21 @@ export type NodeMapFeature = {
 
 export type InvalidNodes = Set<string>;
 
-type MapFeature = NodeMapFeature | LinkMapFeature | InvalidNodes;
+type FeatureMap = {
+    node: NodeMapFeature;
+    link: LinkMapFeature;
+    invalidNodes: InvalidNodes;
+};
 
-export interface SelectedMapFeature {
-    feature: MapFeature;
-    type: FeatureType;
-    id: number | string;
-}
+type FeatureType = keyof FeatureMap;
+
+export type SelectedMapFeature = {
+    [T in FeatureType]: {
+        feature: FeatureMap[T];
+        type: T;
+        id: number | string;
+    };
+}[FeatureType];
 
 export interface IMeshWideSection {
     name: string;

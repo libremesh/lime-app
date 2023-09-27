@@ -8,7 +8,6 @@ import NodeDetails, {
     NodeReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail";
 import {
-    InvalidNodes,
     LinkMapFeature,
     NodeMapFeature,
     SelectedMapFeature,
@@ -48,21 +47,11 @@ export const FeatureDetail = ({
     if (!selectedFeature) return;
     switch (selectedFeature.type) {
         case "link":
-            return (
-                <LinkFeatureDetail
-                    {...(selectedFeature.feature as LinkMapFeature)}
-                />
-            );
+            return <LinkFeatureDetail {...selectedFeature.feature} />;
         case "node":
-            return (
-                <NodeDetails {...(selectedFeature.feature as NodeMapFeature)} />
-            );
+            return <NodeDetails {...selectedFeature.feature} />;
         case "invalidNodes":
-            return (
-                <InvalidNodesDetail
-                    nodes={selectedFeature.feature as InvalidNodes}
-                />
-            );
+            return <InvalidNodesDetail nodes={selectedFeature.feature} />;
         default:
             return <></>;
     }
