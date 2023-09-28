@@ -23,7 +23,7 @@ const SelectedLink = ({
     linkDetail,
     errors,
 }: {
-    linkDetail: MacToMacLink;
+    linkDetail: MacToMacLink<"wifi">;
     errors: ILinkMtoMErrors;
 }) => {
     if (linkDetail === undefined || !errors.linkUp)
@@ -112,7 +112,7 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
     const [selectedLink, setSelectedLink] = useState(0);
     const { errors } = usePointToPointErrors({ id: reference.id });
 
-    const tabs = reference.links.map((link: MacToMacLink, i) => {
+    const tabs = reference.links.map((link: MacToMacLink<"wifi">, i) => {
         return {
             key: i,
             repr: (
@@ -140,7 +140,9 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
                 )}
                 {selectedLink !== null && (
                     <SelectedLink
-                        linkDetail={actual?.links[selectedLink]}
+                        linkDetail={
+                            actual?.links[selectedLink] as MacToMacLink<"wifi">
+                        }
                         errors={
                             errors.macToMacErrors[
                                 actual?.links[selectedLink]?.id

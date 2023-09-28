@@ -82,8 +82,8 @@ export const compareLinks = ({
             ([nodeNameReference, wifiDataReference]) => {
                 const wifiDataActual = macToMacActual?.data[nodeNameReference];
                 const wifiErrors = compareWifiData(
-                    wifiDataReference,
-                    wifiDataActual
+                    wifiDataReference as IWifiLinkData,
+                    wifiDataActual as IWifiLinkData
                 );
                 ptoPErrors.macToMacErrors[macToMacReference.id].linkErrors[
                     nodeNameReference

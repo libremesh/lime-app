@@ -1,13 +1,19 @@
-import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
+import {
+    MacToMacLink,
+    PontToPointLink,
+} from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 
 /**
  * Describe a link with a coordinates
  */
-export type ILocatedLink = {
-    [key: string]: IWifiLinkData & {
+export type LinkData = { wifi: IWifiLinkData; batman: IBatManLinkData };
+export type LinkType = keyof LinkData;
+export type ILocatedLink<T extends LinkType> = {
+    [key: string]: LinkData[T] & {
         coordinates: Coordinates;
     };
 };
+export type BaseMacToMacLink = MacToMacLink<LinkType>;
 
 /**
  * List of located links.
@@ -16,32 +22,48 @@ export type ILocatedLink = {
  *
  * The array of classes contain an indeterminated number of links that are from certain point to another.
  */
-export type LocatedWifiLinkData = {
+export type LocatedLinkData = {
     [key: string]: PontToPointLink;
 };
 
-/**
- * Link info retrieved from the API
- */
-export interface IWifiLinkData {
-    tx_rate: number;
+type MacPair = {
     dst_mac: string;
+    src_mac: string;
+};
+
+/**
+ * Link info retrieved from the API with the wifi data
+ */
+export type IWifiLinkData = {
+    tx_rate: number;
     chains: number[];
     signal: number;
     rx_rate: number;
-    src_mac: string;
-}
+} & MacPair;
+
+/**
+ * Link info retrieved from the API with the batman data
+ */
+export type IBatManLinkData = {
+    hard_ifindex: number;
+    last_seen_msecs: number;
+    iface: string;
+} & MacPair;
 
 /**
  * List of Link info retrieved from the API
  */
-export interface IWifiLinks {
+// export interface ILinks<T extends IBatManLinkData[] | IWifiLinkData[]> {
+export interface ILinks<T extends LinkType> {
     [key: string]: {
         bleachTTL: number;
-        data: IWifiLinkData[];
+        data: Array<LinkData[T]>;
         author: string;
     };
 }
+
+export type IWifiLinks = ILinks<"wifi">;
+export type IBatmanLinks = ILinks<"batman">;
 
 export type Coordinates = {
     lat: string;

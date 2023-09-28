@@ -10,14 +10,14 @@ interface ILinkLineProps {
     actualLink: PontToPointLink | undefined;
 }
 
-export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
+export const WifiLinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
     const isSelected = selectedMapFeature?.id === referenceLink.id;
-    const { linksErrors } = useLocatedLinks();
+    const { linksErrors } = useLocatedLinks({ type: "wifi" });
 
-    const hasError = linksErrors[referenceLink.id].hasErrors;
-    const linkUp = linksErrors[referenceLink.id].linkUp;
+    const hasError = linksErrors[referenceLink.id]?.hasErrors || false;
+    const linkUp = linksErrors[referenceLink.id]?.linkUp || true;
 
     const _setSelectedFeature = () => {
         setSelectedMapFeature({
@@ -60,4 +60,4 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     );
 };
 
-export default LinkLine;
+export default WifiLinkLine;

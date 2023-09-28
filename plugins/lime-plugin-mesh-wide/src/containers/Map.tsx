@@ -9,13 +9,16 @@ import {
 } from "react-leaflet";
 
 import { FloatingAlert } from "plugins/lime-plugin-mesh-wide/src/components/Map/FloatingAlert";
-import { LinksLayer } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayer";
+import {
+    BatmanLinksLayer,
+    WifiLinksLayer,
+} from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayers";
 import NodesLayer from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/NodesLayer";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
-const openStreetMapTileString = "http://{s}.tile.osm.org/{z}/{x}/{y}.png";
+const openStreetMapTileString = "https://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
-    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+    '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors';
 
 export const MeshWideMap = () => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
@@ -32,13 +35,6 @@ export const MeshWideMap = () => {
             });
         }
     }, [mapRef, selectedMapFeature]);
-
-    // const { data: meshWideStatus } = useMeshWide({
-    //     onSuccess: (res) => {
-    //         const geoJson = getCommunityGeoJSON(res.result); // todo(kon): the locate page makes a correction with the own node if is modified
-    //         setCommunityLayer(geoJson as FeatureCollection);
-    //     },
-    // });
 
     return (
         <>
@@ -60,7 +56,12 @@ export const MeshWideMap = () => {
                 <LayersControl position="topright">
                     <LayersControl.Overlay checked name={t`Wifi Links`}>
                         <LayerGroup>
-                            <LinksLayer />
+                            <WifiLinksLayer />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+                    <LayersControl.Overlay name={t`Batman`}>
+                        <LayerGroup>
+                            <BatmanLinksLayer />
                         </LayerGroup>
                     </LayersControl.Overlay>
                     <LayersControl.Overlay checked name={t`Nodes`}>

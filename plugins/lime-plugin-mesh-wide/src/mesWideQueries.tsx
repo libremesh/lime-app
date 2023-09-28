@@ -1,12 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 
 import {
+    getMeshWideBatman,
+    getMeshWideBatmanReference,
     getMeshWideLinks,
     getMeshWideLinksReference,
     getMeshWideNodes,
     getMeshWideNodesReference,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideApi";
 import {
+    IBatmanLinks,
     IMeshWideConfig,
     INodes,
     IWifiLinks,
@@ -31,6 +34,26 @@ export function useMeshWideLinks(params) {
     return useQuery<IWifiLinks>(["lime-meshwide", "links"], getMeshWideLinks, {
         ...params,
     });
+}
+
+export function useMeshWideBatmanReference(params) {
+    return useQuery<IBatmanLinks>(
+        ["lime-meshwide", "batman_reference"],
+        getMeshWideBatmanReference,
+        {
+            ...params,
+        }
+    );
+}
+
+export function useMeshWideBatman(params) {
+    return useQuery<IBatmanLinks>(
+        ["lime-meshwide", "batman"],
+        getMeshWideBatman,
+        {
+            ...params,
+        }
+    );
 }
 
 export function useMeshWideNodesReference(params) {

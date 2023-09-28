@@ -1,7 +1,12 @@
 import {
+    IBatManLinkData,
+    IBatmanLinks,
+    ILinks,
     IMeshWideConfig,
     INodes,
+    IWifiLinkData,
     IWifiLinks,
+    LinkType,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 // todo(kon): if a mac disappear from mac list and a link with this mac as src mac disappear also, is not shown on the map.
@@ -37,7 +42,13 @@ export const nodesReferenceState: INodes = {
                 lon: "-64.42315",
                 lat: "-31.79461",
             },
-            macs: ["14:cc:20:da:4e:ab", "14:cc:20:da:4e:ac"],
+            macs: [
+                "14:cc:20:da:4e:ab",
+                "14:cc:20:da:4e:ac",
+                // Following macs are related to batman links
+                "02:ab:46:fc:3a:bd",
+                "02:58:47:fc:3a:bd",
+            ],
             ipv4: "192.168.1.2",
             ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7335",
             firmware_version: "1.0.1",
@@ -55,7 +66,14 @@ export const nodesReferenceState: INodes = {
                 lon: "-64.41609",
                 lat: "-31.80461",
             },
-            macs: ["a8:40:41:1d:f9:35", "a8:40:41:1d:f9:35"],
+            macs: [
+                "a8:40:41:1d:f9:35",
+                "a8:40:41:1d:f9:35",
+                // Following macs are related to batman links
+                "02:db:d6:46:28:95",
+                "02:ab:46:46:28:95",
+                "02:58:47:46:28:95",
+            ],
             ipv4: "192.168.1.3",
             ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7336",
             firmware_version: "1.0.2",
@@ -73,7 +91,14 @@ export const nodesReferenceState: INodes = {
                 lon: "-64.43209",
                 lat: "-31.79461",
             },
-            macs: ["a8:40:41:1d:f9:ff", "a8:40:41:1d:f9:aa"],
+            macs: [
+                "a8:40:41:1d:f9:ff",
+                "a8:40:41:1d:f9:aa",
+                // Following macs are related to batman links
+                "02:db:d6:da:4e:aa",
+                "02:58:47:da:4e:aa",
+                "02:ab:46:da:4e:aa",
+            ],
             ipv4: "192.168.1.3",
             ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7336",
             firmware_version: "1.0.2",
@@ -127,7 +152,7 @@ export const linksReferenceState: IWifiLinks = {
                 rx_rate: 240000,
                 src_mac: "a8:40:41:1d:f9:aa",
             },
-        ],
+        ] as IWifiLinkData[],
         author: "segundo",
     },
     "LiMe-da4eaa": {
@@ -165,7 +190,7 @@ export const linksReferenceState: IWifiLinks = {
                 rx_rate: 162000,
                 signal: -64,
             },
-        ],
+        ] as IWifiLinkData[],
         author: "LiMe-da4eaa",
     },
     "LiMe-462895": {
@@ -203,8 +228,127 @@ export const linksReferenceState: IWifiLinks = {
                 rx_rate: 135000,
                 signal: -65,
             },
-        ],
+        ] as IWifiLinkData[],
         author: "LiMe-462895",
+    },
+};
+
+export const batManReferenceState: IBatmanLinks = {
+    primero: {
+        bleachTTL: 27,
+        data: [
+            {
+                hard_ifindex: 18,
+                last_seen_msecs: 1300,
+                iface: "eth0-1_250",
+                dst_mac: "02:db:d6:da:4e:aa",
+                src_mac: "02:db:d6:46:28:95",
+            },
+            {
+                hard_ifindex: 26,
+                last_seen_msecs: 20,
+                iface: "wlan1-mesh_250",
+                dst_mac: "02:ab:46:da:4e:aa",
+                src_mac: "02:ab:46:46:28:95",
+            },
+            {
+                hard_ifindex: 26,
+                last_seen_msecs: 40,
+                iface: "wlan1-mesh_250",
+                dst_mac: "02:ab:46:fc:3a:bd",
+                src_mac: "02:ab:46:46:28:95",
+            },
+            {
+                hard_ifindex: 28,
+                last_seen_msecs: 1710,
+                iface: "wlan0-mesh_250",
+                dst_mac: "02:58:47:fc:3a:bd",
+                src_mac: "02:58:47:46:28:95",
+            },
+            {
+                hard_ifindex: 28,
+                last_seen_msecs: 1450,
+                iface: "wlan0-mesh_250",
+                dst_mac: "02:58:47:da:4e:aa",
+                src_mac: "02:58:47:46:28:95",
+            },
+        ] as IBatManLinkData[],
+        author: "primero",
+    },
+    "LiMe-da4eaa": {
+        bleachTTL: 26,
+        data: [
+            {
+                hard_ifindex: 26,
+                last_seen_msecs: 1670,
+                iface: "wlan1-mesh_250",
+                dst_mac: "02:ab:46:da:4e:aa",
+                src_mac: "02:ab:46:fc:3a:bd",
+            },
+            {
+                hard_ifindex: 26,
+                last_seen_msecs: 1350,
+                iface: "wlan1-mesh_250",
+                dst_mac: "02:ab:46:46:28:95",
+                src_mac: "02:ab:46:fc:3a:bd",
+            },
+            {
+                hard_ifindex: 28,
+                last_seen_msecs: 1430,
+                iface: "wlan0-mesh_250",
+                dst_mac: "02:58:47:46:28:95",
+                src_mac: "02:58:47:fc:3a:bd",
+            },
+            {
+                hard_ifindex: 28,
+                last_seen_msecs: 1030,
+                iface: "wlan0-mesh_250",
+                dst_mac: "02:58:47:da:4e:aa",
+                src_mac: "02:58:47:fc:3a:bd",
+            },
+        ] as IBatManLinkData[],
+        author: "tercero",
+    },
+    segundo: {
+        bleachTTL: 28,
+        data: [
+            {
+                hard_ifindex: 18,
+                last_seen_msecs: 1670,
+                src_mac: "02:db:d6:da:4e:aa",
+                dst_mac: "02:db:d6:46:28:95",
+                iface: "eth0-1_250",
+            },
+            {
+                hard_ifindex: 26,
+                last_seen_msecs: 550,
+                src_mac: "02:58:47:da:4e:aa",
+                dst_mac: "02:58:47:46:28:95",
+                iface: "wlan0-mesh_250",
+            },
+            {
+                hard_ifindex: 26,
+                last_seen_msecs: 260,
+                src_mac: "02:58:47:da:4e:aa",
+                dst_mac: "02:58:47:fc:3a:bd",
+                iface: "wlan0-mesh_250",
+            },
+            {
+                hard_ifindex: 28,
+                last_seen_msecs: 340,
+                src_mac: "02:ab:46:da:4e:aa",
+                dst_mac: "02:ab:46:fc:3a:bd",
+                iface: "wlan1-mesh_250",
+            },
+            {
+                hard_ifindex: 28,
+                last_seen_msecs: 550,
+                src_mac: "02:ab:46:da:4e:aa",
+                dst_mac: "02:ab:46:46:28:95",
+                iface: "wlan1-mesh_250",
+            },
+        ] as IBatManLinkData[],
+        author: "segundo",
     },
 };
 
@@ -221,11 +365,11 @@ const macToDelete = "";
 const linkToDelete = "a0:f3:c1:46:11:97";
 // const linkToDelete = "";
 
-export const links = (): IWifiLinks => {
+export const links = <T extends LinkType>(type: T): ILinks<T> => {
+    const data = type === "wifi" ? linksReferenceState : batManReferenceState;
+
     // Create a deep copy of the state to avoid mutating the original object
-    const newState: IWifiLinks = JSON.parse(
-        JSON.stringify(linksReferenceState)
-    );
+    const newState: ILinks<T> = JSON.parse(JSON.stringify(data));
 
     // Get source_macs from the node to be removed
     const source_macs_to_remove = newState[nodeName].data.map((item: any) =>

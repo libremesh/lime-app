@@ -5,40 +5,51 @@ import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/Poi
 import { mergeLinksAndCoordinates } from "plugins/lime-plugin-mesh-wide/src/lib/links/getLinksCoordinates";
 import { compareLinks } from "plugins/lime-plugin-mesh-wide/src/lib/links/processLinkErrors";
 import {
+    useMeshWideBatman,
+    useMeshWideBatmanReference,
     useMeshWideLinks,
     useMeshWideLinksReference,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 import {
     ILinkErrors,
-    LocatedWifiLinkData,
+    LinkType,
+    LocatedLinkData,
     PointToPointLinkId,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
-export const useLocatedLinks = () => {
-    const { data: meshWideLinksReference } = useMeshWideLinksReference({});
-    const { data: meshWideLinks } = useMeshWideLinks({});
+export const useLocatedLinks = ({ type }: { type: LinkType }) => {
+    const fetchData = type === "batman" ? useMeshWideBatman : useMeshWideLinks;
+    const fetchDataReference =
+        type === "batman"
+            ? useMeshWideBatmanReference
+            : useMeshWideLinksReference;
+
+    const { data: linksReference } = fetchDataReference({});
+    const { data: links } = fetchData({});
 
     const {
         locatedNodes: { locatedNodesReference: meshWideNodesReference },
     } = useNodes();
 
-    const locatedLinksReference: LocatedWifiLinkData = useMemo(() => {
-        if (meshWideNodesReference && meshWideLinksReference) {
+    const locatedLinksReference: LocatedLinkData = useMemo(() => {
+        if (meshWideNodesReference && linksReference) {
             return mergeLinksAndCoordinates(
                 meshWideNodesReference,
-                meshWideLinksReference
+                linksReference,
+                type
             );
         }
-    }, [meshWideNodesReference, meshWideLinksReference]);
+    }, [meshWideNodesReference, linksReference, type]);
 
-    const locatedLinks: LocatedWifiLinkData = useMemo(() => {
-        if (meshWideNodesReference && meshWideLinks) {
+    const locatedLinks: LocatedLinkData = useMemo(() => {
+        if (links && meshWideNodesReference) {
             return mergeLinksAndCoordinates(
                 meshWideNodesReference,
-                meshWideLinks
+                links,
+                type
             );
         }
-    }, [meshWideNodesReference, meshWideLinks]);
+    }, [links, meshWideNodesReference, type]);
 
     const linksLoaded = !!locatedLinksReference && !!locatedLinks;
 
@@ -67,6 +78,6 @@ export const useLocatedLinks = () => {
 };
 
 export const usePointToPointErrors = ({ id }: { id: PointToPointLinkId }) => {
-    const { linksErrors } = useLocatedLinks();
+    const { linksErrors } = useLocatedLinks({ type: "wifi" });
     return { errors: linksErrors[id] };
 };
