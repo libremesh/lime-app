@@ -1,6 +1,12 @@
+import { t } from "@lingui/macro";
 import L from "leaflet";
 import { useEffect, useRef } from "preact/hooks";
-import { MapContainer, TileLayer } from "react-leaflet";
+import {
+    LayerGroup,
+    LayersControl,
+    MapContainer,
+    TileLayer,
+} from "react-leaflet";
 
 import { FloatingAlert } from "plugins/lime-plugin-mesh-wide/src/components/Map/FloatingAlert";
 import { LinksLayer } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayer";
@@ -51,8 +57,18 @@ export const MeshWideMap = () => {
                     attribution={openStreetMapAttribution}
                     url={openStreetMapTileString}
                 />
-                <LinksLayer />
-                <NodesLayer />
+                <LayersControl position="topright">
+                    <LayersControl.Overlay checked name={t`Wifi Links`}>
+                        <LayerGroup>
+                            <LinksLayer />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+                    <LayersControl.Overlay checked name={t`Nodes`}>
+                        <LayerGroup>
+                            <NodesLayer />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+                </LayersControl>
             </MapContainer>
         </>
     );
