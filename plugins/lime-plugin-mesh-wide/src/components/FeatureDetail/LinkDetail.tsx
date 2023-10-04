@@ -110,7 +110,10 @@ const SelectedLink = ({
 
 const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
     const [selectedLink, setSelectedLink] = useState(0);
-    const { errors } = usePointToPointErrors({ id: reference.id });
+    const { errors } = usePointToPointErrors({
+        id: reference.id,
+        type: reference.type,
+    });
 
     const tabs = reference.links.map((link: MacToMacLink<"wifi">, i) => {
         return {
@@ -156,7 +159,10 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
 };
 
 export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
-    const { errors } = usePointToPointErrors({ id: reference.id });
+    const { errors } = usePointToPointErrors({
+        id: reference.id,
+        type: reference.type,
+    });
 
     const hasError = errors.hasErrors;
 

@@ -77,7 +77,13 @@ export const useLocatedLinks = ({ type }: { type: LinkType }) => {
     return { locatedLinks, locatedLinksReference, linksLoaded, linksErrors };
 };
 
-export const usePointToPointErrors = ({ id }: { id: PointToPointLinkId }) => {
-    const { linksErrors } = useLocatedLinks({ type: "wifi" });
+export const usePointToPointErrors = ({
+    id,
+    type,
+}: {
+    id: PointToPointLinkId;
+    type: LinkType;
+}) => {
+    const { linksErrors } = useLocatedLinks({ type });
     return { errors: linksErrors[id] };
 };

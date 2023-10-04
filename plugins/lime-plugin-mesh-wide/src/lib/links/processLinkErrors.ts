@@ -1,5 +1,7 @@
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import {
+    BatmanLinkErrorCodes,
+    IBatManLinkData,
     ILinkPtoPErrors,
     IWifiLinkData,
     WifiLinkErrorCodes,
@@ -36,6 +38,17 @@ const compareWifiData = (reference: IWifiLinkData, actual: IWifiLinkData) => {
         DEFAULT_COMMUNITY_SETTINGS.mw_link_chain_threshold
     ) {
         errors.push(WifiLinkErrorCodes.CHAIN_LOSS);
+    }
+    return errors;
+};
+
+const compareBatmanData = (
+    reference: IBatManLinkData,
+    actual: IBatManLinkData
+) => {
+    const errors: BatmanLinkErrorCodes[] = [];
+    if (actual === undefined) {
+        return [BatmanLinkErrorCodes.LINK_DOWN];
     }
     return errors;
 };
@@ -81,20 +94,34 @@ export const compareLinks = ({
         Object.entries(macToMacReference.data).forEach(
             ([nodeNameReference, wifiDataReference]) => {
                 const wifiDataActual = macToMacActual?.data[nodeNameReference];
-                const wifiErrors = compareWifiData(
-                    wifiDataReference as IWifiLinkData,
-                    wifiDataActual as IWifiLinkData
-                );
+                const errors =
+                    referenceLink.type === "wifi"
+                        ? compareWifiData(
+                              wifiDataReference as IWifiLinkData,
+                              wifiDataActual as IWifiLinkData
+                          )
+                        : compareBatmanData(
+                              wifiDataReference as IBatManLinkData,
+                              wifiDataActual as IBatManLinkData
+                          );
                 ptoPErrors.macToMacErrors[macToMacReference.id].linkErrors[
                     nodeNameReference
-                ] = wifiErrors;
-                if (wifiErrors.length) {
+                ] = errors;
+                if (errors.length) {
                     ptoPErrors.macToMacErrors[macToMacReference.id].hasErrors =
                         true;
                     ptoPErrors.hasErrors = true;
                 }
-                if (wifiErrors.includes(WifiLinkErrorCodes.LINK_DOWN))
+                if (
+                    (errors as WifiLinkErrorCodes[]).includes(
+                        WifiLinkErrorCodes.LINK_DOWN
+                    ) ||
+                    (errors as BatmanLinkErrorCodes[]).includes(
+                        BatmanLinkErrorCodes.LINK_DOWN
+                    )
+                ) {
                     setLinkIsDown();
+                }
             }
         );
     });

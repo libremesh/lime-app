@@ -86,10 +86,6 @@ export interface INodeInfo {
     };
 }
 
-export type INamedNodeInfo = {
-    name: string;
-} & INodeInfo;
-
 export type INodes = { [key: string]: INodeInfo };
 
 export type LinkMapFeature = {
@@ -134,6 +130,10 @@ export enum WifiLinkErrorCodes {
     CHAIN_LOSS = "CHAIN_LOSS",
 }
 
+export enum BatmanLinkErrorCodes {
+    LINK_DOWN = "LINK_DOWN",
+}
+
 export enum NodeErrorCodes {
     NODE_DOWN = "NODE_DOWN",
     MACS_MISSMATCH = "MACS_MISSMATCH",
@@ -144,7 +144,7 @@ export enum NodeErrorCodes {
  */
 export type ILinkMtoMErrors = {
     linkErrors: {
-        [nodeName: string]: WifiLinkErrorCodes[];
+        [nodeName: string]: WifiLinkErrorCodes[] | BatmanLinkErrorCodes[];
     };
     hasErrors: boolean;
     linkUp: boolean;

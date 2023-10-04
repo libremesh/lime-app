@@ -81,6 +81,10 @@ export class PontToPointLink {
 
         return allCoordinates.sort((a, b) => a - b).toString();
     }
+
+    get type(): LinkType {
+        return this._links[0].type;
+    }
 }
 
 /**
