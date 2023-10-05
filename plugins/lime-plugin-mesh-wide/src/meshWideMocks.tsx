@@ -371,13 +371,16 @@ export const links = <T extends LinkType>(type: T): ILinks<T> => {
     // Create a deep copy of the state to avoid mutating the original object
     const newState: ILinks<T> = JSON.parse(JSON.stringify(data));
 
-    // Get source_macs from the node to be removed
-    const source_macs_to_remove = newState[nodeName].data.map((item: any) =>
-        item.src_mac.toLowerCase()
-    );
+    let source_macs_to_remove = [];
+    if (nodeName) {
+        // Get source_macs from the node to be removed
+        source_macs_to_remove = newState[nodeName].data.map((item: any) =>
+            item.src_mac.toLowerCase()
+        );
 
-    // Remove the specified node
-    delete newState[nodeName];
+        // Remove the specified node
+        delete newState[nodeName];
+    }
 
     // Remove data items with matching dest_mac in other objects
     Object.keys(newState).forEach((key: string) => {
