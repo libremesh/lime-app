@@ -1,27 +1,18 @@
-import { ComponentType } from "preact";
-
-import WifiLinkLine from "plugins/lime-plugin-mesh-wide/src/components/Map/WifiLinkLine";
+import LinkLine from "plugins/lime-plugin-mesh-wide/src/components/Map/LinkLine";
 import { useLocatedLinks } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { LocatedLinkData } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
-
-interface ILinkComponentProps {
-    referenceLink: PontToPointLink;
-    actualLink: PontToPointLink | undefined;
-}
 
 interface ILinksLayerProps {
     links: LocatedLinkData;
     linksReference: LocatedLinkData;
     linksLoaded: boolean;
-    LinkComponent: ComponentType<ILinkComponentProps>;
 }
 
 const LinksLayer = ({
     links,
     linksReference,
     linksLoaded,
-    LinkComponent,
 }: ILinksLayerProps) => {
     return (
         <>
@@ -34,7 +25,7 @@ const LinksLayer = ({
                         );
                     }
                     return (
-                        <LinkComponent
+                        <LinkLine
                             key={i}
                             referenceLink={referenceLink[1]}
                             actualLink={actualLink}
@@ -55,7 +46,6 @@ export const WifiLinksLayer = () => {
                 links={locatedLinks}
                 linksReference={locatedLinksReference}
                 linksLoaded={linksLoaded}
-                LinkComponent={WifiLinkLine}
             />
         </div>
     );
@@ -71,7 +61,6 @@ export const BatmanLinksLayer = () => {
                 links={locatedLinks}
                 linksReference={locatedLinksReference}
                 linksLoaded={linksLoaded}
-                LinkComponent={WifiLinkLine}
             />
         </div>
     );

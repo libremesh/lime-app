@@ -12,18 +12,106 @@ import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { readableBytes } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
+    BaseMacToMacLink,
+    BatmanLinkErrorCodes,
+    IBatManLinkData,
     ILinkMtoMErrors,
+    IWifiLinkData,
     LinkMapFeature,
     WifiLinkErrorCodes,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 import { Row, TitleAndText } from "./index";
 
+const BatmanDetail = ({
+    name,
+    errorsArray,
+    node,
+}: {
+    name: string;
+    errorsArray: BatmanLinkErrorCodes[];
+    node: IBatManLinkData;
+}) => {
+    return (
+        <>
+            <Row>
+                <div className={"flex"}>
+                    <strong>{name}</strong>{" "}
+                    {errorsArray.length > 0 && <ErrorIcon />}
+                </div>
+            </Row>
+            <Row>
+                <TitleAndText title={<Trans>Iface</Trans>}>
+                    {node?.iface}
+                </TitleAndText>
+                <TitleAndText title={<Trans>Last seen</Trans>}>
+                    <>{node?.last_seen_msecs} ms</>
+                </TitleAndText>
+            </Row>
+        </>
+    );
+};
+
+const WifiDetail = ({
+    name,
+    errorsArray,
+    node,
+}: {
+    name: string;
+    errorsArray: WifiLinkErrorCodes[];
+    node: IWifiLinkData;
+}) => {
+    return (
+        <div>
+            <Row>
+                <div className={"flex"}>
+                    <strong>{name}</strong>{" "}
+                    {errorsArray.length > 0 && <ErrorIcon />}
+                </div>
+            </Row>
+            <Row>
+                <TitleAndText
+                    title={<Trans>Signal</Trans>}
+                    error={
+                        errorsArray.includes(WifiLinkErrorCodes.SIGNAL_LOSS) ? (
+                            <Trans>
+                                The signal is X below the reference state
+                            </Trans>
+                        ) : null
+                    }
+                >
+                    {node?.signal?.toString() ?? "0"}
+                </TitleAndText>
+                <TitleAndText
+                    title={<Trans>Chains</Trans>}
+                    error={
+                        errorsArray.includes(WifiLinkErrorCodes.CHAIN_LOSS) ? (
+                            <Trans>
+                                The difference between chains is too big
+                            </Trans>
+                        ) : null
+                    }
+                >
+                    {node?.chains?.toString() ?? "0/0"}
+                </TitleAndText>
+            </Row>
+            <Row>
+                <TitleAndText title={<Trans>TxRate</Trans>}>
+                    {`${readableBytes(node.tx_rate)}`}
+                </TitleAndText>
+                <TitleAndText title={<Trans>RxRate</Trans>}>
+                    {`${readableBytes(node.rx_rate)}`}
+                </TitleAndText>
+            </Row>
+        </div>
+    );
+};
+
 const SelectedLink = ({
     linkDetail,
     errors,
 }: {
-    linkDetail: MacToMacLink<"wifi">;
+    linkDetail: BaseMacToMacLink;
     errors: ILinkMtoMErrors;
 }) => {
     if (linkDetail === undefined || !errors.linkUp)
@@ -34,6 +122,7 @@ const SelectedLink = ({
         );
 
     const names = linkDetail?.names;
+    const linkType = linkDetail.type;
 
     return (
         <>
@@ -53,55 +142,20 @@ const SelectedLink = ({
             {names.map((name, i) => {
                 const node = linkDetail.linkByName(name);
                 const errorsArray = errors.linkErrors[name];
-                return (
-                    <div key={i}>
-                        <Row>
-                            <div className={"flex"}>
-                                <strong>{name}</strong>{" "}
-                                {errorsArray.length > 0 && <ErrorIcon />}
-                            </div>
-                        </Row>
-                        <Row>
-                            <TitleAndText
-                                title={<Trans>Signal</Trans>}
-                                error={
-                                    errorsArray.includes(
-                                        WifiLinkErrorCodes.SIGNAL_LOSS
-                                    ) ? (
-                                        <Trans>
-                                            The signal is X below the reference
-                                            state
-                                        </Trans>
-                                    ) : null
-                                }
-                            >
-                                {node?.signal?.toString() ?? "0"}
-                            </TitleAndText>
-                            <TitleAndText
-                                title={<Trans>Chains</Trans>}
-                                error={
-                                    errorsArray.includes(
-                                        WifiLinkErrorCodes.CHAIN_LOSS
-                                    ) ? (
-                                        <Trans>
-                                            The difference between chains is too
-                                            big
-                                        </Trans>
-                                    ) : null
-                                }
-                            >
-                                {node?.chains?.toString() ?? "0/0"}
-                            </TitleAndText>
-                        </Row>
-                        <Row>
-                            <TitleAndText title={<Trans>TxRate</Trans>}>
-                                {`${readableBytes(node.tx_rate)}`}
-                            </TitleAndText>
-                            <TitleAndText title={<Trans>RxRate</Trans>}>
-                                {`${readableBytes(node.rx_rate)}`}
-                            </TitleAndText>
-                        </Row>
-                    </div>
+                return linkType === "wifi" ? (
+                    <WifiDetail
+                        key={i}
+                        name={name}
+                        errorsArray={errorsArray as WifiLinkErrorCodes[]}
+                        node={node as IWifiLinkData}
+                    />
+                ) : (
+                    <BatmanDetail
+                        key={i}
+                        name={name}
+                        errorsArray={errorsArray as BatmanLinkErrorCodes[]}
+                        node={node as IBatManLinkData}
+                    />
                 );
             })}
         </>
@@ -114,22 +168,25 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
         id: reference.id,
         type: reference.type,
     });
+    const linkType = reference.type;
 
-    const tabs = reference.links.map((link: MacToMacLink<"wifi">, i) => {
-        return {
-            key: i,
-            repr: (
-                <div className={"flex"}>
-                    <Trans>
-                        Link {i + 1}{" "}
-                        {errors.macToMacErrors[link.id].hasErrors ? (
-                            <ErrorIcon />
-                        ) : null}
-                    </Trans>
-                </div>
-            ),
-        };
-    });
+    const tabs = reference.links.map(
+        (link: MacToMacLink<typeof linkType>, i) => {
+            return {
+                key: i,
+                repr: (
+                    <div className={"flex"}>
+                        <Trans>
+                            Link {i + 1}{" "}
+                            {errors.macToMacErrors[link.id].hasErrors ? (
+                                <ErrorIcon />
+                            ) : null}
+                        </Trans>
+                    </div>
+                ),
+            };
+        }
+    );
 
     return (
         <>
@@ -143,9 +200,7 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
                 )}
                 {selectedLink !== null && (
                     <SelectedLink
-                        linkDetail={
-                            actual?.links[selectedLink] as MacToMacLink<"wifi">
-                        }
+                        linkDetail={actual?.links[selectedLink]}
                         errors={
                             errors.macToMacErrors[
                                 actual?.links[selectedLink]?.id

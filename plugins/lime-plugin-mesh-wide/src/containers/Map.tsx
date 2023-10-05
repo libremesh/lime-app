@@ -54,6 +54,11 @@ export const MeshWideMap = () => {
                     url={openStreetMapTileString}
                 />
                 <LayersControl position="topright">
+                    <LayersControl.Overlay checked name={t`Nodes`}>
+                        <LayerGroup>
+                            <NodesLayer />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
                     <LayersControl.Overlay checked name={t`Wifi Links`}>
                         <LayerGroup>
                             <WifiLinksLayer />
@@ -62,11 +67,6 @@ export const MeshWideMap = () => {
                     <LayersControl.Overlay name={t`Batman`}>
                         <LayerGroup>
                             <BatmanLinksLayer />
-                        </LayerGroup>
-                    </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name={t`Nodes`}>
-                        <LayerGroup>
-                            <NodesLayer />
                         </LayerGroup>
                     </LayersControl.Overlay>
                 </LayersControl>
