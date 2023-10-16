@@ -11,7 +11,7 @@ const NodesLayer = () => {
     } = useNodes();
 
     return (
-        <>
+        <div>
             {meshWideNodesReference &&
                 Object.entries(meshWideNodesReference).map(([k, v], i) => {
                     let actualNode: INodeInfo;
@@ -27,7 +27,7 @@ const NodesLayer = () => {
                         />
                     );
                 })}
-        </>
+        </div>
     );
 };
 

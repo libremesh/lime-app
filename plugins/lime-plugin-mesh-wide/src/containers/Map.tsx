@@ -20,7 +20,17 @@ const openStreetMapTileString = "https://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
     '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors';
 
-export const MeshWideMap = () => {
+interface ILayersChecked {
+    nodes?: boolean;
+    wifiLinks?: boolean;
+    batmanLinks?: boolean;
+}
+
+export const MeshWideMap = ({
+    nodes = true,
+    wifiLinks = true,
+    batmanLinks = false,
+}: ILayersChecked) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
 
@@ -34,10 +44,10 @@ export const MeshWideMap = () => {
                 }
             });
         }
-    }, [mapRef, selectedMapFeature]);
+    }, [mapRef, selectedMapFeature, setSelectedMapFeature]);
 
     return (
-        <>
+        <div>
             <FloatingAlert />
             <MapContainer
                 // center={center}
@@ -54,23 +64,29 @@ export const MeshWideMap = () => {
                     url={openStreetMapTileString}
                 />
                 <LayersControl position="topright">
-                    <LayersControl.Overlay checked name={t`Nodes`}>
+                    <LayersControl.Overlay checked={nodes} name={t`Nodes`}>
                         <LayerGroup>
                             <NodesLayer />
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name={t`Wifi Links`}>
+                    <LayersControl.Overlay
+                        checked={wifiLinks}
+                        name={t`Wifi Links`}
+                    >
                         <LayerGroup>
                             <WifiLinksLayer />
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay name={t`Batman`}>
+                    <LayersControl.Overlay
+                        checked={batmanLinks}
+                        name={t`Batman`}
+                    >
                         <LayerGroup>
                             <BatmanLinksLayer />
                         </LayerGroup>
                     </LayersControl.Overlay>
                 </LayersControl>
             </MapContainer>
-        </>
+        </div>
     );
 };

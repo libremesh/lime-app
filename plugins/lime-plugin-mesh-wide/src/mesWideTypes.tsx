@@ -20,7 +20,7 @@ export type BaseMacToMacLink = MacToMacLink<LinkType>;
  *
  * Are grouped by id based on their coordinates
  *
- * The array of classes contain an indeterminated number of links that are from certain point to another.
+ * The array of classes contains an indeterminated number of links that are from certain point to another.
  */
 export type LocatedLinkData = {
     [key: string]: PontToPointLink;
@@ -53,7 +53,6 @@ export type IBatManLinkData = {
 /**
  * List of Link info retrieved from the API
  */
-// export interface ILinks<T extends IBatManLinkData[] | IWifiLinkData[]> {
 export interface ILinks<T extends LinkType> {
     [key: string]: {
         bleachTTL: number;
