@@ -47,7 +47,7 @@ export const MeshWideMap = ({
     }, [mapRef, selectedMapFeature, setSelectedMapFeature]);
 
     return (
-        <div>
+        <>
             <FloatingAlert />
             <MapContainer
                 // center={center}
@@ -87,6 +87,6 @@ export const MeshWideMap = ({
                     </LayersControl.Overlay>
                 </LayersControl>
             </MapContainer>
-        </div>
+        </>
     );
 };
