@@ -1,7 +1,5 @@
 import { UpgradeNodesInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 
-export const getMeshWideUpgradeInfo = async () => updatedCase;
-
 const updatedCase: UpgradeNodesInfo = {
     result: {
         "ql-czuk-bbone": {

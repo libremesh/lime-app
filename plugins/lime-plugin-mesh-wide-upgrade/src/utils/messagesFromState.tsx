@@ -1,16 +1,26 @@
 import { Trans } from "@lingui/macro";
 import { ComponentChildren } from "preact";
 
-import { InfoStatusType } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { UpgradeStatusType } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 
+// todo(kon):
 export const InfoStatusMessageMap: {
-    [status in InfoStatusType]: ComponentChildren;
+    [status in UpgradeStatusType]: ComponentChildren;
 } = {
-    UPDATED: <Trans>This node is updated</Trans>,
-    UPGRADE_AVAILABLE: <Trans>Available upgrade</Trans>,
-    DOWNLOADING: <Trans>Downloading update</Trans>,
-    UPGRADE_READY: <Trans>Ready for upgrade</Trans>,
-    UPGRADE_SCHEDULED: <Trans>Upgrade scheduled</Trans>,
+    // UPDATED: <Trans>This node is updated</Trans>,
+    // UPGRADE_AVAILABLE: <Trans>Available upgrade</Trans>,
+    // DOWNLOADING: <Trans>Downloading update</Trans>,
+    // UPGRADE_READY: <Trans>Ready for upgrade</Trans>,
+    // UPGRADE_SCHEDULED: <Trans>Upgrade scheduled</Trans>,
+    DEFAULT: <Trans>DEFAULT</Trans>,
+    STARTING: <Trans>STARTING</Trans>,
+    DOWNLOADING: <Trans>DOWNLOADING</Trans>,
+    READY_FOR_UPGRADE: <Trans>READY_FOR_UPGRADE</Trans>,
+    UPGRADE_SCHEDULED: <Trans>UPGRADE_SCHEDULED</Trans>,
+    CONFIRMATION_PENDING: <Trans>CONFIRMATION_PENDING</Trans>,
+    CONFIRMED: <Trans>CONFIRMED</Trans>,
+    UPDATED: <Trans>UPDATED</Trans>,
+    ERROR: <Trans>ERROR</Trans>,
 };
 
 // export const translations = {

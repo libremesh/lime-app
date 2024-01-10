@@ -1,3 +1,4 @@
+import Loading from "components/loading";
 import Notification from "components/notifications/notification";
 
 import NextStepFooter from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nextStepFooter";
@@ -5,7 +6,11 @@ import NodeUpgradeInfoItem from "plugins/lime-plugin-mesh-wide-upgrade/src/compo
 import { useMeshWideUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
 
 const MeshWideUpgrade = () => {
-    const { data } = useMeshWideUpgradeInfo({});
+    const { data, isLoading } = useMeshWideUpgradeInfo({});
+
+    if (isLoading || data === undefined) {
+        return <Loading />;
+    }
 
     return (
         <>
@@ -19,18 +24,15 @@ const MeshWideUpgrade = () => {
                 </Notification>
 
                 {data &&
-                    Object.entries(data.result).map(
-                        ([key, nodeInfo], index) => {
-                            return (
-                                <div key={index}>
-                                    <NodeUpgradeInfoItem
-                                        name={key}
-                                        info={nodeInfo}
-                                    />
-                                </div>
-                            );
-                        }
-                    )}
+                    Object.entries(data).map(([key, nodeInfo], index) => {
+                        return (
+                            <NodeUpgradeInfoItem
+                                key={index}
+                                name={key}
+                                info={nodeInfo}
+                            />
+                        );
+                    })}
             </div>
             <NextStepFooter />
         </>

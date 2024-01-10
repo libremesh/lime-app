@@ -1,22 +1,28 @@
-export type InfoStatusType =
-    | "UPDATED"
-    | "UPGRADE_AVAILABLE"
+export type UpgradeStatusType =
+    | "DEFAULT"
+    | "STARTING"
     | "DOWNLOADING"
-    | "UPGRADE_READY"
-    | "UPGRADE_SCHEDULED";
+    | "READY_FOR_UPGRADE"
+    | "UPGRADE_SCHEDULED"
+    | "CONFIRMATION_PENDING"
+    | "CONFIRMED"
+    | "UPDATED"
+    | "ERROR";
 
 export interface UpgradeInfo {
-    state: InfoStatusType;
-    new_version_info: string;
-    safe_upgrade: boolean;
-    downloaded: boolean; // todo(kon): not needed, it can be known by the state
-    downloading: boolean; // todo(kon): this could be the percentatge?
-    firmware_check: boolean; // todo(kon): not needed, it can be known by the state
-    scheduled: number;
+    bleachTTL: number;
+    author: string;
+    data: {
+        candidate_fw?: string;
+        repo_url?: string;
+        upgrade_state: UpgradeStatusType;
+        error: string;
+        master_node: boolean;
+        board_name: string;
+        current_fw: string;
+    };
 }
 
 export interface UpgradeNodesInfo {
-    result: {
-        [key: string]: UpgradeInfo;
-    };
+    [key: string]: UpgradeInfo;
 }
