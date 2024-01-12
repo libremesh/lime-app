@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { ComponentChildren } from "preact";
 
+import { INodeInfoBodyItemProps } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo";
 import { UpgradeStatusType } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 
 // todo(kon):
@@ -12,15 +13,51 @@ export const InfoStatusMessageMap: {
     // DOWNLOADING: <Trans>Downloading update</Trans>,
     // UPGRADE_READY: <Trans>Ready for upgrade</Trans>,
     // UPGRADE_SCHEDULED: <Trans>Upgrade scheduled</Trans>,
-    DEFAULT: <Trans>DEFAULT</Trans>,
+    DEFAULT: <Trans>No upgrade in progres</Trans>,
     STARTING: <Trans>STARTING</Trans>,
     DOWNLOADING: <Trans>DOWNLOADING</Trans>,
     READY_FOR_UPGRADE: <Trans>READY_FOR_UPGRADE</Trans>,
     UPGRADE_SCHEDULED: <Trans>UPGRADE_SCHEDULED</Trans>,
     CONFIRMATION_PENDING: <Trans>CONFIRMATION_PENDING</Trans>,
     CONFIRMED: <Trans>CONFIRMED</Trans>,
-    UPDATED: <Trans>UPDATED</Trans>,
     ERROR: <Trans>ERROR</Trans>,
+};
+
+export const DetailedInfoStatusMessageMap: {
+    [status in UpgradeStatusType]: INodeInfoBodyItemProps;
+} = {
+    DEFAULT: {
+        title: <Trans>DEFAULT</Trans>,
+        description: <Trans>TODO</Trans>,
+    },
+    STARTING: {
+        title: <Trans>STARTING</Trans>,
+        description: <Trans>TODO</Trans>,
+    },
+    DOWNLOADING: {
+        title: <Trans>DOWNLOADING</Trans>,
+        description: <Trans>TODO</Trans>,
+    },
+    READY_FOR_UPGRADE: {
+        title: <Trans>READY_FOR_UPGRADE</Trans>,
+        description: <Trans>TODO</Trans>,
+    },
+    UPGRADE_SCHEDULED: {
+        title: <Trans>UPGRADE_SCHEDULED</Trans>,
+        description: <Trans>TODO</Trans>,
+    },
+    CONFIRMATION_PENDING: {
+        title: <Trans>TODO</Trans>,
+        description: <Trans>TODO</Trans>,
+    },
+    CONFIRMED: {
+        title: <Trans>CONFIRMED</Trans>,
+        description: <Trans>TODO</Trans>,
+    },
+    ERROR: {
+        title: <Trans>TODO</Trans>,
+        description: <Trans>TODO</Trans>,
+    },
 };
 
 // export const translations = {

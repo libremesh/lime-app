@@ -5,9 +5,12 @@ import { StatusIcon, StatusIcons } from "components/icons/status";
 import { ListItemCollapsible } from "components/list-material";
 
 import { UpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
-import { InfoStatusMessageMap } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/messagesFromState";
+import {
+    DetailedInfoStatusMessageMap,
+    InfoStatusMessageMap,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages";
 
-interface INodeInfoBodyItemProps {
+export interface INodeInfoBodyItemProps {
     title: ComponentChildren;
     description: ComponentChildren;
 }
@@ -20,15 +23,10 @@ const NodeInfoBodyItem = ({ title, description }: INodeInfoBodyItemProps) => (
 );
 
 const NodeInfoDetail = ({ info }: { info: UpgradeInfo }) => {
-    const props: INodeInfoBodyItemProps[] = []; // todo(kon)
-    return (
-        <NodeInfoBodyItem
-            title={<Trans>Node updated</Trans>}
-            description={
-                <Trans>The firmware is at the most updated version </Trans>
-            }
-        />
-    );
+    const nodeInfo =
+        DetailedInfoStatusMessageMap[info.upgrade_state] ??
+        DetailedInfoStatusMessageMap["DEFAULT"];
+    return <NodeInfoBodyItem {...nodeInfo} />;
     // if (info.state === "UPDATED") {
     //     return (
     //         <NodeInfoBodyItem
@@ -114,12 +112,16 @@ const NodeUpgradeInfoItem = ({
     name: string;
 }) => {
     const status: StatusIcons =
-        info.data.upgrade_state === "ERROR" ? "warning" : "success";
+        info.upgrade_state === "ERROR" ? "warning" : "success";
+
+    const descriptionMsg = InfoStatusMessageMap[info.upgrade_state] ?? (
+        <Trans>Error retrieving the status, is this node outdated?</Trans>
+    );
 
     return (
         <ListItemCollapsible
             title={name}
-            description={InfoStatusMessageMap[info.data.upgrade_state]}
+            description={descriptionMsg}
             leftComponent={<StatusIcon status={status} />}
             rightText={"Info"}
         >
