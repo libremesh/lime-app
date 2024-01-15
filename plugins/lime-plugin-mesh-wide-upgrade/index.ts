@@ -3,4 +3,5 @@ import MeshWideUpgrade from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideU
 export default {
     name: "MeshWideUpgrade",
     page: MeshWideUpgrade,
+    isCommunityProtected: true,
 } as LimePlugin;
