@@ -1,10 +1,10 @@
 import Loading from "components/loading";
 
 import NodeUpgradeInfoItem from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo";
-import { useMeshWideUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
+import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
 
 export const NodesList = () => {
-    const { data, isLoading } = useMeshWideUpgradeInfo({});
+    const { data, isLoading } = useMeshUpgrade();
 
     if (isLoading || data === undefined) {
         return <Loading />;

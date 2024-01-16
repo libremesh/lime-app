@@ -1,25 +1,28 @@
 import { Trans } from "@lingui/macro";
 import { useState } from "preact/hooks";
 
+import Loading from "components/loading";
 import Notification from "components/notifications/notification";
 
-import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
 import NextStepFooter from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nextStepFooter";
 import { MeshWideUpgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/MeshWideUpgradeStatus";
 import { NodesList } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/NodesList";
-import { useMeshWideUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
-
-import { useSession } from "utils/queries";
+import {
+    MeshWideUpgradeProvider,
+    useMeshUpgrade,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
 
 const MeshWideUpgrade = () => {
-    const { data, isLoading } = useMeshWideUpgradeInfo({});
-    const { data: session } = useSession();
-    const { data: newVersionData } = useNewVersion({
-        enabled: session?.username !== undefined,
-    });
+    const {
+        data: meshWideNodes,
+        isLoading,
+        newVersionAvailable,
+    } = useMeshUpgrade();
     const [showNodeList, setShowNodeList] = useState(false);
 
-    // const newVersion = newVersionData && newVersionData.version;
+    if (isLoading || meshWideNodes === undefined) {
+        return <Loading />;
+    }
 
     return (
         <>
@@ -43,9 +46,17 @@ const MeshWideUpgrade = () => {
                 {showNodeList && <NodesList />}
                 {!showNodeList && <MeshWideUpgradeStatus />}
             </div>
-            <NextStepFooter />
+            {newVersionAvailable && <NextStepFooter />}
         </>
     );
 };
 
-export default MeshWideUpgrade;
+const MeshWideUpgradePage = () => {
+    return (
+        <MeshWideUpgradeProvider>
+            <MeshWideUpgrade />
+        </MeshWideUpgradeProvider>
+    );
+};
+
+export default MeshWideUpgradePage;
