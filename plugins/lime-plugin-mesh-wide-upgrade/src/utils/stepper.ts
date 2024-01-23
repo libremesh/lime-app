@@ -34,3 +34,24 @@ export const getStepperStatus = (
     }
     return "ERROR";
 };
+
+export type ShowFooterStepperState = Extract<
+    StepperState,
+    | "UPDATE_AVAILABLE"
+    | "DOWNLOADED_MAIN"
+    | "READY_FOR_UPGRADE"
+    | "CONFIRMATION_PENDING"
+    | "ERROR"
+>;
+
+export function isShowFooterStepperState(
+    value: string
+): value is ShowFooterStepperState {
+    return [
+        "UPDATE_AVAILABLE",
+        "DOWNLOADED_MAIN",
+        "READY_FOR_UPGRADE",
+        "CONFIRMATION_PENDING",
+        "ERROR",
+    ].includes(value);
+}
