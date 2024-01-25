@@ -6,7 +6,8 @@ import api from "utils/uhttpd.service";
 const _meshUpgradeApiCall = async (method: string) => {
     const res = (await api.call(
         "lime-mesh-upgrade",
-        method
+        method,
+        {}
     )) as MeshWideRPCReturnTypes;
     if (res.error) {
         // todo(kon): handle errors with error code or whatever
