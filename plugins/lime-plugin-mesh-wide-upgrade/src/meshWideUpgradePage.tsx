@@ -17,10 +17,11 @@ const MeshWideUpgrade = () => {
         data: meshWideNodes,
         isLoading,
         newVersionAvailable,
+        thisNode,
     } = useMeshUpgrade();
     const [showNodeList, setShowNodeList] = useState(false);
 
-    if (isLoading || meshWideNodes === undefined) {
+    if (isLoading || meshWideNodes === undefined || thisNode === undefined) {
         return <Loading />;
     }
 

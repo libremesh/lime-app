@@ -4,14 +4,16 @@ import { useMemo } from "preact/compat";
 import { FooterStatus } from "components/status/footer";
 import { IStatusAndButton } from "components/status/statusAndButton";
 
-import { useSetUpLocalRepository } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
-import { StepperState } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
+import { useSetBecomeMainNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
 import { isShowFooterStepperState } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
 
-const NextStepFooter = ({ stepperState }: { stepperState: StepperState }) => {
-    // const { data: meshWideNodes, isLoading, totalNodes } = useMeshUpgrade();
-    const { mutate: setUpLocalRepository } = useSetUpLocalRepository({
-        onSuccess: () => {},
+const NextStepFooter = () => {
+    const { stepperState } = useMeshUpgrade();
+    const { mutate: setBecomeMainNode } = useSetBecomeMainNode({
+        onSuccess: () => {
+            console.log("todo: become main node success");
+        },
     });
 
     const showFooter = isShowFooterStepperState(stepperState);
@@ -22,7 +24,7 @@ const NextStepFooter = ({ stepperState }: { stepperState: StepperState }) => {
             case "UPDATE_AVAILABLE":
                 return {
                     status: "success",
-                    onClick: () => setUpLocalRepository({}),
+                    onClick: () => setBecomeMainNode({}),
                     children: (
                         <Trans>
                             Download remote firmware
@@ -74,7 +76,7 @@ const NextStepFooter = ({ stepperState }: { stepperState: StepperState }) => {
                     btn: <Trans>Confirm</Trans>,
                 };
         }
-    }, [setUpLocalRepository, showFooter, stepperState]);
+    }, [setBecomeMainNode, showFooter, stepperState]);
 
     return <>{showFooter && <FooterStatus {...footerProps} />}</>;
 };

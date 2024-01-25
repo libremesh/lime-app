@@ -1,3 +1,5 @@
+import { EupgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/eupgrade";
+
 export type UpgradeStatusType =
     | "DEFAULT" // No transaction
     | "STARTING" // Download firmware to setup as master node
@@ -38,4 +40,9 @@ export interface UpgradeInfo {
 
 export interface UpgradeNodesInfo {
     [key: string]: UpgradeInfo;
+}
+
+export interface MeshWideRPCReturnTypes {
+    code: EupgradeStatus | string;
+    error?: string;
 }

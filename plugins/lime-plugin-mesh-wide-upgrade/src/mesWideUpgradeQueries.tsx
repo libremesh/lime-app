@@ -1,11 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import {
+    getMainNodeStatus,
     getMeshWideUpgradeInfo,
     setBecomeMainNode,
-    setUpLocalRepository,
+    setStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeApi";
 import { UpgradeNodesInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { EupgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/eupgrade";
 
 export function useMeshWideUpgradeInfo(params) {
     return useQuery<UpgradeNodesInfo>(
@@ -17,16 +19,26 @@ export function useMeshWideUpgradeInfo(params) {
     );
 }
 
-export function useSetUpLocalRepository(params) {
+export function useSetBecomeMainNode(params) {
     return useMutation<unknown, unknown, unknown>({
-        mutationFn: setUpLocalRepository,
+        mutationFn: setBecomeMainNode,
         ...params,
     });
 }
 
-export function useSetBecomeMainNode(params) {
+export function useMainNodeStatus(params) {
+    return useQuery<EupgradeStatus>(
+        ["lime-meshwideupgrade", "get_main_node_status"],
+        getMainNodeStatus,
+        {
+            ...params,
+        }
+    );
+}
+
+export function useStartFirmwareUpgradeTransaction(params) {
     return useMutation<unknown, unknown, unknown>({
-        mutationFn: setBecomeMainNode,
+        mutationFn: setStartFirmwareUpgradeTransaction,
         ...params,
     });
 }
