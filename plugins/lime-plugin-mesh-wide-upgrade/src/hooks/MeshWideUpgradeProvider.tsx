@@ -2,23 +2,27 @@ import { ComponentChildren, createContext } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { useContext } from "react";
 
-import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
 import {
-    useMainNodeStatus,
+    useDownloadStatus,
+    useNewVersion,
+} from "plugins/lime-plugin-firmware/src/firmwareQueries";
+import {
+    useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
 import {
+    MeshWideUpgradeInfo,
+    NodeMeshUpgradeInfo,
     StepperState,
-    UpgradeInfo,
-    UpgradeNodesInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { EupgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/eupgrade";
 import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
 
 import { useBoardData, useSession } from "utils/queries";
 
 interface MeshWideUpgradeContextProps {
-    data?: UpgradeNodesInfo;
-    thisNode: UpgradeInfo;
+    data?: MeshWideUpgradeInfo;
+    thisNode: NodeMeshUpgradeInfo;
     totalNodes: number;
     isLoading: boolean;
     isError: boolean;
@@ -43,6 +47,8 @@ export const MeshWideUpgradeProvider = ({
 }) => {
     const [downloadStatusInterval, setDownloadStatusInterval] = useState(null);
 
+    const [isMasterNode, setIsMasterNode] = useState(false);
+
     const {
         data: nodesUpgradeInfo,
         isLoading,
@@ -57,30 +63,40 @@ export const MeshWideUpgradeProvider = ({
     const newVersionAvailable = !!(newVersionData && newVersionData.version);
     const totalNodes =
         nodesUpgradeInfo && Object.entries(nodesUpgradeInfo).length;
-    const thisNode = nodesUpgradeInfo && nodesUpgradeInfo[boardData?.hostname];
 
-    const { data: mainNodeStatus } = useMainNodeStatus({
+    const { data: thisNode } = useMeshUpgradeNodeStatus({
+        refetchInterval: isMasterNode ? downloadStatusInterval : 0,
+        enabled: true,
+    });
+
+    const { data: downloadStatus } = useDownloadStatus({
         refetchInterval: downloadStatusInterval,
         enabled: thisNode?.upgrade_state === "STARTING",
     });
+    const eupgradeStatus = downloadStatus as EupgradeStatus;
+
     const stepperState = getStepperStatus(
         nodesUpgradeInfo,
         thisNode,
         newVersionAvailable,
-        mainNodeStatus
+        eupgradeStatus
     );
 
     useEffect(() => {
         if (
             stepperState === "DOWNLOADING_MAIN" &&
-            mainNodeStatus &&
-            mainNodeStatus === "downloading"
+            eupgradeStatus &&
+            eupgradeStatus === "downloading"
         ) {
             setDownloadStatusInterval(1000);
         } else {
             setDownloadStatusInterval(null);
         }
-    }, [mainNodeStatus, stepperState]);
+    }, [eupgradeStatus, stepperState]);
+
+    useEffect(() => {
+        setIsMasterNode(thisNode.master_node);
+    }, [thisNode.master_node]);
 
     return (
         <MeshWideUpgradeContext.Provider

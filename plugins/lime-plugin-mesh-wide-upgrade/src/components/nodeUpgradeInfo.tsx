@@ -4,7 +4,7 @@ import { ComponentChildren } from "preact";
 import { StatusIcon, StatusIcons } from "components/icons/status";
 import { ListItemCollapsible } from "components/list-material";
 
-import { UpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { MeshWideNodeUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 import {
     DetailedInfoStatusMessageMap,
     InfoStatusMessageMap,
@@ -22,7 +22,7 @@ const NodeInfoBodyItem = ({ title, description }: INodeInfoBodyItemProps) => (
     </div>
 );
 
-const NodeInfoDetail = ({ info }: { info: UpgradeInfo }) => {
+const NodeInfoDetail = ({ info }: { info: MeshWideNodeUpgradeInfo }) => {
     const nodeInfo =
         DetailedInfoStatusMessageMap[info.upgrade_state] ??
         DetailedInfoStatusMessageMap["DEFAULT"];
@@ -108,7 +108,7 @@ const NodeUpgradeInfoItem = ({
     info,
     name,
 }: {
-    info: UpgradeInfo;
+    info: MeshWideNodeUpgradeInfo;
     name: string;
 }) => {
     const status: StatusIcons =

@@ -1,12 +1,12 @@
 import {
+    MeshWideUpgradeInfo,
+    NodeMeshUpgradeInfo,
     StepperState,
-    UpgradeInfo,
-    UpgradeNodesInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 
 export const getStepperStatus = (
-    nodeInfo: UpgradeNodesInfo | undefined,
-    thisNode: UpgradeInfo | undefined,
+    nodeInfo: MeshWideUpgradeInfo | undefined,
+    thisNode: NodeMeshUpgradeInfo | undefined,
     newVersionAvailable: boolean,
     downloadStatus: string | undefined
 ): StepperState => {

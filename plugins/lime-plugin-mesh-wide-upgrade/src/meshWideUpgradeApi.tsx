@@ -1,7 +1,23 @@
-import { MeshWideRPCReturnTypes } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
-import { EupgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/eupgrade";
+import {
+    MeshWideRPCReturnTypes,
+    NodeMeshUpgradeInfo,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 
 import api from "utils/uhttpd.service";
+
+export const getMeshWideUpgradeInfo = async () => {
+    return api.call("shared-state", "getFromSharedState", {
+        data_type: "mesh_wide_upgrade",
+    });
+};
+
+export const getMeshUpgradeNodeStatus = async () => {
+    return (await api.call(
+        "lime-mesh-upgrade",
+        "get_mesh_upgrade_node_status",
+        {}
+    )) as NodeMeshUpgradeInfo;
+};
 
 const _meshUpgradeApiCall = async (method: string) => {
     const res = (await api.call(
@@ -16,20 +32,8 @@ const _meshUpgradeApiCall = async (method: string) => {
     return res.code;
 };
 
-export const getMeshWideUpgradeInfo = async () => {
-    return api.call("shared-state", "getFromSharedState", {
-        data_type: "mesh_wide_upgrade",
-    });
-};
-
 export const setBecomeMainNode = async () => {
-    return await _meshUpgradeApiCall("become_main_node");
-};
-
-export const getMainNodeStatus = async () => {
-    return (await _meshUpgradeApiCall(
-        "get_main_node_status"
-    )) as EupgradeStatus;
+    return (await _meshUpgradeApiCall("become_main_node")) as string;
 };
 
 export const setStartFirmwareUpgradeTransaction = async () => {
