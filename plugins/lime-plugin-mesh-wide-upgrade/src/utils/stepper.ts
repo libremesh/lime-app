@@ -15,9 +15,11 @@ export const getStepperStatus = (
         if (newVersionAvailable) return "UPDATE_AVAILABLE";
         return "NO_UPDATE";
     }
-    if (thisNode.upgrade_state === "STARTING") {
-        if (downloadStatus === "downloaded") return "DOWNLOADED_MAIN";
+    if (thisNode.main_node === "STARTING") {
         return "DOWNLOADING_MAIN";
+    }
+    if (thisNode.main_node === "MAIN_NODE") {
+        return "DOWNLOADED_MAIN";
     }
     // todo(kon): check if the main node will follow the same logic as the other nodes
     if (thisNode.upgrade_state === "DOWNLOADING") {

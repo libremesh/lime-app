@@ -5,16 +5,10 @@ import { FooterStatus } from "components/status/footer";
 import { IStatusAndButton } from "components/status/statusAndButton";
 
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
-import { useSetBecomeMainNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
 import { isShowFooterStepperState } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
 
 const NextStepFooter = () => {
-    const { stepperState } = useMeshUpgrade();
-    const { mutate: setBecomeMainNode } = useSetBecomeMainNode({
-        onSuccess: () => {
-            console.log("todo: become main node success");
-        },
-    });
+    const { stepperState, becomeMainNode } = useMeshUpgrade();
 
     const showFooter = isShowFooterStepperState(stepperState);
 
@@ -24,7 +18,7 @@ const NextStepFooter = () => {
             case "UPDATE_AVAILABLE":
                 return {
                     status: "success",
-                    onClick: () => setBecomeMainNode({}),
+                    onClick: () => becomeMainNode(),
                     children: (
                         <Trans>
                             Download remote firmware
@@ -76,7 +70,7 @@ const NextStepFooter = () => {
                     btn: <Trans>Confirm</Trans>,
                 };
         }
-    }, [setBecomeMainNode, showFooter, stepperState]);
+    }, [becomeMainNode, showFooter, stepperState]);
 
     return <>{showFooter && <FooterStatus {...footerProps} />}</>;
 };

@@ -1,3 +1,7 @@
+import { EupgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/eupgrade";
+
+export type MainNodeStatusType = "NO" | "STARTING" | "MAIN_NODE";
+
 export type UpgradeStatusType =
     | "DEFAULT" // No transaction
     | "STARTING" // Download firmware to setup as master node
@@ -29,19 +33,20 @@ export type StepperState =
  */
 export interface NodeMeshUpgradeInfo {
     timestamp: string;
-    master_node: boolean;
+    main_node: MainNodeStatusType;
     error: string;
     transaction_state: string;
     upgrade_state: UpgradeStatusType;
+    eupgradestate: EupgradeStatus;
+    repo_url?: string;
+    candidate_fw?: string;
+    board_name: string;
+    current_fw: string;
 }
 
 export type MeshWideNodeUpgradeInfo = {
     bleachTTL: number;
     author: string;
-    candidate_fw?: string;
-    repo_url?: string;
-    board_name: string;
-    current_fw: string;
 } & NodeMeshUpgradeInfo;
 
 export interface MeshWideUpgradeInfo {

@@ -14,7 +14,7 @@ export const getMeshWideUpgradeInfo = async () => {
 export const getMeshUpgradeNodeStatus = async () => {
     return (await api.call(
         "lime-mesh-upgrade",
-        "get_mesh_upgrade_node_status",
+        "get_node_status",
         {}
     )) as NodeMeshUpgradeInfo;
 };

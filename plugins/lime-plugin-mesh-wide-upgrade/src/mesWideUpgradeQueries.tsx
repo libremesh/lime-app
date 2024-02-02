@@ -27,7 +27,7 @@ export function useMeshWideUpgradeInfo(params) {
 
 export function useMeshUpgradeNodeStatus(params) {
     return useQuery<NodeMeshUpgradeInfo>(
-        ["lime-mesh-upgrade", "get_mesh_upgrade_node_status"],
+        ["lime-mesh-upgrade", "get_node_status"],
         getMeshUpgradeNodeStatus,
         {
             ...params,
@@ -35,7 +35,7 @@ export function useMeshUpgradeNodeStatus(params) {
     );
 }
 
-export function useSetBecomeMainNode(params) {
+export function useBecomeMainNode(params) {
     return useMutation<unknown, unknown, unknown>({
         mutationFn: setBecomeMainNode,
         ...params,
