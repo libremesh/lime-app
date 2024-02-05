@@ -5,16 +5,20 @@ import { FooterStatus } from "components/status/footer";
 import { IStatusAndButton } from "components/status/statusAndButton";
 
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
-import { isShowFooterStepperState } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
+import {
+    ShowFooterStepperState,
+    isShowFooterStepperState,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
 
 const NextStepFooter = () => {
-    const { stepperState, becomeMainNode } = useMeshUpgrade();
+    const { stepperState, becomeMainNode, startFwUpgradeTransaction } =
+        useMeshUpgrade();
 
     const showFooter = isShowFooterStepperState(stepperState);
 
     const footerProps: IStatusAndButton | null = useMemo(() => {
         if (!showFooter) return null;
-        switch (stepperState) {
+        switch (stepperState as ShowFooterStepperState) {
             case "UPDATE_AVAILABLE":
                 return {
                     status: "success",
@@ -31,7 +35,7 @@ const NextStepFooter = () => {
             case "DOWNLOADED_MAIN":
                 return {
                     status: "success",
-                    onClick: () => {},
+                    onClick: startFwUpgradeTransaction,
                     children: <Trans>Ready to start mesh wide upgrade</Trans>,
                     btn: <Trans>Start</Trans>,
                 };

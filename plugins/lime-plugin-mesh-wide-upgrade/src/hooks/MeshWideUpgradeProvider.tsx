@@ -7,6 +7,7 @@ import {
     useBecomeMainNode,
     useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
+    useStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
 import {
     MeshWideUpgradeInfo,
@@ -28,6 +29,7 @@ interface MeshWideUpgradeContextProps {
     newVersionAvailable: boolean;
     stepperState: StepperState;
     becomeMainNode: () => void;
+    startFwUpgradeTransaction: () => void;
 }
 
 export const MeshWideUpgradeContext =
@@ -39,6 +41,7 @@ export const MeshWideUpgradeContext =
         stepperState: "INITIAL",
         thisNode: null,
         becomeMainNode: () => {},
+        startFwUpgradeTransaction: () => {},
     });
 
 export const MeshWideUpgradeProvider = ({
@@ -59,6 +62,14 @@ export const MeshWideUpgradeProvider = ({
             console.log("todo: become main node success");
         },
     });
+
+    const { mutate: fwUpgradeTransaction } = useStartFirmwareUpgradeTransaction(
+        {
+            onSuccess: () => {
+                console.log("todo: start fw upgrade transaction success");
+            },
+        }
+    );
 
     const { data: boardData } = useBoardData();
     const { data: session } = useSession();
@@ -90,6 +101,10 @@ export const MeshWideUpgradeProvider = ({
         setDownloadStatusInterval(NODE_STATUS_REFETCH_INTERVAL);
     }, [becomeMainNodeMutation]);
 
+    const startFwUpgradeTransaction = useCallback(() => {
+        fwUpgradeTransaction({});
+    }, [fwUpgradeTransaction]);
+
     useEffect(() => {
         if (
             thisNode?.main_node &&
@@ -115,6 +130,7 @@ export const MeshWideUpgradeProvider = ({
                 newVersionAvailable,
                 stepperState,
                 becomeMainNode,
+                startFwUpgradeTransaction,
             }}
         >
             {children}
