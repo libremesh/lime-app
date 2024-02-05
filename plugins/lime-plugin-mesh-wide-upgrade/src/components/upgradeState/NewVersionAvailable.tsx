@@ -4,7 +4,11 @@ import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries"
 
 import { useBoardData } from "utils/queries";
 
-export const NewVersionAvailable = () => {
+export const NewVersionAvailable = ({
+    readyForUpgrade,
+}: {
+    readyForUpgrade?: boolean;
+}) => {
     const { data: boardData } = useBoardData();
     const { data: newVersion } = useNewVersion();
 
@@ -20,8 +24,18 @@ export const NewVersionAvailable = () => {
                 <br />
                 {newVersion && newVersion.version}
             </div>
+            {readyForUpgrade && (
+                <div className="text-2xl">
+                    <Trans>Is ready for upgrade!</Trans>
+                    <br />
+                </div>
+            )}
             <div className="text-4xl">
-                <Trans>New version available!</Trans>
+                {readyForUpgrade ? (
+                    <Trans>Start Mesh Wide Transaction</Trans>
+                ) : (
+                    <Trans>New version available!</Trans>
+                )}
             </div>
         </div>
     );

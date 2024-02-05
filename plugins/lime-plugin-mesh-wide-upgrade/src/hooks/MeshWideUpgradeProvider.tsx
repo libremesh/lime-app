@@ -91,10 +91,16 @@ export const MeshWideUpgradeProvider = ({
     }, [becomeMainNodeMutation]);
 
     useEffect(() => {
-        if (thisNode?.main_node && thisNode.main_node === "STARTING") {
+        if (
+            thisNode?.main_node &&
+            thisNode.main_node === "STARTING" &&
+            thisNode.eupgradestate === "downloading"
+        ) {
             setDownloadStatusInterval(NODE_STATUS_REFETCH_INTERVAL);
+        } else {
+            setDownloadStatusInterval(0);
         }
-    }, [thisNode?.main_node]);
+    }, [thisNode?.eupgradestate, thisNode?.main_node]);
 
     const isLoading = meshWideInfoLoading || thisNodeLoading;
 

@@ -16,7 +16,11 @@ export const getStepperStatus = (
         return "NO_UPDATE";
     }
     if (thisNode.main_node === "STARTING") {
-        return "DOWNLOADING_MAIN";
+        if (downloadStatus === "downloading") {
+            return "DOWNLOADING_MAIN";
+        } else if (downloadStatus === "downloaded") {
+            return "DOWNLOADED_MAIN";
+        }
     }
     if (thisNode.main_node === "MAIN_NODE") {
         return "DOWNLOADED_MAIN";
