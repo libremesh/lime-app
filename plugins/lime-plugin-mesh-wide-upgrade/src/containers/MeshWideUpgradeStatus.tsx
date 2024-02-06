@@ -1,19 +1,22 @@
 import { DownloadingMain } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/DownloadingMain";
+import { ErrorState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ErrorState";
 import { NewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable";
 import { NoNewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NoNewVersion";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
 
 const MeshWideUpgradeStatusState = () => {
-    const { stepperState, becomeMainNode } = useMeshUpgrade();
+    const { stepperState, meshWideError } = useMeshUpgrade();
 
-    if (stepperState === "UPDATE_AVAILABLE") {
+    if (stepperState === "ERROR") {
+        return <ErrorState msg={meshWideError.errorMessage} />;
+    } else if (stepperState === "UPDATE_AVAILABLE") {
         return <NewVersionAvailable />;
     } else if (stepperState === "DOWNLOADING_MAIN") {
         return <DownloadingMain />;
     } else if (stepperState === "DOWNLOADED_MAIN") {
         return <NewVersionAvailable readyForUpgrade />;
     } else if (stepperState === "TRANSACTION_STARTED") {
-        return <>todo</>;
+        return <>Transaction started!</>;
     } else if (stepperState === "READY_FOR_UPGRADE") {
         return <>todo</>;
     } else if (stepperState === "UPGRADE_SCHEDULED") {
@@ -22,14 +25,7 @@ const MeshWideUpgradeStatusState = () => {
         return <>todo</>;
     } else if (stepperState === "CONFIRMED") {
         return <>todo</>;
-    } else if (stepperState === "ERROR") {
-        return <>todo</>;
     }
-    // if (stepperState === "UPDATE_AVAILABLE") {
-    //     return <NewVersionAvailable />;
-    // } else if (stepperState === "DOWNLOADED_MAIN") {
-    //     return <NewVersionAvailable />;
-    // }
     return <NoNewVersionAvailable />;
 };
 

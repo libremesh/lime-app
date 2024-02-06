@@ -57,3 +57,8 @@ export interface MeshWideRPCReturnTypes {
     code: "SUCCESS" | "ERROR";
     error?: string;
 }
+
+export type MeshWideError = {
+    errorCode: string;
+    errorMessage: string;
+};

@@ -10,10 +10,12 @@ import {
     useStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
 import {
+    MeshWideError,
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
     StepperState,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { getMeshWideError } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/processError";
 import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
 
 import { useBoardData, useSession } from "utils/queries";
@@ -30,6 +32,7 @@ interface MeshWideUpgradeContextProps {
     stepperState: StepperState;
     becomeMainNode: () => void;
     startFwUpgradeTransaction: () => void;
+    meshWideError?: MeshWideError;
 }
 
 export const MeshWideUpgradeContext =
@@ -96,6 +99,8 @@ export const MeshWideUpgradeProvider = ({
         eupgradeStatus
     );
 
+    const meshWideError = getMeshWideError(thisNode);
+
     const becomeMainNode = useCallback(() => {
         becomeMainNodeMutation({});
         setDownloadStatusInterval(NODE_STATUS_REFETCH_INTERVAL);
@@ -131,6 +136,7 @@ export const MeshWideUpgradeProvider = ({
                 stepperState,
                 becomeMainNode,
                 startFwUpgradeTransaction,
+                meshWideError,
             }}
         >
             {children}
