@@ -64,17 +64,11 @@ const NextStepFooter = () => {
                 return {
                     status: "warning",
                     onClick: () => {},
-                    children: (
-                        <Trans>
-                            All nodes upgraded,
-                            <br />
-                            awaiting confirmation
-                        </Trans>
-                    ),
-                    btn: <Trans>Confirm</Trans>,
+                    children: <Trans>Try last step again</Trans>,
+                    btn: <Trans>Try again</Trans>,
                 };
         }
-    }, [becomeMainNode, showFooter, stepperState]);
+    }, [becomeMainNode, showFooter, startFwUpgradeTransaction, stepperState]);
 
     return <>{showFooter && <FooterStatus {...footerProps} />}</>;
 };

@@ -20,7 +20,7 @@ import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/util
 
 import { useBoardData, useSession } from "utils/queries";
 
-const NODE_STATUS_REFETCH_INTERVAL = 1000;
+const NODE_STATUS_REFETCH_INTERVAL = 2000;
 
 interface MeshWideUpgradeContextProps {
     data?: MeshWideUpgradeInfo;
@@ -58,7 +58,9 @@ export const MeshWideUpgradeProvider = ({
         data: nodesUpgradeInfo,
         isLoading: meshWideInfoLoading,
         isError,
-    } = useMeshWideUpgradeInfo({});
+    } = useMeshWideUpgradeInfo({
+        refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
+    });
 
     const { mutate: becomeMainNodeMutation } = useBecomeMainNode({
         onSuccess: () => {
