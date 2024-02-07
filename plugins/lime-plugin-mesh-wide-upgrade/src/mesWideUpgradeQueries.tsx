@@ -11,6 +11,11 @@ import {
     NodeMeshUpgradeInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 
+export const meshUpgradeNodeStatusKey = [
+    "lime-mesh-upgrade",
+    "get_node_status",
+];
+
 // Shared state related queries
 
 export function useMeshWideUpgradeInfo(params) {
@@ -27,7 +32,7 @@ export function useMeshWideUpgradeInfo(params) {
 
 export function useMeshUpgradeNodeStatus(params) {
     return useQuery<NodeMeshUpgradeInfo>(
-        ["lime-mesh-upgrade", "get_node_status"],
+        meshUpgradeNodeStatusKey,
         getMeshUpgradeNodeStatus,
         {
             ...params,

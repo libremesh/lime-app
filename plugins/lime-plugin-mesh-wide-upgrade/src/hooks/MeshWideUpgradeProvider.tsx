@@ -4,6 +4,7 @@ import { useCallback, useContext } from "react";
 
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
 import {
+    meshUpgradeNodeStatusKey,
     useBecomeMainNode,
     useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
@@ -19,6 +20,7 @@ import { getMeshWideError } from "plugins/lime-plugin-mesh-wide-upgrade/src/util
 import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
 
 import { useBoardData, useSession } from "utils/queries";
+import queryCache from "utils/queryCache";
 
 const NODE_STATUS_REFETCH_INTERVAL = 2000;
 
@@ -54,6 +56,13 @@ export const MeshWideUpgradeProvider = ({
 }) => {
     const [downloadStatusInterval, setDownloadStatusInterval] = useState(0);
 
+    // UseCallback tpo invalidate queries
+    const invalidateQueries = useCallback(() => {
+        queryCache.invalidateQueries({
+            queryKey: meshUpgradeNodeStatusKey,
+        });
+    }, []);
+
     const {
         data: nodesUpgradeInfo,
         isLoading: meshWideInfoLoading,
@@ -64,6 +73,7 @@ export const MeshWideUpgradeProvider = ({
 
     const { mutate: becomeMainNodeMutation } = useBecomeMainNode({
         onSuccess: () => {
+            invalidateQueries();
             console.log("todo: become main node success");
         },
     });
@@ -71,6 +81,7 @@ export const MeshWideUpgradeProvider = ({
     const { mutate: fwUpgradeTransaction } = useStartFirmwareUpgradeTransaction(
         {
             onSuccess: () => {
+                invalidateQueries();
                 console.log("todo: start fw upgrade transaction success");
             },
         }
