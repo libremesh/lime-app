@@ -4,7 +4,6 @@ export type MainNodeStatusType = "NO" | "STARTING" | "MAIN_NODE";
 
 export type UpgradeStatusType =
     | "DEFAULT" // No transaction
-    | "STARTING" // Download firmware to setup as master node
     | "DOWNLOADING" // Transaction started
     | "READY_FOR_UPGRADE"
     | "UPGRADE_SCHEDULED"
