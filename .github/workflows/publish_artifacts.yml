@@ -1,0 +1,54 @@
+name: CI-Development
+
+on:
+    pull_request:
+        types:
+            - labeled
+
+jobs:
+  build-artifacts:
+    if: contains(github.event.pull_request.labels.*.name, 'artifact')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Find a PR comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body-includes: 'Artifacts deployed: '
+      -   name: Delete Comment
+          uses: actions/github-script@v6
+          continue-on-error: true
+          if: steps.fc.outputs.comment-id != 0
+          with:
+              script: |
+                  github.rest.issues.deleteComment({
+                    comment_id: ${{ steps.fc.outputs.comment-id }},
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                  })
+
+      - uses: actions/checkout@v3
+
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+            node-version: 16
+
+      - uses: preactjs/compressed-size-action@v2
+        with:
+          build-script: "build:production"
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+            name: build-artifacts
+            path: build/
+
+      - name: Update the PR comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+            issue-number: ${{ github.event.pull_request.number }}
+            body: |
+                Artifacts deployed:  ${{ steps.artifact-upload-step.outputs.artifact-url }}
