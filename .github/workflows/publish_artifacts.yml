@@ -2,11 +2,11 @@ name: Publish artifacts
 
 on:
     pull_request:
-        types: [ labeled ]
+        types: [ labeled, synchronize ]
 
 jobs:
     build-artifacts:
-        if: ${{ github.event.label.name == 'artifact' }}
+        if: contains(github.event.pull_request.labels.*.name, 'artifact')
         runs-on: ubuntu-latest
 
         steps:
