@@ -21,8 +21,13 @@ jobs:
           with:
             build-script: "build:production"
 
+        # Used to send a comment to the PR with the artifact url
+        - name: Save PR number
+          run: |
+           echo ${{ github.event.number }} > ./build/NR
+
         - name: Upload build artifacts
           uses: actions/upload-artifact@v4
           with:
-            name: build-artifacts
+            name: limeAppBuild-${{ github.event.number }}
             path: build/
