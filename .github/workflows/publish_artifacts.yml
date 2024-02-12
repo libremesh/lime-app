@@ -24,10 +24,11 @@ jobs:
         # Used to send a comment to the PR with the artifact url
         - name: Save PR number
           run: |
-           echo ${{ github.event.number }} > ./build/NR
+              mkdir -p build/pr_number/
+              touch build/pr_number/${{ github.event.number }}
 
         - name: Upload build artifacts
           uses: actions/upload-artifact@v4
           with:
-            name: limeAppBuild-${{ github.event.number }}
+            name: limeAppBuild
             path: build/
