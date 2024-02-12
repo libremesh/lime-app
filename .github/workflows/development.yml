@@ -1,4 +1,4 @@
-name: CI-Development
+name: Test build
 
 on: [pull_request]
 
