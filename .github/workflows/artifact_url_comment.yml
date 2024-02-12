@@ -1,0 +1,113 @@
+name: Comment on the pull request the artifact url
+
+on:
+    workflow_run:
+        workflows: ["Publish artifacts"]
+        types:
+            - completed
+
+jobs:
+    upload:
+        runs-on: ubuntu-latest
+        if: >
+            github.event.workflow_run.event == 'pull_request' &&
+            github.event.workflow_run.conclusion == 'success'
+        steps:
+            #            -   name: 'Download artifact'
+            #                uses: actions/github-script@v6
+            #                with:
+            #                    script: |
+            #                        let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+            #                           owner: context.repo.owner,
+            #                           repo: context.repo.repo,
+            #                           run_id: context.payload.workflow_run.id,
+            #                        });
+            #                        let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+            #                          return artifact.name == "pr_number"
+            #                        })[0];
+            #                        let download = await github.rest.actions.downloadArtifact({
+            #                           owner: context.repo.owner,
+            #                           repo: context.repo.repo,
+            #                           artifact_id: matchArtifact.id,
+            #                           archive_format: 'zip',
+            #                        });
+            #                        let fs = require('fs');
+            #                        fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/pr_number.zip`, Buffer.from(download.data));
+            #            - name: 'Download artifact'
+            #              uses: actions/github-script@v3.1.0
+            #              with:
+            #                  script: |
+            #                      var artifacts = await github.actions.listWorkflowRunArtifacts({
+            #                         owner: context.repo.owner,
+            #                         repo: context.repo.repo,
+            #                         run_id: ${{github.event.workflow_run.id }},
+            #                      });
+            #                      var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+            #                        print(artifact.name);
+            #                        return artifact.name == "limeAppBuild"
+            #                      })[0];
+            #                      print(matchArtifact);
+            #                      var download = await github.actions.downloadArtifact({
+            #                         owner: context.repo.owner,
+            #                         repo: context.repo.repo,
+            #                         artifact_id: matchArtifact.id,
+            #                         archive_format: 'zip',
+            #                      });
+            #                      var fs = require('fs');
+            #                      fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+            #            - run: unzip pr.zip
+            #            -   name: 'Comment on PR'
+            #                uses: actions/github-script@v3
+            #                with:
+            #                    github-token: ${{ secrets.GITHUB_TOKEN }}
+            #                    script: |
+            #                        var fs = require('fs');
+            #                        var issue_number = Number(fs.readFileSync('./NR'));
+            #                        await github.issues.createComment({
+            #                          owner: context.repo.owner,
+            #                          repo: context.repo.repo,
+            #                          issue_number: issue_number,
+            #                          body: 'Everything is OK. Thank you for the PR!'
+            #                        });
+
+            - run: |
+                echo "Downloading artifact"
+                  echo  ${{github.event.workflow_run.id }}
+                  echo  ${{github.event.workflow_run.artifacts_url }}
+                  echo  ${{github.event.workflow_run.pull_requests[0].url }}
+            - uses: actions/download-artifact@v4
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  run-id: ${{github.event.workflow_run.id }}
+
+            -   name: Get PR number
+                run: echo "PR_NUM=$(ls limeAppBuild/pr_number)" >> $GITHUB_ENV
+            - name: Display structure of downloaded files
+              run: ls -R
+            - name: Test
+              run: echo $PR_NUM
+
+            -   name: Find a PR comment
+                uses: peter-evans/find-comment@v2
+                id: fc
+                with:
+                    issue-number: ${{ env.PR_NUM }}
+                    body-includes: 'Artifacts deployed: '
+            -   name: Delete Comment
+                uses: actions/github-script@v6
+                continue-on-error: true
+                if: steps.fc.outputs.comment-id != 0
+                with:
+                    script: |
+                        github.rest.issues.deleteComment({
+                          comment_id: ${{ steps.fc.outputs.comment-id }},
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                        })
+
+            -   name: Update the PR comment
+                uses: peter-evans/create-or-update-comment@v2
+                with:
+                    issue-number: ${{ env.PR_NUM }}
+                    body: |
+                        Artifacts deployed: ${{github.event.workflow_run.artifacts_url }}
