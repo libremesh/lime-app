@@ -23,14 +23,13 @@ export const getStepperStatus = (
         }
     }
     if (thisNode.main_node === "MAIN_NODE") {
-        return "DOWNLOADED_MAIN";
+        return "TRANSACTION_STARTED";
     }
     // todo(kon): check if the main node will follow the same logic as the other nodes
     if (thisNode.upgrade_state === "DOWNLOADING") {
         return "TRANSACTION_STARTED";
     }
     if (
-        thisNode.upgrade_state === "READY_FOR_UPGRADE" ||
         thisNode.upgrade_state === "UPGRADE_SCHEDULED" ||
         thisNode.upgrade_state === "CONFIRMATION_PENDING" ||
         thisNode.upgrade_state === "ERROR" ||
@@ -45,7 +44,7 @@ export type ShowFooterStepperState = Extract<
     StepperState,
     | "UPDATE_AVAILABLE"
     | "DOWNLOADED_MAIN"
-    | "READY_FOR_UPGRADE"
+    | "TRANSACTION_STARTED"
     | "CONFIRMATION_PENDING"
     | "ERROR"
 >;
@@ -56,7 +55,7 @@ export function isShowFooterStepperState(
     return [
         "UPDATE_AVAILABLE",
         "DOWNLOADED_MAIN",
-        "READY_FOR_UPGRADE",
+        "TRANSACTION_STARTED",
         "CONFIRMATION_PENDING",
         "ERROR",
     ].includes(value);

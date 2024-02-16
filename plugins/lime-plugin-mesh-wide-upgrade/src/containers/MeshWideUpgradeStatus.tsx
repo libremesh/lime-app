@@ -17,8 +17,6 @@ const MeshWideUpgradeStatusState = () => {
         return <NewVersionAvailable readyForUpgrade />;
     } else if (stepperState === "TRANSACTION_STARTED") {
         return <>Transaction started!</>;
-    } else if (stepperState === "READY_FOR_UPGRADE") {
-        return <>todo</>;
     } else if (stepperState === "UPGRADE_SCHEDULED") {
         return <>todo</>;
     } else if (stepperState === "CONFIRMATION_PENDING") {

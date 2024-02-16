@@ -11,8 +11,12 @@ import {
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
 
 const NextStepFooter = () => {
-    const { stepperState, becomeMainNode, startFwUpgradeTransaction } =
-        useMeshUpgrade();
+    const {
+        stepperState,
+        becomeMainNode,
+        startFwUpgradeTransaction,
+        allNodesReadyForUpgrade,
+    } = useMeshUpgrade();
 
     const showFooter = isShowFooterStepperState(stepperState);
 
@@ -39,12 +43,19 @@ const NextStepFooter = () => {
                     children: <Trans>Ready to start mesh wide upgrade</Trans>,
                     btn: <Trans>Start</Trans>,
                 };
-            case "READY_FOR_UPGRADE":
+            case "TRANSACTION_STARTED":
                 return {
-                    status: "success",
+                    status: allNodesReadyForUpgrade ? "success" : "warning",
                     onClick: () => {},
-                    children: <Trans>The network is ready for upgrade</Trans>,
-                    btn: <Trans>Upgrade</Trans>,
+                    children: allNodesReadyForUpgrade ? (
+                        <Trans>Ready to start mesh wide upgrade</Trans>
+                    ) : (
+                        <Trans>
+                            Some nodes are not ready for upgrade <br />
+                            Check node details for more info
+                        </Trans>
+                    ),
+                    btn: <Trans>Schedule upgrade</Trans>,
                 };
             case "CONFIRMATION_PENDING":
                 return {

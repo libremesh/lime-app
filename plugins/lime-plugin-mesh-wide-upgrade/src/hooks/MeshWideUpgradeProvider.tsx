@@ -1,4 +1,5 @@
 import { ComponentChildren, createContext } from "preact";
+import { useMemo } from "preact/compat";
 import { useEffect, useState } from "preact/hooks";
 import { useCallback, useContext } from "react";
 
@@ -35,6 +36,7 @@ interface MeshWideUpgradeContextProps {
     becomeMainNode: () => void;
     startFwUpgradeTransaction: () => void;
     meshWideError?: MeshWideError;
+    allNodesReadyForUpgrade: boolean;
 }
 
 export const MeshWideUpgradeContext =
@@ -47,6 +49,7 @@ export const MeshWideUpgradeContext =
         thisNode: null,
         becomeMainNode: () => {},
         startFwUpgradeTransaction: () => {},
+        allNodesReadyForUpgrade: false,
     });
 
 export const MeshWideUpgradeProvider = ({
@@ -123,6 +126,13 @@ export const MeshWideUpgradeProvider = ({
         fwUpgradeTransaction({});
     }, [fwUpgradeTransaction]);
 
+    // useMemo to check that all nodes have the status of READY_FOR_UPGRADE
+    const allNodesReadyForUpgrade = useMemo(() => {
+        return Object.values(nodesUpgradeInfo || {}).every(
+            (node) => node.upgrade_state === "READY_FOR_UPGRADE"
+        );
+    }, [nodesUpgradeInfo]);
+
     useEffect(() => {
         if (
             thisNode?.main_node &&
@@ -150,6 +160,7 @@ export const MeshWideUpgradeProvider = ({
                 becomeMainNode,
                 startFwUpgradeTransaction,
                 meshWideError,
+                allNodesReadyForUpgrade,
             }}
         >
             {children}

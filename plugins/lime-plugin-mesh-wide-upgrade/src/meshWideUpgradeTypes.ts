@@ -21,7 +21,6 @@ export type StepperState =
     | "DOWNLOADING_MAIN" // Downloading firmware to setup as master node
     | "DOWNLOADED_MAIN" // Downloaded firmware to setup as master node
     | "TRANSACTION_STARTED" // Transaction initiated and sharing new firmware
-    | "READY_FOR_UPGRADE" // Nodes are ready for upgrade
     | "UPGRADE_SCHEDULED" // Upgrade scheduled
     | "CONFIRMATION_PENDING" // Upgrade done, confirmation pending.
     | "CONFIRMED" // Upgrade done, confirmed.
