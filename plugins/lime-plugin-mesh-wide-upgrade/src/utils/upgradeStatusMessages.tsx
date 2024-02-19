@@ -2,7 +2,11 @@ import { Trans } from "@lingui/macro";
 import { ComponentChildren } from "preact";
 
 import { INodeInfoBodyItemProps } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo";
-import { UpgradeStatusType } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import {
+    MainNodeStatusType,
+    MeshWideNodeUpgradeInfo,
+    UpgradeStatusType,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 
 // todo(kon):
 export const InfoStatusMessageMap: {
@@ -20,13 +24,13 @@ export const InfoStatusMessageMap: {
 type DetailedInfoStatusMessageMapType = {
     [status in UpgradeStatusType]: INodeInfoBodyItemProps;
 };
-export const DetailedInfoStatusMessageMap = (
-    errorMsg?: string
+export const detailedInfoStatusMessageMap = (
+    nodeInfo?: MeshWideNodeUpgradeInfo
 ): DetailedInfoStatusMessageMapType => {
     return {
         DEFAULT: {
-            title: <Trans>Error</Trans>,
-            description: { errorMsg },
+            title: <Trans>Everything is up to date!</Trans>,
+            description: <Trans>No new version available is found</Trans>,
         },
         DOWNLOADING: {
             title: <Trans>This node is downloading a new firmware</Trans>,
@@ -63,7 +67,27 @@ export const DetailedInfoStatusMessageMap = (
         },
         ERROR: {
             title: <Trans>This node has an error!</Trans>,
-            description: <> {errorMsg}</>,
+            description: nodeInfo.error,
         },
     };
+};
+
+type MainNodeInfoStatusMessageMapType = {
+    [status in MainNodeStatusType]: INodeInfoBodyItemProps;
+};
+
+export const mainNodeStatusMessageMap: MainNodeInfoStatusMessageMapType = {
+    NO: null,
+    STARTING: {
+        title: <Trans>Setting up main node</Trans>,
+        description: (
+            <Trans>The become main node process is starting on this node</Trans>
+        ),
+    },
+    MAIN_NODE: {
+        title: <Trans>This is a main node</Trans>,
+        description: (
+            <Trans>Other nodes will download the firmware from it</Trans>
+        ),
+    },
 };

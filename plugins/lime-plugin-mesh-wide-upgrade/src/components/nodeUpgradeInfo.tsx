@@ -6,8 +6,9 @@ import { ListItemCollapsible } from "components/list-material";
 
 import { MeshWideNodeUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
 import {
-    DetailedInfoStatusMessageMap,
     InfoStatusMessageMap,
+    detailedInfoStatusMessageMap,
+    mainNodeStatusMessageMap,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages";
 
 export interface INodeInfoBodyItemProps {
@@ -21,13 +22,6 @@ const NodeInfoBodyItem = ({ title, description }: INodeInfoBodyItemProps) => (
         <div className="text-gray-600">{description}</div>
     </div>
 );
-
-const NodeInfoDetail = ({ info }: { info: MeshWideNodeUpgradeInfo }) => {
-    const nodeInfo =
-        DetailedInfoStatusMessageMap(info.error)[info.upgrade_state] ??
-        DetailedInfoStatusMessageMap()["DEFAULT"];
-    return <NodeInfoBodyItem {...nodeInfo} />;
-};
 
 const NodeUpgradeInfoItem = ({
     info,
@@ -43,6 +37,12 @@ const NodeUpgradeInfoItem = ({
         <Trans>Error retrieving the status, is this node outdated?</Trans>
     );
 
+    const nodeStatusInfo =
+        detailedInfoStatusMessageMap(info)[info.upgrade_state] ??
+        detailedInfoStatusMessageMap()["DEFAULT"];
+
+    const mainNodeStatusInfo = mainNodeStatusMessageMap[info.main_node];
+
     return (
         <ListItemCollapsible
             title={name}
@@ -50,7 +50,16 @@ const NodeUpgradeInfoItem = ({
             leftComponent={<StatusIcon status={status} />}
             rightText={"Info"}
         >
-            <NodeInfoDetail info={info} />
+            <NodeInfoBodyItem {...nodeStatusInfo} />
+            {mainNodeStatusInfo && <NodeInfoBodyItem {...mainNodeStatusInfo} />}
+            <NodeInfoBodyItem
+                title={<Trans>Board</Trans>}
+                description={<Trans>{info.board_name}</Trans>}
+            />
+            <NodeInfoBodyItem
+                title={<Trans>Firmware version</Trans>}
+                description={<Trans>{info.current_fw}</Trans>}
+            />
         </ListItemCollapsible>
     );
 };
