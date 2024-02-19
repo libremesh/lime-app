@@ -4,6 +4,7 @@ import { useMemo } from "preact/compat";
 import { FooterStatus } from "components/status/footer";
 import { IStatusAndButton } from "components/status/statusAndButton";
 
+import { useScheduleUpgradeModal } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/modals";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
 import {
     ShowFooterStepperState,
@@ -15,8 +16,17 @@ const NextStepFooter = () => {
         stepperState,
         becomeMainNode,
         startFwUpgradeTransaction,
-        allNodesReadyForUpgrade,
+        allNodesReadyForUpgrade: allNodesReady,
     } = useMeshUpgrade();
+
+    const { toggleModal: toggleStartSchedule, showScheduleModal } =
+        useScheduleUpgradeModal({
+            allNodesReady,
+            cb: () => {
+                console.log("Schedule upgrade");
+                // startFwUpgradeTransaction()
+            },
+        });
 
     const showFooter = isShowFooterStepperState(stepperState);
 
@@ -45,9 +55,11 @@ const NextStepFooter = () => {
                 };
             case "TRANSACTION_STARTED":
                 return {
-                    status: allNodesReadyForUpgrade ? "success" : "warning",
-                    onClick: () => {},
-                    children: allNodesReadyForUpgrade ? (
+                    status: allNodesReady ? "success" : "warning",
+                    onClick: () => {
+                        showScheduleModal();
+                    },
+                    children: allNodesReady ? (
                         <Trans>Ready to start mesh wide upgrade</Trans>
                     ) : (
                         <Trans>
