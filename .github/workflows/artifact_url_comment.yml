@@ -17,6 +17,7 @@ jobs:
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   run-id: ${{github.event.workflow_run.id }}
+                  path: limeAppBuild/
 
             -   name: Get PR number
                 run: echo "PR_NUM=$(ls limeAppBuild/pr_number)" >> $GITHUB_ENV
