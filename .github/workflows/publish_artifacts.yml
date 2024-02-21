@@ -30,5 +30,6 @@ jobs:
         - name: Upload build artifacts
           uses: actions/upload-artifact@v4
           with:
-            name: limeAppBuild
+            name: limeAppBuild-${{ github.event.number }}
             path: build/
+            overwrite: true
