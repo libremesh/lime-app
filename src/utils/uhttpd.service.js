@@ -17,15 +17,18 @@ const parseResult = (result) =>
     });
 
 export class UhttpdService {
-    constructor() {
-        this.url = `${window.origin}/ubus`;
+    constructor(customIp) {
+        this.url = customIp
+            ? `http://${customIp}/ubus`
+            : `${window.origin}/ubus`;
         this.jsonrpc = "2.0";
         this.sec = 0;
         this.requestList = [];
+        this.sidKey = `sid-${customIp}`; // Store sid by url to be able to use multiple instances of uhttpdService
     }
 
     sid() {
-        const sid = sessionStorage.getItem("sid");
+        const sid = sessionStorage.getItem(this.sidKey);
         return sid || UNAUTH_SESSION_ID;
     }
 
@@ -64,7 +67,7 @@ export class UhttpdService {
                 new Promise((res, rej) => {
                     if (response.ubus_rpc_session) {
                         sessionStorage.setItem(
-                            "sid",
+                            this.sidKey,
                             response.ubus_rpc_session
                         );
                         res(response);
