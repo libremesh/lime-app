@@ -1,9 +1,9 @@
-import {
-    MeshWideRPCReturnTypes,
-    NodeMeshUpgradeInfo,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { NodeMeshUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { meshUpgradeApiCall } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 
-import api from "utils/uhttpd.service";
+import { ParallelMutationError } from "utils/meshWideSyncCall";
+import { login } from "utils/queries";
+import api, { UhttpdService } from "utils/uhttpd.service";
 
 export const getMeshWideUpgradeInfo = async () => {
     return api.call("shared-state", "getFromSharedState", {
@@ -19,23 +19,35 @@ export const getMeshUpgradeNodeStatus = async () => {
     )) as NodeMeshUpgradeInfo;
 };
 
-const _meshUpgradeApiCall = async (method: string) => {
-    const res = (await api.call(
-        "lime-mesh-upgrade",
-        method,
-        {}
-    )) as MeshWideRPCReturnTypes;
-    if (res.error) {
-        // todo(kon): handle errors with error code or whatever
-        throw new Error(res.error);
-    }
-    return res.code;
-};
-
 export const setBecomeMainNode = async () => {
-    return (await _meshUpgradeApiCall("become_main_node")) as string;
+    return (await meshUpgradeApiCall("become_main_node")) as string;
 };
 
 export const setStartFirmwareUpgradeTransaction = async () => {
-    return await _meshUpgradeApiCall("start_firmware_upgrade_transaction");
+    return await meshUpgradeApiCall("start_firmware_upgrade_transaction");
 };
+
+// Remote API calls
+
+export async function remoteStartSafeUpgrade({ ip }: { ip: string }) {
+    const customApi = new UhttpdService(ip);
+    try {
+        await login({ username: "lime-app", password: "generic", customApi });
+    } catch (error) {
+        throw new ParallelMutationError(`Cannot login for ${ip}`, ip, error);
+    }
+    try {
+        // return await meshUpgradeApiCall("start_safe_upgrade");
+        return (await customApi.call(
+            "lime-utils",
+            "get_node_status",
+            {}
+        )) as NodeMeshUpgradeInfo;
+    } catch (error) {
+        throw new ParallelMutationError(
+            `Cannot startSafeUpgrade for ${ip}`,
+            ip,
+            error
+        );
+    }
+}
