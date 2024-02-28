@@ -1,4 +1,4 @@
-import { NodeMeshUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { NodeMeshUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import { meshUpgradeApiCall } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 
 import { ParallelMutationError } from "utils/meshWideSyncCall";

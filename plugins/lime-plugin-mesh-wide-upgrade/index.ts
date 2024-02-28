@@ -1,7 +1,7 @@
-import MeshWideUpgradePage from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradePage";
+import MeshUpgradePage from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradePage";
 
 export default {
     name: "MeshWideUpgrade",
-    page: MeshWideUpgradePage,
+    page: MeshUpgradePage,
     isCommunityProtected: true,
 } as LimePlugin;

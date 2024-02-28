@@ -1,4 +1,4 @@
-import { MeshWideRPCReturnTypes } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { MeshWideRPCReturnTypes } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 
 import api, { UhttpdService } from "utils/uhttpd.service";
 

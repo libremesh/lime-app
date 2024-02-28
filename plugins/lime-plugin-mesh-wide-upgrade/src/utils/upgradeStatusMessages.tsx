@@ -6,7 +6,7 @@ import {
     MainNodeStatusType,
     MeshWideNodeUpgradeInfo,
     UpgradeStatusType,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 
 // todo(kon):
 export const InfoStatusMessageMap: {

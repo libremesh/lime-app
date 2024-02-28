@@ -10,13 +10,13 @@ import {
     useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
     useStartFirmwareUpgradeTransaction,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/mesWideUpgradeQueries";
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 import {
     MeshWideError,
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
     StepperState,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import { getMeshWideError } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/processError";
 import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/stepper";
 

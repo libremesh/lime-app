@@ -4,7 +4,7 @@ import { ComponentChildren } from "preact";
 import { StatusIcon, StatusIcons } from "components/icons/status";
 import { ListItemCollapsible } from "components/list-material";
 
-import { MeshWideNodeUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { MeshWideNodeUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import {
     InfoStatusMessageMap,
     detailedInfoStatusMessageMap,

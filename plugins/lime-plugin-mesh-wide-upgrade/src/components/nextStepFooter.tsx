@@ -1,11 +1,13 @@
 import { Trans } from "@lingui/macro";
 import { useMemo } from "preact/compat";
 
+import { Button } from "components/buttons/button";
 import { FooterStatus } from "components/status/footer";
 import { IStatusAndButton } from "components/status/statusAndButton";
 
 import { useScheduleUpgradeModal } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/modals";
-import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
+import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
+import { useStartSafeUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 import {
     ShowFooterStepperState,
     isShowFooterStepperState,

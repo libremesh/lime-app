@@ -1,7 +1,7 @@
 import {
     MeshWideError,
     NodeMeshUpgradeInfo,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 
 export const getMeshWideError = (
     thisNode: NodeMeshUpgradeInfo

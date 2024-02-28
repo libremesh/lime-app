@@ -1,4 +1,4 @@
-import { MeshWideUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+import { MeshWideUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 
 const updatedCase: MeshWideUpgradeInfo = {
     result: {

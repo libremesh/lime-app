@@ -5,12 +5,12 @@ import Loading from "components/loading";
 import Notification from "components/notifications/notification";
 
 import NextStepFooter from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nextStepFooter";
-import { MeshWideUpgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/MeshWideUpgradeStatus";
-import { NodesList } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/NodesList";
+import { MeshWideUpgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus";
+import { NodesList } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/nodesList";
 import {
     MeshWideUpgradeProvider,
     useMeshUpgrade,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/MeshWideUpgradeProvider";
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 
 const MeshWideUpgrade = () => {
     const {
@@ -52,7 +52,7 @@ const MeshWideUpgrade = () => {
     );
 };
 
-const MeshWideUpgradePage = () => {
+const MeshUpgradePage = () => {
     return (
         <MeshWideUpgradeProvider>
             <MeshWideUpgrade />
@@ -60,4 +60,4 @@ const MeshWideUpgradePage = () => {
     );
 };
 
-export default MeshWideUpgradePage;
+export default MeshUpgradePage;

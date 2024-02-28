@@ -6,11 +6,11 @@ import {
     remoteStartSafeUpgrade,
     setBecomeMainNode,
     setStartFirmwareUpgradeTransaction,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeApi";
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeApi";
 import {
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshWideUpgradeTypes";
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import { useMeshWideNodes } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
 import { useMeshWideSyncCall } from "utils/meshWideSyncCall";
@@ -60,12 +60,12 @@ export function useStartFirmwareUpgradeTransaction(params) {
 
 // Parallel queries/mutations
 
-export const useStartSafeUpgrade = () => {
+export const useStartMeshWideSafeUpgrade = (opts) => {
     // State to store the errors
     const { data: nodes } = useMeshWideNodes({});
     const ips = Object.values(nodes || {}).map(
         // @ts-ignore
         (node) => node?.ipv4 ?? ""
     );
-    return useMeshWideSyncCall(remoteStartSafeUpgrade, ips);
+    return useMeshWideSyncCall(remoteStartSafeUpgrade, ips, undefined, ...opts);
 };
