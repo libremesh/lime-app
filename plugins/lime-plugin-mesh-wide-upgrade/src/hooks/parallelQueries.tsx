@@ -30,9 +30,9 @@ async function startSafeUpgrade({ ip }: { ip: string }) {
 export const useStartSafeUpgrade = () => {
     // State to store the errors
     const { data: nodes } = useMeshWideNodes({});
-    const ips = Object.entries(nodes || {}).map(
+    const ips = Object.values(nodes || {}).map(
         // @ts-ignore
-        ([_, node]) => node?.ipv4 ?? ""
+        (node) => node?.ipv4 ?? ""
     );
     return useMeshWideSyncCall(startSafeUpgrade, ips);
 };
