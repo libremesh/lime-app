@@ -18,13 +18,21 @@ export function useSession() {
     return useQuery(["session", "get"], getSession, { staleTime: Infinity });
 }
 
-function login({ username, password }) {
+/**
+ * Login function
+ * @param customApi it accepts a custom instance of UhttpdService to be used for login to a custom API
+ */
+export function login({ username, password, customApi }) {
+    if (customApi) {
+        return customApi.login(username, password);
+    }
     return api.login(username, password);
 }
 
 export function useLogin() {
     return useMutation(login, {
         onSuccess: (res) => {
+            // @ts-ignore
             queryCache.setQueryData(["session", "get"], () => res.data);
         },
     });
