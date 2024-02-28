@@ -60,12 +60,17 @@ export function useStartFirmwareUpgradeTransaction(params) {
 
 // Parallel queries/mutations
 
-export const useStartMeshWideSafeUpgrade = (opts) => {
+export const useStartMeshWideSafeUpgrade = (opts?) => {
     // State to store the errors
     const { data: nodes } = useMeshWideNodes({});
     const ips = Object.values(nodes || {}).map(
         // @ts-ignore
         (node) => node?.ipv4 ?? ""
     );
-    return useMeshWideSyncCall(remoteStartSafeUpgrade, ips, undefined, ...opts);
+    return useMeshWideSyncCall({
+        mutationKey: ["lime-mesh-upgrade", "start_safe_upgrade"],
+        mutationFn: remoteStartSafeUpgrade,
+        ips,
+        options: opts,
+    });
 };
