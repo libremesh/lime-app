@@ -75,7 +75,7 @@ export const useMeshWideSyncCall = <TVariables, TResult>({
     variables,
     options,
 }: IMeshWideSyncCall<TVariables, TResult>) => {
-    const { data: results, setData: setResults } = useSharedData<
+    const { data: mutationResults, setData: setResults } = useSharedData<
         SyncCallCacheObject<TResult>
     >([...mutationKey, "results"]);
 
@@ -100,6 +100,8 @@ export const useMeshWideSyncCall = <TVariables, TResult>({
     );
 
     const callMutations = useCallback(async () => {
+        if (mutationResults?.isLoading) return mutationResults;
+
         setResults({ errors: [], results: [], isLoading: true });
 
         const mutations = ips.map((ip) => {
@@ -120,12 +122,12 @@ export const useMeshWideSyncCall = <TVariables, TResult>({
             errors, // This contains all the errors from the mutations
             results: successfulResults,
         };
-    }, [_callSingleMutation, ips, setResults]);
+    }, [_callSingleMutation, ips, mutationResults, setResults]);
 
     return {
         callMutations,
-        errors: results?.errors, // This contains all the errors from the mutations
-        results: results?.results,
-        isLoading: results?.isLoading,
+        errors: mutationResults?.errors, // This contains all the errors from the mutations
+        results: mutationResults?.results,
+        isLoading: mutationResults?.isLoading,
     };
 };
