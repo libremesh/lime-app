@@ -1,6 +1,5 @@
 import { MutationKey } from "@tanstack/query-core/src/types";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
-import { useState } from "preact/hooks";
 import { useCallback } from "react";
 
 import queryCache from "utils/queryCache";
@@ -25,11 +24,19 @@ interface IMutationFnVariables<TVariables> {
     variables?: TVariables;
 }
 
-type SyncCallErrors = Array<Error | ParallelMutationError>;
+export type SyncCallErrors = Array<Error | ParallelMutationError>;
 type SyncCallResults<TResult> = TResult[];
+/**
+ * This object is used to store the results and errors of all the mutations calls.
+ * This data is stored on the queryCache using the useSharedData hook
+ * Storing isLoading there makes us able to avoid using a context to share the loading state
+ * between different hook instances. If we want to use a setState, we should wrap the hook
+ * with a context for the whole app
+ */
 type SyncCallCacheObject<TResult> = {
     errors: SyncCallErrors;
     results: SyncCallResults<TResult>;
+    isLoading?: boolean;
 };
 
 interface IMeshWideSyncCall<TVariables, TResult> {
@@ -68,8 +75,6 @@ export const useMeshWideSyncCall = <TVariables, TResult>({
     variables,
     options,
 }: IMeshWideSyncCall<TVariables, TResult>) => {
-    const [isLoading, setIsLoading] = useState(false);
-
     const { data: results, setData: setResults } = useSharedData<
         SyncCallCacheObject<TResult>
     >([...mutationKey, "results"]);
@@ -95,12 +100,14 @@ export const useMeshWideSyncCall = <TVariables, TResult>({
     );
 
     const callMutations = useCallback(async () => {
-        setIsLoading(true);
+        setResults({ errors: [], results: [], isLoading: true });
 
         const mutations = ips.map((ip) => {
             return _callSingleMutation(ip);
         });
+
         const results = await Promise.allSettled(mutations);
+
         const errors: SyncCallErrors = results
             .filter((result) => result.status === "rejected")
             .map((result) => (result as PromiseRejectedResult).reason);
@@ -108,8 +115,7 @@ export const useMeshWideSyncCall = <TVariables, TResult>({
             .filter((result) => result.status === "fulfilled")
             .map((result) => (result as PromiseFulfilledResult<TResult>).value);
 
-        setResults({ errors, results: successfulResults });
-        setIsLoading(false);
+        setResults({ errors, results: successfulResults, isLoading: false });
         return {
             errors, // This contains all the errors from the mutations
             results: successfulResults,
@@ -120,6 +126,6 @@ export const useMeshWideSyncCall = <TVariables, TResult>({
         callMutations,
         errors: results?.errors, // This contains all the errors from the mutations
         results: results?.results,
-        isLoading,
+        isLoading: results?.isLoading,
     };
 };
