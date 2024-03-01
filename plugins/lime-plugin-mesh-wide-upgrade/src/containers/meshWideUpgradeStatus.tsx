@@ -5,6 +5,7 @@ import { LoadingPage } from "plugins/lime-plugin-mesh-wide-upgrade/src/component
 import { NewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable";
 import { NoNewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NoNewVersion";
 import { TransactionStarted } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/TransactionStarted";
+import { UpgradeScheduled } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeScheduled";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 
 const MeshWideUpgradeStatusState = () => {
@@ -30,7 +31,7 @@ const MeshWideUpgradeStatusState = () => {
             />
         );
     } else if (stepperState === "UPGRADE_SCHEDULED") {
-        return <>todo</>;
+        return <UpgradeScheduled />;
     } else if (stepperState === "CONFIRMATION_PENDING") {
         return <>todo</>;
     } else if (stepperState === "CONFIRMED") {

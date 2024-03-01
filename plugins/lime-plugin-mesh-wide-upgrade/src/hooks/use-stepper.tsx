@@ -24,6 +24,13 @@ export const getStepperStatus = (
 ): StepperState => {
     if (!nodeInfo || !thisNode) return "INITIAL";
 
+    if (
+        scheduleMeshSafeUpgradeStatus.results?.length ||
+        scheduleMeshSafeUpgradeStatus.errors?.length
+    ) {
+        return "UPGRADE_SCHEDULED";
+    }
+
     if (thisNode.upgrade_state === "DEFAULT") {
         if (newVersionAvailable) return "UPDATE_AVAILABLE";
         return "NO_UPDATE";
@@ -64,6 +71,7 @@ export type ShowFooterStepperState = Extract<
     | "UPDATE_AVAILABLE"
     | "DOWNLOADED_MAIN"
     | "TRANSACTION_STARTED"
+    | "UPGRADE_SCHEDULED"
     | "CONFIRMATION_PENDING"
     | "ERROR"
 >;
@@ -75,6 +83,7 @@ export function isShowFooterStepperState(
         "UPDATE_AVAILABLE",
         "DOWNLOADED_MAIN",
         "TRANSACTION_STARTED",
+        "UPGRADE_SCHEDULED",
         "CONFIRMATION_PENDING",
         "ERROR",
     ].includes(value);
@@ -88,7 +97,7 @@ export const useStep = () => {
         allNodesReadyForUpgrade: allNodesReady,
     } = useMeshUpgrade();
 
-    const { callMutations: startScheduleMeshUpgrade } =
+    const { callMutations: startScheduleMeshUpgrade, errors: scheduleErrors } =
         useScheduleMeshSafeUpgrade();
 
     const { showScheduleModal } = useScheduleUpgradeModal({
@@ -102,7 +111,7 @@ export const useStep = () => {
 
     const step: IStatusAndButton | null = useMemo(() => {
         if (!showFooter) return null;
-        switch (status as ShowFooterStepperState) {
+        switch (stepperState as ShowFooterStepperState) {
             case "UPDATE_AVAILABLE":
                 return {
                     status: "success",
@@ -139,6 +148,24 @@ export const useStep = () => {
                     ),
                     btn: <Trans>Schedule upgrade</Trans>,
                 };
+            case "UPGRADE_SCHEDULED": {
+                const data: Omit<IStatusAndButton, "status" | "children"> = {
+                    onClick: showScheduleModal,
+                    btn: <Trans>Schedule again</Trans>,
+                };
+                if (scheduleErrors.length) {
+                    return {
+                        ...data,
+                        status: "warning",
+                        children: <Trans>Some nodes have errors</Trans>,
+                    };
+                }
+                return {
+                    ...data,
+                    status: "success",
+                    children: <Trans>All nodes scheduled succesfull</Trans>,
+                };
+            }
             case "CONFIRMATION_PENDING":
                 return {
                     status: "success",
@@ -167,6 +194,7 @@ export const useStep = () => {
         showFooter,
         showScheduleModal,
         startFwUpgradeTransaction,
+        stepperState,
     ]);
 
     return { step, showFooter };

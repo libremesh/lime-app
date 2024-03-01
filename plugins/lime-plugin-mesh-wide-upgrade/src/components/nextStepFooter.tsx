@@ -4,7 +4,7 @@ import { useStep } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/use-ste
 
 const NextStepFooter = () => {
     const { step, showFooter } = useStep();
-    ``;
+
     return <>{showFooter && <FooterStatus {...step} />}</>;
 };
 
