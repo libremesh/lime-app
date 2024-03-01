@@ -1,7 +1,10 @@
-import { DownloadingMain } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/DownloadingMain";
+import { Trans } from "@lingui/macro";
+
 import { ErrorState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ErrorState";
+import { LoadingPage } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/LoadingPage";
 import { NewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable";
 import { NoNewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NoNewVersion";
+import { TransactionStarted } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/TransactionStarted";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 
 const MeshWideUpgradeStatusState = () => {
@@ -12,11 +15,20 @@ const MeshWideUpgradeStatusState = () => {
     } else if (stepperState === "UPDATE_AVAILABLE") {
         return <NewVersionAvailable />;
     } else if (stepperState === "DOWNLOADING_MAIN") {
-        return <DownloadingMain />;
+        return <LoadingPage title={<Trans>Downloading</Trans>} />;
     } else if (stepperState === "DOWNLOADED_MAIN") {
         return <NewVersionAvailable readyForUpgrade />;
     } else if (stepperState === "TRANSACTION_STARTED") {
-        return <>Transaction started!</>;
+        return <TransactionStarted />;
+    } else if (stepperState === "SENDING_START_SCHEDULE") {
+        return (
+            <LoadingPage
+                title={<Trans>Scheduling upgrade</Trans>}
+                description={
+                    <Trans>Schedule upgrade to all available nodes</Trans>
+                }
+            />
+        );
     } else if (stepperState === "UPGRADE_SCHEDULED") {
         return <>todo</>;
     } else if (stepperState === "CONFIRMATION_PENDING") {

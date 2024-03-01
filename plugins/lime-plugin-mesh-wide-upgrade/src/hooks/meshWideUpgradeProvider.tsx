@@ -10,6 +10,7 @@ import {
     useBecomeMainNode,
     useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
+    useScheduleMeshSafeUpgrade,
     useStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 import {
@@ -20,7 +21,7 @@ import {
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import { getMeshWideError } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/processError";
 
-import { useBoardData, useSession } from "utils/queries";
+import { useSession } from "utils/queries";
 import queryCache from "utils/queryCache";
 
 const NODE_STATUS_REFETCH_INTERVAL = 2000;
@@ -90,7 +91,6 @@ export const MeshWideUpgradeProvider = ({
         }
     );
 
-    const { data: boardData } = useBoardData();
     const { data: session } = useSession();
     const { data: newVersionData } = useNewVersion({
         enabled: session?.username !== undefined,
@@ -108,11 +108,14 @@ export const MeshWideUpgradeProvider = ({
 
     const eupgradeStatus = thisNode?.eupgradestate;
 
+    const meshSafeUpgrade = useScheduleMeshSafeUpgrade();
+
     const stepperState = getStepperStatus(
         nodesUpgradeInfo,
         thisNode,
         newVersionAvailable,
-        eupgradeStatus
+        eupgradeStatus,
+        meshSafeUpgrade
     );
 
     const meshWideError = getMeshWideError(thisNode);

@@ -6,6 +6,10 @@ import { IStatusAndButton } from "components/status/statusAndButton";
 import { useScheduleUpgradeModal } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/modals";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 import {
+    UseScheduleMeshSafeUpgradeType,
+    useScheduleMeshSafeUpgrade,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
+import {
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
     StepperState,
@@ -15,31 +19,39 @@ export const getStepperStatus = (
     nodeInfo: MeshWideUpgradeInfo | undefined,
     thisNode: NodeMeshUpgradeInfo | undefined,
     newVersionAvailable: boolean,
-    downloadStatus: string | undefined
+    downloadStatus: string | undefined,
+    scheduleMeshSafeUpgradeStatus: UseScheduleMeshSafeUpgradeType | undefined
 ): StepperState => {
     if (!nodeInfo || !thisNode) return "INITIAL";
+
     if (thisNode.upgrade_state === "DEFAULT") {
         if (newVersionAvailable) return "UPDATE_AVAILABLE";
         return "NO_UPDATE";
     }
     if (thisNode.main_node === "STARTING") {
-        if (downloadStatus === "downloading") {
-            return "DOWNLOADING_MAIN";
-        } else if (downloadStatus === "downloaded") {
+        if (downloadStatus === "downloaded") {
             return "DOWNLOADED_MAIN";
         }
+        return "DOWNLOADING_MAIN";
     }
-    if (thisNode.main_node === "MAIN_NODE") {
-        return "TRANSACTION_STARTED";
-    }
-    // todo(kon): check if the main node will follow the same logic as the other nodes
-    if (thisNode.upgrade_state === "DOWNLOADING") {
+    if (
+        thisNode.main_node === "MAIN_NODE" ||
+        thisNode.upgrade_state === "DOWNLOADING" ||
+        thisNode.upgrade_state === "UPGRADE_SCHEDULED"
+    ) {
+        if (scheduleMeshSafeUpgradeStatus.isLoading) {
+            return "SENDING_START_SCHEDULE";
+        }
+        if (
+            scheduleMeshSafeUpgradeStatus.results.length ||
+            scheduleMeshSafeUpgradeStatus.errors.length
+        ) {
+            return "UPGRADE_SCHEDULED";
+        }
         return "TRANSACTION_STARTED";
     }
     if (
-        thisNode.upgrade_state === "UPGRADE_SCHEDULED" ||
         thisNode.upgrade_state === "CONFIRMATION_PENDING" ||
-        thisNode.upgrade_state === "ERROR" ||
         thisNode.upgrade_state === "CONFIRMED"
     ) {
         return thisNode.upgrade_state;
@@ -76,14 +88,15 @@ export const useStep = () => {
         allNodesReadyForUpgrade: allNodesReady,
     } = useMeshUpgrade();
 
-    const { toggleModal: toggleStartSchedule, showScheduleModal } =
-        useScheduleUpgradeModal({
-            allNodesReady,
-            cb: () => {
-                console.log("Schedule upgrade");
-                // startFwUpgradeTransaction()
-            },
-        });
+    const { callMutations: startScheduleMeshUpgrade } =
+        useScheduleMeshSafeUpgrade();
+
+    const { showScheduleModal } = useScheduleUpgradeModal({
+        allNodesReady,
+        cb: () => {
+            startScheduleMeshUpgrade();
+        },
+    });
 
     const showFooter = isShowFooterStepperState(stepperState);
 

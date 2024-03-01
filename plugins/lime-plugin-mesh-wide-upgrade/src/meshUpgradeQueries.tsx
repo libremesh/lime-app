@@ -60,7 +60,10 @@ export function useStartFirmwareUpgradeTransaction(params) {
 
 // Parallel queries/mutations
 
-export const useStartMeshWideSafeUpgrade = (opts?) => {
+export type UseScheduleMeshSafeUpgradeType = ReturnType<
+    typeof useScheduleMeshSafeUpgrade
+>;
+export const useScheduleMeshSafeUpgrade = (opts?) => {
     // State to store the errors
     const { data: nodes } = useMeshWideNodes({});
     const ips = Object.values(nodes || {}).map(
