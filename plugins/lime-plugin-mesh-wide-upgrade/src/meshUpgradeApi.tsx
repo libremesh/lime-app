@@ -34,7 +34,7 @@ export async function remoteStartSafeUpgrade({ ip }: { ip: string }) {
     try {
         await login({ username: "lime-app", password: "generic", customApi });
     } catch (error) {
-        throw new ParallelMutationError(`Cannot login for ${ip}`, ip, error);
+        throw new ParallelMutationError(`Cannot login`, ip, error);
     }
     try {
         // return await meshUpgradeApiCall("start_safe_upgrade");
@@ -44,10 +44,6 @@ export async function remoteStartSafeUpgrade({ ip }: { ip: string }) {
             {}
         )) as NodeMeshUpgradeInfo;
     } catch (error) {
-        throw new ParallelMutationError(
-            `Cannot startSafeUpgrade for ${ip}`,
-            ip,
-            error
-        );
+        throw new ParallelMutationError(`Cannot startSafeUpgrade`, ip, error);
     }
 }
