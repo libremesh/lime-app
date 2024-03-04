@@ -42,7 +42,7 @@ const MeshWideUpgradeStatusState = () => {
 
 export const MeshWideUpgradeStatus = () => {
     return (
-        <div className="container container-center">
+        <div className="flex-grow flex flex-col justify-center content-center text-center h-full max-h-full">
             <MeshWideUpgradeStatusState />
         </div>
     );

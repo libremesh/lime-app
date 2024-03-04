@@ -26,29 +26,31 @@ const MeshWideUpgrade = () => {
     }
 
     return (
-        <>
-            <div className={"flex flex-col gap-1 w-full"}>
-                <Notification
-                    title={"Mesh wide upgrade"}
-                    right={
-                        <div
-                            onClick={() => setShowNodeList(!showNodeList)}
-                            className={"cursor-pointer"}
-                        >
-                            <Trans>Show nodes</Trans>
-                        </div>
-                    }
-                >
-                    <Trans>
-                        Upgrade all network nodes at once. This proces will take
-                        a while and will require user interaction.
-                    </Trans>
-                </Notification>
+        <div className={"flex flex-col h-full w-full max-h-full"}>
+            <Notification
+                title={"Mesh wide upgrade"}
+                right={
+                    <div
+                        onClick={() => setShowNodeList(!showNodeList)}
+                        className={"cursor-pointer"}
+                    >
+                        <Trans>Show nodes</Trans>
+                    </div>
+                }
+            >
+                <Button onClick={callMutations}> run!</Button>
+
+                <Trans>
+                    Upgrade all network nodes at once. This proces will take a
+                    while and will require user interaction.
+                </Trans>
+            </Notification>
+            <div className={"flex-grow overflow-auto max-h-full w-full"}>
                 {showNodeList && <NodesList />}
                 {!showNodeList && <MeshWideUpgradeStatus />}
             </div>
-            {newVersionAvailable && <NextStepFooter />}
-        </>
+            <NextStepFooter />
+        </div>
     );
 };
 
