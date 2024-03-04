@@ -1,6 +1,6 @@
 import { FooterStatus } from "components/status/footer";
 
-import { useStep } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/use-stepper";
+import { useStep } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper";
 
 const NextStepFooter = () => {
     const { step, showFooter } = useStep();

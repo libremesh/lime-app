@@ -4,7 +4,7 @@ import { useEffect, useState } from "preact/hooks";
 import { useCallback, useContext } from "react";
 
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
-import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/use-stepper";
+import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper";
 import {
     meshUpgradeNodeStatusKey,
     useBecomeMainNode,
