@@ -153,7 +153,7 @@ export const useStep = () => {
                     onClick: showScheduleModal,
                     btn: <Trans>Schedule again</Trans>,
                 };
-                if (scheduleErrors.length) {
+                if (scheduleErrors?.length) {
                     return {
                         ...data,
                         status: "warning",
@@ -191,6 +191,7 @@ export const useStep = () => {
     }, [
         allNodesReady,
         becomeMainNode,
+        scheduleErrors?.length,
         showFooter,
         showScheduleModal,
         startFwUpgradeTransaction,
