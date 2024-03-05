@@ -1,5 +1,8 @@
 import { NodeMeshUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
-import { meshUpgradeApiCall } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
+import {
+    MeshUpgradeApiError,
+    meshUpgradeApiCall,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 
 import { ParallelMutationError } from "utils/meshWideSyncCall";
 import { login } from "utils/queries";
@@ -29,21 +32,38 @@ export const setStartFirmwareUpgradeTransaction = async () => {
 
 // Remote API calls
 
-export async function remoteScheduleUpgrade({ ip }: { ip: string }) {
+async function remoteCallWrapper({
+    ip,
+    apiMethod,
+}: {
+    ip: string;
+    apiMethod: string;
+}) {
     const customApi = new UhttpdService(ip);
     try {
         await login({ username: "lime-app", password: "generic", customApi });
     } catch (error) {
-        throw new ParallelMutationError(`Cannot login`, ip, error);
+        throw new ParallelMutationError(
+            `Cannot login`,
+            customApi.customIp,
+            error
+        );
     }
     try {
-        // return await meshUpgradeApiCall("start_safe_upgrade");
-        return (await customApi.call(
-            "lime-utils",
-            "get_node_status",
-            {}
-        )) as NodeMeshUpgradeInfo;
+        return await meshUpgradeApiCall(apiMethod, customApi);
     } catch (error) {
-        throw new ParallelMutationError(`Cannot startSafeUpgrade`, ip, error);
+        let additionalInfo = "";
+        if (error instanceof MeshUpgradeApiError) {
+            additionalInfo = `: ${error.message}`;
+        }
+        throw new ParallelMutationError(
+            `Cannot startSafeUpgrade${additionalInfo}`,
+            ip,
+            error
+        );
     }
+}
+
+export async function remoteScheduleUpgrade({ ip }: { ip: string }) {
+    return await remoteCallWrapper({ ip, apiMethod: "start_safe_upgrade" });
 }

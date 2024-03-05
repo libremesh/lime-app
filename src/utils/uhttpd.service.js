@@ -18,6 +18,7 @@ const parseResult = (result) =>
 
 export class UhttpdService {
     constructor(customIp) {
+        this.customIp = customIp;
         this.url = customIp
             ? `http://${customIp}/ubus`
             : `${window.origin}/ubus`;

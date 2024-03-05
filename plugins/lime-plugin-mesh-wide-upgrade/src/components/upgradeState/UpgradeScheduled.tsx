@@ -2,13 +2,15 @@ import { Trans } from "@lingui/macro";
 
 import { StatusMessage } from "components/status/statusMessage";
 
+import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 import { useParallelScheduleUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 
 import { ParallelMutationError } from "utils/meshWideSyncCall";
 
 export const UpgradeScheduled = () => {
+    const { totalNodes } = useMeshUpgrade();
     const { errors, results } = useParallelScheduleUpgrade();
-    const nodesToBeUpgraded = results.length - errors.length;
+    const nodesToBeUpgraded = results.length;
 
     return (
         <>
@@ -17,7 +19,7 @@ export const UpgradeScheduled = () => {
             </div>
             <div className="text-2xl mb-6">
                 <Trans>
-                    {nodesToBeUpgraded} of {results.length} will be upgraded
+                    {nodesToBeUpgraded} of {totalNodes} will be upgraded
                 </Trans>
             </div>
             {errors?.length > 0 && (

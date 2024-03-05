@@ -42,6 +42,7 @@ export interface NodeMeshUpgradeInfo {
     candidate_fw?: string;
     board_name: string;
     current_fw: string;
+    node_ip: string;
 }
 
 export type MeshWideNodeUpgradeInfo = {
@@ -62,3 +63,5 @@ export type MeshWideError = {
     errorCode: string;
     errorMessage: string;
 };
+
+export type MeshUpgradeApiErrorTypes = string; // todo(kon)
