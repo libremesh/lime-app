@@ -45,12 +45,12 @@ export const getStepperStatus = (
         thisNode.upgrade_state === "DOWNLOADING" ||
         thisNode.upgrade_state === "UPGRADE_SCHEDULED"
     ) {
-        if (scheduleMeshSafeUpgradeStatus.isLoading) {
+        if (scheduleMeshSafeUpgradeStatus?.isLoading) {
             return "SENDING_START_SCHEDULE";
         }
         if (
-            scheduleMeshSafeUpgradeStatus.results.length ||
-            scheduleMeshSafeUpgradeStatus.errors.length
+            scheduleMeshSafeUpgradeStatus?.results?.length ||
+            scheduleMeshSafeUpgradeStatus?.errors?.length
         ) {
             return "UPGRADE_SCHEDULED";
         }
@@ -60,10 +60,10 @@ export const getStepperStatus = (
         thisNode.upgrade_state === "CONFIRMATION_PENDING" ||
         thisNode.upgrade_state === "CONFIRMED"
     ) {
-        if (confirmUpgradeStatus.isLoading) {
+        if (confirmUpgradeStatus?.isLoading) {
             return "SENDING_CONFIRMATION";
         }
-        if (confirmUpgradeStatus.errors.length) {
+        if (confirmUpgradeStatus?.errors?.length) {
             return "CONFIRMATION_PENDING";
         }
         return thisNode.upgrade_state;

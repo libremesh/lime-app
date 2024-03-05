@@ -33,16 +33,21 @@ const NodeUpgradeInfoItem = ({
     const status: StatusIcons =
         info.upgrade_state === "ERROR" ? "warning" : "success";
 
-    const descriptionMsg = InfoStatusMessageMap[info.upgrade_state] ?? (
-        <Trans>Error retrieving the status, is this node outdated?</Trans>
-    );
-
     const nodeStatusInfo =
         detailedInfoStatusMessageMap(info)[info.upgrade_state] ??
         detailedInfoStatusMessageMap()["DEFAULT"];
 
     const mainNodeStatusInfo = mainNodeStatusMessageMap[info.main_node];
-
+    let descriptionMsg = InfoStatusMessageMap[info.upgrade_state] ?? (
+        <Trans>Error retrieving the status, is this node outdated?</Trans>
+    );
+    if (mainNodeStatusInfo) {
+        descriptionMsg = (
+            <>
+                <Trans>(Main Node)</Trans> {descriptionMsg}
+            </>
+        );
+    }
     return (
         <ListItemCollapsible
             title={name}

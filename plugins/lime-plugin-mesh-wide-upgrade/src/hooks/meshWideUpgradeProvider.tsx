@@ -62,6 +62,9 @@ export const MeshWideUpgradeProvider = ({
     children: ComponentChildren;
 }) => {
     const [downloadStatusInterval, setDownloadStatusInterval] = useState(0);
+    const [refetchEupgradeInterval, setRefetchEupgradeInterval] = useState(
+        NODE_STATUS_REFETCH_INTERVAL
+    );
 
     // UseCallback tpo invalidate queries
     const invalidateQueries = useCallback(() => {
@@ -97,6 +100,7 @@ export const MeshWideUpgradeProvider = ({
     const { data: session } = useSession();
     const { data: newVersionData } = useNewVersion({
         enabled: session?.username !== undefined,
+        refetchInterval: refetchEupgradeInterval,
     });
 
     const newVersionAvailable = !!(newVersionData && newVersionData.version);
@@ -158,6 +162,12 @@ export const MeshWideUpgradeProvider = ({
             setDownloadStatusInterval(0);
         }
     }, [thisNode?.eupgradestate, thisNode?.main_node]);
+
+    useEffect(() => {
+        if (newVersionData) {
+            setDownloadStatusInterval(0);
+        }
+    }, [newVersionData]);
 
     const isLoading = meshWideInfoLoading || thisNodeLoading;
 

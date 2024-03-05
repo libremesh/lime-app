@@ -13,12 +13,7 @@ import {
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 
 const MeshWideUpgrade = () => {
-    const {
-        data: meshWideNodes,
-        isLoading,
-        newVersionAvailable,
-        thisNode,
-    } = useMeshUpgrade();
+    const { data: meshWideNodes, isLoading, thisNode } = useMeshUpgrade();
     const [showNodeList, setShowNodeList] = useState(false);
 
     if (isLoading || meshWideNodes === undefined || thisNode === undefined) {
