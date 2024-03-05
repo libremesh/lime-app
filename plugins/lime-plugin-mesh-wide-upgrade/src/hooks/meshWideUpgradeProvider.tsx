@@ -10,7 +10,7 @@ import {
     useBecomeMainNode,
     useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
-    useScheduleMeshSafeUpgrade,
+    useParallelScheduleUpgrade,
     useStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 import {
@@ -108,7 +108,7 @@ export const MeshWideUpgradeProvider = ({
 
     const eupgradeStatus = thisNode?.eupgradestate;
 
-    const meshSafeUpgrade = useScheduleMeshSafeUpgrade();
+    const meshSafeUpgrade = useParallelScheduleUpgrade();
 
     const stepperState = getStepperStatus(
         nodesUpgradeInfo,

@@ -29,7 +29,7 @@ export const setStartFirmwareUpgradeTransaction = async () => {
 
 // Remote API calls
 
-export async function remoteStartSafeUpgrade({ ip }: { ip: string }) {
+export async function remoteScheduleUpgrade({ ip }: { ip: string }) {
     const customApi = new UhttpdService(ip);
     try {
         await login({ username: "lime-app", password: "generic", customApi });

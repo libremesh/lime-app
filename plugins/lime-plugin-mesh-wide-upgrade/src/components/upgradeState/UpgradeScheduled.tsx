@@ -2,12 +2,12 @@ import { Trans } from "@lingui/macro";
 
 import { StatusMessage } from "components/status/statusMessage";
 
-import { useScheduleMeshSafeUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
+import { useParallelScheduleUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 
 import { ParallelMutationError } from "utils/meshWideSyncCall";
 
 export const UpgradeScheduled = () => {
-    const { errors, results } = useScheduleMeshSafeUpgrade();
+    const { errors, results } = useParallelScheduleUpgrade();
     const nodesToBeUpgraded = results.length - errors.length;
 
     return (

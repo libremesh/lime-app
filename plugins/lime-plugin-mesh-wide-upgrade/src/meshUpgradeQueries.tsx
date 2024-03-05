@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
     getMeshUpgradeNodeStatus,
     getMeshWideUpgradeInfo,
-    remoteStartSafeUpgrade,
+    remoteScheduleUpgrade,
     setBecomeMainNode,
     setStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeApi";
@@ -11,7 +11,6 @@ import {
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
-import { useMeshWideNodes } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 
 import { useMeshWideSyncCall } from "utils/meshWideSyncCall";
 
@@ -61,18 +60,15 @@ export function useStartFirmwareUpgradeTransaction(params) {
 // Parallel queries/mutations
 
 export type UseScheduleMeshSafeUpgradeType = ReturnType<
-    typeof useScheduleMeshSafeUpgrade
+    typeof useParallelScheduleUpgrade
 >;
-export const useScheduleMeshSafeUpgrade = (opts?) => {
+export const useParallelScheduleUpgrade = (opts?) => {
     // State to store the errors
-    const { data: nodes } = useMeshWideNodes({});
-    const ips = Object.values(nodes || {}).map(
-        // @ts-ignore
-        (node) => node?.ipv4 ?? ""
-    );
+    const { data: nodes } = useMeshWideUpgradeInfo({});
+    const ips = Object.values(nodes || {}).map((node) => node?.node_ip ?? "");
     return useMeshWideSyncCall({
         mutationKey: ["lime-mesh-upgrade", "start_safe_upgrade"],
-        mutationFn: remoteStartSafeUpgrade,
+        mutationFn: remoteScheduleUpgrade,
         ips,
         options: opts,
     });

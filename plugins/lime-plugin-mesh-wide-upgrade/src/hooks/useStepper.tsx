@@ -7,7 +7,7 @@ import { useScheduleUpgradeModal } from "plugins/lime-plugin-mesh-wide-upgrade/s
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 import {
     UseScheduleMeshSafeUpgradeType,
-    useScheduleMeshSafeUpgrade,
+    useParallelScheduleUpgrade,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 import {
     MeshWideUpgradeInfo,
@@ -98,7 +98,7 @@ export const useStep = () => {
     } = useMeshUpgrade();
 
     const { callMutations: startScheduleMeshUpgrade, errors: scheduleErrors } =
-        useScheduleMeshSafeUpgrade();
+        useParallelScheduleUpgrade();
 
     const { showScheduleModal } = useScheduleUpgradeModal({
         allNodesReady,
