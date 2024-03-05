@@ -67,3 +67,7 @@ async function remoteCallWrapper({
 export async function remoteScheduleUpgrade({ ip }: { ip: string }) {
     return await remoteCallWrapper({ ip, apiMethod: "start_safe_upgrade" });
 }
+
+export async function remoteConfirmUpgrade({ ip }: { ip: string }) {
+    return await remoteCallWrapper({ ip, apiMethod: "confirm_boot_partition" });
+}

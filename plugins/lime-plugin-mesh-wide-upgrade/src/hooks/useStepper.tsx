@@ -3,10 +3,15 @@ import { useMemo } from "react";
 
 import { IStatusAndButton } from "components/status/statusAndButton";
 
-import { useScheduleUpgradeModal } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/modals";
+import {
+    useConfirmModal,
+    useScheduleUpgradeModal,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/components/modals";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 import {
+    UseConfirmUpgradeType,
     UseScheduleMeshSafeUpgradeType,
+    useParallelConfirmUpgrade,
     useParallelScheduleUpgrade,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 import {
@@ -20,16 +25,10 @@ export const getStepperStatus = (
     thisNode: NodeMeshUpgradeInfo | undefined,
     newVersionAvailable: boolean,
     downloadStatus: string | undefined,
-    scheduleMeshSafeUpgradeStatus: UseScheduleMeshSafeUpgradeType | undefined
+    scheduleMeshSafeUpgradeStatus: UseScheduleMeshSafeUpgradeType | undefined,
+    confirmUpgradeStatus: UseConfirmUpgradeType | undefined
 ): StepperState => {
     if (!nodeInfo || !thisNode) return "INITIAL";
-
-    if (
-        scheduleMeshSafeUpgradeStatus.results?.length ||
-        scheduleMeshSafeUpgradeStatus.errors?.length
-    ) {
-        return "UPGRADE_SCHEDULED";
-    }
 
     if (thisNode.upgrade_state === "DEFAULT") {
         if (newVersionAvailable) return "UPDATE_AVAILABLE";
@@ -61,6 +60,12 @@ export const getStepperStatus = (
         thisNode.upgrade_state === "CONFIRMATION_PENDING" ||
         thisNode.upgrade_state === "CONFIRMED"
     ) {
+        if (confirmUpgradeStatus.isLoading) {
+            return "SENDING_CONFIRMATION";
+        }
+        if (confirmUpgradeStatus.errors.length) {
+            return "CONFIRMATION_PENDING";
+        }
         return thisNode.upgrade_state;
     }
     return "ERROR";
@@ -94,16 +99,27 @@ export const useStep = () => {
         stepperState,
         becomeMainNode,
         startFwUpgradeTransaction,
-        allNodesReadyForUpgrade: allNodesReady,
+        allNodesReadyForUpgrade,
+        allNodesConfirmed,
     } = useMeshUpgrade();
 
     const { callMutations: startScheduleMeshUpgrade, errors: scheduleErrors } =
         useParallelScheduleUpgrade();
 
-    const { showScheduleModal } = useScheduleUpgradeModal({
-        allNodesReady,
+    const { callMutations: confirmMeshUpgrade, errors: confirmErrors } =
+        useParallelConfirmUpgrade();
+
+    const { showModal: showScheduleModal } = useScheduleUpgradeModal({
+        allNodesReady: allNodesReadyForUpgrade,
         cb: () => {
             startScheduleMeshUpgrade();
+        },
+    });
+
+    const { showModal: showConfirmationModal } = useConfirmModal({
+        allNodesReady: allNodesConfirmed,
+        cb: () => {
+            confirmMeshUpgrade();
         },
     });
 
@@ -134,11 +150,11 @@ export const useStep = () => {
                 };
             case "TRANSACTION_STARTED":
                 return {
-                    status: allNodesReady ? "success" : "warning",
+                    status: allNodesReadyForUpgrade ? "success" : "warning",
                     onClick: () => {
                         showScheduleModal();
                     },
-                    children: allNodesReady ? (
+                    children: allNodesReadyForUpgrade ? (
                         <Trans>Ready to start mesh wide upgrade</Trans>
                     ) : (
                         <Trans>
@@ -163,20 +179,14 @@ export const useStep = () => {
                 return {
                     ...data,
                     status: "success",
-                    children: <Trans>All nodes scheduled succesfull</Trans>,
+                    children: <Trans>All nodes scheduled successful</Trans>,
                 };
             }
             case "CONFIRMATION_PENDING":
                 return {
                     status: "success",
-                    onClick: () => {},
-                    children: (
-                        <Trans>
-                            All nodes upgraded,
-                            <br />
-                            awaiting confirmation
-                        </Trans>
-                    ),
+                    onClick: showConfirmationModal,
+                    children: <Trans>Confirm upgrade on all nodes</Trans>,
                     btn: <Trans>Confirm</Trans>,
                 };
             case "ERROR":
@@ -189,7 +199,7 @@ export const useStep = () => {
                 };
         }
     }, [
-        allNodesReady,
+        allNodesReadyForUpgrade,
         becomeMainNode,
         scheduleErrors?.length,
         showFooter,

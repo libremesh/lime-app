@@ -10,6 +10,7 @@ import {
     useBecomeMainNode,
     useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
+    useParallelConfirmUpgrade,
     useParallelScheduleUpgrade,
     useStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
@@ -38,6 +39,7 @@ interface MeshWideUpgradeContextProps {
     startFwUpgradeTransaction: () => void;
     meshWideError?: MeshWideError;
     allNodesReadyForUpgrade: boolean;
+    allNodesConfirmed: boolean;
 }
 
 export const MeshWideUpgradeContext =
@@ -51,6 +53,7 @@ export const MeshWideUpgradeContext =
         becomeMainNode: () => {},
         startFwUpgradeTransaction: () => {},
         allNodesReadyForUpgrade: false,
+        allNodesConfirmed: false,
     });
 
 export const MeshWideUpgradeProvider = ({
@@ -109,13 +112,15 @@ export const MeshWideUpgradeProvider = ({
     const eupgradeStatus = thisNode?.eupgradestate;
 
     const meshSafeUpgrade = useParallelScheduleUpgrade();
+    const confirmUpgrade = useParallelConfirmUpgrade();
 
     const stepperState = getStepperStatus(
         nodesUpgradeInfo,
         thisNode,
         newVersionAvailable,
         eupgradeStatus,
-        meshSafeUpgrade
+        meshSafeUpgrade,
+        confirmUpgrade
     );
 
     const meshWideError = getMeshWideError(thisNode);
@@ -133,6 +138,12 @@ export const MeshWideUpgradeProvider = ({
     const allNodesReadyForUpgrade = useMemo(() => {
         return Object.values(nodesUpgradeInfo || {}).every(
             (node) => node.upgrade_state === "READY_FOR_UPGRADE"
+        );
+    }, [nodesUpgradeInfo]);
+
+    const allNodesConfirmed = useMemo(() => {
+        return Object.values(nodesUpgradeInfo || {}).every(
+            (node) => node.upgrade_state === "CONFIRMED"
         );
     }, [nodesUpgradeInfo]);
 
@@ -164,6 +175,7 @@ export const MeshWideUpgradeProvider = ({
                 startFwUpgradeTransaction,
                 meshWideError,
                 allNodesReadyForUpgrade,
+                allNodesConfirmed,
             }}
         >
             {children}

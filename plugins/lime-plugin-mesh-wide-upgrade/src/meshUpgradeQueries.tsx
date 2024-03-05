@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
     getMeshUpgradeNodeStatus,
     getMeshWideUpgradeInfo,
+    remoteConfirmUpgrade,
     remoteScheduleUpgrade,
     setBecomeMainNode,
     setStartFirmwareUpgradeTransaction,
@@ -69,6 +70,21 @@ export const useParallelScheduleUpgrade = (opts?) => {
     return useMeshWideSyncCall({
         mutationKey: ["lime-mesh-upgrade", "start_safe_upgrade"],
         mutationFn: remoteScheduleUpgrade,
+        ips,
+        options: opts,
+    });
+};
+
+export type UseConfirmUpgradeType = ReturnType<
+    typeof useParallelConfirmUpgrade
+>;
+export const useParallelConfirmUpgrade = (opts?) => {
+    // State to store the errors
+    const { data: nodes } = useMeshWideUpgradeInfo({});
+    const ips = Object.values(nodes || {}).map((node) => node?.node_ip ?? "");
+    return useMeshWideSyncCall({
+        mutationKey: ["lime-mesh-upgrade", "start_safe_upgrade"],
+        mutationFn: remoteConfirmUpgrade,
         ips,
         options: opts,
     });

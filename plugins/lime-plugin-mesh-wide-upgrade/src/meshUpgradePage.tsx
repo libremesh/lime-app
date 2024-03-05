@@ -38,8 +38,6 @@ const MeshWideUpgrade = () => {
                     </div>
                 }
             >
-                <Button onClick={callMutations}> run!</Button>
-
                 <Trans>
                     Upgrade all network nodes at once. This proces will take a
                     while and will require user interaction.
