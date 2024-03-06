@@ -71,6 +71,11 @@ export const UseModalProvider = ({ children }) => {
         [isLoading]
     );
 
+    const successCb =
+        modalState.successCb != null ? () => runCb(modalState.successCb) : null;
+    const deleteCb =
+        modalState.deleteCb != null ? () => runCb(modalState.deleteCb) : null;
+
     return (
         <ModalContext.Provider
             value={{
@@ -86,9 +91,9 @@ export const UseModalProvider = ({ children }) => {
                 toggleModal={toggleModal}
                 title={modalState.title}
                 cancelBtn={modalState.cancelBtn}
-                successCb={() => runCb(modalState.successCb)}
+                successCb={successCb}
                 successBtnText={modalState.successBtnText}
-                deleteCb={() => runCb(modalState.successCb)}
+                deleteCb={deleteCb}
                 deleteBtnText={modalState.deleteBtnText}
             >
                 {modalState.content}
