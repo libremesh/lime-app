@@ -160,12 +160,17 @@ const Modal = ({
                                     <Button
                                         color={"primary"}
                                         onClick={successCb}
+                                        disabled={isLoading}
                                     >
                                         {successBtnText}
                                     </Button>
                                 )}
                                 {deleteCb && (
-                                    <Button color={"danger"} onClick={deleteCb}>
+                                    <Button
+                                        color={"danger"}
+                                        onClick={deleteCb}
+                                        disabled={isLoading}
+                                    >
                                         {deleteBtnText}
                                     </Button>
                                 )}
