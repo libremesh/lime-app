@@ -69,12 +69,17 @@ const useParallelQueriesModal = ({
     content,
 }: IUseParallelQueriesModalProps) => {
     const { toggleModal, setModalState } = useModal();
+    const runAndClose = useCallback(() => {
+        cb(null);
+        toggleModal();
+    }, [cb, toggleModal]);
+
     const showModal = useCallback(() => {
         setModalState({
             content,
             title,
-            successCb: allNodesReady && cb,
-            deleteCb: !allNodesReady && cb,
+            successCb: allNodesReady && runAndClose,
+            deleteCb: !allNodesReady && runAndClose,
             successBtnText: <Trans>Schedule</Trans>,
             deleteBtnText: <Trans>Schedule</Trans>,
         });
