@@ -68,7 +68,10 @@ export const getStepperStatus = (
         }
         return thisNode.upgrade_state;
     }
-    return "ERROR";
+    if (thisNode.upgrade_state === "ERROR") {
+        return "ERROR";
+    }
+    return "INITIAL";
 };
 
 export type ShowFooterStepperState = Extract<
