@@ -41,6 +41,7 @@ interface MeshWideUpgradeContextProps {
     meshWideError?: MeshWideError;
     allNodesReadyForUpgrade: boolean;
     allNodesConfirmed: boolean;
+    someNodeDownloading: boolean;
 }
 
 export const MeshWideUpgradeContext =
@@ -56,6 +57,7 @@ export const MeshWideUpgradeContext =
         startFwUpgradeTransaction: () => {},
         allNodesReadyForUpgrade: false,
         allNodesConfirmed: false,
+        someNodeDownloading: false,
     });
 
 export const MeshWideUpgradeProvider = ({
@@ -121,26 +123,6 @@ export const MeshWideUpgradeProvider = ({
     const meshSafeUpgrade = useParallelScheduleUpgrade();
     const confirmUpgrade = useParallelConfirmUpgrade();
 
-    const stepperState = getStepperStatus(
-        nodesUpgradeInfo,
-        thisNode,
-        newVersionAvailable,
-        eupgradeStatus,
-        meshSafeUpgrade,
-        confirmUpgrade
-    );
-
-    const meshWideError = getMeshWideError(thisNode);
-
-    const becomeMainNode = useCallback(() => {
-        becomeMainNodeMutation({});
-        setDownloadStatusInterval(NODE_STATUS_REFETCH_INTERVAL);
-    }, [becomeMainNodeMutation]);
-
-    const startFwUpgradeTransaction = useCallback(() => {
-        fwUpgradeTransaction({});
-    }, [fwUpgradeTransaction]);
-
     // useMemo to check that all nodes have the status of READY_FOR_UPGRADE
     const allNodesReadyForUpgrade = useMemo(() => {
         return Object.values(nodesUpgradeInfo || {}).every(
@@ -153,6 +135,33 @@ export const MeshWideUpgradeProvider = ({
             (node) => node.upgrade_state === "CONFIRMED"
         );
     }, [nodesUpgradeInfo]);
+
+    const someNodeDownloading = useMemo(() => {
+        return Object.values(nodesUpgradeInfo || {}).some(
+            (node) => node.upgrade_state === "DOWNLOADING"
+        );
+    }, [nodesUpgradeInfo]);
+
+    const stepperState = getStepperStatus(
+        nodesUpgradeInfo,
+        thisNode,
+        newVersionAvailable,
+        eupgradeStatus,
+        meshSafeUpgrade,
+        confirmUpgrade,
+        someNodeDownloading
+    );
+
+    const meshWideError = getMeshWideError(thisNode);
+
+    const becomeMainNode = useCallback(() => {
+        becomeMainNodeMutation({});
+        setDownloadStatusInterval(NODE_STATUS_REFETCH_INTERVAL);
+    }, [becomeMainNodeMutation]);
+
+    const startFwUpgradeTransaction = useCallback(() => {
+        fwUpgradeTransaction({});
+    }, [fwUpgradeTransaction]);
 
     useEffect(() => {
         if (
@@ -190,6 +199,7 @@ export const MeshWideUpgradeProvider = ({
                 meshWideError,
                 allNodesReadyForUpgrade,
                 allNodesConfirmed,
+                someNodeDownloading,
             }}
         >
             {children}

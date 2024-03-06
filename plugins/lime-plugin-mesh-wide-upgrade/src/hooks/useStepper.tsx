@@ -26,7 +26,8 @@ export const getStepperStatus = (
     newVersionAvailable: boolean,
     downloadStatus: string | undefined,
     scheduleMeshSafeUpgradeStatus: UseScheduleMeshSafeUpgradeType | undefined,
-    confirmUpgradeStatus: UseConfirmUpgradeType | undefined
+    confirmUpgradeStatus: UseConfirmUpgradeType | undefined,
+    someNodeAreDownloading: boolean
 ): StepperState => {
     if (!nodeInfo || !thisNode) return "INITIAL";
 
@@ -47,6 +48,9 @@ export const getStepperStatus = (
     ) {
         if (scheduleMeshSafeUpgradeStatus?.isLoading) {
             return "SENDING_START_SCHEDULE";
+        }
+        if (someNodeAreDownloading) {
+            return "NODES_DOWNLOADING";
         }
         if (
             scheduleMeshSafeUpgradeStatus?.results?.length ||

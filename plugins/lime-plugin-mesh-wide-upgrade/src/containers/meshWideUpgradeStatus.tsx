@@ -20,7 +20,10 @@ const MeshWideUpgradeStatusState = () => {
         return <LoadingPage title={<Trans>Downloading</Trans>} />;
     } else if (stepperState === "DOWNLOADED_MAIN") {
         return <NewVersionAvailable readyForUpgrade />;
-    } else if (stepperState === "TRANSACTION_STARTED") {
+    } else if (
+        stepperState === "TRANSACTION_STARTED" ||
+        stepperState === "NODES_DOWNLOADING"
+    ) {
         return <TransactionStarted />;
     } else if (stepperState === "SENDING_START_SCHEDULE") {
         return (
