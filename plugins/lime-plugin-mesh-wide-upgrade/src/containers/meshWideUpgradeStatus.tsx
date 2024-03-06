@@ -7,6 +7,7 @@ import { NoNewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src
 import { TransactionStarted } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/TransactionStarted";
 import { UpgradeScheduled } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeScheduled";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
+import { CenterFlex } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/divs";
 
 const MeshWideUpgradeStatusState = () => {
     const { stepperState, meshWideError } = useMeshUpgrade();
@@ -42,8 +43,8 @@ const MeshWideUpgradeStatusState = () => {
 
 export const MeshWideUpgradeStatus = () => {
     return (
-        <div className="flex-grow flex flex-col justify-center content-center text-center h-full max-h-full">
+        <CenterFlex>
             <MeshWideUpgradeStatusState />
-        </div>
+        </CenterFlex>
     );
 };

@@ -65,6 +65,10 @@ const NodeUpgradeInfoItem = ({
                 title={<Trans>Firmware version</Trans>}
                 description={<Trans>{info.current_fw}</Trans>}
             />
+            <NodeInfoBodyItem
+                title={<Trans>Ip</Trans>}
+                description={<Trans>{info.node_ip}</Trans>}
+            />
         </ListItemCollapsible>
     );
 };

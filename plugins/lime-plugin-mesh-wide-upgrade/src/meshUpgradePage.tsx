@@ -12,6 +12,7 @@ import {
     MeshWideUpgradeProvider,
     useMeshUpgrade,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
+import { CenterFlex } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/divs";
 
 const MeshWideUpgrade = () => {
     const {
@@ -24,20 +25,28 @@ const MeshWideUpgrade = () => {
 
     if (isError) {
         return (
-            <ErrorState
-                msg={
-                    <Trans>
-                        Errors found getting mesh info!
-                        <br />
-                        Check with your network administrators
-                    </Trans>
-                }
-            />
+            <CenterFlex>
+                <ErrorState
+                    msg={
+                        <Trans>
+                            Errors found getting mesh info!
+                            <br />
+                            Is mesh upgrade package installed?
+                            <br />
+                            Contact with your network administrators
+                        </Trans>
+                    }
+                />
+            </CenterFlex>
         );
     }
 
     if (isLoading || meshWideNodes === undefined || thisNode === undefined) {
-        return <Loading />;
+        return (
+            <CenterFlex>
+                <Loading />
+            </CenterFlex>
+        );
     }
 
     return (
@@ -49,7 +58,11 @@ const MeshWideUpgrade = () => {
                         onClick={() => setShowNodeList(!showNodeList)}
                         className={"cursor-pointer"}
                     >
-                        <Trans>Show nodes</Trans>
+                        {showNodeList ? (
+                            <Trans>Show state</Trans>
+                        ) : (
+                            <Trans>Show nodes</Trans>
+                        )}
                     </div>
                 }
             >

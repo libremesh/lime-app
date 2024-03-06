@@ -14,6 +14,13 @@ export const NewVersionAvailable = ({
 
     return (
         <div className="text-center">
+            <div className="text-4xl">
+                {readyForUpgrade ? (
+                    <Trans>Start Mesh Wide Transaction</Trans>
+                ) : (
+                    <Trans>New version available!</Trans>
+                )}
+            </div>
             <div className="text-2xl">
                 <Trans>This node version:</Trans>
                 <br />
@@ -30,13 +37,6 @@ export const NewVersionAvailable = ({
                     <br />
                 </div>
             )}
-            <div className="text-4xl">
-                {readyForUpgrade ? (
-                    <Trans>Start Mesh Wide Transaction</Trans>
-                ) : (
-                    <Trans>New version available!</Trans>
-                )}
-            </div>
         </div>
     );
 };
