@@ -10,22 +10,27 @@ interface ModalContextProps {
     isModalOpen: boolean;
     toggleModal: () => void;
     setModalState: (state?: ModalState) => void;
+    isLoading: boolean;
 }
+
+type CallbackFn = () => void | Promise<void>;
 
 interface ModalState {
     content?: ComponentChildren;
     title: ComponentChildren | string;
     cancelBtn?: boolean;
-    successCb?: (e) => void;
+    successCb?: CallbackFn;
     successBtnText?: ComponentChildren;
-    deleteCb?: (e) => void;
+    deleteCb?: CallbackFn;
     deleteBtnText?: ComponentChildren;
+    isLoading?: boolean;
 }
 
 const ModalContext = createContext<ModalContextProps>({
     isModalOpen: false,
     toggleModal: () => {},
     setModalState: () => {},
+    isLoading: false,
 });
 
 export const useModal = () => {
@@ -40,6 +45,8 @@ export type ModalActions = "success" | "delete";
 
 export const UseModalProvider = ({ children }) => {
     const [isModalOpen, setModalOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
     const [modalState, setModalState] = useState<ModalState>({
         content: <></>,
         title: "",
@@ -54,12 +61,23 @@ export const UseModalProvider = ({ children }) => {
         setModalOpen((prevIsModalOpen) => !prevIsModalOpen);
     }, [isModalOpen]);
 
+    const runCb = useCallback(
+        async (cb: CallbackFn) => {
+            if (isLoading) return;
+            setIsLoading(true);
+            await cb();
+            setIsLoading(false);
+        },
+        [isLoading]
+    );
+
     return (
         <ModalContext.Provider
             value={{
                 isModalOpen,
                 toggleModal,
                 setModalState,
+                isLoading,
             }}
         >
             {children}
@@ -68,9 +86,9 @@ export const UseModalProvider = ({ children }) => {
                 toggleModal={toggleModal}
                 title={modalState.title}
                 cancelBtn={modalState.cancelBtn}
-                successCb={modalState.successCb}
+                successCb={() => runCb(modalState.successCb)}
                 successBtnText={modalState.successBtnText}
-                deleteCb={modalState.deleteCb}
+                deleteCb={() => runCb(modalState.successCb)}
                 deleteBtnText={modalState.deleteBtnText}
             >
                 {modalState.content}
@@ -89,6 +107,7 @@ const Modal = ({
     successBtnText = <Trans>Success</Trans>,
     deleteCb,
     deleteBtnText = <Trans>Cancel</Trans>,
+    isLoading,
 }: {
     isModalOpen: boolean;
     toggleModal: () => void;
