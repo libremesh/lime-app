@@ -5,6 +5,7 @@ import Loading from "components/loading";
 import Notification from "components/notifications/notification";
 
 import NextStepFooter from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nextStepFooter";
+import { ErrorState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ErrorState";
 import { MeshWideUpgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus";
 import { NodesList } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/nodesList";
 import {
@@ -13,8 +14,27 @@ import {
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 
 const MeshWideUpgrade = () => {
-    const { data: meshWideNodes, isLoading, thisNode } = useMeshUpgrade();
+    const {
+        data: meshWideNodes,
+        isLoading,
+        thisNode,
+        isError,
+    } = useMeshUpgrade();
     const [showNodeList, setShowNodeList] = useState(false);
+
+    if (isError) {
+        return (
+            <ErrorState
+                msg={
+                    <Trans>
+                        Errors found getting mesh info!
+                        <br />
+                        Check with your network administrators
+                    </Trans>
+                }
+            />
+        );
+    }
 
     if (isLoading || meshWideNodes === undefined || thisNode === undefined) {
         return <Loading />;

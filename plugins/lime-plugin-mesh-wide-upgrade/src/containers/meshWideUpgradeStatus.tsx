@@ -12,7 +12,7 @@ const MeshWideUpgradeStatusState = () => {
     const { stepperState, meshWideError } = useMeshUpgrade();
 
     if (stepperState === "ERROR") {
-        return <ErrorState msg={meshWideError.errorMessage} />;
+        return <ErrorState msg={meshWideError?.errorMessage} />;
     } else if (stepperState === "UPDATE_AVAILABLE") {
         return <NewVersionAvailable />;
     } else if (stepperState === "DOWNLOADING_MAIN") {
