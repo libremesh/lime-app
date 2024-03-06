@@ -78,12 +78,19 @@ const useParallelQueriesModal = ({
         setModalState({
             content,
             title,
-            successCb: allNodesReady && runAndClose,
-            deleteCb: !allNodesReady && runAndClose,
+            successCb: allNodesReady ? runAndClose : undefined,
+            deleteCb: !allNodesReady ? runAndClose : undefined,
             successBtnText: <Trans>Schedule</Trans>,
             deleteBtnText: <Trans>Schedule</Trans>,
         });
         toggleModal();
-    }, [setModalState, content, title, allNodesReady, cb, toggleModal]);
+    }, [
+        setModalState,
+        content,
+        title,
+        allNodesReady,
+        runAndClose,
+        toggleModal,
+    ]);
     return { showModal, toggleModal };
 };
