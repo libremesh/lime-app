@@ -20,6 +20,7 @@ const MeshWideUpgrade = () => {
         isLoading,
         thisNode,
         isError,
+        error,
     } = useMeshUpgrade();
     const [showNodeList, setShowNodeList] = useState(false);
 
@@ -28,13 +29,10 @@ const MeshWideUpgrade = () => {
             <CenterFlex>
                 <ErrorState
                     msg={
-                        <Trans>
-                            Errors found getting mesh info!
-                            <br />
-                            Is mesh upgrade package installed?
-                            <br />
-                            Contact with your network administrators
-                        </Trans>
+                        <div className={"flex flex-col gap-2 mt-4"}>
+                            <Trans>Errors found getting mesh info!</Trans>
+                            {error && <div>{error.toString()}</div>}
+                        </div>
                     }
                 />
             </CenterFlex>

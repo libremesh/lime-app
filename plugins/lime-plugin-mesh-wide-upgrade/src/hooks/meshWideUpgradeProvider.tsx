@@ -33,6 +33,7 @@ interface MeshWideUpgradeContextProps {
     totalNodes: number;
     isLoading: boolean;
     isError: boolean;
+    error: unknown;
     newVersionAvailable: boolean;
     stepperState: StepperState;
     becomeMainNode: () => void;
@@ -46,6 +47,7 @@ export const MeshWideUpgradeContext =
     createContext<MeshWideUpgradeContextProps>({
         isLoading: false,
         isError: false,
+        error: null,
         totalNodes: 0,
         newVersionAvailable: false,
         stepperState: "INITIAL",
@@ -77,6 +79,7 @@ export const MeshWideUpgradeProvider = ({
         data: nodesUpgradeInfo,
         isLoading: meshWideInfoLoading,
         isError,
+        error,
     } = useMeshWideUpgradeInfo({
         refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
     });
@@ -178,6 +181,7 @@ export const MeshWideUpgradeProvider = ({
                 thisNode,
                 isLoading,
                 isError,
+                error,
                 totalNodes,
                 newVersionAvailable,
                 stepperState,
