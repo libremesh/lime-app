@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/macro";
 
+import { ConfirmationPending } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ConfirmationPending";
 import { ErrorState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ErrorState";
 import { LoadingPage } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/LoadingPage";
 import { NewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable";
@@ -13,7 +14,7 @@ const MeshWideUpgradeStatusState = () => {
     const { stepperState, meshWideError } = useMeshUpgrade();
 
     if (stepperState === "ERROR") {
-        return <ErrorState msg={meshWideError?.errorMessage} />;
+        return <ErrorState msg={meshWideError?.errorMessage.toString()} />;
     } else if (stepperState === "UPDATE_AVAILABLE") {
         return <NewVersionAvailable />;
     } else if (stepperState === "DOWNLOADING_MAIN") {
@@ -37,7 +38,7 @@ const MeshWideUpgradeStatusState = () => {
     } else if (stepperState === "UPGRADE_SCHEDULED") {
         return <UpgradeScheduled />;
     } else if (stepperState === "CONFIRMATION_PENDING") {
-        return <>todo</>;
+        return <ConfirmationPending />;
     } else if (stepperState === "CONFIRMED") {
         return <>todo</>;
     }
