@@ -73,7 +73,6 @@ const MostActiveBox = ({ node, changeNode }) => {
     );
 
     if (!use_most_active) {
-        console.log("SPAN");
         return <span />;
     }
 
