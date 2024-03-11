@@ -65,13 +65,15 @@ const SystemBox = ({ uptime, firmwareVersion, boardModel }) => {
 };
 
 const MostActiveBox = ({ node, changeNode }) => {
+    const use_most_active = !!node.most_active?.iface;
     const { data: bathost } = useBatHost(
-        node.most_active && node.most_active.station_mac,
-        node.most_active && node.most_active.iface,
+        node.most_active?.station_mac,
+        node.most_active?.iface,
         { enabled: !!node.most_active }
     );
 
-    if (node.most_active === undefined) {
+    if (!use_most_active) {
+        console.log("SPAN");
         return <span />;
     }
 
