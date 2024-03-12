@@ -11,4 +11,4 @@ export const EupgradeStatusStates = [
     "download-failed",
 ] as const;
 
-export type EupgradeStatus = (typeof EupgradeStatusStates)[number];
+export type EupgradeStatus = typeof EupgradeStatusStates[number];

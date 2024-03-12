@@ -24,7 +24,7 @@ export function useSession() {
  * @param password the password
  * @param customApi it accepts a custom instance of UhttpdService to be used for login to a custom API
  */
-export function login({ username, password, customApi }) {
+export function login({ username, password, customApi = null }) {
     if (customApi) {
         return customApi.login(username, password);
     }
