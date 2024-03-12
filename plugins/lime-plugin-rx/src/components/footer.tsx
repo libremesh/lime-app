@@ -1,11 +1,18 @@
 import { Trans } from "@lingui/macro";
 
 export const Footer = () => {
-    const imgClass = "h-16"
+    const imgClass = "h-16";
     return (
-        <div className={"w-full flex justify-around mt-20 content-center items-center"}>
+        <div
+            className={
+                "z-50 fixed bottom-0 w-full flex justify-around content-center items-center"
+            }
+        >
             <div>
-                <img src={"assets/icons/AlterMundiLogo.svg"} className={imgClass} />
+                <img
+                    src={"assets/icons/AlterMundiLogo.svg"}
+                    className={imgClass}
+                />
             </div>
             <div className={"flex flex-col text-center text-xl"}>
                 <div className={"italic font-normal text-2xl"}>
@@ -31,7 +38,10 @@ export const Footer = () => {
                 </div>
             </div>
             <div>
-                <img src={"assets/icons/LibreRouterLogo.svg"} className={imgClass} />
+                <img
+                    src={"assets/icons/LibreRouterLogo.svg"}
+                    className={imgClass}
+                />
             </div>
         </div>
     );
