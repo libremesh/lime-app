@@ -76,7 +76,7 @@ export const InternetPath = () => {
     let pathComponent = (
         <div
             className={
-                "flex-1 full flex flex-column text-center text-lg text-disabled justify-content-center align-items-center mt-5 gap-4"
+                "flex-1 flex flex-column text-center text-lg text-disabled justify-content-center align-items-center mt-5 gap-4"
             }
         >
             <Loading />
@@ -90,7 +90,7 @@ export const InternetPath = () => {
         pathComponent = (
             <div
                 className={
-                    "flex-1 full flex flex-column text-center text-lg text-disabled justify-content-center align-items-center mt-5 gap-4"
+                    "flex-1 flex flex-column text-center text-lg text-disabled justify-content-center align-items-center mt-5 gap-4"
                 }
             >
                 <GlobeIcon
