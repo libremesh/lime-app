@@ -1,6 +1,8 @@
 import { Trans } from "@lingui/macro";
 
 import { Button } from "components/elements/button";
+import { GlobeIcon } from "components/icons/globeIcon";
+import Loading from "components/loading";
 
 import {
     usePath,
@@ -11,12 +13,11 @@ import {
     Section,
     SectionTitle,
 } from "plugins/lime-plugin-rx/src/components/components";
+import LineChart from "plugins/lime-plugin-rx/src/components/internetPathChart";
 import { InternetStatus } from "plugins/lime-plugin-rx/src/components/internetStatus";
 import { PathIcon } from "plugins/lime-plugin-rx/src/icons/pathIcon";
 import { IGetInternetStatus } from "plugins/lime-plugin-rx/src/rxApi";
 import { useInternetStatus } from "plugins/lime-plugin-rx/src/rxQueries";
-
-import LineChart from "../components/internetPathChart";
 
 export const InternetPath = () => {
     const { data: internet, isLoading: internetStatusLoading } =
@@ -40,7 +41,11 @@ export const InternetPath = () => {
             },
         });
 
-    const { data: path, isLoading: pathIsLoading } = usePath({
+    const {
+        data: path,
+        isLoading: pathIsLoading,
+        isError: pathError,
+    } = usePath({
         refetchOnWindowFocus: false,
         enabled: true,
     });
@@ -67,24 +72,53 @@ export const InternetPath = () => {
         refetchLosses();
     };
 
+    // Conditional rendering for las known path
+    let pathComponent = (
+        <div
+            className={
+                "flex-1 full flex flex-column text-center text-lg text-disabled justify-content-center align-items-center mt-5 gap-4"
+            }
+        >
+            <Loading />
+            <Trans>
+                Loading <br />
+                last internet path...
+            </Trans>
+        </div>
+    );
+    if (pathError) {
+        pathComponent = (
+            <div
+                className={
+                    "flex-1 full flex flex-column text-center text-lg text-disabled justify-content-center align-items-center mt-5 gap-4"
+                }
+            >
+                <GlobeIcon
+                    size={"30px"}
+                    className={"stroke-gray-400 fill-gray-400"}
+                />
+                <Trans>
+                    Error retrieving
+                    <br />
+                    last internet path
+                </Trans>
+            </div>
+        );
+    } else if (!pathIsLoading && path) {
+        pathComponent = (
+            <span onClick={checkLosses}>
+                <LineChart nodes={path} internet={workingInternet} />
+            </span>
+        );
+    }
+
     return (
         <Section className={"border border-primary-dark rounded-md mx-4"}>
             <SectionTitle icon={<PathIcon className={IconsClassName} />}>
                 <Trans>Path to Internet</Trans>
             </SectionTitle>
             <div className="flex flex-row items-start justify-center space-x-6 pt-8 px-8">
-                {pathIsLoading || !path ? (
-                    <div className={"text-center text-lg text-disabled"}>
-                        <Trans>
-                            Loading <br />
-                            last internet path...
-                        </Trans>
-                    </div>
-                ) : (
-                    <span onClick={checkLosses}>
-                        <LineChart nodes={path} internet={workingInternet} />
-                    </span>
-                )}
+                {pathComponent}
                 <div className="flex flex-col justify-center gap-8">
                     <Button href={"#/metrics"}>
                         <Trans>Diagnose</Trans>
