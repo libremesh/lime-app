@@ -1,6 +1,5 @@
 import { ComponentChildren, createContext } from "preact";
 import { useMemo } from "preact/compat";
-import { useEffect, useState } from "preact/hooks";
 import { useCallback, useContext } from "react";
 
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
@@ -65,11 +64,6 @@ export const MeshWideUpgradeProvider = ({
 }: {
     children: ComponentChildren;
 }) => {
-    const [downloadStatusInterval, setDownloadStatusInterval] = useState(0);
-    const [refetchEupgradeInterval, setRefetchEupgradeInterval] = useState(
-        NODE_STATUS_REFETCH_INTERVAL
-    );
-
     // UseCallback tpo invalidate queries
     const invalidateQueries = useCallback(() => {
         queryCache.invalidateQueries({
@@ -105,7 +99,6 @@ export const MeshWideUpgradeProvider = ({
     const { data: session } = useSession();
     const { data: newVersionData } = useNewVersion({
         enabled: session?.username !== undefined,
-        refetchInterval: refetchEupgradeInterval,
     });
 
     const newVersionAvailable = !!(newVersionData && newVersionData.version);
@@ -114,8 +107,7 @@ export const MeshWideUpgradeProvider = ({
 
     const { data: thisNode, isLoading: thisNodeLoading } =
         useMeshUpgradeNodeStatus({
-            refetchInterval: downloadStatusInterval,
-            enabled: true,
+            refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
         });
 
     const eupgradeStatus = thisNode?.eupgradestate;
@@ -156,30 +148,11 @@ export const MeshWideUpgradeProvider = ({
 
     const becomeMainNode = useCallback(() => {
         becomeMainNodeMutation({});
-        setDownloadStatusInterval(NODE_STATUS_REFETCH_INTERVAL);
     }, [becomeMainNodeMutation]);
 
     const startFwUpgradeTransaction = useCallback(() => {
         fwUpgradeTransaction({});
     }, [fwUpgradeTransaction]);
-
-    useEffect(() => {
-        if (
-            thisNode?.main_node &&
-            thisNode.main_node === "STARTING" &&
-            thisNode.eupgradestate === "downloading"
-        ) {
-            setDownloadStatusInterval(NODE_STATUS_REFETCH_INTERVAL);
-        } else {
-            setDownloadStatusInterval(0);
-        }
-    }, [thisNode?.eupgradestate, thisNode?.main_node]);
-
-    useEffect(() => {
-        if (newVersionData) {
-            setDownloadStatusInterval(0);
-        }
-    }, [newVersionData]);
 
     const isLoading = meshWideInfoLoading || thisNodeLoading;
 
