@@ -1,16 +1,16 @@
 import { Fragment } from "preact";
 
+import { Footer } from "plugins/lime-plugin-rx/src/components/footer";
 import { Alignment } from "plugins/lime-plugin-rx/src/sections/alignment";
 import { InternetPath } from "plugins/lime-plugin-rx/src/sections/internetPath";
 import { Wired } from "plugins/lime-plugin-rx/src/sections/wired";
-import {Footer} from "plugins/lime-plugin-rx/src/components/footer";
 
 const Page = ({}) => {
     return (
         <Fragment>
             <div
                 className={
-                    "my-0 mx-auto flex flex-col h-screen items-center -translate-y-6"
+                    "my-0 flex flex-col justify-between items-center -translate-y-6 container container-padded"
                 }
             >
                 <InternetPath />
