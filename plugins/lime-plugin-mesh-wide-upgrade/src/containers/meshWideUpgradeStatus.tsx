@@ -37,10 +37,17 @@ const MeshWideUpgradeStatusState = () => {
         );
     } else if (stepperState === "UPGRADE_SCHEDULED") {
         return <UpgradeScheduled />;
+    } else if (stepperState === "SENDING_CONFIRMATION") {
+        return (
+            <LoadingPage
+                title={<Trans>Sending confirmation</Trans>}
+                description={<Trans>Confirming all upgraded nodes</Trans>}
+            />
+        );
     } else if (stepperState === "CONFIRMATION_PENDING") {
         return <ConfirmationPending />;
     } else if (stepperState === "CONFIRMED") {
-        return <>todo</>;
+        return <>Confirmed!</>;
     }
     return <NoNewVersionAvailable />;
 };

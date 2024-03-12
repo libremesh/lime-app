@@ -209,6 +209,7 @@ export const useStep = () => {
         allNodesReadyForUpgrade,
         becomeMainNode,
         scheduleErrors?.length,
+        showConfirmationModal,
         showFooter,
         showScheduleModal,
         startFwUpgradeTransaction,
