@@ -75,7 +75,7 @@ const App = () => {
     const { data: session } = useSession();
     const { mutate: login } = useLogin();
     const { data: boardData } = useBoardData({
-        enabled: session && session.username !== undefined,
+        enabled: session?.username != null,
     });
 
     useEffect(() => {

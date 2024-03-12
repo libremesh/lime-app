@@ -20,27 +20,31 @@ const VoucherList = () => {
 
     if (loadingBoardData || loadingVouchers) return <Loading />;
 
-    const filteredVoucher = vouchers
-        .sort((a, b) => {
-            return parseInt(a.creation_date, 10) < parseInt(b.creation_date, 10)
-                ? 1
-                : -1;
-        })
-        .filter((voucher) => {
-            if (filterSelection === "all-vouchers") return true;
-            if (filterSelection === "created-in-this-node") {
-                return voucher.author_node === boardData.hostname;
-            }
-            return voucher.status === filterSelection;
-        })
-        .filter((voucher) => {
-            if (!search || search === "") return true;
-            const withName = voucher.name.includes(search);
-            const withNode = voucher.author_node?.includes(search);
-            const withId = voucher.id.includes(search);
-            const withCode = voucher.code.includes(search);
-            if (withName || withNode || withId || withCode) return true;
-        });
+    let filteredVoucher = [];
+    if (vouchers) {
+        filteredVoucher = vouchers
+            .sort((a, b) => {
+                return parseInt(a.creation_date, 10) <
+                    parseInt(b.creation_date, 10)
+                    ? 1
+                    : -1;
+            })
+            .filter((voucher) => {
+                if (filterSelection === "all-vouchers") return true;
+                if (filterSelection === "created-in-this-node") {
+                    return voucher.author_node === boardData.hostname;
+                }
+                return voucher.status === filterSelection;
+            })
+            .filter((voucher) => {
+                if (!search || search === "") return true;
+                const withName = voucher.name.includes(search);
+                const withNode = voucher.author_node?.includes(search);
+                const withId = voucher.id.includes(search);
+                const withCode = voucher.code.includes(search);
+                if (withName || withNode || withId || withCode) return true;
+            });
+    }
 
     return (
         <div className="d-flex flex-column flex-grow-1">
