@@ -35,6 +35,13 @@ const MeshWideUpgradeStatusState = () => {
                 }
             />
         );
+    } else if (stepperState === "UPGRADING") {
+        return (
+            <LoadingPage
+                title={<Trans>Node is upgrading</Trans>}
+                description={<Trans>Await until it reboots</Trans>}
+            />
+        );
     } else if (stepperState === "UPGRADE_SCHEDULED") {
         return <UpgradeScheduled />;
     } else if (stepperState === "SENDING_CONFIRMATION") {

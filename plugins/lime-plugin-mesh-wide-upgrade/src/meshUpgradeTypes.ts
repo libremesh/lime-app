@@ -24,6 +24,7 @@ export type StepperState =
     | "SENDING_START_SCHEDULE" // Sending start to start the upgrade
     | "NODES_DOWNLOADING" // Some nodes on the network are downloading the firmware
     | "UPGRADE_SCHEDULED" // Upgrade scheduled
+    | "UPGRADING" // Doing the upgrade
     | "CONFIRMATION_PENDING" // Upgrade done, confirmation pending.
     | "SENDING_CONFIRMATION" // Sending confirmation to confirm the upgrade
     | "CONFIRMED" // Upgrade done, confirmed.

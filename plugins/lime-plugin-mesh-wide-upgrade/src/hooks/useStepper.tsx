@@ -23,6 +23,7 @@ import {
 export const getStepperStatus = (
     nodeInfo: MeshWideUpgradeInfo | undefined,
     thisNode: NodeMeshUpgradeInfo | undefined,
+    thisNodeError: boolean,
     newVersionAvailable: boolean,
     downloadStatus: string | undefined,
     scheduleMeshSafeUpgradeStatus: UseScheduleMeshSafeUpgradeType | undefined,
@@ -46,6 +47,10 @@ export const getStepperStatus = (
         thisNode.upgrade_state === "DOWNLOADING" ||
         thisNode.upgrade_state === "UPGRADE_SCHEDULED"
     ) {
+        // We suppose that if the upgrade is scheduled, and we lost the connection is because is upgrading
+        if (thisNode.upgrade_state === "UPGRADE_SCHEDULED" && thisNodeError) {
+            return "UPGRADING";
+        }
         if (scheduleMeshSafeUpgradeStatus?.isLoading) {
             return "SENDING_START_SCHEDULE";
         }

@@ -74,8 +74,8 @@ export const MeshWideUpgradeProvider = ({
     const {
         data: nodesUpgradeInfo,
         isLoading: meshWideInfoLoading,
-        isError,
-        error,
+        isError: isMeshWideQueryError,
+        error: meshWideQueryError,
     } = useMeshWideUpgradeInfo({
         refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
     });
@@ -103,10 +103,13 @@ export const MeshWideUpgradeProvider = ({
     const totalNodes =
         nodesUpgradeInfo && Object.entries(nodesUpgradeInfo).length;
 
-    const { data: thisNode, isLoading: thisNodeLoading } =
-        useMeshUpgradeNodeStatus({
-            refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
-        });
+    const {
+        data: thisNode,
+        isLoading: thisNodeLoading,
+        isError: isThisNodeStatusError,
+    } = useMeshUpgradeNodeStatus({
+        refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
+    });
 
     const eupgradeStatus = thisNode?.eupgradestate;
 
@@ -135,6 +138,7 @@ export const MeshWideUpgradeProvider = ({
     const stepperState = getStepperStatus(
         nodesUpgradeInfo,
         thisNode,
+        isThisNodeStatusError,
         newVersionAvailable,
         eupgradeStatus,
         meshSafeUpgrade,
@@ -153,6 +157,14 @@ export const MeshWideUpgradeProvider = ({
     }, [fwUpgradeTransaction]);
 
     const isLoading = meshWideInfoLoading || thisNodeLoading;
+
+    let isError;
+    let error;
+    // If the state is upgrading, ignore the errors because is normal to lose the connection
+    if (stepperState !== "UPGRADING") {
+        isError = isMeshWideQueryError;
+        error = meshWideQueryError;
+    }
 
     return (
         <MeshWideUpgradeContext.Provider
