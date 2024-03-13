@@ -5,7 +5,6 @@ import { useCallback, useContext } from "react";
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
 import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper";
 import {
-    meshUpgradeNodeStatusKey,
     useBecomeMainNode,
     useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
@@ -13,6 +12,7 @@ import {
     useParallelScheduleUpgrade,
     useStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";
 import {
     MeshWideError,
     MeshWideUpgradeInfo,
@@ -67,7 +67,7 @@ export const MeshWideUpgradeProvider = ({
     // UseCallback tpo invalidate queries
     const invalidateQueries = useCallback(() => {
         queryCache.invalidateQueries({
-            queryKey: meshUpgradeNodeStatusKey,
+            queryKey: meshUpgradeQueryKeys.getMeshUpgradeNodeStatus(),
         });
     }, []);
 

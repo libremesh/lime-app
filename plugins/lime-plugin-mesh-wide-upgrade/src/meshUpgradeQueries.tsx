@@ -8,6 +8,7 @@ import {
     setBecomeMainNode,
     setStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeApi";
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";
 import {
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
@@ -16,16 +17,11 @@ import { getNodeIpsByStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/ut
 
 import { useMeshWideSyncCall } from "utils/meshWideSyncCall";
 
-export const meshUpgradeNodeStatusKey = [
-    "lime-mesh-upgrade",
-    "get_node_status",
-];
-
 // Shared state related queries
 
 export function useMeshWideUpgradeInfo(params) {
     return useQuery<MeshWideUpgradeInfo>(
-        ["shared-state", "getFromSharedState", "mesh_wide_upgrade"],
+        meshUpgradeQueryKeys.getMeshWideUpgradeInfo(),
         getMeshWideUpgradeInfo,
         {
             ...params,
@@ -37,7 +33,7 @@ export function useMeshWideUpgradeInfo(params) {
 
 export function useMeshUpgradeNodeStatus(params) {
     return useQuery<NodeMeshUpgradeInfo>(
-        meshUpgradeNodeStatusKey,
+        meshUpgradeQueryKeys.getMeshUpgradeNodeStatus(),
         getMeshUpgradeNodeStatus,
         {
             ...params,
@@ -70,7 +66,7 @@ export const useParallelScheduleUpgrade = (opts?) => {
     const ips = getNodeIpsByStatus(nodes, "READY_FOR_UPGRADE");
     // localStorage.setItem("hideReleaseBannerPlease", value);
     return useMeshWideSyncCall({
-        mutationKey: ["lime-mesh-upgrade", "start_safe_upgrade"],
+        mutationKey: meshUpgradeQueryKeys.remoteScheduleUpgrade(),
         mutationFn: remoteScheduleUpgrade,
         ips,
         options: opts,
@@ -85,7 +81,7 @@ export const useParallelConfirmUpgrade = (opts?) => {
     const { data: nodes } = useMeshWideUpgradeInfo({});
     const ips = getNodeIpsByStatus(nodes, "READY_FOR_UPGRADE");
     return useMeshWideSyncCall({
-        mutationKey: ["lime-mesh-upgrade", "confirm_boot_partition"],
+        mutationKey: meshUpgradeQueryKeys.remoteConfirmUpgrade(),
         mutationFn: remoteConfirmUpgrade,
         ips,
         options: opts,
