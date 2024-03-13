@@ -1,5 +1,6 @@
 import { ComponentChildren, createContext } from "preact";
 import { useMemo } from "preact/compat";
+import { useEffect } from "preact/hooks";
 import { useCallback, useContext } from "react";
 
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
@@ -64,10 +65,16 @@ export const MeshWideUpgradeProvider = ({
 }: {
     children: ComponentChildren;
 }) => {
-    // UseCallback tpo invalidate queries
+    // UseCallback to invalidate queries
     const invalidateQueries = useCallback(() => {
         queryCache.invalidateQueries({
             queryKey: meshUpgradeQueryKeys.getMeshUpgradeNodeStatus(),
+        });
+    }, []);
+
+    const invalidateLogin = useCallback(() => {
+        queryCache.invalidateQueries({
+            queryKey: ["session", "get"],
         });
     }, []);
 
@@ -165,6 +172,17 @@ export const MeshWideUpgradeProvider = ({
         isError = isMeshWideQueryError;
         error = meshWideQueryError;
     }
+
+    useEffect(() => {
+        if (
+            stepperState === "UPGRADING" &&
+            meshWideQueryError &&
+            (meshWideQueryError as any).code != null &&
+            (meshWideQueryError as any).code === -32002 // Auth failed error code
+        ) {
+            invalidateLogin();
+        }
+    }, [invalidateLogin, meshWideQueryError, stepperState]);
 
     return (
         <MeshWideUpgradeContext.Provider
