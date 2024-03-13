@@ -83,7 +83,6 @@ export const MeshWideUpgradeProvider = ({
     const { mutate: becomeMainNodeMutation } = useBecomeMainNode({
         onSuccess: () => {
             invalidateQueries();
-            console.log("todo: become main node success");
         },
     });
 
@@ -91,7 +90,6 @@ export const MeshWideUpgradeProvider = ({
         {
             onSuccess: () => {
                 invalidateQueries();
-                console.log("todo: start fw upgrade transaction success");
             },
         }
     );

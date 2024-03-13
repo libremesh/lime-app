@@ -1,6 +1,8 @@
 import {
     MeshUpgradeApiErrorTypes,
     MeshWideRPCReturnTypes,
+    MeshWideUpgradeInfo,
+    UpgradeStatusType,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 
 import api, { UhttpdService } from "utils/uhttpd.service";
@@ -32,3 +34,24 @@ export class MeshUpgradeApiError extends Error {
         Object.setPrototypeOf(this, MeshUpgradeApiError.prototype);
     }
 }
+
+/**
+ * From a MeshWideUpgradeInfo nodes it returns the ips of the nodes that are in certain status provided
+ * @param nodes the nodes to check
+ * @param status the status to check the criteria
+ */
+export const getNodeIpsByStatus = (
+    nodes: MeshWideUpgradeInfo,
+    status: UpgradeStatusType
+) => {
+    if (!nodes) return [];
+    return Object.values(nodes)
+        .filter(
+            (node) =>
+                node.node_ip !== null &&
+                node.node_ip !== undefined &&
+                node.node_ip.trim() !== "" &&
+                node.upgrade_state === status
+        )
+        .map((node) => node.node_ip as string); // 'as string' is safe here due to the filter condition
+};
