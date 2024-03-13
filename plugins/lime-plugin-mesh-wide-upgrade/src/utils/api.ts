@@ -5,6 +5,8 @@ import {
     UpgradeStatusType,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 
+import { ParallelMutationError } from "utils/meshWideSyncCall";
+import { login } from "utils/queries";
 import api, { UhttpdService } from "utils/uhttpd.service";
 
 export const meshUpgradeApiCall = async (
@@ -32,6 +34,45 @@ export class MeshUpgradeApiError extends Error {
         this.message = message;
         this.code = code;
         Object.setPrototypeOf(this, MeshUpgradeApiError.prototype);
+    }
+}
+
+/**
+ * Wrapper that tries to call a remote node and returns the result or throws an error
+ *
+ * First it tries to login and if success do a specific call to the remote node
+ * @param ip
+ * @param apiMethod
+ */
+export async function callToRemoteNode({
+    ip,
+    apiMethod,
+}: {
+    ip: string;
+    apiMethod: string;
+}) {
+    const customApi = new UhttpdService(ip);
+    try {
+        await login({ username: "lime-app", password: "generic", customApi });
+    } catch (error) {
+        throw new ParallelMutationError(
+            `Cannot login`,
+            customApi.customIp,
+            error
+        );
+    }
+    try {
+        return await meshUpgradeApiCall(apiMethod, customApi);
+    } catch (error) {
+        let additionalInfo = "";
+        if (error instanceof MeshUpgradeApiError) {
+            additionalInfo = `: ${error.message}`;
+        }
+        throw new ParallelMutationError(
+            `Cannot startSafeUpgrade${additionalInfo}`,
+            ip,
+            error
+        );
     }
 }
 
