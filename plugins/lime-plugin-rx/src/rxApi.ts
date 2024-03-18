@@ -5,7 +5,7 @@ interface DeviceStatus {
     address: string;
 }
 
-interface SwitchStatus {
+export interface SwitchStatus {
     device: string;
     num: number;
     role: string;
