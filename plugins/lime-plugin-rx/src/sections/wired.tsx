@@ -18,37 +18,34 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
         acc[role].push(obj);
         return acc;
     }, {});
-
     return (
-        <div className={"flex flex-row px-10"} data-testid="ports-container">
+        <div
+            className={"flex flex-wrap px-10 gap-4 justify-between"}
+            data-testid="ports-container"
+        >
             {Object.keys(ports).map((role) => {
-                if (
-                    role.toLowerCase() === "wan" ||
-                    role.toLowerCase() === "lan"
-                )
-                    return (
-                        <div key={role} className={"flex-1 flex flex-column"}>
-                            <h2 className={"font-bold"}>
-                                {role.toUpperCase()}
-                            </h2>
-                            <h2>{ports[role][0].device.toLowerCase()}</h2>
-                            <div className={"flex flex-row gap-5 "}>
-                                {ports[role].map((port) => {
-                                    const link =
-                                        port.link.toLowerCase() === "up"
-                                            ? "fill-primary-dark"
-                                            : "fill-disabled";
-                                    return (
-                                        <div key={`${role}-${port.num}`}>
-                                            <PortsIcon
-                                                className={`h-7 w-7 ${link}`}
-                                            />
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                if (role.toLowerCase() === "cpu") return null;
+                return (
+                    <div key={role} className={"flex flex-col h-fit"}>
+                        <h2 className={"font-bold"}>{role.toUpperCase()}</h2>
+                        <h2>{ports[role][0].device.toLowerCase()}</h2>
+                        <div className={"flex flex-row gap-5 "}>
+                            {ports[role].map((port) => {
+                                const link =
+                                    port.link.toLowerCase() === "up"
+                                        ? "fill-primary-dark"
+                                        : "fill-disabled";
+                                return (
+                                    <div key={`${role}-${port.num}`}>
+                                        <PortsIcon
+                                            className={`h-7 w-7 ${link}`}
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
-                    );
+                    </div>
+                );
             })}
         </div>
     );
