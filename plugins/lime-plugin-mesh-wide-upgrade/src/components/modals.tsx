@@ -39,7 +39,7 @@ export const useConfirmModal = ({
         <Trans>Confirm mesh wide upgrade for all nodes on the network</Trans>
     );
     if (!allNodesReady) {
-        title = <Trans>Some nodes are not ready</Trans>;
+        title = <Trans>Some nodes don't upgraded properly</Trans>;
         content = (
             <Trans>
                 Are you sure you want to confirm the upgrade? <br />

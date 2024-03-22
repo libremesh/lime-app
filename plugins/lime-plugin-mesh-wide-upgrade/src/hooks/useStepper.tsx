@@ -43,7 +43,7 @@ export const getStepperStatus = (
         return "DOWNLOADING_MAIN";
     }
     if (
-        thisNode.main_node === "MAIN_NODE" ||
+        thisNode.upgrade_state === "READY_FOR_UPGRADE" ||
         thisNode.upgrade_state === "DOWNLOADING" ||
         thisNode.upgrade_state === "UPGRADE_SCHEDULED"
     ) {
@@ -63,6 +63,7 @@ export const getStepperStatus = (
         ) {
             return "UPGRADE_SCHEDULED";
         }
+        // Here the user can send the schedule upgrade to the nodes
         return "TRANSACTION_STARTED";
     }
     if (
@@ -128,9 +129,12 @@ export const useStep = () => {
         },
     });
 
+    console.log("AAAAAAAA", allNodesConfirmed);
     const { showModal: showConfirmationModal } = useConfirmModal({
-        allNodesReady: allNodesConfirmed,
+        // allNodesReady: allNodesConfirmed, // todo(kon) esto no esta bien, aqui deberia comprobar si todos los nodos estan up
+        allNodesReady: true,
         cb: () => {
+            console.log("SHIIIT");
             confirmMeshUpgrade();
         },
     });
@@ -205,7 +209,7 @@ export const useStep = () => {
             default:
                 return {
                     status: "warning",
-                    onClick: () => {},
+                    onClick: () => {}, // todo(kon)
                     children: <Trans>Try last step again</Trans>,
                     btn: <Trans>Try again</Trans>,
                 };

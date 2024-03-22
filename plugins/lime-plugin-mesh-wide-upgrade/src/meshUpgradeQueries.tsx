@@ -79,7 +79,7 @@ export type UseConfirmUpgradeType = ReturnType<
 export const useParallelConfirmUpgrade = (opts?) => {
     // State to store the errors
     const { data: nodes } = useMeshWideUpgradeInfo({});
-    const ips = getNodeIpsByStatus(nodes, "READY_FOR_UPGRADE");
+    const ips = getNodeIpsByStatus(nodes, "CONFIRMATION_PENDING");
     return useMeshWideSyncCall({
         mutationKey: meshUpgradeQueryKeys.remoteConfirmUpgrade(),
         mutationFn: remoteConfirmUpgrade,
