@@ -19,23 +19,29 @@ import {
     NodeMeshUpgradeInfo,
     StepperState,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
+import { EupgradeStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/eupgrade";
 
 export const getStepperStatus = (
     nodeInfo: MeshWideUpgradeInfo | undefined,
     thisNode: NodeMeshUpgradeInfo | undefined,
     thisNodeError: boolean,
     newVersionAvailable: boolean,
-    downloadStatus: string | undefined,
+    downloadStatus: EupgradeStatus,
     scheduleMeshSafeUpgradeStatus: UseScheduleMeshSafeUpgradeType | undefined,
     confirmUpgradeStatus: UseConfirmUpgradeType | undefined,
     someNodeAreDownloading: boolean
 ): StepperState => {
     if (!nodeInfo || !thisNode) return "INITIAL";
 
+    if (downloadStatus === "download-failed") {
+        return "ERROR";
+    }
+
     if (thisNode.upgrade_state === "DEFAULT") {
         if (newVersionAvailable) return "UPDATE_AVAILABLE";
         return "NO_UPDATE";
     }
+
     if (thisNode.main_node === "STARTING") {
         if (downloadStatus === "downloaded") {
             return "DOWNLOADED_MAIN";
@@ -129,7 +135,6 @@ export const useStep = () => {
         },
     });
 
-    console.log("AAAAAAAA", allNodesConfirmed);
     const { showModal: showConfirmationModal } = useConfirmModal({
         // allNodesReady: allNodesConfirmed, // todo(kon) esto no esta bien, aqui deberia comprobar si todos los nodos estan up
         allNodesReady: true,
