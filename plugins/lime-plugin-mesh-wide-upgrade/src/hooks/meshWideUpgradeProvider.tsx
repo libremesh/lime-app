@@ -113,7 +113,7 @@ export const MeshWideUpgradeProvider = ({
     const {
         data: thisNode,
         isLoading: thisNodeLoading,
-        isError: isThisNodeStatusError,
+        isError: isThisNodeError,
     } = useMeshUpgradeNodeStatus({
         refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
     });
@@ -145,7 +145,7 @@ export const MeshWideUpgradeProvider = ({
     const stepperState = getStepperStatus(
         nodesUpgradeInfo,
         thisNode,
-        isThisNodeStatusError,
+        isThisNodeError,
         newVersionAvailable,
         eupgradeStatus,
         meshSafeUpgrade,
@@ -175,7 +175,6 @@ export const MeshWideUpgradeProvider = ({
 
     useEffect(() => {
         if (
-            stepperState === "UPGRADING" &&
             meshWideQueryError &&
             (meshWideQueryError as any).code != null &&
             (meshWideQueryError as any).code === -32002 // Auth failed error code
