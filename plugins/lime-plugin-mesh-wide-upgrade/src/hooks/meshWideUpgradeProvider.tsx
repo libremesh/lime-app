@@ -6,6 +6,7 @@ import { useCallback, useContext } from "react";
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
 import { getStepperStatus } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper";
 import {
+    useAbort,
     useBecomeMainNode,
     useMeshUpgradeNodeStatus,
     useMeshWideUpgradeInfo,
@@ -42,6 +43,7 @@ interface MeshWideUpgradeContextProps {
     allNodesReadyForUpgrade: boolean;
     allNodesConfirmed: boolean;
     someNodeDownloading: boolean;
+    abort: () => void;
 }
 
 export const MeshWideUpgradeContext =
@@ -55,6 +57,7 @@ export const MeshWideUpgradeContext =
         thisNode: null,
         becomeMainNode: () => {},
         startFwUpgradeTransaction: () => {},
+        abort: () => {},
         allNodesReadyForUpgrade: false,
         allNodesConfirmed: false,
         someNodeDownloading: false,
@@ -100,6 +103,8 @@ export const MeshWideUpgradeProvider = ({
             },
         }
     );
+
+    const { mutate: abort, isLoading: isAborting } = useAbort({});
 
     const { data: session } = useSession();
     const { data: newVersionData } = useNewVersion({
@@ -150,7 +155,8 @@ export const MeshWideUpgradeProvider = ({
         eupgradeStatus,
         meshSafeUpgrade,
         confirmUpgrade,
-        someNodeDownloading
+        someNodeDownloading,
+        isAborting
     );
 
     const meshWideError = getMeshWideError(thisNode);
@@ -200,6 +206,7 @@ export const MeshWideUpgradeProvider = ({
                 allNodesReadyForUpgrade,
                 allNodesConfirmed,
                 someNodeDownloading,
+                abort,
             }}
         >
             {children}

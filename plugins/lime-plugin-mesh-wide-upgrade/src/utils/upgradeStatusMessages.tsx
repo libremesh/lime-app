@@ -8,7 +8,6 @@ import {
     UpgradeStatusType,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 
-// todo(kon):
 export const InfoStatusMessageMap: {
     [status in UpgradeStatusType]: ComponentChildren;
 } = {
@@ -19,6 +18,7 @@ export const InfoStatusMessageMap: {
     CONFIRMATION_PENDING: <Trans>Confirmation pending</Trans>,
     CONFIRMED: <Trans>Confirmed</Trans>,
     ERROR: <Trans>This node has an error</Trans>,
+    ABORTED: <Trans>This node aborted successfully</Trans>,
 };
 
 type DetailedInfoStatusMessageMapType = {
@@ -68,6 +68,10 @@ export const detailedInfoStatusMessageMap = (
         ERROR: {
             title: <Trans>This node has an error!</Trans>,
             description: nodeInfo.error,
+        },
+        ABORTED: {
+            title: <Trans>This node aborted</Trans>,
+            description: <Trans>Start mesh wide firmware upgrade again</Trans>,
         },
     };
 };

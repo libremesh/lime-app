@@ -9,6 +9,7 @@ export type UpgradeStatusType =
     | "UPGRADE_SCHEDULED"
     | "CONFIRMATION_PENDING"
     | "CONFIRMED"
+    | "ABORTED"
     | "ERROR";
 
 // Inner state to check the stepper state. It differs from the upgradeStatusType
@@ -28,7 +29,8 @@ export type StepperState =
     | "CONFIRMATION_PENDING" // Upgrade done, confirmation pending.
     | "SENDING_CONFIRMATION" // Sending confirmation to confirm the upgrade
     | "CONFIRMED" // Upgrade done, confirmed.
-    | "ERROR"; // Error
+    | "ERROR" // Error
+    | "ABORTING"; // Aborting
 
 /**
  * Interface that describe the result for this node mesh upgrade status

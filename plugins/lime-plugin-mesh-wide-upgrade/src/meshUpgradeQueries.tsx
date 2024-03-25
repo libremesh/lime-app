@@ -5,6 +5,7 @@ import {
     getMeshWideUpgradeInfo,
     remoteConfirmUpgrade,
     remoteScheduleUpgrade,
+    setAbort,
     setBecomeMainNode,
     setStartFirmwareUpgradeTransaction,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeApi";
@@ -51,6 +52,13 @@ export function useBecomeMainNode(params) {
 export function useStartFirmwareUpgradeTransaction(params) {
     return useMutation<unknown, unknown, unknown>({
         mutationFn: setStartFirmwareUpgradeTransaction,
+        ...params,
+    });
+}
+
+export function useAbort(params) {
+    return useMutation({
+        mutationFn: setAbort,
         ...params,
     });
 }

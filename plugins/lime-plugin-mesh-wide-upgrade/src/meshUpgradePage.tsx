@@ -69,6 +69,12 @@ const MeshWideUpgrade = () => {
                     while and will require user interaction.
                 </Trans>
             </Notification>
+            {thisNode.upgrade_state === "ABORTED" && (
+                // todo(kon): implement this properly
+                <div className={"px-4 py-4 w-full bg-info"}>
+                    <Trans>This node aborted successfully</Trans>
+                </div>
+            )}
             <div className={"flex-grow overflow-auto max-h-full w-full"}>
                 {showNodeList && <NodesList />}
                 {!showNodeList && <MeshWideUpgradeStatus />}

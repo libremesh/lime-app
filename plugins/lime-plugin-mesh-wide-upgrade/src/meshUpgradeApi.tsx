@@ -28,6 +28,10 @@ export const setStartFirmwareUpgradeTransaction = async () => {
     return await meshUpgradeApiCall("start_firmware_upgrade_transaction");
 };
 
+export const setAbort = async () => {
+    return await meshUpgradeApiCall("abort");
+};
+
 // Remote API calls
 
 export async function remoteScheduleUpgrade({ ip }: { ip: string }) {

@@ -29,15 +29,23 @@ export const getStepperStatus = (
     downloadStatus: EupgradeStatus,
     scheduleMeshSafeUpgradeStatus: UseScheduleMeshSafeUpgradeType | undefined,
     confirmUpgradeStatus: UseConfirmUpgradeType | undefined,
-    someNodeAreDownloading: boolean
+    someNodeAreDownloading: boolean,
+    isAborting: boolean
 ): StepperState => {
     if (!nodeInfo || !thisNode) return "INITIAL";
+
+    if (isAborting) {
+        return "ABORTING";
+    }
 
     if (downloadStatus === "download-failed") {
         return "ERROR";
     }
 
-    if (thisNode.upgrade_state === "DEFAULT") {
+    if (
+        thisNode.upgrade_state === "DEFAULT" ||
+        thisNode.upgrade_state === "ABORTED"
+    ) {
         if (newVersionAvailable) return "UPDATE_AVAILABLE";
         return "NO_UPDATE";
     }
@@ -113,6 +121,17 @@ export function isShowFooterStepperState(
     ].includes(value);
 }
 
+function isShowAbortButtonState(
+    value: string
+): value is ShowFooterStepperState {
+    return [
+        "TRANSACTION_STARTED",
+        "UPGRADE_SCHEDULED",
+        "CONFIRMATION_PENDING",
+        "ERROR",
+    ].includes(value);
+}
+
 export const useStep = () => {
     const {
         stepperState,
@@ -120,6 +139,7 @@ export const useStep = () => {
         startFwUpgradeTransaction,
         allNodesReadyForUpgrade,
         allNodesConfirmed,
+        abort,
     } = useMeshUpgrade();
 
     const { callMutations: startScheduleMeshUpgrade, errors: scheduleErrors } =
@@ -139,7 +159,6 @@ export const useStep = () => {
         // allNodesReady: allNodesConfirmed, // todo(kon) esto no esta bien, aqui deberia comprobar si todos los nodos estan up
         allNodesReady: true,
         cb: () => {
-            console.log("SHIIIT");
             confirmMeshUpgrade();
         },
     });
@@ -148,9 +167,11 @@ export const useStep = () => {
 
     const step: IStatusAndButton | null = useMemo(() => {
         if (!showFooter) return null;
+
+        let step: IStatusAndButton;
         switch (stepperState as ShowFooterStepperState) {
             case "UPDATE_AVAILABLE":
-                return {
+                step = {
                     status: "success",
                     onClick: () => becomeMainNode(),
                     children: (
@@ -162,15 +183,17 @@ export const useStep = () => {
                     ),
                     btn: <Trans>Start mesh upgrade</Trans>,
                 };
+                break;
             case "DOWNLOADED_MAIN":
-                return {
+                step = {
                     status: "success",
                     onClick: startFwUpgradeTransaction,
                     children: <Trans>Ready to start mesh wide upgrade</Trans>,
                     btn: <Trans>Start</Trans>,
                 };
+                break;
             case "TRANSACTION_STARTED":
-                return {
+                step = {
                     status: allNodesReadyForUpgrade ? "success" : "warning",
                     onClick: () => {
                         showScheduleModal();
@@ -185,41 +208,56 @@ export const useStep = () => {
                     ),
                     btn: <Trans>Schedule upgrade</Trans>,
                 };
+                break;
             case "UPGRADE_SCHEDULED": {
                 const data: Omit<IStatusAndButton, "status" | "children"> = {
                     onClick: showScheduleModal,
                     btn: <Trans>Schedule again</Trans>,
                 };
                 if (scheduleErrors?.length) {
-                    return {
+                    step = {
                         ...data,
                         status: "warning",
                         children: <Trans>Some nodes have errors</Trans>,
                     };
                 }
-                return {
+                step = {
                     ...data,
                     status: "success",
                     children: <Trans>All nodes scheduled successful</Trans>,
                 };
+                break;
             }
             case "CONFIRMATION_PENDING":
-                return {
+                step = {
                     status: "success",
                     onClick: showConfirmationModal,
                     children: <Trans>Confirm upgrade on all nodes</Trans>,
                     btn: <Trans>Confirm</Trans>,
                 };
+                break;
             case "ERROR":
             default:
-                return {
+                step = {
                     status: "warning",
-                    onClick: () => {}, // todo(kon)
                     children: <Trans>Try last step again</Trans>,
-                    btn: <Trans>Try again</Trans>,
                 };
         }
+        if (isShowAbortButtonState(stepperState)) {
+            const showAbort: Pick<
+                IStatusAndButton,
+                "btnCancel" | "onClickCancel"
+            > = {
+                btnCancel: <Trans>Abort</Trans>,
+                onClickCancel: async () => {
+                    await abort();
+                },
+            };
+            step = { ...step, ...showAbort };
+        }
+        return step;
     }, [
+        abort,
         allNodesReadyForUpgrade,
         becomeMainNode,
         scheduleErrors?.length,

@@ -15,6 +15,18 @@ const MeshWideUpgradeStatusState = () => {
 
     if (stepperState === "ERROR") {
         return <ErrorState msg={meshWideError?.errorMessage.toString()} />;
+    } else if (stepperState === "ABORTING") {
+        return (
+            <LoadingPage
+                title={<Trans>Aborting</Trans>}
+                description={
+                    <Trans>
+                        Sending abort message to this node. The abort order will
+                        be propagated to all nodes.
+                    </Trans>
+                }
+            />
+        );
     } else if (stepperState === "UPDATE_AVAILABLE") {
         return <NewVersionAvailable />;
     } else if (stepperState === "DOWNLOADING_MAIN") {
