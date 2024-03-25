@@ -80,7 +80,11 @@ export const AssocRow = ({ station, iface }) => {
 };
 
 export const AssocList = ({ iface }) => {
-    const { data: assoclist, isLoading } = useAssocList(iface, {
+    const {
+        data: assoclist,
+        isLoading,
+        isError,
+    } = useAssocList(iface, {
         refetchInterval: 2000,
     });
 
@@ -88,6 +92,14 @@ export const AssocList = ({ iface }) => {
         return (
             <div className="container container-center">
                 <Loading />
+            </div>
+        );
+    }
+
+    if (isError || !assoclist) {
+        return (
+            <div className="container container-center">
+                <Trans>Error retrieving associated list</Trans>
             </div>
         );
     }
