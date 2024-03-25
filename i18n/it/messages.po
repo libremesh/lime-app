@@ -151,6 +151,10 @@ msgstr ""
 msgid "Channel"
 msgstr ""
 
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:80
+msgid "Check<0/>Alignment"
+msgstr ""
+
 #: plugins/lime-plugin-fbw/src/containers/Setting.js:100
 msgid "Checking connection"
 msgstr ""
@@ -302,8 +306,12 @@ msgstr ""
 msgid "Description: {name}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:51
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:51
 msgid "Device"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:90
+msgid "Diagnose"
 msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:52
@@ -445,7 +453,8 @@ msgstr ""
 
 #: plugins/lime-plugin-align/src/alignPage.js:37
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
-#: plugins/lime-plugin-rx/src/rxPage.js:92
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:92
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:63
 msgid "Fetching name"
 msgstr ""
 
@@ -458,7 +467,7 @@ msgid "Filter by"
 msgstr ""
 
 #: plugins/lime-plugin-firmware/src/firmwareMenu.js:18
-#: plugins/lime-plugin-rx/src/rxPage.js:58
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:58
 msgid "Firmware"
 msgstr ""
 
@@ -506,7 +515,7 @@ msgstr ""
 msgid "I don't know the shared password"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:180
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:180
 msgid "IP Addresses"
 msgstr "Indirizzi IP"
 
@@ -526,14 +535,26 @@ msgstr ""
 msgid "If your community network has local services, you can point a link to them."
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:97
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:97
 msgid "Interface"
 msgstr "Interfaccia"
 
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:68
+msgid "Interface:"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/components/internetPathChart.tsx:190
+msgid "Internet"
+msgstr ""
+
 #: plugins/lime-plugin-metrics/src/components/internetStatus.js:10
-#: plugins/lime-plugin-rx/src/rxPage.js:148
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:148
 msgid "Internet connection"
 msgstr "Connessione a Internet"
+
+#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:17
+msgid "Internet<0/>connection"
+msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:96
 msgid "Invalidate"
@@ -562,6 +583,10 @@ msgstr ""
 msgid "It must start with https:// or http://"
 msgstr ""
 
+#: plugins/lime-plugin-rx/src/components/footer.tsx:15
+msgid "Join"
+msgstr ""
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:72
 msgid "Join the mesh"
 msgstr ""
@@ -583,7 +608,11 @@ msgstr ""
 msgid "Load last known Internet path"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:127
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:78
+msgid "Loading <0/>last internet path..."
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:127
 msgid "Loading node status..."
 msgstr "Caricando lo stato del nodo..."
 
@@ -608,6 +637,7 @@ msgid "Manage Vouchers"
 msgstr ""
 
 #: plugins/lime-plugin-locate/src/locateMenu.js:18
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:93
 msgid "Map"
 msgstr ""
 
@@ -635,12 +665,20 @@ msgstr ""
 msgid "More than 10 characters"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:79
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:79
 msgid "Most Active"
 msgstr "Più attivi"
 
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:56
+msgid "Most active link"
+msgstr ""
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:129
 msgid "Must select a valid hostname"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/components/footer.tsx:12
+msgid "Need support?"
 msgstr ""
 
 #: plugins/lime-plugin-network-admin/src/netAdminMenu.js:6
@@ -737,6 +775,10 @@ msgstr ""
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:86
 msgid "Password: {password}"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:73
+msgid "Path to Internet"
 msgstr ""
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:58
@@ -948,7 +990,7 @@ msgstr "Stato"
 msgid "Status: {0}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:42
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:42
 msgid "System"
 msgstr "Sistema"
 
@@ -1061,9 +1103,13 @@ msgstr "All'Internet"
 msgid "To enable remote access an internet connection is needed"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:102
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:102
 msgid "Traffic"
 msgstr "Traffico di dati"
+
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:74
+msgid "Traffic:"
+msgstr ""
 
 #: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:12
 msgid "Try reloading the app"
@@ -1094,7 +1140,7 @@ msgstr ""
 msgid "Upload firmware image from your device"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:45
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:45
 msgid "Uptime"
 msgstr "Tempo di attività"
 
@@ -1103,6 +1149,7 @@ msgid "Use vouchers for access"
 msgstr ""
 
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:75
+#: plugins/lime-plugin-rx/src/components/footer.tsx:24
 msgid "Visit"
 msgstr ""
 
@@ -1147,6 +1194,10 @@ msgstr ""
 #: plugins/lime-plugin-node-admin/src/screens/password.js:45
 #: plugins/lime-plugin-node-admin/src/screens/password.js:104
 msgid "Wifi Password"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/sections/wired.tsx:64
+msgid "Wired connections"
 msgstr ""
 
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:108
@@ -1202,6 +1253,10 @@ msgstr ""
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr ""
 
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:105
+msgid "Your Alignment"
+msgstr ""
+
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:74
 msgid "Your node has no internet connection"
 msgstr ""
@@ -1214,8 +1269,16 @@ msgstr ""
 msgid "confirm location"
 msgstr ""
 
+#: plugins/lime-plugin-rx/src/components/footer.tsx:29
+msgid "docs.altermundi.net"
+msgstr ""
+
 #: plugins/lime-plugin-locate/src/locatePage.tsx:246
 msgid "edit location"
+msgstr ""
+
+#: plugins/lime-plugin-rx/src/components/footer.tsx:20
+msgid "foro.librerouter.org"
 msgstr ""
 
 #: plugins/lime-plugin-locate/src/locatePage.tsx:257
@@ -1246,15 +1309,15 @@ msgstr ""
 msgid "{0, plural, =0 {No one has joined yet.} one {One person has joined.} other {# people have joined.}}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:20
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:20
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:23
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:23
 msgid "{hours, plural, one {# hour} other {# hours}}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:26
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:26
 msgid "{mins, plural, one {# minute} other {# minutes}}"
 msgstr ""
 
@@ -1262,7 +1325,7 @@ msgstr ""
 msgid "{secondsAmount} seconds ago"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:29
+#: plugins/lime-plugin-rx/src/rxPageBAK.js:29
 msgid "{secs, plural, one {# second} other {# seconds}}"
 msgstr ""
 

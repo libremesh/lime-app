@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import queryCache from "utils/queryCache";
 
-import { getGateway, getMetrics, getPath } from "./metricsApi";
+import { getGateway, getLoss, getMetrics, getPath } from "./metricsApi";
 
 export function useMetrics(ip, params) {
     return useQuery(["lime-metrics", "get_metrics", ip], () => getMetrics(ip), {
@@ -41,4 +41,32 @@ export function useGateway(params) {
 
 export function usePath(params) {
     return useQuery(["lime-metrics", "get_path"], getPath, params);
+}
+
+export function useLoss(ip, params) {
+    return useQuery(["lime-metrics", "get_loss", ip], () => getLoss(ip), {
+        retry: false,
+        ...params,
+    });
+}
+
+export const getAllLoss = async (nodes) => {
+    let losses = {};
+    for (const node of nodes) {
+        const queryKey = ["lime-metrics", "get_loss", node.ip];
+        await queryCache.invalidateQueries(queryKey);
+        losses[node.ip] = await queryCache.fetchQuery(queryKey);
+    }
+    return losses;
+};
+
+export function usePathLoss(nodes, params) {
+    return useQuery(
+        ["lime-metrics", "get_loss", nodes],
+        (query) => getAllLoss(query.queryKey[2]),
+        {
+            retry: false,
+            ...params,
+        }
+    );
 }
