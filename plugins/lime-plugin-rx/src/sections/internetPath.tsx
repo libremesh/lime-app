@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/macro";
+import { useCallback } from "react";
 
 import { Button } from "components/elements/button";
 import { GlobeIcon } from "components/icons/globeIcon";
@@ -20,27 +21,6 @@ import { IGetInternetStatus } from "plugins/lime-plugin-rx/src/rxApi";
 import { useInternetStatus } from "plugins/lime-plugin-rx/src/rxQueries";
 
 export const InternetPath = () => {
-    const { data: internet, isLoading: internetStatusLoading } =
-        useInternetStatus({
-            structuralSharing: (
-                oldData: IGetInternetStatus,
-                newData: IGetInternetStatus
-            ) => {
-                if (
-                    // If is the first execution and there are no internet
-                    (!oldData &&
-                        !(newData.IPv4.working || newData.IPv6.working)) ||
-                    // If the old data and new data are different
-                    (oldData &&
-                        (oldData.IPv4.working || oldData.IPv6.working) !==
-                            (newData.IPv4.working || newData.IPv6.working))
-                ) {
-                    refetchLosses();
-                }
-                return newData;
-            },
-        });
-
     const {
         data: path,
         isLoading: pathIsLoading,
@@ -49,10 +29,6 @@ export const InternetPath = () => {
         refetchOnWindowFocus: false,
         enabled: true,
     });
-
-    const workingInternet =
-        !internetStatusLoading &&
-        (internet.IPv4.working || internet.IPv6.working);
 
     const pathLoss =
         path
@@ -68,9 +44,34 @@ export const InternetPath = () => {
         initialData: [],
     });
 
-    const checkLosses = async () => {
+    const { data: internet, isLoading: internetStatusLoading } =
+        useInternetStatus({
+            structuralSharing: (
+                oldData: IGetInternetStatus,
+                newData: IGetInternetStatus
+            ) => {
+                if (
+                    // If is the first execution and there are no internet
+                    (!oldData &&
+                        !(newData.IPv4.working || newData.IPv6.working)) ||
+                    // If the old data and new data are different
+                    (oldData &&
+                        (oldData.IPv4.working || oldData.IPv6.working) !==
+                            (newData.IPv4.working || newData.IPv6.working))
+                ) {
+                    if (refetchLosses) refetchLosses();
+                }
+                return newData;
+            },
+        });
+
+    const checkLosses = useCallback(async () => {
         refetchLosses();
-    };
+    }, [refetchLosses]);
+
+    const workingInternet =
+        !internetStatusLoading &&
+        (internet.IPv4.working || internet.IPv6.working);
 
     // Conditional rendering for las known path
     let pathComponent = (
