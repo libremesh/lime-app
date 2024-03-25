@@ -75,12 +75,13 @@ const SignalBox = ({ signal }) => (
 
 const AlignSingle = ({ iface, mac }) => {
     const { data: bathost } = useBatHost(mac, iface);
-    const { data: assocList, isLoading } = useAssocList(iface, {
+    const {
+        data: assocList,
+        isLoading,
+        isError,
+    } = useAssocList(iface, {
         refetchInterval: 2000,
     });
-    const station = assocList && getStation(assocList, mac);
-    const fromRadio = ifaceToRadioNumber(iface);
-    const toRadio = bathost.iface && ifaceToRadioNumber(bathost.iface);
 
     if (isLoading) {
         return (
@@ -89,6 +90,18 @@ const AlignSingle = ({ iface, mac }) => {
             </div>
         );
     }
+
+    if (isError || !assocList) {
+        return (
+            <div className="container container-center">
+                <Trans>Error retrieving associated list</Trans>
+            </div>
+        );
+    }
+
+    const station = assocList && getStation(assocList, mac);
+    const fromRadio = ifaceToRadioNumber(iface);
+    const toRadio = bathost.iface && ifaceToRadioNumber(bathost.iface);
 
     return (
         <div className="d-flex flex-grow-1 flex-column container-padded">
