@@ -8,6 +8,7 @@ import {
     getMeshWideNodes,
     getMeshWideNodesReference,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideApi";
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/mesWideQueriesKeys";
 import {
     IBatmanLinks,
     IMeshWideConfig,
@@ -19,10 +20,9 @@ import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMoc
 
 import { useSharedData } from "utils/useSharedData";
 
-// todo(kon): this is a mock
 export function useMeshWideLinksReference(params) {
     return useQuery<IWifiLinks>(
-        ["lime-meshwide", "links_reference"],
+        meshUpgradeQueryKeys.wifiLinksInfoRef,
         getMeshWideLinksReference,
         {
             ...params,
@@ -31,14 +31,18 @@ export function useMeshWideLinksReference(params) {
 }
 
 export function useMeshWideLinks(params) {
-    return useQuery<IWifiLinks>(["lime-meshwide", "links"], getMeshWideLinks, {
-        ...params,
-    });
+    return useQuery<IWifiLinks>(
+        meshUpgradeQueryKeys.wifiLinksInfo,
+        getMeshWideLinks,
+        {
+            ...params,
+        }
+    );
 }
 
 export function useMeshWideBatmanReference(params) {
     return useQuery<IBatmanLinks>(
-        ["lime-meshwide", "batman_reference"],
+        meshUpgradeQueryKeys.batHostsRef,
         getMeshWideBatmanReference,
         {
             ...params,
@@ -48,7 +52,7 @@ export function useMeshWideBatmanReference(params) {
 
 export function useMeshWideBatman(params) {
     return useQuery<IBatmanLinks>(
-        ["lime-meshwide", "batman"],
+        meshUpgradeQueryKeys.batHosts,
         getMeshWideBatman,
         {
             ...params,
@@ -58,7 +62,7 @@ export function useMeshWideBatman(params) {
 
 export function useMeshWideNodesReference(params) {
     return useQuery<INodes>(
-        ["lime-meshwide", "nodes_reference"],
+        meshUpgradeQueryKeys.meshWideNodesRef,
         getMeshWideNodesReference,
         {
             ...params,
@@ -67,9 +71,13 @@ export function useMeshWideNodesReference(params) {
 }
 
 export function useMeshWideNodes(params) {
-    return useQuery<INodes>(["lime-meshwide", "nodes"], getMeshWideNodes, {
-        ...params,
-    });
+    return useQuery<INodes>(
+        meshUpgradeQueryKeys.meshWideNodes,
+        getMeshWideNodes,
+        {
+            ...params,
+        }
+    );
 }
 
 export function useMeshWideConfig(params) {

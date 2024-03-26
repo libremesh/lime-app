@@ -1,31 +1,21 @@
-import {
-    batManReferenceState,
-    links,
-    linksReferenceState,
-    nodes,
-    nodesReferenceState,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/mesWideQueriesKeys";
 
-export const getMeshWideBatmanReference = () => {
-    return batManReferenceState;
-};
+import api from "utils/uhttpd.service";
 
-export const getMeshWideBatman = () => {
-    return links("batman");
-};
+export const getMeshWideBatmanReference = () =>
+    api.call(...meshUpgradeQueryKeys.batHostsRef);
 
-export const getMeshWideLinksReference = () => {
-    return linksReferenceState;
-};
+export const getMeshWideBatman = () =>
+    api.call(...meshUpgradeQueryKeys.batHosts);
 
-export const getMeshWideLinks = () => {
-    return links("wifi");
-};
+export const getMeshWideLinksReference = () =>
+    api.call(...meshUpgradeQueryKeys.wifiLinksInfoRef);
 
-export const getMeshWideNodesReference = () => {
-    return nodesReferenceState;
-};
+export const getMeshWideLinks = () =>
+    api.call(...meshUpgradeQueryKeys.wifiLinksInfo);
 
-export const getMeshWideNodes = () => {
-    return nodes();
-};
+export const getMeshWideNodesReference = () =>
+    api.call(...meshUpgradeQueryKeys.meshWideNodesRef);
+
+export const getMeshWideNodes = () =>
+    api.call(...meshUpgradeQueryKeys.meshWideNodes);
