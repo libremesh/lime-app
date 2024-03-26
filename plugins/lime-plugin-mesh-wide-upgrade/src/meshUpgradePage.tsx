@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { useState } from "preact/hooks";
 
+import { StatusIcon } from "components/icons/status";
 import Loading from "components/loading";
 import Notification from "components/notifications/notification";
 
@@ -70,8 +71,12 @@ const MeshWideUpgrade = () => {
                 </Trans>
             </Notification>
             {thisNode.upgrade_state === "ABORTED" && (
-                // todo(kon): implement this properly
-                <div className={"px-4 py-4 w-full bg-info"}>
+                <div
+                    className={
+                        "flex flex-row gap-3 justify-start content-center px-4 py-4 w-full bg-primary-card "
+                    }
+                >
+                    <StatusIcon status={"success"} />
                     <Trans>This node aborted successfully</Trans>
                 </div>
             )}
