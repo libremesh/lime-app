@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro";
 import { route } from "preact-router";
 import React from "react";
 
@@ -19,20 +20,27 @@ const MeshWidePage = () => {
 
     const loading = isLoadingAssets;
 
+    if (loading) {
+        return (
+            <div>
+                <Loading />
+            </div>
+        );
+    }
+
+    if (isAssetError) {
+        return (
+            <div>
+                <Trans>Error loading leaflet </Trans>
+            </div>
+        );
+    }
+
     return (
         <>
-            {loading && (
-                <div>
-                    <Loading />
-                </div>
-            )}
-            {!loading && (
-                <>
-                    <MeshWideMap />
-                    <SelectedFeatureBottomSheet />
-                    <FloatingButton onClick={() => route("/meshwide/config")} />
-                </>
-            )}
+            <MeshWideMap />
+            <SelectedFeatureBottomSheet />
+            <FloatingButton onClick={() => route("/meshwide/config")} />
         </>
     );
 };
