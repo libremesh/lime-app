@@ -21,7 +21,7 @@ msgstr "Nueva versión del firmware disponible"
 msgid "A reboot is needed to apply changes"
 msgstr "Reinicia el nodo para aplicar cambios"
 
-#: plugins/lime-plugin-pirania/src/piraniaMenu.js:18
+#: plugins/lime-plugin-pirania/src/piraniaMenu.js:9
 msgid "Access Vouchers"
 msgstr "Cupones de Acceso"
 
@@ -29,39 +29,31 @@ msgstr "Cupones de Acceso"
 msgid "Access vouchers"
 msgstr "Cupones de Acceso"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:73
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:74
 msgid "Activation date: {0}"
 msgstr "Plazo para activación: {0}"
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:111
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:115
 msgid "Activation deadline"
 msgstr "Plazo para activación"
 
-#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:62
-#~ msgid "Activation deadline: <0/>"
-#~ msgstr "Plazo para activación: <0/>"
-
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:79
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:52
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:81
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:53
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:82
 msgid "Activation deadline: {0}"
 msgstr "Plazo para activación: {0}"
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:41
-#~ msgid "Activation deadline: {deadlineText}"
-#~ msgstr "Plazo para activación: {deadlineText}"
-
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:25
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:14
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:85
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:91
 msgid "Active"
 msgstr "Activo"
 
-#: plugins/lime-plugin-align/src/alignMenu.js:18
+#: plugins/lime-plugin-align/src/alignMenu.js:9
 msgid "Align"
 msgstr "Alineación"
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:79
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:85
 msgid "All Vouchers"
 msgstr "Todos los cupones"
 
@@ -86,13 +78,13 @@ msgstr "Al menos una letra"
 msgid "At least one number"
 msgstr "Al menos un número"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:49
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:50
 msgid "Author node: {author_node}"
 msgstr "Nodo autor: {author_node}"
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:23
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:12
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:82
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:88
 msgid "Available"
 msgstr "Disponible"
 
@@ -127,15 +119,15 @@ msgstr "Cancelando"
 msgid "Cannot connect to the remote support server"
 msgstr "No hay conexión con el servidor de soporte remoto"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:207
+#: plugins/lime-plugin-locate/src/locatePage.tsx:153
 msgid "Cannot load map, check your internet connection"
 msgstr "El mapa no puede cargarse, verifica la conexión a internet"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:122
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:123
 msgid "Cannot use Radio 0, it's being used for mesh links"
 msgstr "La Radio 0 no se puede utilizar por que está siendo utilizada para enlaces mesh."
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:145
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:146
 msgid "Cellphone Instructions"
 msgstr "Instrucciones para el celular"
 
@@ -194,23 +186,19 @@ msgstr "Confirmá la actualización en los próximos {_counter} segundos o será
 msgid "Community Logo"
 msgstr "Logo de la Comunidad"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:25
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:112
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:27
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:113
 msgid "Community Portal"
 msgstr "Portal Comunitario"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:47
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:67
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:49
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:68
 msgid "Community Roaming AP"
 msgstr "AP Comunitario"
 
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:92
 msgid "Community name"
 msgstr "Nombre de la comunidad"
-
-#: plugins/lime-plugin-fbw/src/containers/SelectAction.js:6
-#~ msgid "Configure your network"
-#~ msgstr "Configure su red"
 
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:83
 msgid "Configure your new community network"
@@ -224,9 +212,9 @@ msgstr "Confirmar"
 msgid "Congratulations"
 msgstr "Felicitaciones"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:68
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:71
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:37
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:198
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:199
 msgid "Connect to a Mobile Hotspot"
 msgstr "Conectarse a Punto de Acceso Móvil"
 
@@ -247,8 +235,8 @@ msgstr "Conexión al celular"
 msgid "Connection to the internet"
 msgstr "Conexión a internet"
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:129
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:116
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:134
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:122
 msgid "Create"
 msgstr "Crear"
 
@@ -265,27 +253,19 @@ msgstr "Crear Cupón"
 msgid "Create network"
 msgstr "Crear red"
 
-#: plugins/lime-plugin-fbw/src/containers/SelectAction.js:17
-#~ msgid "Create new network"
-#~ msgstr "Crear nueva red"
-
-#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:66
-#~ msgid "Created <0/>"
-#~ msgstr "Creado <0/>"
-
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:76
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:82
 msgid "Created in this node"
 msgstr "Creados en este nodo"
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:36
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:37
 msgid "Created vouchers"
 msgstr "Cupones creados"
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:87
 msgid "Created {0}"
-msgstr ""
+msgstr "Creado {0}"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:52
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:53
 msgid "Creation date: {0}"
 msgstr "Fecha de creación: {0}"
 
@@ -297,8 +277,8 @@ msgstr "Actualmente tu nodo tiene la versión:"
 msgid "Description"
 msgstr "Descripción"
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:45
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:46
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:46
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:47
 msgid "Description: {name}"
 msgstr "Descripción: {name}"
 
@@ -306,9 +286,9 @@ msgstr "Descripción: {name}"
 msgid "Device"
 msgstr "Equipo"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:52
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:69
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:19
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:54
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:72
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:20
 msgid "Disabled"
 msgstr "Deshabilitado"
 
@@ -327,20 +307,20 @@ msgid "Downloading"
 msgstr "Descargando"
 
 #: plugins/lime-plugin-pirania/src/screens/postCreate.js:18
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:58
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:59
 msgid "Duration: is permanent"
 msgstr "Duración: es permanente"
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:21
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:19
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:22
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:20
 msgid "Duration: {days, plural, one {# day} other {# days}}"
 msgstr "Duración: {days, plural, one {# día} other {# días}}"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:89
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:90
 msgid "Edit"
 msgstr "Editar"
 
-#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:83
+#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:84
 msgid "Edit Voucher"
 msgstr "Editar Cupón"
 
@@ -360,20 +340,20 @@ msgstr "Activar Contraseña"
 msgid "Enable Portal in Community AP"
 msgstr "Habilita el Portal en el AP Comunitario"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:50
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:69
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:52
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:72
 msgid "Enabled"
 msgstr "Activado"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:13
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:14
 msgid "Enabled, with vouchers"
 msgstr "Habilitado, con vouchers"
 
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:16
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigItem.tsx:17
 msgid "Enabled, without vouchers"
 msgstr "Habilitado, sin vouchers"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:91
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:92
 msgid "Encryption: {encryptionMethod}"
 msgstr "Cifrado: {encryptionMethod}"
 
@@ -395,11 +375,16 @@ msgstr "Error al descargar lime community"
 
 #: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:158
 msgid "Error getting scan results"
-msgstr ""
+msgstr "Error recibiendo los resultados del escaneo"
 
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:40
 msgid "Error reaching hostname!"
 msgstr "No se pudo obtener el nombre de host!"
+
+#: plugins/lime-plugin-align/src/alignPage.js:102
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:97
+msgid "Error retrieving associated list"
+msgstr "Error recuperando la lista de nodos associados"
 
 #: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:155
 msgid "Error scanning networks"
@@ -413,51 +398,43 @@ msgstr "Error configurando red"
 msgid "Error stopping scan"
 msgstr "Error deteniendo la búsqueda"
 
-#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.tsx:54
+#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.tsx:55
 msgid "Error: Not Saved"
 msgstr "Error: No se guardó"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:65
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:66
 msgid "Expiration date: {0}"
 msgstr "Fecha de expiración: {0}"
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:24
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:13
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:88
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:94
 msgid "Expired"
 msgstr "Expirado"
 
-#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:59
-#~ msgid "Expired <0/>"
-#~ msgstr "Expirado <0/>"
-
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:71
 msgid "Expired {0}"
-msgstr ""
-
-#: plugins/lime-plugin-pirania/src/components/voucherListItem.js:55
-#~ msgid "Expires <0/>"
-#~ msgstr "Expira <0/>"
+msgstr "Expirado {0}"
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:63
 msgid "Expires {0}"
-msgstr ""
+msgstr "Expira en {0}"
 
 #: plugins/lime-plugin-align/src/alignPage.js:37
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
-#: plugins/lime-plugin-rx/src/rxPage.js:92
+#: plugins/lime-plugin-rx/src/rxPage.js:93
 msgid "Fetching name"
 msgstr "Consiguiendo nombre"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:201
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:205
 msgid "Filename"
 msgstr "Nombre"
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:67
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:72
 msgid "Filter by"
 msgstr "Filtrar por"
 
-#: plugins/lime-plugin-firmware/src/firmwareMenu.js:18
+#: plugins/lime-plugin-firmware/src/firmwareMenu.js:9
 #: plugins/lime-plugin-rx/src/rxPage.js:58
 msgid "Firmware"
 msgstr "Firmware"
@@ -470,17 +447,17 @@ msgstr "Desde"
 msgid "Full path metrics"
 msgstr "Medir todo el recorrido"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:66
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:67
 msgid "Get an additional cell phone to the one you are currently using that has a mobile data connection"
 msgstr "Consigue un teléfono adicional al que estás usando que tenga conexión a internet por datos móviles"
 
 #: src/containers/Menu/menu.js:48
 msgid "Go to Community View"
-msgstr ""
+msgstr "Ir a la página de comunidad"
 
 #: src/containers/Menu/menu.js:51
 msgid "Go to Node View"
-msgstr ""
+msgstr "Ir a la página de nodo"
 
 #: plugins/lime-plugin-firmware/src/upgradeCountdown.js:27
 msgid "Go!"
@@ -506,7 +483,7 @@ msgstr "Nombre del nodo"
 msgid "I don't know the shared password"
 msgstr "No sé la contraseña compartida"
 
-#: plugins/lime-plugin-rx/src/rxPage.js:180
+#: plugins/lime-plugin-rx/src/rxPage.js:181
 msgid "IP Addresses"
 msgstr "Direcciones IP"
 
@@ -526,34 +503,34 @@ msgstr "Si invalidas este cupón, el mismo no podrá volver a ser utilizado. Est
 msgid "If your community network has local services, you can point a link to them."
 msgstr "Si tu red comunitaria tiene servicios locales, puedes indicar un enlace para acceder a ellos."
 
-#: plugins/lime-plugin-rx/src/rxPage.js:97
+#: plugins/lime-plugin-rx/src/rxPage.js:98
 msgid "Interface"
 msgstr "Interfaz"
 
 #: plugins/lime-plugin-metrics/src/components/internetStatus.js:10
-#: plugins/lime-plugin-rx/src/rxPage.js:148
+#: plugins/lime-plugin-rx/src/rxPage.js:149
 msgid "Internet connection"
 msgstr "Conexión a Internet"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:96
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:97
 msgid "Invalidate"
 msgstr "Invalidar"
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:26
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:15
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:91
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:97
 msgid "Invalidated"
 msgstr "Invalidado"
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:71
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:75
 msgid "Is permanent"
 msgstr "Es permanente"
 
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:81
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:82
 msgid "It is disabled by default in {communityName}"
 msgstr "Está deshabilitado por defecto en {communityName}"
 
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:86
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:87
 msgid "It is enabled by default in {communityName}"
 msgstr "Está habilitado por defecto en {communityName}"
 
@@ -567,7 +544,7 @@ msgid "Join the mesh"
 msgstr "Unirse a la red"
 
 #: plugins/lime-plugin-align/src/alignPage.js:55
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:121
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:134
 msgid "Last packet"
 msgstr "Último paquete"
 
@@ -583,7 +560,7 @@ msgstr "URL del enlace"
 msgid "Load last known Internet path"
 msgstr "Cargando última ruta a Internet conocida"
 
-#: plugins/lime-plugin-rx/src/rxPage.js:127
+#: plugins/lime-plugin-rx/src/rxPage.js:128
 msgid "Loading node status..."
 msgstr "Cargando el estado del nodo..."
 
@@ -607,7 +584,7 @@ msgstr "Texto principal"
 msgid "Manage Vouchers"
 msgstr "Administrar Cupones"
 
-#: plugins/lime-plugin-locate/src/locateMenu.js:18
+#: plugins/lime-plugin-locate/src/locateMenu.js:9
 msgid "Map"
 msgstr "Mapa"
 
@@ -619,7 +596,7 @@ msgstr "Máx. {length} caracteres"
 msgid "Measuring links"
 msgstr "Midiendo enlaces"
 
-#: plugins/lime-plugin-metrics/src/metricsMenu.js:18
+#: plugins/lime-plugin-metrics/src/metricsMenu.js:9
 msgid "Metrics"
 msgstr "Diagnostico"
 
@@ -635,7 +612,7 @@ msgstr "Más info en:"
 msgid "More than 10 characters"
 msgstr "Más de 10 caracteres"
 
-#: plugins/lime-plugin-rx/src/rxPage.js:79
+#: plugins/lime-plugin-rx/src/rxPage.js:80
 msgid "Most Active"
 msgstr "Enlace más activo"
 
@@ -643,15 +620,11 @@ msgstr "Enlace más activo"
 msgid "Must select a valid hostname"
 msgstr "Debes elegir un nombre de host valido"
 
-#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:6
-#~ msgid "Network Configuration"
-#~ msgstr "Configuración de la Red"
-
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:81
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:82
 msgid "Network Name: {ssid}"
 msgstr "Nombre de Red: {ssid}"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:33
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:35
 msgid "No password"
 msgstr "Sin contraseña"
 
@@ -664,12 +637,12 @@ msgstr "Sin resultado de escaneo"
 msgid "No, cancel"
 msgstr "No, cancelar"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:28
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:81
+#: plugins/lime-plugin-node-admin/src/nodeAdminMenu.js:9
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:84
 msgid "Node Configuration"
 msgstr "Configuración del Nodo"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:19
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:20
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:43
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
 msgid "Node Name"
@@ -680,7 +653,7 @@ msgstr "Nombre del Nodo"
 msgid "Not Connected"
 msgstr "No Conectado"
 
-#: plugins/lime-plugin-notes/src/notesMenu.js:18
+#: plugins/lime-plugin-notes/src/notesMenu.js:9
 msgid "Notes"
 msgstr "Notas"
 
@@ -688,11 +661,11 @@ msgstr "Notas"
 msgid "Notes of"
 msgstr "Notas de"
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:89
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:93
 msgid "Number of vouchers"
 msgstr "Número de cupones"
 
-#: plugins/lime-plugin-pirania/src/screens/postCreate.js:61
+#: plugins/lime-plugin-pirania/src/screens/postCreate.js:62
 #: src/components/banner/index.js:17
 msgid "Ok"
 msgstr "Ok"
@@ -701,7 +674,7 @@ msgstr "Ok"
 msgid "On its radio {radioNumber}"
 msgstr "En su radio {radioNumber}"
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:113
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:126
 msgid "On its radio {toRadio}"
 msgstr "En su radio {radioNumber}"
 
@@ -709,8 +682,8 @@ msgstr "En su radio {radioNumber}"
 msgid "Only gateway"
 msgstr "Solo la puerta de enlace"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:55
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:71
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:57
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:72
 msgid "Opens the \"{apSsid}\" AP in this node"
 msgstr "Abre el AP \"{apSsid}\" en este nodo"
 
@@ -722,7 +695,7 @@ msgstr "O elige una imagen de firmware desde tu dispositivo"
 msgid "Or if this node is already configured, you can skip this step"
 msgstr "O, si tu nodo ya está bien configurado, puedes saltear este paso"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:244
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:248
 msgid "Or upgrade to latest release"
 msgstr "O actualiza a la última version del firmware"
 
@@ -735,7 +708,7 @@ msgstr "Paquetes perdidos"
 msgid "Password"
 msgstr "Contraseña"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:86
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:87
 msgid "Password: {password}"
 msgstr "Contraseña: {password}"
 
@@ -743,15 +716,15 @@ msgstr "Contraseña: {password}"
 msgid "Permanent"
 msgstr "Permanente"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:220
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:224
 msgid "Please select a .sh or .bin file"
 msgstr "Por favor, seleccione un archivo .bin o .sh"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:215
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:219
 msgid "Please select a file"
 msgstr "Porfavor, elige un archivo"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:105
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:106
 msgid "Please stay connected to the wifi network"
 msgstr "Por favor, permanece conectado/a a la red wifi."
 
@@ -772,7 +745,7 @@ msgstr "Por favor espere a que el dispositivo se reinicie y recargue la app"
 msgid "Please wait {time} seconds"
 msgstr "Por favor espere {time} segundos"
 
-#: plugins/lime-plugin-align/src/alignPage.js:125
+#: plugins/lime-plugin-align/src/alignPage.js:137
 msgid "Radio {radioNumber}"
 msgstr "Radio {radioNumber}"
 
@@ -802,7 +775,7 @@ msgstr "Recargar"
 msgid "Reload page"
 msgstr "Recargar página"
 
-#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:18
+#: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:9
 msgid "Remote Support"
 msgstr "Soporte Remoto"
 
@@ -826,13 +799,13 @@ msgstr "Revertir"
 msgid "Reverting to previous version"
 msgstr "Volviendo a la versión anterior"
 
-#: plugins/lime-plugin-node-admin/src/screens/hostname.js:82
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:48
-#: plugins/lime-plugin-node-admin/src/screens/password.js:73
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:36
-#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:87
-#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:50
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:162
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:84
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:49
+#: plugins/lime-plugin-node-admin/src/screens/password.js:74
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:37
+#: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:88
+#: plugins/lime-plugin-pirania/src/screens/editVoucher.js:51
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:163
 msgid "Save"
 msgstr "Guardar"
 
@@ -840,19 +813,15 @@ msgstr "Guardar"
 msgid "Save notes"
 msgstr "Guardar notas"
 
-#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.tsx:51
+#: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.tsx:52
 msgid "Saved"
 msgstr "Guardado"
-
-#: plugins/lime-plugin-fbw/src/containers/SelectAction.js:12
-#~ msgid "Scan for existing networks"
-#~ msgstr "Buscar redes existentes"
 
 #: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:161
 msgid "Scanning for existing networks"
 msgstr "Buscando redes existentes"
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:56
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:60
 msgid "Search by"
 msgstr "Buscar por"
 
@@ -876,7 +845,7 @@ msgstr "Selecciona"
 msgid "Select another node and use the LimeApp as you were there"
 msgstr "Selecciona el nodo que quieras visitar y usa la LimeApp como si estuvieras ahí"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:186
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:190
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:89
 msgid "Select file"
 msgstr "Seleccioná el archivo"
@@ -905,7 +874,7 @@ msgstr "Configurando la nueva contraseña"
 msgid "Setup Hotspot"
 msgstr "Configurar Punto de Acceso Móvil"
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:107
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:111
 msgid "Setup activation deadline"
 msgstr "Elegir plazo para activación"
 
@@ -913,11 +882,11 @@ msgstr "Elegir plazo para activación"
 msgid "Share the following command with whoever you want to give them access to your node"
 msgstr "Comparte el siguiente comando con quien quieras para darle acceso a tu nodo"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:138
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:139
 msgid "Share your mobile connection by connecting the node to a mobile hotspost"
 msgstr "Comparte tu conexión de datos con el nodo a través de un Punto de Acceso Móvil"
 
-#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:18
+#: plugins/lime-plugin-network-admin/src/netAdminMenu.js:9
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:48
 msgid "Shared Password"
 msgstr "Contraseña Compartida"
@@ -936,15 +905,15 @@ msgstr "Ver consola"
 msgid "Signal lost"
 msgstr "Sin señal"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:207
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:211
 msgid "Size"
 msgstr "Tamaño"
 
-#: plugins/lime-plugin-rx/src/rxMenu.js:18
+#: plugins/lime-plugin-rx/src/rxMenu.js:9
 msgid "Status"
 msgstr "Estado"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:61
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:62
 msgid "Status: {0}"
 msgstr "Estado: {0}"
 
@@ -952,7 +921,7 @@ msgstr "Estado: {0}"
 msgid "System"
 msgstr "Sistema"
 
-#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:74
+#: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:75
 msgid "The Community AP is present in every node allowing people to move around the network territory without losing connection"
 msgstr "El AP Comunitario está presente en todos los nodos permitiendo que las personas se muevan por el territorio de la red sin perder conectividad"
 
@@ -960,7 +929,7 @@ msgstr "El AP Comunitario está presente en todos los nodos permitiendo que las 
 msgid "The Community Portal enables a welcome screen to be displayed in the web browser to anyone connecting to the network using the Community AP"
 msgstr "El Portal Comunitario permite mostrar una pantalla de bienvenida en el navegador a cualquier persona que se conecte a la red a través del AP Comunitario"
 
-#: plugins/lime-plugin-align/src/alignPage.js:145
+#: plugins/lime-plugin-align/src/alignPage.js:157
 msgid "The are not mesh interfaces available"
 msgstr "No hay interfaces mesh disponibles"
 
@@ -972,11 +941,11 @@ msgstr "La descarga falló"
 msgid "The firmware is being upgraded..."
 msgstr "La actualización se está realizando..."
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:114
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:115
 msgid "The hotspot couldn’t be found, please review the instructions above."
 msgstr "El punto de acceso no se encuentra disponible, por favor revisa las instrucciones."
 
-#: plugins/lime-plugin-node-admin/src/screens/hostname.js:69
+#: plugins/lime-plugin-node-admin/src/screens/hostname.js:70
 msgid "The name should have at least 3 characters"
 msgstr "El nombre tiene que tener al menos 3 caracteres"
 
@@ -993,11 +962,11 @@ msgstr "La contraseña debe incluir:"
 msgid "The passwords do not match!"
 msgstr "Las contraseñas no coinciden!"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:102
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:103
 msgid "The radio needs to be restarted..."
 msgstr "La radio necesita reiniciarse..."
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:236
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:240
 msgid "The selected image is not valid for the target device"
 msgstr "La imagen seleccionada no es válida para este dispositivo"
 
@@ -1009,7 +978,7 @@ msgstr "La contraseña compartida fue elegida por la comunidad al iniciar la red
 msgid "The upgrade should be done"
 msgstr "La actualización debiera estar lista"
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:104
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:110
 msgid "There are no vouchers matching the current criteria"
 msgstr "No hay cupones para tu búsqueda"
 
@@ -1021,7 +990,7 @@ msgstr "Hay una sesión de soporte remoto activa"
 msgid "There's no open session for remote support. Click at Create Session to begin one"
 msgstr "No hay una sesión de soporte remoto abierta. Haz click en Crear Sesión para empezar una"
 
-#: plugins/lime-plugin-align/src/alignPage.js:99
+#: plugins/lime-plugin-align/src/alignPage.js:111
 msgid "These are the nodes associated on this radio"
 msgstr "Estos son los nodos asociados a esta radio"
 
@@ -1041,7 +1010,7 @@ msgstr "Este campo es requerido"
 msgid "This node is the gateway"
 msgstr "Este nodo es el gateway"
 
-#: plugins/lime-plugin-align/src/alignPage.js:107
+#: plugins/lime-plugin-align/src/alignPage.js:119
 msgid "This radio is not associated with other nodes"
 msgstr "Esta radio no está enlazada a otros nodos"
 
@@ -1061,7 +1030,7 @@ msgstr "Hasta Internet"
 msgid "To enable remote access an internet connection is needed"
 msgstr "Para posibilitar el acceso remoto es necesaria una conexión a internet."
 
-#: plugins/lime-plugin-rx/src/rxPage.js:102
+#: plugins/lime-plugin-rx/src/rxPage.js:103
 msgid "Traffic"
 msgstr "Tráfico"
 
@@ -1073,7 +1042,7 @@ msgstr "Intentar recargar la app"
 msgid "Unknown error"
 msgstr "Error desconocido"
 
-#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:225
+#: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:229
 msgid "Upgrade"
 msgstr "Actualizar"
 
@@ -1106,24 +1075,24 @@ msgstr "Usar cupones de acceso"
 msgid "Visit"
 msgstr "Visitar"
 
-#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:18
+#: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:9
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:50
 msgid "Visit a neighboring node"
 msgstr "Visitar un nodo vecino"
 
-#: plugins/lime-plugin-pirania/src/screens/voucher.js:110
+#: plugins/lime-plugin-pirania/src/screens/voucher.js:111
 msgid "Voucher Details"
 msgstr "Detalles del cupón"
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:78
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:82
 msgid "Voucher duration in days"
 msgstr "Duración del cupón en días"
 
-#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:49
+#: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:53
 msgid "Voucher group description"
 msgstr "Descripción del grupo de cupones"
 
-#: plugins/lime-plugin-pirania/src/screens/voucherList.js:50
+#: plugins/lime-plugin-pirania/src/screens/voucherList.js:54
 msgid "Voucher list"
 msgstr "Lista de Cupones"
 
@@ -1135,7 +1104,7 @@ msgstr "Los cupones sirven para limitar el acceso a través del Portal Comunitar
 msgid "Welcome to LimeApp"
 msgstr "Bienvenido/a a la LimeApp"
 
-#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:196
+#: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:197
 msgid "Wellcome Screen"
 msgstr "Pantalla de Bienvenida"
 
@@ -1143,17 +1112,17 @@ msgstr "Pantalla de Bienvenida"
 msgid "When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted"
 msgstr "Al recargar la aplicación, se te pedirá que confirmes la actualización, si no lo haces se revertirá"
 
-#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:32
+#: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/screens/password.js:45
-#: plugins/lime-plugin-node-admin/src/screens/password.js:104
+#: plugins/lime-plugin-node-admin/src/screens/password.js:105
 msgid "Wifi Password"
 msgstr "Contraseña del Wifi"
 
-#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:108
+#: plugins/lime-plugin-align/src/containers/alignSingle/index.js:121
 msgid "With radio {fromRadio} alignin with"
 msgstr "Con radio {fromRadio} alineando con"
 
-#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:72
+#: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:73
 msgid "With this second cell phone create an access point or hotspot with this data:"
 msgstr "Con este segundo celular crea un punto de acceso móvil (\"hotspot\") con estos datos:"
 
@@ -1173,10 +1142,6 @@ msgstr "Está conectado a otro nodo de la red, intente conectarse a"
 #: plugins/lime-plugin-fbw/src/containers/Setting.js:135
 msgid "You are now part of"
 msgstr "Usted es ahora parte de"
-
-#: plugins/lime-plugin-fbw/src/containers/SelectAction.js:7
-#~ msgid "You can search for mesh networks around you to add or to create a new one."
-#~ msgstr "Puede buscar redes cercanas para sumarse o crear una nueva."
 
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:83
 msgid "You can share your mobile connection to the node by setting up a mobile hotspot"
@@ -1206,23 +1171,28 @@ msgstr "Intente conectarse a la red wifi {wifiSsid} para completar la instalaci�
 msgid "Your node has no internet connection"
 msgstr "Tu nodo no tiene conexión a internet"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:240
+#: plugins/lime-plugin-locate/src/locateMap.tsx:207
+#: plugins/lime-plugin-locate/src/locatePage.tsx:225
 msgid "cancel"
 msgstr "cancelar"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:235
+#: plugins/lime-plugin-locate/src/locateMap.tsx:193
+#: plugins/lime-plugin-locate/src/locatePage.tsx:211
 msgid "confirm location"
 msgstr "confirmar ubicación"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:246
+#: plugins/lime-plugin-locate/src/locateMap.tsx:209
+#: plugins/lime-plugin-locate/src/locatePage.tsx:227
 msgid "edit location"
 msgstr "modificar ubicación"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:257
+#: plugins/lime-plugin-locate/src/locateMap.tsx:199
+#: plugins/lime-plugin-locate/src/locatePage.tsx:217
 msgid "hide community"
 msgstr "esconder comunidad"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:251
+#: plugins/lime-plugin-locate/src/locateMap.tsx:212
+#: plugins/lime-plugin-locate/src/locatePage.tsx:230
 msgid "locate my node"
 msgstr "ubicar mi nodo"
 
@@ -1230,7 +1200,8 @@ msgstr "ubicar mi nodo"
 msgid "more than a minute ago"
 msgstr "hace más de un minuto"
 
-#: plugins/lime-plugin-locate/src/locatePage.tsx:259
+#: plugins/lime-plugin-locate/src/locateMap.tsx:201
+#: plugins/lime-plugin-locate/src/locatePage.tsx:219
 msgid "show community"
 msgstr "mostrar comunidad"
 
