@@ -8,6 +8,10 @@ import {
     TileLayer,
 } from "react-leaflet";
 
+import {
+    useLoadLeaflet,
+    useLocation,
+} from "plugins/lime-plugin-locate/src/locateQueries";
 import { FloatingAlert } from "plugins/lime-plugin-mesh-wide/src/components/Map/FloatingAlert";
 import {
     BatmanLinksLayer,
@@ -34,7 +38,17 @@ export const MeshWideMap = ({
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
 
+    const { isLoading: assetsLoading, isFetchedAfterMount: assetsLoaded } =
+        useLoadLeaflet({
+            refetchOnWindowFocus: false,
+        });
+
+    const { data: nodeLocation, isLoading: isLoadingLocation } = useLocation({
+        enabled: assetsLoaded,
+    });
+
     const mapRef = useRef<L.Map | null>();
+    const loading = assetsLoading || isLoadingLocation;
 
     useEffect(() => {
         if (mapRef) {
@@ -46,13 +60,28 @@ export const MeshWideMap = ({
         }
     }, [mapRef, selectedMapFeature, setSelectedMapFeature]);
 
+    // Set map position when map is available or location gets updated
+    useEffect(() => {
+        const mapInstance = mapRef.current;
+        if (
+            !loading &&
+            mapInstance &&
+            nodeLocation &&
+            nodeLocation.location &&
+            (nodeLocation.location.lat !== "FIXME" ||
+                nodeLocation.location.lon !== "FIXME")
+        ) {
+            mapInstance.setView(
+                [+nodeLocation.location.lat, +nodeLocation.location.lon],
+                13
+            );
+        }
+    }, [loading, nodeLocation]);
+
     return (
         <MapContainer
-            // center={center}
-            // center={[-30, -60]}
-            // zoom={13}
-            center={[-31.81854, -64.40097]}
-            zoom={13}
+            center={[-30, -60]}
+            zoom={3}
             scrollWheelZoom={true}
             className={"w-screen h-screen sm:h-auto sm:pt-14 z-0"}
             ref={mapRef}
