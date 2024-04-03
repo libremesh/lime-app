@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.26](https://github.com/libremesh/lime-app/compare/v0.2.25...v0.3.0) (2024-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **dependencies:** upgrade `react-query` v2 to v4. Also migrate old storybook `@storybook/addon-knobs to` api to `@storybook/addon-controls`
+
+### Features
+
+* **docker:** Add docker for local dev ([ffa9876](https://github.com/libremesh/lime-app/commit/ffa987670fa6cc9c73f6454dec043b22bc9b736e))
+* **fbw:** show scans results https://github.com/libremesh/lime-app/pull/339
+* **nodejs:** upgrade .nvmrc to 20 ([48f415b](https://github.com/libremesh/lime-app/commit/48f415ba312bf4eb8e84eea687de1178df23f342))
+* **gh-action:** create actions to test, build and create a build package to test
+
+### Bug Fixes
+
+* **ci:** translations not present ([2127352](https://github.com/libremesh/lime-app/commit/2127352ba6ee690f562b652a0effa35e3d053851))
+* **fbw:** multiple fixes and migrate to react query
+* **lime-plugin-metrics:** multiple fixes
+* **lime-plugin-metrics:** refactor to react query ([a166cd6](https://github.com/libremesh/lime-app/commit/a166cd627d3bb7d1683156124addcdb462889e08))
+* **lime-plugin-rx:** multiple fixes
+* **lime-plugin-rx:** migrate to react query ([7118a73](https://github.com/libremesh/lime-app/commit/7118a73a1b443e1d7a7dcdf06632032bfcb5bbc6))
+* **node-admin:** voucher tests ([bdf1219](https://github.com/libremesh/lime-app/commit/bdf12196ae4eaba6682ba5dd4b7168ef413f2f64))
+* **tests:** multiple text fixing. See https://github.com/libremesh/lime-app/issues/359
+* **jest:** fix regular expression to find the tests files ([a9f57f2](https://github.com/libremesh/lime-app/commit/a9f57f2333ead426c1526a3a50b4c9eed2e11ba5))
+
+* **dependencies:** upgrade node dependencies ([5acd8ca](https://github.com/libremesh/lime-app/commit/5acd8ca3f3aa738c80807e24707c301dae0a7842))
 ### [0.2.25](https://github.com/germanferrero/lime-app/compare/v0.2.24...v0.2.25) (2022-03-04)
 
 
