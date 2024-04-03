@@ -29,7 +29,7 @@ export const FloatingAlert = () => {
         <div
             data-testid={"has-invalid-nodes"}
             onClick={callback}
-            className="cursor-pointer z-50 fixed top-28 right-4 my-2 mx-4 w-24 h-24 bg-gray-500 opacity-80 rounded flex justify-center items-center text-white"
+            className="cursor-pointer z-50 fixed top-24 right-24 my-2 mx-4 w-24 h-24 bg-gray-500 opacity-80 rounded flex justify-center items-center text-white"
         >
             <div className={"text-info"}>
                 <WarningIcon />

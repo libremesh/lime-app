@@ -47,46 +47,38 @@ export const MeshWideMap = ({
     }, [mapRef, selectedMapFeature, setSelectedMapFeature]);
 
     return (
-        <>
+        <MapContainer
+            // center={center}
+            // center={[-30, -60]}
+            // zoom={13}
+            center={[-31.81854, -64.40097]}
+            zoom={13}
+            scrollWheelZoom={true}
+            className={"w-screen h-screen sm:h-auto sm:pt-14 z-0"}
+            ref={mapRef}
+        >
+            <TileLayer
+                attribution={openStreetMapAttribution}
+                url={openStreetMapTileString}
+            />
             <FloatingAlert />
-            <MapContainer
-                // center={center}
-                // center={[-30, -60]}
-                // zoom={13}
-                center={[-31.81854, -64.40097]}
-                zoom={13}
-                scrollWheelZoom={true}
-                className={"w-screen h-screen sm:h-auto sm:pt-14 z-0"}
-                ref={mapRef}
-            >
-                <TileLayer
-                    attribution={openStreetMapAttribution}
-                    url={openStreetMapTileString}
-                />
-                <LayersControl position="topright">
-                    <LayersControl.Overlay checked={nodes} name={t`Nodes`}>
-                        <LayerGroup>
-                            <NodesLayer />
-                        </LayerGroup>
-                    </LayersControl.Overlay>
-                    <LayersControl.Overlay
-                        checked={wifiLinks}
-                        name={t`Wifi Links`}
-                    >
-                        <LayerGroup>
-                            <WifiLinksLayer />
-                        </LayerGroup>
-                    </LayersControl.Overlay>
-                    <LayersControl.Overlay
-                        checked={batmanLinks}
-                        name={t`Batman`}
-                    >
-                        <LayerGroup>
-                            <BatmanLinksLayer />
-                        </LayerGroup>
-                    </LayersControl.Overlay>
-                </LayersControl>
-            </MapContainer>
-        </>
+            <LayersControl position="topright">
+                <LayersControl.Overlay checked={nodes} name={t`Nodes`}>
+                    <LayerGroup>
+                        <NodesLayer />
+                    </LayerGroup>
+                </LayersControl.Overlay>
+                <LayersControl.Overlay checked={wifiLinks} name={t`Wifi Links`}>
+                    <LayerGroup>
+                        <WifiLinksLayer />
+                    </LayerGroup>
+                </LayersControl.Overlay>
+                <LayersControl.Overlay checked={batmanLinks} name={t`Batman`}>
+                    <LayerGroup>
+                        <BatmanLinksLayer />
+                    </LayerGroup>
+                </LayersControl.Overlay>
+            </LayersControl>
+        </MapContainer>
     );
 };
