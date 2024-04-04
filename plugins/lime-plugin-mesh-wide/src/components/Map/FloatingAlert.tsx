@@ -15,8 +15,8 @@ export const FloatingAlert = () => {
 
     const callback = useCallback(() => {
         const list: InvalidNodes = new Set([
-            ...Object.keys(invalidNodesReference),
-            ...Object.keys(invalidNodesActual),
+            ...Object.keys(invalidNodesReference ?? []),
+            ...Object.keys(invalidNodesActual ?? []),
         ]);
         setSelectedFeature({
             id: "invalidNodes",

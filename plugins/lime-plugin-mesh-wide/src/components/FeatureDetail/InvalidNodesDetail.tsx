@@ -13,8 +13,8 @@ export const InvalidNodesDetail = ({ nodes }: { nodes: InvalidNodes }) => {
             </Row>
             <Row>
                 <Trans>
-                    The following nodes are not located. Please, set their
-                    location to see them on the map:
+                    The following nodes are not located or have not reference
+                    state. Please, set their location to see them on the map:
                 </Trans>
             </Row>
             {[...nodes].map((name, k) => (
