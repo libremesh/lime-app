@@ -2,20 +2,31 @@ import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/mesWideQ
 
 import api from "utils/uhttpd.service";
 
+const sharedStateApiCall = async (queryKey) => {
+    try {
+        return await api.call(...queryKey);
+    } catch (e) {
+        // Prevent the whole page from crashing if the API call fails
+        // It can happen either because the package is not installed or reference state is not available
+        console.error(e);
+        return {};
+    }
+};
+
 export const getMeshWideBatmanReference = () =>
-    api.call(...meshUpgradeQueryKeys.batHostsRef);
+    sharedStateApiCall(meshUpgradeQueryKeys.batHostsRef);
 
 export const getMeshWideBatman = () =>
-    api.call(...meshUpgradeQueryKeys.batHosts);
+    sharedStateApiCall(meshUpgradeQueryKeys.batHosts);
 
 export const getMeshWideLinksReference = () =>
-    api.call(...meshUpgradeQueryKeys.wifiLinksInfoRef);
+    sharedStateApiCall(meshUpgradeQueryKeys.wifiLinksInfoRef);
 
 export const getMeshWideLinks = () =>
-    api.call(...meshUpgradeQueryKeys.wifiLinksInfo);
+    sharedStateApiCall(meshUpgradeQueryKeys.wifiLinksInfo);
 
 export const getMeshWideNodesReference = () =>
-    api.call(...meshUpgradeQueryKeys.meshWideNodesRef);
+    sharedStateApiCall(meshUpgradeQueryKeys.meshWideNodesRef);
 
 export const getMeshWideNodes = () =>
-    api.call(...meshUpgradeQueryKeys.meshWideNodes);
+    sharedStateApiCall(meshUpgradeQueryKeys.meshWideNodes);

@@ -11,12 +11,15 @@ import {
     LocatedLinkData,
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
+import { isEmpty } from "utils/utils";
+
 export const mergeLinksAndCoordinates = <T extends LinkType>(
     nodes: INodes,
     links: ILinks<T>,
     type: T
 ): LocatedLinkData => {
-    if (!nodes || !links) return {};
+    if (!nodes || isEmpty(nodes) || !links || isEmpty(links)) return {};
+
     const result: LocatedLinkData = {};
 
     // for every node check all links
