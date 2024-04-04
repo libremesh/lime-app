@@ -38,13 +38,12 @@ export const MeshWideMap = ({
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
 
-    const { isLoading: assetsLoading, isFetchedAfterMount: assetsLoaded } =
-        useLoadLeaflet({
-            refetchOnWindowFocus: false,
-        });
+    const { isLoading: assetsLoading, data: leafletData } = useLoadLeaflet({
+        refetchOnWindowFocus: false,
+    });
 
     const { data: nodeLocation, isLoading: isLoadingLocation } = useLocation({
-        enabled: assetsLoaded,
+        enabled: !!leafletData,
     });
 
     const mapRef = useRef<L.Map | null>();
