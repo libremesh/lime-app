@@ -3,6 +3,8 @@ import { useLocatedLinks } from "plugins/lime-plugin-mesh-wide/src/hooks/useLoca
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { LocatedLinkData } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
+import { isEmpty } from "utils/utils";
+
 interface ILinksLayerProps {
     links: LocatedLinkData;
     linksReference: LocatedLinkData;
@@ -11,9 +13,15 @@ interface ILinksLayerProps {
 
 const LinksLayer = ({
     links,
-    linksReference,
+    linksReference: originalLinksReference,
     linksLoaded,
 }: ILinksLayerProps) => {
+    // If reference is not set or empty, use actual nodes
+    const linksReference =
+        originalLinksReference && isEmpty(originalLinksReference)
+            ? links
+            : originalLinksReference;
+
     return (
         <div>
             {linksLoaded &&

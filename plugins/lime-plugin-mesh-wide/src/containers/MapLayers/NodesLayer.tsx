@@ -2,6 +2,8 @@ import NodeMarker from "plugins/lime-plugin-mesh-wide/src/components/Map/NodeMar
 import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { INodeInfo } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
+import { isEmpty } from "utils/utils";
+
 const NodesLayer = () => {
     const {
         locatedNodes: {
@@ -10,10 +12,16 @@ const NodesLayer = () => {
         },
     } = useNodes();
 
+    // If reference is not set or empty, use actual nodes
+    const referenceNodes =
+        meshWideNodesReference && isEmpty(meshWideNodesReference)
+            ? meshWideNodesActual
+            : meshWideNodesReference;
+
     return (
         <div>
-            {meshWideNodesReference &&
-                Object.entries(meshWideNodesReference).map(([k, v], i) => {
+            {referenceNodes &&
+                Object.entries(referenceNodes).map(([k, v], i) => {
                     let actualNode: INodeInfo;
                     if (meshWideNodesActual) {
                         actualNode = meshWideNodesActual[k];
