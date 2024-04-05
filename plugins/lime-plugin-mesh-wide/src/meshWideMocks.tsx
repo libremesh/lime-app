@@ -15,98 +15,86 @@ export const nodesReferenceState: INodes = {
     "LiMe-462895": {
         bleachTTL: 12,
         author: "LiMe-462895",
-        data: {
-            coordinates: {
-                lon: "-64.42703",
-                lat: "-31.80874",
-            },
-            macs: [
-                "a0:f3:c1:46:28:96",
-                "a0:f3:c1:46:28:97",
-                "a0:f3:c1:46:11:97",
-            ],
-            ipv4: "192.168.1.1",
-            ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
-            firmware_version: "1.0.0",
-            uptime: 1010.03,
-            device: "Router",
-            board: "",
-            hostname: "",
+        coordinates: {
+            long: "-64.42703",
+            lat: "-31.80874",
         },
+        macs: ["a0:f3:c1:46:28:96", "a0:f3:c1:46:28:97", "a0:f3:c1:46:11:97"],
+        ipv4: "192.168.1.1",
+        ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+        firmware_version: "1.0.0",
+        uptime: 1010.03,
+        device: "Router",
+        board: "",
+        hostname: "",
     },
     "LiMe-da4eaa": {
         bleachTTL: 12,
         author: "LiMe-da4eaa",
-        data: {
-            coordinates: {
-                lon: "-64.42315",
-                lat: "-31.79461",
-            },
-            macs: [
-                "14:cc:20:da:4e:ab",
-                "14:cc:20:da:4e:ac",
-                // Following macs are related to batman links
-                "02:ab:46:fc:3a:bd",
-                "02:58:47:fc:3a:bd",
-            ],
-            ipv4: "192.168.1.2",
-            ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7335",
-            firmware_version: "1.0.1",
-            uptime: 37.89,
-            device: "Switch",
-            board: "",
-            hostname: "",
+        coordinates: {
+            long: "-64.42315",
+            lat: "-31.79461",
         },
+        macs: [
+            "14:cc:20:da:4e:ab",
+            "14:cc:20:da:4e:ac",
+            // Following macs are related to batman links
+            "02:ab:46:fc:3a:bd",
+            "02:58:47:fc:3a:bd",
+        ],
+        ipv4: "192.168.1.2",
+        ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7335",
+        firmware_version: "1.0.1",
+        uptime: 37.89,
+        device: "Switch",
+        board: "",
+        hostname: "",
     },
     primero: {
         bleachTTL: 12,
         author: "primero",
-        data: {
-            coordinates: {
-                lon: "-64.41609",
-                lat: "-31.80461",
-            },
-            macs: [
-                "a8:40:41:1d:f9:35",
-                "a8:40:41:1d:f9:35",
-                // Following macs are related to batman links
-                "02:db:d6:46:28:95",
-                "02:ab:46:46:28:95",
-                "02:58:47:46:28:95",
-            ],
-            ipv4: "192.168.1.3",
-            ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7336",
-            firmware_version: "1.0.2",
-            uptime: 37.89,
-            device: "Hub",
-            board: "",
-            hostname: "",
+        coordinates: {
+            long: "-64.41609",
+            lat: "-31.80461",
         },
+        macs: [
+            "a8:40:41:1d:f9:35",
+            "a8:40:41:1d:f9:35",
+            // Following macs are related to batman links
+            "02:db:d6:46:28:95",
+            "02:ab:46:46:28:95",
+            "02:58:47:46:28:95",
+        ],
+        ipv4: "192.168.1.3",
+        ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7336",
+        firmware_version: "1.0.2",
+        uptime: 37.89,
+        device: "Hub",
+        board: "",
+        hostname: "",
     },
     segundo: {
         bleachTTL: 12,
         author: "segundo",
-        data: {
-            coordinates: {
-                lon: "-64.43209",
-                lat: "-31.79461",
-            },
-            macs: [
-                "a8:40:41:1d:f9:ff",
-                "a8:40:41:1d:f9:aa",
-                // Following macs are related to batman links
-                "02:db:d6:da:4e:aa",
-                "02:58:47:da:4e:aa",
-                "02:ab:46:da:4e:aa",
-            ],
-            ipv4: "192.168.1.3",
-            ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7336",
-            firmware_version: "1.0.2",
-            uptime: 37.89,
-            device: "Hub",
-            board: "",
-            hostname: "",
+        coordinates: {
+            long: "-64.43209",
+            lat: "-31.79461",
         },
+        macs: [
+            "a8:40:41:1d:f9:ff",
+            "a8:40:41:1d:f9:aa",
+            // Following macs are related to batman links
+            "02:db:d6:da:4e:aa",
+            "02:58:47:da:4e:aa",
+            "02:ab:46:da:4e:aa",
+        ],
+        ipv4: "192.168.1.3",
+        ipv6: "2001:0db8:85a3:0000:0000:8a2e:0370:7336",
+        firmware_version: "1.0.2",
+        uptime: 37.89,
+        device: "Hub",
+        board: "",
+        hostname: "",
     },
 };
 
@@ -402,7 +390,7 @@ export const nodes = (): INodes => {
 
     // This only delete a particular mac from the list of macs
     for (const [k, v] of Object.entries(newState)) {
-        v.data.macs = v.data.macs.filter((mac) => mac !== macToDelete);
+        v.macs = v.macs.filter((mac) => mac !== macToDelete);
     }
 
     // This delete an entire node

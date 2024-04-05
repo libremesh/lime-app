@@ -21,8 +21,8 @@ export const useNodes = () => {
             try {
                 if (
                     isValidCoordinate(
-                        nodeInfo.data.coordinates.lat,
-                        nodeInfo.data.coordinates.lon
+                        nodeInfo.coordinates.lat,
+                        nodeInfo.coordinates.long
                     )
                 ) {
                     validNodes[key] = nodeInfo;

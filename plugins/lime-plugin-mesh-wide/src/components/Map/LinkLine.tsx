@@ -37,7 +37,7 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
         };
     };
 
-    const coordinates = referenceLink.coordinates.map((c) => [c.lat, c.lon]);
+    const coordinates = referenceLink.coordinates.map((c) => [c.lat, c.long]);
 
     return (
         <Polyline

@@ -73,9 +73,9 @@ export class PontToPointLink {
             parseFloat(coord.replace("-", "").replace(".", ""));
 
         const allCoordinates = [
-            _prepareCoord(coord1.lon),
+            _prepareCoord(coord1.long),
             _prepareCoord(coord1.lat),
-            _prepareCoord(coord2.lon),
+            _prepareCoord(coord2.long),
             _prepareCoord(coord2.lat),
         ];
 

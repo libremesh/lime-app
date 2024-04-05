@@ -27,7 +27,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
         for (const linkData of links[linkNodeName].data) {
             // Get the nodeName of the destination node
             const dstNodeName = Object.keys(nodes).find((pid) => {
-                return nodes[pid].data.macs.find(
+                return nodes[pid].macs.find(
                     (mac) =>
                         mac.toLowerCase() === linkData.dst_mac.toLowerCase()
                 );
@@ -40,15 +40,15 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
             ) {
                 // Generate a unique id of the point to point link based on the coordinates
                 const linkKey = PontToPointLink.generateId(
-                    nodes[linkNodeName].data.coordinates,
-                    nodes[dstNodeName!].data.coordinates
+                    nodes[linkNodeName].coordinates,
+                    nodes[dstNodeName!].coordinates
                 );
 
                 // If this point to point link no exists, instantiate it
                 if (!result[linkKey]) {
                     result[linkKey] = new PontToPointLink(
-                        nodes[linkNodeName].data.coordinates,
-                        nodes[dstNodeName!].data.coordinates
+                        nodes[linkNodeName].coordinates,
+                        nodes[dstNodeName!].coordinates
                     );
                 }
                 // Else if the link is not already added don't do it.
@@ -76,11 +76,11 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 const entry = {
                     [linkNodeName]: {
                         ...linkData,
-                        coordinates: nodes[linkNodeName].data.coordinates,
+                        coordinates: nodes[linkNodeName].coordinates,
                     },
                     [dstNodeName]: {
                         ...destPointData,
-                        coordinates: nodes[dstNodeName].data.coordinates,
+                        coordinates: nodes[dstNodeName].coordinates,
                     },
                 } as ILocatedLink<T>;
 

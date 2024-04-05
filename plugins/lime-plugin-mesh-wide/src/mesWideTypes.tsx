@@ -68,23 +68,21 @@ export type IBatmanLinks = ILinks<"batman">;
 
 export type Coordinates = {
     lat: string;
-    lon: string;
+    long: string;
 };
 
 export interface INodeInfo {
     bleachTTL: number;
     author: string;
-    data: {
-        coordinates?: Coordinates; // Coordinates may not be set
-        board: string;
-        device: string;
-        macs: string[];
-        hostname: string;
-        ipv4: string;
-        ipv6: string;
-        firmware_version: string;
-        uptime: number;
-    };
+    coordinates?: Coordinates; // Coordinates may not be set
+    board: string;
+    device: string;
+    macs: string[];
+    hostname: string;
+    ipv4: string;
+    ipv6: string;
+    firmware_version: string;
+    uptime: number;
 }
 
 export type INodes = { [key: string]: INodeInfo };

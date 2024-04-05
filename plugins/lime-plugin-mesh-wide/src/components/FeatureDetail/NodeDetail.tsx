@@ -17,17 +17,17 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
-    const uptime = reference.data.uptime;
-    const firmware = reference.data.firmware_version;
-    const ipv6 = reference.data.ipv6;
-    const ipv4 = reference.data.ipv4;
-    const device = reference.data.device;
-    const { errors, hasErrors, isDown } = useNodeErrors({ actual, reference });
+    const uptime = reference.uptime;
+    const firmware = reference.firmware_version;
+    const ipv6 = reference.ipv6;
+    const ipv4 = reference.ipv4;
+    const device = reference.device;
+    const { errors, isDown } = useNodeErrors({ actual, reference });
 
     if (isDown) {
         return <Trans>This node seems down</Trans>;
     }
-    const macs = actual.data.macs;
+    const macs = actual.macs;
 
     return (
         <div>
@@ -76,7 +76,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                         }
                     >
                         <>
-                            {getArrayDifference(reference.data.macs, macs).map(
+                            {getArrayDifference(reference.macs, macs).map(
                                 (mac, k) => (
                                     <div key={k}>{mac}</div>
                                 )
