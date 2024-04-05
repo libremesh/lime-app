@@ -6,7 +6,7 @@ import { ErrorsDetails } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
     return (
         <div className={"flex flex-col gap-6"}>
-            {errors.invalidNodes && (
+            {errors.invalidNodes.size > 0 && (
                 <div>
                     <Row>
                         <div className={"text-3xl"}>
