@@ -1,9 +1,35 @@
+import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 
 import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { WarningIcon } from "plugins/lime-plugin-mesh-wide/src/icons/warningIcon";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/mesWideQueriesKeys";
 import { InvalidNodes } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+
+import queryCache from "utils/queryCache";
+
+const checkErrors = () => {
+    const errors = Object.keys(meshUpgradeQueryKeys).reduce((acc, key) => {
+        const queryKey = meshUpgradeQueryKeys[key];
+        const queryState = queryCache.getQueryState(queryKey);
+
+        if (queryState?.error) {
+            acc[key] = { queryKey, error: queryState.error };
+        }
+
+        return acc;
+    }, {});
+
+    return errors;
+};
+
+export function useMeshWideDataErrors(params) {
+    return useQuery(["lime-meshwide", "mesh_wide_errors"], checkErrors, {
+        refetchInterval: 6000, // Fetch data every 6 seconds
+        ...params,
+    });
+}
 
 export const FloatingAlert = () => {
     const {
@@ -13,6 +39,9 @@ export const FloatingAlert = () => {
 
     const { setData: setSelectedFeature } = useSelectedMapFeature();
 
+    const { data: errors } = useMeshWideDataErrors({});
+
+    console.log("errors", errors);
     const callback = useCallback(() => {
         const list: InvalidNodes = new Set([
             ...Object.keys(invalidNodesReference ?? []),
@@ -23,7 +52,12 @@ export const FloatingAlert = () => {
             type: "invalidNodes",
             feature: list,
         });
-    }, [invalidNodesActual, invalidNodesReference, setSelectedFeature]);
+    }, [
+        // checkErrors,
+        invalidNodesActual,
+        invalidNodesReference,
+        setSelectedFeature,
+    ]);
 
     return hasInvalidNodes ? (
         <div
