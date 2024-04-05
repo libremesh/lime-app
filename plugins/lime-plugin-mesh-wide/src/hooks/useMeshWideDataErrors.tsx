@@ -62,13 +62,13 @@ export const useMeshWideDataErrors = () => {
     const { data: nodesReferenceData, error: nodesReferenceError } =
         useMeshWideNodesReference({});
     addError(
-        meshUpgradeQueryKeys.nodesAndLinksRef,
+        meshUpgradeQueryKeys.meshWideNodesRef,
         nodesReferenceError,
         nodesReferenceData
     );
 
     const { error: nodesError } = useMeshWideNodes({});
-    addError(meshUpgradeQueryKeys.nodesAndLinks, nodesError);
+    addError(meshUpgradeQueryKeys.meshWideNodes, nodesError);
 
     return { meshWideDataErrors, dataNotSetErrors };
 };
