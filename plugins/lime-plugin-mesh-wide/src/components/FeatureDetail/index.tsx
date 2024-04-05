@@ -1,12 +1,12 @@
 import { VNode } from "preact";
 
-import { InvalidNodesDetail } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/InvalidNodesDetail";
 import LinkFeatureDetail, {
     LinkReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail";
 import NodeDetails, {
     NodeReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail";
+import { ShowErrorsDetail } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail";
 import {
     LinkMapFeature,
     NodeMapFeature,
@@ -50,8 +50,8 @@ export const FeatureDetail = ({
             return <LinkFeatureDetail {...selectedFeature.feature} />;
         case "node":
             return <NodeDetails {...selectedFeature.feature} />;
-        case "invalidNodes":
-            return <InvalidNodesDetail nodes={selectedFeature.feature} />;
+        case "errorsDetails":
+            return <ShowErrorsDetail errors={selectedFeature.feature} />;
         default:
             return <></>;
     }

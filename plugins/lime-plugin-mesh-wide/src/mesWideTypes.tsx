@@ -1,3 +1,5 @@
+import { QueryKey } from "@tanstack/react-query";
+
 import {
     MacToMacLink,
     PontToPointLink,
@@ -98,12 +100,22 @@ export type NodeMapFeature = {
     name: string;
 };
 
+export type MeshWideDataError = {
+    queryKey: QueryKey;
+    error?: unknown;
+};
+
 export type InvalidNodes = Set<string>;
+export type ErrorsDetails = {
+    invalidNodes: Set<string>;
+    meshWideDataErrors: MeshWideDataError[];
+    dataNotSetErrors: MeshWideDataError[];
+};
 
 type FeatureMap = {
     node: NodeMapFeature;
     link: LinkMapFeature;
-    invalidNodes: InvalidNodes;
+    errorsDetails: ErrorsDetails;
 };
 
 type FeatureType = keyof FeatureMap;

@@ -1,65 +1,46 @@
-import { useQuery } from "@tanstack/react-query";
 import { useCallback } from "react";
 
+import { useMeshWideDataErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useMeshWideDataErrors";
 import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { WarningIcon } from "plugins/lime-plugin-mesh-wide/src/icons/warningIcon";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
-import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/mesWideQueriesKeys";
 import { InvalidNodes } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
-import queryCache from "utils/queryCache";
-
-const checkErrors = () => {
-    const errors = Object.keys(meshUpgradeQueryKeys).reduce((acc, key) => {
-        const queryKey = meshUpgradeQueryKeys[key];
-        const queryState = queryCache.getQueryState(queryKey);
-
-        if (queryState?.error) {
-            acc[key] = { queryKey, error: queryState.error };
-        }
-
-        return acc;
-    }, {});
-
-    return errors;
-};
-
-export function useMeshWideDataErrors(params) {
-    return useQuery(["lime-meshwide", "mesh_wide_errors"], checkErrors, {
-        refetchInterval: 6000, // Fetch data every 6 seconds
-        ...params,
-    });
-}
-
 export const FloatingAlert = () => {
+    const { setData: setSelectedFeature } = useSelectedMapFeature();
+
     const {
         hasInvalidNodes,
         invalidNodes: { invalidNodesReference, invalidNodesActual },
     } = useNodes();
+    const { meshWideDataErrors, dataNotSetErrors } = useMeshWideDataErrors();
 
-    const { setData: setSelectedFeature } = useSelectedMapFeature();
+    const hasErrors =
+        hasInvalidNodes || meshWideDataErrors.length || dataNotSetErrors.length;
 
-    const { data: errors } = useMeshWideDataErrors({});
-
-    console.log("errors", errors);
     const callback = useCallback(() => {
-        const list: InvalidNodes = new Set([
+        const invalidNodes: InvalidNodes = new Set([
             ...Object.keys(invalidNodesReference ?? []),
             ...Object.keys(invalidNodesActual ?? []),
         ]);
         setSelectedFeature({
-            id: "invalidNodes",
-            type: "invalidNodes",
-            feature: list,
+            id: "errorsDetails",
+            type: "errorsDetails",
+            feature: {
+                invalidNodes,
+                meshWideDataErrors,
+                dataNotSetErrors,
+            },
         });
     }, [
-        // checkErrors,
+        dataNotSetErrors,
         invalidNodesActual,
         invalidNodesReference,
+        meshWideDataErrors,
         setSelectedFeature,
     ]);
 
-    return hasInvalidNodes ? (
+    return hasErrors ? (
         <div
             data-testid={"has-invalid-nodes"}
             onClick={callback}
