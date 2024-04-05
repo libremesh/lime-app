@@ -21,7 +21,7 @@ describe("tests for the algorithm that merge point and links data types", () => 
             for (const link of merged.links) {
                 Object.entries(link.data).map(([name, linkData], i) => {
                     const node = nodesReferenceState[name];
-                    expect(linkData.coordinates).toBe(node.data.coordinates);
+                    expect(linkData.coordinates).toBe(node.coordinates);
                 });
             }
         });
