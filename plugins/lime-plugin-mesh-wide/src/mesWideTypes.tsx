@@ -87,6 +87,12 @@ export interface INodeInfo {
 
 export type INodes = { [key: string]: INodeInfo };
 
+export type SharedStateTypes = INodes | IWifiLinks | IBatmanLinks;
+export type SharedStateReturnType<T extends SharedStateTypes> = {
+    data: T;
+    error: number;
+};
+
 export type LinkMapFeature = {
     actual: PontToPointLink;
     reference: PontToPointLink;
