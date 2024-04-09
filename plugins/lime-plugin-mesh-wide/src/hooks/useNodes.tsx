@@ -7,6 +7,7 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
 import { INodes } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
+// todo(kon): this should be inside a provider to don't repeat the calculations
 export const useNodes = () => {
     const { data: meshWideNodesReference } = useMeshWideNodesReference({});
     const { data: meshWideNodesActual } = useMeshWideNodes({});

@@ -28,8 +28,11 @@ export const useLocatedLinks = ({ type }: { type: LinkType }) => {
     const { data: links } = fetchData({});
 
     const {
-        locatedNodes: { locatedNodesReference: meshWideNodesReference },
+        locatedNodes: { locatedNodesReference, locatedNodesActual },
     } = useNodes();
+
+    const meshWideNodesReference =
+        locatedNodesReference || locatedNodesActual || {};
 
     const locatedLinksReference: LocatedLinkData = useMemo(() => {
         if (meshWideNodesReference && linksReference) {

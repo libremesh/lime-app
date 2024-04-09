@@ -99,245 +99,217 @@ export const nodesReferenceState: INodes = {
 };
 
 export const linksReferenceState: IWifiLinks = {
-    primero: {
-        bleachTTL: 30,
-        data: [
-            {
-                tx_rate: 150000,
-                dst_mac: "A0:F3:C1:46:28:97",
-                chains: [-63, -59],
-                signal: -58,
-                rx_rate: 180000,
-                src_mac: "a8:40:41:1d:f9:35",
-            },
-            {
-                tx_rate: 162000,
-                dst_mac: "14:CC:20:DA:4E:AC",
-                chains: [-57, -51],
-                signal: -50,
-                rx_rate: 240000,
-                src_mac: "a8:40:41:1d:f9:35",
-            },
-        ],
-        author: "primero",
-    },
-    segundo: {
-        bleachTTL: 30,
-        data: [
-            {
-                tx_rate: 150000,
-                dst_mac: "A0:F3:C1:46:11:97",
-                chains: [-58, -59],
-                signal: -58,
-                rx_rate: 180000,
-                src_mac: "a8:40:41:1d:f9:ff",
-            },
-            {
-                tx_rate: 162000,
-                dst_mac: "14:CC:20:DA:4E:AC",
-                chains: [-52, -51],
-                signal: -50,
-                rx_rate: 240000,
-                src_mac: "a8:40:41:1d:f9:aa",
-            },
-        ] as IWifiLinkData[],
-        author: "segundo",
-    },
-    "LiMe-da4eaa": {
-        bleachTTL: 30,
-        data: [
-            {
-                tx_rate: 65000,
-                dst_mac: "A0:F3:C1:46:28:96",
-                chains: [-25, -25],
-                src_mac: "14:cc:20:da:4e:ab",
-                rx_rate: 65000,
-                signal: -25,
-            },
-            {
-                tx_rate: 270000,
-                dst_mac: "A0:F3:C1:46:28:97",
-                chains: [-50, -47],
-                src_mac: "14:cc:20:da:4e:ac",
-                rx_rate: 150000,
-                signal: -45,
-            },
-            {
-                tx_rate: 243000,
-                dst_mac: "A8:40:41:1D:F9:35",
-                chains: [-75, -64],
-                src_mac: "14:cc:20:da:4e:ac",
-                rx_rate: 162000,
-                signal: -64,
-            },
-            {
-                tx_rate: 243000,
-                dst_mac: "A8:40:41:1D:F9:aa",
-                chains: [-75, -64],
-                src_mac: "14:cc:20:da:4e:ac",
-                rx_rate: 162000,
-                signal: -64,
-            },
-        ] as IWifiLinkData[],
-        author: "LiMe-da4eaa",
-    },
-    "LiMe-462895": {
-        bleachTTL: 28,
-        data: [
-            {
-                tx_rate: 78000,
-                dst_mac: "14:CC:20:DA:4E:AB",
-                chains: [-43, -46],
-                src_mac: "a0:f3:c1:46:28:96",
-                rx_rate: 78000,
-                signal: 2,
-            },
-            {
-                tx_rate: 243000,
-                dst_mac: "14:CC:20:DA:4E:AC",
-                chains: [-68, -41],
-                src_mac: "a0:f3:c1:46:28:97",
-                rx_rate: 216000,
-                signal: -41,
-            },
-            {
-                tx_rate: 240000,
-                dst_mac: "A8:40:41:1D:F9:35",
-                chains: [-77, -65],
-                src_mac: "a0:f3:c1:46:28:97",
-                rx_rate: 135000,
-                signal: -65,
-            },
-            {
-                tx_rate: 240000,
-                dst_mac: "A8:40:41:1D:F9:ff",
-                chains: [-64, -65],
-                src_mac: "a0:f3:c1:46:11:97",
-                rx_rate: 135000,
-                signal: -65,
-            },
-        ] as IWifiLinkData[],
-        author: "LiMe-462895",
-    },
+    primero: [
+        {
+            tx_rate: 150000,
+            dst_mac: "A0:F3:C1:46:28:97",
+            chains: [-63, -59],
+            signal: -58,
+            rx_rate: 180000,
+            src_mac: "a8:40:41:1d:f9:35",
+        },
+        {
+            tx_rate: 162000,
+            dst_mac: "14:CC:20:DA:4E:AC",
+            chains: [-57, -51],
+            signal: -50,
+            rx_rate: 240000,
+            src_mac: "a8:40:41:1d:f9:35",
+        },
+    ],
+    segundo: [
+        {
+            tx_rate: 150000,
+            dst_mac: "A0:F3:C1:46:11:97",
+            chains: [-58, -59],
+            signal: -58,
+            rx_rate: 180000,
+            src_mac: "a8:40:41:1d:f9:ff",
+        },
+        {
+            tx_rate: 162000,
+            dst_mac: "14:CC:20:DA:4E:AC",
+            chains: [-52, -51],
+            signal: -50,
+            rx_rate: 240000,
+            src_mac: "a8:40:41:1d:f9:aa",
+        },
+    ] as IWifiLinkData[],
+    "LiMe-da4eaa": [
+        {
+            tx_rate: 65000,
+            dst_mac: "A0:F3:C1:46:28:96",
+            chains: [-25, -25],
+            src_mac: "14:cc:20:da:4e:ab",
+            rx_rate: 65000,
+            signal: -25,
+        },
+        {
+            tx_rate: 270000,
+            dst_mac: "A0:F3:C1:46:28:97",
+            chains: [-50, -47],
+            src_mac: "14:cc:20:da:4e:ac",
+            rx_rate: 150000,
+            signal: -45,
+        },
+        {
+            tx_rate: 243000,
+            dst_mac: "A8:40:41:1D:F9:35",
+            chains: [-75, -64],
+            src_mac: "14:cc:20:da:4e:ac",
+            rx_rate: 162000,
+            signal: -64,
+        },
+        {
+            tx_rate: 243000,
+            dst_mac: "A8:40:41:1D:F9:aa",
+            chains: [-75, -64],
+            src_mac: "14:cc:20:da:4e:ac",
+            rx_rate: 162000,
+            signal: -64,
+        },
+    ] as IWifiLinkData[],
+    "LiMe-462895": [
+        {
+            tx_rate: 78000,
+            dst_mac: "14:CC:20:DA:4E:AB",
+            chains: [-43, -46],
+            src_mac: "a0:f3:c1:46:28:96",
+            rx_rate: 78000,
+            signal: 2,
+        },
+        {
+            tx_rate: 243000,
+            dst_mac: "14:CC:20:DA:4E:AC",
+            chains: [-68, -41],
+            src_mac: "a0:f3:c1:46:28:97",
+            rx_rate: 216000,
+            signal: -41,
+        },
+        {
+            tx_rate: 240000,
+            dst_mac: "A8:40:41:1D:F9:35",
+            chains: [-77, -65],
+            src_mac: "a0:f3:c1:46:28:97",
+            rx_rate: 135000,
+            signal: -65,
+        },
+        {
+            tx_rate: 240000,
+            dst_mac: "A8:40:41:1D:F9:ff",
+            chains: [-64, -65],
+            src_mac: "a0:f3:c1:46:11:97",
+            rx_rate: 135000,
+            signal: -65,
+        },
+    ] as IWifiLinkData[],
 };
 
 export const batManReferenceState: IBatmanLinks = {
-    primero: {
-        bleachTTL: 27,
-        data: [
-            {
-                hard_ifindex: 18,
-                last_seen_msecs: 1300,
-                iface: "eth0-1_250",
-                dst_mac: "02:db:d6:da:4e:aa",
-                src_mac: "02:db:d6:46:28:95",
-            },
-            {
-                hard_ifindex: 26,
-                last_seen_msecs: 20,
-                iface: "wlan1-mesh_250",
-                dst_mac: "02:ab:46:da:4e:aa",
-                src_mac: "02:ab:46:46:28:95",
-            },
-            {
-                hard_ifindex: 26,
-                last_seen_msecs: 40,
-                iface: "wlan1-mesh_250",
-                dst_mac: "02:ab:46:fc:3a:bd",
-                src_mac: "02:ab:46:46:28:95",
-            },
-            {
-                hard_ifindex: 28,
-                last_seen_msecs: 1710,
-                iface: "wlan0-mesh_250",
-                dst_mac: "02:58:47:fc:3a:bd",
-                src_mac: "02:58:47:46:28:95",
-            },
-            {
-                hard_ifindex: 28,
-                last_seen_msecs: 1450,
-                iface: "wlan0-mesh_250",
-                dst_mac: "02:58:47:da:4e:aa",
-                src_mac: "02:58:47:46:28:95",
-            },
-        ] as IBatManLinkData[],
-        author: "primero",
-    },
-    "LiMe-da4eaa": {
-        bleachTTL: 26,
-        data: [
-            {
-                hard_ifindex: 26,
-                last_seen_msecs: 1670,
-                iface: "wlan1-mesh_250",
-                dst_mac: "02:ab:46:da:4e:aa",
-                src_mac: "02:ab:46:fc:3a:bd",
-            },
-            {
-                hard_ifindex: 26,
-                last_seen_msecs: 1350,
-                iface: "wlan1-mesh_250",
-                dst_mac: "02:ab:46:46:28:95",
-                src_mac: "02:ab:46:fc:3a:bd",
-            },
-            {
-                hard_ifindex: 28,
-                last_seen_msecs: 1430,
-                iface: "wlan0-mesh_250",
-                dst_mac: "02:58:47:46:28:95",
-                src_mac: "02:58:47:fc:3a:bd",
-            },
-            {
-                hard_ifindex: 28,
-                last_seen_msecs: 1030,
-                iface: "wlan0-mesh_250",
-                dst_mac: "02:58:47:da:4e:aa",
-                src_mac: "02:58:47:fc:3a:bd",
-            },
-        ] as IBatManLinkData[],
-        author: "tercero",
-    },
-    segundo: {
-        bleachTTL: 28,
-        data: [
-            {
-                hard_ifindex: 18,
-                last_seen_msecs: 1670,
-                src_mac: "02:db:d6:da:4e:aa",
-                dst_mac: "02:db:d6:46:28:95",
-                iface: "eth0-1_250",
-            },
-            {
-                hard_ifindex: 26,
-                last_seen_msecs: 550,
-                src_mac: "02:58:47:da:4e:aa",
-                dst_mac: "02:58:47:46:28:95",
-                iface: "wlan0-mesh_250",
-            },
-            {
-                hard_ifindex: 26,
-                last_seen_msecs: 260,
-                src_mac: "02:58:47:da:4e:aa",
-                dst_mac: "02:58:47:fc:3a:bd",
-                iface: "wlan0-mesh_250",
-            },
-            {
-                hard_ifindex: 28,
-                last_seen_msecs: 340,
-                src_mac: "02:ab:46:da:4e:aa",
-                dst_mac: "02:ab:46:fc:3a:bd",
-                iface: "wlan1-mesh_250",
-            },
-            {
-                hard_ifindex: 28,
-                last_seen_msecs: 550,
-                src_mac: "02:ab:46:da:4e:aa",
-                dst_mac: "02:ab:46:46:28:95",
-                iface: "wlan1-mesh_250",
-            },
-        ] as IBatManLinkData[],
-        author: "segundo",
-    },
+    primero: [
+        {
+            hard_ifindex: 18,
+            last_seen_msecs: 1300,
+            iface: "eth0-1_250",
+            dst_mac: "02:db:d6:da:4e:aa",
+            src_mac: "02:db:d6:46:28:95",
+        },
+        {
+            hard_ifindex: 26,
+            last_seen_msecs: 20,
+            iface: "wlan1-mesh_250",
+            dst_mac: "02:ab:46:da:4e:aa",
+            src_mac: "02:ab:46:46:28:95",
+        },
+        {
+            hard_ifindex: 26,
+            last_seen_msecs: 40,
+            iface: "wlan1-mesh_250",
+            dst_mac: "02:ab:46:fc:3a:bd",
+            src_mac: "02:ab:46:46:28:95",
+        },
+        {
+            hard_ifindex: 28,
+            last_seen_msecs: 1710,
+            iface: "wlan0-mesh_250",
+            dst_mac: "02:58:47:fc:3a:bd",
+            src_mac: "02:58:47:46:28:95",
+        },
+        {
+            hard_ifindex: 28,
+            last_seen_msecs: 1450,
+            iface: "wlan0-mesh_250",
+            dst_mac: "02:58:47:da:4e:aa",
+            src_mac: "02:58:47:46:28:95",
+        },
+    ] as IBatManLinkData[],
+    "LiMe-da4eaa": [
+        {
+            hard_ifindex: 26,
+            last_seen_msecs: 1670,
+            iface: "wlan1-mesh_250",
+            dst_mac: "02:ab:46:da:4e:aa",
+            src_mac: "02:ab:46:fc:3a:bd",
+        },
+        {
+            hard_ifindex: 26,
+            last_seen_msecs: 1350,
+            iface: "wlan1-mesh_250",
+            dst_mac: "02:ab:46:46:28:95",
+            src_mac: "02:ab:46:fc:3a:bd",
+        },
+        {
+            hard_ifindex: 28,
+            last_seen_msecs: 1430,
+            iface: "wlan0-mesh_250",
+            dst_mac: "02:58:47:46:28:95",
+            src_mac: "02:58:47:fc:3a:bd",
+        },
+        {
+            hard_ifindex: 28,
+            last_seen_msecs: 1030,
+            iface: "wlan0-mesh_250",
+            dst_mac: "02:58:47:da:4e:aa",
+            src_mac: "02:58:47:fc:3a:bd",
+        },
+    ],
+    segundo: [
+        {
+            hard_ifindex: 18,
+            last_seen_msecs: 1670,
+            src_mac: "02:db:d6:da:4e:aa",
+            dst_mac: "02:db:d6:46:28:95",
+            iface: "eth0-1_250",
+        },
+        {
+            hard_ifindex: 26,
+            last_seen_msecs: 550,
+            src_mac: "02:58:47:da:4e:aa",
+            dst_mac: "02:58:47:46:28:95",
+            iface: "wlan0-mesh_250",
+        },
+        {
+            hard_ifindex: 26,
+            last_seen_msecs: 260,
+            src_mac: "02:58:47:da:4e:aa",
+            dst_mac: "02:58:47:fc:3a:bd",
+            iface: "wlan0-mesh_250",
+        },
+        {
+            hard_ifindex: 28,
+            last_seen_msecs: 340,
+            src_mac: "02:ab:46:da:4e:aa",
+            dst_mac: "02:ab:46:fc:3a:bd",
+            iface: "wlan1-mesh_250",
+        },
+        {
+            hard_ifindex: 28,
+            last_seen_msecs: 550,
+            src_mac: "02:ab:46:da:4e:aa",
+            dst_mac: "02:ab:46:46:28:95",
+            iface: "wlan1-mesh_250",
+        },
+    ] as IBatManLinkData[],
 };
 
 // Use the same as on the reference state deleting a specific node
@@ -362,7 +334,7 @@ export const links = <T extends LinkType>(type: T): ILinks<T> => {
     let source_macs_to_remove = [];
     if (nodeName) {
         // Get source_macs from the node to be removed
-        source_macs_to_remove = newState[nodeName].data.map((item: any) =>
+        source_macs_to_remove = newState[nodeName].map((item: any) =>
             item.src_mac.toLowerCase()
         );
 
@@ -372,7 +344,7 @@ export const links = <T extends LinkType>(type: T): ILinks<T> => {
 
     // Remove data items with matching dest_mac in other objects
     Object.keys(newState).forEach((key: string) => {
-        newState[key].data = newState[key].data.filter((item) => {
+        newState[key] = newState[key].filter((item) => {
             return (
                 !source_macs_to_remove.includes(item.dst_mac.toLowerCase()) ||
                 // Added to delete a specific link of a node and not an entire node

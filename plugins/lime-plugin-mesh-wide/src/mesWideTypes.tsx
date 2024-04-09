@@ -56,11 +56,7 @@ export type IBatManLinkData = {
  * List of Link info retrieved from the API
  */
 export interface ILinks<T extends LinkType> {
-    [key: string]: {
-        bleachTTL: number;
-        data: Array<LinkData[T]>;
-        author: string;
-    };
+    [key: string]: Array<LinkData[T]>;
 }
 
 export type IWifiLinks = ILinks<"wifi">;
