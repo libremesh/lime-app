@@ -7,7 +7,8 @@ import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWide
 import { InvalidNodes } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 
 export const FloatingAlert = () => {
-    const { setData: setSelectedFeature } = useSelectedMapFeature();
+    const { setData: setSelectedFeature, data: selectedMapFeature } =
+        useSelectedMapFeature();
 
     const {
         hasInvalidNodes,
@@ -19,10 +20,15 @@ export const FloatingAlert = () => {
         hasInvalidNodes || meshWideDataErrors.length || dataNotSetErrors.length;
 
     const callback = useCallback(() => {
+        if (selectedMapFeature && selectedMapFeature.id === "errorsDetails") {
+            setSelectedFeature(null);
+            return;
+        }
         const invalidNodes: InvalidNodes = new Set([
             ...Object.keys(invalidNodesReference ?? []),
             ...Object.keys(invalidNodesActual ?? []),
         ]);
+
         setSelectedFeature({
             id: "errorsDetails",
             type: "errorsDetails",
