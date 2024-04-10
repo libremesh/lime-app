@@ -3,8 +3,8 @@ import { useCallback } from "react";
 import { useMeshWideDataErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useMeshWideDataErrors";
 import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { WarningIcon } from "plugins/lime-plugin-mesh-wide/src/icons/warningIcon";
-import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
-import { InvalidNodes } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+import { InvalidNodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const FloatingAlert = () => {
     const { setData: setSelectedFeature, data: selectedMapFeature } =

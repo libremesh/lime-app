@@ -2,11 +2,11 @@ import L from "leaflet";
 import { Marker, Tooltip } from "react-leaflet";
 
 import { useNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodeErrors";
-import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
+import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
     INodeInfo,
     NodeMapFeature,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import style from "./style.less";
 

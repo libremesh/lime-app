@@ -7,7 +7,7 @@ import {
     IWifiLinkData,
     IWifiLinks,
     LinkType,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 // todo(kon): if a mac disappear from mac list and a link with this mac as src mac disappear also, is not shown on the map.
 

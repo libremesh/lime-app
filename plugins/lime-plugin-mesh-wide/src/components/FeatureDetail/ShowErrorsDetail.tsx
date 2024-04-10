@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 
 import { Row } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
-import { ErrorsDetails } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+import { ErrorsDetails } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
     return (

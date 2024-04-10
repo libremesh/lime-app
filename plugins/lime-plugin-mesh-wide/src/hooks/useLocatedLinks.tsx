@@ -9,13 +9,13 @@ import {
     useMeshWideBatmanReference,
     useMeshWideLinks,
     useMeshWideLinksReference,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
     ILinkErrors,
     LinkType,
     LocatedLinkData,
     PointToPointLinkId,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const useLocatedLinks = ({ type }: { type: LinkType }) => {
     const fetchData = type === "batman" ? useMeshWideBatman : useMeshWideLinks;

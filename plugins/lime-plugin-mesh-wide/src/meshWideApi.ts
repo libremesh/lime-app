@@ -1,10 +1,10 @@
-import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/mesWideQueriesKeys";
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
     IBatmanLinks,
     INodes,
     IWifiLinks,
     SharedStateReturnType,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import api from "utils/uhttpd.service";
 

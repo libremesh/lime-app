@@ -5,7 +5,7 @@ import {
     ILinkPtoPErrors,
     IWifiLinkData,
     WifiLinkErrorCodes,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { DEFAULT_COMMUNITY_SETTINGS } from "utils/constants";
 

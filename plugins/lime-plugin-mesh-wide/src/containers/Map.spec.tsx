@@ -1,15 +1,10 @@
 import "@testing-library/jest-dom";
-// import "@testing-library/jest-dom/extend-expect";
-import { screen } from "@testing-library/preact";
 
-import { MeshWideMap } from "plugins/lime-plugin-mesh-wide/src/containers/Map";
+// import "@testing-library/jest-dom/extend-expect";
 import {
     getMeshWideNodes,
     getMeshWideNodesReference,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideApi";
-import { nodesReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
-
-import { render } from "utils/test_utils";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
 
 jest.mock("plugins/lime-plugin-mesh-wide/src/mesWideApi.ts");
 jest.mock("leaflet");

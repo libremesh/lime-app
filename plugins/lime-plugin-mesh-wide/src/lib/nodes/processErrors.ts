@@ -1,7 +1,7 @@
 import {
     INodeInfo,
     NodeErrorCodes,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const processNodeErrors = (
     reference: INodeInfo,

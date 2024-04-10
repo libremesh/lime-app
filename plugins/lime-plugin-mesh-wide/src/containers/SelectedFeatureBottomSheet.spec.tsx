@@ -3,17 +3,17 @@ import "@testing-library/jest-dom";
 import { screen } from "@testing-library/preact";
 
 import { SelectedFeatureBottomSheet } from "plugins/lime-plugin-mesh-wide/src/containers/SelectedFeatureBottomSheet";
-import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
-import {
-    INodeInfo,
-    NodeMapFeature,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
 import {
     links,
     linksReferenceState,
     nodes,
     nodesReferenceState,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
+import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+import {
+    INodeInfo,
+    NodeMapFeature,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { render } from "utils/test_utils";
 

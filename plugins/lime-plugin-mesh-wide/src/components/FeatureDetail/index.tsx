@@ -11,7 +11,7 @@ import {
     LinkMapFeature,
     NodeMapFeature,
     SelectedMapFeature,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const TitleAndText = ({
     title,

@@ -14,7 +14,7 @@ import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils"
 import {
     NodeErrorCodes,
     NodeMapFeature,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const uptime = reference.uptime;

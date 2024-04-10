@@ -6,7 +6,7 @@ import {
     FeatureDetail,
     FeatureReferenceStatus,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail";
-import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
+import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 
 export const SelectedFeatureBottomSheet = () => {
     const [isOpen, setIsOpen] = useState(false);

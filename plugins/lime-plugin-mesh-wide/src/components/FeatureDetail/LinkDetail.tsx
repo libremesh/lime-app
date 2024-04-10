@@ -19,7 +19,7 @@ import {
     IWifiLinkData,
     LinkMapFeature,
     WifiLinkErrorCodes,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { Row, TitleAndText } from "./index";
 

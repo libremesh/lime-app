@@ -1,6 +1,6 @@
 import NodeMarker from "plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker";
 import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
-import { INodeInfo } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+import { INodeInfo } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { isEmpty } from "utils/utils";
 

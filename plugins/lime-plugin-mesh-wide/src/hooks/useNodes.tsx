@@ -4,8 +4,8 @@ import { isValidCoordinate } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
     useMeshWideNodes,
     useMeshWideNodesReference,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
-import { INodes } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+import { INodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 // todo(kon): this should be inside a provider to don't repeat the calculations
 export const useNodes = () => {

@@ -9,7 +9,7 @@ import {
     LinkData,
     LinkType,
     LocatedLinkData,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { isEmpty } from "utils/utils";
 

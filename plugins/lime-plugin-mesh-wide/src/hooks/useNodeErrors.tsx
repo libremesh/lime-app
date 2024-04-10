@@ -2,7 +2,7 @@ import { processNodeErrors } from "plugins/lime-plugin-mesh-wide/src/lib/nodes/p
 import {
     INodeInfo,
     NodeErrorCodes,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const useNodeErrors = ({
     actual,

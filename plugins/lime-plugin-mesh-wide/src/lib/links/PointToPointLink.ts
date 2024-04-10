@@ -6,7 +6,7 @@ import {
     LinkType,
     MacToMacLinkId,
     PointToPointLinkId,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 /**
  * This class should store a group of links between the same geo coordinates.

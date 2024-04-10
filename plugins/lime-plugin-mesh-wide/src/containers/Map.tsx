@@ -18,7 +18,7 @@ import {
     WifiLinksLayer,
 } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayers";
 import NodesLayer from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/NodesLayer";
-import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
+import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 
 const openStreetMapTileString = "https://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =

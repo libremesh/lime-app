@@ -11,7 +11,7 @@ import {
     useDeletePropModal,
     useEditPropModal,
 } from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
-import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const ConfigSection = ({ dropdown }: { dropdown: IMeshWideSection }) => {
     return (

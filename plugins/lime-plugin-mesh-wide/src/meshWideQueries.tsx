@@ -7,16 +7,16 @@ import {
     getMeshWideLinksReference,
     getMeshWideNodes,
     getMeshWideNodesReference,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideApi";
-import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/mesWideQueriesKeys";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
+import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
     IBatmanLinks,
     IMeshWideConfig,
     INodes,
     IWifiLinks,
     SelectedMapFeature,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
-import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { useSharedData } from "utils/useSharedData";
 

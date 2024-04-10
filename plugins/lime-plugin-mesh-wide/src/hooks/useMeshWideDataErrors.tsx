@@ -7,9 +7,9 @@ import {
     useMeshWideLinksReference,
     useMeshWideNodes,
     useMeshWideNodesReference,
-} from "plugins/lime-plugin-mesh-wide/src/mesWideQueries";
-import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/mesWideQueriesKeys";
-import { MeshWideDataError } from "plugins/lime-plugin-mesh-wide/src/mesWideTypes";
+} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
+import { MeshWideDataError } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { isEmpty } from "utils/utils";
 
