@@ -18,7 +18,7 @@ const LinksLayer = ({
 }: ILinksLayerProps) => {
     // If reference is not set or empty, use actual nodes
     const linksReference =
-        originalLinksReference && isEmpty(originalLinksReference)
+        !originalLinksReference || isEmpty(originalLinksReference)
             ? links
             : originalLinksReference;
 

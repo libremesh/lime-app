@@ -14,7 +14,7 @@ const NodesLayer = () => {
 
     // If reference is not set or empty, use actual nodes
     const referenceNodes =
-        meshWideNodesReference && isEmpty(meshWideNodesReference)
+        !meshWideNodesReference || isEmpty(meshWideNodesReference)
             ? meshWideNodesActual
             : meshWideNodesReference;
 

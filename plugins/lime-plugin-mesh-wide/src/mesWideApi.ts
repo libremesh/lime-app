@@ -26,7 +26,9 @@ const sharedStateApiCall = async <K extends keyof typeof meshUpgradeQueryKeys>(
     const res = (await api.call(
         ...meshUpgradeQueryKeys[queryKey]
     )) as SharedStateReturnType<MeshUpgradeQueryKeyTypes[K]>;
-    if (res.error !== 0) throw Error(`Shared state error: ${res.error}`);
+    if (res.error !== 0 && res.error !== 404) {
+        throw Error(`Shared state error: ${res.error}`);
+    }
     return res.data;
 };
 
