@@ -17,8 +17,13 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     const isSelected = selectedMapFeature?.id === referenceLink.id;
     const { linksErrors } = useLocatedLinks({ type });
 
-    const hasError = linksErrors[referenceLink.id]?.hasErrors ?? false;
-    const linkUp = linksErrors[referenceLink.id]?.linkUp ?? true;
+    let hasError = false;
+    let linkUp = true;
+
+    if (linksErrors && linksErrors[referenceLink.id]) {
+        hasError = linksErrors[referenceLink.id].hasErrors;
+        linkUp = linksErrors[referenceLink.id].linkUp;
+    }
 
     const _setSelectedFeature = () => {
         setSelectedMapFeature({

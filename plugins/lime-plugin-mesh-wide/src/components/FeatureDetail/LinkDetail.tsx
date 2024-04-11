@@ -29,7 +29,7 @@ const BatmanDetail = ({
     node,
 }: {
     name: string;
-    errorsArray: BatmanLinkErrorCodes[];
+    errorsArray: BatmanLinkErrorCodes[] | undefined;
     node: IBatManLinkData;
 }) => {
     return (
@@ -37,7 +37,7 @@ const BatmanDetail = ({
             <Row>
                 <div className={"flex"}>
                     <strong>{name}</strong>{" "}
-                    {errorsArray.length > 0 && <ErrorIcon />}
+                    {errorsArray?.length > 0 && <ErrorIcon />}
                 </div>
             </Row>
             <Row>
@@ -66,14 +66,16 @@ const WifiDetail = ({
             <Row>
                 <div className={"flex"}>
                     <strong>{name}</strong>{" "}
-                    {errorsArray.length > 0 && <ErrorIcon />}
+                    {errorsArray?.length > 0 && <ErrorIcon />}
                 </div>
             </Row>
             <Row>
                 <TitleAndText
                     title={<Trans>Signal</Trans>}
                     error={
-                        errorsArray.includes(WifiLinkErrorCodes.SIGNAL_LOSS) ? (
+                        errorsArray?.includes(
+                            WifiLinkErrorCodes.SIGNAL_LOSS
+                        ) ? (
                             <Trans>
                                 The signal is X below the reference state
                             </Trans>
@@ -85,7 +87,7 @@ const WifiDetail = ({
                 <TitleAndText
                     title={<Trans>Chains</Trans>}
                     error={
-                        errorsArray.includes(WifiLinkErrorCodes.CHAIN_LOSS) ? (
+                        errorsArray?.includes(WifiLinkErrorCodes.CHAIN_LOSS) ? (
                             <Trans>
                                 The difference between chains is too big
                             </Trans>
@@ -112,9 +114,9 @@ const SelectedLink = ({
     errors,
 }: {
     linkDetail: BaseMacToMacLink;
-    errors: ILinkMtoMErrors;
+    errors: ILinkMtoMErrors | undefined;
 }) => {
-    if (linkDetail === undefined || !errors.linkUp)
+    if (linkDetail === undefined || (errors && !errors?.linkUp))
         return (
             <div>
                 <Trans>This link seems down</Trans>
@@ -141,7 +143,7 @@ const SelectedLink = ({
             </Row>
             {names.map((name, i) => {
                 const node = linkDetail.linkByName(name);
-                const errorsArray = errors.linkErrors[name];
+                const errorsArray = errors?.linkErrors[name] ?? [];
                 return linkType === "wifi" ? (
                     <WifiDetail
                         key={i}
@@ -178,7 +180,8 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
                     <div className={"flex"}>
                         <Trans>
                             Link {i + 1}{" "}
-                            {errors.macToMacErrors[link.id].hasErrors ? (
+                            {errors &&
+                            errors?.macToMacErrors[link.id]?.hasErrors ? (
                                 <ErrorIcon />
                             ) : null}
                         </Trans>
@@ -202,7 +205,7 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
                     <SelectedLink
                         linkDetail={actual?.links[selectedLink]}
                         errors={
-                            errors.macToMacErrors[
+                            errors?.macToMacErrors[
                                 actual?.links[selectedLink]?.id
                             ]
                         }
@@ -219,7 +222,8 @@ export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
         type: reference.type,
     });
 
-    const hasError = errors.hasErrors;
+    const hasError = errors?.hasErrors ?? false;
+    // todo(kon): check here if reference state is empty to show reference not set message
 
     const txt: VNode = hasError ? (
         <Trans>This link has errors</Trans>

@@ -12,6 +12,7 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
     ILinkErrors,
+    ILinkPtoPErrors,
     LinkType,
     LocatedLinkData,
     PointToPointLinkId,
@@ -19,7 +20,17 @@ import {
 
 import { isEmpty } from "utils/utils";
 
-export const useLocatedLinks = ({ type }: { type: LinkType }) => {
+interface IUselocatedLinks {
+    locatedLinksReference: LocatedLinkData;
+    linksErrors: ILinkErrors | undefined;
+    locatedLinks: LocatedLinkData;
+    linksLoaded: boolean;
+}
+export const useLocatedLinks = ({
+    type,
+}: {
+    type: LinkType;
+}): IUselocatedLinks => {
     const fetchData = type === "batman" ? useMeshWideBatman : useMeshWideLinks;
     const fetchDataReference =
         type === "batman"
@@ -63,7 +74,8 @@ export const useLocatedLinks = ({ type }: { type: LinkType }) => {
     const linksLoaded = !!locatedLinksReference && !!locatedLinks;
 
     const linksErrors: ILinkErrors = useMemo(() => {
-        if (locatedLinksReference) {
+        // If there are no links reference just drop no errors (because there are no links to compare with)
+        if (locatedLinksReference && !isEmpty(locatedLinksReference)) {
             const errors: ILinkErrors = {};
             Object.entries(locatedLinksReference).forEach(
                 ([k, referenceLink]) => {
@@ -83,7 +95,12 @@ export const useLocatedLinks = ({ type }: { type: LinkType }) => {
         }
     }, [locatedLinksReference, locatedLinks]);
 
-    return { locatedLinks, locatedLinksReference, linksLoaded, linksErrors };
+    return {
+        locatedLinks,
+        locatedLinksReference,
+        linksLoaded,
+        linksErrors,
+    } as IUselocatedLinks;
 };
 
 export const usePointToPointErrors = ({
@@ -92,7 +109,7 @@ export const usePointToPointErrors = ({
 }: {
     id: PointToPointLinkId;
     type: LinkType;
-}) => {
+}): { errors: ILinkPtoPErrors | undefined } => {
     const { linksErrors } = useLocatedLinks({ type });
-    return { errors: linksErrors[id] };
+    return { errors: linksErrors && linksErrors[id] };
 };
