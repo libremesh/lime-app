@@ -17,6 +17,8 @@ import {
     PointToPointLinkId,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
+import { isEmpty } from "utils/utils";
+
 export const useLocatedLinks = ({ type }: { type: LinkType }) => {
     const fetchData = type === "batman" ? useMeshWideBatman : useMeshWideLinks;
     const fetchDataReference =
@@ -26,13 +28,17 @@ export const useLocatedLinks = ({ type }: { type: LinkType }) => {
 
     const { data: linksReference } = fetchDataReference({});
     const { data: links } = fetchData({});
-
     const {
         locatedNodes: { locatedNodesReference, locatedNodesActual },
     } = useNodes();
 
-    const meshWideNodesReference =
-        locatedNodesReference || locatedNodesActual || {};
+    // If reference is not set or empty, use actual nodes
+    let meshWideNodesReference = {};
+    if (locatedNodesReference && !isEmpty(locatedNodesReference)) {
+        meshWideNodesReference = locatedNodesReference;
+    } else if (locatedNodesActual && !isEmpty(locatedNodesActual)) {
+        meshWideNodesReference = locatedNodesActual;
+    }
 
     const locatedLinksReference: LocatedLinkData = useMemo(() => {
         if (meshWideNodesReference && linksReference) {

@@ -7,7 +7,7 @@ interface MeshWideQueryKeysProps {
 const MeshWideQueryKeys: MeshWideQueryKeysProps = {
     meshWideNodes: [{ data_type: "node_info" }],
     wifiLinksInfo: [{ data_type: "wifi_links_info" }],
-    batHosts: [{ data_type: "bat-hosts" }],
+    batHosts: [{ data_type: "bat_links_info" }],
 };
 
 const getFromSharedState = ["shared-state", "getFromSharedState"];
