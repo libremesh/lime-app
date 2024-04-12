@@ -1,7 +1,7 @@
 import L from "leaflet";
 import { Marker, Tooltip } from "react-leaflet";
 
-import { useNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodeErrors";
+import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
     INodeInfo,
@@ -22,7 +22,7 @@ const NodeMarker = ({
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
 
-    const { hasErrors, isDown } = useNodeErrors({ actual, reference });
+    const { hasErrors, isDown } = useSingleNodeErrors({ actual, reference });
 
     const markerClasses = `${
         selectedMapFeature?.id === name && style.selectedMarker

@@ -1,12 +1,14 @@
 import { Trans } from "@lingui/macro";
-import { VNode } from "preact";
 import { useState } from "preact/hooks";
 
 import { Button } from "components/buttons/button";
 import Tabs from "components/tabs";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
-import { usePointToPointErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
+import {
+    getQueryByLinkType,
+    usePointToPointErrors,
+} from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import ErrorIcon from "plugins/lime-plugin-mesh-wide/src/icons/errorIcon";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
@@ -20,6 +22,8 @@ import {
     LinkMapFeature,
     WifiLinkErrorCodes,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+
+import { isEmpty } from "utils/utils";
 
 import { Row, TitleAndText } from "./index";
 
@@ -222,20 +226,32 @@ export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
         type: reference.type,
     });
 
-    const hasError = errors?.hasErrors ?? false;
-    // todo(kon): check here if reference state is empty to show reference not set message
-
-    const txt: VNode = hasError ? (
-        <Trans>This link has errors</Trans>
-    ) : (
-        <Trans>Same status as in the reference state</Trans>
+    const { reference: fetchDataReference } = getQueryByLinkType(
+        reference.type
     );
+    // Check if there are errors of global reference state to shown
+    const { data: referenceData, isError: isReferenceError } =
+        fetchDataReference({});
+    let referenceError = false;
+    if (!referenceData || isEmpty(referenceData) || isReferenceError) {
+        referenceError = true;
+    }
+
+    let errorMessage = <Trans>Same status as in the reference state</Trans>;
+    if (referenceError) {
+        errorMessage = <Trans>Reference is not set or has errors</Trans>;
+    } else if (errors?.hasErrors) {
+        errorMessage = <Trans>This link has errors</Trans>;
+    }
+
+    const hasError = errors?.hasErrors || referenceError;
+
     return (
         <StatusAndButton
             isError={hasError}
             btn={hasError && <Trans>Update this link on reference state</Trans>}
         >
-            {txt}
+            {errorMessage}
         </StatusAndButton>
     );
 };

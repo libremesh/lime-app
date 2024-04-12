@@ -4,7 +4,7 @@ import {
     NodeErrorCodes,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
-export const useNodeErrors = ({
+export const useSingleNodeErrors = ({
     actual,
     reference,
 }: {
@@ -12,8 +12,8 @@ export const useNodeErrors = ({
     reference: INodeInfo;
 }) => {
     const errors = processNodeErrors(reference, actual);
-    const hasErrors = errors.length > 0;
     const isDown = errors.includes(NodeErrorCodes.NODE_DOWN);
+    const hasErrors = errors.length > 0;
 
     return { errors, hasErrors, isDown };
 };

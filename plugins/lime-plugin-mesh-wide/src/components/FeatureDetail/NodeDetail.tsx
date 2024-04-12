@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/macro";
-import { VNode } from "preact";
 
 import { Button } from "components/buttons/button";
 
@@ -8,13 +7,16 @@ import {
     Row,
     TitleAndText,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
-import { useNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodeErrors";
+import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
+import { useMeshWideNodesReference } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
     NodeErrorCodes,
     NodeMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+
+import { isEmpty } from "utils/utils";
 
 const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const uptime = reference.uptime;
@@ -22,7 +24,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const ipv6 = reference.ipv6;
     const ipv4 = reference.ipv4;
     const device = reference.device;
-    const { errors, isDown } = useNodeErrors({ actual, reference });
+    const { errors, isDown } = useSingleNodeErrors({ actual, reference });
 
     if (isDown) {
         return <Trans>This node seems down</Trans>;
@@ -90,13 +92,36 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
 };
 
 export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
-    const { errors, hasErrors, isDown } = useNodeErrors({ actual, reference });
+    const {
+        errors,
+        hasErrors: hasNodeErrors,
+        isDown,
+    } = useSingleNodeErrors({
+        actual,
+        reference,
+    });
 
-    const txt: VNode = isDown ? (
-        <Trans>In the reference state this node is on</Trans>
-    ) : (
-        <Trans>Same status as in the reference state</Trans>
-    );
+    // Check if there are errors of global reference state to shown
+    const { data: meshWideNodesReference, isError: isReferenceError } =
+        useMeshWideNodesReference({});
+    let referenceError = false;
+    if (
+        !meshWideNodesReference ||
+        isEmpty(meshWideNodesReference) ||
+        isReferenceError
+    ) {
+        referenceError = true;
+    }
+
+    let errorMessage = <Trans>Same status as in the reference state</Trans>;
+    if (referenceError) {
+        errorMessage = <Trans>Reference is not set or has errors</Trans>;
+    } else if (isDown) {
+        errorMessage = <Trans>In the reference state this node is on</Trans>;
+    }
+
+    const hasErrors = hasNodeErrors || referenceError;
+
     return (
         <StatusAndButton
             isError={hasErrors}
@@ -104,7 +129,7 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
                 hasErrors && <Trans>Update this node on reference state</Trans>
             }
         >
-            {txt}
+            {errorMessage}
         </StatusAndButton>
     );
 };

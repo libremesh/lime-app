@@ -1,3 +1,4 @@
+import { UseQueryResult } from "@tanstack/react-query";
 import { useMemo } from "preact/compat";
 
 import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
@@ -13,12 +14,37 @@ import {
 import {
     ILinkErrors,
     ILinkPtoPErrors,
+    ILinks,
     LinkType,
     LocatedLinkData,
     PointToPointLinkId,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { isEmpty } from "utils/utils";
+
+interface getQueryByLinkTypeReturnType<T extends LinkType> {
+    // state: (params) => UseQueryResult<ILinks<T>>;
+    state: (params) => UseQueryResult<ILinks<T>>;
+    reference: (params) => UseQueryResult<ILinks<T>>;
+}
+/**
+ * Util function that returns the correct query based on the link type
+ * @param type
+ */
+export const getQueryByLinkType = <T extends LinkType>(
+    type: T
+): getQueryByLinkTypeReturnType<T> => {
+    if (type === "batman") {
+        return {
+            state: useMeshWideBatman,
+            reference: useMeshWideBatmanReference,
+        } as getQueryByLinkTypeReturnType<T>;
+    }
+    return {
+        state: useMeshWideLinks,
+        reference: useMeshWideLinksReference,
+    } as getQueryByLinkTypeReturnType<T>;
+};
 
 interface IUselocatedLinks {
     locatedLinksReference: LocatedLinkData;
@@ -31,11 +57,8 @@ export const useLocatedLinks = ({
 }: {
     type: LinkType;
 }): IUselocatedLinks => {
-    const fetchData = type === "batman" ? useMeshWideBatman : useMeshWideLinks;
-    const fetchDataReference =
-        type === "batman"
-            ? useMeshWideBatmanReference
-            : useMeshWideLinksReference;
+    const { state: fetchData, reference: fetchDataReference } =
+        getQueryByLinkType(type);
 
     const { data: linksReference } = fetchDataReference({});
     const { data: links } = fetchData({});
