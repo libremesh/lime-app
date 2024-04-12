@@ -8,7 +8,7 @@ import {
     useMeshWideNodes,
     useMeshWideNodesReference,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
-import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
+import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import { MeshWideDataError } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { isEmpty } from "utils/utils";
@@ -40,35 +40,44 @@ export const useMeshWideDataErrors = () => {
     const { data: linksReferenceData, error: linksReferenceError } =
         useMeshWideLinksReference({});
     addError(
-        meshUpgradeQueryKeys.wifiLinksInfoRef,
+        getFromSharedStateKeys.getFromSharedStateMultiWriter("wifi_links_info"),
         linksReferenceError,
         linksReferenceData
     );
 
     const { error: linksError } = useMeshWideLinks({});
-    addError(meshUpgradeQueryKeys.wifiLinksInfo, linksError);
+    addError(
+        getFromSharedStateKeys.getFromSharedStateAsync("wifi_links_info"),
+        linksError
+    );
 
     const { data: batmanReferenceData, error: batmanReferenceError } =
         useMeshWideBatmanReference({});
     addError(
-        meshUpgradeQueryKeys.batHostsRef,
+        getFromSharedStateKeys.getFromSharedStateMultiWriter("bat_links_info"),
         batmanReferenceError,
         batmanReferenceData
     );
 
     const { error: batmanError } = useMeshWideBatman({});
-    addError(meshUpgradeQueryKeys.batHosts, batmanError);
+    addError(
+        getFromSharedStateKeys.getFromSharedStateAsync("bat_links_info"),
+        batmanError
+    );
 
     const { data: nodesReferenceData, error: nodesReferenceError } =
         useMeshWideNodesReference({});
     addError(
-        meshUpgradeQueryKeys.meshWideNodesRef,
+        getFromSharedStateKeys.getFromSharedStateMultiWriter("node_info"),
         nodesReferenceError,
         nodesReferenceData
     );
 
     const { error: nodesError } = useMeshWideNodes({});
-    addError(meshUpgradeQueryKeys.meshWideNodes, nodesError);
+    addError(
+        getFromSharedStateKeys.getFromSharedStateAsync("node_info"),
+        nodesError
+    );
 
     return { meshWideDataErrors, dataNotSetErrors };
 };

@@ -1,36 +1,30 @@
-import { QueryKey } from "@tanstack/react-query";
+import {
+    DataTypeMap,
+    DataTypes,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
-interface MeshWideQueryKeysProps {
-    [key: string]: QueryKey;
-}
-
-const MeshWideQueryKeys: MeshWideQueryKeysProps = {
-    meshWideNodes: [{ data_type: "node_info" }],
-    wifiLinksInfo: [{ data_type: "wifi_links_info" }],
-    batHosts: [{ data_type: "bat_links_info" }],
-};
-
-const getFromSharedState = ["shared-state", "getFromSharedState"];
-const getFromSharedStateMultiWriter = [
+export const getFromSharedStateMultiWriterKey = [
     "shared-state",
     "getFromSharedStateMultiWriter",
 ];
-const getFromSharedStateAsync = ["shared-state-async", "get"];
+export const getFromSharedStateAsyncKey = ["shared-state-async", "get"];
 
-export const meshUpgradeQueryKeys = {
-    meshWideNodes: [...getFromSharedState, ...MeshWideQueryKeys.meshWideNodes],
-    meshWideNodesRef: [
-        ...getFromSharedStateMultiWriter,
-        ...MeshWideQueryKeys.meshWideNodes,
+export const insertIntoSharedStateKey = [
+    "insertIntoSharedStateMultiWriter",
+    "sync",
+];
+
+export const getFromSharedStateKeys = {
+    getFromSharedStateAsync: (dataType: DataTypes) => [
+        ...getFromSharedStateAsyncKey,
+        { data_type: dataType },
     ],
-    wifiLinksInfo: [...getFromSharedState, ...MeshWideQueryKeys.wifiLinksInfo],
-    wifiLinksInfoRef: [
-        ...getFromSharedStateMultiWriter,
-        ...MeshWideQueryKeys.wifiLinksInfo,
+    getFromSharedStateMultiWriter: (dataType: DataTypes) => [
+        ...getFromSharedStateMultiWriterKey,
+        { data_type: dataType },
     ],
-    batHosts: [...getFromSharedStateAsync, ...MeshWideQueryKeys.batHosts],
-    batHostsRef: [
-        ...getFromSharedStateMultiWriter,
-        ...MeshWideQueryKeys.batHosts,
-    ],
+    insertIntoSharedStateKey: <T extends DataTypes>(
+        dataType: T,
+        data: DataTypeMap[T]
+    ) => [...insertIntoSharedStateKey, { data_type: dataType, json: data }],
 };

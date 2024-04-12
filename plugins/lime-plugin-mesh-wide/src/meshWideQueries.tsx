@@ -1,16 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
-import {
-    getMeshWideBatman,
-    getMeshWideBatmanReference,
-    getMeshWideLinks,
-    getMeshWideLinksReference,
-    getMeshWideNodes,
-    getMeshWideNodesReference,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
+import { getSharedStateApiCall } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
 import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
-import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
+import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
+    DataTypeMap,
+    DataTypes,
     IBatmanLinks,
     IMeshWideConfig,
     INodes,
@@ -21,9 +16,12 @@ import {
 import { useSharedData } from "utils/useSharedData";
 
 export function useMeshWideLinksReference(params) {
+    const dataType: DataTypes = "wifi_links_info";
+    const queryKey =
+        getFromSharedStateKeys.getFromSharedStateMultiWriter(dataType);
     return useQuery<IWifiLinks>(
-        meshUpgradeQueryKeys.wifiLinksInfoRef,
-        getMeshWideLinksReference,
+        queryKey,
+        () => getSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -31,9 +29,11 @@ export function useMeshWideLinksReference(params) {
 }
 
 export function useMeshWideLinks(params) {
+    const dataType: DataTypes = "wifi_links_info";
+    const queryKey = getFromSharedStateKeys.getFromSharedStateAsync(dataType);
     return useQuery<IWifiLinks>(
-        meshUpgradeQueryKeys.wifiLinksInfo,
-        getMeshWideLinks,
+        queryKey,
+        () => getSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -41,9 +41,12 @@ export function useMeshWideLinks(params) {
 }
 
 export function useMeshWideBatmanReference(params) {
+    const dataType: DataTypes = "bat_links_info";
+    const queryKey =
+        getFromSharedStateKeys.getFromSharedStateMultiWriter(dataType);
     return useQuery<IBatmanLinks>(
-        meshUpgradeQueryKeys.batHostsRef,
-        getMeshWideBatmanReference,
+        queryKey,
+        () => getSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -51,9 +54,11 @@ export function useMeshWideBatmanReference(params) {
 }
 
 export function useMeshWideBatman(params) {
+    const dataType: DataTypes = "bat_links_info";
+    const queryKey = getFromSharedStateKeys.getFromSharedStateAsync(dataType);
     return useQuery<IBatmanLinks>(
-        meshUpgradeQueryKeys.batHosts,
-        getMeshWideBatman,
+        queryKey,
+        () => getSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -61,9 +66,12 @@ export function useMeshWideBatman(params) {
 }
 
 export function useMeshWideNodesReference(params) {
+    const dataType: DataTypes = "node_info";
+    const queryKey =
+        getFromSharedStateKeys.getFromSharedStateMultiWriter(dataType);
     return useQuery<INodes>(
-        meshUpgradeQueryKeys.meshWideNodesRef,
-        getMeshWideNodesReference,
+        queryKey,
+        () => getSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -71,9 +79,32 @@ export function useMeshWideNodesReference(params) {
 }
 
 export function useMeshWideNodes(params) {
+    const dataType: DataTypes = "node_info";
+    const queryKey = getFromSharedStateKeys.getFromSharedStateAsync(dataType);
     return useQuery<INodes>(
-        meshUpgradeQueryKeys.meshWideNodes,
-        getMeshWideNodes,
+        queryKey,
+        () => getSharedStateApiCall<typeof dataType>(queryKey),
+        {
+            ...params,
+        }
+    );
+}
+
+/**
+ * Insert into shared state
+ */
+export function useInsertIntoSharedState<T extends DataTypes>(
+    type: T,
+    data: DataTypeMap[T],
+    params
+) {
+    const queryKey = getFromSharedStateKeys.insertIntoSharedStateKey(
+        type,
+        data
+    );
+    return useMutation(
+        queryKey,
+        () => getSharedStateApiCall<typeof type>(queryKey),
         {
             ...params,
         }
