@@ -8,10 +8,14 @@ import {
 /**
  * Describe a link with a coordinates
  */
-export type LinkData = { wifi: IWifiLinkData; batman: IBatManLinkData };
-export type LinkType = keyof LinkData;
+
+export type LinkDataTypes = {
+    wifi_links_info: IWifiLinkData;
+    bat_links_info: IBatManLinkData;
+};
+export type LinkType = keyof LinkDataTypes;
 export type ILocatedLink<T extends LinkType> = {
-    [key: string]: LinkData[T] & {
+    [key: string]: LinkDataTypes[T] & {
         coordinates: Coordinates;
     };
 };
@@ -56,11 +60,11 @@ export type IBatManLinkData = {
  * List of Link info retrieved from the API
  */
 export interface ILinks<T extends LinkType> {
-    [key: string]: Array<LinkData[T]>;
+    [key: string]: Array<LinkDataTypes[T]>;
 }
 
-export type IWifiLinks = ILinks<"wifi">;
-export type IBatmanLinks = ILinks<"batman">;
+export type IWifiLinks = ILinks<"wifi_links_info">;
+export type IBatmanLinks = ILinks<"bat_links_info">;
 
 export type Coordinates = {
     lat: string;

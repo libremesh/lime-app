@@ -95,7 +95,7 @@ export const compareLinks = ({
             ([nodeNameReference, wifiDataReference]) => {
                 const wifiDataActual = macToMacActual?.data[nodeNameReference];
                 const errors =
-                    referenceLink.type === "wifi"
+                    referenceLink.type === "wifi_links_info"
                         ? compareWifiData(
                               wifiDataReference as IWifiLinkData,
                               wifiDataActual as IWifiLinkData

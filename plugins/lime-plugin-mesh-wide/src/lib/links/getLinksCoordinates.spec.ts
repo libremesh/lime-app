@@ -13,7 +13,7 @@ describe("tests for the algorithm that merge point and links data types", () => 
         const locatedLinksReference = mergeLinksAndCoordinates(
             nodesReferenceState,
             linksReferenceState,
-            "wifi"
+            "wifi_links_info"
         );
         // Iterate between merged link objects
         Object.entries(locatedLinksReference).map(([k, merged], i) => {

@@ -148,7 +148,7 @@ const SelectedLink = ({
             {names.map((name, i) => {
                 const node = linkDetail.linkByName(name);
                 const errorsArray = errors?.linkErrors[name] ?? [];
-                return linkType === "wifi" ? (
+                return linkType === "wifi_links_info" ? (
                     <WifiDetail
                         key={i}
                         name={name}

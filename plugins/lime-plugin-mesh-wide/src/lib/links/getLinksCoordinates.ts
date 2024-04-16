@@ -6,7 +6,7 @@ import {
     ILinks,
     ILocatedLink,
     INodes,
-    LinkData,
+    LinkDataTypes,
     LinkType,
     LocatedLinkData,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
@@ -66,9 +66,9 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
 
                 // Get the destination link info
                 const destPointData = (
-                    links[dstNodeName] as Array<LinkData[T]>
+                    links[dstNodeName] as Array<LinkDataTypes[T]>
                 ).find(
-                    (data: LinkData[T]) =>
+                    (data: LinkDataTypes[T]) =>
                         data.dst_mac.toLowerCase() ===
                             linkData.src_mac.toLowerCase() &&
                         data.src_mac.toLowerCase() ===

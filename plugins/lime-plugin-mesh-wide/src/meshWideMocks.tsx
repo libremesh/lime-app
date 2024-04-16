@@ -326,7 +326,8 @@ const linkToDelete = "a0:f3:c1:46:11:97";
 // const linkToDelete = "";
 
 export const links = <T extends LinkType>(type: T): ILinks<T> => {
-    const data = type === "wifi" ? linksReferenceState : batManReferenceState;
+    const data =
+        type === "wifi_links_info" ? linksReferenceState : batManReferenceState;
 
     // Create a deep copy of the state to avoid mutating the original object
     const newState: ILinks<T> = JSON.parse(JSON.stringify(data));

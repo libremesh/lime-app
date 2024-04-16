@@ -34,7 +34,7 @@ interface getQueryByLinkTypeReturnType<T extends LinkType> {
 export const getQueryByLinkType = <T extends LinkType>(
     type: T
 ): getQueryByLinkTypeReturnType<T> => {
-    if (type === "batman") {
+    if (type === "bat_links_info") {
         return {
             state: useMeshWideBatman,
             reference: useMeshWideBatmanReference,

@@ -2,7 +2,7 @@ import {
     BaseMacToMacLink,
     Coordinates,
     ILocatedLink,
-    LinkData,
+    LinkDataTypes,
     LinkType,
     MacToMacLinkId,
     PointToPointLinkId,
@@ -128,7 +128,7 @@ export class MacToMacLink<T extends LinkType> {
         return [...Object.keys(this._data)];
     }
 
-    linkByName(name: string): LinkData[T] {
+    linkByName(name: string): LinkDataTypes[T] {
         return this._data[name];
     }
 }

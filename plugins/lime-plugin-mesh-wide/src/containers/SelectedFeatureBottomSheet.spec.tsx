@@ -98,7 +98,7 @@ describe("Feature bottom sheet", () => {
 
     it.skip("should open BottomSheet with link feature", () => {
         const name = "LiMe-da4eaa";
-        const actual = links("wifi")[name];
+        const actual = links("wifi_links_info")[name];
         const reference = linksReferenceState[name];
         // todo: fix this test
         // mockedSelectedMapFeature.mockReturnValue({

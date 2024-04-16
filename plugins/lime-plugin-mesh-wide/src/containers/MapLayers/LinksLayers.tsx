@@ -46,7 +46,7 @@ const LinksLayer = ({
 
 export const WifiLinksLayer = () => {
     const { locatedLinks, locatedLinksReference, linksLoaded } =
-        useLocatedLinks({ type: "wifi" });
+        useLocatedLinks({ type: "wifi_links_info" });
 
     return (
         <div>
@@ -61,7 +61,7 @@ export const WifiLinksLayer = () => {
 
 export const BatmanLinksLayer = () => {
     const { locatedLinks, locatedLinksReference, linksLoaded } =
-        useLocatedLinks({ type: "batman" });
+        useLocatedLinks({ type: "bat_links_info" });
 
     return (
         <div>

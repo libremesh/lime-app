@@ -1,15 +1,15 @@
 import "@testing-library/jest-dom";
 
 // import "@testing-library/jest-dom/extend-expect";
-import {
-    getMeshWideNodes,
-    getMeshWideNodesReference,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
+// import {
+//     getMeshWideNodes,
+//     getMeshWideNodesReference,
+// } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
 
 jest.mock("plugins/lime-plugin-mesh-wide/src/mesWideApi.ts");
 jest.mock("leaflet");
-const mockedMeshWideNodes = jest.mocked(getMeshWideNodes);
-const mockedMeshWideNodesReference = jest.mocked(getMeshWideNodesReference);
+// const mockedMeshWideNodes = jest.mocked(getMeshWideNodes);
+// const mockedMeshWideNodesReference = jest.mocked(getMeshWideNodesReference);
 
 describe("Map component", () => {
     it("should show nodes alert when a node has not configured properly the coordinates", async () => {
