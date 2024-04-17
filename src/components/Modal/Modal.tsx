@@ -95,6 +95,7 @@ export const UseModalProvider = ({ children }) => {
                 successBtnText={modalState.successBtnText}
                 deleteCb={deleteCb}
                 deleteBtnText={modalState.deleteBtnText}
+                isLoading={isLoading}
             >
                 {modalState.content}
             </Modal>
@@ -132,7 +133,9 @@ const Modal = ({
             >
                 <div
                     className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0"
-                    onClick={toggleModal}
+                    onClick={() => {
+                        if (!isLoading) toggleModal();
+                    }}
                 >
                     <div
                         className="fixed inset-0 transition-opacity"
@@ -184,6 +187,7 @@ const Modal = ({
                                         color={"info"}
                                         outline={true}
                                         onClick={toggleModal}
+                                        disabled={isLoading}
                                     >
                                         <Trans>Close</Trans>
                                     </Button>
