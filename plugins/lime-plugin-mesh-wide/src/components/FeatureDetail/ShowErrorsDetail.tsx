@@ -2,8 +2,22 @@ import { Trans } from "@lingui/macro";
 
 import { Button } from "components/buttons/button";
 
+import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
 import { Row } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
-import { ErrorsDetails } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+import {
+    DataTypes,
+    ErrorsDetails,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+
+const SetDataTypeBtn = <T extends DataTypes>({ dataType }: { dataType: T }) => {
+    const { mutate, btnText } = useSetReferenceState(dataType);
+    return (
+        <div className={"flex flex-column gap-5"}>
+            <div className={"text-3xl"}>{dataType}</div>
+            <Button onClick={() => mutate()}>{btnText}</Button>
+        </div>
+    );
+};
 
 export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
     return (
@@ -49,24 +63,14 @@ export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
                                     null,
                                     2
                                 );
+                                return (
+                                    <div key={k}>
+                                        {dataType}: {data?.error?.toString()}
+                                    </div>
+                                );
                             }
                             return (
-                                <div
-                                    className={"flex flex-column gap-5"}
-                                    key={k}
-                                >
-                                    <div className={"text-3xl"}>{dataType}</div>
-                                    <Button
-                                        onClick={() => {
-                                            // todo(kon): implement set reference state
-                                            console.log("todo");
-                                        }}
-                                    >
-                                        <Trans>
-                                            Set {dataType} reference state
-                                        </Trans>
-                                    </Button>
-                                </div>
+                                <SetDataTypeBtn key={k} dataType={dataType} />
                             );
                         })}
                     </div>

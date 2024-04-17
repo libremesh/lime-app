@@ -5,6 +5,7 @@ import { Button } from "components/buttons/button";
 import Tabs from "components/tabs";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
+import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
 import {
     getQueryByLinkType,
     usePointToPointErrors,
@@ -237,6 +238,9 @@ export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
         referenceError = true;
     }
 
+    // Mutation to update the reference state
+    const { mutate, btnText } = useSetReferenceState(reference.type);
+
     let errorMessage = <Trans>Same status as in the reference state</Trans>;
     if (referenceError) {
         errorMessage = <Trans>Reference is not set or has errors</Trans>;
@@ -249,7 +253,8 @@ export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
     return (
         <StatusAndButton
             isError={hasError}
-            btn={hasError && <Trans>Update this link on reference state</Trans>}
+            btn={hasError && btnText}
+            onClick={mutate}
         >
             {errorMessage}
         </StatusAndButton>

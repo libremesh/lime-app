@@ -10,8 +10,8 @@ export const getFromSharedStateMultiWriterKey = [
 export const getFromSharedStateAsyncKey = ["shared-state-async", "get"];
 
 export const insertIntoSharedStateKey = [
+    "shared-state",
     "insertIntoSharedStateMultiWriter",
-    "sync",
 ];
 
 export const getFromSharedStateKeys = {

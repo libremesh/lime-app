@@ -3,6 +3,7 @@ import { Trans } from "@lingui/macro";
 import { Button } from "components/buttons/button";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
+import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
 import {
     Row,
     TitleAndText,
@@ -104,6 +105,10 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     // Check if there are errors of global reference state to shown
     const { data: meshWideNodesReference, isError: isReferenceError } =
         useMeshWideNodesReference({});
+
+    // Mutation to update the reference state
+    const { mutate, btnText } = useSetReferenceState("node_info");
+
     let referenceError = false;
     if (
         !meshWideNodesReference ||
@@ -125,9 +130,8 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     return (
         <StatusAndButton
             isError={hasErrors}
-            btn={
-                hasErrors && <Trans>Update this node on reference state</Trans>
-            }
+            btn={hasErrors && btnText}
+            onClick={mutate}
         >
             {errorMessage}
         </StatusAndButton>

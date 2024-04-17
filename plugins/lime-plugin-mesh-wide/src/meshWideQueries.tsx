@@ -4,7 +4,6 @@ import { getSharedStateApiCall } from "plugins/lime-plugin-mesh-wide/src/meshWid
 import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
-    DataTypeMap,
     DataTypes,
     IBatmanLinks,
     IMeshWideConfig,
@@ -92,12 +91,14 @@ export function useMeshWideNodes(params) {
 
 /**
  * Insert into shared state
+ *
+ * Don't use those mutations itself, use it implementing it on the useReferenceState hook in order
+ * to unify criterias and add a confirmation modal
  */
-export function useInsertIntoSharedState<T extends DataTypes>(
-    type: T,
-    data: DataTypeMap[T],
-    params
-) {
+
+export const useSetNodeInfoReferenceState = (params) => {
+    const type = "node_info";
+    const { data } = useMeshWideNodes({});
     const queryKey = getFromSharedStateKeys.insertIntoSharedStateKey(
         type,
         data
@@ -109,7 +110,43 @@ export function useInsertIntoSharedState<T extends DataTypes>(
             ...params,
         }
     );
-}
+};
+
+export const useSetWifiLinksInfoReferenceState = (params) => {
+    const type = "wifi_links_info";
+    const { data } = useMeshWideLinks({});
+    const queryKey = getFromSharedStateKeys.insertIntoSharedStateKey(
+        type,
+        data
+    );
+    return useMutation(
+        queryKey,
+        () => getSharedStateApiCall<typeof type>(queryKey),
+        {
+            ...params,
+        }
+    );
+};
+
+export const useSetBatmanLinksInfoReferenceState = (params) => {
+    const type = "bat_links_info";
+    const { data } = useMeshWideBatman({});
+    const queryKey = getFromSharedStateKeys.insertIntoSharedStateKey(
+        type,
+        data
+    );
+    return useMutation(
+        queryKey,
+        () => getSharedStateApiCall<typeof type>(queryKey),
+        {
+            ...params,
+        }
+    );
+};
+
+/**
+ * Set mesh wide config
+ */
 
 export function useMeshWideConfig(params) {
     return useQuery<IMeshWideConfig>(

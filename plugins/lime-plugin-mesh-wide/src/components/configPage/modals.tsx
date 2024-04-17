@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { ModalActions, useModal } from "components/Modal/Modal";
 import InputField from "components/inputs/InputField";
 
+import { DataTypes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+
 const useActionModal = (
     title: ComponentChildren,
     btnText: ComponentChildren,
@@ -81,4 +83,27 @@ export const useAddNewSectionModal = () => {
         [setModalState, toggleModal]
     );
     return { actionModal, toggleModal };
+};
+
+export const useSetReferenceStateModal = () => {
+    const { toggleModal, setModalState, isModalOpen } = useModal();
+
+    const confirmModal = useCallback(
+        (dataType: DataTypes, cb: () => Promise<void>) => {
+            setModalState({
+                title: <Trans>Set reference state for {dataType}</Trans>,
+                content: (
+                    <Trans>
+                        Are you sure you want to set this reference state for{" "}
+                        {dataType}
+                    </Trans>
+                ),
+                successCb: cb,
+                successBtnText: <Trans>Continue</Trans>,
+            });
+            toggleModal();
+        },
+        [setModalState, toggleModal]
+    );
+    return { confirmModal, toggleModal, isModalOpen };
 };
