@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { getSharedStateApiCall } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
+import { doSharedStateApiCall } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
 import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
@@ -20,7 +20,7 @@ export function useMeshWideLinksReference(params) {
         getFromSharedStateKeys.getFromSharedStateMultiWriter(dataType);
     return useQuery<IWifiLinks>(
         queryKey,
-        () => getSharedStateApiCall<typeof dataType>(queryKey),
+        () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -32,7 +32,7 @@ export function useMeshWideLinks(params) {
     const queryKey = getFromSharedStateKeys.getFromSharedStateAsync(dataType);
     return useQuery<IWifiLinks>(
         queryKey,
-        () => getSharedStateApiCall<typeof dataType>(queryKey),
+        () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -45,7 +45,7 @@ export function useMeshWideBatmanReference(params) {
         getFromSharedStateKeys.getFromSharedStateMultiWriter(dataType);
     return useQuery<IBatmanLinks>(
         queryKey,
-        () => getSharedStateApiCall<typeof dataType>(queryKey),
+        () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -57,7 +57,7 @@ export function useMeshWideBatman(params) {
     const queryKey = getFromSharedStateKeys.getFromSharedStateAsync(dataType);
     return useQuery<IBatmanLinks>(
         queryKey,
-        () => getSharedStateApiCall<typeof dataType>(queryKey),
+        () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -70,7 +70,7 @@ export function useMeshWideNodesReference(params) {
         getFromSharedStateKeys.getFromSharedStateMultiWriter(dataType);
     return useQuery<INodes>(
         queryKey,
-        () => getSharedStateApiCall<typeof dataType>(queryKey),
+        () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -82,7 +82,7 @@ export function useMeshWideNodes(params) {
     const queryKey = getFromSharedStateKeys.getFromSharedStateAsync(dataType);
     return useQuery<INodes>(
         queryKey,
-        () => getSharedStateApiCall<typeof dataType>(queryKey),
+        () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
             ...params,
         }
@@ -105,7 +105,7 @@ export const useSetNodeInfoReferenceState = (params) => {
     );
     return useMutation(
         queryKey,
-        () => getSharedStateApiCall<typeof type>(queryKey),
+        () => doSharedStateApiCall<typeof type>(queryKey),
         {
             ...params,
         }
@@ -121,7 +121,7 @@ export const useSetWifiLinksInfoReferenceState = (params) => {
     );
     return useMutation(
         queryKey,
-        () => getSharedStateApiCall<typeof type>(queryKey),
+        () => doSharedStateApiCall<typeof type>(queryKey),
         {
             ...params,
         }
@@ -137,7 +137,7 @@ export const useSetBatmanLinksInfoReferenceState = (params) => {
     );
     return useMutation(
         queryKey,
-        () => getSharedStateApiCall<typeof type>(queryKey),
+        () => doSharedStateApiCall<typeof type>(queryKey),
         {
             ...params,
         }

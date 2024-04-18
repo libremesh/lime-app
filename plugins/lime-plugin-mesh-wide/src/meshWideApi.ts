@@ -8,7 +8,7 @@ import {
 
 import api from "utils/uhttpd.service";
 
-export const getSharedStateApiCall = async <T extends DataTypes>(
+export const doSharedStateApiCall = async <T extends DataTypes>(
     queryKey: QueryKey
 ) => {
     const res = (await api.call(...queryKey)) as SharedStateReturnType<
