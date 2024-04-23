@@ -170,14 +170,15 @@ const SelectedLink = ({
 };
 
 const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
+    const linkToShow = reference ?? actual;
     const [selectedLink, setSelectedLink] = useState(0);
     const { errors } = usePointToPointErrors({
-        id: reference.id,
-        type: reference.type,
+        id: linkToShow.id,
+        type: linkToShow.type,
     });
-    const linkType = reference.type;
+    const linkType = linkToShow.type;
 
-    const tabs = reference.links.map(
+    const tabs = linkToShow.links.map(
         (link: MacToMacLink<typeof linkType>, i) => {
             return {
                 key: i,
@@ -222,15 +223,17 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
 };
 
 export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
+    const isNewNode = !reference;
+
     const { errors } = usePointToPointErrors({
         id: reference.id,
         type: reference.type,
     });
 
+    // Check if there are errors of global reference state to shown
     const { reference: fetchDataReference } = getQueryByLinkType(
         reference.type
     );
-    // Check if there are errors of global reference state to shown
     const { data: referenceData, isError: isReferenceError } =
         fetchDataReference({});
     let referenceError = false;
@@ -246,9 +249,13 @@ export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
         errorMessage = <Trans>Reference is not set or has errors</Trans>;
     } else if (errors?.hasErrors) {
         errorMessage = <Trans>This link has errors</Trans>;
+    } else if (isNewNode) {
+        errorMessage = (
+            <Trans>This Link is not registered on the reference state</Trans>
+        );
     }
 
-    const hasError = errors?.hasErrors || referenceError;
+    const hasError = errors?.hasErrors || referenceError || isNewNode;
 
     return (
         <StatusAndButton

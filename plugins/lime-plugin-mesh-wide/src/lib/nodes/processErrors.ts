@@ -11,6 +11,9 @@ export const processNodeErrors = (
     // todo(kon): use community settings and not limeapp defaults
     // const { data: communitySettings } = useCommunitySettings();
 
+    // If not reference is a new node
+    if (!reference) return errors;
+
     if (!actual) return [NodeErrorCodes.NODE_DOWN];
 
     // Check mac list are equal

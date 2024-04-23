@@ -3,25 +3,19 @@ import { useLocatedLinks } from "plugins/lime-plugin-mesh-wide/src/hooks/useLoca
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { LocatedLinkData } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
-import { isEmpty } from "utils/utils";
-
 interface ILinksLayerProps {
     links: LocatedLinkData;
     linksReference: LocatedLinkData;
+    newLinks: LocatedLinkData;
     linksLoaded: boolean;
 }
 
 const LinksLayer = ({
     links,
-    linksReference: originalLinksReference,
+    linksReference,
     linksLoaded,
+    newLinks,
 }: ILinksLayerProps) => {
-    // If reference is not set or empty, use actual nodes
-    const linksReference =
-        !originalLinksReference || isEmpty(originalLinksReference)
-            ? links
-            : originalLinksReference;
-
     return (
         <div>
             {linksLoaded &&
@@ -40,13 +34,21 @@ const LinksLayer = ({
                         />
                     );
                 })}
+            {newLinks &&
+                Object.entries(newLinks).map(([k, v], i) => {
+                    return <LinkLine key={i} actualLink={v} />;
+                })}
         </div>
     );
 };
 
 export const WifiLinksLayer = () => {
-    const { locatedLinks, locatedLinksReference, linksLoaded } =
-        useLocatedLinks({ type: "wifi_links_info" });
+    const {
+        locatedNewLinks: newLinks,
+        locatedLinks,
+        locatedLinksReference,
+        linksLoaded,
+    } = useLocatedLinks({ type: "wifi_links_info" });
 
     return (
         <div>
@@ -54,14 +56,19 @@ export const WifiLinksLayer = () => {
                 links={locatedLinks}
                 linksReference={locatedLinksReference}
                 linksLoaded={linksLoaded}
+                newLinks={newLinks}
             />
         </div>
     );
 };
 
 export const BatmanLinksLayer = () => {
-    const { locatedLinks, locatedLinksReference, linksLoaded } =
-        useLocatedLinks({ type: "bat_links_info" });
+    const {
+        locatedNewLinks: newLinks,
+        locatedLinks,
+        locatedLinksReference,
+        linksLoaded,
+    } = useLocatedLinks({ type: "bat_links_info" });
 
     return (
         <div>
@@ -69,6 +76,7 @@ export const BatmanLinksLayer = () => {
                 links={locatedLinks}
                 linksReference={locatedLinksReference}
                 linksLoaded={linksLoaded}
+                newLinks={newLinks}
             />
         </div>
     );

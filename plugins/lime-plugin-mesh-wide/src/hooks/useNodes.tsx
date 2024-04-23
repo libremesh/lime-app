@@ -63,12 +63,33 @@ export const useNodes = () => {
             Object.keys(invalidNodesReference).length > 0) ||
         (invalidNodesActual && Object.keys(invalidNodesActual).length > 0);
 
+    // This nodes are valid and not exists on the reference state
+    let locatedNewNodes: INodes = {};
+    if (locatedNodesActual) {
+        locatedNewNodes = Object.keys(locatedNodesActual).reduce((obj, key) => {
+            if (!meshWideNodesReference || !meshWideNodesReference[key]) {
+                obj[key] = locatedNodesActual[key];
+            }
+            return obj;
+        }, {} as INodes);
+    }
+
+    // Used to have on an a single list all the located nodes
+    // This is used to have an easier way to draw links between nodes
+    // that are not active, or not on reference or new
+    const allLocatedNodes = {
+        ...locatedNodesReference,
+        ...locatedNodesActual,
+        ...locatedNewNodes,
+    };
+
     return {
         hasInvalidNodes,
         allNodes: {
             meshWideNodesReference,
             meshWideNodesActual,
         },
+        // Invalid nodes doesn't contain a correct lat long
         invalidNodes: {
             invalidNodesReference,
             invalidNodesActual,
@@ -76,6 +97,8 @@ export const useNodes = () => {
         locatedNodes: {
             locatedNodesReference,
             locatedNodesActual,
+            allLocatedNodes,
+            locatedNewNodes, // New nodes (not on the ref state)
         },
     };
 };

@@ -6,29 +6,37 @@ import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/Poi
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 
 interface ILinkLineProps {
-    referenceLink: PontToPointLink;
+    referenceLink?: PontToPointLink;
     actualLink: PontToPointLink | undefined;
 }
 
 export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
-    const type = referenceLink.type;
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
-    const isSelected = selectedMapFeature?.id === referenceLink.id;
+
+    const linkToShow = referenceLink ?? actualLink;
+    let isNewNode = false;
+    if (!referenceLink) {
+        isNewNode = true;
+    }
+
+    const type = linkToShow.type;
+    const isSelected = selectedMapFeature?.id === linkToShow.id;
+
     const { linksErrors } = useLocatedLinks({ type });
 
     let hasError = false;
     let linkUp = true;
 
-    if (linksErrors && linksErrors[referenceLink.id]) {
+    if (!isNewNode && linksErrors && linksErrors[referenceLink.id]) {
         hasError = linksErrors[referenceLink.id].hasErrors;
         linkUp = linksErrors[referenceLink.id].linkUp;
     }
 
     const _setSelectedFeature = () => {
         setSelectedMapFeature({
-            id: referenceLink.id,
-            feature: { reference: referenceLink, actual: actualLink },
+            id: linkToShow.id,
+            feature: { reference: linkToShow, actual: actualLink },
             type: "link",
         });
     };
@@ -38,11 +46,11 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
             color: hasError ? "#eb7575" : "#76bd7d",
             weight: isSelected ? 7 : 5,
             opacity: isSelected ? 1 : 0.8,
-            dashArray: linkUp ? null : "7 10",
+            dashArray: isNewNode || !linkUp ? "7 10" : null, // Show dash array also when is a new node
         };
     };
 
-    const coordinates = referenceLink.coordinates.map((c) => [c.lat, c.long]);
+    const coordinates = linkToShow.coordinates.map((c) => [c.lat, c.long]);
 
     return (
         <Polyline

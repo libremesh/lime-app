@@ -16,23 +16,30 @@ const NodeMarker = ({
     reference,
 }: {
     name: string;
-    reference: INodeInfo;
+    reference?: INodeInfo | undefined;
     actual: INodeInfo;
 }) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
 
-    const { hasErrors, isDown } = useSingleNodeErrors({ actual, reference });
+    const { hasErrors, isDown, isNewNode } = useSingleNodeErrors({
+        actual,
+        reference,
+    });
 
     const markerClasses = `${
         selectedMapFeature?.id === name && style.selectedMarker
-    } ${hasErrors ? style.errorMarker : style.syncedMarker} ${
-        isDown && style.notUpMarker
-    }`;
+    }
+    ${hasErrors ? style.errorMarker : style.syncedMarker}
+    ${isDown && style.notUpMarker}
+    ${isNewNode && style.newNodeMarker}`;
+
+    // If node no reference is set, is a new node
+    const nodeToShow = reference ?? actual;
 
     return (
         <Marker
-            position={[reference.coordinates.lat, reference.coordinates.long]}
+            position={[nodeToShow.coordinates.lat, nodeToShow.coordinates.long]}
             icon={L.divIcon({
                 className: style.leafletDivCustomIcon,
                 iconAnchor: [0, 24],

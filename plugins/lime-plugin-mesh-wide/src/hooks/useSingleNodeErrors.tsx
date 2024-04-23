@@ -11,9 +11,10 @@ export const useSingleNodeErrors = ({
     actual: INodeInfo;
     reference: INodeInfo;
 }) => {
+    const isNewNode = !reference;
     const errors = processNodeErrors(reference, actual);
     const isDown = errors.includes(NodeErrorCodes.NODE_DOWN);
     const hasErrors = errors.length > 0;
 
-    return { errors, hasErrors, isDown };
+    return { errors, hasErrors, isDown, isNewNode };
 };

@@ -20,12 +20,18 @@ import {
 import { isEmpty } from "utils/utils";
 
 const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
-    const uptime = reference.uptime;
-    const firmware = reference.firmware_version;
-    const ipv6 = reference.ipv6;
-    const ipv4 = reference.ipv4;
-    const device = reference.device;
-    const { errors, isDown } = useSingleNodeErrors({ actual, reference });
+    // If node no reference is set, is a new node
+    const nodeToShow = reference ?? actual;
+
+    const uptime = nodeToShow.uptime;
+    const firmware = nodeToShow.firmware_version;
+    const ipv6 = nodeToShow.ipv6;
+    const ipv4 = nodeToShow.ipv4;
+    const device = nodeToShow.device;
+    const { errors, isDown, isNewNode } = useSingleNodeErrors({
+        actual,
+        reference,
+    });
 
     if (isDown) {
         return <Trans>This node seems down</Trans>;
@@ -97,6 +103,7 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
         errors,
         hasErrors: hasNodeErrors,
         isDown,
+        isNewNode,
     } = useSingleNodeErrors({
         actual,
         reference,
@@ -123,9 +130,13 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
         errorMessage = <Trans>Reference is not set or has errors</Trans>;
     } else if (isDown) {
         errorMessage = <Trans>In the reference state this node is on</Trans>;
+    } else if (isNewNode) {
+        errorMessage = (
+            <Trans>This node is not registered on the reference state</Trans>
+        );
     }
 
-    const hasErrors = hasNodeErrors || referenceError;
+    const hasErrors = hasNodeErrors || referenceError || isNewNode;
 
     return (
         <StatusAndButton

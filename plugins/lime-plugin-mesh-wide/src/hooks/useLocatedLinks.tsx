@@ -51,6 +51,7 @@ interface IUselocatedLinks {
     linksErrors: ILinkErrors | undefined;
     locatedLinks: LocatedLinkData;
     linksLoaded: boolean;
+    locatedNewLinks: LocatedLinkData;
 }
 export const useLocatedLinks = ({
     type,
@@ -63,36 +64,24 @@ export const useLocatedLinks = ({
     const { data: linksReference } = fetchDataReference({});
     const { data: links } = fetchData({});
     const {
-        locatedNodes: { locatedNodesReference, locatedNodesActual },
+        locatedNodes: { allLocatedNodes: meshWideNodes },
     } = useNodes();
 
-    // If reference is not set or empty, use actual nodes
-    let meshWideNodesReference = {};
-    if (locatedNodesReference && !isEmpty(locatedNodesReference)) {
-        meshWideNodesReference = locatedNodesReference;
-    } else if (locatedNodesActual && !isEmpty(locatedNodesActual)) {
-        meshWideNodesReference = locatedNodesActual;
-    }
-
     const locatedLinksReference: LocatedLinkData = useMemo(() => {
-        if (meshWideNodesReference && linksReference) {
+        if (meshWideNodes && linksReference) {
             return mergeLinksAndCoordinates(
-                meshWideNodesReference,
+                meshWideNodes,
                 linksReference,
                 type
             );
         }
-    }, [meshWideNodesReference, linksReference, type]);
+    }, [meshWideNodes, linksReference, type]);
 
     const locatedLinks: LocatedLinkData = useMemo(() => {
-        if (links && meshWideNodesReference) {
-            return mergeLinksAndCoordinates(
-                meshWideNodesReference,
-                links,
-                type
-            );
+        if (links && meshWideNodes) {
+            return mergeLinksAndCoordinates(meshWideNodes, links, type);
         }
-    }, [links, meshWideNodesReference, type]);
+    }, [links, meshWideNodes, type]);
 
     const linksLoaded = !!locatedLinksReference && !!locatedLinks;
 
@@ -118,11 +107,23 @@ export const useLocatedLinks = ({
         }
     }, [locatedLinksReference, locatedLinks]);
 
+    // This links are valid and not exists on the reference state
+    let locatedNewLinks: LocatedLinkData = {};
+    if (locatedLinks) {
+        locatedNewLinks = Object.keys(locatedLinks).reduce((obj, key) => {
+            if (!locatedLinksReference || !locatedLinksReference[key]) {
+                obj[key] = locatedLinks[key];
+            }
+            return obj;
+        }, {} as LocatedLinkData);
+    }
+
     return {
         locatedLinks,
         locatedLinksReference,
         linksLoaded,
         linksErrors,
+        locatedNewLinks,
     } as IUselocatedLinks;
 };
 
