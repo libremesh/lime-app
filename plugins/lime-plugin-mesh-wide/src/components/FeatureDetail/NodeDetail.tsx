@@ -1,7 +1,5 @@
 import { Trans } from "@lingui/macro";
 
-import { Button } from "components/buttons/button";
-
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
 import {
@@ -9,7 +7,6 @@ import {
     TitleAndText,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
 import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
-import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import { useMeshWideNodesReference } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
@@ -42,9 +39,10 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
         <div>
             <Row>
                 <div className={"text-3xl"}>{name}</div>
-                <Button color={"danger"} outline={true} size={"sm"}>
-                    <PowerIcon />
-                </Button>
+                {/*todo(kon): implement safe_reboot*/}
+                {/*<Button color={"danger"} outline={true} size={"sm"}>*/}
+                {/*    <PowerIcon />*/}
+                {/*</Button>*/}
             </Row>
             <Row>
                 {!isDown ? (

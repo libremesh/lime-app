@@ -1,7 +1,6 @@
 import { Trans } from "@lingui/macro";
 import { useState } from "preact/hooks";
 
-import { Button } from "components/buttons/button";
 import Tabs from "components/tabs";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
@@ -11,7 +10,6 @@ import {
     usePointToPointErrors,
 } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import ErrorIcon from "plugins/lime-plugin-mesh-wide/src/icons/errorIcon";
-import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { readableBytes } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
@@ -142,9 +140,6 @@ const SelectedLink = ({
                         </Trans>
                     </div>
                 )}
-                <Button color={"danger"} outline={true} size={"sm"}>
-                    <PowerIcon />
-                </Button>
             </Row>
             {names.map((name, i) => {
                 const node = linkDetail.linkByName(name);
