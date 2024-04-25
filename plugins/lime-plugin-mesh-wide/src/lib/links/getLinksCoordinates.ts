@@ -35,6 +35,10 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 );
             });
 
+            // Is possible that the destination node is not on the list of links,
+            // just ignore it
+            if (!dstNodeName) continue;
+
             if (
                 dstNodeName &&
                 dstNodeName !== linkNodeName &&
@@ -63,6 +67,8 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 ) {
                     continue;
                 }
+
+                console.log("AAAAAA", dstNodeName, links[dstNodeName], links);
 
                 // Get the destination link info
                 const destPointData = (
