@@ -25,7 +25,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
     // for every node check all links
     for (const linkNodeName in links) {
         if (isEmpty(links[linkNodeName])) continue;
-        for (const linkData of links[linkNodeName]) {
+        for (const linkData of Object.values(links[linkNodeName])) {
             if (!linkData.dst_mac) continue;
             // Get the nodeName of the destination node
             const dstNodeName = Object.keys(nodes).find((pid) => {
@@ -67,8 +67,6 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 ) {
                     continue;
                 }
-
-                console.log("AAAAAA", dstNodeName, links[dstNodeName], links);
 
                 // Get the destination link info
                 const destPointData = (

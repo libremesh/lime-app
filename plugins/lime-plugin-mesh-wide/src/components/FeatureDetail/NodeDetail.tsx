@@ -50,8 +50,8 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                         {uptime.toString()}
                     </TitleAndText>
                 ) : (
-                    <TitleAndText title={<Trans>Downtime</Trans>}>
-                        todo
+                    <TitleAndText title={<Trans>Uptime</Trans>}>
+                        <Trans>The node is down</Trans>
                     </TitleAndText>
                 )}
                 <TitleAndText title={<Trans>Firmware version</Trans>}>

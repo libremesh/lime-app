@@ -8,8 +8,6 @@ export const processNodeErrors = (
     actual: INodeInfo | undefined
 ) => {
     const errors: NodeErrorCodes[] = [];
-    // todo(kon): use community settings and not limeapp defaults
-    // const { data: communitySettings } = useCommunitySettings();
 
     // If not reference is a new node
     if (!reference) return errors;

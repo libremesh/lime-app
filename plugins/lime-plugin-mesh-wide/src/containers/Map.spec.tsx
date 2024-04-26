@@ -1,25 +1,26 @@
 import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/extend-expect";
+import { screen } from "@testing-library/preact";
 
-// import "@testing-library/jest-dom/extend-expect";
-// import {
-//     getMeshWideNodes,
-//     getMeshWideNodesReference,
-// } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
+import { MeshWideMap } from "plugins/lime-plugin-mesh-wide/src/containers/Map";
+import { doSharedStateApiCall } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
+import { nodesReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 
-jest.mock("plugins/lime-plugin-mesh-wide/src/mesWideApi.ts");
+import { render } from "utils/test_utils";
+
+jest.mock("plugins/lime-plugin-mesh-wide/src/meshWideApi.ts");
 jest.mock("leaflet");
-// const mockedMeshWideNodes = jest.mocked(getMeshWideNodes);
-// const mockedMeshWideNodesReference = jest.mocked(getMeshWideNodesReference);
+
+const mockedDoSharedStateApiCall = jest.mocked(doSharedStateApiCall);
 
 describe("Map component", () => {
     it("should show nodes alert when a node has not configured properly the coordinates", async () => {
-        nodesReferenceState["primero"].data.coordinates = {
-            lon: "FIXME",
+        nodesReferenceState["primero"].coordinates = {
+            long: "FIXME",
             lat: "FIXME",
         };
-        mockedMeshWideNodesReference.mockReturnValue(nodesReferenceState);
-        mockedMeshWideNodesReference.mockReturnValue(nodesReferenceState);
-
+        // mockedDoSharedStateApiCall.mockResolvedValue(nodesReferenceState);
+        mockedDoSharedStateApiCall.mockResolvedValue(nodesReferenceState);
         render(
             <MeshWideMap nodes={true} batmanLinks={false} wifiLinks={false} />
         );
