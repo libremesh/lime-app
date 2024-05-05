@@ -14,6 +14,8 @@ import {
 
 import { useSharedData } from "utils/useSharedData";
 
+const refetchInterval = 5000;
+
 export function useMeshWideLinksReference(params) {
     const dataType: DataTypes = "wifi_links_info";
     const queryKey =
@@ -22,6 +24,7 @@ export function useMeshWideLinksReference(params) {
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
+            refetchInterval,
             ...params,
         }
     );
@@ -34,6 +37,7 @@ export function useMeshWideLinks(params) {
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
+            refetchInterval,
             ...params,
         }
     );
@@ -47,6 +51,7 @@ export function useMeshWideBatmanReference(params) {
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
+            refetchInterval,
             ...params,
         }
     );
@@ -59,6 +64,7 @@ export function useMeshWideBatman(params) {
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
+            refetchInterval,
             ...params,
         }
     );
@@ -72,6 +78,7 @@ export function useMeshWideNodesReference(params) {
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
+            refetchInterval,
             ...params,
         }
     );
@@ -84,6 +91,7 @@ export function useMeshWideNodes(params) {
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
+            refetchInterval,
             ...params,
         }
     );
