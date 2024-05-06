@@ -28,8 +28,7 @@ export const SignalColor = ({
                 color: signal ? colorScale.getColor(signal * -1) : "gray",
             }}
         >
-            {" "}
-            {signal}{" "}
+            {signal}
         </span>
     );
 };

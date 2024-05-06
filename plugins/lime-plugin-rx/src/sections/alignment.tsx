@@ -9,8 +9,8 @@ import {
 } from "plugins/lime-plugin-rx/src/components/components";
 import { SignalColor } from "plugins/lime-plugin-rx/src/components/signalColor";
 import { AlignIcon } from "plugins/lime-plugin-rx/src/icons/alignIcon";
-import { StatusResponse } from "plugins/lime-plugin-rx/src/rxApi";
 import { useNodeStatus } from "plugins/lime-plugin-rx/src/rxQueries";
+import { StatusResponse } from "plugins/lime-plugin-rx/src/rxTypes";
 
 import { useBatHost } from "utils/queries";
 
@@ -68,13 +68,13 @@ export const AlignmentCard = ({ status }: { status: StatusResponse }) => {
                                 </span>
                             )}
                         </div>
-                        <div className={""}>
+                        <div>
                             <Trans>Interface: </Trans>
                             <span className={"font-bold"}>
                                 {status.most_active.iface}
                             </span>
                         </div>
-                        <div className={""}>
+                        <div>
                             <Trans>Traffic: </Trans>
                             <span className={"font-bold"}> {traffic}MB/s</span>
                         </div>

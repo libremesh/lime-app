@@ -19,22 +19,26 @@ export const Footer = () => {
                     <Trans>Need support?</Trans>
                 </div>
                 <div>
-                    <Trans>Join</Trans>{" "}
-                    <a
-                        className={"text-[#0198FE] hover:text-[#F39100]"}
-                        href={"https://foro.librerouter.org"}
-                    >
-                        <Trans>foro.librerouter.org</Trans>
-                    </a>
+                    <Trans>
+                        Join{" "}
+                        <a
+                            className={"text-[#0198FE] hover:text-[#F39100]"}
+                            href={"https://foro.librerouter.org"}
+                        >
+                            foro.librerouter.org
+                        </a>
+                    </Trans>
                 </div>
                 <div>
-                    <Trans>Visit</Trans>{" "}
-                    <a
-                        className={"text-[#F39100] hover:text-[#0198FE]"}
-                        href={"https://docs.altermundi.net"}
-                    >
-                        <Trans>docs.altermundi.net</Trans>
-                    </a>
+                    <Trans>
+                        Visit{" "}
+                        <a
+                            className={"text-[#F39100] hover:text-[#0198FE]"}
+                            href={"https://docs.altermundi.net"}
+                        >
+                            docs.altermundi.net
+                        </a>
+                    </Trans>
                 </div>
             </div>
             <div>

@@ -1,10 +1,8 @@
 import "@testing-library/jest-dom/extend-expect";
 import { screen } from "@testing-library/preact";
 
-import {
-    StatusResponse,
-    getNodeStatus,
-} from "plugins/lime-plugin-rx/src/rxApi";
+import { getNodeStatus } from "plugins/lime-plugin-rx/src/rxApi";
+import { StatusResponse } from "plugins/lime-plugin-rx/src/rxTypes";
 import { Wired } from "plugins/lime-plugin-rx/src/sections/wired";
 
 import { render } from "utils/test_utils";

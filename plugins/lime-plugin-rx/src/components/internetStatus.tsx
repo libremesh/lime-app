@@ -4,7 +4,7 @@ import { Circle } from "components/icons/circle";
 import { CirclecheckIcon } from "components/icons/circlecheckIcon";
 import { XmarkIcon } from "components/icons/xmarkIcon";
 
-import { IGetInternetStatus } from "plugins/lime-plugin-rx/src/rxApi";
+import { IGetInternetStatus } from "plugins/lime-plugin-rx/src/rxTypes";
 
 export const InternetStatus = ({ data }: { data: IGetInternetStatus }) => {
     const checkIconClass = "h-10 w-10 fill-primary-dark ";

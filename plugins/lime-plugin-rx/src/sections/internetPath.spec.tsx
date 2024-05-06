@@ -3,10 +3,10 @@ import { screen, waitFor, within } from "@testing-library/preact";
 
 import { getPath } from "plugins/lime-plugin-metrics/src/metricsApi";
 import {
-    IGetInternetStatus,
     getInternetStatus,
     getNodeStatus,
 } from "plugins/lime-plugin-rx/src/rxApi";
+import { IGetInternetStatus } from "plugins/lime-plugin-rx/src/rxTypes";
 import { InternetPath } from "plugins/lime-plugin-rx/src/sections/internetPath";
 import { mock_node_status } from "plugins/lime-plugin-rx/src/sections/wired.spec";
 
