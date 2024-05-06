@@ -7,6 +7,10 @@ import { useLoadLeaflet } from "plugins/lime-plugin-locate/src/locateQueries";
 import { FloatingAlert } from "plugins/lime-plugin-mesh-wide/src/components/Map/FloatingAlert";
 import { MeshWideMap } from "plugins/lime-plugin-mesh-wide/src/containers/Map";
 import { SelectedFeatureBottomSheet } from "plugins/lime-plugin-mesh-wide/src/containers/SelectedFeatureBottomSheet";
+import {
+    BatmanLinksProvider,
+    MeshWideLinksProvider,
+} from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { NodesProvider } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 
 const MeshWide = () => {
@@ -49,7 +53,11 @@ const MeshWide = () => {
 const MeshWidePage = () => {
     return (
         <NodesProvider>
-            <MeshWide />
+            <BatmanLinksProvider>
+                <MeshWideLinksProvider>
+                    <MeshWide />
+                </MeshWideLinksProvider>
+            </BatmanLinksProvider>
         </NodesProvider>
     );
 };

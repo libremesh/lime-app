@@ -1,5 +1,7 @@
 import { UseQueryResult } from "@tanstack/react-query";
+import { createContext } from "preact";
 import { useMemo } from "preact/compat";
+import { useContext } from "preact/hooks";
 
 import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
@@ -23,7 +25,6 @@ import {
 import { isEmpty } from "utils/utils";
 
 interface getQueryByLinkTypeReturnType<T extends LinkType> {
-    // state: (params) => UseQueryResult<ILinks<T>>;
     state: (params) => UseQueryResult<ILinks<T>>;
     reference: (params) => UseQueryResult<ILinks<T>>;
 }
@@ -53,7 +54,12 @@ interface IUselocatedLinks {
     linksLoaded: boolean;
     locatedNewLinks: LocatedLinkData;
 }
-export const useLocatedLinks = ({
+
+/**
+ * Util hook to get located links and compare them with the reference links
+ * @param type
+ */
+const useCalculateLocatedLinks = ({
     type,
 }: {
     type: LinkType;
@@ -136,4 +142,48 @@ export const usePointToPointErrors = ({
 }): { errors: ILinkPtoPErrors | undefined } => {
     const { linksErrors } = useLocatedLinks({ type });
     return { errors: linksErrors && linksErrors[id] };
+};
+
+// Define separate contexts for each type of link
+const BatmanLinksContext = createContext<IUselocatedLinks | null>(null);
+const MeshWideLinksContext = createContext<IUselocatedLinks | null>(null);
+
+// Export a hook that return the proper context based on the type of link
+export const useLocatedLinks = ({ type }: { type: LinkType }) => {
+    let requestedContext = MeshWideLinksContext;
+    if (type === "bat_links_info") {
+        requestedContext = BatmanLinksContext;
+    }
+
+    const context = useContext(requestedContext);
+    if (context === null) {
+        throw new Error(
+            `useLocatedLinks must be used within a provider for ${requestedContext} links`
+        );
+    }
+    return context;
+};
+
+export const BatmanLinksProvider = ({ children }) => {
+    const batmanLinksData = useCalculateLocatedLinks({
+        type: "bat_links_info",
+    });
+
+    return (
+        <BatmanLinksContext.Provider value={batmanLinksData}>
+            {children}
+        </BatmanLinksContext.Provider>
+    );
+};
+
+export const MeshWideLinksProvider = ({ children }) => {
+    const meshWideLinksData = useCalculateLocatedLinks({
+        type: "wifi_links_info",
+    });
+
+    return (
+        <MeshWideLinksContext.Provider value={meshWideLinksData}>
+            {children}
+        </MeshWideLinksContext.Provider>
+    );
 };
