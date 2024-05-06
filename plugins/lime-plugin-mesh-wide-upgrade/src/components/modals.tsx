@@ -10,7 +10,7 @@ export const useScheduleUpgradeModal = ({
 }: IUseParallelQueriesModalProps) => {
     let title = <Trans>All nodes are ready</Trans>;
     let content = (
-        <Trans>Schedule a firmware upgrade for all nodes on the nevtwork</Trans>
+        <Trans>Schedule a firmware upgrade for all nodes on the network</Trans>
     );
     if (!allNodesReady) {
         title = <Trans>Some nodes are not ready</Trans>;

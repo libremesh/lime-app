@@ -13,62 +13,62 @@ import { CenterFlex } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/divs
 const MeshWideUpgradeStatusState = () => {
     const { stepperState, meshWideError } = useMeshUpgrade();
 
-    if (stepperState === "ERROR") {
-        return <ErrorState msg={meshWideError?.errorMessage.toString()} />;
-    } else if (stepperState === "ABORTING") {
-        return (
-            <LoadingPage
-                title={<Trans>Aborting</Trans>}
-                description={
-                    <Trans>
-                        Sending abort message to this node. The abort order will
-                        be propagated to all nodes.
-                    </Trans>
-                }
-            />
-        );
-    } else if (stepperState === "UPDATE_AVAILABLE") {
-        return <NewVersionAvailable />;
-    } else if (stepperState === "DOWNLOADING_MAIN") {
-        return <LoadingPage title={<Trans>Downloading</Trans>} />;
-    } else if (stepperState === "DOWNLOADED_MAIN") {
-        return <NewVersionAvailable readyForUpgrade />;
-    } else if (
-        stepperState === "TRANSACTION_STARTED" ||
-        stepperState === "NODES_DOWNLOADING"
-    ) {
-        return <TransactionStarted />;
-    } else if (stepperState === "SENDING_START_SCHEDULE") {
-        return (
-            <LoadingPage
-                title={<Trans>Scheduling upgrade</Trans>}
-                description={
-                    <Trans>Schedule upgrade to all available nodes</Trans>
-                }
-            />
-        );
-    } else if (stepperState === "UPGRADING") {
-        return (
-            <LoadingPage
-                title={<Trans>Node is upgrading</Trans>}
-                description={<Trans>Await until it reboots</Trans>}
-            />
-        );
-    } else if (stepperState === "UPGRADE_SCHEDULED") {
-        return <UpgradeScheduled />;
-    } else if (stepperState === "SENDING_CONFIRMATION") {
-        return (
-            <LoadingPage
-                title={<Trans>Sending confirmation</Trans>}
-                description={<Trans>Confirming all upgraded nodes</Trans>}
-            />
-        );
-    } else if (stepperState === "CONFIRMATION_PENDING") {
-        return <ConfirmationPending />;
-    } else if (stepperState === "CONFIRMED") {
-        return <>Confirmed!</>;
+    switch (stepperState) {
+        case "ERROR":
+            return <ErrorState msg={meshWideError?.errorMessage.toString()} />;
+        case "ABORTING":
+            return (
+                <LoadingPage
+                    title={<Trans>Aborting</Trans>}
+                    description={
+                        <Trans>
+                            Sending abort message to this node. The abort order
+                            will be propagated to all nodes.
+                        </Trans>
+                    }
+                />
+            );
+        case "UPDATE_AVAILABLE":
+            return <NewVersionAvailable />;
+        case "DOWNLOADING_MAIN":
+            return <LoadingPage title={<Trans>Downloading</Trans>} />;
+        case "DOWNLOADED_MAIN":
+            return <NewVersionAvailable readyForUpgrade />;
+        case "TRANSACTION_STARTED":
+        case "NODES_DOWNLOADING":
+            return <TransactionStarted />;
+        case "SENDING_START_SCHEDULE":
+            return (
+                <LoadingPage
+                    title={<Trans>Scheduling upgrade</Trans>}
+                    description={
+                        <Trans>Schedule upgrade to all available nodes</Trans>
+                    }
+                />
+            );
+        case "UPGRADING":
+            return (
+                <LoadingPage
+                    title={<Trans>Node is upgrading</Trans>}
+                    description={<Trans>Await until it reboots</Trans>}
+                />
+            );
+        case "UPGRADE_SCHEDULED":
+            return <UpgradeScheduled />;
+        case "SENDING_CONFIRMATION":
+            return (
+                <LoadingPage
+                    title={<Trans>Sending confirmation</Trans>}
+                    description={<Trans>Confirming all upgraded nodes</Trans>}
+                />
+            );
+        case "CONFIRMATION_PENDING":
+            return <ConfirmationPending />;
+        case "CONFIRMED":
+            return <>Confirmed!</>;
+        default:
+            return <NoNewVersionAvailable />;
     }
-    return <NoNewVersionAvailable />;
 };
 
 export const MeshWideUpgradeStatus = () => {

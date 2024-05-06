@@ -42,11 +42,7 @@ const NodeUpgradeInfoItem = ({
         <Trans>Error retrieving the status, is this node outdated?</Trans>
     );
     if (mainNodeStatusInfo) {
-        descriptionMsg = (
-            <>
-                <Trans>(Main Node)</Trans> {descriptionMsg}
-            </>
-        );
+        descriptionMsg = <Trans>(Main Node) {descriptionMsg}</Trans>;
     }
     return (
         <ListItemCollapsible

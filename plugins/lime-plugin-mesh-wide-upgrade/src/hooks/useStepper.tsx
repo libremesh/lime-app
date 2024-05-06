@@ -138,7 +138,6 @@ export const useStep = () => {
         becomeMainNode,
         startFwUpgradeTransaction,
         allNodesReadyForUpgrade,
-        allNodesConfirmed,
         abort,
     } = useMeshUpgrade();
 
@@ -156,7 +155,7 @@ export const useStep = () => {
     });
 
     const { showModal: showConfirmationModal } = useConfirmModal({
-        // allNodesReady: allNodesConfirmed, // todo(kon) esto no esta bien, aqui deberia comprobar si todos los nodos estan up
+        // Ideally we have to implement some kind of state before run the upgrade to check if all nodes are up again.
         allNodesReady: true,
         cb: () => {
             confirmMeshUpgrade();

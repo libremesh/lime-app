@@ -68,4 +68,4 @@ export type MeshWideError = {
     errorMessage: string;
 };
 
-export type MeshUpgradeApiErrorTypes = string; // todo(kon)
+export type MeshUpgradeApiErrorTypes = string;
