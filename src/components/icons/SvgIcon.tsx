@@ -10,8 +10,7 @@ export interface IconProps {
 }
 
 interface SvgIconProps {
-    // children?: VNode;
-    children?: any; // Type 'VNode<{}>' is not assignable to type 'ReactNode'.
+    children?: VNode;
     viewBox?: string;
 }
 

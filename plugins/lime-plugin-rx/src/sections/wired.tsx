@@ -6,8 +6,8 @@ import {
     SectionTitle,
 } from "plugins/lime-plugin-rx/src/components/components";
 import { PortsIcon } from "plugins/lime-plugin-rx/src/icons/portsIcon";
-import { SwitchStatus } from "plugins/lime-plugin-rx/src/rxApi";
 import { useNodeStatus } from "plugins/lime-plugin-rx/src/rxQueries";
+import { SwitchStatus } from "plugins/lime-plugin-rx/src/rxTypes";
 
 const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
     const ports = switches.reduce((acc, obj) => {

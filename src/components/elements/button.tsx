@@ -39,17 +39,19 @@ export const Button = ({
 
     const cls = `cursor-pointer text-white font-semibold rounded-xl text-center place-content-center
     justify-center border-0 ${sizeClasses}  ${colorClasses}`;
-    const Btn = () => (
-        // @ts-ignore
+
+    if (href) {
+        return (
+            <a href={href}>
+                <div type="button" onClick={onClick} className={cls} {...props}>
+                    {children}
+                </div>
+            </a>
+        );
+    }
+    return (
         <div type="button" onClick={onClick} className={cls} {...props}>
             {children}
         </div>
-    );
-    return href ? (
-        <a href={href}>
-            <Btn />
-        </a>
-    ) : (
-        <Btn />
     );
 };
