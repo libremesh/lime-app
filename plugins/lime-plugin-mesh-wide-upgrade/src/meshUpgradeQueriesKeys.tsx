@@ -5,11 +5,7 @@ interface MeshUpgradeQueryKeysProps {
 }
 
 const MeshUpgradeQueryKeys: MeshUpgradeQueryKeysProps = {
-    meshWideUpgradeInfo: [
-        "shared-state",
-        "getFromSharedState",
-        "mesh_wide_upgrade",
-    ],
+    meshWideUpgradeInfo: ["shared-state-async", "get", "mesh_wide_upgrade"],
     getMeshUpgradeNodeStatus: ["lime-mesh-upgrade", "get_node_status"],
     remoteScheduleUpgrade: ["lime-mesh-upgrade", "schedule_upgrade"],
     remoteConfirmUpgrade: ["lime-mesh-upgrade", "confirm_boot_partition"],

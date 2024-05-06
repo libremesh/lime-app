@@ -1,4 +1,7 @@
-import { NodeMeshUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
+import {
+    MeshWideUpgradeInfo,
+    NodeMeshUpgradeInfo,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import {
     callToRemoteNode,
     meshUpgradeApiCall,
@@ -7,9 +10,15 @@ import {
 import api from "utils/uhttpd.service";
 
 export const getMeshWideUpgradeInfo = async () => {
-    return api.call("shared-state", "getFromSharedState", {
+    const res = await api.call("shared-state-async", "get", {
         data_type: "mesh_wide_upgrade",
     });
+    if (res.error) {
+        throw new Error(
+            `Error getting mesh wide upgrade info from shared state async, code error ${res.error}`
+        );
+    }
+    return res.data as MeshWideUpgradeInfo;
 };
 
 export const getMeshUpgradeNodeStatus = async () => {
