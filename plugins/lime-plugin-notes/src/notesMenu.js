@@ -1,7 +1,12 @@
-import { h } from 'preact';
+import { Trans } from "@lingui/macro";
 
-import I18n from 'i18n-js';
+import { DocIcon } from "components/icons/teenny/doc";
 
 export const Menu = () => (
-	<a href={'#/notes'}>{I18n.t('Notes')}</a>
+    <span>
+        <DocIcon />
+        <a href={"#/notes"}>
+            <Trans>Notes</Trans>
+        </a>
+    </span>
 );

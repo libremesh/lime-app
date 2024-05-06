@@ -1,0 +1,20 @@
+name: Test build
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+            node-version: 20
+            cache: 'npm'
+
+      - uses: preactjs/compressed-size-action@v2
+        with:
+          build-script: "build:production"

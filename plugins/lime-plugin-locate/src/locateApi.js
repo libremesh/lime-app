@@ -1,3 +1,13 @@
-export const getLocation = (api, sid) => api.call(sid, 'lime-location','get', {});
+import api from "utils/uhttpd.service";
 
-export const changeLocation = (api, sid, location) => api.call(sid, 'lime-location','set', location);
+export const getLocation = () => api.call("lime-location", "get", {});
+
+export const getNodesandlinks = async () =>
+    api.call("lime-location", "all_nodes_and_links", {});
+
+export const changeLocation = async (location) => {
+    return await api.call("lime-location", "set", {
+        lat: location.lat.toFixed(5),
+        lon: location.lon.toFixed(5),
+    });
+};

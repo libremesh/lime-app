@@ -1,17 +1,10 @@
-import {
-	NOTES_GET,
-	NOTES_SET
-} from './notesConstants';
+import { NOTES_GET, NOTES_SET } from "./notesConstants";
 
-export const getNotes = () => (dispatch) => {
-	dispatch({
-		type: NOTES_GET
-	});
-};
+export const getNotes = () => ({
+    type: NOTES_GET,
+});
 
-export const setNotes = (notes) => (dispatch) => {
-	dispatch({
-		type: NOTES_SET,
-		payload: { notes }
-	});
-};
+export const setNotes = (notes) => ({
+    type: NOTES_SET,
+    payload: { notes },
+});

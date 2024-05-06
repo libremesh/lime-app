@@ -1,59 +1,67 @@
-import { h, Component } from 'preact';
+/* eslint @typescript-eslint/no-empty-function: "off" */
+import { Trans } from "@lingui/macro";
+import { useEffect, useState } from "preact/hooks";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import './style';
+import { useBoardData } from "utils/queries";
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { getNotes, setNotes } from "./notesActions";
+import { getNotesState } from "./notesSelectors";
+import style from "./style.less";
 
-import { getNotes, setNotes } from './notesActions';
-import { getNotesState } from './notesSelectors';
+export const Page = ({ setNotes, getNotes, notes, loading }) => {
+    const { data: boardData } = useBoardData();
+    const [value, setValue] = useState(notes || "");
 
-import I18n from 'i18n-js';
+    function handleChange(event) {
+        setValue(event.target.value);
+    }
 
-class Page extends Component {
+    function saveNotes() {
+        setNotes(value);
+    }
 
-	handleChange(event) {
-		this.setState({ value: event.target.value });
-	}
+    //Only once
+    useEffect(() => {
+        getNotes();
+        return () => {};
+    }, [getNotes]);
 
-	saveNotes() {
-		this.props.setNotes(this.state.value);
-	}
+    //After notes reload
+    useEffect(() => {
+        setValue(notes);
+        return () => {};
+    }, [notes]);
 
-	constructor(props) {
-		super(props);
-		this.state = { value: this.props.notes };
-		this.handleChange = this.handleChange.bind(this);
-		this.saveNotes = this.saveNotes.bind(this);
-	}
-
-	componentWillMount() {
-		this.props.getNotes();
-	}
-
-	render() {
-		let getNotes = (notes) => notes;
-
-		return (
-			<div class="container" style={{ paddingTop: '100px' }}>
-				<h4><span>{I18n.t('Notes of')}</span> {this.props.hostname}</h4>
-				<textarea onChange={this.handleChange} class="notes" value={getNotes(this.props.notes)} />
-				<button onClick={this.saveNotes}>{I18n.t('Save notes')}</button>
-			</div>
-		);
-	}
-}
-
+    return (
+        <div className="container container-padded">
+            <h4>
+                <span>
+                    <Trans>Notes of</Trans>
+                </span>{" "}
+                {boardData.hostname}
+            </h4>
+            <textarea
+                onChange={handleChange}
+                className={style.notes}
+                value={value}
+            />
+            <button disabled={loading} onClick={saveNotes}>
+                <Trans>Save notes</Trans>
+            </button>
+        </div>
+    );
+};
 
 const mapStateToProps = (state) => ({
-	notes: getNotesState(state),
-	loading: state.notes.loading,
-	hostname: state.meta.selectedHost
+    notes: getNotesState(state),
+    loading: state.notes.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	getNotes: bindActionCreators(getNotes, dispatch),
-	setNotes: bindActionCreators(setNotes, dispatch)
+    getNotes: bindActionCreators(getNotes, dispatch),
+    setNotes: bindActionCreators(setNotes, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Page);

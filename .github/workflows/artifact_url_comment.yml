@@ -1,0 +1,54 @@
+name: Comment on the pull request the artifact url
+
+on:
+    workflow_run:
+        workflows: ["Publish artifacts"]
+        types:
+            - completed
+
+jobs:
+    publish-artifact-url:
+        runs-on: ubuntu-latest
+        if: >
+            github.event.workflow_run.event == 'pull_request' &&
+            github.event.workflow_run.conclusion == 'success'
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  run-id: ${{github.event.workflow_run.id }}
+                  path: limeAppBuild/
+
+            -   name: Get PR number
+                run: echo "PR_NUM=$(ls limeAppBuild/*/pr_number)" >> $GITHUB_ENV
+
+            -   name: Find a PR comment
+                uses: peter-evans/find-comment@v2
+                id: fc
+                with:
+                    issue-number: ${{ env.PR_NUM }}
+                    body-includes: 'Artifacts deployed: '
+
+            -   name: Delete Comment
+                uses: actions/github-script@v6
+                continue-on-error: true
+                if: steps.fc.outputs.comment-id != 0
+                with:
+                    script: |
+                        github.rest.issues.deleteComment({
+                          comment_id: ${{ steps.fc.outputs.comment-id }},
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                        })
+
+            -   name: Get the artifact url
+                run: >
+                    ARTIFACT_URL=$(curl https://api.github.com/repos/libremesh/lime-app/actions/runs/${{github.event.workflow_run.id }}/artifacts -s | jq '.artifacts[0].url' | sed "s/[\'\"]//g" | awk -F'/' '{print $NF}')
+                    ;echo $ARTIFACT_URL; echo "ARTIFACT_URL=$ARTIFACT_URL" >> $GITHUB_ENV
+
+            -   name: Update the PR comment
+                uses: peter-evans/create-or-update-comment@v2
+                with:
+                    issue-number: ${{ env.PR_NUM }}
+                    body: |
+                        Artifacts deployed: https://github.com/libremesh/lime-app/actions/runs/${{github.event.workflow_run.id}}/artifacts/${{ env.ARTIFACT_URL }}

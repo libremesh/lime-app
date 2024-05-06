@@ -1,47 +1,80 @@
-import axios from 'axios';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromPromise';
+const UNAUTH_SESSION_ID = "00000000000000000000000000000000";
+const DEFAULT_SESSION_TIMEOUT = 5000;
+
+const parseResult = (result) =>
+    new Promise((res, rej) => {
+        if (result.error) {
+            return rej(result.error);
+        }
+        if (result.result[0] !== 0) {
+            return rej(result);
+        }
+        result = result.result[1];
+        if (result && result.status === "error") {
+            return rej(result.message);
+        }
+        return res(result);
+    });
 
 export class UhttpdService {
-	constructor(url){
-		this.url = url;
-		this.sid = '00000000000000000000000000000000';
-		this.jsonrpc = '2.0';
-		this.sec = 0;
-	}
-	addId(){
-		this.sec += 1;
-		return Number(this.sec);
-	}
+    constructor() {
+        this.url = `${window.origin}/ubus`;
+        this.jsonrpc = "2.0";
+        this.sec = 0;
+        this.requestList = [];
+    }
 
-	request(payload) {
-		return Observable.fromPromise(axios.post(this.url, {
-			id: this.addId(),
-			jsonrpc: this.jsonrpc,
-			method: 'call',
-			params: payload
-		})).map(x => x.data.result[1]);
-	}
+    sid() {
+        const sid = sessionStorage.getItem("sid");
+        return sid || UNAUTH_SESSION_ID;
+    }
 
-	call(sid,action, method, data) {
-		return this.request([sid, action, method, data]);
-	}
+    addId() {
+        this.sec += 1;
+        return Number(this.sec);
+    }
 
-	connect(newUrl) {
-		this.url = newUrl;
-		return Observable.fromPromise( new Promise((res,rej) => {
-			axios.get(this.url).catch(
-				err => {
-					try {
-						( err.response.status === 400)? res(): rej();
-					}
-					catch (error) {
-						rej();
-					}
+    call(action, method, data, customSid = null, timeout = null) {
+        this.sec += 1;
+        const body = {
+            id: this.addId(),
+            jsonrpc: this.jsonrpc,
+            method: "call",
+            params: [customSid || this.sid(), action, method, data],
+        };
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout || 15000);
+        return (
+            fetch(this.url, {
+                method: "POST",
+                body: JSON.stringify(body),
+                signal: controller.signal,
+            })
+                .then((response) => response.json())
+                .then(parseResult)
+                // @ts-ignore
+                .finally(clearTimeout(id))
+        );
+    }
 
-				}
-			);
-		}));
-	}
-
+    login(username, password) {
+        const data = { username, password, timeout: DEFAULT_SESSION_TIMEOUT };
+        return this.call("session", "login", data, UNAUTH_SESSION_ID).then(
+            (response) =>
+                new Promise((res, rej) => {
+                    if (response.ubus_rpc_session) {
+                        sessionStorage.setItem(
+                            "sid",
+                            response.ubus_rpc_session
+                        );
+                        res(response);
+                    } else {
+                        rej(response);
+                    }
+                })
+        );
+    }
 }
+
+const uhttpdService = new UhttpdService();
+export default uhttpdService;

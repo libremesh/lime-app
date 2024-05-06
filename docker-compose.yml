@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  ui:
+    build: ./
+    command: sh -c "npm run dev & npm run storybook"
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    ports:
+      - 8080:8080
+      - 8081:8081
+
+volumes:
+  node_modules:

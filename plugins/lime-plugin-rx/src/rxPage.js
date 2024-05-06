@@ -1,156 +1,217 @@
-import { h, Component } from 'preact';
+import { Trans, plural } from "@lingui/macro";
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
+import { Box } from "components/box";
 
-import { getNodeStatus, stopTimer, changeNode } from './rxActions';
-import { getNodeData, isLoading } from './rxSelectors';
+import { useBatHost, useBoardData } from "utils/queries";
 
-import { Box } from '../../../src/components/box';
+import { useInternetStatus, useNodeStatus } from "./rxQueries";
 
-import I18n from 'i18n-js';
+function stripIface(hostIface) {
+    return hostIface.split("_wlan")[0].replace("_", "-");
+}
 
-const toHHMMSS = (secs, plus) => {
-	let secNum = parseInt(secs, 10) + plus;
-	let days    = Math.floor(secNum / 86400) % 24;
-	let hours   = Math.floor(secNum / 3600) % 24;
-	let minutes = Math.floor(secNum / 60) % 60;
-	let seconds = secNum % 60;
-	return [days,hours,minutes,seconds]
-		.map(v => v < 10 ? '0' + v : v)
-		.join(':');
+const toHHMMSS = (seconds, plus) => {
+    let secNum = parseInt(seconds, 10) + plus;
+    let days = Math.floor(secNum / 86400);
+    let hours = Math.floor(secNum / 3600) % 24;
+    let mins = Math.floor(secNum / 60) % 60;
+    let secs = secNum % 60;
+    const daysText = days
+        ? plural(days, { one: "# day", other: "# days" })
+        : null;
+    const hoursText = hours
+        ? plural(hours, { one: "# hour", other: "# hours" })
+        : null;
+    const minsText = mins
+        ? plural(mins, { one: "# minute", other: "# minutes" })
+        : null;
+    const secsText = secs
+        ? plural(secs, { one: "# second", other: "# seconds" })
+        : null;
+    const allTexts = [daysText, hoursText, minsText, secsText];
+    return allTexts.filter((x) => x !== null).join(", ");
 };
 
-const SystemBox = ({ node, update, count }) => {
-	if (typeof node.uptime !== 'undefined') {
-		update();
-		return (
-			<Box title={I18n.t('System')}>
-				<span>
-					<b>{I18n.t('Uptime')} </b>{toHHMMSS(node.uptime, count)}<br />
-				</span>
-			</Box>
-		);
-	}
-	return (<span />);
+const SystemBox = ({ uptime, firmwareVersion, boardModel }) => {
+    // The plus was used because the refetch interval was every two seconds for trying to not refetch timer every two sec.
+    // But, this is buggie and advance the timer more that what is needed. At my opinion (kon) is better to refetch every
+    // two seconds and check a more elegant way to resolve this
+    let actualUptime = toHHMMSS(uptime, 0);
+
+    return (
+        <Box title={<Trans>System</Trans>}>
+            <span>
+                <b>
+                    <Trans>Uptime</Trans>
+                </b>{" "}
+                {actualUptime} <br />
+            </span>
+            <span>
+                <b>
+                    <Trans>Device</Trans>
+                </b>{" "}
+                {boardModel}
+                <br />
+            </span>
+            <span style={{ whiteSpace: "nowrap" }}>
+                <b>
+                    <Trans>Firmware</Trans>{" "}
+                </b>
+                {firmwareVersion}
+                <br />
+            </span>
+        </Box>
+    );
 };
 
 const MostActiveBox = ({ node, changeNode }) => {
-	if (typeof node.most_active !== 'undefined') {
-		return (
-			<Box title={I18n.t('Most Active')}>
-				<span style={{ float: 'right',fontSize: '2.7em' }}>{node.most_active.signal}</span>
-				<span style={{ fontSize: '1.4em' }} onClick={changeNode(node)}><b>{node.most_active.station_hostname.split('_')[0]}</b></span><br />
-				<b>{I18n.t('Interface')} </b>{node.most_active.iface.split('-')[0]}<br />
-				<b>{I18n.t('Traffic')} </b> {Math.round((node.most_active.rx_bytes + node.most_active.tx_bytes)/1024/1024)}MB
-				<div style={{ clear: 'both' }} />
-			</Box>
-		);
-	}
-	return (<span />);
+    const use_most_active = !!node.most_active?.iface;
+    const { data: bathost } = useBatHost(
+        node.most_active?.station_mac,
+        node.most_active?.iface,
+        { enabled: !!node.most_active }
+    );
+
+    if (!use_most_active) {
+        return <span />;
+    }
+
+    return (
+        <Box title={<Trans>Most Active</Trans>}>
+            <span style={{ float: "right", fontSize: "2.7em" }}>
+                {node.most_active.signal}
+            </span>
+            {bathost && bathost.hostname ? (
+                <a
+                    style={{ fontSize: "1.4em" }}
+                    onClick={() => changeNode(bathost.hostname)}
+                >
+                    <b>{stripIface(bathost.hostname)}</b>
+                </a>
+            ) : (
+                <span className="withLoadingEllipsis">
+                    <Trans>Fetching name</Trans>
+                </span>
+            )}
+            <br />
+            <b>
+                <Trans>Interface</Trans>{" "}
+            </b>
+            {node.most_active.iface.split("-")[0]}
+            <br />
+            <b>
+                <Trans>Traffic</Trans>{" "}
+            </b>{" "}
+            {Math.round(
+                (node.most_active.rx_bytes + node.most_active.tx_bytes) /
+                    1024 /
+                    1024
+            )}
+            MB
+            <div style={{ clear: "both" }} />
+        </Box>
+    );
 };
 
-export class Page extends Component {
-  
-	loading(option, nodeData){
-		if (!option) {
-			return this.nodeStatus(nodeData);
-		}
-		return (
-			<h4 style={{ textAlign: 'center' }} >
-				{I18n.t('Loading node status...')}
-			</h4>
-		);
-	}
+const Page = ({}) => {
+    const { data: boardData, isLoading: loadingBoardData } = useBoardData();
 
+    const { data: nodeStatusData, isLoading } = useNodeStatus({});
+    const { data: internet } = useInternetStatus();
 
-	startCount() {
-		if (typeof this.count === 'undefined') {
-			this.setState({ plusTime: 0 });
-			this.count = setInterval(() => {
-				let newTime = this.state.plusTime + 1;
-				this.setState({ plusTime: newTime });
-			},1000);
-		}
-	}
+    function loading(option, nodeData) {
+        if (!option && !loadingBoardData) {
+            return nodeStatus(nodeData);
+        }
+        return (
+            <h4 style={{ textAlign: "center" }}>
+                <Trans>Loading node status...</Trans>
+            </h4>
+        );
+    }
 
-	stopCount() {
-		clearInterval(this.count);
-		this.setState({ plusTime: 0 });
-		delete this.count;
-	}
+    function _changeNode(hostname) {
+        window.location.href = `http://${hostname}`;
+    }
 
-	changeNode(node) {
-		return () => {
-			this.props.changeNode(node.most_active.hostname.split('_')[0]);
-		};
-	}
+    function nodeStatus(node) {
+        if (node.hostname) {
+            return (
+                <div>
+                    <MostActiveBox node={node} changeNode={_changeNode} />
 
-	nodeStatus(node){
-		if (node.hostname) {
-			this.startCount();
-			return (
-				<div>
+                    <SystemBox
+                        uptime={node.uptime}
+                        firmwareVersion={boardData.release.description}
+                        boardModel={boardData.model}
+                    />
 
-					<MostActiveBox node={node} changeNode={this.changeNode} />
-					
-					<SystemBox node={node} count={this.state.plusTime} update={this.startCount} />
+                    <Box title={<Trans>Internet connection</Trans>}>
+                        <span>
+                            <b>
+                                {" "}
+                                {internet.IPv4.working === true ? (
+                                    <span style={{ color: "#38927f" }}>✔</span>
+                                ) : (
+                                    <span style={{ color: "#b11" }}>✘</span>
+                                )}{" "}
+                                IPv4{" "}
+                            </b>
+                            <b>
+                                {" "}
+                                {internet.IPv6.working === true ? (
+                                    <span style={{ color: "#38927f" }}>✔</span>
+                                ) : (
+                                    <span style={{ color: "#b11" }}>✘</span>
+                                )}{" "}
+                                IPv6{" "}
+                            </b>
+                            <b>
+                                {" "}
+                                {internet.DNS.working === true ? (
+                                    <span style={{ color: "#38927f" }}>✔</span>
+                                ) : (
+                                    <span style={{ color: "#b11" }}>✘</span>
+                                )}{" "}
+                                DNS{" "}
+                            </b>
+                        </span>
+                    </Box>
 
-					<Box title={I18n.t('Internet connection')}>
-						<span>
-							<b> {(node.internet.IPv4.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv4 </b>
-							<b> {(node.internet.IPv6.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} IPv6 </b>
-							<b> {(node.internet.DNS.working === true)? (<span style={{ color: 'green' }}>✔</span>): (<span style={{ color: 'red' }}>✘</span>)} DNS </b>
-						</span>
-					</Box>
-            
-					<Box title={I18n.t('IP Addresses')}>
-						{ node.ips.map((ip,key) => (
-							<span style={(key === 0)? { fontSize: '1.4em' } :{}}>
-								<b>IPv{ip.version} </b> {ip.address}<br />
-							</span>)
-						)}
-					</Box>
+                    <Box title={<Trans>IP Addresses</Trans>}>
+                        {node.ips.map((ip, key) => (
+                            <span
+                                key={key}
+                                style={key === 0 ? { fontSize: "1.4em" } : {}}
+                            >
+                                <b>IPv{ip.version} </b> {ip.address}
+                                <br />
+                            </span>
+                        ))}
+                    </Box>
+                </div>
+            );
+        }
+    }
 
-				</div>
-			);
-		}
-	}
-  
-	constructor(props) {
-		super(props);
-		this.startCount = this.startCount.bind(this);
-		this.changeNode = this.changeNode.bind(this);
-	}
+    return (
+        <div className="container container-padded">
+            {loading(isLoading, nodeStatusData)}
+        </div>
+    );
+};
 
-	componentDidMount() {
-		this.props.getNodeStatus();
-	}
+export default Page;
 
-	componentWillUnmount() {
-		this.props.stopTimer();
-		this.stopCount();
-	}
-
-	render() {
-		return (
-			<div class="container" style={{ paddingTop: '80px' }}>
-				{ this.loading(this.props.isLoading, this.props.nodeData,this.props.signal) }
-			</div>
-		);
-	}
-}
-
-
-export const mapStateToProps = (state) => ({
-	nodeData: getNodeData(state),
-	isLoading: isLoading(state)
-});
-
-export const mapDispatchToProps = (dispatch) => ({
-	getNodeStatus: bindActionCreators(getNodeStatus,dispatch),
-	stopTimer: bindActionCreators(stopTimer,dispatch),
-	changeNode: bindActionCreators(changeNode,dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Page);
+// export const mapStateToProps = (state) => ({
+//     nodeData: getNodeData(state),
+//     isLoading: isLoading(state),
+// });
+//
+// export const mapDispatchToProps = (dispatch) => ({
+//     getNodeStatusTimer: bindActionCreators(getNodeStatusTimer, dispatch),
+//     getNodeStatus: bindActionCreators(getNodeStatus, dispatch),
+//     stopTimer: bindActionCreators(stopTimer, dispatch),
+// });
+//
+// export default connect(mapStateToProps, mapDispatchToProps)(Page);

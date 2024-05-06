@@ -1,7 +1,12 @@
-import { h } from 'preact';
+import { Trans } from "@lingui/macro";
 
-import I18n from 'i18n-js';
+import { StatusIcon } from "components/icons/teenny/status";
 
 export const RxMenu = () => (
-	<a href={'#/rx'}>{I18n.t('Status')}</a>
+    <span>
+        <StatusIcon />
+        <a href={"#/rx"}>
+            <Trans>Status</Trans>
+        </a>
+    </span>
 );

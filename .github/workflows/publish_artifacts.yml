@@ -1,0 +1,37 @@
+name: Publish artifacts
+
+on:
+    pull_request:
+        types: [ labeled, synchronize ]
+
+jobs:
+    build-artifacts:
+        if: contains(github.event.pull_request.labels.*.name, 'artifact')
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v4
+
+        - name: Install node
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+            cache: 'npm'
+
+        - name: Install dependencies
+          run: npm ci
+        - name: Build production app
+          run: npm run build:production
+
+        # Used to send a comment to the PR with the artifact url
+        - name: Save PR number
+          run: |
+              mkdir -p build/pr_number/
+              touch build/pr_number/${{ github.event.number }}
+
+        - name: Upload build artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: limeAppBuild-${{ github.event.number }}
+            path: build/
+            overwrite: true

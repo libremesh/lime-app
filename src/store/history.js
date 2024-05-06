@@ -1,3 +1,3 @@
-import createHistory from 'history/createHashHistory';
+import { createHashHistory } from "history";
 
-export const history = createHistory();
+export const history = createHashHistory();

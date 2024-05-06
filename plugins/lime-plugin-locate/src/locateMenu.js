@@ -1,7 +1,12 @@
-import { h } from 'preact';
+import { Trans } from "@lingui/macro";
 
-import I18n from 'i18n-js';
+import { MapIcon } from "components/icons/teenny/map";
 
 export const LocateMenu = () => (
-	<a href={'#/locate'}>{I18n.t('Locate')}</a>
+    <span>
+        <MapIcon />
+        <a href={"#/locate"}>
+            <Trans>Map</Trans>
+        </a>
+    </span>
 );

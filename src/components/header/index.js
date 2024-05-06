@@ -1,38 +1,36 @@
-import { h, Component } from 'preact';
-import style from './style';
+import { Fragment } from "preact";
+import { useState } from "preact/hooks";
 
-import { Navs } from '../../routes';
-import { Drawer } from '../drawer';
+import { useBoardData } from "utils/queries";
 
-class Header extends Component {
+import { useAppContext } from "../../utils/app.context";
+import style from "./style.less";
 
-	toggle(){
-		this.setState({ open: !this.state.open });
-	}
+export const Header = ({ Menu }) => {
+    const { data: boardData } = useBoardData();
+    const { menuEnabled } = useAppContext();
+    const [menuOpened, setMenuOpened] = useState(false);
 
-	menuStatus(open){
-		return (open)? [style.hamburger, style.isActive].join(' ') : style.hamburger;
-	}
+    function toggleMenu() {
+        setMenuOpened((prevValue) => !prevValue);
+    }
 
-	constructor() {
-		super();
-		this.toggle = this.toggle.bind(this);
-		this.state = { open: false };
-	}
-
-	render() {
-		return (
-			<header class={style.header}>
-				<h1>{(this.props.hostname !== '')?this.props.hostname:'LiMe'}</h1>
-				<div class={this.menuStatus(this.state.open)} onClick={this.toggle}>
-					<span>toggle menu</span>
-				</div>
-				<Drawer status={this.state.open} toggle={this.toggle}>
-					<Navs />
-				</Drawer>
-			</header>
-		);
-	}
-}
-
-export default Header;
+    return (
+        <Fragment>
+            <header className={style.header}>
+                {boardData && <h1>{boardData.hostname}</h1>}
+                {boardData && menuEnabled && (
+                    <div
+                        className={`${style.hamburger} ${
+                            menuOpened ? style.isActive : ""
+                        }`}
+                        onClick={toggleMenu}
+                    >
+                        <span>toogle menu</span>
+                    </div>
+                )}
+            </header>
+            <Menu opened={menuOpened} toggle={toggleMenu} />
+        </Fragment>
+    );
+};

@@ -1,159 +1,174 @@
-import { h, Component } from 'preact';
+import { Trans } from "@lingui/macro";
+import { route } from "preact-router";
+import { useEffect, useState } from "preact/hooks";
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'preact-redux';
-import { changeInterface, changeStation, startAlign, stopTimer } from './alignActions';
+import { List, ListItem } from "components/list";
+import Loading from "components/loading";
+import { SignalBar } from "components/signalbar";
+import signalStyle from "components/signalbar/style.less";
+import Tabs from "components/tabs";
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/debounce';
-import 'rxjs/add/observable/timer';
+import { useBatHost } from "utils/queries";
 
-import { getAll, getSelectedHost, getSettings } from './alignSelectors';
+import { useAssocList, useMeshIfaces } from "./alignQueries";
+import { SecondsAgo } from "./components/secondsAgo";
+import style from "./style.less";
+import { ifaceToRadioNumber } from "./utils";
 
-import I18n from 'i18n-js';
+export const AssocRow = ({ station, iface }) => {
+    const {
+        data: bathost,
+        isLoading,
+        isError,
+    } = useBatHost(station.mac, iface);
 
-import colorScale from 'simple-color-scale';
+    function goToAlignSingle() {
+        route(`/align-single/${iface}/${station.mac}`);
+    }
 
-//Eperimental text-to-speech
-let synth = window.speechSynthesis;
-let voices = synth.getVoices();
-
-const speech = (text, lang, voices, synth) => {
-	let utterThis = new SpeechSynthesisUtterance(text);
-	utterThis.pitch = 0.9;
-	utterThis.rate = 1.2;
-	utterThis.voice = voices.filter(x => x.name === lang)[0];
-	synth.speak(utterThis);
+    const radioNumber = bathost?.iface && ifaceToRadioNumber(bathost.iface);
+    return (
+        <ListItem onClick={goToAlignSingle}>
+            <div>
+                {isLoading || isError ? (
+                    <div
+                        className={`${style.fetchingName} withLoadingEllipsis`}
+                    >
+                        <Trans>Fetching name</Trans>
+                    </div>
+                ) : (
+                    <div className={style.stationHostname}>
+                        {bathost.hostname}
+                    </div>
+                )}
+                {bathost && bathost.iface && (
+                    <div>
+                        <Trans>On its radio {radioNumber}</Trans>
+                    </div>
+                )}
+                {station.inactive >= 3000 && (
+                    <div>
+                        <div>
+                            <Trans>Signal lost</Trans>
+                        </div>
+                        <div>
+                            <Trans>Last packet</Trans>:{" "}
+                            <SecondsAgo initialMs={station.inactive} isStatic />
+                        </div>
+                    </div>
+                )}
+            </div>
+            {station.inactive >= 3000 ? (
+                <div className={signalStyle.signal}>
+                    X
+                    <SignalBar signal={null} className={signalStyle.bar} />
+                </div>
+            ) : (
+                <div className={signalStyle.signal}>
+                    <div className="d-flex flex-grow-1 align-items-baseline">
+                        <div>{station.signal}</div>
+                        <div className={style.unit}>dBm</div>
+                    </div>
+                    <SignalBar
+                        signal={station.signal}
+                        className={signalStyle.bar}
+                    />
+                </div>
+            )}
+        </ListItem>
+    );
 };
 
+export const AssocList = ({ iface }) => {
+    const {
+        data: assoclist,
+        isLoading,
+        isError,
+    } = useAssocList(iface, {
+        refetchInterval: 2000,
+    });
 
-const style = {
-	signal: {
-		fontSize: '20vh',
-		margin: '0.5rem',
-		display: 'block',
-		textAlign: 'center'
-	},
-	bar: {
-		display: 'block',
-		height: '10px'
-	},
-	hostname: {
-		display: 'block',
-		textAlign: 'center'
-	},
-	block: {
-		width: '100%'
-	}
+    if (isLoading) {
+        return (
+            <div className="container container-center">
+                <Loading />
+            </div>
+        );
+    }
+
+    if (isError || !assoclist) {
+        return (
+            <div className="container container-center">
+                <Trans>Error retrieving associated list</Trans>
+            </div>
+        );
+    }
+
+    return (
+        <List>
+            {assoclist.length > 0 && (
+                <div className={style.assoclistHeader}>
+                    <Trans>These are the nodes associated on this radio</Trans>
+                </div>
+            )}
+            {assoclist.map((station) => (
+                <AssocRow key={station.mac} station={station} iface={iface} />
+            ))}
+            {assoclist.length === 0 && (
+                <div className="container-center">
+                    <Trans>This radio is not associated with other nodes</Trans>
+                </div>
+            )}
+        </List>
+    );
 };
 
-class Align extends Component {
+export const Align = ({}) => {
+    const [tabs, setTabs] = useState([]);
+    const [selectedIface, setSelectedIface] = useState(null);
+    const { data: ifaces, isLoading } = useMeshIfaces();
 
-	changeInterface(e) {
-		this.props.changeInterface(e.target.value);
-	}
+    useEffect(() => {
+        if (!ifaces) return;
+        const tabs = ifaces.sort().map((iface) => {
+            const radioNumber = ifaceToRadioNumber(iface);
+            return {
+                key: iface,
+                repr: <Trans>Radio {radioNumber}</Trans>,
+            };
+        });
+        setTabs(tabs);
+        if (ifaces.length > 0) {
+            setSelectedIface(ifaces[0]);
+        }
+    }, [ifaces]);
 
-	changeStation(e) {
-		this.props.changeStation(e.target.value);
-	}
+    if (isLoading) {
+        return (
+            <div className="container container-center">
+                <Loading />
+            </div>
+        );
+    }
 
-	startSpeech() {
-		this.speechSubscription = this.alignValue
-			.debounce(() => Observable.timer(1000))
-			.subscribe((value) => {
-				if ( (Math.floor(this.lastSpeech/10) !== Math.floor(value/10)) || Number(value.toString()[value.toString().length -1 ]) === 0 || this.resumedTimes === 5 ) {
-					speech(value || 0, 'es-ES', voices, synth);
-					this.resumedTimes = 0;
-				}
-				else {
-					speech(value.toString()[value.toString().length - 1] || 0, 'es-ES', voices, synth);
-					this.resumedTimes++;
-				}
-				this.lastSpeech = value;
-			});
-	}
+    if (!ifaces || ifaces.length === 0) {
+        return (
+            <div className="container container-center">
+                <Trans>The are not mesh interfaces available</Trans>
+            </div>
+        );
+    }
 
-	stopSpeech() {
-		this.speechSubscription.unsubscribe();
-	}
+    return (
+        <div className="d-flex flex-column flex-grow-1 overflow-auto">
+            <Tabs
+                tabs={tabs}
+                current={selectedIface}
+                onChange={setSelectedIface}
+            />
+            {selectedIface && <AssocList iface={selectedIface} />}
+        </div>
+    );
+};
 
-	colorBar(signal) {
-		return Object.assign({}, style.bar,{ backgroundColor: colorScale.getColor(signal) });
-	}
-
-	constructor() {
-		super();
-		this.alignValue = new BehaviorSubject();
-		this.speechSubscription = null;
-		this.lastSpeech = 0;
-		this.resumedTimes = 0;
-		this.changeInterface = this.changeInterface.bind(this);
-		this.changeStation = this.changeStation.bind(this);
-	}
-
-	componentWillMount() {
-		this.props.startAlign();
-		this.startSpeech();
-		colorScale.setConfig({
-			outputStart: 1,
-			outputEnd: Number(this.props.settings.bad_signal)* -1,
-			inputStart: Number(this.props.settings.good_signal)* -1,
-			inputEnd: Number(this.props.settings.bad_signal)* -1 + 10
-		});
-	}
-
-	componentWillUnmount() {
-		this.props.stopAlign();
-		this.stopSpeech();
-	}
-
-	render(state) {
-		this.alignValue.next(state.alignData.currentReading.signal * -1);
-		return (
-			<div className="container" style={{ paddingTop: '100px' }}>
-				<div className="row">
-					<div className="six columns">
-						<span style={style.hostname}>
-							{this.props.selectedHost || ''}
-						</span>
-						<h1 style={style.signal}>
-							{state.alignData.currentReading.signal || 0}
-							<span style={this.colorBar(this.props.alignData.currentReading.signal * -1)} />
-						</h1>
-						<span style={style.hostname}>
-							{state.alignData.currentReading.hostname || ''}
-						</span>
-					</div>
-					<div className="six columns">
-						<label>{I18n.t('Interfaces')}</label>
-						<select style={style.block} onChange={this.changeInterface} value={state.alignData.currentReading.iface ? state.alignData.currentReading.iface : null}>
-							{state.alignData.ifaces.map((iface) => <option value={iface.name}>{iface.name}</option>)}
-						</select>
-						<label>{I18n.t('Stations')}</label>
-						<select  style={style.block} onChange={this.changeStation} value={state.alignData.currentReading.mac ? state.alignData.currentReading.mac : null}>
-							{state.alignData.stations.map((station) => <option value={station.mac}>{station.hostname}</option>)}
-						</select>
-					</div>
-				</div>
-			</div>
-		);
-	}
-}
-
-
-const mapStateToProps = (state) => ({
-	alignData: getAll(state),
-	selectedHost: getSelectedHost(state),
-	settings: getSettings(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	changeInterface: bindActionCreators(changeInterface, dispatch),
-	changeStation: bindActionCreators(changeStation, dispatch),
-	startAlign: bindActionCreators(startAlign, dispatch),
-	stopAlign: bindActionCreators(stopTimer,dispatch)
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Align);
+export default Align;

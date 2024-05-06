@@ -1,28 +1,33 @@
-import { compose, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { routerMiddleware } from "react-router-redux";
+import { applyMiddleware, compose, createStore } from "redux";
+import { createEpicMiddleware } from "redux-observable";
+import { from } from "rxjs";
 
-import { createEpicMiddleware } from 'redux-observable';
-import { routerMiddleware } from 'preact-router-redux';
+import uhttpdService from "../utils/uhttpd.service";
+import { history } from "./history";
 
-import { history } from './history';
+const api = {
+    call: (...params) => from(uhttpdService.call(...params)),
+};
 
+export default (initialState, rootEpics, rootReducers) => {
+    const composeEnhancers =
+        // @ts-ignore
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default (initialState,rootEpics,rootReducers, wsAPI) => {
+    const reduxRouterMiddleware = routerMiddleware(history);
 
-	const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const epicMiddleware = createEpicMiddleware({
+        dependencies: { wsAPI: api },
+    });
 
-	const reduxRouterMiddleware = routerMiddleware(history);
+    const enhancer = composeEnhancers(
+        applyMiddleware(...[reduxRouterMiddleware, epicMiddleware])
+    );
 
-	const epicMiddleware = createEpicMiddleware(rootEpics, {
-		dependencies: { wsAPI }
-	});
-  
-	const enhancer = composeEnhancers(
-		applyMiddleware(...[reduxRouterMiddleware,epicMiddleware,thunk.withExtraArgument()]),
-	);
-  
+    const store = createStore(rootReducers, initialState, enhancer);
 
-	const store = createStore(rootReducers, initialState, enhancer);
-	return store;
+    epicMiddleware.run(rootEpics);
 
+    return store;
 };

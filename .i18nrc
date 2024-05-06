@@ -1,6 +1,0 @@
-{
-  "plugins": [
-    "preact-i18nline"
-  ],
-  "outputFile": "i18n/generic.json"
-}

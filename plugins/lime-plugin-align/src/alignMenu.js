@@ -1,7 +1,12 @@
-import { h } from 'preact';
+import { Trans } from "@lingui/macro";
 
-import I18n from 'i18n-js';
+import { AlignIcon } from "components/icons/teenny/align";
 
 export const AlignMenu = () => (
-	<a href={'#/align'}>{I18n.t('Align')}</a>
+    <span>
+        <AlignIcon />
+        <a href={"#/align"}>
+            <Trans>Align</Trans>
+        </a>
+    </span>
 );

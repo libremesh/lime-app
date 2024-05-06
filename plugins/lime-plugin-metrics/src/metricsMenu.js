@@ -1,7 +1,12 @@
-import { h } from 'preact';
+import { Trans } from "@lingui/macro";
 
-import I18n from 'i18n-js';
+import { EqualizerIcon } from "components/icons/teenny/equalizer";
 
 export const MetricsMenu = () => (
-	<a href={'#/metrics'}>{I18n.t('Metrics')}</a>
+    <span>
+        <EqualizerIcon />
+        <a href={"#/metrics"}>
+            <Trans>Metrics</Trans>
+        </a>
+    </span>
 );
