@@ -1,4 +1,6 @@
+import { ComponentChildren, createContext } from "preact";
 import { useMemo } from "preact/compat";
+import { useContext } from "preact/hooks";
 
 import { isValidCoordinate } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
@@ -7,8 +9,31 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import { INodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
-// todo(kon): this should be inside a provider to don't repeat the calculations
-export const useNodes = () => {
+interface NodesContextType {
+    hasInvalidNodes: boolean;
+    allNodes: {
+        meshWideNodesReference: INodes;
+        meshWideNodesActual: INodes;
+    };
+    invalidNodes: {
+        invalidNodesReference: INodes;
+        invalidNodesActual: INodes;
+    };
+    locatedNodes: {
+        locatedNodesReference: INodes;
+        locatedNodesActual: INodes;
+        allLocatedNodes: INodes;
+        locatedNewNodes: INodes;
+    };
+}
+
+const NodesContext = createContext<NodesContextType>(null);
+
+export const NodesProvider = ({
+    children,
+}: {
+    children: ComponentChildren;
+}) => {
     const { data: meshWideNodesReference } = useMeshWideNodesReference({});
     const { data: meshWideNodesActual } = useMeshWideNodes({});
 
@@ -83,22 +108,37 @@ export const useNodes = () => {
         ...locatedNewNodes,
     };
 
-    return {
-        hasInvalidNodes,
-        allNodes: {
-            meshWideNodesReference,
-            meshWideNodesActual,
-        },
-        // Invalid nodes doesn't contain a correct lat long
-        invalidNodes: {
-            invalidNodesReference,
-            invalidNodesActual,
-        },
-        locatedNodes: {
-            locatedNodesReference,
-            locatedNodesActual,
-            allLocatedNodes,
-            locatedNewNodes, // New nodes (not on the ref state)
-        },
-    };
+    return (
+        <NodesContext.Provider
+            value={{
+                hasInvalidNodes,
+                allNodes: {
+                    meshWideNodesReference,
+                    meshWideNodesActual,
+                },
+                // Invalid nodes doesn't contain a correct lat long
+                invalidNodes: {
+                    invalidNodesReference,
+                    invalidNodesActual,
+                },
+                locatedNodes: {
+                    locatedNodesReference,
+                    locatedNodesActual,
+                    allLocatedNodes,
+                    locatedNewNodes, // New nodes (not on the ref state)
+                },
+            }}
+        >
+            {children}
+        </NodesContext.Provider>
+    );
+};
+
+// Helper hook to use the context
+export const useNodes = () => {
+    const context = useContext(NodesContext);
+    if (context === null) {
+        throw new Error("useNodesContext must be used within a NodesProvider");
+    }
+    return context;
 };

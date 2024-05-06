@@ -7,8 +7,9 @@ import { useLoadLeaflet } from "plugins/lime-plugin-locate/src/locateQueries";
 import { FloatingAlert } from "plugins/lime-plugin-mesh-wide/src/components/Map/FloatingAlert";
 import { MeshWideMap } from "plugins/lime-plugin-mesh-wide/src/containers/Map";
 import { SelectedFeatureBottomSheet } from "plugins/lime-plugin-mesh-wide/src/containers/SelectedFeatureBottomSheet";
+import { NodesProvider } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 
-const MeshWidePage = () => {
+const MeshWide = () => {
     const {
         isError: isAssetError,
         isFetchedAfterMount: assetsLoaded,
@@ -42,6 +43,14 @@ const MeshWidePage = () => {
             <SelectedFeatureBottomSheet />
             {/*<FloatingButton onClick={() => route("/meshwide/config")} />*/}
         </>
+    );
+};
+
+const MeshWidePage = () => {
+    return (
+        <NodesProvider>
+            <MeshWide />
+        </NodesProvider>
     );
 };
 
