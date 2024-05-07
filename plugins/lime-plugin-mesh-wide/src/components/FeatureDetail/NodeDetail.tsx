@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
+import RemoteRebootBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn";
 import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
 import {
     Row,
@@ -39,10 +40,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
         <div>
             <Row>
                 <div className={"text-3xl"}>{name}</div>
-                {/*todo(kon): implement safe_reboot*/}
-                {/*<Button color={"danger"} outline={true} size={"sm"}>*/}
-                {/*    <PowerIcon />*/}
-                {/*</Button>*/}
+                <RemoteRebootBtn node={nodeToShow} />
             </Row>
             <Row>
                 {!isDown ? (
