@@ -6,6 +6,9 @@ import Router from "preact-router";
 import { useEffect } from "preact/hooks";
 import { Provider } from "react-redux";
 
+import { UseModalProvider } from "components/Modal/Modal";
+import { ToastProvider } from "components/toast/toastProvider";
+
 import { Menu } from "containers/Menu";
 import { RebootPage } from "containers/RebootPage";
 import SubHeader from "containers/SubHeader";
@@ -85,7 +88,7 @@ const App = () => {
     }, [session, login]);
 
     if (!session?.username || !boardData) {
-        return "Loading...";
+        return <div>"Loading..."</div>;
     }
 
     return (
@@ -106,13 +109,14 @@ const AppDefault = () => {
     }, []);
     return (
         <I18nProvider i18n={i18n}>
-            {/*@ts-ignore*/}
             <QueryClientProvider client={queryCache}>
-                {/* @ts-ignore */}
                 <AppContextProvider>
                     <Provider store={store}>
-                        {/* @ts-ignore */}
-                        <App />
+                        <UseModalProvider>
+                            <ToastProvider>
+                                <App />
+                            </ToastProvider>
+                        </UseModalProvider>
                     </Provider>
                 </AppContextProvider>
             </QueryClientProvider>

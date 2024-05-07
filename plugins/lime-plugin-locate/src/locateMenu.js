@@ -1,12 +1,12 @@
 import { Trans } from "@lingui/macro";
 
-import { MapIcon } from "components/icons/teenny/map";
+import { PinIcon } from "components/icons/teenny/pin";
 
 export const LocateMenu = () => (
     <span>
-        <MapIcon />
+        <PinIcon />
         <a href={"#/locate"}>
-            <Trans>Map</Trans>
+            <Trans>Locate</Trans>
         </a>
     </span>
 );
