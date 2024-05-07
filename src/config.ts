@@ -4,7 +4,7 @@ import Fbw from "plugins/lime-plugin-fbw";
 import Firmware from "plugins/lime-plugin-firmware";
 import Locate from "plugins/lime-plugin-locate";
 import MeshWide from "plugins/lime-plugin-mesh-wide";
-import MeshWideUpgrade from "plugins/lime-plugin-mesh-wide-upgrade";
+import MeshUpgrade from "plugins/lime-plugin-mesh-wide-upgrade";
 import Metrics from "plugins/lime-plugin-metrics";
 import NetworkAdmin from "plugins/lime-plugin-network-admin";
 import NodeAdmin from "plugins/lime-plugin-node-admin";
@@ -24,9 +24,10 @@ export const plugins: LimePlugin[] = [
     NodeAdmin,
     NetworkAdmin,
     Firmware,
+    MeshWide,
+    MeshUpgrade,
     ChangeNode,
     RemoteSupport,
     Pirania,
     Fbw, // fbw does not have menu item
-    MeshWideUpgrade, // Does not have menu item
 ];
