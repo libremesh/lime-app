@@ -25,6 +25,10 @@ module.exports = {
                     info: "#00ADEE",
                     disabled: "#BABABA",
                 },
+                button: {
+                    primary: "#1BC47D",
+                    secondary: "#6BC3AE",
+                },
                 danger: "#EB7575",
                 info: "#EAAB7E",
                 success: "#76BD7D",

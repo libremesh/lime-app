@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { i18n } from "@lingui/core";
 // import i18n, { dynamicActivate } from '../i18n';
 import { I18nProvider } from "@lingui/react";

@@ -4,7 +4,7 @@ import { getInternetStatus, getNodeStatus } from "./rxApi";
 
 const refetchInterval = 2000;
 
-export function useNodeStatus(params) {
+export function useNodeStatus(params?) {
     return useQuery(["lime-rx", "node-status"], getNodeStatus, {
         enabled: true,
         refetchInterval,
@@ -12,7 +12,7 @@ export function useNodeStatus(params) {
     });
 }
 
-export function useInternetStatus(params) {
+export function useInternetStatus(params?) {
     return useQuery(["lime-rx", "internet-status"], getInternetStatus, {
         placeholderData: {
             IPv4: { working: null },
