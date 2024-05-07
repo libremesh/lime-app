@@ -1,14 +1,13 @@
 import { Trans } from "@lingui/macro";
 
+import { FooterStatus } from "components/status/footer";
 import { useToast } from "components/toast/toastProvider";
-
-import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 
 export const MeshStatus = () => {
     const { showToast } = useToast();
     return (
-        <StatusAndButton
-            isError={false}
+        <FooterStatus
+            status={"success"}
             btn={"Update"}
             onClick={() => {
                 showToast({
@@ -31,6 +30,6 @@ export const MeshStatus = () => {
                     <Trans>Last update: 30 second ago</Trans>
                 </span>
             </div>
-        </StatusAndButton>
+        </FooterStatus>
     );
 };

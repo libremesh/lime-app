@@ -3,15 +3,14 @@ import { VNode } from "preact";
 import { Button } from "components/buttons/button";
 import { BinIcon } from "components/icons/bin";
 import { EditIcon } from "components/icons/edit";
-
-import SuccessIcon from "plugins/lime-plugin-mesh-wide/src/icons/SuccessIcon";
-import ErrorIcon from "plugins/lime-plugin-mesh-wide/src/icons/errorIcon";
+import { StatusIcon } from "components/icons/status";
 
 interface IStatusMessage {
     isError: boolean;
     children: VNode | string;
 }
 
+// todo(kon): merge with src/components/status/statusAndButton.tsx
 export const StatusAndButton = ({
     isError,
     children,
@@ -39,7 +38,11 @@ export const StatusMessage = ({
     <div
         className={`flex flex-row gap-3 ${classes} items-center justify-center text-center`}
     >
-        {isError ? <ErrorIcon /> : <SuccessIcon />}
+        {isError ? (
+            <StatusIcon status={"warning"} />
+        ) : (
+            <StatusIcon status={"success"} />
+        )}
         {children}
     </div>
 );

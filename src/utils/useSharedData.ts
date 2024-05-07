@@ -1,3 +1,4 @@
+import { MutationKey } from "@tanstack/query-core/src/types";
 import { useQuery } from "@tanstack/react-query";
 
 import queryCache from "utils/queryCache";
@@ -8,7 +9,7 @@ import queryCache from "utils/queryCache";
  * @param queryKey
  */
 export const useSharedData = <T>(
-    queryKey: Array<string>
+    queryKey: MutationKey
 ): { data: T | null; setData: (newData: T) => void } => {
     const { data } = useQuery<T | null>(queryKey, () => null);
     const setData = (newData: T) => queryCache.setQueryData(queryKey, newData);
