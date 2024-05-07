@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import queryCache from "utils/queryCache";
 import { useSharedData } from "utils/useSharedData";
 
-export class ParallelMutationError extends Error {
+export class RemoteNodeCallError extends Error {
     ip: string;
     error: Error;
     constructor(message: string, ip: string, error: Error) {
@@ -15,7 +15,7 @@ export class ParallelMutationError extends Error {
         this.error = error;
 
         // Set the prototype explicitly.
-        Object.setPrototypeOf(this, ParallelMutationError.prototype);
+        Object.setPrototypeOf(this, RemoteNodeCallError.prototype);
     }
 }
 
@@ -24,7 +24,7 @@ interface IMutationFnVariables<TVariables> {
     variables?: TVariables;
 }
 
-export type SyncCallErrors = Array<Error | ParallelMutationError>;
+export type SyncCallErrors = Array<Error | RemoteNodeCallError>;
 type SyncCallResults<TResult> = TResult[];
 /**
  * This object is used to store the results and errors of all the mutations calls.
@@ -49,7 +49,7 @@ interface IMeshWideSyncCall<TVariables, TResult> {
     variables?: TVariables;
     options?: UseMutationOptions<
         TResult,
-        ParallelMutationError,
+        RemoteNodeCallError,
         IMutationFnVariables<TVariables>
     >;
 }
@@ -60,7 +60,7 @@ interface IMeshWideSyncCall<TVariables, TResult> {
  * In order to reuse the data on different parts, it implements caches using the queryCache. The results and errors for
  * all the calls are stored using useSharedData query.
  *
- * In addition, is possible to acces to every single call accesing to the [...mutationKey, ip] key on the queryCache.
+ * In addition, is possible to access to every single call accessing to the [...mutationKey, ip] key on the queryCache.
  *
  * @param mutationKey Mutation key to store the results and errors
  * @param mutationFn Function that will be called for every ip
@@ -81,7 +81,7 @@ export const useMeshWideSyncCall = <TVariables, TResult>({
 
     const { mutateAsync } = useMutation<
         TResult,
-        ParallelMutationError,
+        RemoteNodeCallError,
         IMutationFnVariables<TVariables>
     >({ mutationFn, mutationKey, ...options });
 
