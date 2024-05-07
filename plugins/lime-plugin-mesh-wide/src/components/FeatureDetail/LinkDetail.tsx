@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { useState } from "preact/hooks";
 
+import { Warning } from "components/icons/status";
 import Tabs from "components/tabs";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
@@ -9,7 +10,6 @@ import {
     getQueryByLinkType,
     usePointToPointErrors,
 } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
-import ErrorIcon from "plugins/lime-plugin-mesh-wide/src/icons/errorIcon";
 import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { readableBytes } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
@@ -40,7 +40,7 @@ const BatmanDetail = ({
             <Row>
                 <div className={"flex"}>
                     <strong>{name}</strong>{" "}
-                    {errorsArray?.length > 0 && <ErrorIcon />}
+                    {errorsArray?.length > 0 && <Warning />}
                 </div>
             </Row>
             <Row>
@@ -69,7 +69,7 @@ const WifiDetail = ({
             <Row>
                 <div className={"flex"}>
                     <strong>{name}</strong>{" "}
-                    {errorsArray?.length > 0 && <ErrorIcon />}
+                    {errorsArray?.length > 0 && <Warning />}
                 </div>
             </Row>
             <Row>
@@ -183,7 +183,7 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
                             Link {i + 1}{" "}
                             {errors &&
                             errors?.macToMacErrors[link.id]?.hasErrors ? (
-                                <ErrorIcon />
+                                <Warning />
                             ) : null}
                         </Trans>
                     </div>

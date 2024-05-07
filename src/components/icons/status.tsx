@@ -14,9 +14,9 @@ export const StatusIcon = ({ status }: { status: StatusIcons }) => {
     }
 };
 
-const Tick = () => <span className={"text-success text-4xl"}>✓</span>;
+export const Tick = () => <span className={"text-success text-4xl"}>✓</span>;
 
-const Warning = () => (
+export const Warning = () => (
     <span
         className={
             "rounded-full border-2 border-danger text-danger w-8 h-8 flex items-center justify-center mx-2"
