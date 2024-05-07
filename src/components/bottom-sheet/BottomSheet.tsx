@@ -9,7 +9,6 @@ import {
     useReduceMotion,
 } from "./utils";
 
-//  TODO - account for resizing the window
 const DRAWER_HEIGHT = window.innerHeight;
 const INITIAL_DRAWER_DISTANCE_FROM_TOP = 400;
 const MAX_WIDTH = 560;

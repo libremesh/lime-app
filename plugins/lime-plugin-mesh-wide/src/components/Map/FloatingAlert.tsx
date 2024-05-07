@@ -43,6 +43,7 @@ export const FloatingAlert = () => {
         invalidNodesActual,
         invalidNodesReference,
         meshWideDataErrors,
+        selectedMapFeature,
         setSelectedFeature,
     ]);
 

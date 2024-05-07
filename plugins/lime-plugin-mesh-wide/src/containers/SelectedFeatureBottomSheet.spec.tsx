@@ -1,11 +1,8 @@
 import "@testing-library/jest-dom";
-// import "@testing-library/jest-dom/extend-expect";
 import { screen } from "@testing-library/preact";
 
 import { SelectedFeatureBottomSheet } from "plugins/lime-plugin-mesh-wide/src/containers/SelectedFeatureBottomSheet";
 import {
-    links,
-    linksReferenceState,
     nodes,
     nodesReferenceState,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
@@ -17,7 +14,7 @@ import {
 
 import { render } from "utils/test_utils";
 
-jest.mock("plugins/lime-plugin-mesh-wide/src/mesWideQueries.tsx");
+jest.mock("plugins/lime-plugin-mesh-wide/src/meshWideQueries.tsx");
 const mockedSelectedMapFeature = jest.mocked(useSelectedMapFeature);
 
 function pxToNumber(pxString: string): number {
@@ -57,25 +54,28 @@ describe("Feature bottom sheet", () => {
         ).toBeLessThan(0);
     });
 
-    // todo(kon): refactor this test because this feautre is changed
-    // it("should open BottomSheet with invalid nodes feature", () => {
-    //     const invalid = "invalid_node";
-    //     mockedSelectedMapFeature.mockReturnValue({
-    //         data: {
-    //             type: "invalidNodes",
-    //             feature: new Set([invalid]),
-    //             id: "invalidNodes",
-    //         },
-    //         setData: () => {},
-    //     });
-    //
-    //     render(<SelectedFeatureBottomSheet />);
-    //     expect(
-    //         pxToNumber(screen.queryByTestId("bottom-sheet-body").style.height)
-    //     ).toBeGreaterThan(0);
-    //     expect(screen.getByText(invalid)).toBeInTheDocument();
-    //     expect(screen.getByText("Invalid Nodes")).toBeInTheDocument();
-    // });
+    it("should open BottomSheet with invalid nodes feature", () => {
+        const invalid = "invalid_node";
+        mockedSelectedMapFeature.mockReturnValue({
+            data: {
+                type: "errorsDetails",
+                feature: {
+                    invalidNodes: new Set([invalid]),
+                    meshWideDataErrors: [],
+                    dataNotSetErrors: [],
+                },
+                id: "errorsDetails",
+            },
+            setData: () => {},
+        });
+
+        render(<SelectedFeatureBottomSheet />);
+        expect(
+            pxToNumber(screen.queryByTestId("bottom-sheet-body").style.height)
+        ).toBeGreaterThan(0);
+        expect(screen.getByText(invalid)).toBeInTheDocument();
+        expect(screen.getByText("Invalid Nodes")).toBeInTheDocument();
+    });
 
     it("should open BottomSheet with node feature", () => {
         const name = "LiMe-da4eaa";
@@ -97,10 +97,10 @@ describe("Feature bottom sheet", () => {
     });
 
     it.skip("should open BottomSheet with link feature", () => {
-        const name = "LiMe-da4eaa";
-        const actual = links("wifi_links_info")[name];
-        const reference = linksReferenceState[name];
-        // todo: fix this test
+        // todo: fix this test. The feature change with new objects.
+        // const name = "LiMe-da4eaa";
+        // const actual = links("wifi_links_info")[name];
+        // const reference = linksReferenceState[name];
         // mockedSelectedMapFeature.mockReturnValue({
         //     data: {
         //         type: "link",

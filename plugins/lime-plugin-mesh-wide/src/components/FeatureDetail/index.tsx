@@ -52,8 +52,6 @@ export const FeatureDetail = ({
             return <NodeDetails {...selectedFeature.feature} />;
         case "errorsDetails":
             return <ShowErrorsDetail errors={selectedFeature.feature} />;
-        default:
-            return <></>;
     }
 };
 

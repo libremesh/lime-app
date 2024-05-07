@@ -14,7 +14,11 @@ export const SelectedFeatureBottomSheet = () => {
     const { data: selectedMapFeature } = useSelectedMapFeature();
 
     useEffect(() => {
-        selectedMapFeature == null ? setIsOpen(false) : setIsOpen(true);
+        if (selectedMapFeature == null) {
+            setIsOpen(false);
+        } else {
+            setIsOpen(true);
+        }
     }, [selectedMapFeature]);
 
     return (

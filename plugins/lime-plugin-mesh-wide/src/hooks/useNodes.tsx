@@ -134,7 +134,6 @@ export const NodesProvider = ({
     );
 };
 
-// Helper hook to use the context
 export const useNodes = () => {
     const context = useContext(NodesContext);
     if (context === null) {

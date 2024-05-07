@@ -9,8 +9,6 @@ import {
     LinkType,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
-// todo(kon): if a mac disappear from mac list and a link with this mac as src mac disappear also, is not shown on the map.
-
 export const nodesReferenceState: INodes = {
     "LiMe-462895": {
         bleachTTL: 12,

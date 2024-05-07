@@ -12,7 +12,7 @@ const NodesLayer = () => {
     } = useNodes();
 
     return (
-        <div>
+        <>
             {referenceNodes &&
                 Object.entries(referenceNodes).map(([k, v], i) => {
                     let actualNode: INodeInfo;
@@ -32,7 +32,7 @@ const NodesLayer = () => {
                 Object.entries(locatedNewNodes).map(([k, v], i) => {
                     return <NodeMarker key={i} actual={v} name={k} />;
                 })}
-        </div>
+        </>
     );
 };
 

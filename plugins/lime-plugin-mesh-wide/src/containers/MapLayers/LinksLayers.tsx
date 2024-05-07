@@ -17,7 +17,7 @@ const LinksLayer = ({
     newLinks,
 }: ILinksLayerProps) => {
     return (
-        <div>
+        <>
             {linksLoaded &&
                 Object.entries(linksReference).map((referenceLink, i) => {
                     let actualLink: PontToPointLink;
@@ -38,7 +38,7 @@ const LinksLayer = ({
                 Object.entries(newLinks).map(([k, v], i) => {
                     return <LinkLine key={i} actualLink={v} />;
                 })}
-        </div>
+        </>
     );
 };
 

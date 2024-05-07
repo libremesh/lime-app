@@ -33,7 +33,7 @@ export const SectionEditOrDelete = ({ name }) => {
     const { toggleModal: toggleEditModal, actionModal: editPropertyModal } =
         useEditPropModal();
 
-    const { showToast, hideToast } = useToast();
+    const { showToast } = useToast();
 
     return (
         <EditOrDelete
@@ -44,12 +44,9 @@ export const SectionEditOrDelete = ({ name }) => {
                     toggleEditModal();
                     showToast({
                         text: (
-                            <>
-                                <Trans>Edited</Trans>
-                                {name}
-                                {" - "}
-                                {new Date().toDateString()}
-                            </>
+                            <Trans>
+                                Edited {name} - {new Date().toDateString()}
+                            </Trans>
                         ),
                         duration: 5000,
                         onAction: () => {
@@ -65,11 +62,9 @@ export const SectionEditOrDelete = ({ name }) => {
                     toggleDeleteModal();
                     showToast({
                         text: (
-                            <>
-                                <Trans>Deleted</Trans> {name}
-                                {" - "}
-                                {new Date().toDateString()}
-                            </>
+                            <Trans>
+                                Deleted {name} - {new Date().toDateString()}
+                            </Trans>
                         ),
                         duration: 5000,
                         onAction: () => {
@@ -86,7 +81,7 @@ export const AddNewSectionBtn = () => {
     const { toggleModal: toggleNewSectionModal, actionModal: addSectionModal } =
         useAddNewSectionModal();
 
-    const { showToast, hideToast } = useToast();
+    const { showToast } = useToast();
     return (
         <Button
             color={"info"}
@@ -96,11 +91,10 @@ export const AddNewSectionBtn = () => {
                     toggleNewSectionModal();
                     showToast({
                         text: (
-                            <>
-                                <Trans>Added section </Trans> {data.name}
-                                {" - "}
+                            <Trans>
+                                Added section {data.name} -{" "}
                                 {new Date().toDateString()}
-                            </>
+                            </Trans>
                         ),
                         duration: 5000,
                     });

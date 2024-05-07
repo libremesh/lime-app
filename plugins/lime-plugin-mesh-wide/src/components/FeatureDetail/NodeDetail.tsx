@@ -25,7 +25,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const ipv6 = nodeToShow.ipv6;
     const ipv4 = nodeToShow.ipv4;
     const device = nodeToShow.device;
-    const { errors, isDown, isNewNode } = useSingleNodeErrors({
+    const { errors, isDown } = useSingleNodeErrors({
         actual,
         reference,
     });
@@ -98,7 +98,6 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
 
 export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     const {
-        errors,
         hasErrors: hasNodeErrors,
         isDown,
         isNewNode,

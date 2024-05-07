@@ -88,7 +88,7 @@ const App = () => {
     }, [session, login]);
 
     if (!session?.username || !boardData) {
-        return "Loading...";
+        return <div>"Loading..."</div>;
     }
 
     return (
@@ -109,14 +109,11 @@ const AppDefault = () => {
     }, []);
     return (
         <I18nProvider i18n={i18n}>
-            {/*@ts-ignore*/}
             <QueryClientProvider client={queryCache}>
-                {/* @ts-ignore */}
                 <AppContextProvider>
                     <Provider store={store}>
                         <UseModalProvider>
                             <ToastProvider>
-                                {/* @ts-ignore */}
                                 <App />
                             </ToastProvider>
                         </UseModalProvider>

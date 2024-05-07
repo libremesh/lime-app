@@ -193,31 +193,27 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
     );
 
     return (
-        <>
-            <div className="d-flex flex-column flex-grow-1 overflow-auto gap-6">
-                {tabs?.length > 1 && (
-                    <Tabs
-                        tabs={tabs}
-                        current={selectedLink}
-                        onChange={setSelectedLink}
-                    />
-                )}
-                {selectedLink !== null && (
-                    <SelectedLink
-                        linkDetail={actual?.links[selectedLink]}
-                        errors={
-                            errors?.macToMacErrors[
-                                actual?.links[selectedLink]?.id
-                            ]
-                        }
-                    />
-                )}
-            </div>
-        </>
+        <div className="d-flex flex-column flex-grow-1 overflow-auto gap-6">
+            {tabs?.length > 1 && (
+                <Tabs
+                    tabs={tabs}
+                    current={selectedLink}
+                    onChange={setSelectedLink}
+                />
+            )}
+            {selectedLink !== null && (
+                <SelectedLink
+                    linkDetail={actual?.links[selectedLink]}
+                    errors={
+                        errors?.macToMacErrors[actual?.links[selectedLink]?.id]
+                    }
+                />
+            )}
+        </div>
     );
 };
 
-export const LinkReferenceStatus = ({ actual, reference }: LinkMapFeature) => {
+export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
     const isNewNode = !reference;
 
     const { errors } = usePointToPointErrors({

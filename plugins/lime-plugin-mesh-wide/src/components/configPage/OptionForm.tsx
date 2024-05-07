@@ -71,7 +71,7 @@ export const OptionContainer = ({
         useDeletePropModal();
     const { toggleModal: toggleEditModal, actionModal: editPropertyModal } =
         useEditPropModal();
-    const { showToast, hideToast } = useToast();
+    const { showToast } = useToast();
 
     return (
         <div class={"px-4"}>
@@ -96,10 +96,9 @@ export const OptionContainer = ({
                                         toggleDeleteModal();
                                         showToast({
                                             text: (
-                                                <>
-                                                    <Trans>Deleted</Trans>{" "}
-                                                    {keyString}
-                                                </>
+                                                <Trans>
+                                                    Deleted {keyString}
+                                                </Trans>
                                             ),
                                             duration: 5000,
                                             onAction: () => {
@@ -122,11 +121,7 @@ export const OptionContainer = ({
                                 toggleEditModal();
                                 toggleIsEditing();
                                 showToast({
-                                    text: (
-                                        <>
-                                            <Trans>Edited </Trans> {keyString}
-                                        </>
-                                    ),
+                                    text: <Trans>Edited {keyString}</Trans>,
                                     duration: 5000,
                                 });
                             });

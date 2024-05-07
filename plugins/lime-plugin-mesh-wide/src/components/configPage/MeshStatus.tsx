@@ -5,8 +5,7 @@ import { useToast } from "components/toast/toastProvider";
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 
 export const MeshStatus = () => {
-    const { showToast, hideToast } = useToast();
-
+    const { showToast } = useToast();
     return (
         <StatusAndButton
             isError={false}
@@ -15,8 +14,10 @@ export const MeshStatus = () => {
                 showToast({
                     text: (
                         <>
-                            <Trans>Updating shared state</Trans>{" "}
-                            {new Date().toDateString()}
+                            <Trans>
+                                Updating shared state{" "}
+                                {new Date().toDateString()}
+                            </Trans>
                         </>
                     ),
                     duration: 5000,
