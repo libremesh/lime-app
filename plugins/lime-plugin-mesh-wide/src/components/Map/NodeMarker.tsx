@@ -57,7 +57,7 @@ const NodeMarker = ({
                 },
             }}
         >
-            <Tooltip>{name}</Tooltip>
+            <Tooltip className={"text-3xl"}>{name}</Tooltip>
         </Marker>
     );
 };

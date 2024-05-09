@@ -14,7 +14,7 @@ import {
 
 import { useSharedData } from "utils/useSharedData";
 
-const refetchInterval = 5000;
+const refetchInterval = 10000;
 
 export function useMeshWideLinksReference(params) {
     const dataType: DataTypes = "wifi_links_info";

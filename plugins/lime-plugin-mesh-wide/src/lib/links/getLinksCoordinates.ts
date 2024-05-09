@@ -37,7 +37,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
 
             // Is possible that the destination node is not on the list of links,
             // just ignore it
-            if (!dstNodeName) continue;
+            if (!dstNodeName || !links[dstNodeName]) continue;
 
             if (
                 dstNodeName &&
@@ -47,7 +47,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 // Generate a unique id of the point to point link based on the coordinates
                 const linkKey = PontToPointLink.generateId(
                     nodes[linkNodeName].coordinates,
-                    nodes[dstNodeName!].coordinates
+                    nodes[dstNodeName].coordinates
                 );
 
                 // If this point to point link no exists, instantiate it

@@ -24,7 +24,6 @@ export const plugins: LimePlugin[] = [
     NodeAdmin,
     NetworkAdmin,
     Firmware,
-    MeshWide,
     MeshUpgrade,
     ChangeNode,
     RemoteSupport,
