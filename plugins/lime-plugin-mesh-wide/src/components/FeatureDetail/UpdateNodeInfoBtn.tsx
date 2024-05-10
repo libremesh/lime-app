@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/macro";
+import { useState } from "preact/hooks";
 import { useCallback } from "react";
 
 import { Button } from "components/buttons/button";
@@ -21,7 +22,9 @@ import queryCache from "utils/queryCache";
 const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
     const ip = node.ipv4;
 
+    const [isLoading, setIsLoading] = useState(false);
     const { showToast } = useToast();
+
     const { mutateAsync: localNodeSync } = useSyncDataTypes({
         ip,
     });
@@ -42,25 +45,31 @@ const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
 
     // useCallback to sync the node data
     const syncNode = useCallback(async () => {
-        try {
-            await publishOnRemoteNode({ ip });
-        } catch (e) {
-            showToast({
-                text: (
-                    <Trans>
-                        Error connecting with {node.hostname}, is node up?
-                    </Trans>
-                ),
-                duration: 5000,
+        if (isLoading) return;
+        setIsLoading(true);
+        publishOnRemoteNode({ ip })
+            .catch((e) => {
+                showToast({
+                    text: (
+                        <Trans>
+                            Error connecting with {node.hostname}, is node up?
+                        </Trans>
+                    ),
+                    duration: 5000,
+                });
+                throw e;
+            })
+            .then(async () => {
+                await localNodeSync({ ip });
+                await invalidateQueries();
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
-            console.error(e);
-        }
-
-        await localNodeSync({ ip });
-        await invalidateQueries();
     }, [
         invalidateQueries,
         ip,
+        isLoading,
         localNodeSync,
         node.hostname,
         publishOnRemoteNode,
@@ -68,7 +77,12 @@ const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
     ]);
 
     return (
-        <Button color={"primary"} outline={true} size={"sm"} onClick={syncNode}>
+        <Button
+            color={"primary"}
+            outline={!isLoading}
+            size={"sm"}
+            onClick={syncNode}
+        >
             <RefreshIcon />
         </Button>
     );
