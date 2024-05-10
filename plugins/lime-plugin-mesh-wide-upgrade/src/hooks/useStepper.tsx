@@ -32,6 +32,7 @@ export const getStepperStatus = (
     someNodeAreDownloading: boolean,
     isAborting: boolean
 ): StepperState => {
+    return "DOWNLOADED_MAIN";
     if (!nodeInfo || !thisNode) return "INITIAL";
 
     if (isAborting) {

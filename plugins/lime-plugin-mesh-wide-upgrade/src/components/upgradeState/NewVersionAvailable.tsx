@@ -27,7 +27,7 @@ export const NewVersionAvailable = ({
         },
     ];
 
-    if (readyForUpgrade) {
+    if (!readyForUpgrade) {
         steps = [
             ...steps,
             {
