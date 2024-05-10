@@ -10,6 +10,7 @@ import { callToRemoteNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/util
 import { doSharedStateApiCall } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
 import {
     getFromSharedStateKeys,
+    publishAllFromSharedStateAsyncKey,
     syncFromSharedStateAsyncKey,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
@@ -29,10 +30,23 @@ export async function publishOnRemoteNode({ ip }: IRemoteRebotProps) {
         ip,
         apiCall: (customApi) =>
             customApi
-                .call("shared-state-async", "publish_all", {})
+                .call(...publishAllFromSharedStateAsyncKey, {})
                 .then(() => true),
     });
 }
+
+const usePublishOnRemoteNode = ({
+    ip,
+    ...opts
+}: {
+    ip: string;
+    opts?: any;
+}) => {
+    return useMutation(publishOnRemoteNode, {
+        mutationKey: [publishAllFromSharedStateAsyncKey, ip],
+        ...opts,
+    });
+};
 
 export async function syncDataType({
     dataType,
@@ -41,10 +55,9 @@ export async function syncDataType({
     dataType: DataTypes;
     ip: string;
 }) {
-    const queryKey = getFromSharedStateKeys.syncFromSharedStateAsync(
-        dataType,
-        ip
-    );
+    const queryKey = getFromSharedStateKeys.syncFromSharedStateAsync(dataType, [
+        ip,
+    ]);
     return doSharedStateApiCall<typeof dataType>(queryKey);
 }
 
@@ -56,26 +69,10 @@ export async function syncAllDataTypes({ ip }: { ip: string }) {
 }
 
 const useSyncDataTypes = ({ ip, ...opts }: { ip: string; opts?: any }) => {
-    return useMutation((props: IRemoteRebotProps) => syncAllDataTypes({ ip }), {
+    return useMutation(syncAllDataTypes, {
         mutationKey: [syncFromSharedStateAsyncKey, ip],
         ...opts,
     });
-};
-
-const usePublishOnRemoteNode = ({
-    ip,
-    ...opts
-}: {
-    ip: string;
-    opts?: any;
-}) => {
-    return useMutation(
-        (props: IRemoteRebotProps) => publishOnRemoteNode({ ip }),
-        {
-            mutationKey: [syncFromSharedStateAsyncKey, ip],
-            ...opts,
-        }
-    );
 };
 
 const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
@@ -103,7 +100,7 @@ const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
     // useCallback to sync the node data
     const syncNode = useCallback(async () => {
         try {
-            await localNodeSync({ ip });
+            await publishOnRemoteNode({ ip });
         } catch (e) {
             showToast({
                 text: (
@@ -111,9 +108,12 @@ const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
                         Error connecting with {node.hostname}, is node up?
                     </Trans>
                 ),
+                duration: 5000,
             });
+            console.error(e);
         }
-        await publishOnRemoteNode({ ip });
+
+        await localNodeSync({ ip });
         await invalidateQueries();
     }, [
         invalidateQueries,
