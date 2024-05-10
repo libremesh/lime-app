@@ -1,5 +1,5 @@
-import { t } from "@lingui/macro";
 import L from "leaflet";
+import { ComponentChildren } from "preact";
 import { useEffect, useRef } from "preact/hooks";
 import {
     LayerGroup,
@@ -18,6 +18,7 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayers";
 import NodesLayer from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/NodesLayer";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+import { DataTypes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 const openStreetMapTileString = "https://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
@@ -76,6 +77,15 @@ export const MeshWideMap = ({
         }
     }, [loading, nodeLocation]);
 
+    const mapSupportedLayers: Record<
+        DataTypes,
+        { name: string; layer: ComponentChildren }
+    > = {
+        node_info: { name: "Nodes", layer: <NodesLayer /> },
+        wifi_links_info: { name: "Wifi Links", layer: <WifiLinksLayer /> },
+        bat_links_info: { name: "Batman", layer: <BatmanLinksLayer /> },
+    };
+
     return (
         <MapContainer
             center={[-30, -60]}
@@ -89,21 +99,11 @@ export const MeshWideMap = ({
                 url={openStreetMapTileString}
             />
             <LayersControl position="topright">
-                <LayersControl.Overlay checked={nodes} name={t`Nodes`}>
-                    <LayerGroup>
-                        <NodesLayer />
-                    </LayerGroup>
-                </LayersControl.Overlay>
-                <LayersControl.Overlay checked={wifiLinks} name={t`Wifi Links`}>
-                    <LayerGroup>
-                        <WifiLinksLayer />
-                    </LayerGroup>
-                </LayersControl.Overlay>
-                <LayersControl.Overlay checked={batmanLinks} name={t`Batman`}>
-                    <LayerGroup>
-                        <BatmanLinksLayer />
-                    </LayerGroup>
-                </LayersControl.Overlay>
+                {Object.values(mapSupportedLayers).map(({ name, layer }, k) => (
+                    <LayersControl.Overlay key={k} checked={true} name={name}>
+                        <LayerGroup>{layer}</LayerGroup>
+                    </LayersControl.Overlay>
+                ))}
             </LayersControl>
         </MapContainer>
     );
