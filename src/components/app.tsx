@@ -88,7 +88,7 @@ const App = () => {
     }, [session, login]);
 
     if (!session?.username || !boardData) {
-        return <div>"Loading..."</div>;
+        return <div>Loading...</div>;
     }
 
     return (

@@ -146,7 +146,7 @@ const Modal = ({
 
                     <div
                         onClick={stopPropagation}
-                        className="flex flex-col px-6 justify-between w-full md:w-10/12 h-96 md:mx-24 self-center bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all "
+                        className="flex flex-col px-6 justify-between w-full min-h-96 md:w-10/12 md:mx-24 self-center bg-white rounded-lg overflow-auto text-left shadow-xl transform transition-all "
                     >
                         <div className="bg-white pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div className="mt-3 text-start sm:mt-0 sm:text-left">

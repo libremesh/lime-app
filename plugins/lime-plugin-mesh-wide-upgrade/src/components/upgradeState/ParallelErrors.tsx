@@ -2,7 +2,7 @@ import { Trans } from "@lingui/macro";
 
 import { StatusMessage } from "components/status/statusMessage";
 
-import { ParallelMutationError, SyncCallErrors } from "utils/meshWideSyncCall";
+import { RemoteNodeCallError, SyncCallErrors } from "utils/meshWideSyncCall";
 
 export const ParallelErrors = ({ errors }: { errors: SyncCallErrors }) => {
     return (
@@ -13,7 +13,7 @@ export const ParallelErrors = ({ errors }: { errors: SyncCallErrors }) => {
             </StatusMessage>
             <div className={"flex flex-col gap-3 mt-4 overflow-auto gap-4"}>
                 {errors.map((error, key) => {
-                    if (error instanceof ParallelMutationError) {
+                    if (error instanceof RemoteNodeCallError) {
                         return (
                             <div key={key}>
                                 <strong>{error.ip}</strong>: {error.message}

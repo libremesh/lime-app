@@ -1,13 +1,14 @@
 import {
+    MeshWideRPCReturnTypes,
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import {
+    MeshUpgradeApiError,
     callToRemoteNode,
-    meshUpgradeApiCall,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 
-import api from "utils/uhttpd.service";
+import api, { UhttpdService } from "utils/uhttpd.service";
 
 export const getMeshWideUpgradeInfo = async () => {
     const res = await api.call("shared-state-async", "get", {
@@ -42,11 +43,34 @@ export const setAbort = async () => {
 };
 
 // Remote API calls
-
 export async function remoteScheduleUpgrade({ ip }: { ip: string }) {
-    return await callToRemoteNode({ ip, apiMethod: "start_safe_upgrade" });
+    return await callToRemoteNode({
+        ip,
+        apiCall: (customApi) =>
+            meshUpgradeApiCall("start_safe_upgrade", customApi),
+    });
 }
 
 export async function remoteConfirmUpgrade({ ip }: { ip: string }) {
-    return await callToRemoteNode({ ip, apiMethod: "confirm_boot_partition" });
+    return await callToRemoteNode({
+        ip,
+        apiCall: (customApi) =>
+            meshUpgradeApiCall("confirm_boot_partition", customApi),
+    });
 }
+
+const meshUpgradeApiCall = async (
+    method: string,
+    customApi?: UhttpdService
+) => {
+    const httpService = customApi || api;
+    const res = (await httpService.call(
+        "lime-mesh-upgrade",
+        method,
+        {}
+    )) as MeshWideRPCReturnTypes;
+    if (res.error) {
+        throw new MeshUpgradeApiError(res.error, res.code);
+    }
+    return res.code;
+};
