@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { useCallback } from "react";
 
 import { Button } from "components/buttons/button";
@@ -23,7 +23,7 @@ const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
     const ip = node.ipv4;
 
     const [isLoading, setIsLoading] = useState(false);
-    const { showToast } = useToast();
+    const { showToast, hideToast } = useToast();
 
     const { mutateAsync: localNodeSync } = useSyncDataTypes({
         ip,
@@ -75,6 +75,14 @@ const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
         publishOnRemoteNode,
         showToast,
     ]);
+
+    // Use effect to sync the node data on mount
+    useEffect(() => {
+        (async () => {
+            await syncNode();
+        })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [node.ipv4]);
 
     return (
         <Button
