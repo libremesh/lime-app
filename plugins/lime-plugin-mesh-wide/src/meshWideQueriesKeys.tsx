@@ -8,6 +8,7 @@ export const getFromSharedStateMultiWriterKey = [
     "getFromSharedStateMultiWriter",
 ];
 export const getFromSharedStateAsyncKey = ["shared-state-async", "get"];
+export const syncFromSharedStateAsyncKey = ["shared-state-async", "sync"];
 
 export const insertIntoSharedStateKey = [
     "shared-state",
@@ -19,6 +20,10 @@ export const getFromSharedStateKeys = {
         ...getFromSharedStateAsyncKey,
         { data_type: dataType },
     ],
+    syncFromSharedStateAsync: <T extends DataTypes>(
+        dataType: T,
+        ip: string
+    ) => [...syncFromSharedStateAsyncKey, { data_type: dataType, ip }],
     getFromSharedStateMultiWriter: (dataType: DataTypes) => [
         ...getFromSharedStateMultiWriterKey,
         { data_type: dataType },
