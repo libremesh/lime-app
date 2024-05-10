@@ -1,5 +1,7 @@
 import { Trans } from "@lingui/macro";
 
+import { GlobeIcon } from "components/icons/globeIcon";
+
 import { ParallelErrors } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ParallelErrors";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 import { useParallelScheduleUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
@@ -7,11 +9,13 @@ import { useParallelScheduleUpgrade } from "plugins/lime-plugin-mesh-wide-upgrad
 export const UpgradeScheduled = () => {
     const { totalNodes } = useMeshUpgrade();
     const { errors, results } = useParallelScheduleUpgrade();
-    const nodesToBeUpgraded = results.length;
+    const nodesToBeUpgraded = results?.length;
 
     return (
-        <>
-            <div className="text-4xl mb-4">
+        <div className={"flex flex-col items-center gap-4"}>
+            <GlobeIcon size={80} className={`fill-internet`} />
+
+            <div className="text-4xl font-bold">
                 <Trans>Upgrade is scheduled!</Trans>
             </div>
             <div className="text-2xl mb-6">
@@ -20,6 +24,6 @@ export const UpgradeScheduled = () => {
                 </Trans>
             </div>
             {errors?.length > 0 && <ParallelErrors errors={errors} />}
-        </>
+        </div>
     );
 };
