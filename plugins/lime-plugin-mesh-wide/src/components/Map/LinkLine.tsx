@@ -15,6 +15,7 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
         useSelectedMapFeature();
 
     const linkToShow = referenceLink ?? actualLink;
+    const linkId = linkToShow.id;
     let isNewNode = false;
     if (!referenceLink) {
         isNewNode = true;
@@ -28,9 +29,9 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     let hasError = false;
     let linkUp = true;
 
-    if (!isNewNode && linksErrors && linksErrors[referenceLink.id]) {
-        hasError = linksErrors[referenceLink.id].hasErrors;
-        linkUp = linksErrors[referenceLink.id].linkUp;
+    if (linksErrors && linksErrors[linkId]) {
+        hasError = linksErrors[linkId].hasErrors;
+        linkUp = linksErrors[linkId].linkUp;
     }
 
     const _setSelectedFeature = () => {

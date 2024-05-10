@@ -9,10 +9,14 @@ export const processNodeErrors = (
 ) => {
     const errors: NodeErrorCodes[] = [];
 
-    // If not reference is a new node
-    if (!reference) return errors;
+    // Here the errors related to the actual node state
 
     if (!actual) return [NodeErrorCodes.NODE_DOWN];
+
+    // Down here put errors related to the comparassion with reference state
+
+    // If not reference is a new node
+    if (!reference) return errors;
 
     // Check mac list are equal
     if (reference.macs.length !== actual.macs.length) {

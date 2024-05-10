@@ -92,25 +92,28 @@ const useCalculateLocatedLinks = ({
     const linksLoaded = !!locatedLinksReference && !!locatedLinks;
 
     const linksErrors: ILinkErrors = useMemo(() => {
-        // If there are no links reference just drop no errors (because there are no links to compare with)
-        if (locatedLinksReference && !isEmpty(locatedLinksReference)) {
-            const errors: ILinkErrors = {};
-            Object.entries(locatedLinksReference).forEach(
-                ([k, referenceLink]) => {
-                    let actualLink: PontToPointLink;
-                    if (locatedLinks) {
-                        actualLink = Object.values(locatedLinks).find(
-                            (value) => value.id === referenceLink.id
-                        );
-                    }
-                    errors[referenceLink.id] = compareLinks({
-                        referenceLink,
-                        actualLink,
-                    });
-                }
-            );
-            return errors;
+        if (!locatedLinks) return;
+        let _locatedLinksReference = locatedLinksReference;
+        // If there are no links reference we set the reference to the actual links
+        // On this way the errors between the actual links and the reference links wont be shown but
+        // errors on the links will.
+        if (!_locatedLinksReference || isEmpty(_locatedLinksReference)) {
+            _locatedLinksReference = locatedLinks;
         }
+        const errors: ILinkErrors = {};
+        Object.entries(_locatedLinksReference).forEach(([k, referenceLink]) => {
+            let actualLink: PontToPointLink;
+            if (locatedLinks) {
+                actualLink = Object.values(locatedLinks).find(
+                    (value) => value.id === referenceLink.id
+                );
+            }
+            errors[referenceLink.id] = compareLinks({
+                referenceLink,
+                actualLink,
+            });
+        });
+        return errors;
     }, [locatedLinksReference, locatedLinks]);
 
     // This links are valid and not exists on the reference state
