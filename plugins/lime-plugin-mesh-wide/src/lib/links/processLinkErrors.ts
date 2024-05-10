@@ -86,11 +86,13 @@ export const compareLinks = ({
         const isUp = !!actualLink;
         if (!isUp) setLinkIsDown();
 
-        ptoPErrors.macToMacErrors[macToMacReference.id] = {
-            hasErrors: false,
-            linkErrors: {},
-            linkUp: isUp,
-        };
+        if (!ptoPErrors.macToMacErrors[macToMacReference.id]) {
+            ptoPErrors.macToMacErrors[macToMacReference.id] = {
+                hasErrors: false,
+                linkErrors: {},
+                linkUp: isUp,
+            };
+        }
         Object.entries(macToMacReference.data).forEach(
             ([nodeNameReference, wifiDataReference]) => {
                 const wifiDataActual = macToMacActual?.data[nodeNameReference];
