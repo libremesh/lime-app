@@ -12,7 +12,6 @@ import {
     useLoadLeaflet,
     useLocation,
 } from "plugins/lime-plugin-locate/src/locateQueries";
-import { FloatingAlert } from "plugins/lime-plugin-mesh-wide/src/components/Map/FloatingAlert";
 import {
     BatmanLinksLayer,
     WifiLinksLayer,
@@ -89,7 +88,6 @@ export const MeshWideMap = ({
                 attribution={openStreetMapAttribution}
                 url={openStreetMapTileString}
             />
-            <FloatingAlert />
             <LayersControl position="topright">
                 <LayersControl.Overlay checked={nodes} name={t`Nodes`}>
                     <LayerGroup>
