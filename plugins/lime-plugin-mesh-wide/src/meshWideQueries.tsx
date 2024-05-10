@@ -1,8 +1,16 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { doSharedStateApiCall } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
+import {
+    doSharedStateApiCall,
+    publishOnRemoteNode,
+    syncAllDataTypes,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
 import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
-import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
+import {
+    getFromSharedStateKeys,
+    publishAllFromSharedStateAsyncKey,
+    syncFromSharedStateAsyncKey,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
     DataTypes,
     IBatmanLinks,
@@ -150,6 +158,36 @@ export const useSetBatmanLinksInfoReferenceState = (params) => {
             ...params,
         }
     );
+};
+
+/**
+ * Sync all data types from shared state from remote node
+ * */
+
+export const usePublishOnRemoteNode = ({
+    ip,
+    ...opts
+}: {
+    ip: string;
+    opts?: any;
+}) => {
+    return useMutation(publishOnRemoteNode, {
+        mutationKey: [publishAllFromSharedStateAsyncKey, ip],
+        ...opts,
+    });
+};
+
+export const useSyncDataTypes = ({
+    ip,
+    ...opts
+}: {
+    ip: string;
+    opts?: any;
+}) => {
+    return useMutation(syncAllDataTypes, {
+        mutationKey: [syncFromSharedStateAsyncKey, ip],
+        ...opts,
+    });
 };
 
 /**
