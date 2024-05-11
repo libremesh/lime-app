@@ -13,17 +13,25 @@ import {
 import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
     DataTypes,
-    INodeInfo,
     completeDataTypeKeys,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import queryCache from "utils/queryCache";
 
-const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
-    const ip = node.ipv4;
+interface INodeInfoProps {
+    ip: string;
+    nodeName: string;
+}
 
+const UpdateNodeInfoBtn = ({
+    ip,
+    nodeName,
+    updateOnMount = true,
+}: {
+    updateOnMount?: boolean;
+} & INodeInfoProps) => {
     const [isLoading, setIsLoading] = useState(false);
-    const { showToast, hideToast } = useToast();
+    const { showToast } = useToast();
 
     const { mutateAsync: localNodeSync } = useSyncDataTypes({
         ip,
@@ -52,7 +60,7 @@ const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
                 showToast({
                     text: (
                         <Trans>
-                            Error connecting with {node.hostname}, is node up?
+                            Error connecting with {nodeName}, is node up?
                         </Trans>
                     ),
                     duration: 5000,
@@ -71,25 +79,30 @@ const UpdateNodeInfoBtn = ({ node }: { node: INodeInfo }) => {
         ip,
         isLoading,
         localNodeSync,
-        node.hostname,
+        nodeName,
         publishOnRemoteNode,
         showToast,
     ]);
 
     // Use effect to sync the node data on mount
     useEffect(() => {
+        if (!updateOnMount) return;
         (async () => {
             await syncNode();
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [node.ipv4]);
+    }, [ip]);
 
     return (
         <Button
             color={"primary"}
             outline={!isLoading}
             size={"sm"}
-            onClick={syncNode}
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                syncNode();
+            }}
         >
             <RefreshIcon />
         </Button>

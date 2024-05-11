@@ -42,7 +42,10 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
             <Row>
                 <div className={"text-3xl"}>{name}</div>
                 <div className={"flex flex-row gap-4"}>
-                    <UpdateNodeInfoBtn node={nodeToShow} />
+                    <UpdateNodeInfoBtn
+                        ip={nodeToShow.ipv4}
+                        nodeName={nodeToShow.hostname}
+                    />
                     <RemoteRebootBtn node={nodeToShow} />
                 </div>
             </Row>
