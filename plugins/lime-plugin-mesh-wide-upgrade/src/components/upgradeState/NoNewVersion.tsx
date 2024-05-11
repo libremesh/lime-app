@@ -1,12 +1,15 @@
 import { Trans } from "@lingui/macro";
 
+import {
+    MeshUpgradeSuccessIcon,
+    UpgradeState,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
+
 export const NoNewVersionAvailable = () => {
     return (
-        <div className="text-center ">
-            <div className="text-9xl text-primary-light">✓</div>
-            <div className="text-4xl">
-                <Trans>No new version available!</Trans>
-            </div>
-        </div>
+        <UpgradeState
+            title={<Trans>No new version available!</Trans>}
+            icon={<MeshUpgradeSuccessIcon />}
+        />
     );
 };

@@ -2,6 +2,8 @@ import { VNode } from "preact";
 
 import Loading from "components/loading";
 
+import { UpgradeState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
+
 export const LoadingPage = ({
     title,
     description,
@@ -10,10 +12,8 @@ export const LoadingPage = ({
     description?: VNode;
 }) => {
     return (
-        <div className="flex flex-col text-center gap-4">
-            <Loading />
-            <div className="text-4xl font-bold">{title}</div>
-            {description && <div className="text-2xl">{description}</div>}
-        </div>
+        <UpgradeState title={title} icon={<Loading />}>
+            {description}
+        </UpgradeState>
     );
 };

@@ -3,6 +3,7 @@ import { Trans } from "@lingui/macro";
 import LineChart, { LineChartStep } from "components/PathChart";
 
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
+import { UpgradeState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
 
 import { useBoardData } from "utils/queries";
 
@@ -60,23 +61,22 @@ export const NewVersionAvailable = ({
             },
         ];
     }
+    let title = <Trans>New version available!</Trans>;
+    if (readyForUpgrade) {
+        title = (
+            <Trans>
+                Ready to start mesh wide
+                <br />
+                firmware upgrade
+            </Trans>
+        );
+    }
 
     return (
-        <div className="text-center flex flex-col gap-6">
-            <div className="text-4xl">
-                {readyForUpgrade ? (
-                    <Trans>
-                        Ready to start mesh wide
-                        <br />
-                        firmware upgrade
-                    </Trans>
-                ) : (
-                    <Trans>New version available!</Trans>
-                )}
-            </div>
+        <UpgradeState title={title} icon={false}>
             <div className="flex flex-col items-center ">
                 <LineChart steps={steps} />
             </div>
-        </div>
+        </UpgradeState>
     );
 };
