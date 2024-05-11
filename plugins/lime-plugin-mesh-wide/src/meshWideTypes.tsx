@@ -198,3 +198,10 @@ export type SharedStateReturnType<T extends SharedStateTypes> = {
     data: T;
     error: number;
 };
+// Util in order to iterate over the keys of the DataTypeMap
+export type CompleteDataTypeKeys = { [K in DataTypes]: true };
+export const completeDataTypeKeys: CompleteDataTypeKeys = {
+    node_info: true,
+    wifi_links_info: true,
+    bat_links_info: true,
+};

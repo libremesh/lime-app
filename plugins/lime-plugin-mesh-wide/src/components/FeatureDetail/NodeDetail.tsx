@@ -3,6 +3,7 @@ import { Trans } from "@lingui/macro";
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import RemoteRebootBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn";
 import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
+import UpdateNodeInfoBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/UpdateNodeInfoBtn";
 import {
     Row,
     TitleAndText,
@@ -40,7 +41,10 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
         <div>
             <Row>
                 <div className={"text-3xl"}>{name}</div>
-                <RemoteRebootBtn node={nodeToShow} />
+                <div className={"flex flex-row gap-4"}>
+                    <UpdateNodeInfoBtn node={nodeToShow} />
+                    <RemoteRebootBtn node={nodeToShow} />
+                </div>
             </Row>
             <Row>
                 {!isDown ? (

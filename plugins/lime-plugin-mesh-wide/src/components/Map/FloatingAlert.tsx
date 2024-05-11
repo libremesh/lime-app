@@ -48,13 +48,15 @@ export const FloatingAlert = () => {
     ]);
 
     return hasErrors ? (
-        <div
-            data-testid={"has-invalid-nodes"}
-            onClick={callback}
-            className="cursor-pointer z-50 fixed top-24 right-24 my-2 mx-4 w-24 h-24 bg-gray-500 opacity-80 rounded flex justify-center items-center text-white"
-        >
-            <div className={"text-info"}>
-                <WarningIcon />
+        <div className={"absolute w-full h-full"}>
+            <div
+                data-testid={"has-invalid-nodes"}
+                onClick={callback}
+                className="cursor-pointer z-50 absolute float-right right-32 top-2 my-2 mx-4 w-24 h-24 bg-gray-500 opacity-80 rounded flex justify-center items-center text-white"
+            >
+                <div className={"text-info"}>
+                    <WarningIcon />
+                </div>
             </div>
         </div>
     ) : null;
