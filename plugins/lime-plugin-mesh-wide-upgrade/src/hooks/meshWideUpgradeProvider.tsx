@@ -1,6 +1,6 @@
 import { ComponentChildren, createContext } from "preact";
 import { useMemo } from "preact/compat";
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { useCallback, useContext } from "react";
 
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
@@ -70,7 +70,7 @@ export const MeshWideUpgradeProvider = ({
 }) => {
     // UseCallback to invalidate queries
     const invalidateQueries = useCallback(() => {
-        queryCache.invalidateQueries({
+        return queryCache.invalidateQueries({
             queryKey: meshUpgradeQueryKeys.getMeshUpgradeNodeStatus(),
         });
     }, []);
@@ -90,21 +90,22 @@ export const MeshWideUpgradeProvider = ({
         refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
     });
 
-    const { mutate: becomeMainNodeMutation } = useBecomeMainNode({
+    const { mutateAsync: becomeMainNodeMutation } = useBecomeMainNode({
         onSuccess: () => {
             invalidateQueries();
         },
     });
 
-    const { mutate: fwUpgradeTransaction } = useStartFirmwareUpgradeTransaction(
-        {
+    const { mutateAsync: fwUpgradeTransaction } =
+        useStartFirmwareUpgradeTransaction({
             onSuccess: () => {
                 invalidateQueries();
             },
-        }
-    );
+        });
 
-    const { mutate: abort, isLoading: isAborting } = useAbort({});
+    // Inner state to control is aborting callback awaiting until query invalidation
+    const [isAborting, setIsAborting] = useState(false);
+    const { mutateAsync: abortMutation } = useAbort({});
 
     const { data: session } = useSession();
     const { data: newVersionData } = useNewVersion({
@@ -161,13 +162,26 @@ export const MeshWideUpgradeProvider = ({
 
     const meshWideError = getMeshWideError(thisNode);
 
-    const becomeMainNode = useCallback(() => {
-        becomeMainNodeMutation({});
-    }, [becomeMainNodeMutation]);
+    const becomeMainNode = useCallback(async () => {
+        await becomeMainNodeMutation({});
+        await invalidateQueries();
+    }, [becomeMainNodeMutation, invalidateQueries]);
 
-    const startFwUpgradeTransaction = useCallback(() => {
-        fwUpgradeTransaction({});
-    }, [fwUpgradeTransaction]);
+    const startFwUpgradeTransaction = useCallback(async () => {
+        await fwUpgradeTransaction({});
+        await invalidateQueries();
+    }, [fwUpgradeTransaction, invalidateQueries]);
+
+    const abort = useCallback(async () => {
+        setIsAborting(true);
+        abortMutation()
+            .then(() => {
+                return invalidateQueries();
+            })
+            .finally(() => {
+                setIsAborting(false);
+            });
+    }, [abortMutation, invalidateQueries]);
 
     const isLoading = meshWideInfoLoading || thisNodeLoading;
 
