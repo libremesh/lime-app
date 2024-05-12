@@ -6,7 +6,6 @@ import {
     ILinks,
     ILocatedLink,
     INodes,
-    LinkDataTypes,
     LinkType,
     LocatedLinkData,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
@@ -25,7 +24,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
     // for every node check all links
     for (const linkNodeName in links) {
         if (isEmpty(links[linkNodeName])) continue;
-        for (const linkData of Object.values(links[linkNodeName])) {
+        for (const [linkKey, linkData] of Object.entries(links[linkNodeName])) {
             if (!linkData.dst_mac) continue;
             // Get the nodeName of the destination node
             const dstNodeName = Object.keys(nodes).find((pid) => {
@@ -39,12 +38,15 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
             // just ignore it
             if (!dstNodeName || !links[dstNodeName]) continue;
 
+            // If the destination node is not the same as the link node
+            // and the destination node is on the list of nodes
+            // and the link is not already added
             if (
                 dstNodeName &&
                 dstNodeName !== linkNodeName &&
-                nodes[linkNodeName] // If is the link for a non geolocated node
+                nodes[linkNodeName]
             ) {
-                // Generate a unique id of the point to point link based on the coordinates
+                // Generate a unique id of the point to point link based on the coordinates to check if already exists
                 const linkKey = PontToPointLink.generateId(
                     nodes[linkNodeName].coordinates,
                     nodes[dstNodeName].coordinates
@@ -57,7 +59,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                         nodes[dstNodeName!].coordinates
                     );
                 }
-                // Else if the link is not already added don't do it.
+                // If the link PontToPointLink already exists and the link is already added, ignore it
                 else if (
                     result[linkKey].linkExists(
                         linkData.src_mac,
@@ -68,16 +70,8 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                     continue;
                 }
 
-                // Get the destination link info
-                const destPointData = (
-                    links[dstNodeName] as Array<LinkDataTypes[T]>
-                ).find(
-                    (data: LinkDataTypes[T]) =>
-                        data.dst_mac.toLowerCase() ===
-                            linkData.src_mac.toLowerCase() &&
-                        data.src_mac.toLowerCase() ===
-                            linkData.dst_mac.toLowerCase()
-                );
+                // Find destination link info from shared state
+                const destPointData = links[dstNodeName][linkKey];
 
                 const entry = {
                     [linkNodeName]: {
@@ -90,7 +84,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                     },
                 } as ILocatedLink<T>;
 
-                result[linkKey].addLink(new MacToMacLink(entry, type));
+                result[linkKey].addLink(new MacToMacLink(linkKey, entry, type));
             }
         }
     }

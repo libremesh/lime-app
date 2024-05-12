@@ -95,25 +95,10 @@ export class MacToMacLink<T extends LinkType> {
     private _id: MacToMacLinkId;
     public type: T;
 
-    constructor(data: ILocatedLink<T>, type: T) {
+    constructor(id: MacToMacLinkId, data: ILocatedLink<T>, type: T) {
         this._data = data;
-        this._id = MacToMacLink.generateId(data);
+        this._id = id;
         this.type = type;
-    }
-
-    /**
-     * Deterministically generation of a unique id using the macs of this link. Concatenate the sorted macs that
-     * are involved on this link
-     * @param data
-     */
-    static generateId(data: ILocatedLink<LinkType>): MacToMacLinkId {
-        return [
-            ...Object.entries(data).map(([k, v]) => {
-                return v.src_mac?.toLowerCase().replace(/:/g, "");
-            }),
-        ]
-            .sort()
-            .join("");
     }
 
     get id() {
