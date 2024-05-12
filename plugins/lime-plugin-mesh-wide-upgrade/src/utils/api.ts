@@ -1,7 +1,7 @@
 import {
     MeshUpgradeApiErrorTypes,
     MeshWideUpgradeInfo,
-    UpgradeStatusType,
+    NodeMeshUpgradeInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 
 import { RemoteNodeCallError } from "utils/meshWideSyncCall";
@@ -21,13 +21,14 @@ export class MeshUpgradeApiError extends Error {
 }
 
 /**
- * From a MeshWideUpgradeInfo nodes it returns the ips of the nodes that are in certain status provided
+ * From a MeshWideUpgradeInfo nodes it returns the ips of the nodes that match the condition defined on the function
  * @param nodes the nodes to check
- * @param status the status to check the criteria
+ * @param condition function that receives a NodeMeshUpgradeInfo and returns a boolean
  */
-export const getNodeIpsByStatus = (
+export const getNodeIpsByCondition = (
     nodes: MeshWideUpgradeInfo,
-    status: UpgradeStatusType
+    // status: UpgradeStatusType
+    condition: (node: NodeMeshUpgradeInfo) => boolean
 ) => {
     if (!nodes) return [];
     return Object.values(nodes)
@@ -36,7 +37,7 @@ export const getNodeIpsByStatus = (
                 node.node_ip !== null &&
                 node.node_ip !== undefined &&
                 node.node_ip.trim() !== "" &&
-                node.upgrade_state === status
+                condition(node)
         )
         .map((node) => node.node_ip as string); // 'as string' is safe here due to the filter condition
 };
