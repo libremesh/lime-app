@@ -1,10 +1,7 @@
 import { QueryKey } from "@tanstack/react-query";
 
 import { callToRemoteNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
-import {
-    getFromSharedStateKeys,
-    publishAllFromSharedStateAsyncKey,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
+import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
     DataTypeMap,
     DataTypes,
@@ -12,48 +9,43 @@ import {
     completeDataTypeKeys,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
-import api from "utils/uhttpd.service";
+import { UhttpdService, default as defaultApi } from "utils/uhttpd.service";
 
 export const doSharedStateApiCall = async <T extends DataTypes>(
-    queryKey: QueryKey
+    queryKey: QueryKey,
+    ip?: string
 ) => {
-    const res = (await api.call(...queryKey)) as SharedStateReturnType<
-        DataTypeMap[T]
-    >;
-    if (res.error !== 0 && res.error !== 404) {
-        throw Error(`Shared state error: ${res.error}`);
+    const doCall = async (api: UhttpdService = defaultApi) => {
+        const res = (await api.call(...queryKey)) as SharedStateReturnType<
+            DataTypeMap[T]
+        >;
+        // Don't count 404 as an error, it means not found
+        if (res.error !== 0 && res.error !== 404) {
+            throw Error(`Shared state error: ${res.error}`);
+        }
+        return res.data;
+    };
+    if (ip) {
+        return await callToRemoteNode({
+            ip,
+            apiCall: (customApi) => doCall(customApi),
+        });
     }
-    return res.data;
+    return await doCall();
 };
 
 /**
  * Sync all data types from shared state from remote node
  */
 
-interface ISyncWithIpProps {
-    ip: string;
-}
-
-export async function publishOnRemoteNode({ ip }: ISyncWithIpProps) {
-    return await callToRemoteNode({
-        ip,
-        apiCall: (customApi) =>
-            customApi
-                .call(...publishAllFromSharedStateAsyncKey, {})
-                .then(() => true),
-    });
-}
-
-export async function syncDataType({
+async function syncDataType({
     dataType,
     ip,
 }: {
     dataType: DataTypes;
     ip: string;
 }) {
-    const queryKey = getFromSharedStateKeys.syncFromSharedStateAsync(dataType, [
-        ip,
-    ]);
+    const queryKey = getFromSharedStateKeys.syncFromSharedState(dataType, [ip]);
     return doSharedStateApiCall<typeof dataType>(queryKey);
 }
 

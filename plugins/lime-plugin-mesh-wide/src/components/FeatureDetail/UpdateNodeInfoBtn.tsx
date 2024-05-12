@@ -45,8 +45,7 @@ const UpdateNodeInfoBtn = ({
             completeDataTypeKeys
         ) as DataTypes[]) {
             queryCache.invalidateQueries({
-                queryKey:
-                    getFromSharedStateKeys.getFromSharedStateAsync(dataType),
+                queryKey: getFromSharedStateKeys.getFromSharedState(dataType),
             });
         }
     }, []);
