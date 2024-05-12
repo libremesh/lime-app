@@ -55,8 +55,8 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 // If this point to point link no exists, instantiate it
                 if (!result[linkKey]) {
                     result[linkKey] = new PontToPointLink(
-                        nodes[linkNodeName].coordinates,
-                        nodes[dstNodeName!].coordinates
+                        nodes[linkNodeName],
+                        nodes[dstNodeName]
                     );
                 }
                 // If the link PontToPointLink already exists and the link is already added, ignore it

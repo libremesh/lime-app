@@ -1,16 +1,22 @@
 import { Trans } from "@lingui/macro";
+import { useCallback } from "react";
+
+import { useToast } from "components/toast/toastProvider";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import RemoteRebootBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn";
-import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
 import UpdateNodeInfoBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/UpdateNodeInfoBtn";
 import {
     Row,
     TitleAndText,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
+import { useSetNoeInfoReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
 import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
 import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
-import { useMeshWideNodesReference } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+import {
+    useMeshWideNodesReference,
+    useSetNodeInfoReferenceState,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
     NodeErrorCodes,
     NodeMapFeature,
@@ -111,12 +117,49 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
         reference,
     });
 
+    const hostname = isDown ? reference.hostname : actual.hostname;
+    const ip = isDown ? reference.ipv4 : actual.ipv4;
+
     // Check if there are errors of global reference state to shown
     const { data: meshWideNodesReference, isError: isReferenceError } =
         useMeshWideNodesReference({});
 
+    const { toggleModal, confirmModal, isModalOpen } =
+        useSetNoeInfoReferenceStateModal();
+    const { showToast } = useToast();
+
     // Mutation to update the reference state
-    const { mutate, btnText } = useSetReferenceState("node_info");
+    const { mutateAsync } = useSetNodeInfoReferenceState({
+        ip,
+        hostname,
+        isDown,
+        params: {
+            onSuccess: () => {
+                showToast({
+                    text: <Trans>New reference state set!</Trans>,
+                });
+            },
+            onError: () => {
+                showToast({
+                    text: <Trans>Error setting new reference state!</Trans>,
+                });
+            },
+            onSettled: () => {
+                if (isModalOpen) toggleModal();
+            },
+        },
+    });
+
+    const setReferenceState = useCallback(async () => {
+        confirmModal(hostname, isDown, async () => {
+            await mutateAsync();
+        });
+    }, [confirmModal, hostname, isDown, mutateAsync]);
+
+    let btnText = <Trans>Set reference state for this node</Trans>;
+    if (isDown) {
+        btnText = <Trans>Delete this this node from reference state</Trans>;
+    }
 
     let referenceError = false;
     if (
@@ -144,7 +187,7 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
         <StatusAndButton
             isError={hasErrors}
             btn={hasErrors && btnText}
-            onClick={mutate}
+            onClick={setReferenceState}
         >
             {errorMessage}
         </StatusAndButton>

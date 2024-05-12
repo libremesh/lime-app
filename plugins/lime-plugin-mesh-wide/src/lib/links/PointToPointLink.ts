@@ -2,6 +2,7 @@ import {
     BaseMacToMacLink,
     Coordinates,
     ILocatedLink,
+    INodeInfo,
     LinkDataTypes,
     LinkType,
     MacToMacLinkId,
@@ -15,11 +16,15 @@ import {
  */
 export class PontToPointLink {
     private _links: BaseMacToMacLink[] = [];
+    private _nodes: INodeInfo[] = [];
     public readonly id: PointToPointLinkId;
     public readonly coordinates: Coordinates[] = [];
 
-    constructor(coord1: Coordinates, coord2: Coordinates) {
+    constructor(node1: INodeInfo, node2: INodeInfo) {
+        const coord1 = node1.coordinates;
+        const coord2 = node2.coordinates;
         this.id = PontToPointLink.generateId(coord1, coord2);
+        this.nodes.push(node1, node2);
         this.coordinates.push(coord1, coord2);
     }
 
@@ -50,17 +55,12 @@ export class PontToPointLink {
         return false;
     }
 
-    get names(): string[] {
-        return [
-            ...this._links.reduce((acc, link) => {
-                Object.keys(link).forEach((key) => acc.add(key));
-                return acc;
-            }, new Set()),
-        ] as string[];
-    }
-
     get links() {
         return this._links;
+    }
+
+    get nodes() {
+        return this._nodes;
     }
 
     /**

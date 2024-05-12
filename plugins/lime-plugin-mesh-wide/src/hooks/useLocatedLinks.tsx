@@ -35,16 +35,19 @@ interface getQueryByLinkTypeReturnType<T extends LinkType> {
 export const getQueryByLinkType = <T extends LinkType>(
     type: T
 ): getQueryByLinkTypeReturnType<T> => {
-    if (type === "bat_links_info") {
-        return {
-            state: useMeshWideBatman,
-            reference: useMeshWideBatmanReference,
-        } as getQueryByLinkTypeReturnType<T>;
+    switch (type) {
+        case "bat_links_info":
+            return {
+                state: useMeshWideBatman,
+                reference: useMeshWideBatmanReference,
+            } as getQueryByLinkTypeReturnType<T>;
+        case "wifi_links_info":
+        default:
+            return {
+                state: useMeshWideLinks,
+                reference: useMeshWideLinksReference,
+            } as getQueryByLinkTypeReturnType<T>;
     }
-    return {
-        state: useMeshWideLinks,
-        reference: useMeshWideLinksReference,
-    } as getQueryByLinkTypeReturnType<T>;
 };
 
 interface IUselocatedLinks {

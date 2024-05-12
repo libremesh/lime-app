@@ -1,5 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";
+import { getQueryByLinkType } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
+import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import {
     doSharedStateApiCall,
     syncAllDataTypes,
@@ -15,9 +18,11 @@ import {
     IMeshWideConfig,
     INodes,
     IWifiLinks,
+    LinkType,
     SelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
+import { useMeshWideSyncCall } from "utils/meshWideSyncCall";
 import { useSharedData } from "utils/useSharedData";
 
 const refetchInterval = 60000;
@@ -110,21 +115,28 @@ export function useMeshWideNodes(params) {
  * to unify criterias and add a confirmation modal
  */
 
-interface IShatedStateRemoteQueryProps {
+interface ISharedStateRemoteQueryProps {
     ip: string;
-    hostname?: string;
     params?: any;
 }
+
+type ISharedStateSetReferenceQueryProps = {
+    isDown: boolean;
+    hostname?: string;
+} & ISharedStateRemoteQueryProps;
 
 export const useSetNodeInfoReferenceState = ({
     ip,
     hostname,
+    isDown,
     params,
-}: IShatedStateRemoteQueryProps) => {
+}: ISharedStateSetReferenceQueryProps) => {
     const type = "node_info";
     const { data } = useMeshWideNodes({});
+    // Ignore the types here because it to delete a node you have to pass an empty object
+    // @ts-ignore
     const queryKey = getFromSharedStateKeys.insertIntoReferenceState(type, {
-        [hostname]: data[hostname],
+        [hostname]: isDown ? null : data[hostname],
     });
     return useMutation(
         queryKey,
@@ -135,42 +147,50 @@ export const useSetNodeInfoReferenceState = ({
     );
 };
 
-export const useSetWifiLinksInfoReferenceState = ({
-    ip,
-    hostname,
-    params,
-}: IShatedStateRemoteQueryProps) => {
-    const type = "wifi_links_info";
-    const { data } = useMeshWideLinks({});
-    const queryKey = getFromSharedStateKeys.insertIntoReferenceState(type, {
-        [hostname]: data[hostname],
-    });
-    return useMutation(
-        queryKey,
-        () => doSharedStateApiCall<typeof type>(queryKey, ip),
-        {
-            ...params,
-        }
-    );
-};
+interface IUseSetLinkReferenceState {
+    linkType: LinkType;
+    linkToUpdate: PontToPointLink;
+    nodesToUpdate: { [ip: string]: string }; // { ip: hostname }
+    params: any;
+    isDown: boolean;
+}
 
-export const useSetBatmanLinksInfoReferenceState = ({
-    ip,
-    hostname,
+export const useSetLinkReferenceState = ({
+    linkType,
+    linkToUpdate,
+    isDown,
+    nodesToUpdate,
     params,
-}: IShatedStateRemoteQueryProps) => {
-    const type = "bat_links_info";
-    const { data } = useMeshWideBatman({});
-    const queryKey = getFromSharedStateKeys.insertIntoReferenceState(type, {
-        [hostname]: data[hostname],
+}: IUseSetLinkReferenceState) => {
+    const { state, reference } = getQueryByLinkType(linkType);
+    const { data } = state({});
+    const { data: referenceData } = reference({});
+
+    return useMeshWideSyncCall({
+        mutationKey: meshUpgradeQueryKeys.remoteConfirmUpgrade(),
+        mutationFn: ({ ip }) => {
+            const hostname = nodesToUpdate[ip];
+            const referenceLinks = referenceData[hostname];
+            for (const mactomac of linkToUpdate.links) {
+                if (isDown) {
+                    delete referenceLinks[mactomac.id];
+                    continue;
+                }
+                referenceLinks[mactomac.id] = data[hostname][mactomac.id];
+            }
+            const queryKey = getFromSharedStateKeys.insertIntoReferenceState(
+                linkType,
+                // For some reason I have to ignore the types here because it not infers properly.
+                // Using the same code but for a specific link type, it works.
+                // For some reason with the use of getQueryByLinkType it doesn't work.
+                // @ts-ignore
+                { [hostname]: referenceLinks }
+            );
+            return doSharedStateApiCall<typeof linkType>(queryKey, ip);
+        },
+        ips: Object.keys(nodesToUpdate),
+        options: params,
     });
-    return useMutation(
-        queryKey,
-        () => doSharedStateApiCall<typeof type>(queryKey, ip),
-        {
-            ...params,
-        }
-    );
 };
 
 /**
@@ -179,9 +199,8 @@ export const useSetBatmanLinksInfoReferenceState = ({
 
 export const usePublishOnRemoteNode = ({
     ip,
-    hostname,
     ...opts
-}: IShatedStateRemoteQueryProps) => {
+}: ISharedStateRemoteQueryProps) => {
     return useMutation<any, any, { ip: string }>({
         mutationFn: ({ ip }) =>
             doSharedStateApiCall(
@@ -195,11 +214,11 @@ export const usePublishOnRemoteNode = ({
 
 export const useSyncDataTypes = ({
     ip,
-    ...opts
-}: IShatedStateRemoteQueryProps) => {
+    params,
+}: ISharedStateRemoteQueryProps) => {
     return useMutation(syncAllDataTypes, {
         mutationKey: [syncFromSharedStateKey, ip],
-        ...opts,
+        ...params,
     });
 };
 
