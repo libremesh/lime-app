@@ -90,18 +90,10 @@ export const MeshWideUpgradeProvider = ({
         refetchInterval: NODE_STATUS_REFETCH_INTERVAL,
     });
 
-    const { mutateAsync: becomeMainNodeMutation } = useBecomeMainNode({
-        onSuccess: () => {
-            invalidateQueries();
-        },
-    });
+    const { mutateAsync: becomeMainNodeMutation } = useBecomeMainNode({});
 
     const { mutateAsync: fwUpgradeTransaction } =
-        useStartFirmwareUpgradeTransaction({
-            onSuccess: () => {
-                invalidateQueries();
-            },
-        });
+        useStartFirmwareUpgradeTransaction({});
 
     // Inner state to control is aborting callback awaiting until query invalidation
     const [isAborting, setIsAborting] = useState(false);
