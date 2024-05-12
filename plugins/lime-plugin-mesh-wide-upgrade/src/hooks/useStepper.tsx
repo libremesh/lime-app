@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { IStatusAndButton } from "components/status/statusAndButton";
 
 import {
+    useAbortModal,
     useConfirmModal,
     useScheduleUpgradeModal,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/modals";
@@ -144,21 +145,26 @@ export const useStep = () => {
     const { callMutations: startScheduleMeshUpgrade, errors: scheduleErrors } =
         useParallelScheduleUpgrade();
 
-    const { callMutations: confirmMeshUpgrade, errors: confirmErrors } =
-        useParallelConfirmUpgrade();
+    const { callMutations: confirmMeshUpgrade } = useParallelConfirmUpgrade();
 
     const { showModal: showScheduleModal } = useScheduleUpgradeModal({
-        allNodesReady: allNodesReadyForUpgrade,
+        useSuccessBtn: allNodesReadyForUpgrade,
         cb: () => {
-            startScheduleMeshUpgrade();
+            return startScheduleMeshUpgrade();
         },
     });
 
     const { showModal: showConfirmationModal } = useConfirmModal({
         // Ideally we have to implement some kind of state before run the upgrade to check if all nodes are up again.
-        allNodesReady: true,
+        useSuccessBtn: true,
         cb: () => {
-            confirmMeshUpgrade();
+            return confirmMeshUpgrade();
+        },
+    });
+
+    const { showModal: showAbortModal } = useAbortModal({
+        cb: () => {
+            return abort();
         },
     });
 
@@ -249,7 +255,7 @@ export const useStep = () => {
             > = {
                 btnCancel: <Trans>Abort</Trans>,
                 onClickCancel: async () => {
-                    await abort();
+                    showAbortModal();
                 },
             };
             step = { ...step, ...showAbort };

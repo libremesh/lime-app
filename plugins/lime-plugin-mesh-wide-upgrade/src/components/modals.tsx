@@ -4,69 +4,20 @@ import { useCallback } from "react";
 
 import { useModal } from "components/Modal/Modal";
 
-export const useScheduleUpgradeModal = ({
-    allNodesReady,
-    cb,
-}: IUseParallelQueriesModalProps) => {
-    let title = <Trans>All nodes are ready</Trans>;
-    let content = (
-        <Trans>Schedule a firmware upgrade for all nodes on the network</Trans>
-    );
-    if (!allNodesReady) {
-        title = <Trans>Some nodes are not ready</Trans>;
-        content = (
-            <Trans>
-                Are you sure you want to start mesh wide upgrade? <br />
-                Check node list to see the network status
-            </Trans>
-        );
-    }
-
-    return useParallelQueriesModal({
-        allNodesReady,
-        cb,
-        title,
-        content,
-    });
-};
-
-export const useConfirmModal = ({
-    allNodesReady,
-    cb,
-}: IUseParallelQueriesModalProps) => {
-    let title = <Trans>All nodes are upgraded successfully</Trans>;
-    let content = (
-        <Trans>Confirm mesh wide upgrade for all nodes on the network</Trans>
-    );
-    if (!allNodesReady) {
-        title = <Trans>Some nodes don't upgraded properly</Trans>;
-        content = (
-            <Trans>
-                Are you sure you want to confirm the upgrade? <br />
-                Check node list to see the network status
-            </Trans>
-        );
-    }
-    return useParallelQueriesModal({
-        allNodesReady,
-        cb,
-        title,
-        content,
-    });
-};
-
 interface IUseParallelQueriesModalProps {
-    allNodesReady: boolean;
+    useSuccessBtn?: boolean;
     cb?: (e) => void;
     title?: VNode;
     content?: VNode;
+    btnTxt?: VNode;
 }
 
 const useParallelQueriesModal = ({
-    allNodesReady,
+    useSuccessBtn,
     cb,
     title,
     content,
+    btnTxt = <Trans>Schedule</Trans>,
 }: IUseParallelQueriesModalProps) => {
     const { toggleModal, setModalState } = useModal();
     const runAndClose = useCallback(() => {
@@ -78,19 +29,89 @@ const useParallelQueriesModal = ({
         setModalState({
             content,
             title,
-            successCb: allNodesReady ? runAndClose : undefined,
-            deleteCb: !allNodesReady ? runAndClose : undefined,
-            successBtnText: <Trans>Schedule</Trans>,
-            deleteBtnText: <Trans>Schedule</Trans>,
+            successCb: useSuccessBtn ? runAndClose : undefined,
+            deleteCb: !useSuccessBtn ? runAndClose : undefined,
+            successBtnText: btnTxt,
+            deleteBtnText: btnTxt,
         });
         toggleModal();
     }, [
         setModalState,
         content,
         title,
-        allNodesReady,
+        useSuccessBtn,
         runAndClose,
+        btnTxt,
         toggleModal,
     ]);
     return { showModal, toggleModal };
+};
+
+export const useScheduleUpgradeModal = ({
+    useSuccessBtn,
+    cb,
+}: IUseParallelQueriesModalProps) => {
+    let title = <Trans>All nodes are ready</Trans>;
+    let content = (
+        <Trans>Schedule a firmware upgrade for all nodes on the network</Trans>
+    );
+    if (!useSuccessBtn) {
+        title = <Trans>Some nodes are not ready</Trans>;
+        content = (
+            <Trans>
+                Are you sure you want to start mesh wide upgrade? <br />
+                Check node list to see the network status
+            </Trans>
+        );
+    }
+
+    return useParallelQueriesModal({
+        useSuccessBtn,
+        cb,
+        title,
+        content,
+    });
+};
+
+export const useConfirmModal = ({
+    useSuccessBtn,
+    cb,
+}: IUseParallelQueriesModalProps) => {
+    let title = <Trans>All nodes are upgraded successfully</Trans>;
+    let content = (
+        <Trans>Confirm mesh wide upgrade for all nodes on the network</Trans>
+    );
+    if (!useSuccessBtn) {
+        title = <Trans>Some nodes don't upgraded properly</Trans>;
+        content = (
+            <Trans>
+                Are you sure you want to confirm the upgrade? <br />
+                Check node list to see the network status
+            </Trans>
+        );
+    }
+    return useParallelQueriesModal({
+        useSuccessBtn,
+        cb,
+        title,
+        content,
+    });
+};
+
+export const useAbortModal = ({ cb }: IUseParallelQueriesModalProps) => {
+    const title = <Trans>Abort current mesh wide upgrade?</Trans>;
+    const content = (
+        <Trans>
+            This will the abort current upgrade process on all nodes. Are you
+            sure you want to proceed?
+        </Trans>
+    );
+    const btnTxt = <Trans>Abort</Trans>;
+    return useParallelQueriesModal({
+        useSuccessBtn: false,
+        cb,
+        title,
+        content,
+        btnTxt,
+    });
 };
