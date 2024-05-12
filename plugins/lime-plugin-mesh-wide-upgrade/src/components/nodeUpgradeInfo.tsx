@@ -10,6 +10,7 @@ import {
     detailedInfoStatusMessageMap,
     mainNodeStatusMessageMap,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages";
+import UpdateNodeInfoBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/UpdateNodeInfoBtn";
 
 export interface INodeInfoBodyItemProps {
     title: ComponentChildren;
@@ -49,7 +50,13 @@ const NodeUpgradeInfoItem = ({
             title={name}
             description={descriptionMsg}
             leftComponent={<StatusIcon status={status} />}
-            rightText={"Info"}
+            rightText={
+                <UpdateNodeInfoBtn
+                    updateOnMount={false}
+                    ip={info.node_ip}
+                    nodeName={name}
+                />
+            }
         >
             <NodeInfoBodyItem {...nodeStatusInfo} />
             {mainNodeStatusInfo && <NodeInfoBodyItem {...mainNodeStatusInfo} />}

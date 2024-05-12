@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 export interface ButtonProps {
-    onClick?: (e) => void;
+    onClick?: ((e) => void) | ((e) => Promise<void>);
     children?: any; // type error with Trans component
     size?: "sm" | "md" | "lg";
     color?: "primary" | "secondary" | "danger" | "info" | "disabled";
@@ -20,6 +20,9 @@ export const Button = ({
     outline = false,
     ...props
 }: ButtonProps) => {
+    // button internal state to set loading state
+    const [isLoading, setIsLoading] = React.useState(false);
+
     let sizeClasses = "",
         colorClasses = "";
     switch (size) {
@@ -34,7 +37,7 @@ export const Button = ({
             break;
     }
 
-    color = disabled ? "disabled" : color;
+    color = disabled || isLoading ? "disabled" : color;
 
     switch (color) {
         case "secondary":
@@ -55,7 +58,7 @@ export const Button = ({
         case "disabled":
             colorClasses = outline
                 ? "border-2 border-button-disabled text-button-disabled hover:bg-button-disabled hover:text-white"
-                : "bg-button-disabled text-white border-2 border-button-disabled hover:text-button-disabled hover:bg-white";
+                : "bg-button-disabled border-2 border-button-disabled hover:text-button-disabled hover:bg-white";
             break;
         case "primary":
         default:
@@ -67,10 +70,21 @@ export const Button = ({
 
     const cls = `cursor-pointer font-semibold rounded-xl text-center place-content-center transition-all duration-300
     justify-center border-0 ${sizeClasses}  ${colorClasses}`;
+
+    // useCallback for button click
+    const handleClick = useCallback(
+        async (e) => {
+            if (isLoading || disabled) return;
+            setIsLoading(true);
+            await onClick(e);
+            setIsLoading(false);
+        },
+        [disabled, isLoading, onClick]
+    );
     const Btn = () => (
         <div
             type="button"
-            onClick={(e) => (!disabled ? onClick(e) : null)}
+            onClick={(e) => handleClick(e)}
             className={cls}
             {...props}
         >

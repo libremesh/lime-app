@@ -1,25 +1,32 @@
 import { Trans } from "@lingui/macro";
 
-import { ParallelErrors } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ParallelErrors";
+import {
+    ParallelErrors,
+    UpgradeState,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
 import { useParallelConfirmUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 
 export const ConfirmationPending = () => {
     const { errors } = useParallelConfirmUpgrade();
+    const title = (
+        <Trans>
+            Upgraded!
+            <br />
+            Awaiting confirmation
+        </Trans>
+    );
 
     return (
-        <>
-            <div className="text-4xl mb-4">
-                <Trans>Upgrade done</Trans>
-            </div>
-            <div className="text-2xl mb-6">
+        <UpgradeState title={title}>
+            <>
                 <Trans>
                     Check if network is working properly and confirm the upgrade
                     <br />
                     If not confirmed, the upgrade will be rolled back after a
                     while
                 </Trans>
-            </div>
-            {errors?.length > 0 && <ParallelErrors errors={errors} />}
-        </>
+                {errors?.length > 0 && <ParallelErrors errors={errors} />}
+            </>
+        </UpgradeState>
     );
 };

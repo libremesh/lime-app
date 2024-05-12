@@ -1,6 +1,9 @@
 import { Trans } from "@lingui/macro";
 
+import LineChart, { LineChartStep } from "components/PathChart";
+
 import { useNewVersion } from "plugins/lime-plugin-firmware/src/firmwareQueries";
+import { UpgradeState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState";
 
 import { useBoardData } from "utils/queries";
 
@@ -12,31 +15,68 @@ export const NewVersionAvailable = ({
     const { data: boardData } = useBoardData();
     const { data: newVersion } = useNewVersion();
 
-    return (
-        <div className="text-center">
-            <div className="text-4xl">
-                {readyForUpgrade ? (
-                    <Trans>Start Mesh Wide Transaction</Trans>
-                ) : (
-                    <Trans>New version available!</Trans>
-                )}
-            </div>
-            <div className="text-2xl">
-                <Trans>This node version:</Trans>
-                <br />
-                {boardData && boardData.release.description}
-            </div>
-            <div className="text-2xl">
-                <Trans>New available version:</Trans>
-                <br />
-                {newVersion && newVersion.version}
-            </div>
-            {readyForUpgrade && (
-                <div className="text-2xl">
-                    <Trans>Is ready for upgrade!</Trans>
+    let steps: LineChartStep[] = [
+        {
+            text: (
+                <Trans>
+                    This node version
                     <br />
-                </div>
-            )}
-        </div>
+                    {boardData && boardData.release.version}
+                </Trans>
+            ),
+            status: "SUCCESS",
+        },
+    ];
+
+    if (!readyForUpgrade) {
+        steps = [
+            ...steps,
+            {
+                text: (
+                    <Trans>
+                        New available version:
+                        <br />
+                        {newVersion && newVersion.version}
+                    </Trans>
+                ),
+                status: "SUCCESS",
+            },
+        ];
+    } else {
+        steps = [
+            ...steps,
+            {
+                text: (
+                    <Trans>
+                        Downloaded version
+                        <br />
+                        {newVersion && newVersion.version}
+                    </Trans>
+                ),
+                status: "SUCCESS",
+            },
+            {
+                text: <Trans>Start mesh wide upgrade</Trans>,
+                status: "SUCCESS",
+            },
+        ];
+    }
+    let title = <Trans>New version available!</Trans>;
+    if (readyForUpgrade) {
+        title = (
+            <Trans>
+                Ready to start mesh wide
+                <br />
+                firmware upgrade
+            </Trans>
+        );
+    }
+
+    return (
+        <UpgradeState title={title} icon={false}>
+            <div className="flex flex-col items-center ">
+                <LineChart steps={steps} />
+            </div>
+        </UpgradeState>
     );
 };

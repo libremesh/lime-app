@@ -14,13 +14,17 @@ export const StatusIcon = ({ status }: { status: StatusIcons }) => {
     }
 };
 
-export const Tick = () => <span className={"text-success text-4xl"}>✓</span>;
+interface IconsProps {
+    className?: string;
+}
 
-export const Warning = () => (
+export const Tick = ({ className }: IconsProps) => (
+    <span className={`text-success text-4xl ${className}`}>✓</span>
+);
+
+export const Warning = ({ className = "w-8 h-8" }: IconsProps) => (
     <span
-        className={
-            "rounded-full border-2 border-danger text-danger w-8 h-8 flex items-center justify-center mx-2"
-        }
+        className={`rounded-full border-2 border-danger text-danger flex items-center justify-center mx-2 ${className}`}
     >
         !
     </span>

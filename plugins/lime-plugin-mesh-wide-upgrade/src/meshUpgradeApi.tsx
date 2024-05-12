@@ -59,6 +59,13 @@ export async function remoteConfirmUpgrade({ ip }: { ip: string }) {
     });
 }
 
+export async function remoteAbort({ ip }: { ip: string }) {
+    return await callToRemoteNode({
+        ip,
+        apiCall: (customApi) => meshUpgradeApiCall("abort", customApi),
+    });
+}
+
 const meshUpgradeApiCall = async (
     method: string,
     customApi?: UhttpdService

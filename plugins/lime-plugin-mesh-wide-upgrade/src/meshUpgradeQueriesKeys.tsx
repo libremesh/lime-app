@@ -9,6 +9,7 @@ const MeshUpgradeQueryKeys: MeshUpgradeQueryKeysProps = {
     getMeshUpgradeNodeStatus: ["lime-mesh-upgrade", "get_node_status"],
     remoteScheduleUpgrade: ["lime-mesh-upgrade", "schedule_upgrade"],
     remoteConfirmUpgrade: ["lime-mesh-upgrade", "confirm_boot_partition"],
+    remoteAbort: ["lime-mesh-upgrade", "abort"],
 };
 
 export const meshUpgradeQueryKeys = {
@@ -20,4 +21,5 @@ export const meshUpgradeQueryKeys = {
         MeshUpgradeQueryKeys.remoteScheduleUpgrade,
     remoteConfirmUpgrade: (): QueryKey =>
         MeshUpgradeQueryKeys.remoteConfirmUpgrade,
+    remoteAbort: (): QueryKey => MeshUpgradeQueryKeys.remoteConfirmUpgrade,
 };
