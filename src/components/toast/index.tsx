@@ -32,7 +32,7 @@ const Toast = ({
     onHide,
     onAction,
     actionText = "Undo",
-    duration,
+    duration = 5000,
 }: IToastProps) => {
     const [showToast, setShowToast] = useState(true);
     const _onAction = () => {

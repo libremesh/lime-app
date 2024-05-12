@@ -19,7 +19,6 @@ export const MeshStatus = () => {
                             </Trans>
                         </>
                     ),
-                    duration: 5000,
                 });
             }}
         >

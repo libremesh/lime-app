@@ -100,7 +100,6 @@ export const OptionContainer = ({
                                                     Deleted {keyString}
                                                 </Trans>
                                             ),
-                                            duration: 5000,
                                             onAction: () => {
                                                 console.log("Undo action");
                                             },
@@ -122,7 +121,6 @@ export const OptionContainer = ({
                                 toggleIsEditing();
                                 showToast({
                                     text: <Trans>Edited {keyString}</Trans>,
-                                    duration: 5000,
                                 });
                             });
                         }}

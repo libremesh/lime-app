@@ -62,7 +62,6 @@ const UpdateNodeInfoBtn = ({
                             Error connecting with {nodeName}, is node up?
                         </Trans>
                     ),
-                    duration: 5000,
                 });
                 throw e;
             })
