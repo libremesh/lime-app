@@ -7,6 +7,7 @@ import { useModal } from "components/Modal/Modal";
 import { Button } from "components/buttons/button";
 import { ErrorMsg } from "components/form";
 import Loading from "components/loading";
+import { useErrrorConnectionToast } from "components/toast/toasts";
 
 import { callToRemoteNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
@@ -28,8 +29,12 @@ export async function remoteReboot({ ip, password }: IRemoteRebotProps) {
 }
 
 const useRemoteReboot = (opts?) => {
+    const { show } = useErrrorConnectionToast();
     return useMutation((props: IRemoteRebotProps) => remoteReboot(props), {
         mutationKey: ["system", "reboot"],
+        onError: (error, variables) => {
+            show(variables.ip);
+        },
         ...opts,
     });
 };

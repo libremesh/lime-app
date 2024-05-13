@@ -1,5 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import { useErrrorConnectionToast } from "components/toast/toasts";
+
 import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";
 import { getQueryByLinkType } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
@@ -133,6 +135,8 @@ export const useSetNodeInfoReferenceState = ({
 }: ISharedStateSetReferenceQueryProps) => {
     const type = "node_info";
     const { data } = useMeshWideNodes({});
+    const { show } = useErrrorConnectionToast();
+
     // Ignore the types here because it to delete a node you have to pass an empty object
     // @ts-ignore
     const queryKey = getFromSharedStateKeys.insertIntoReferenceState(type, {
@@ -142,6 +146,9 @@ export const useSetNodeInfoReferenceState = ({
         queryKey,
         () => doSharedStateApiCall<typeof type>(queryKey, ip),
         {
+            onError: () => {
+                show(hostname);
+            },
             ...params,
         }
     );
@@ -201,6 +208,8 @@ export const usePublishOnRemoteNode = ({
     ip,
     ...opts
 }: ISharedStateRemoteQueryProps) => {
+    const { show } = useErrrorConnectionToast();
+
     return useMutation<any, any, { ip: string }>({
         mutationFn: ({ ip }) =>
             doSharedStateApiCall(
@@ -208,6 +217,9 @@ export const usePublishOnRemoteNode = ({
                 ip
             ),
         mutationKey: [getFromSharedStateKeys.publishAllFromSharedState(), ip],
+        onError: () => {
+            show(ip);
+        },
         ...opts,
     });
 };
