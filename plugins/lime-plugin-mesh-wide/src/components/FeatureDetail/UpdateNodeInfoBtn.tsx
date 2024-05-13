@@ -1,27 +1,11 @@
-import { Trans } from "@lingui/macro";
-import { useEffect, useState } from "preact/hooks";
-import { useCallback } from "react";
+import { useEffect } from "preact/hooks";
 
 import { Button } from "components/buttons/button";
 import { RefreshIcon } from "components/icons/teenny/refresh";
-import { useToast } from "components/toast/toastProvider";
 
-import {
-    usePublishOnRemoteNode,
-    useSyncDataTypes,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
-import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
-import {
-    DataTypes,
-    completeDataTypeKeys,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
-
-import queryCache from "utils/queryCache";
-
-interface INodeInfoProps {
-    ip: string;
-    nodeName: string;
-}
+import useSyncWithNode, {
+    ISyncWithNodeProps,
+} from "plugins/lime-plugin-mesh-wide/src/hooks/useSyncWithNode";
 
 const UpdateNodeInfoBtn = ({
     ip,
@@ -29,58 +13,8 @@ const UpdateNodeInfoBtn = ({
     updateOnMount = true,
 }: {
     updateOnMount?: boolean;
-} & INodeInfoProps) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const { showToast } = useToast();
-
-    const { mutateAsync: localNodeSync } = useSyncDataTypes({
-        ip,
-    });
-    const { mutateAsync: publishOnRemoteNode } = usePublishOnRemoteNode({
-        ip,
-    });
-
-    const invalidateQueries = useCallback(() => {
-        for (const dataType of Object.keys(
-            completeDataTypeKeys
-        ) as DataTypes[]) {
-            queryCache.invalidateQueries({
-                queryKey: getFromSharedStateKeys.getFromSharedState(dataType),
-            });
-        }
-    }, []);
-
-    // useCallback to sync the node data
-    const syncNode = useCallback(async () => {
-        if (isLoading) return;
-        setIsLoading(true);
-        publishOnRemoteNode({ ip })
-            .catch((e) => {
-                showToast({
-                    text: (
-                        <Trans>
-                            Error connecting with {nodeName}, is node up?
-                        </Trans>
-                    ),
-                });
-                throw e;
-            })
-            .then(async () => {
-                await localNodeSync({ ip });
-                await invalidateQueries();
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    }, [
-        invalidateQueries,
-        ip,
-        isLoading,
-        localNodeSync,
-        nodeName,
-        publishOnRemoteNode,
-        showToast,
-    ]);
+} & ISyncWithNodeProps) => {
+    const { syncNode, isLoading } = useSyncWithNode({ ip, nodeName });
 
     // Use effect to sync the node data on mount
     useEffect(() => {
@@ -88,18 +22,20 @@ const UpdateNodeInfoBtn = ({
         (async () => {
             await syncNode();
         })();
+        // Avoid executing the effect on updateOnMount change
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ip]);
 
     return (
         <Button
             color={"primary"}
-            outline={!isLoading}
+            outline
+            disabled={isLoading}
             size={"sm"}
-            onClick={(e) => {
+            onClick={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                syncNode();
+                await syncNode();
             }}
         >
             <RefreshIcon />
