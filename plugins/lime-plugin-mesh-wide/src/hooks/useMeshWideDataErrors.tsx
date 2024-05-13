@@ -37,11 +37,14 @@ export const useMeshWideDataErrors = () => {
         }
     };
 
-    const { data: linksReferenceData, error: linksReferenceError } =
-        useMeshWideLinksReference({});
+    const {
+        data: linksReferenceData,
+        error: linksReferenceError,
+        isError: linksReferenceIsError,
+    } = useMeshWideLinksReference({});
     addError(
         getFromSharedStateKeys.getReferenceFromSharedState("wifi_links_info"),
-        linksReferenceError,
+        linksReferenceIsError ? linksReferenceError : null,
         linksReferenceData
     );
 
@@ -51,11 +54,14 @@ export const useMeshWideDataErrors = () => {
         linksError
     );
 
-    const { data: batmanReferenceData, error: batmanReferenceError } =
-        useMeshWideBatmanReference({});
+    const {
+        data: batmanReferenceData,
+        error: batmanReferenceError,
+        isError: batmanReferenceIsError,
+    } = useMeshWideBatmanReference({});
     addError(
         getFromSharedStateKeys.getReferenceFromSharedState("bat_links_info"),
-        batmanReferenceError,
+        batmanReferenceIsError ? batmanReferenceError : null,
         batmanReferenceData
     );
 
@@ -65,11 +71,14 @@ export const useMeshWideDataErrors = () => {
         batmanError
     );
 
-    const { data: nodesReferenceData, error: nodesReferenceError } =
-        useMeshWideNodesReference({});
+    const {
+        data: nodesReferenceData,
+        error: nodesReferenceError,
+        isError: isNodesReferenceError,
+    } = useMeshWideNodesReference({});
     addError(
         getFromSharedStateKeys.getReferenceFromSharedState("node_info"),
-        nodesReferenceError,
+        isNodesReferenceError ? nodesReferenceError : null,
         nodesReferenceData
     );
 
