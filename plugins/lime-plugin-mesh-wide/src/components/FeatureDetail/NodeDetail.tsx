@@ -12,6 +12,7 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
 import { useSetNoeInfoReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
 import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
+import useSyncWithNode from "plugins/lime-plugin-mesh-wide/src/hooks/useSyncWithNode";
 import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
     useMeshWideNodesReference,
@@ -51,6 +52,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                     <UpdateNodeInfoBtn
                         ip={nodeToShow.ipv4}
                         nodeName={nodeToShow.hostname}
+                        updateOnMount={false}
                     />
                     <RemoteRebootBtn node={nodeToShow} />
                 </div>
@@ -127,6 +129,7 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     const { toggleModal, confirmModal, isModalOpen } =
         useSetNoeInfoReferenceStateModal();
     const { showToast } = useToast();
+    const { syncNode } = useSyncWithNode({ ip, nodeName: hostname });
 
     // Mutation to update the reference state
     const { mutateAsync } = useSetNodeInfoReferenceState({
@@ -134,7 +137,8 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
         hostname,
         isDown,
         params: {
-            onSuccess: () => {
+            onSuccess: async () => {
+                await syncNode();
                 showToast({
                     text: <Trans>New reference state set!</Trans>,
                 });
