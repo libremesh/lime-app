@@ -102,6 +102,9 @@ const WifiDetail = ({
                 >
                     {node?.chains?.toString() ?? "0/0"}
                 </TitleAndText>
+                <TitleAndText title={<Trans>Channel</Trans>}>
+                    {node?.channel?.toString() ?? "0"}
+                </TitleAndText>
             </Row>
             <Row>
                 <TitleAndText title={<Trans>TxRate</Trans>}>

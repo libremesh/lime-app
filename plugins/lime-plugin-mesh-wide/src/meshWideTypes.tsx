@@ -49,6 +49,7 @@ export type IWifiLinkData = {
     chains: number[];
     signal: number;
     rx_rate: number;
+    channel: number;
 } & MacPair;
 
 /**
