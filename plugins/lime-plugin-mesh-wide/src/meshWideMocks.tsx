@@ -105,11 +105,13 @@ export const linksReferenceState: IWifiLinks = {
             tx_rate: 150000,
             rx_rate: 180000,
             chains: [-63, -59],
+            channel: 13,
             signal: -58,
             src_mac: "a8:40:41:1d:f9:35",
             dst_mac: "A0:F3:C1:46:28:97",
         },
         "14CC20DA4EACa840411df935": {
+            channel: 13,
             tx_rate: 162000,
             rx_rate: 240000,
             chains: [-57, -51],
@@ -120,6 +122,7 @@ export const linksReferenceState: IWifiLinks = {
     },
     segundo: {
         A0F3C1461197a840411df9ff: {
+            channel: 13,
             tx_rate: 150000,
             rx_rate: 180000,
             chains: [-58, -59],
@@ -128,6 +131,7 @@ export const linksReferenceState: IWifiLinks = {
             dst_mac: "A0:F3:C1:46:11:97",
         },
         "14CC20DA4EACa840411df9aa": {
+            channel: 13,
             tx_rate: 162000,
             rx_rate: 240000,
             chains: [-52, -51],
@@ -138,6 +142,7 @@ export const linksReferenceState: IWifiLinks = {
     },
     "LiMe-da4eaa": {
         "14cc20da4eabA0F3C1462896": {
+            channel: 13,
             tx_rate: 65000,
             rx_rate: 65000,
             chains: [-25, -25],
@@ -146,6 +151,7 @@ export const linksReferenceState: IWifiLinks = {
             dst_mac: "A0:F3:C1:46:28:96",
         },
         "14cc20da4eacA0F3C1462897": {
+            channel: 13,
             tx_rate: 270000,
             rx_rate: 150000,
             chains: [-50, -47],
@@ -154,6 +160,7 @@ export const linksReferenceState: IWifiLinks = {
             dst_mac: "A0:F3:C1:46:28:97",
         },
         "14cc20da4eacA840411DF935": {
+            channel: 13,
             tx_rate: 243000,
             rx_rate: 162000,
             chains: [-75, -64],
@@ -162,6 +169,7 @@ export const linksReferenceState: IWifiLinks = {
             dst_mac: "A8:40:41:1D:F9:35",
         },
         "14cc20da4eacA840411DF9aa": {
+            channel: 13,
             tx_rate: 243000,
             rx_rate: 162000,
             chains: [-75, -64],
@@ -172,6 +180,7 @@ export const linksReferenceState: IWifiLinks = {
     },
     "LiMe-462895": {
         "14CC20DA4EABa0f3c1462896": {
+            channel: 13,
             tx_rate: 78000,
             rx_rate: 78000,
             chains: [-43, -46],
@@ -180,6 +189,7 @@ export const linksReferenceState: IWifiLinks = {
             dst_mac: "14:CC:20:DA:4E:AB",
         },
         "14CC20DA4EACa0f3c1462897": {
+            channel: 13,
             tx_rate: 243000,
             rx_rate: 216000,
             chains: [-68, -41],
@@ -188,6 +198,7 @@ export const linksReferenceState: IWifiLinks = {
             dst_mac: "14:CC:20:DA:4E:AC",
         },
         A840411DF935a0f3c1462897: {
+            channel: 13,
             tx_rate: 240000,
             rx_rate: 135000,
             chains: [-77, -65],
@@ -196,6 +207,7 @@ export const linksReferenceState: IWifiLinks = {
             dst_mac: "A8:40:41:1D:F9:35",
         },
         A840411DF9ffa0f3c1461197: {
+            channel: 13,
             tx_rate: 240000,
             rx_rate: 135000,
             chains: [-64, -65],
