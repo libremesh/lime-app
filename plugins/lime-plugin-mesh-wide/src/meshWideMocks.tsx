@@ -71,6 +71,9 @@ export const nodesReferenceState: INodes = {
         board: "",
         hostname: "",
     },
+};
+
+const newNode = {
     segundo: {
         bleachTTL: 12,
         author: "segundo",
@@ -365,7 +368,7 @@ export const nodes = (): INodes => {
     // This delete an entire node
     delete newState[nodeName];
 
-    return newState;
+    return { ...newState, ...newNode };
 };
 
 export const getMeshWideConfig = async () => meshWideConfig;
