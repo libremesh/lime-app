@@ -31,8 +31,7 @@ const NodeMarker = ({
         selectedMapFeature?.id === name && style.selectedMarker
     }
     ${hasErrors ? style.errorMarker : style.syncedMarker}
-    ${isDown && style.notUpMarker}
-    ${isNewNode && style.newNodeMarker}`;
+    ${isDown && style.notUpMarker}`;
 
     // If node no reference is set, is a new node
     const nodeToShow = reference ?? actual;
@@ -44,7 +43,11 @@ const NodeMarker = ({
                 className: style.leafletDivCustomIcon,
                 iconAnchor: [0, 24],
                 popupAnchor: [0, -36],
-                html: `<span class="${style.defaultMarker} ${markerClasses}" />`,
+                html: `<span class="${style.markerContainer}"><span class="${
+                    style.defaultMarker
+                } ${markerClasses}"/> <span class="${
+                    isNewNode ? style.badge : ""
+                }" /></span>`,
             })}
             eventHandlers={{
                 click: (e) => {

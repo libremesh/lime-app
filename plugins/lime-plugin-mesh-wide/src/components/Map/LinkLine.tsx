@@ -1,5 +1,6 @@
+import { Trans } from "@lingui/macro";
 import L from "leaflet";
-import { Polyline } from "react-leaflet";
+import { Polyline, Tooltip } from "react-leaflet";
 
 import { useLocatedLinks } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
@@ -16,9 +17,9 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
 
     const linkToShow = referenceLink ?? actualLink;
     const linkId = linkToShow.id;
-    let isNewNode = false;
+    let isNewLink = true;
     if (!referenceLink) {
-        isNewNode = true;
+        isNewLink = true;
     }
 
     const type = linkToShow.type;
@@ -45,9 +46,10 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     const getPathOpts = (isSelected) => {
         return {
             color: hasError ? "#eb7575" : "#76bd7d",
+            stroke: true,
             weight: isSelected ? 7 : 5,
             opacity: isSelected ? 1 : 0.8,
-            dashArray: isNewNode || !linkUp ? "7 10" : null, // Show dash array also when is a new node
+            dashArray: isNewLink ? "1,6" : !linkUp ? "7 10" : null, // Show dot line when new and dashed line when link is down
         };
     };
 
@@ -71,7 +73,13 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
                     l.setStyle(getPathOpts(isSelected));
                 },
             }}
-        />
+        >
+            {isNewLink && (
+                <Tooltip className={"text-3xl"}>
+                    <Trans>New link</Trans>
+                </Tooltip>
+            )}
+        </Polyline>
     );
 };
 
