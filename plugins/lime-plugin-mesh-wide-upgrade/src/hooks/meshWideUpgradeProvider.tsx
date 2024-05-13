@@ -26,7 +26,7 @@ import { getMeshWideError } from "plugins/lime-plugin-mesh-wide-upgrade/src/util
 import { useSession } from "utils/queries";
 import queryCache from "utils/queryCache";
 
-const NODE_STATUS_REFETCH_INTERVAL = 2000;
+const NODE_STATUS_REFETCH_INTERVAL = 5000;
 
 interface MeshWideUpgradeContextProps {
     data?: MeshWideUpgradeInfo;
