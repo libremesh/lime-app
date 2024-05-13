@@ -8,7 +8,8 @@ import Divider from "components/divider";
 
 interface ModalContextProps {
     isModalOpen: boolean;
-    toggleModal: () => void;
+    openModalKey?: string | null;
+    toggleModal: (key?: string) => void;
     setModalState: (state?: ModalState) => void;
     isLoading: boolean;
 }
@@ -28,6 +29,7 @@ interface ModalState {
 
 const ModalContext = createContext<ModalContextProps>({
     isModalOpen: false,
+    openModalKey: null,
     toggleModal: () => {},
     setModalState: () => {},
     isLoading: false,
@@ -45,6 +47,7 @@ export type ModalActions = "success" | "delete";
 
 export const UseModalProvider = ({ children }) => {
     const [isModalOpen, setModalOpen] = useState(false);
+    const [openModalKey, setOpenModalKey] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const [modalState, setModalState] = useState<ModalState>({
@@ -57,9 +60,10 @@ export const UseModalProvider = ({ children }) => {
         deleteBtnText: <Trans>Cancel</Trans>,
     });
 
-    const toggleModal = useCallback(() => {
+    const toggleModal = useCallback((key?: string) => {
         setModalOpen((prevIsModalOpen) => !prevIsModalOpen);
-    }, [isModalOpen]);
+        setOpenModalKey(key ?? null);
+    }, []);
 
     const runCb = useCallback(
         async (cb: CallbackFn) => {
@@ -83,6 +87,7 @@ export const UseModalProvider = ({ children }) => {
                 toggleModal,
                 setModalState,
                 isLoading,
+                openModalKey,
             }}
         >
             {children}

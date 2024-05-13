@@ -35,11 +35,13 @@ const useRemoteReboot = (opts?) => {
 };
 
 const useRebootNodeModal = ({ node }: { node: INodeInfo }) => {
-    const { toggleModal, setModalState, isModalOpen } = useModal();
+    const modalKey = "rebootNodeModal";
+    const { toggleModal, setModalState, isModalOpen, openModalKey } =
+        useModal();
     const [password, setPassword] = useState("");
     const { mutate, isLoading, error } = useRemoteReboot({
         onSuccess: () => {
-            toggleModal();
+            toggleModal(modalKey);
         },
     });
 
@@ -91,15 +93,15 @@ const useRebootNodeModal = ({ node }: { node: INodeInfo }) => {
 
     const rebootModal = useCallback(() => {
         updateModalState();
-        toggleModal();
+        toggleModal(modalKey);
     }, [toggleModal, updateModalState]);
 
     // Update modal state with mutation result
     useEffect(() => {
-        if (isModalOpen) {
+        if (isModalOpen && openModalKey === modalKey) {
             updateModalState();
         }
-    }, [isLoading, error, isModalOpen, updateModalState]);
+    }, [isLoading, error, isModalOpen, updateModalState, openModalKey]);
 
     return { rebootModal, toggleModal, isModalOpen };
 };

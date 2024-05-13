@@ -32,7 +32,7 @@ const useActionModal = (
             });
             toggleModal();
         },
-        [setModalState, toggleModal]
+        [actionName, btnText, setModalState, title, toggleModal]
     );
     return { actionModal, toggleModal };
 };
@@ -80,7 +80,7 @@ export const useAddNewSectionModal = () => {
             });
             toggleModal();
         },
-        [setModalState, toggleModal]
+        [handleSubmit, register, setModalState, toggleModal]
     );
     return { actionModal, toggleModal };
 };
