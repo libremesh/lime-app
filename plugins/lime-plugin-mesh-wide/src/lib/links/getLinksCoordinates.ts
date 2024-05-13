@@ -47,31 +47,28 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 nodes[linkNodeName]
             ) {
                 // Generate a unique id of the point to point link based on the coordinates to check if already exists
-                const linkKey = PontToPointLink.generateId(
+                const geoLinkKey = PontToPointLink.generateId(
                     nodes[linkNodeName].coordinates,
                     nodes[dstNodeName].coordinates
                 );
 
                 // If this point to point link no exists, instantiate it
-                if (!result[linkKey]) {
-                    result[linkKey] = new PontToPointLink(
+                if (!result[geoLinkKey]) {
+                    result[geoLinkKey] = new PontToPointLink(
                         nodes[linkNodeName],
                         nodes[dstNodeName]
                     );
                 }
                 // If the link PontToPointLink already exists and the link is already added, ignore it
                 else if (
-                    result[linkKey].linkExists(
-                        linkData.src_mac,
-                        linkData.dst_mac
-                    ) ||
+                    result[geoLinkKey].linkExists(linkKey) ||
                     !links[dstNodeName]
                 ) {
                     continue;
                 }
 
                 // Find destination link info from shared state
-                const destPointData = links[dstNodeName][linkKey];
+                const destLinkData = links[dstNodeName][linkKey];
 
                 const entry = {
                     [linkNodeName]: {
@@ -79,12 +76,14 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                         coordinates: nodes[linkNodeName].coordinates,
                     },
                     [dstNodeName]: {
-                        ...destPointData,
+                        ...destLinkData,
                         coordinates: nodes[dstNodeName].coordinates,
                     },
                 } as ILocatedLink<T>;
 
-                result[linkKey].addLink(new MacToMacLink(linkKey, entry, type));
+                result[geoLinkKey].addLink(
+                    new MacToMacLink(linkKey, entry, type)
+                );
             }
         }
     }

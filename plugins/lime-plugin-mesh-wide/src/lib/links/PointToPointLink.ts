@@ -38,21 +38,9 @@ export class PontToPointLink {
      * @param mac1
      * @param mac2
      */
-    linkExists(mac1: string, mac2: string) {
-        for (const link of this._links) {
-            // Just needed to check the first node of the link object becouse the other will have the same macs but reversed
-            const node = link.data[Object.keys(link.data)[0]];
-            if (
-                node &&
-                (node.dst_mac.toLowerCase() === mac1.toLowerCase() ||
-                    node.src_mac.toLowerCase() === mac1.toLowerCase()) &&
-                (node.dst_mac.toLowerCase() === mac2.toLowerCase() ||
-                    node.src_mac.toLowerCase() === mac2.toLowerCase())
-            ) {
-                return true;
-            }
-        }
-        return false;
+    linkExists(linkKey: string) {
+        const link = this._links.find((link) => link.id === linkKey);
+        return !!link;
     }
 
     get links() {
