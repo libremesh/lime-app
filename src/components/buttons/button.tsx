@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks";
 import React, { useCallback } from "react";
 
 export interface ButtonProps {
@@ -21,7 +22,7 @@ export const Button = ({
     ...props
 }: ButtonProps) => {
     // button internal state to set loading state
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [innerIsLoading, setInnerIsLoading] = useState(false);
 
     let sizeClasses = "",
         colorClasses = "";
@@ -37,9 +38,9 @@ export const Button = ({
             break;
     }
 
-    color = disabled || isLoading ? "disabled" : color;
+    const _color = disabled || innerIsLoading ? "disabled" : color;
 
-    switch (color) {
+    switch (_color) {
         case "secondary":
             colorClasses = outline
                 ? "border-2 border-button-secondary text-button-secondary hover:bg-button-secondary hover:text-white"
@@ -74,13 +75,17 @@ export const Button = ({
     // useCallback for button click
     const handleClick = useCallback(
         async (e) => {
-            if (isLoading || disabled) return;
-            setIsLoading(true);
-            await onClick(e);
-            setIsLoading(false);
+            if (innerIsLoading || disabled) return;
+            setInnerIsLoading(true);
+            try {
+                await onClick(e);
+            } finally {
+                setInnerIsLoading(false);
+            }
         },
-        [disabled, isLoading, onClick]
+        [disabled, innerIsLoading, onClick]
     );
+
     const Btn = () => (
         <div
             type="button"
