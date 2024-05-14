@@ -17,7 +17,7 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
 
     const linkToShow = referenceLink ?? actualLink;
     const linkId = linkToShow.id;
-    let isNewLink = true;
+    let isNewLink = false;
     if (!referenceLink) {
         isNewLink = true;
     }
