@@ -177,13 +177,14 @@ export const useSetLinkReferenceState = ({
         mutationKey: meshUpgradeQueryKeys.remoteConfirmUpgrade(),
         mutationFn: ({ ip }) => {
             const hostname = nodesToUpdate[ip];
-            const referenceLinks = referenceData[hostname];
+
+            const newReferenceLinks = referenceData[hostname] ?? {};
             for (const mactomac of linkToUpdate.links) {
                 if (isDown) {
-                    delete referenceLinks[mactomac.id];
+                    delete newReferenceLinks[mactomac.id];
                     continue;
                 }
-                referenceLinks[mactomac.id] = data[hostname][mactomac.id];
+                newReferenceLinks[mactomac.id] = data[hostname][mactomac.id];
             }
             const queryKey = getFromSharedStateKeys.insertIntoReferenceState(
                 linkType,
@@ -191,7 +192,7 @@ export const useSetLinkReferenceState = ({
                 // Using the same code but for a specific link type, it works.
                 // For some reason with the use of getQueryByLinkType it doesn't work.
                 // @ts-ignore
-                { [hostname]: referenceLinks }
+                { [hostname]: newReferenceLinks }
             );
             return doSharedStateApiCall<typeof linkType>(queryKey, ip);
         },
