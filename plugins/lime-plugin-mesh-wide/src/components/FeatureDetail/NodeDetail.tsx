@@ -1,18 +1,18 @@
 import { Trans } from "@lingui/macro";
 import { useCallback } from "react";
 
+import UpdateSharedStateBtn from "components/shared-state/UpdateSharedStateBtn";
+import useSharedStateSync from "components/shared-state/useSharedStateSync";
 import { useToast } from "components/toast/toastProvider";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import RemoteRebootBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn";
-import UpdateNodeInfoBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/UpdateNodeInfoBtn";
 import {
     Row,
     TitleAndText,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
 import { useSetNoeInfoReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
 import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
-import useSyncWithNode from "plugins/lime-plugin-mesh-wide/src/hooks/useSyncWithNode";
 import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
     useMeshWideNodesReference,
@@ -47,7 +47,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
             <Row>
                 <div className={"text-3xl"}>{name}</div>
                 <div className={"flex flex-row gap-4"}>
-                    <UpdateNodeInfoBtn
+                    <UpdateSharedStateBtn
                         ip={actual.ipv4}
                         nodeName={actual.hostname}
                         updateOnMount={false}
@@ -127,7 +127,7 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     const { toggleModal, confirmModal, isModalOpen } =
         useSetNoeInfoReferenceStateModal();
     const { showToast } = useToast();
-    const { syncNode } = useSyncWithNode({ ip, nodeName: hostname });
+    const { syncNode } = useSharedStateSync({ ip, nodeName: hostname });
 
     // Mutation to update the reference state
     const { mutateAsync } = useSetNodeInfoReferenceState({

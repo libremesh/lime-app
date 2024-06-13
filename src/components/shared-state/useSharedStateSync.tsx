@@ -21,7 +21,7 @@ export interface ISyncWithNodeProps {
     nodeName?: string;
 }
 
-const useSyncWithNode = ({ ip, nodeName }: ISyncWithNodeProps) => {
+const useSharedStateSync = ({ ip, nodeName }: ISyncWithNodeProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const { show } = useErrrorConnectionToast();
     const { data: boardData } = useBoardData();
@@ -63,6 +63,7 @@ const useSyncWithNode = ({ ip, nodeName }: ISyncWithNodeProps) => {
             setIsLoading(false);
         }
     }, [
+        boardData,
         invalidateQueries,
         ip,
         isLoading,
@@ -75,4 +76,4 @@ const useSyncWithNode = ({ ip, nodeName }: ISyncWithNodeProps) => {
     return { isLoading, syncNode };
 };
 
-export default useSyncWithNode;
+export default useSharedStateSync;
