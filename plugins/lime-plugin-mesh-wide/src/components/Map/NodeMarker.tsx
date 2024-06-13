@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro";
 import L from "leaflet";
 import { Marker, Tooltip } from "react-leaflet";
 
@@ -36,6 +37,8 @@ const NodeMarker = ({
     // If node no reference is set, is a new node
     const nodeToShow = reference ?? actual;
 
+    const newNodeTooltip = isNewNode ? <Trans>(new)</Trans> : "";
+
     return (
         <Marker
             position={[nodeToShow.coordinates.lat, nodeToShow.coordinates.long]}
@@ -60,7 +63,9 @@ const NodeMarker = ({
                 },
             }}
         >
-            <Tooltip className={"text-3xl"}>{name}</Tooltip>
+            <Tooltip className={"text-3xl"}>
+                {name} {newNodeTooltip}
+            </Tooltip>
         </Marker>
     );
 };
