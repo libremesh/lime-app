@@ -14,11 +14,15 @@ export type LinkDataTypes = {
     bat_links_info: IBatManLinkData;
 };
 export type LinkType = keyof LinkDataTypes;
-export type ILocatedLink<T extends LinkType> = {
-    [key: string]: LinkDataTypes[T] & {
+export type IBaseLink<T extends LinkType> = {
+    [linkKey: string]: LinkDataTypes[T];
+};
+export type ILocatedLink<T extends LinkType> = IBaseLink<T> & {
+    [key: string]: {
         coordinates: Coordinates;
     };
 };
+
 export type BaseMacToMacLink = MacToMacLink<LinkType>;
 
 /**
@@ -45,6 +49,7 @@ export type IWifiLinkData = {
     chains: number[];
     signal: number;
     rx_rate: number;
+    channel: number;
 } & MacPair;
 
 /**
@@ -60,7 +65,7 @@ export type IBatManLinkData = {
  * List of Link info retrieved from the API
  */
 export interface ILinks<T extends LinkType> {
-    [key: string]: Array<LinkDataTypes[T]>;
+    [nodeKey: string]: IBaseLink<T>;
 }
 
 export type IWifiLinks = ILinks<"wifi_links_info">;
@@ -172,8 +177,7 @@ export type ILinkErrors = {
 };
 
 /**
- * Type to store the link detail id, created deterministically by the
- * two macs of this link
+ * Type to store the link detail id
  */
 export type MacToMacLinkId = string;
 

@@ -1,23 +1,7 @@
 import { Trans } from "@lingui/macro";
 
-import { Button } from "components/buttons/button";
-
-import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
 import { Row } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
-import {
-    DataTypes,
-    ErrorsDetails,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
-
-const SetDataTypeBtn = <T extends DataTypes>({ dataType }: { dataType: T }) => {
-    const { mutate, btnText } = useSetReferenceState(dataType);
-    return (
-        <div className={"flex flex-column gap-5"}>
-            <div className={"text-3xl"}>{dataType}</div>
-            <Button onClick={() => mutate()}>{btnText}</Button>
-        </div>
-    );
-};
+import { ErrorsDetails } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
     return (
@@ -70,7 +54,12 @@ export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
                                 );
                             }
                             return (
-                                <SetDataTypeBtn key={k} dataType={dataType} />
+                                <div key={k} className={"text-2xl font-bold"}>
+                                    <Trans>
+                                        Reference state is not set for{" "}
+                                        {dataType}
+                                    </Trans>
+                                </div>
                             );
                         })}
                     </div>

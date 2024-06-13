@@ -1,17 +1,20 @@
 import { Trans } from "@lingui/macro";
 import { useState } from "preact/hooks";
+import { useCallback } from "react";
 
 import { Warning } from "components/icons/status";
 import Tabs from "components/tabs";
+import { useToast } from "components/toast/toastProvider";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
-import { useSetReferenceState } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/SetReferenceStateBtn";
+import { useSetLinkReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
 import {
     getQueryByLinkType,
     usePointToPointErrors,
 } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { readableBytes } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
+import { useSetLinkReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
     BaseMacToMacLink,
     BatmanLinkErrorCodes,
@@ -98,6 +101,9 @@ const WifiDetail = ({
                     }
                 >
                     {node?.chains?.toString() ?? "0/0"}
+                </TitleAndText>
+                <TitleAndText title={<Trans>Channel</Trans>}>
+                    {node?.channel?.toString() ?? "0"}
                 </TitleAndText>
             </Row>
             <Row>
@@ -221,6 +227,8 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         type: reference.type,
     });
 
+    const isDown = !errors.linkUp;
+
     // Check if there are errors of global reference state to shown
     const { reference: fetchDataReference } = getQueryByLinkType(
         reference.type
@@ -232,8 +240,63 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         referenceError = true;
     }
 
+    const { toggleModal, confirmModal, isModalOpen } =
+        useSetLinkReferenceStateModal();
+    const { showToast } = useToast();
+
     // Mutation to update the reference state
-    const { mutate, btnText } = useSetReferenceState(reference.type);
+    const nodesToUpdate = reference.nodes.reduce((acc, node) => {
+        acc[node.ipv4] = node.hostname;
+        return acc;
+    }, {});
+    const { callMutations } = useSetLinkReferenceState({
+        linkType: reference.type,
+        linkToUpdate: reference,
+        isDown,
+        nodesToUpdate,
+        params: {
+            onSuccess: () => {
+                showToast({
+                    text: <Trans>New reference state set!</Trans>,
+                });
+            },
+            onError: () => {
+                showToast({
+                    text: <Trans>Error setting new reference state!</Trans>,
+                });
+            },
+            onSettled: () => {
+                if (isModalOpen) toggleModal();
+            },
+        },
+    });
+
+    const setReferenceState = useCallback(async () => {
+        confirmModal(
+            reference.type,
+            Object.values(nodesToUpdate),
+            isDown,
+            async () => {
+                await callMutations();
+            }
+        );
+    }, [callMutations, confirmModal, isDown, nodesToUpdate, reference.type]);
+
+    let btnText = (
+        <Trans>
+            Set reference state for this
+            <br /> {reference.type} link
+        </Trans>
+    );
+    if (isDown) {
+        btnText = (
+            <Trans>
+                Delete this {reference.type} link
+                <br />
+                from reference state
+            </Trans>
+        );
+    }
 
     let errorMessage = <Trans>Same status as in the reference state</Trans>;
     if (referenceError) {
@@ -252,7 +315,7 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         <StatusAndButton
             isError={hasError}
             btn={hasError && btnText}
-            onClick={mutate}
+            onClick={setReferenceState}
         >
             {errorMessage}
         </StatusAndButton>

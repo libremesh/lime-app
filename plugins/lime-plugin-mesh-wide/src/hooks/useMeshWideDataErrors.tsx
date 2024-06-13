@@ -37,45 +37,54 @@ export const useMeshWideDataErrors = () => {
         }
     };
 
-    const { data: linksReferenceData, error: linksReferenceError } =
-        useMeshWideLinksReference({});
+    const {
+        data: linksReferenceData,
+        error: linksReferenceError,
+        isError: linksReferenceIsError,
+    } = useMeshWideLinksReference({});
     addError(
-        getFromSharedStateKeys.getFromSharedStateMultiWriter("wifi_links_info"),
-        linksReferenceError,
+        getFromSharedStateKeys.getReferenceFromSharedState("wifi_links_info"),
+        linksReferenceIsError ? linksReferenceError : null,
         linksReferenceData
     );
 
     const { error: linksError } = useMeshWideLinks({});
     addError(
-        getFromSharedStateKeys.getFromSharedStateAsync("wifi_links_info"),
+        getFromSharedStateKeys.getFromSharedState("wifi_links_info"),
         linksError
     );
 
-    const { data: batmanReferenceData, error: batmanReferenceError } =
-        useMeshWideBatmanReference({});
+    const {
+        data: batmanReferenceData,
+        error: batmanReferenceError,
+        isError: batmanReferenceIsError,
+    } = useMeshWideBatmanReference({});
     addError(
-        getFromSharedStateKeys.getFromSharedStateMultiWriter("bat_links_info"),
-        batmanReferenceError,
+        getFromSharedStateKeys.getReferenceFromSharedState("bat_links_info"),
+        batmanReferenceIsError ? batmanReferenceError : null,
         batmanReferenceData
     );
 
     const { error: batmanError } = useMeshWideBatman({});
     addError(
-        getFromSharedStateKeys.getFromSharedStateAsync("bat_links_info"),
+        getFromSharedStateKeys.getFromSharedState("bat_links_info"),
         batmanError
     );
 
-    const { data: nodesReferenceData, error: nodesReferenceError } =
-        useMeshWideNodesReference({});
+    const {
+        data: nodesReferenceData,
+        error: nodesReferenceError,
+        isError: isNodesReferenceError,
+    } = useMeshWideNodesReference({});
     addError(
-        getFromSharedStateKeys.getFromSharedStateMultiWriter("node_info"),
-        nodesReferenceError,
+        getFromSharedStateKeys.getReferenceFromSharedState("node_info"),
+        isNodesReferenceError ? nodesReferenceError : null,
         nodesReferenceData
     );
 
     const { error: nodesError } = useMeshWideNodes({});
     addError(
-        getFromSharedStateKeys.getFromSharedStateAsync("node_info"),
+        getFromSharedStateKeys.getFromSharedState("node_info"),
         nodesError
     );
 

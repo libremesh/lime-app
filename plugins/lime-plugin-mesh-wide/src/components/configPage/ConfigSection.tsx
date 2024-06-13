@@ -48,7 +48,6 @@ export const SectionEditOrDelete = ({ name }) => {
                                 Edited {name} - {new Date().toDateString()}
                             </Trans>
                         ),
-                        duration: 5000,
                         onAction: () => {
                             console.log("Undo action");
                         },
@@ -66,7 +65,6 @@ export const SectionEditOrDelete = ({ name }) => {
                                 Deleted {name} - {new Date().toDateString()}
                             </Trans>
                         ),
-                        duration: 5000,
                         onAction: () => {
                             console.log("Undo action");
                         },
@@ -96,7 +94,6 @@ export const AddNewSectionBtn = () => {
                                 {new Date().toDateString()}
                             </Trans>
                         ),
-                        duration: 5000,
                     });
                 });
             }}

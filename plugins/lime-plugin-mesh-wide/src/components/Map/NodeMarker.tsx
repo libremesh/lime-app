@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/macro";
 import L from "leaflet";
 import { Marker, Tooltip } from "react-leaflet";
 
@@ -31,11 +32,12 @@ const NodeMarker = ({
         selectedMapFeature?.id === name && style.selectedMarker
     }
     ${hasErrors ? style.errorMarker : style.syncedMarker}
-    ${isDown && style.notUpMarker}
-    ${isNewNode && style.newNodeMarker}`;
+    ${isDown && style.notUpMarker}`;
 
     // If node no reference is set, is a new node
     const nodeToShow = reference ?? actual;
+
+    const newNodeTooltip = isNewNode ? <Trans>(new)</Trans> : "";
 
     return (
         <Marker
@@ -44,7 +46,11 @@ const NodeMarker = ({
                 className: style.leafletDivCustomIcon,
                 iconAnchor: [0, 24],
                 popupAnchor: [0, -36],
-                html: `<span class="${style.defaultMarker} ${markerClasses}" />`,
+                html: `<span class="${style.markerContainer}"><span class="${
+                    style.defaultMarker
+                } ${markerClasses}"/> <span class="${
+                    isNewNode ? style.badge : ""
+                }" /></span>`,
             })}
             eventHandlers={{
                 click: (e) => {
@@ -57,7 +63,9 @@ const NodeMarker = ({
                 },
             }}
         >
-            <Tooltip className={"text-3xl"}>{name}</Tooltip>
+            <Tooltip className={"text-3xl"}>
+                {name} {newNodeTooltip}
+            </Tooltip>
         </Marker>
     );
 };

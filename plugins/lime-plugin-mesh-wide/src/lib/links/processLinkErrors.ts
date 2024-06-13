@@ -74,6 +74,8 @@ export const compareLinks = ({
         linkUp: true,
     };
 
+    let downCounter = 0;
+
     referenceLink.links.forEach((macToMacReference) => {
         const setLinkIsDown = () => {
             ptoPErrors.linkUp = false;
@@ -113,19 +115,25 @@ export const compareLinks = ({
                     ptoPErrors.macToMacErrors[macToMacReference.id].hasErrors =
                         true;
                     ptoPErrors.hasErrors = true;
-                }
-                if (
-                    (errors as WifiLinkErrorCodes[]).includes(
-                        WifiLinkErrorCodes.LINK_DOWN
-                    ) ||
-                    (errors as BatmanLinkErrorCodes[]).includes(
-                        BatmanLinkErrorCodes.LINK_DOWN
-                    )
-                ) {
-                    setLinkIsDown();
+
+                    if (
+                        (errors as WifiLinkErrorCodes[]).includes(
+                            WifiLinkErrorCodes.LINK_DOWN
+                        ) ||
+                        (errors as BatmanLinkErrorCodes[]).includes(
+                            BatmanLinkErrorCodes.LINK_DOWN
+                        )
+                    ) {
+                        ptoPErrors.macToMacErrors[macToMacReference.id].linkUp =
+                            false;
+                        downCounter++;
+                    }
                 }
             }
         );
     });
+    if (downCounter === referenceLink.links.length) {
+        ptoPErrors.linkUp = false;
+    }
     return ptoPErrors;
 };

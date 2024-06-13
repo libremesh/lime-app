@@ -32,7 +32,7 @@ const useActionModal = (
             });
             toggleModal();
         },
-        [setModalState, toggleModal]
+        [actionName, btnText, setModalState, title, toggleModal]
     );
     return { actionModal, toggleModal };
 };
@@ -80,23 +80,82 @@ export const useAddNewSectionModal = () => {
             });
             toggleModal();
         },
-        [setModalState, toggleModal]
+        [handleSubmit, register, setModalState, toggleModal]
     );
     return { actionModal, toggleModal };
 };
 
-export const useSetReferenceStateModal = () => {
+export const useSetNoeInfoReferenceStateModal = () => {
     const { toggleModal, setModalState, isModalOpen } = useModal();
 
     const confirmModal = useCallback(
-        (dataType: DataTypes, cb: () => Promise<void>) => {
-            setModalState({
-                title: <Trans>Set reference state for {dataType}</Trans>,
-                content: (
+        (nodeName: string, isDown: boolean, cb: () => Promise<void>) => {
+            let title = <Trans>Set reference state for {nodeName}</Trans>;
+            let content = <Trans>Set the reference state for this node.</Trans>;
+            if (isDown) {
+                title = (
+                    <Trans>Remove {nodeName} from the reference state</Trans>
+                );
+                content = (
                     <Trans>
-                        Are you sure you want to set this reference state for{" "}
-                        {dataType}
+                        This node seems down, remove them from the reference
+                        state?
                     </Trans>
+                );
+            }
+            setModalState({
+                title,
+                content,
+                successCb: cb,
+                successBtnText: <Trans>Continue</Trans>,
+            });
+            toggleModal();
+        },
+        [setModalState, toggleModal]
+    );
+    return { confirmModal, toggleModal, isModalOpen };
+};
+
+export const useSetLinkReferenceStateModal = () => {
+    const { toggleModal, setModalState, isModalOpen } = useModal();
+
+    const confirmModal = useCallback(
+        (
+            dataType: DataTypes,
+            nodes: string[],
+            isDown: boolean,
+            cb: () => Promise<void>
+        ) => {
+            let title = (
+                <Trans>Set reference state for this {dataType} link?</Trans>
+            );
+            let content = (
+                <Trans>This will set the reference state of this link:</Trans>
+            );
+            if (isDown) {
+                title = (
+                    <Trans>
+                        Remove this {dataType} from the reference state
+                    </Trans>
+                );
+                content = (
+                    <Trans>
+                        This link seems down, remove them from the reference
+                        state?
+                    </Trans>
+                );
+            }
+            setModalState({
+                title,
+                content: (
+                    <div>
+                        {content}
+                        <br />
+                        <div className={"flex flex-row"}>
+                            <div>{nodes[0]}</div>
+                            <div>{nodes[1]}</div>
+                        </div>
+                    </div>
                 ),
                 successCb: cb,
                 successBtnText: <Trans>Continue</Trans>,

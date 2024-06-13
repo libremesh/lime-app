@@ -2,6 +2,7 @@ import {
     BaseMacToMacLink,
     Coordinates,
     ILocatedLink,
+    INodeInfo,
     LinkDataTypes,
     LinkType,
     MacToMacLinkId,
@@ -15,11 +16,15 @@ import {
  */
 export class PontToPointLink {
     private _links: BaseMacToMacLink[] = [];
+    private _nodes: INodeInfo[] = [];
     public readonly id: PointToPointLinkId;
     public readonly coordinates: Coordinates[] = [];
 
-    constructor(coord1: Coordinates, coord2: Coordinates) {
+    constructor(node1: INodeInfo, node2: INodeInfo) {
+        const coord1 = node1.coordinates;
+        const coord2 = node2.coordinates;
         this.id = PontToPointLink.generateId(coord1, coord2);
+        this.nodes.push(node1, node2);
         this.coordinates.push(coord1, coord2);
     }
 
@@ -33,34 +38,17 @@ export class PontToPointLink {
      * @param mac1
      * @param mac2
      */
-    linkExists(mac1: string, mac2: string) {
-        for (const link of this._links) {
-            // Just needed to check the first node of the link object becouse the other will have the same macs but reversed
-            const node = link.data[Object.keys(link.data)[0]];
-            if (
-                node &&
-                (node.dst_mac.toLowerCase() === mac1.toLowerCase() ||
-                    node.src_mac.toLowerCase() === mac1.toLowerCase()) &&
-                (node.dst_mac.toLowerCase() === mac2.toLowerCase() ||
-                    node.src_mac.toLowerCase() === mac2.toLowerCase())
-            ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    get names(): string[] {
-        return [
-            ...this._links.reduce((acc, link) => {
-                Object.keys(link).forEach((key) => acc.add(key));
-                return acc;
-            }, new Set()),
-        ] as string[];
+    linkExists(linkKey: string) {
+        const link = this._links.find((link) => link.id === linkKey);
+        return !!link;
     }
 
     get links() {
         return this._links;
+    }
+
+    get nodes() {
+        return this._nodes;
     }
 
     /**
@@ -95,25 +83,10 @@ export class MacToMacLink<T extends LinkType> {
     private _id: MacToMacLinkId;
     public type: T;
 
-    constructor(data: ILocatedLink<T>, type: T) {
+    constructor(id: MacToMacLinkId, data: ILocatedLink<T>, type: T) {
         this._data = data;
-        this._id = MacToMacLink.generateId(data);
+        this._id = id;
         this.type = type;
-    }
-
-    /**
-     * Deterministically generation of a unique id using the macs of this link. Concatenate the sorted macs that
-     * are involved on this link
-     * @param data
-     */
-    static generateId(data: ILocatedLink<LinkType>): MacToMacLinkId {
-        return [
-            ...Object.entries(data).map(([k, v]) => {
-                return v.src_mac?.toLowerCase().replace(/:/g, "");
-            }),
-        ]
-            .sort()
-            .join("");
     }
 
     get id() {

@@ -2,6 +2,11 @@
 @warning: #eaab7e;
 @bad: #eb7575;
 
+.markerContainer {
+    position: relative;
+    display: inline-block;
+}
+
 //Delete a leaflet strange div
 .leaflet-div-custom-icon {
     background: none !important;
@@ -66,4 +71,15 @@
 .selectedMarker,
 .defaultMarker:hover {
     border: 2px solid black;
+}
+
+.badge {
+    position: absolute;
+    top: 7px;
+    right: -3px;
+    background-color: @warning;
+    color: white;
+    border-radius: 50%;
+    padding: 6px 6px;
+    font-size: 0.8em;
 }
