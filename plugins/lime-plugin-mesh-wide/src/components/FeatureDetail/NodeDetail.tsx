@@ -26,14 +26,6 @@ import {
 import { isEmpty } from "utils/utils";
 
 const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
-    // If node no reference is set, is a new node
-    const nodeToShow = reference ?? actual;
-
-    const uptime = nodeToShow.uptime;
-    const firmware = nodeToShow.firmware_version;
-    const ipv6 = nodeToShow.ipv6;
-    const ipv4 = nodeToShow.ipv4;
-    const device = nodeToShow.device;
     const { errors, isDown } = useSingleNodeErrors({
         actual,
         reference,
@@ -42,6 +34,12 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     if (isDown) {
         return <Trans>This node seems down</Trans>;
     }
+
+    const uptime = actual.uptime;
+    const firmware = actual.firmware_version;
+    const ipv6 = actual.ipv6;
+    const ipv4 = actual.ipv4;
+    const device = actual.device;
     const macs = actual.macs;
 
     return (
@@ -50,11 +48,11 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                 <div className={"text-3xl"}>{name}</div>
                 <div className={"flex flex-row gap-4"}>
                     <UpdateNodeInfoBtn
-                        ip={nodeToShow.ipv4}
-                        nodeName={nodeToShow.hostname}
+                        ip={actual.ipv4}
+                        nodeName={actual.hostname}
                         updateOnMount={false}
                     />
-                    <RemoteRebootBtn node={nodeToShow} />
+                    <RemoteRebootBtn node={actual} />
                 </div>
             </Row>
             <Row>
