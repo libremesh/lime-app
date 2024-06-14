@@ -7,13 +7,12 @@ import useSharedStateSync, {
 } from "components/shared-state/useSharedStateSync";
 
 const UpdateSharedStateBtn = ({
-    ip,
-    nodeName,
     updateOnMount = true,
+    ...rest
 }: {
     updateOnMount?: boolean;
 } & ISyncWithNodeProps) => {
-    const { syncNode, isLoading } = useSharedStateSync({ ip, nodeName });
+    const { syncNode, isLoading } = useSharedStateSync({ ...rest });
 
     // Use effect to sync the node data on mount
     useEffect(() => {
@@ -23,7 +22,7 @@ const UpdateSharedStateBtn = ({
         })();
         // Avoid executing the effect on updateOnMount change
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ip]);
+    }, [rest]);
 
     return (
         <Button

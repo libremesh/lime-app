@@ -21,6 +21,7 @@ import {
 import {
     NodeErrorCodes,
     NodeMapFeature,
+    getMeshWideMapTypes,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { isEmpty } from "utils/utils";
@@ -51,6 +52,10 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                         ip={actual.ipv4}
                         nodeName={actual.hostname}
                         updateOnMount={false}
+                        types={
+                            // Dinamically get mesh wide map types
+                            getMeshWideMapTypes()
+                        }
                     />
                     <RemoteRebootBtn node={actual} />
                 </div>
@@ -127,7 +132,12 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     const { toggleModal, confirmModal, isModalOpen } =
         useSetNodeInfoReferenceStateModal();
     const { showToast } = useToast();
-    const { syncNode } = useSharedStateSync({ ip, nodeName: hostname });
+
+    const { syncNode } = useSharedStateSync({
+        ip,
+        nodeName: hostname,
+        types: getMeshWideMapTypes(),
+    });
 
     // Mutation to update the reference state
     const { mutateAsync } = useSetNodeInfoReferenceState({

@@ -197,3 +197,16 @@ export type PointToPointLinkId = string;
  */
 type AllMeshWideMapTypes = MeshWideMapTypes & MeshWideMapReferenceTypes;
 export type MeshWideMapDataTypeKeys = keyof AllMeshWideMapTypes;
+// Util in order to iterate over the keys of the DataTypeMap
+type CompleteDataTypeKeys = { [K in MeshWideMapDataTypeKeys]: true };
+const completeDataTypeKeys: CompleteDataTypeKeys = {
+    node_info: true,
+    wifi_links_info: true,
+    bat_links_info: true,
+    node_info_ref: true,
+    wifi_links_info_ref: true,
+    bat_links_info_ref: true,
+};
+export const getMeshWideMapTypes = () => {
+    return Object.keys(completeDataTypeKeys) as MeshWideMapDataTypeKeys[];
+};

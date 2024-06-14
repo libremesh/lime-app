@@ -1,17 +1,15 @@
 import { useState } from "preact/hooks";
 import { useCallback } from "react";
 
-import { useErrrorConnectionToast } from "components/toast/toasts";
-
 import {
-    usePublishOnRemoteNode,
+    usePublishAll,
     useSyncDataTypes,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
-import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
+} from "components/shared-state/SharedStateQueries";
 import {
-    DataTypes,
-    completeDataTypeKeys,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+    SharedStateDataTypeKeys,
+    sharedStateQueries,
+} from "components/shared-state/SharedStateTypes";
+import { useErrrorConnectionToast } from "components/toast/toasts";
 
 import { useBoardData } from "utils/queries";
 import queryCache from "utils/queryCache";
@@ -19,29 +17,33 @@ import queryCache from "utils/queryCache";
 export interface ISyncWithNodeProps {
     ip: string;
     nodeName?: string;
+    types: SharedStateDataTypeKeys[];
 }
 
-const useSharedStateSync = ({ ip, nodeName }: ISyncWithNodeProps) => {
+const useSharedStateSync = ({ types, ip, nodeName }: ISyncWithNodeProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const { show } = useErrrorConnectionToast();
     const { data: boardData } = useBoardData();
 
-    const { mutateAsync: localNodeSync } = useSyncDataTypes({
+    const { mutateAsync: syncDataTypes } = useSyncDataTypes({
         ip,
+        dataTypes: types,
     });
-    const { mutateAsync: publishOnRemoteNode } = usePublishOnRemoteNode({
+    const { mutateAsync: publishAll } = usePublishAll({
         ip,
     });
 
     const invalidateQueries = useCallback(() => {
+        // const typeKeys = types.map((type) => Object.keys(type)[0]);
         for (const dataType of Object.keys(
-            completeDataTypeKeys
-        ) as DataTypes[]) {
+            // completeDataTypeKeys
+            types
+        ) as SharedStateDataTypeKeys[]) {
             queryCache.invalidateQueries({
-                queryKey: getFromSharedStateKeys.getFromSharedState(dataType),
+                queryKey: sharedStateQueries.getFromSharedState(dataType),
             });
         }
-    }, []);
+    }, [types]);
 
     // useCallback to sync the node data
     const syncNode = useCallback(async () => {
@@ -49,14 +51,14 @@ const useSharedStateSync = ({ ip, nodeName }: ISyncWithNodeProps) => {
         setIsLoading(true);
         try {
             try {
-                await publishOnRemoteNode({ ip });
+                await publishAll({ ip });
             } catch (e) {
                 show(nodeName ?? ip);
                 throw e;
             }
             // If not boardata and or the hostname is different to target node do sync from local node
             if (!boardData || boardData?.hostname !== nodeName) {
-                await localNodeSync({ ip });
+                await syncDataTypes({ ip, dataTypes: types });
             }
             await invalidateQueries();
         } finally {
@@ -67,10 +69,11 @@ const useSharedStateSync = ({ ip, nodeName }: ISyncWithNodeProps) => {
         invalidateQueries,
         ip,
         isLoading,
-        localNodeSync,
         nodeName,
-        publishOnRemoteNode,
+        publishAll,
         show,
+        syncDataTypes,
+        types,
     ]);
 
     return { isLoading, syncNode };

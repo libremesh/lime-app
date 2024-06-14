@@ -55,6 +55,7 @@ const NodeUpgradeInfoItem = ({
                     updateOnMount={false}
                     ip={info.node_ip}
                     nodeName={name}
+                    types={["mesh_wide_upgrade"]}
                 />
             }
         >
