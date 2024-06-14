@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { ModalActions, useModal } from "components/Modal/Modal";
 import InputField from "components/inputs/InputField";
 
-import { DataTypes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+import { MeshWideMapDataTypeKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 const useActionModal = (
     title: ComponentChildren,
@@ -85,7 +85,7 @@ export const useAddNewSectionModal = () => {
     return { actionModal, toggleModal };
 };
 
-export const useSetNoeInfoReferenceStateModal = () => {
+export const useSetNodeInfoReferenceStateModal = () => {
     const { toggleModal, setModalState, isModalOpen } = useModal();
 
     const confirmModal = useCallback(
@@ -121,7 +121,7 @@ export const useSetLinkReferenceStateModal = () => {
 
     const confirmModal = useCallback(
         (
-            dataType: DataTypes,
+            dataType: MeshWideMapDataTypeKeys,
             nodes: string[],
             isDown: boolean,
             cb: () => Promise<void>

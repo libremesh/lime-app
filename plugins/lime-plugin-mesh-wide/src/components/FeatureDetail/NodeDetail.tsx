@@ -11,7 +11,7 @@ import {
     Row,
     TitleAndText,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
-import { useSetNoeInfoReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
+import { useSetNodeInfoReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
 import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
 import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
@@ -125,7 +125,7 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
         useMeshWideNodesReference({});
 
     const { toggleModal, confirmModal, isModalOpen } =
-        useSetNoeInfoReferenceStateModal();
+        useSetNodeInfoReferenceStateModal();
     const { showToast } = useToast();
     const { syncNode } = useSharedStateSync({ ip, nodeName: hostname });
 

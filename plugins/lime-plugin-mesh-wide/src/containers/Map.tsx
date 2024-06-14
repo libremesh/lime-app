@@ -8,6 +8,8 @@ import {
     TileLayer,
 } from "react-leaflet";
 
+import { MeshWideMapTypes } from "components/shared-state/SharedStateTypes";
+
 import {
     useLoadLeaflet,
     useLocation,
@@ -18,7 +20,6 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayers";
 import NodesLayer from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/NodesLayer";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
-import { DataTypes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 const openStreetMapTileString = "https://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
@@ -78,7 +79,7 @@ export const MeshWideMap = ({
     }, [loading, nodeLocation]);
 
     const mapSupportedLayers: Record<
-        DataTypes,
+        keyof MeshWideMapTypes,
         { name: string; layer: ComponentChildren }
     > = {
         node_info: { name: "Nodes", layer: <NodesLayer /> },

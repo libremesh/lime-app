@@ -1,23 +1,23 @@
 import { QueryKey } from "@tanstack/react-query";
 
-import { callToRemoteNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
-import { getFromSharedStateKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
 import {
-    DataTypeMap,
-    DataTypes,
+    AllSharedStateTypes,
+    SharedStateDataTypeKeys,
     SharedStateReturnType,
-    completeDataTypeKeys,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+    sharedStateQueries,
+} from "components/shared-state/SharedStateTypes";
+
+import { callToRemoteNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 
 import { UhttpdService, default as defaultApi } from "utils/uhttpd.service";
 
-export const doSharedStateApiCall = async <T extends DataTypes>(
+export const doSharedStateApiCall = async <T extends SharedStateDataTypeKeys>(
     queryKey: QueryKey,
     ip?: string
 ) => {
     const doCall = async (api: UhttpdService = defaultApi) => {
         const res = (await api.call(...queryKey)) as SharedStateReturnType<
-            DataTypeMap[T]
+            AllSharedStateTypes[T]
         >;
         // Don't count 404 as an error, it means not found
         if (res.error !== 0 && res.error !== 404) {
@@ -25,6 +25,7 @@ export const doSharedStateApiCall = async <T extends DataTypes>(
         }
         return res.data;
     };
+    // Todo(kon): check if the ip is not this node
     if (ip) {
         return await callToRemoteNode({
             ip,
@@ -34,24 +35,26 @@ export const doSharedStateApiCall = async <T extends DataTypes>(
     return await doCall();
 };
 
-/**
- * Sync all data types from shared state from remote node
- */
-
 async function syncDataType({
     dataType,
     ip,
 }: {
-    dataType: DataTypes;
+    dataType: SharedStateDataTypeKeys;
     ip: string;
 }) {
-    const queryKey = getFromSharedStateKeys.syncFromSharedState(dataType, [ip]);
+    const queryKey = sharedStateQueries.syncFromSharedState(dataType, [ip]);
     return doSharedStateApiCall<typeof dataType>(queryKey);
 }
 
-export async function syncAllDataTypes({ ip }: { ip: string }) {
-    const promises = (Object.keys(completeDataTypeKeys) as DataTypes[]).map(
-        (dataType) => syncDataType({ dataType, ip })
+export async function syncDataTypes({
+    ip,
+    dataTypes,
+}: {
+    ip: string;
+    dataTypes: SharedStateDataTypeKeys[];
+}) {
+    const promises = dataTypes.map((dataType) =>
+        syncDataType({ dataType, ip })
     );
     return await Promise.all(promises);
 }

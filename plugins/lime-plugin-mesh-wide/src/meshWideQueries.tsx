@@ -1,26 +1,21 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import { doSharedStateApiCall } from "components/shared-state/SharedStateApi";
+import { ISharedStateRemoteQueryProps } from "components/shared-state/SharedStateQueries";
+import { sharedStateQueries } from "components/shared-state/SharedStateTypes";
 import { useErrrorConnectionToast } from "components/toast/toasts";
 
 import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";
 import { getQueryByLinkType } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
-import {
-    doSharedStateApiCall,
-    syncAllDataTypes,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
 import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 import {
-    getFromSharedStateKeys,
-    syncFromSharedStateKey,
-} from "plugins/lime-plugin-mesh-wide/src/meshWideQueriesKeys";
-import {
-    DataTypes,
     IBatmanLinks,
     IMeshWideConfig,
     INodes,
     IWifiLinks,
     LinkType,
+    MeshWideMapDataTypeKeys,
     SelectedMapFeature,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
@@ -30,9 +25,8 @@ import { useSharedData } from "utils/useSharedData";
 const refetchInterval = 60000;
 
 export function useMeshWideLinksReference(params) {
-    const dataType: DataTypes = "wifi_links_info";
-    const queryKey =
-        getFromSharedStateKeys.getReferenceFromSharedState(dataType);
+    const dataType: MeshWideMapDataTypeKeys = "wifi_links_info_ref";
+    const queryKey = sharedStateQueries.getFromSharedState(dataType);
     return useQuery<IWifiLinks>(
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
@@ -44,8 +38,8 @@ export function useMeshWideLinksReference(params) {
 }
 
 export function useMeshWideLinks(params) {
-    const dataType: DataTypes = "wifi_links_info";
-    const queryKey = getFromSharedStateKeys.getFromSharedState(dataType);
+    const dataType: MeshWideMapDataTypeKeys = "wifi_links_info";
+    const queryKey = sharedStateQueries.getFromSharedState(dataType);
     return useQuery<IWifiLinks>(
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
@@ -57,9 +51,8 @@ export function useMeshWideLinks(params) {
 }
 
 export function useMeshWideBatmanReference(params) {
-    const dataType: DataTypes = "bat_links_info";
-    const queryKey =
-        getFromSharedStateKeys.getReferenceFromSharedState(dataType);
+    const dataType: MeshWideMapDataTypeKeys = "bat_links_info_ref";
+    const queryKey = sharedStateQueries.getFromSharedState(dataType);
     return useQuery<IBatmanLinks>(
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
@@ -71,8 +64,8 @@ export function useMeshWideBatmanReference(params) {
 }
 
 export function useMeshWideBatman(params) {
-    const dataType: DataTypes = "bat_links_info";
-    const queryKey = getFromSharedStateKeys.getFromSharedState(dataType);
+    const dataType: MeshWideMapDataTypeKeys = "bat_links_info";
+    const queryKey = sharedStateQueries.getFromSharedState(dataType);
     return useQuery<IBatmanLinks>(
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
@@ -84,9 +77,8 @@ export function useMeshWideBatman(params) {
 }
 
 export function useMeshWideNodesReference(params) {
-    const dataType: DataTypes = "node_info";
-    const queryKey =
-        getFromSharedStateKeys.getReferenceFromSharedState(dataType);
+    const dataType: MeshWideMapDataTypeKeys = "node_info_ref";
+    const queryKey = sharedStateQueries.getFromSharedState(dataType);
     return useQuery<INodes>(
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
@@ -98,8 +90,8 @@ export function useMeshWideNodesReference(params) {
 }
 
 export function useMeshWideNodes(params) {
-    const dataType: DataTypes = "node_info";
-    const queryKey = getFromSharedStateKeys.getFromSharedState(dataType);
+    const dataType: MeshWideMapDataTypeKeys = "node_info";
+    const queryKey = sharedStateQueries.getFromSharedState(dataType);
     return useQuery<INodes>(
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
@@ -116,11 +108,6 @@ export function useMeshWideNodes(params) {
  * Don't use those mutations itself, use it implementing it on the useReferenceState hook in order
  * to unify criterias and add a confirmation modal
  */
-
-interface ISharedStateRemoteQueryProps {
-    ip: string;
-    params?: any;
-}
 
 type ISharedStateSetReferenceQueryProps = {
     isDown: boolean;
@@ -139,7 +126,7 @@ export const useSetNodeInfoReferenceState = ({
 
     // Ignore the types here because it to delete a node you have to pass an empty object
     // @ts-ignore
-    const queryKey = getFromSharedStateKeys.insertIntoReferenceState(type, {
+    const queryKey = sharedStateQueries.insertIntoReferenceState(type, {
         [hostname]: isDown ? null : data[hostname],
     });
     return useMutation(
@@ -186,7 +173,7 @@ export const useSetLinkReferenceState = ({
                 }
                 newReferenceLinks[mactomac.id] = data[hostname][mactomac.id];
             }
-            const queryKey = getFromSharedStateKeys.insertIntoReferenceState(
+            const queryKey = sharedStateQueries.insertIntoReferenceState(
                 linkType,
                 // For some reason I have to ignore the types here because it not infers properly.
                 // Using the same code but for a specific link type, it works.
@@ -198,40 +185,6 @@ export const useSetLinkReferenceState = ({
         },
         ips: Object.keys(nodesToUpdate),
         options: params,
-    });
-};
-
-/**
- * Sync all data types from shared state from remote node
- * */
-
-export const usePublishOnRemoteNode = ({
-    ip,
-    ...opts
-}: ISharedStateRemoteQueryProps) => {
-    const { show } = useErrrorConnectionToast();
-
-    return useMutation<any, any, { ip: string }>({
-        mutationFn: ({ ip }) =>
-            doSharedStateApiCall(
-                getFromSharedStateKeys.publishAllFromSharedState(),
-                ip
-            ),
-        mutationKey: [getFromSharedStateKeys.publishAllFromSharedState(), ip],
-        onError: () => {
-            show(ip);
-        },
-        ...opts,
-    });
-};
-
-export const useSyncDataTypes = ({
-    ip,
-    params,
-}: ISharedStateRemoteQueryProps) => {
-    return useMutation(syncAllDataTypes, {
-        mutationKey: [syncFromSharedStateKey, ip],
-        ...params,
     });
 };
 

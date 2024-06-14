@@ -1,6 +1,11 @@
 import { QueryKey } from "@tanstack/react-query";
 
 import {
+    MeshWideMapReferenceTypes,
+    MeshWideMapTypes,
+} from "components/shared-state/SharedStateTypes";
+
+import {
     MacToMacLink,
     PontToPointLink,
 } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
@@ -190,22 +195,5 @@ export type PointToPointLinkId = string;
 /**
  * Query keys types
  */
-
-export type DataTypeMap = {
-    node_info: INodes;
-    wifi_links_info: IWifiLinks;
-    bat_links_info: IBatmanLinks;
-};
-export type DataTypes = keyof DataTypeMap;
-export type SharedStateTypes = DataTypeMap[keyof DataTypeMap];
-export type SharedStateReturnType<T extends SharedStateTypes> = {
-    data: T;
-    error: number;
-};
-// Util in order to iterate over the keys of the DataTypeMap
-export type CompleteDataTypeKeys = { [K in DataTypes]: true };
-export const completeDataTypeKeys: CompleteDataTypeKeys = {
-    node_info: true,
-    wifi_links_info: true,
-    bat_links_info: true,
-};
+type AllMeshWideMapTypes = MeshWideMapTypes & MeshWideMapReferenceTypes;
+export type MeshWideMapDataTypeKeys = keyof AllMeshWideMapTypes;
