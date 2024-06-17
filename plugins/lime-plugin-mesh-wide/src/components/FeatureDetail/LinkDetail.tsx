@@ -240,15 +240,21 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         referenceError = true;
     }
 
+    // Modal to set ref state
     const { toggleModal, confirmModal, isModalOpen } =
         useSetLinkReferenceStateModal();
     const { showToast } = useToast();
 
-    // Mutation to update the reference state
+    // Generate a list of nodes to update
     const nodesToUpdate = reference.nodes.reduce((acc, node) => {
         acc[node.ipv4] = node.hostname;
         return acc;
     }, {});
+
+    // todo(kon): Sync mutations, used to sync data between nodes and local node after setting the reference state
+    // useSharedStateSync
+
+    // Mutation to update the reference state
     const { callMutations } = useSetLinkReferenceState({
         linkType: reference.type,
         linkToUpdate: reference,
@@ -271,6 +277,7 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         },
     });
 
+    // Show confirmation modal before run mutations
     const setReferenceState = useCallback(async () => {
         confirmModal(
             reference.type,

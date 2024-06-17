@@ -42,6 +42,10 @@ const useSharedStateSync = ({ types, ip, nodeName }: ISyncWithNodeProps) => {
     }, [types]);
 
     // useCallback to sync the node data
+    // The sync consists of:
+    // 1. Publish all data to the node
+    // 2. Sync data types from the node user is connected to show the changes on the map
+    // 3. Invalidate queries to refetch specific data
     const syncNode = useCallback(async () => {
         if (isLoading) return;
         setIsLoading(true);
@@ -52,7 +56,7 @@ const useSharedStateSync = ({ types, ip, nodeName }: ISyncWithNodeProps) => {
                 show(nodeName ?? ip);
                 throw e;
             }
-            // If not boardata and or the hostname is different to target node do sync from local node
+            // If not boardData and or the hostname is different to target node do sync from local node
             if (!boardData || boardData?.hostname !== nodeName) {
                 await syncDataTypes({ ip, dataTypes: types });
             }
