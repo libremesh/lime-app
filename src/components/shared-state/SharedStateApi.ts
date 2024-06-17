@@ -1,10 +1,10 @@
 import { QueryKey } from "@tanstack/react-query";
 
+import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
 import {
     AllSharedStateTypes,
     SharedStateDataTypeKeys,
     SharedStateReturnType,
-    sharedStateQueries,
 } from "components/shared-state/SharedStateTypes";
 
 import { callToRemoteNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";

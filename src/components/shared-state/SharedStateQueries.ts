@@ -5,10 +5,10 @@ import {
     syncDataTypes,
 } from "components/shared-state/SharedStateApi";
 import {
-    SharedStateDataTypeKeys,
     sharedStateQueries,
     syncFromSharedStateKey,
-} from "components/shared-state/SharedStateTypes";
+} from "components/shared-state/SharedStateQueriesKeys";
+import { SharedStateDataTypeKeys } from "components/shared-state/SharedStateTypes";
 import { useErrrorConnectionToast } from "components/toast/toasts";
 
 export interface ISharedStateRemoteQueryProps {
@@ -58,7 +58,7 @@ export const useSyncDataTypes = ({
     params,
 }: ISyncDataTypesProps) => {
     return useMutation(syncDataTypes, {
-        mutationKey: [syncFromSharedStateKey, ip, dataTypes],
+        mutationKey: [syncFromSharedStateKey, ip, ...dataTypes],
         ...params,
     });
 };

@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import { doSharedStateApiCall } from "components/shared-state/SharedStateApi";
 import { ISharedStateRemoteQueryProps } from "components/shared-state/SharedStateQueries";
-import { sharedStateQueries } from "components/shared-state/SharedStateTypes";
+import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
 import { useErrrorConnectionToast } from "components/toast/toasts";
 
 import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";

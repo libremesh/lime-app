@@ -5,10 +5,8 @@ import {
     usePublishAll,
     useSyncDataTypes,
 } from "components/shared-state/SharedStateQueries";
-import {
-    SharedStateDataTypeKeys,
-    sharedStateQueries,
-} from "components/shared-state/SharedStateTypes";
+import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
+import { SharedStateDataTypeKeys } from "components/shared-state/SharedStateTypes";
 import { useErrrorConnectionToast } from "components/toast/toasts";
 
 import { useBoardData } from "utils/queries";
@@ -34,9 +32,7 @@ const useSharedStateSync = ({ types, ip, nodeName }: ISyncWithNodeProps) => {
     });
 
     const invalidateQueries = useCallback(() => {
-        // const typeKeys = types.map((type) => Object.keys(type)[0]);
         for (const dataType of Object.keys(
-            // completeDataTypeKeys
             types
         ) as SharedStateDataTypeKeys[]) {
             queryCache.invalidateQueries({

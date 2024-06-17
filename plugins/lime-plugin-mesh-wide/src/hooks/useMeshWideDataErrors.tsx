@@ -1,6 +1,6 @@
 import { QueryKey } from "@tanstack/react-query";
 
-import { sharedStateQueries } from "components/shared-state/SharedStateTypes";
+import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
 
 import {
     useMeshWideBatman,
