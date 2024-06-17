@@ -1,3 +1,7 @@
+import {
+    MeshUpgradeApiError,
+    callToRemoteNode,
+} from "components/shared-state/SharedStateApi";
 import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
 
 import {
@@ -5,10 +9,6 @@ import {
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
-import {
-    MeshUpgradeApiError,
-    callToRemoteNode,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 
 import api, { UhttpdService } from "utils/uhttpd.service";
 

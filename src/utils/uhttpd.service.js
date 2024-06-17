@@ -18,10 +18,10 @@ const parseResult = (result) =>
 
 export class UhttpdService {
     constructor(customIp) {
-        this.customIp = customIp;
         this.url = customIp
             ? `http://${customIp}/ubus`
             : `${window.origin}/ubus`;
+        this.customIp = customIp ?? window.origin;
         this.jsonrpc = "2.0";
         this.sec = 0;
         this.requestList = [];

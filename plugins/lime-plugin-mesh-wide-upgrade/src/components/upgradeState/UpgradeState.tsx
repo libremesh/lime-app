@@ -3,9 +3,10 @@ import { ComponentChildren } from "preact";
 
 import { GlobeIcon } from "components/icons/globeIcon";
 import { Tick, Warning } from "components/icons/status";
+import { RemoteNodeCallError } from "components/shared-state/SharedStateApi";
 import { StatusMessage } from "components/status/statusMessage";
 
-import { RemoteNodeCallError, SyncCallErrors } from "utils/meshWideSyncCall";
+import { SyncCallErrors } from "utils/meshWideSyncCall";
 
 interface UpgradeStateProps {
     icon?: ComponentChildren;

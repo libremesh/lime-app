@@ -2,22 +2,10 @@ import { MutationKey } from "@tanstack/query-core/src/types";
 import { UseMutationOptions, useMutation } from "@tanstack/react-query";
 import { useCallback } from "react";
 
+import { RemoteNodeCallError } from "components/shared-state/SharedStateApi";
+
 import queryCache from "utils/queryCache";
 import { useSharedData } from "utils/useSharedData";
-
-export class RemoteNodeCallError extends Error {
-    ip: string;
-    error: Error;
-    constructor(message: string, ip: string, error: Error) {
-        super(message); // Pass the message to the Error constructor
-        this.name = "ParallelMutationError"; // Set the name of the error
-        this.ip = ip;
-        this.error = error;
-
-        // Set the prototype explicitly.
-        Object.setPrototypeOf(this, RemoteNodeCallError.prototype);
-    }
-}
 
 interface IMutationFnVariables<TVariables> {
     ip: string;
