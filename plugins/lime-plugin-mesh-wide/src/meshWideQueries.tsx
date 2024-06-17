@@ -145,7 +145,7 @@ interface IUseSetLinkReferenceState {
     linkType: LinkType;
     linkToUpdate: PontToPointLink;
     nodesToUpdate: { [ip: string]: string }; // { ip: hostname }
-    params: any;
+    params?: any;
     isDown: boolean;
 }
 

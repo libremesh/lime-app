@@ -241,7 +241,7 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
     }
 
     // Modal to set ref state
-    const { toggleModal, confirmModal, isModalOpen } =
+    const { closeModal, confirmModal, isModalOpen } =
         useSetLinkReferenceStateModal();
     const { showToast } = useToast();
 
@@ -260,21 +260,6 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         linkToUpdate: reference,
         isDown,
         nodesToUpdate,
-        params: {
-            onSuccess: () => {
-                showToast({
-                    text: <Trans>New reference state set!</Trans>,
-                });
-            },
-            onError: () => {
-                showToast({
-                    text: <Trans>Error setting new reference state!</Trans>,
-                });
-            },
-            onSettled: () => {
-                if (isModalOpen) toggleModal();
-            },
-        },
     });
 
     // Show confirmation modal before run mutations
@@ -284,10 +269,33 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
             Object.values(nodesToUpdate),
             isDown,
             async () => {
-                await callMutations();
+                try {
+                    const res = await callMutations();
+                    if (res.errors.length) {
+                        console.log("Errors");
+                        throw new Error("Error setting new reference state!");
+                    }
+                    showToast({
+                        text: <Trans>New reference state set!</Trans>,
+                    });
+                } catch (error) {
+                    showToast({
+                        text: <Trans>Error setting new reference state!</Trans>,
+                    });
+                } finally {
+                    closeModal();
+                }
             }
         );
-    }, [callMutations, confirmModal, isDown, nodesToUpdate, reference.type]);
+    }, [
+        callMutations,
+        closeModal,
+        confirmModal,
+        isDown,
+        nodesToUpdate,
+        reference.type,
+        showToast,
+    ]);
 
     let btnText = (
         <Trans>
@@ -316,12 +324,13 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         );
     }
 
-    const hasError = errors?.hasErrors || referenceError || isNewNode;
+    const hasError = errors?.hasErrors || referenceError;
+    const showSetReferenceButton = isDown || isNewNode || referenceError;
 
     return (
         <StatusAndButton
             isError={hasError}
-            btn={hasError && btnText}
+            btn={showSetReferenceButton && btnText}
             onClick={setReferenceState}
         >
             {errorMessage}

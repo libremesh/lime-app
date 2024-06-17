@@ -117,52 +117,45 @@ export const useSetNodeInfoReferenceStateModal = () => {
 };
 
 export const useSetLinkReferenceStateModal = () => {
-    const { toggleModal, setModalState, isModalOpen } = useModal();
+    const { toggleModal, setModalState, isModalOpen, closeModal } = useModal();
 
-    const confirmModal = useCallback(
-        (
-            dataType: MeshWideMapDataTypeKeys,
-            nodes: string[],
-            isDown: boolean,
-            cb: () => Promise<void>
-        ) => {
-            let title = (
-                <Trans>Set reference state for this {dataType} link?</Trans>
+    const confirmModal = (
+        dataType: MeshWideMapDataTypeKeys,
+        nodes: string[],
+        isDown: boolean,
+        cb: () => Promise<void>
+    ) => {
+        let title = (
+            <Trans>Set reference state for this {dataType} link?</Trans>
+        );
+        let content = (
+            <Trans>This will set the reference state of this link:</Trans>
+        );
+        if (isDown) {
+            title = (
+                <Trans>Remove this {dataType} from the reference state</Trans>
             );
-            let content = (
-                <Trans>This will set the reference state of this link:</Trans>
+            content = (
+                <Trans>
+                    This link seems down, remove them from the reference state?
+                </Trans>
             );
-            if (isDown) {
-                title = (
-                    <Trans>
-                        Remove this {dataType} from the reference state
-                    </Trans>
-                );
-                content = (
-                    <Trans>
-                        This link seems down, remove them from the reference
-                        state?
-                    </Trans>
-                );
-            }
-            setModalState({
-                title,
-                content: (
-                    <div>
-                        {content}
-                        <br />
-                        <div className={"flex flex-row"}>
-                            <div>{nodes[0]}</div>
-                            <div>{nodes[1]}</div>
-                        </div>
+        }
+        setModalState({
+            title,
+            content: (
+                <div>
+                    {content}
+                    <br />
+                    <div className={"flex flex-row font-bold"}>
+                        {nodes.join(", ")}
                     </div>
-                ),
-                successCb: cb,
-                successBtnText: <Trans>Continue</Trans>,
-            });
-            toggleModal();
-        },
-        [setModalState, toggleModal]
-    );
-    return { confirmModal, toggleModal, isModalOpen };
+                </div>
+            ),
+            successCb: cb,
+            successBtnText: <Trans>Continue</Trans>,
+        });
+        toggleModal();
+    };
+    return { confirmModal, closeModal, isModalOpen };
 };
