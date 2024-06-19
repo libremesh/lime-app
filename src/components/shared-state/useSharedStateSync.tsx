@@ -32,9 +32,7 @@ const useSharedStateSync = ({ types, ip, nodeName }: ISyncWithNodeProps) => {
     });
 
     const invalidateQueries = useCallback(() => {
-        for (const dataType of Object.keys(
-            types
-        ) as SharedStateDataTypeKeys[]) {
+        for (const dataType of types) {
             queryCache.invalidateQueries({
                 queryKey: sharedStateQueries.getFromSharedState(dataType),
             });
