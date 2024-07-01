@@ -328,20 +328,6 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
     const showSetReferenceButton =
         errors?.hasErrors || isDown || isNewLink || referenceError;
 
-    console.log(
-        "AAAAA",
-        "hasError",
-        hasError,
-        "showSetReferenceButton",
-        showSetReferenceButton,
-        "isDown",
-        isDown,
-        "isNewNode",
-        isNewLink,
-        "referenceError",
-        referenceError
-    );
-
     return (
         <StatusAndButton
             isError={hasError}
