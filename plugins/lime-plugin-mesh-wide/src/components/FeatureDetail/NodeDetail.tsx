@@ -43,6 +43,13 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
     const device = actual.device;
     const macs = actual.macs;
 
+    let newMacs = [];
+    let notFoundMacs = [];
+    if (errors.includes(NodeErrorCodes.MACS_MISSMATCH)) {
+        notFoundMacs = getArrayDifference(reference.macs, macs);
+        newMacs = getArrayDifference(macs, reference.macs);
+    }
+
     return (
         <div>
             <Row>
@@ -84,7 +91,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                 </TitleAndText>
             </Row>
             <Row>
-                <TitleAndText title={<Trans>Macs</Trans>}>
+                <TitleAndText title={<Trans>Macs ({macs.length})</Trans>}>
                     <div>
                         {macs.map((mac, k) => (
                             <div key={k}>{mac}</div>
@@ -92,20 +99,46 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
                     </div>
                 </TitleAndText>
                 {errors.includes(NodeErrorCodes.MACS_MISSMATCH) && (
-                    <TitleAndText
-                        title={<Trans>Macs not found</Trans>}
-                        error={
-                            <Trans>This macs are not on the actual state</Trans>
-                        }
-                    >
-                        <>
-                            {getArrayDifference(reference.macs, macs).map(
-                                (mac, k) => (
-                                    <div key={k}>{mac}</div>
-                                )
-                            )}
-                        </>
-                    </TitleAndText>
+                    <div className={"flex flex-col gap-4"}>
+                        {notFoundMacs && (
+                            <TitleAndText
+                                title={
+                                    <Trans>
+                                        Macs not found ({notFoundMacs.length})
+                                    </Trans>
+                                }
+                                error={
+                                    <Trans>
+                                        This macs are not on the actual state
+                                    </Trans>
+                                }
+                            >
+                                <>
+                                    {notFoundMacs.map((mac, k) => (
+                                        <div key={k}>{mac}</div>
+                                    ))}
+                                </>
+                            </TitleAndText>
+                        )}
+                        {newMacs && (
+                            <TitleAndText
+                                title={
+                                    <Trans>New Macs ({newMacs.length})</Trans>
+                                }
+                                error={
+                                    <Trans>
+                                        This macs are not on the reference state
+                                    </Trans>
+                                }
+                            >
+                                <>
+                                    {newMacs.map((mac, k) => (
+                                        <div key={k}>{mac}</div>
+                                    ))}
+                                </>
+                            </TitleAndText>
+                        )}
+                    </div>
                 )}
             </Row>
         </div>
@@ -193,12 +226,13 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
         );
     }
 
-    const hasErrors = hasNodeErrors || referenceError || isNewNode;
+    const hasErrors = hasNodeErrors || referenceError;
+    const showSetReferenceButton = hasNodeErrors || isNewNode || referenceError;
 
     return (
         <StatusAndButton
             isError={hasErrors}
-            btn={hasErrors && btnText}
+            btn={showSetReferenceButton && btnText}
             onClick={setReferenceState}
         >
             {errorMessage}

@@ -220,7 +220,7 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
 };
 
 export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
-    const isNewNode = !reference;
+    const isNewLink = !reference;
 
     const { errors } = usePointToPointErrors({
         id: reference.id,
@@ -318,14 +318,29 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         errorMessage = <Trans>Reference is not set or has errors</Trans>;
     } else if (errors?.hasErrors) {
         errorMessage = <Trans>This link has errors</Trans>;
-    } else if (isNewNode) {
+    } else if (isNewLink) {
         errorMessage = (
             <Trans>This Link is not registered on the reference state</Trans>
         );
     }
 
     const hasError = errors?.hasErrors || referenceError;
-    const showSetReferenceButton = isDown || isNewNode || referenceError;
+    const showSetReferenceButton =
+        errors?.hasErrors || isDown || isNewLink || referenceError;
+
+    console.log(
+        "AAAAA",
+        "hasError",
+        hasError,
+        "showSetReferenceButton",
+        showSetReferenceButton,
+        "isDown",
+        isDown,
+        "isNewNode",
+        isNewLink,
+        "referenceError",
+        referenceError
+    );
 
     return (
         <StatusAndButton
