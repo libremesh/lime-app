@@ -1,11 +1,12 @@
 import { QueryKey } from "@tanstack/react-query";
 
+import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
+
 interface MeshUpgradeQueryKeysProps {
     [key: string]: QueryKey;
 }
 
 const MeshUpgradeQueryKeys: MeshUpgradeQueryKeysProps = {
-    meshWideUpgradeInfo: ["shared-state-async", "get", "mesh_wide_upgrade"],
     getMeshUpgradeNodeStatus: ["lime-mesh-upgrade", "get_node_status"],
     remoteScheduleUpgrade: ["lime-mesh-upgrade", "schedule_upgrade"],
     remoteConfirmUpgrade: ["lime-mesh-upgrade", "confirm_boot_partition"],
@@ -14,7 +15,7 @@ const MeshUpgradeQueryKeys: MeshUpgradeQueryKeysProps = {
 
 export const meshUpgradeQueryKeys = {
     getMeshWideUpgradeInfo: (): QueryKey =>
-        MeshUpgradeQueryKeys.meshWideUpgradeInfo,
+        sharedStateQueries.getFromSharedState("mesh_wide_upgrade"),
     getMeshUpgradeNodeStatus: (): QueryKey =>
         MeshUpgradeQueryKeys.getMeshUpgradeNodeStatus,
     remoteScheduleUpgrade: (): QueryKey =>

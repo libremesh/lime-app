@@ -7,9 +7,9 @@ import { useModal } from "components/Modal/Modal";
 import { Button } from "components/buttons/button";
 import { ErrorMsg } from "components/form";
 import Loading from "components/loading";
+import { callToRemoteNode } from "components/shared-state/SharedStateApi";
 import { useErrrorConnectionToast } from "components/toast/toasts";
 
-import { callToRemoteNode } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 import { PowerIcon } from "plugins/lime-plugin-mesh-wide/src/icons/power";
 import { INodeInfo } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 

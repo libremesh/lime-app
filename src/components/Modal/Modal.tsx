@@ -10,6 +10,7 @@ interface ModalContextProps {
     isModalOpen: boolean;
     openModalKey?: string | null;
     toggleModal: (key?: string) => void;
+    closeModal: (key?: string) => void;
     setModalState: (state?: ModalState) => void;
     isLoading: boolean;
 }
@@ -31,6 +32,7 @@ const ModalContext = createContext<ModalContextProps>({
     isModalOpen: false,
     openModalKey: null,
     toggleModal: () => {},
+    closeModal: () => {},
     setModalState: () => {},
     isLoading: false,
 });
@@ -65,6 +67,11 @@ export const UseModalProvider = ({ children }) => {
         setOpenModalKey(key ?? null);
     }, []);
 
+    const closeModal = useCallback((key?: string) => {
+        setModalOpen(false);
+        setOpenModalKey(null);
+    }, []);
+
     const runCb = useCallback(
         async (cb: CallbackFn) => {
             if (isLoading) return;
@@ -86,6 +93,7 @@ export const UseModalProvider = ({ children }) => {
                 isModalOpen,
                 toggleModal,
                 setModalState,
+                closeModal,
                 isLoading,
                 openModalKey,
             }}

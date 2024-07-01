@@ -220,7 +220,7 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
 };
 
 export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
-    const isNewNode = !reference;
+    const isNewLink = !reference;
 
     const { errors } = usePointToPointErrors({
         id: reference.id,
@@ -240,47 +240,62 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         referenceError = true;
     }
 
-    const { toggleModal, confirmModal, isModalOpen } =
+    // Modal to set ref state
+    const { closeModal, confirmModal, isModalOpen } =
         useSetLinkReferenceStateModal();
     const { showToast } = useToast();
 
-    // Mutation to update the reference state
+    // Generate a list of nodes to update
     const nodesToUpdate = reference.nodes.reduce((acc, node) => {
         acc[node.ipv4] = node.hostname;
         return acc;
     }, {});
+
+    // todo(kon): Sync mutations, used to sync data between nodes and local node after setting the reference state
+    // useSharedStateSync
+
+    // Mutation to update the reference state
     const { callMutations } = useSetLinkReferenceState({
         linkType: reference.type,
         linkToUpdate: reference,
         isDown,
         nodesToUpdate,
-        params: {
-            onSuccess: () => {
-                showToast({
-                    text: <Trans>New reference state set!</Trans>,
-                });
-            },
-            onError: () => {
-                showToast({
-                    text: <Trans>Error setting new reference state!</Trans>,
-                });
-            },
-            onSettled: () => {
-                if (isModalOpen) toggleModal();
-            },
-        },
     });
 
+    // Show confirmation modal before run mutations
     const setReferenceState = useCallback(async () => {
         confirmModal(
             reference.type,
             Object.values(nodesToUpdate),
             isDown,
             async () => {
-                await callMutations();
+                try {
+                    const res = await callMutations();
+                    if (res.errors.length) {
+                        console.log("Errors");
+                        throw new Error("Error setting new reference state!");
+                    }
+                    showToast({
+                        text: <Trans>New reference state set!</Trans>,
+                    });
+                } catch (error) {
+                    showToast({
+                        text: <Trans>Error setting new reference state!</Trans>,
+                    });
+                } finally {
+                    closeModal();
+                }
             }
         );
-    }, [callMutations, confirmModal, isDown, nodesToUpdate, reference.type]);
+    }, [
+        callMutations,
+        closeModal,
+        confirmModal,
+        isDown,
+        nodesToUpdate,
+        reference.type,
+        showToast,
+    ]);
 
     let btnText = (
         <Trans>
@@ -303,18 +318,34 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         errorMessage = <Trans>Reference is not set or has errors</Trans>;
     } else if (errors?.hasErrors) {
         errorMessage = <Trans>This link has errors</Trans>;
-    } else if (isNewNode) {
+    } else if (isNewLink) {
         errorMessage = (
             <Trans>This Link is not registered on the reference state</Trans>
         );
     }
 
-    const hasError = errors?.hasErrors || referenceError || isNewNode;
+    const hasError = errors?.hasErrors || referenceError;
+    const showSetReferenceButton =
+        errors?.hasErrors || isDown || isNewLink || referenceError;
+
+    console.log(
+        "AAAAA",
+        "hasError",
+        hasError,
+        "showSetReferenceButton",
+        showSetReferenceButton,
+        "isDown",
+        isDown,
+        "isNewNode",
+        isNewLink,
+        "referenceError",
+        referenceError
+    );
 
     return (
         <StatusAndButton
             isError={hasError}
-            btn={hasError && btnText}
+            btn={showSetReferenceButton && btnText}
             onClick={setReferenceState}
         >
             {errorMessage}

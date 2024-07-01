@@ -24,12 +24,12 @@ export const processNodeErrors = (
     }
     const sortedRefMacs = reference.macs.slice().sort();
     const sortedActualMacs = actual.macs.slice().sort();
-
-    for (let i = 0; i < sortedRefMacs.length; i++) {
-        if (sortedRefMacs[i] !== sortedActualMacs[i]) {
-            errors.push(NodeErrorCodes.MACS_MISSMATCH);
-            break;
-        }
+    if (
+        !sortedRefMacs.every(
+            (value, index) => value === sortedActualMacs[index]
+        )
+    ) {
+        errors.push(NodeErrorCodes.MACS_MISSMATCH);
     }
 
     return errors;

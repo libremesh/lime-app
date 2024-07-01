@@ -2,19 +2,17 @@ import { useEffect } from "preact/hooks";
 
 import { Button } from "components/buttons/button";
 import { RefreshIcon } from "components/icons/teenny/refresh";
-
-import useSyncWithNode, {
+import useSharedStateSync, {
     ISyncWithNodeProps,
-} from "plugins/lime-plugin-mesh-wide/src/hooks/useSyncWithNode";
+} from "components/shared-state/useSharedStateSync";
 
-const UpdateNodeInfoBtn = ({
-    ip,
-    nodeName,
+const UpdateSharedStateBtn = ({
     updateOnMount = true,
+    ...rest
 }: {
     updateOnMount?: boolean;
 } & ISyncWithNodeProps) => {
-    const { syncNode, isLoading } = useSyncWithNode({ ip, nodeName });
+    const { syncNode, isLoading } = useSharedStateSync({ ...rest });
 
     // Use effect to sync the node data on mount
     useEffect(() => {
@@ -24,7 +22,7 @@ const UpdateNodeInfoBtn = ({
         })();
         // Avoid executing the effect on updateOnMount change
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ip]);
+    }, [rest]);
 
     return (
         <Button
@@ -43,4 +41,4 @@ const UpdateNodeInfoBtn = ({
     );
 };
 
-export default UpdateNodeInfoBtn;
+export default UpdateSharedStateBtn;

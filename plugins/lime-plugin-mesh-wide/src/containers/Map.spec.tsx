@@ -2,8 +2,9 @@ import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/extend-expect";
 import { screen } from "@testing-library/preact";
 
+import { doSharedStateApiCall } from "components/shared-state/SharedStateApi";
+
 import { MeshWideMap } from "plugins/lime-plugin-mesh-wide/src/containers/Map";
-import { doSharedStateApiCall } from "plugins/lime-plugin-mesh-wide/src/meshWideApi";
 import { nodesReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 
 import { render } from "utils/test_utils";

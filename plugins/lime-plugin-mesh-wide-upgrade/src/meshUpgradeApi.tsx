@@ -1,19 +1,21 @@
 import {
+    MeshUpgradeApiError,
+    callToRemoteNode,
+} from "components/shared-state/SharedStateApi";
+import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
+
+import {
     MeshWideRPCReturnTypes,
     MeshWideUpgradeInfo,
     NodeMeshUpgradeInfo,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
-import {
-    MeshUpgradeApiError,
-    callToRemoteNode,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/api";
 
 import api, { UhttpdService } from "utils/uhttpd.service";
 
+// todo(kon): refactor this to use doSharedStateApiCall??
 export const getMeshWideUpgradeInfo = async () => {
-    const res = await api.call("shared-state-async", "get", {
-        data_type: "mesh_wide_upgrade",
-    });
+    const query = sharedStateQueries.getFromSharedState("mesh_wide_upgrade");
+    const res = await api.call(...query);
     if (res.error) {
         throw new Error(
             `Error getting mesh wide upgrade info from shared state async, code error ${res.error}`

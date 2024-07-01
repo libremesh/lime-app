@@ -3,6 +3,7 @@ import { ComponentChildren } from "preact";
 
 import { StatusIcon, StatusIcons } from "components/icons/status";
 import { ListItemCollapsible } from "components/list-material";
+import UpdateSharedStateBtn from "components/shared-state/UpdateSharedStateBtn";
 
 import { MeshWideNodeUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import {
@@ -10,7 +11,6 @@ import {
     detailedInfoStatusMessageMap,
     mainNodeStatusMessageMap,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages";
-import UpdateNodeInfoBtn from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/UpdateNodeInfoBtn";
 
 export interface INodeInfoBodyItemProps {
     title: ComponentChildren;
@@ -51,10 +51,11 @@ const NodeUpgradeInfoItem = ({
             description={descriptionMsg}
             leftComponent={<StatusIcon status={status} />}
             rightText={
-                <UpdateNodeInfoBtn
+                <UpdateSharedStateBtn
                     updateOnMount={false}
                     ip={info.node_ip}
                     nodeName={name}
+                    types={["mesh_wide_upgrade"]}
                 />
             }
         >
