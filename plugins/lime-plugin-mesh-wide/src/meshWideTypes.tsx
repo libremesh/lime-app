@@ -20,13 +20,18 @@ export type LinkDataTypes = {
 };
 export type LinkType = keyof LinkDataTypes;
 export type IBaseLink<T extends LinkType> = {
-    [linkKey: string]: LinkDataTypes[T];
-};
-export type ILocatedLink<T extends LinkType> = IBaseLink<T> & {
-    [key: string]: {
-        coordinates: Coordinates;
+    [linkKey: string]: LinkDataTypes[T] & {
+        dst_mac: string;
+        src_mac: string;
+        dst_loc?: Coordinates;
     };
 };
+// export type ILocatedLink<T extends LinkType> = IBaseLink<T> & {
+//     [key: string]: {
+//         src_loc: Coordinates;
+//         dst_loc?: Coordinates;
+//     };
+// };
 
 export type BaseMacToMacLink = MacToMacLink<LinkType>;
 
@@ -41,10 +46,12 @@ export type LocatedLinkData = {
     [key: string]: PontToPointLink;
 };
 
-type MacPair = {
-    dst_mac: string;
-    src_mac: string;
-};
+// type LinkCommon = {
+//     dst_mac: string;
+//     src_mac: string;
+//     src_loc: Coordinates;
+//     dst_loc?: Coordinates;
+// };
 
 /**
  * Link info retrieved from the API with the wifi data
@@ -55,7 +62,7 @@ export type IWifiLinkData = {
     signal: number;
     rx_rate: number;
     channel: number;
-} & MacPair;
+};
 
 /**
  * Link info retrieved from the API with the batman data
@@ -64,13 +71,16 @@ export type IBatManLinkData = {
     hard_ifindex: number;
     last_seen_msecs: number;
     iface: string;
-} & MacPair;
+};
 
 /**
  * List of Link info retrieved from the API
  */
 export interface ILinks<T extends LinkType> {
-    [nodeKey: string]: IBaseLink<T>;
+    [nodeKey: string]: {
+        src_loc: Coordinates;
+        links: IBaseLink<T>;
+    };
 }
 
 export type IWifiLinks = ILinks<"wifi_links_info">;

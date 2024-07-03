@@ -77,18 +77,18 @@ const useCalculateLocatedLinks = ({
     } = useNodes();
 
     const locatedLinksReference: LocatedLinkData = useMemo(() => {
-        if (meshWideNodes && linksReference) {
+        if (linksReference) {
             return mergeLinksAndCoordinates(
-                meshWideNodes,
                 linksReference,
-                type
+                type,
+                meshWideNodes
             );
         }
-    }, [meshWideNodes, linksReference, type]);
+    }, [linksReference, meshWideNodes, type]);
 
     const locatedLinks: LocatedLinkData = useMemo(() => {
-        if (links && meshWideNodes) {
-            return mergeLinksAndCoordinates(meshWideNodes, links, type);
+        if (links) {
+            return mergeLinksAndCoordinates(links, type, meshWideNodes);
         }
     }, [links, meshWideNodes, type]);
 

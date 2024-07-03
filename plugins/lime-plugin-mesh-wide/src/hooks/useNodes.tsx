@@ -15,15 +15,16 @@ interface NodesContextType {
         meshWideNodesReference: INodes;
         meshWideNodesActual: INodes;
     };
+    // Invalid nodes doesn't contain a correct lat long
     invalidNodes: {
         invalidNodesReference: INodes;
         invalidNodesActual: INodes;
     };
     locatedNodes: {
-        locatedNodesReference: INodes;
-        locatedNodesActual: INodes;
-        allLocatedNodes: INodes;
-        locatedNewNodes: INodes;
+        locatedNodesReference: INodes; // All located reference nodes
+        locatedNodesActual: INodes; // Located nodes of the actual state
+        allLocatedNodes: INodes; // Sum of actual state and ref state
+        locatedNewNodes: INodes; // New nodes (not on the ref state)
     };
 }
 
@@ -99,7 +100,7 @@ export const NodesProvider = ({
         }, {} as INodes);
     }
 
-    // Used to have on an a single list all the located nodes
+    // Used to have on a single list all the located nodes
     // This is used to have an easier way to draw links between nodes
     // that are not active, or not on reference or new
     const allLocatedNodes = {
@@ -116,7 +117,6 @@ export const NodesProvider = ({
                     meshWideNodesReference,
                     meshWideNodesActual,
                 },
-                // Invalid nodes doesn't contain a correct lat long
                 invalidNodes: {
                     invalidNodesReference,
                     invalidNodesActual,

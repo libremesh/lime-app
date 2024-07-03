@@ -99,6 +99,7 @@ const newNode = {
     },
 };
 
+// @ts-ignore
 export const linksReferenceState: IWifiLinks = {
     primero: {
         A0F3C1462897a840411df935: {
@@ -219,6 +220,7 @@ export const linksReferenceState: IWifiLinks = {
     } as { [linkKey: MacToMacLinkId]: IWifiLinkData },
 } as ILinks<"wifi_links_info">;
 
+// @ts-ignore
 export const batManReferenceState: IBatmanLinks = {
     primero: {
         "02dbd646289502dbd6da4eaa": {

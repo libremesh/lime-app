@@ -10,7 +10,9 @@ import { getQueryByLinkType } from "plugins/lime-plugin-mesh-wide/src/hooks/useL
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 import {
+    IBaseLink,
     IBatmanLinks,
+    ILinks,
     IMeshWideConfig,
     INodes,
     IWifiLinks,
@@ -165,21 +167,32 @@ export const useSetLinkReferenceState = ({
         mutationFn: ({ ip }) => {
             const hostname = nodesToUpdate[ip];
 
-            const newReferenceLinks = referenceData[hostname] ?? {};
+            let newReferenceLinks = (referenceData[hostname] ??
+                {}) as IBaseLink<typeof linkType>;
+            // todo(kon): this is a hotfix because backend returns an empty string somtimes
+            if (typeof newReferenceLinks !== "object") newReferenceLinks = {};
+
             for (const mactomac of linkToUpdate.links) {
                 if (isDown) {
                     delete newReferenceLinks[mactomac.id];
                     continue;
                 }
-                newReferenceLinks[mactomac.id] = data[hostname][mactomac.id];
+                newReferenceLinks[mactomac.id] =
+                    data[hostname].links[mactomac.id];
             }
+
             const queryKey = sharedStateQueries.insertIntoReferenceState(
                 linkType,
                 // For some reason I have to ignore the types here because it not infers properly.
                 // Using the same code but for a specific link type, it works.
                 // For some reason with the use of getQueryByLinkType it doesn't work.
                 // @ts-ignore
-                { [hostname]: newReferenceLinks }
+                {
+                    [hostname]: {
+                        links: newReferenceLinks,
+                        src_loc: data[hostname].src_loc,
+                    },
+                } as ILinks<typeof linkType>
             );
             return doSharedStateApiCall<typeof linkType>(queryKey, ip);
         },

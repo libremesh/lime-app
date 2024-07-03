@@ -14,10 +14,7 @@ import {
     useLoadLeaflet,
     useLocation,
 } from "plugins/lime-plugin-locate/src/locateQueries";
-import {
-    BatmanLinksLayer,
-    WifiLinksLayer,
-} from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayers";
+import { WifiLinksLayer } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayers";
 import NodesLayer from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/NodesLayer";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 
@@ -78,13 +75,14 @@ export const MeshWideMap = ({
         }
     }, [loading, nodeLocation]);
 
+    // @ts-ignore
     const mapSupportedLayers: Record<
         keyof MeshWideMapTypes,
         { name: string; layer: ComponentChildren }
     > = {
         node_info: { name: "Nodes", layer: <NodesLayer /> },
         wifi_links_info: { name: "Wifi Links", layer: <WifiLinksLayer /> },
-        bat_links_info: { name: "Batman", layer: <BatmanLinksLayer /> },
+        // bat_links_info: { name: "Batman", layer: <BatmanLinksLayer /> },
     };
 
     return (
