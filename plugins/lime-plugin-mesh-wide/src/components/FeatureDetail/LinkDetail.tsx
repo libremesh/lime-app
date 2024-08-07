@@ -251,12 +251,6 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         useSetLinkReferenceStateModal();
     const { showToast } = useToast();
 
-    // Generate a list of nodes to update
-    // const nodesToUpdate = reference.nodes.reduce((acc, node) => {
-    //     acc[node.ipv4] = node.hostname;
-    //     return acc;
-    // }, {});
-
     // Get nodes to update
     const nodesToUpdate = useMemo(() => {
         // First get an object with all nodes
@@ -274,9 +268,6 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
             return acc;
         }, {});
     }, [meshWideNodesReference, meshWideNodesActual, reference.nodes]);
-
-    // todo(kon): Sync mutations, used to sync data between nodes and local node after setting the reference state
-    // useSharedStateSync
 
     // Mutation to update the reference state
     const { callMutations } = useSetLinkReferenceState({

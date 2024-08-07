@@ -26,12 +26,6 @@ export type IBaseLink<T extends LinkType> = {
         dst_loc?: Coordinates;
     };
 };
-// export type ILocatedLink<T extends LinkType> = IBaseLink<T> & {
-//     [key: string]: {
-//         src_loc: Coordinates;
-//         dst_loc?: Coordinates;
-//     };
-// };
 
 export type BaseMacToMacLink = MacToMacLink<LinkType>;
 
@@ -45,13 +39,6 @@ export type BaseMacToMacLink = MacToMacLink<LinkType>;
 export type LocatedLinkData = {
     [key: string]: PontToPointLink;
 };
-
-// type LinkCommon = {
-//     dst_mac: string;
-//     src_mac: string;
-//     src_loc: Coordinates;
-//     dst_loc?: Coordinates;
-// };
 
 /**
  * Link info retrieved from the API with the wifi data

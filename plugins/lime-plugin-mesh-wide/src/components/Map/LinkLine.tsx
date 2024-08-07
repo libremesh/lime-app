@@ -54,7 +54,7 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     };
 
     if (linkToShow.hasInValidCoordinates()) return <></>;
-    console.log("LinkToShow", linkToShow);
+
     const coordinates = linkToShow.coordinates.map((c) => [c.lat, c.long]);
 
     return (

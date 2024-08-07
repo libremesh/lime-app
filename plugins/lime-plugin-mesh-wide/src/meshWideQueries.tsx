@@ -169,7 +169,7 @@ export const useSetLinkReferenceState = ({
 
             let newReferenceLinks = (referenceData[hostname] ??
                 {}) as IBaseLink<typeof linkType>;
-            // todo(kon): this is a hotfix because backend returns an empty string somtimes
+            // This is a hotfix because backend returns an empty string somtimes
             if (typeof newReferenceLinks !== "object") newReferenceLinks = {};
 
             for (const mactomac of linkToUpdate.links) {

@@ -15,26 +15,19 @@ import {
  */
 export class PontToPointLink {
     private _links: BaseMacToMacLink[] = [];
-    // private _nodes: INodeInfo[] = [];
     public readonly id: PointToPointLinkId;
     public readonly coordinates: Array<Coordinates | undefined> = [];
     private _nodes: Set<string> = new Set<string>([]);
 
-    // constructor(node1: INodeInfo, node2: INodeInfo) {
     constructor(
         coord1?: Coordinates | undefined,
         coord2?: Coordinates | undefined
     ) {
-        // const coord1 = node1.coordinates;
-        // const coord2 = node2.coordinates;
         this.id = PontToPointLink.generateId(coord1, coord2);
-        // this.nodes.push(node1, node2);
         this.coordinates.push(coord1, coord2);
     }
 
     addLink(link: typeof this._links[number]) {
-        console.log("addLink INNER", link);
-
         this.links.push(link);
     }
 
@@ -94,11 +87,6 @@ export class PontToPointLink {
     hasInValidCoordinates = () => {
         return this.coordinates.some((coord) => coord === undefined);
     };
-
-    // // todo(kon): do this on a best way
-    // hasValidCoordinates = () => {
-    //     this.coordinates.any((coord) => coord !== undefined);
-    // };
 }
 
 /**
