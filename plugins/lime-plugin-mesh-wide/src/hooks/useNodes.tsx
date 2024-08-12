@@ -9,6 +9,8 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import { INodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
+import { isEmpty } from "utils/utils";
+
 interface NodesContextType {
     hasInvalidNodes: boolean;
     allNodes: {
@@ -93,7 +95,13 @@ export const NodesProvider = ({
     let locatedNewNodes: INodes = {};
     if (locatedNodesActual) {
         locatedNewNodes = Object.keys(locatedNodesActual).reduce((obj, key) => {
-            if (!meshWideNodesReference || !meshWideNodesReference[key]) {
+            if (
+                !meshWideNodesReference ||
+                isEmpty(meshWideNodesReference) ||
+                !meshWideNodesReference[key] ||
+                (meshWideNodesReference[key] &&
+                    isEmpty(meshWideNodesReference[key]))
+            ) {
                 obj[key] = locatedNodesActual[key];
             }
             return obj;

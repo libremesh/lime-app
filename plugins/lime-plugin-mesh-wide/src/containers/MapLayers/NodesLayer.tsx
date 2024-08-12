@@ -5,19 +5,19 @@ import { INodeInfo } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 const NodesLayer = () => {
     const {
         locatedNodes: {
-            locatedNodesReference: referenceNodes,
-            locatedNodesActual: meshWideNodesActual,
+            locatedNodesReference,
+            locatedNodesActual,
             locatedNewNodes,
         },
     } = useNodes();
 
     return (
         <>
-            {referenceNodes &&
-                Object.entries(referenceNodes).map(([k, v], i) => {
+            {locatedNodesReference &&
+                Object.entries(locatedNodesReference).map(([k, v], i) => {
                     let actualNode: INodeInfo;
-                    if (meshWideNodesActual) {
-                        actualNode = meshWideNodesActual[k];
+                    if (locatedNodesActual) {
+                        actualNode = locatedNodesActual[k];
                     }
                     return (
                         <NodeMarker
