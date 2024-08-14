@@ -40,25 +40,18 @@ export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
                     </Row>
                     <div className={"flex flex-column gap-5"}>
                         {[...errors.dataNotSetErrors].map((data, k) => {
-                            let dataType = data.queryKey[2]["data_type"];
-                            if (!dataType) {
-                                dataType = JSON.stringify(
-                                    data.queryKey,
-                                    null,
-                                    2
-                                );
-                                return (
-                                    <div key={k}>
-                                        {dataType}: {data?.error?.toString()}
-                                    </div>
-                                );
-                            }
+                            const dataType = data.queryKey[2]["data_type"];
+                            const nodes = data.nodeNames.join(", ");
                             return (
-                                <div key={k} className={"text-2xl font-bold"}>
-                                    <Trans>
-                                        Reference state is not set for{" "}
+                                <div key={k} className={"flex flex-row gap-5"}>
+                                    <div className={"text-2xl font-bold"}>
                                         {dataType}
-                                    </Trans>
+                                    </div>
+                                    {nodes && (
+                                        <Trans>
+                                            for the following nodes: {nodes}
+                                        </Trans>
+                                    )}
                                 </div>
                             );
                         })}

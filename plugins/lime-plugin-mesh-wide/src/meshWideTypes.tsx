@@ -108,6 +108,7 @@ export type NodeMapFeature = {
 export type MeshWideDataError = {
     queryKey: QueryKey;
     error?: unknown;
+    nodeNames?: string[];
 };
 
 export type InvalidNodes = Set<string>;

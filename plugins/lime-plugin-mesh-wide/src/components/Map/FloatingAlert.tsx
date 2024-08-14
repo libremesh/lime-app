@@ -10,14 +10,13 @@ export const FloatingAlert = () => {
     const { setData: setSelectedFeature, data: selectedMapFeature } =
         useSelectedMapFeature();
 
-    const {
-        hasInvalidNodes,
-        invalidNodes: { invalidNodesReference, invalidNodesActual },
-    } = useNodes();
+    const { hasNonLocatedNodes, nonLocatedNodes } = useNodes();
     const { meshWideDataErrors, dataNotSetErrors } = useMeshWideDataErrors();
 
     const hasErrors =
-        hasInvalidNodes || meshWideDataErrors.length || dataNotSetErrors.length;
+        hasNonLocatedNodes ||
+        meshWideDataErrors.length ||
+        dataNotSetErrors.length;
 
     const callback = useCallback(() => {
         if (selectedMapFeature && selectedMapFeature.id === "errorsDetails") {
@@ -25,8 +24,7 @@ export const FloatingAlert = () => {
             return;
         }
         const invalidNodes: InvalidNodes = new Set([
-            ...Object.keys(invalidNodesReference ?? []),
-            ...Object.keys(invalidNodesActual ?? []),
+            ...Object.keys(nonLocatedNodes ?? []),
         ]);
 
         setSelectedFeature({
@@ -40,9 +38,8 @@ export const FloatingAlert = () => {
         });
     }, [
         dataNotSetErrors,
-        invalidNodesActual,
-        invalidNodesReference,
         meshWideDataErrors,
+        nonLocatedNodes,
         selectedMapFeature,
         setSelectedFeature,
     ]);
