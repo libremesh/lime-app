@@ -15,7 +15,10 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
-import { readableBytes } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
+import {
+    dataTypeNameMapping,
+    readableBytes,
+} from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import { useSetLinkReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
     BaseMacToMacLink,
@@ -315,13 +318,13 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
     let btnText = (
         <Trans>
             Set reference state for this
-            <br /> {reference.type} link
+            <br /> {dataTypeNameMapping(reference.type)}
         </Trans>
     );
     if (isDown) {
         btnText = (
             <Trans>
-                Delete this {reference.type} link
+                Delete this {dataTypeNameMapping(reference.type)}
                 <br />
                 from reference state
             </Trans>

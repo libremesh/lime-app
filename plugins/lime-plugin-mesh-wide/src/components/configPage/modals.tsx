@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { ModalActions, useModal } from "components/Modal/Modal";
 import InputField from "components/inputs/InputField";
 
+import { dataTypeNameMapping } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import { MeshWideMapDataTypeKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 const useActionModal = (
@@ -126,14 +127,19 @@ export const useSetLinkReferenceStateModal = () => {
         cb: () => Promise<void>
     ) => {
         let title = (
-            <Trans>Set reference state for this {dataType} link?</Trans>
+            <Trans>
+                Set reference state for this {dataTypeNameMapping(dataType)}?
+            </Trans>
         );
         let content = (
             <Trans>This will set the reference state of this link:</Trans>
         );
         if (isDown) {
             title = (
-                <Trans>Remove this {dataType} from the reference state</Trans>
+                <Trans>
+                    Remove this {dataTypeNameMapping(dataType)} from the
+                    reference state
+                </Trans>
             );
             content = (
                 <Trans>

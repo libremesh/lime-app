@@ -1,6 +1,8 @@
-import { INodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+import { t } from "@lingui/macro";
 
-import { isEmpty } from "utils/utils";
+import { SharedStateDataTypeKeys } from "components/shared-state/SharedStateTypes";
+
+import { INodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const readableBytes = (bytes: number) => {
     const sizes = ["B", "KB", "MB", "GB", "TB"];
@@ -64,4 +66,23 @@ export const splitNodesByLocated = (nodeList: INodes): ISplitNodesByLocated => {
     });
 
     return { locatedNodes, nonLocatedNodes };
+};
+
+export const dataTypeNameMapping = (dataType: SharedStateDataTypeKeys) => {
+    switch (dataType) {
+        case "node_info":
+            return t`Node Info`;
+        case "node_info_ref":
+            return t`Node Info Reference`;
+        case "wifi_links_info":
+            return t`Wifi Links`;
+        case "wifi_links_info_ref":
+            return t`Wifi Links Reference`;
+        case "bat_links_info":
+            return t`Batman Links`;
+        case "bat_links_info_ref":
+            return t`Batman Links Reference`;
+        default:
+            return dataType;
+    }
 };
