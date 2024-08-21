@@ -2,28 +2,30 @@ import { ComponentChildren, createContext } from "preact";
 import { useMemo } from "preact/compat";
 import { useContext } from "preact/hooks";
 
-import { isValidCoordinate } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
+import {
+    ISplitNodesByLocated,
+    splitNodesByLocated,
+} from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
     useMeshWideNodes,
     useMeshWideNodesReference,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import { INodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
+import { isEmpty } from "utils/utils";
+
 interface NodesContextType {
-    hasInvalidNodes: boolean;
+    hasNonLocatedNodes: boolean;
     allNodes: {
         meshWideNodesReference: INodes;
         meshWideNodesActual: INodes;
     };
-    invalidNodes: {
-        invalidNodesReference: INodes;
-        invalidNodesActual: INodes;
-    };
+    // nonLocatedNodes doesn't contain a correct lat long
+    nonLocatedNodes: INodes;
     locatedNodes: {
-        locatedNodesReference: INodes;
-        locatedNodesActual: INodes;
-        allLocatedNodes: INodes;
-        locatedNewNodes: INodes;
+        locatedNodesReference: INodes; // All located reference nodes
+        locatedNodesActual: INodes; // Located nodes of the actual state
+        locatedNewNodes: INodes; // New nodes (not on the ref state)
     };
 }
 
@@ -37,94 +39,58 @@ export const NodesProvider = ({
     const { data: meshWideNodesReference } = useMeshWideNodesReference({});
     const { data: meshWideNodesActual } = useMeshWideNodes({});
 
-    const splitNodesByValidity = (
-        nodeList: INodes
-    ): { validNodes: INodes; invalidNodes: INodes } => {
-        const validNodes: INodes = {};
-        const invalidNodes: INodes = {};
-
-        Object.entries(nodeList).forEach(([key, nodeInfo]) => {
-            try {
-                if (
-                    isValidCoordinate(
-                        nodeInfo.coordinates.lat,
-                        nodeInfo.coordinates.long
-                    )
-                ) {
-                    validNodes[key] = nodeInfo;
-                } else {
-                    invalidNodes[key] = nodeInfo;
-                }
-            } catch (e) {
-                invalidNodes[key] = nodeInfo;
-            }
-        });
-
-        return { validNodes, invalidNodes };
-    };
-
-    const {
-        validNodes: locatedNodesReference,
-        invalidNodes: invalidNodesReference,
-    }: { validNodes: INodes; invalidNodes: INodes } | undefined =
+    // It doesn't check the non located nodes on the reference state because it's not necessary
+    // Is supposed that the reference state won't have a non located node
+    const { locatedNodes: locatedNodesReference }: ISplitNodesByLocated =
         useMemo(() => {
-            if (meshWideNodesReference)
-                return splitNodesByValidity(meshWideNodesReference);
-            return { validNodes: undefined, invalidNodes: undefined };
+            if (meshWideNodesReference) {
+                return splitNodesByLocated(meshWideNodesReference);
+            }
+            return { locatedNodes: undefined, nonLocatedNodes: undefined };
         }, [meshWideNodesReference]);
 
     const {
-        validNodes: locatedNodesActual,
-        invalidNodes: invalidNodesActual,
-    }: { validNodes: INodes; invalidNodes: INodes } | undefined =
-        useMemo(() => {
-            if (meshWideNodesActual)
-                return splitNodesByValidity(meshWideNodesActual);
-            return { validNodes: undefined, invalidNodes: undefined };
-        }, [meshWideNodesActual]);
+        locatedNodes: locatedNodesActual,
+        nonLocatedNodes,
+    }: ISplitNodesByLocated | undefined = useMemo(() => {
+        if (meshWideNodesActual) {
+            return splitNodesByLocated(meshWideNodesActual);
+        }
+        return { locatedNodes: undefined, nonLocatedNodes: undefined };
+    }, [meshWideNodesActual]);
 
-    const hasInvalidNodes =
-        (invalidNodesReference &&
-            Object.keys(invalidNodesReference).length > 0) ||
-        (invalidNodesActual && Object.keys(invalidNodesActual).length > 0);
+    const hasNonLocatedNodes =
+        nonLocatedNodes && Object.keys(nonLocatedNodes).length > 0;
 
     // This nodes are valid and not exists on the reference state
     let locatedNewNodes: INodes = {};
     if (locatedNodesActual) {
         locatedNewNodes = Object.keys(locatedNodesActual).reduce((obj, key) => {
-            if (!meshWideNodesReference || !meshWideNodesReference[key]) {
+            if (
+                !meshWideNodesReference ||
+                isEmpty(meshWideNodesReference) ||
+                !meshWideNodesReference[key] ||
+                (meshWideNodesReference[key] &&
+                    isEmpty(meshWideNodesReference[key]))
+            ) {
                 obj[key] = locatedNodesActual[key];
             }
             return obj;
         }, {} as INodes);
     }
 
-    // Used to have on an a single list all the located nodes
-    // This is used to have an easier way to draw links between nodes
-    // that are not active, or not on reference or new
-    const allLocatedNodes = {
-        ...locatedNodesReference,
-        ...locatedNodesActual,
-        ...locatedNewNodes,
-    };
-
     return (
         <NodesContext.Provider
             value={{
-                hasInvalidNodes,
+                hasNonLocatedNodes,
                 allNodes: {
                     meshWideNodesReference,
                     meshWideNodesActual,
                 },
-                // Invalid nodes doesn't contain a correct lat long
-                invalidNodes: {
-                    invalidNodesReference,
-                    invalidNodesActual,
-                },
+                nonLocatedNodes,
                 locatedNodes: {
                     locatedNodesReference,
                     locatedNodesActual,
-                    allLocatedNodes,
                     locatedNewNodes, // New nodes (not on the ref state)
                 },
             }}

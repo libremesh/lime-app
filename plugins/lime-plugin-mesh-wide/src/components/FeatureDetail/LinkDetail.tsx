@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/macro";
+import { useMemo } from "preact/compat";
 import { useState } from "preact/hooks";
 import { useCallback } from "react";
 
@@ -12,6 +13,7 @@ import {
     getQueryByLinkType,
     usePointToPointErrors,
 } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
+import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { readableBytes } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import { useSetLinkReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
@@ -227,7 +229,11 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         type: reference.type,
     });
 
-    const isDown = !errors.linkUp;
+    const {
+        allNodes: { meshWideNodesReference, meshWideNodesActual },
+    } = useNodes();
+
+    const isDown = !errors?.linkUp;
 
     // Check if there are errors of global reference state to shown
     const { reference: fetchDataReference } = getQueryByLinkType(
@@ -245,14 +251,23 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         useSetLinkReferenceStateModal();
     const { showToast } = useToast();
 
-    // Generate a list of nodes to update
-    const nodesToUpdate = reference.nodes.reduce((acc, node) => {
-        acc[node.ipv4] = node.hostname;
-        return acc;
-    }, {});
-
-    // todo(kon): Sync mutations, used to sync data between nodes and local node after setting the reference state
-    // useSharedStateSync
+    // Get nodes to update
+    const nodesToUpdate = useMemo(() => {
+        // First get an object with all nodes
+        const allNodes = {
+            ...(meshWideNodesReference || {}),
+            ...(meshWideNodesActual || {}),
+        };
+        if (!allNodes) return {};
+        // Then reduce the nodes to update
+        return reference.nodes.reduce((acc, node) => {
+            // If the node with node name exist get the ipv4 and hostname
+            if (allNodes[node]) {
+                acc[allNodes[node].ipv4] = allNodes[node].hostname;
+            }
+            return acc;
+        }, {});
+    }, [meshWideNodesReference, meshWideNodesActual, reference.nodes]);
 
     // Mutation to update the reference state
     const { callMutations } = useSetLinkReferenceState({
@@ -327,20 +342,6 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
     const hasError = errors?.hasErrors || referenceError;
     const showSetReferenceButton =
         errors?.hasErrors || isDown || isNewLink || referenceError;
-
-    console.log(
-        "AAAAA",
-        "hasError",
-        hasError,
-        "showSetReferenceButton",
-        showSetReferenceButton,
-        "isDown",
-        isDown,
-        "isNewNode",
-        isNewLink,
-        "referenceError",
-        referenceError
-    );
 
     return (
         <StatusAndButton

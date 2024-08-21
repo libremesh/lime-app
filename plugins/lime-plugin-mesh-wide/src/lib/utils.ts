@@ -1,3 +1,7 @@
+import { INodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+
+import { isEmpty } from "utils/utils";
+
 export const readableBytes = (bytes: number) => {
     const sizes = ["B", "KB", "MB", "GB", "TB"];
 
@@ -31,4 +35,33 @@ export const isValidCoordinate = (
         lng >= -180 &&
         lng <= 180
     );
+};
+
+export interface ISplitNodesByLocated {
+    locatedNodes: INodes | undefined;
+    nonLocatedNodes: INodes | undefined;
+}
+
+export const splitNodesByLocated = (nodeList: INodes): ISplitNodesByLocated => {
+    const locatedNodes: INodes = {};
+    const nonLocatedNodes: INodes = {};
+
+    Object.entries(nodeList).forEach(([key, nodeInfo]) => {
+        try {
+            if (
+                isValidCoordinate(
+                    nodeInfo.coordinates.lat,
+                    nodeInfo.coordinates.long
+                )
+            ) {
+                locatedNodes[key] = nodeInfo;
+            } else {
+                nonLocatedNodes[key] = nodeInfo;
+            }
+        } catch (e) {
+            nonLocatedNodes[key] = nodeInfo;
+        }
+    });
+
+    return { locatedNodes, nonLocatedNodes };
 };

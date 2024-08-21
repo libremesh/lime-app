@@ -11,17 +11,24 @@ describe("tests for the algorithm that merge point and links data types", () => 
 
     it("assert that merged nodes have the correct coordinates", async () => {
         const locatedLinksReference = mergeLinksAndCoordinates(
-            nodesReferenceState,
             linksReferenceState,
-            "wifi_links_info"
+            "wifi_links_info",
+            nodesReferenceState
         );
         // Iterate between merged link objects
         Object.entries(locatedLinksReference).map(([k, merged], i) => {
             expect(merged.coordinates.length).toBe(2); // Merged objects haw to be exactly two geo points
             for (const link of merged.links) {
                 Object.entries(link.data).map(([name, linkData], i) => {
-                    const node = nodesReferenceState[name];
-                    expect(linkData.coordinates).toBe(node.coordinates);
+                    const srcNode = nodesReferenceState[name];
+                    if (!srcNode) return; // Segundo not exists
+                    const srcCoords = merged.coordinates.find(
+                        (c) =>
+                            c.lat === srcNode.coordinates.lat &&
+                            c.long === srcNode.coordinates.long
+                    );
+                    expect(srcCoords).toBeDefined();
+                    expect(merged.coordinates[1]).toBeDefined();
                 });
             }
         });

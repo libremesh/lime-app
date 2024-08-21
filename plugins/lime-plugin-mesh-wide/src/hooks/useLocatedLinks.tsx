@@ -73,22 +73,35 @@ const useCalculateLocatedLinks = ({
     const { data: linksReference } = fetchDataReference({});
     const { data: links } = fetchData({});
     const {
-        locatedNodes: { allLocatedNodes: meshWideNodes },
+        locatedNodes: {
+            locatedNodesReference,
+            locatedNodesActual,
+            locatedNewNodes,
+        },
     } = useNodes();
 
+    // Used to have on a single list all the located nodes
+    // This is used to have an easier way to draw links between nodes
+    // that are not active, or not on reference or new
+    const meshWideNodes = {
+        ...locatedNodesReference,
+        ...locatedNodesActual,
+        ...locatedNewNodes,
+    };
+
     const locatedLinksReference: LocatedLinkData = useMemo(() => {
-        if (meshWideNodes && linksReference) {
+        if (linksReference) {
             return mergeLinksAndCoordinates(
-                meshWideNodes,
                 linksReference,
-                type
+                type,
+                meshWideNodes
             );
         }
-    }, [meshWideNodes, linksReference, type]);
+    }, [linksReference, meshWideNodes, type]);
 
     const locatedLinks: LocatedLinkData = useMemo(() => {
-        if (links && meshWideNodes) {
-            return mergeLinksAndCoordinates(meshWideNodes, links, type);
+        if (links) {
+            return mergeLinksAndCoordinates(links, type, meshWideNodes);
         }
     }, [links, meshWideNodes, type]);
 

@@ -10,7 +10,12 @@ import {
     useMeshWideNodes,
     useMeshWideNodesReference,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
-import { MeshWideDataError } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+import {
+    IBatmanLinks,
+    INodes,
+    IWifiLinks,
+    MeshWideDataError,
+} from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 import { isEmpty } from "utils/utils";
 
@@ -29,9 +34,18 @@ export const useMeshWideDataErrors = () => {
     const meshWideDataErrors: MeshWideDataError[] = [];
     const dataNotSetErrors: MeshWideDataError[] = [];
 
-    const addError = (queryKey: QueryKey, error?: unknown, data?: object) => {
-        if (data && isEmpty(data)) {
-            dataNotSetErrors.push({ queryKey, error });
+    const addError = (
+        queryKey: QueryKey,
+        error?: unknown,
+        data?: IWifiLinks | IBatmanLinks | INodes
+    ) => {
+        if (data) {
+            // Check also node by node if reference state is empty
+            const nodeNames = Object.keys(data).filter((key) =>
+                isEmpty(data[key])
+            );
+            if (isEmpty(data) || nodeNames.length)
+                dataNotSetErrors.push({ queryKey, error, nodeNames });
         }
         if (error) {
             meshWideDataErrors.push({ queryKey, error });

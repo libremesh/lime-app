@@ -78,13 +78,22 @@ export const MeshWideMap = ({
         }
     }, [loading, nodeLocation]);
 
+    // @ts-ignore
     const mapSupportedLayers: Record<
         keyof MeshWideMapTypes,
-        { name: string; layer: ComponentChildren }
+        { name: string; layer: ComponentChildren; checked: boolean }
     > = {
-        node_info: { name: "Nodes", layer: <NodesLayer /> },
-        wifi_links_info: { name: "Wifi Links", layer: <WifiLinksLayer /> },
-        bat_links_info: { name: "Batman", layer: <BatmanLinksLayer /> },
+        node_info: { name: "Nodes", layer: <NodesLayer />, checked: nodes },
+        wifi_links_info: {
+            name: "Wifi Links",
+            layer: <WifiLinksLayer />,
+            checked: wifiLinks,
+        },
+        bat_links_info: {
+            name: "Batman",
+            layer: <BatmanLinksLayer />,
+            checked: batmanLinks,
+        },
     };
 
     return (
@@ -100,11 +109,17 @@ export const MeshWideMap = ({
                 url={openStreetMapTileString}
             />
             <LayersControl position="topright">
-                {Object.values(mapSupportedLayers).map(({ name, layer }, k) => (
-                    <LayersControl.Overlay key={k} checked={true} name={name}>
-                        <LayerGroup>{layer}</LayerGroup>
-                    </LayersControl.Overlay>
-                ))}
+                {Object.values(mapSupportedLayers).map(
+                    ({ name, layer, checked }, k) => (
+                        <LayersControl.Overlay
+                            key={k}
+                            name={name}
+                            checked={checked}
+                        >
+                            <LayerGroup>{layer}</LayerGroup>
+                        </LayersControl.Overlay>
+                    )
+                )}
             </LayersControl>
         </MapContainer>
     );

@@ -19,11 +19,7 @@ const compareWifiData = (reference: IWifiLinkData, actual: IWifiLinkData) => {
     // const { data: communitySettings } = useCommunitySettings();
 
     const errors: WifiLinkErrorCodes[] = [];
-    if (
-        actual === undefined ||
-        actual.signal === undefined ||
-        actual.signal === 0
-    ) {
+    if (actual === undefined || actual.signal === undefined) {
         return [WifiLinkErrorCodes.LINK_DOWN];
     }
 
