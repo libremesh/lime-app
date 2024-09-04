@@ -34,11 +34,15 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
             // Find destination link info from shared state
             let dest: IBaseLink<T>;
             for (const destNodeKey in links) {
-                const link = Object.entries(links[destNodeKey].links).find(
-                    ([key]) => key === linkKey && destNodeKey !== actualNodeName
-                );
-                if (link) {
-                    dest = { [destNodeKey]: link[1] };
+                // Prevent empty objects crashing from shared state
+                if (links[destNodeKey] && !isEmpty(links[destNodeKey]?.links)) {
+                    const link = Object.entries(links[destNodeKey].links).find(
+                        ([key]) =>
+                            key === linkKey && destNodeKey !== actualNodeName
+                    );
+                    if (link) {
+                        dest = { [destNodeKey]: link[1] };
+                    }
                 }
             }
 
