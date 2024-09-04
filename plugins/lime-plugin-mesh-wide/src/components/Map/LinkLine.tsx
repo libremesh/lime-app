@@ -45,7 +45,7 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
 
     const getPathOpts = (isSelected) => {
         return {
-            color: hasError ? "#eb7575" : "#76bd7d",
+            color: hasError ? "#eb7575" : "#006a05",
             stroke: true,
             weight: isSelected ? 7 : 5,
             opacity: isSelected ? 1 : 0.8,
