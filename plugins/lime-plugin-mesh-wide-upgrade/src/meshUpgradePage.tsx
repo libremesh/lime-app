@@ -4,6 +4,7 @@ import { useState } from "preact/hooks";
 import { StatusIcon } from "components/icons/status";
 import Loading from "components/loading";
 import Notification from "components/notifications/notification";
+import Tabs from "components/tabs";
 
 import NextStepFooter from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nextStepFooter";
 import { ErrorState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ErrorState";
@@ -23,7 +24,7 @@ const MeshWideUpgrade = () => {
         isError,
         error,
     } = useMeshUpgrade();
-    const [showNodeList, setShowNodeList] = useState(false);
+    const [showNodeList, setShowNodeList] = useState(0);
 
     if (isError) {
         return (
@@ -48,23 +49,28 @@ const MeshWideUpgrade = () => {
         );
     }
 
+    const tabs = [
+        {
+            key: 0,
+            repr: (
+                <div className={"flex"}>
+                    <Trans>Show state</Trans>
+                </div>
+            ),
+        },
+        {
+            key: 1,
+            repr: (
+                <div className={"flex"}>
+                    <Trans>Show nodes</Trans>
+                </div>
+            ),
+        },
+    ];
+
     return (
         <div className={"flex flex-col h-full w-full max-h-full"}>
-            <Notification
-                title={"Mesh wide upgrade"}
-                right={
-                    <div
-                        onClick={() => setShowNodeList(!showNodeList)}
-                        className={"cursor-pointer"}
-                    >
-                        {showNodeList ? (
-                            <Trans>Show state</Trans>
-                        ) : (
-                            <Trans>Show nodes</Trans>
-                        )}
-                    </div>
-                }
-            >
+            <Notification title={"Mesh wide upgrade"}>
                 <Trans>
                     Upgrade all network nodes at once. This proces will take a
                     while and will require user interaction.
@@ -80,9 +86,16 @@ const MeshWideUpgrade = () => {
                     <Trans>This node aborted successfully</Trans>
                 </div>
             )}
-            <div className={"flex-grow overflow-auto max-h-full w-full"}>
-                {showNodeList && <NodesList />}
-                {!showNodeList && <MeshWideUpgradeStatus />}
+            <div className={"flex-grow flex flex-col max-h-full w-full"}>
+                <Tabs
+                    tabs={tabs}
+                    current={showNodeList}
+                    onChange={setShowNodeList}
+                />
+                <div className="flex-grow overflow-auto">
+                    {showNodeList === 0 && <MeshWideUpgradeStatus />}
+                    {showNodeList === 1 && <NodesList />}
+                </div>
             </div>
             <NextStepFooter />
         </div>

@@ -1,6 +1,9 @@
 import { Trans } from "@lingui/macro";
 
+import { SharedStateDataTypeKeys } from "components/shared-state/SharedStateTypes";
+
 import { Row } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
+import { dataTypeNameMapping } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import { ErrorsDetails } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
 export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
@@ -45,7 +48,7 @@ export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
                             return (
                                 <div key={k} className={"flex flex-row gap-5"}>
                                     <div className={"text-2xl font-bold"}>
-                                        {dataType}
+                                        {dataTypeNameMapping(dataType)}
                                     </div>
                                     {nodes && (
                                         <Trans>
@@ -71,12 +74,19 @@ export const ShowErrorsDetail = ({ errors }: { errors: ErrorsDetails }) => {
                             Are they installed or properly initialized?
                         </Trans>
                     </Row>
-                    {[...errors.meshWideDataErrors].map((data, k) => (
-                        <div key={k}>
-                            {JSON.stringify(data.queryKey, null, 2)}:{" "}
-                            {data?.error?.toString()}
-                        </div>
-                    ))}
+                    {[...errors.meshWideDataErrors].map((data, k) => {
+                        const queryKey = JSON.stringify(
+                            data.queryKey,
+                            null,
+                            2
+                        ) as SharedStateDataTypeKeys;
+                        return (
+                            <div key={k}>
+                                {dataTypeNameMapping(queryKey)}:{" "}
+                                {data?.error?.toString()}
+                            </div>
+                        );
+                    })}
                 </div>
             )}
         </div>
