@@ -35,7 +35,7 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
             let dest: IBaseLink<T>;
             for (const destNodeKey in links) {
                 // Prevent empty objects crashing from shared state
-                if (!isEmpty(links[destNodeKey].links)) {
+                if (links[destNodeKey] && !isEmpty(links[destNodeKey]?.links)) {
                     const link = Object.entries(links[destNodeKey].links).find(
                         ([key]) =>
                             key === linkKey && destNodeKey !== actualNodeName
