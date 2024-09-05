@@ -168,11 +168,13 @@ export const useSetLinkReferenceState = ({
         mutationFn: ({ ip }) => {
             const hostname = nodesToUpdate[ip];
 
-            let newReferenceLinks = (referenceData[hostname] ??
+            let newReferenceLinks = (referenceData[hostname].links ??
                 {}) as IBaseLink<typeof linkType>;
 
             // This is a hotfix because backend returns an empty array sometimes
             if (isEmpty(newReferenceLinks)) newReferenceLinks = {};
+
+            console.log("PREEE ", newReferenceLinks);
 
             for (const mactomac of linkToUpdate.links) {
                 if (isDown) {
