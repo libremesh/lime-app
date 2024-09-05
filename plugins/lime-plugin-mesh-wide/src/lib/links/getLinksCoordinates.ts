@@ -56,7 +56,11 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 let destLoc = linkData?.dst_loc;
                 // If destination coords are undefined, try to find it on other ways.
                 if (!destLoc) {
-                    if (dest && links[Object.keys(dest)[0]].src_loc) {
+                    if (
+                        dest &&
+                        !isEmpty(dest) &&
+                        links[Object.keys(dest)[0]]?.src_loc
+                    ) {
                         // If we have destination link info, try to find the src_loc
                         destLoc = links[Object.keys(dest)[0]].src_loc;
                     } else {
