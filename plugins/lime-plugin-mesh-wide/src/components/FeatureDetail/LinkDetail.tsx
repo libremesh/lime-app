@@ -285,38 +285,23 @@ export const LinkReferenceStatus = ({
 
     // Show confirmation modal before run mutations
     const setReferenceState = useCallback(async () => {
-        confirmModal(
-            linkToShow.type,
-            Object.values(nodesToUpdate),
-            isDown,
-            async () => {
-                try {
-                    const res = await callMutations();
-                    if (res.errors.length) {
-                        console.log("Errors");
-                        throw new Error("Error setting new reference state!");
-                    }
-                    showToast({
-                        text: <Trans>New reference state set!</Trans>,
-                    });
-                } catch (error) {
-                    showToast({
-                        text: <Trans>Error setting new reference state!</Trans>,
-                    });
-                } finally {
-                    closeModal();
-                }
+        try {
+            const res = await callMutations();
+            if (res.errors.length) {
+                console.log("Errors");
+                throw new Error("Error setting new reference state!");
             }
-        );
-    }, [
-        callMutations,
-        closeModal,
-        confirmModal,
-        isDown,
-        nodesToUpdate,
-        linkToShow.type,
-        showToast,
-    ]);
+            showToast({
+                text: <Trans>New reference state set!</Trans>,
+            });
+        } catch (error) {
+            showToast({
+                text: <Trans>Error setting new reference state!</Trans>,
+            });
+        } finally {
+            closeModal();
+        }
+    }, [callMutations, closeModal, showToast]);
 
     let btnText = (
         <Trans>
@@ -354,7 +339,14 @@ export const LinkReferenceStatus = ({
         <StatusAndButton
             isError={hasError}
             btn={showSetReferenceButton && btnText}
-            onClick={setReferenceState}
+            onClick={() =>
+                confirmModal({
+                    dataType: linkToShow.type,
+                    nodes: Object.values(nodesToUpdate),
+                    isDown,
+                    cb: setReferenceState,
+                })
+            }
         >
             {errorMessage}
         </StatusAndButton>

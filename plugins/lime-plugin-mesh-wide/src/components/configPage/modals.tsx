@@ -120,12 +120,17 @@ export const useSetNodeInfoReferenceStateModal = () => {
 export const useSetLinkReferenceStateModal = () => {
     const { toggleModal, setModalState, isModalOpen, closeModal } = useModal();
 
-    const confirmModal = (
-        dataType: MeshWideMapDataTypeKeys,
-        nodes: string[],
-        isDown: boolean,
-        cb: () => Promise<void>
-    ) => {
+    const confirmModal = ({
+        dataType,
+        nodes,
+        isDown,
+        cb,
+    }: {
+        dataType: MeshWideMapDataTypeKeys;
+        nodes: string[];
+        isDown: boolean;
+        cb: () => Promise<void>;
+    }) => {
         let title = (
             <Trans>
                 Set reference state for this {dataTypeNameMapping(dataType)}?

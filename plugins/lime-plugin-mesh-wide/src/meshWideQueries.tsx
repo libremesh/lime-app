@@ -23,6 +23,7 @@ import {
 
 import { useMeshWideSyncCall } from "utils/meshWideSyncCall";
 import { useSharedData } from "utils/useSharedData";
+import { isEmpty } from "utils/utils";
 
 const refetchInterval = 60000;
 
@@ -169,8 +170,9 @@ export const useSetLinkReferenceState = ({
 
             let newReferenceLinks = (referenceData[hostname] ??
                 {}) as IBaseLink<typeof linkType>;
-            // This is a hotfix because backend returns an empty string somtimes
-            if (typeof newReferenceLinks !== "object") newReferenceLinks = {};
+
+            // This is a hotfix because backend returns an empty array sometimes
+            if (isEmpty(newReferenceLinks)) newReferenceLinks = {};
 
             for (const mactomac of linkToUpdate.links) {
                 if (isDown) {
@@ -194,6 +196,12 @@ export const useSetLinkReferenceState = ({
                     },
                 } as ILinks<typeof linkType>
             );
+            console.log("linkToUpdate", linkToUpdate);
+            console.log("newReferenceLinks", newReferenceLinks);
+            console.log("referenceData", referenceData);
+            console.log("data[hostname]", data[hostname]);
+            console.log("hostname", hostname);
+            console.log("queryKey", queryKey);
             return doSharedStateApiCall<typeof linkType>(queryKey, ip);
         },
         ips: Object.keys(nodesToUpdate),
