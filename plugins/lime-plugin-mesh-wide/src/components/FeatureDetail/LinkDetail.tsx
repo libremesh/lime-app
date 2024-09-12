@@ -280,6 +280,7 @@ export const LinkReferenceStatus = ({
         linkType: linkToShow.type,
         linkToUpdate: linkToShow,
         isDown,
+        isNewLink,
         nodesToUpdate,
     });
 
@@ -309,7 +310,9 @@ export const LinkReferenceStatus = ({
             <br /> {dataTypeNameMapping(linkToShow.type)}
         </Trans>
     );
-    if (isDown) {
+    // If is down and not a new link.
+    // Could happen that one of the links is not on the state yet and the other is not
+    if (isDown && !isNewLink) {
         btnText = (
             <Trans>
                 Delete this {dataTypeNameMapping(linkToShow.type)}

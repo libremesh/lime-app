@@ -150,12 +150,14 @@ interface IUseSetLinkReferenceState {
     nodesToUpdate: { [ip: string]: string }; // { ip: hostname }
     params?: any;
     isDown: boolean;
+    isNewLink: boolean;
 }
 
 export const useSetLinkReferenceState = ({
     linkType,
     linkToUpdate,
     isDown,
+    isNewLink,
     nodesToUpdate,
     params,
 }: IUseSetLinkReferenceState) => {
@@ -174,10 +176,8 @@ export const useSetLinkReferenceState = ({
             // This is a hotfix because backend returns an empty array sometimes
             if (isEmpty(newReferenceLinks)) newReferenceLinks = {};
 
-            console.log("PREEE ", newReferenceLinks);
-
             for (const mactomac of linkToUpdate.links) {
-                if (isDown) {
+                if (isDown && newReferenceLinks[mactomac.id] && !isNewLink) {
                     delete newReferenceLinks[mactomac.id];
                     continue;
                 }
