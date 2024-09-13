@@ -2,6 +2,7 @@ import {
     MacToMacLink,
     PontToPointLink,
 } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
+import { isValidCoordinate } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
     IBaseLink,
     ILinks,
@@ -26,9 +27,15 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
             if (
                 isEmpty(links[actualNodeName]) ||
                 typeof links[actualNodeName].links !== "object" // todo(kon): this is an error from the backend
-            )
+            ) {
                 continue;
+            }
             const srcLoc = links[actualNodeName].src_loc;
+            // If the source location is not valid (FIXME coords), continue
+            if (!isValidCoordinate(srcLoc.lat, srcLoc.long)) {
+                continue;
+            }
+
             for (const [linkKey, linkData] of Object.entries(
                 links[actualNodeName].links
             )) {
@@ -82,7 +89,10 @@ export const mergeLinksAndCoordinates = <T extends LinkType>(
                 // What happen if the destination link or location is undefined?
                 // Maybe drawing somehow to the map and show the user that the link is not complete
                 // For the moment lets ignore the link
-                if (!destLoc) {
+                if (
+                    !destLoc ||
+                    (destLoc && !isValidCoordinate(destLoc.lat, destLoc.long)) // FIXME coords
+                ) {
                     continue;
                 }
 
