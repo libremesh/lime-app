@@ -38,7 +38,11 @@ export const LinkLine = ({ referenceLink, actualLink }: ILinkLineProps) => {
     const _setSelectedFeature = () => {
         setSelectedMapFeature({
             id: linkToShow.id,
-            feature: { reference: linkToShow, actual: actualLink },
+            feature: {
+                reference: referenceLink,
+                actual: actualLink,
+                linkToShow,
+            },
             type: "link",
         });
     };

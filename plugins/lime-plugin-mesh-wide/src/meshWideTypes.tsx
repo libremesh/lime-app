@@ -96,7 +96,8 @@ export type INodes = { [key: string]: INodeInfo };
 
 export type LinkMapFeature = {
     actual: PontToPointLink;
-    reference: PontToPointLink;
+    reference?: PontToPointLink;
+    linkToShow: PontToPointLink;
 };
 
 export type NodeMapFeature = {

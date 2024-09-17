@@ -175,8 +175,8 @@ const SelectedLink = ({
     );
 };
 
-const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
-    const linkToShow = reference ?? actual;
+const LinkFeatureDetail = ({ linkToShow, actual }: LinkMapFeature) => {
+    // const linkToShow = reference ?? actual;
     const [selectedLink, setSelectedLink] = useState(0);
     const { errors } = usePointToPointErrors({
         id: linkToShow.id,
@@ -224,12 +224,15 @@ const LinkFeatureDetail = ({ actual, reference }: LinkMapFeature) => {
     );
 };
 
-export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
+export const LinkReferenceStatus = ({
+    linkToShow,
+    reference,
+}: LinkMapFeature) => {
     const isNewLink = !reference;
 
     const { errors } = usePointToPointErrors({
-        id: reference.id,
-        type: reference.type,
+        id: linkToShow.id,
+        type: linkToShow.type,
     });
 
     const {
@@ -240,7 +243,7 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
 
     // Check if there are errors of global reference state to shown
     const { reference: fetchDataReference } = getQueryByLinkType(
-        reference.type
+        linkToShow.type
     );
     const { data: referenceData, isError: isReferenceError } =
         fetchDataReference({});
@@ -263,68 +266,56 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         };
         if (!allNodes) return {};
         // Then reduce the nodes to update
-        return reference.nodes.reduce((acc, node) => {
+        return linkToShow.nodes.reduce((acc, node) => {
             // If the node with node name exist get the ipv4 and hostname
             if (allNodes[node]) {
                 acc[allNodes[node].ipv4] = allNodes[node].hostname;
             }
             return acc;
         }, {});
-    }, [meshWideNodesReference, meshWideNodesActual, reference.nodes]);
+    }, [meshWideNodesReference, meshWideNodesActual, linkToShow.nodes]);
 
     // Mutation to update the reference state
     const { callMutations } = useSetLinkReferenceState({
-        linkType: reference.type,
-        linkToUpdate: reference,
+        linkType: linkToShow.type,
+        linkToUpdate: linkToShow,
         isDown,
+        isNewLink,
         nodesToUpdate,
     });
 
     // Show confirmation modal before run mutations
     const setReferenceState = useCallback(async () => {
-        confirmModal(
-            reference.type,
-            Object.values(nodesToUpdate),
-            isDown,
-            async () => {
-                try {
-                    const res = await callMutations();
-                    if (res.errors.length) {
-                        console.log("Errors");
-                        throw new Error("Error setting new reference state!");
-                    }
-                    showToast({
-                        text: <Trans>New reference state set!</Trans>,
-                    });
-                } catch (error) {
-                    showToast({
-                        text: <Trans>Error setting new reference state!</Trans>,
-                    });
-                } finally {
-                    closeModal();
-                }
+        try {
+            const res = await callMutations();
+            if (res.errors.length) {
+                console.log("Errors");
+                throw new Error("Error setting new reference state!");
             }
-        );
-    }, [
-        callMutations,
-        closeModal,
-        confirmModal,
-        isDown,
-        nodesToUpdate,
-        reference.type,
-        showToast,
-    ]);
+            showToast({
+                text: <Trans>New reference state set!</Trans>,
+            });
+        } catch (error) {
+            showToast({
+                text: <Trans>Error setting new reference state!</Trans>,
+            });
+        } finally {
+            closeModal();
+        }
+    }, [callMutations, closeModal, showToast]);
 
     let btnText = (
         <Trans>
             Set reference state for this
-            <br /> {dataTypeNameMapping(reference.type)}
+            <br /> {dataTypeNameMapping(linkToShow.type)}
         </Trans>
     );
-    if (isDown) {
+    // If is down and not a new link.
+    // Could happen that one of the links is not on the state yet and the other is not
+    if (isDown && !isNewLink) {
         btnText = (
             <Trans>
-                Delete this {dataTypeNameMapping(reference.type)}
+                Delete this {dataTypeNameMapping(linkToShow.type)}
                 <br />
                 from reference state
             </Trans>
@@ -332,14 +323,15 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
     }
 
     let errorMessage = <Trans>Same status as in the reference state</Trans>;
-    if (referenceError) {
-        errorMessage = <Trans>Reference is not set or has errors</Trans>;
-    } else if (errors?.hasErrors) {
-        errorMessage = <Trans>This link has errors</Trans>;
-    } else if (isNewLink) {
+
+    if (isNewLink) {
         errorMessage = (
             <Trans>This Link is not registered on the reference state</Trans>
         );
+    } else if (referenceError) {
+        errorMessage = <Trans>Reference is not set or has errors</Trans>;
+    } else if (errors?.hasErrors) {
+        errorMessage = <Trans>This link has errors</Trans>;
     }
 
     const hasError = errors?.hasErrors || referenceError;
@@ -350,7 +342,14 @@ export const LinkReferenceStatus = ({ reference }: LinkMapFeature) => {
         <StatusAndButton
             isError={hasError}
             btn={showSetReferenceButton && btnText}
-            onClick={setReferenceState}
+            onClick={() =>
+                confirmModal({
+                    dataType: linkToShow.type,
+                    nodes: Object.values(nodesToUpdate),
+                    isDown,
+                    cb: setReferenceState,
+                })
+            }
         >
             {errorMessage}
         </StatusAndButton>

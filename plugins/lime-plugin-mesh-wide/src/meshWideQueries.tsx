@@ -23,6 +23,7 @@ import {
 
 import { useMeshWideSyncCall } from "utils/meshWideSyncCall";
 import { useSharedData } from "utils/useSharedData";
+import { isEmpty } from "utils/utils";
 
 const refetchInterval = 60000;
 
@@ -149,12 +150,14 @@ interface IUseSetLinkReferenceState {
     nodesToUpdate: { [ip: string]: string }; // { ip: hostname }
     params?: any;
     isDown: boolean;
+    isNewLink: boolean;
 }
 
 export const useSetLinkReferenceState = ({
     linkType,
     linkToUpdate,
     isDown,
+    isNewLink,
     nodesToUpdate,
     params,
 }: IUseSetLinkReferenceState) => {
@@ -167,13 +170,14 @@ export const useSetLinkReferenceState = ({
         mutationFn: ({ ip }) => {
             const hostname = nodesToUpdate[ip];
 
-            let newReferenceLinks = (referenceData[hostname] ??
+            let newReferenceLinks = (referenceData[hostname].links ??
                 {}) as IBaseLink<typeof linkType>;
-            // This is a hotfix because backend returns an empty string somtimes
-            if (typeof newReferenceLinks !== "object") newReferenceLinks = {};
+
+            // This is a hotfix because backend returns an empty array sometimes
+            if (isEmpty(newReferenceLinks)) newReferenceLinks = {};
 
             for (const mactomac of linkToUpdate.links) {
-                if (isDown) {
+                if (isDown && newReferenceLinks[mactomac.id] && !isNewLink) {
                     delete newReferenceLinks[mactomac.id];
                     continue;
                 }
@@ -194,6 +198,12 @@ export const useSetLinkReferenceState = ({
                     },
                 } as ILinks<typeof linkType>
             );
+            console.log("linkToUpdate", linkToUpdate);
+            console.log("newReferenceLinks", newReferenceLinks);
+            console.log("referenceData", referenceData);
+            console.log("data[hostname]", data[hostname]);
+            console.log("hostname", hostname);
+            console.log("queryKey", queryKey);
             return doSharedStateApiCall<typeof linkType>(queryKey, ip);
         },
         ips: Object.keys(nodesToUpdate),
