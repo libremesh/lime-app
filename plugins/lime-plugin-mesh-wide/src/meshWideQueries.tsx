@@ -225,12 +225,6 @@ export const useSetLinkReferenceState = ({
                     },
                 } as ILinks<typeof linkType>
             );
-            console.log("linkToUpdate", linkToUpdate);
-            console.log("newReferenceLinks", newReferenceLinks);
-            console.log("referenceData", referenceData);
-            console.log("data[hostname]", data[hostname]);
-            console.log("hostname", hostname);
-            console.log("queryKey", queryKey);
             return doSharedStateApiCall<typeof linkType>(queryKey, ip);
         },
         ips: Object.keys(nodesToUpdate),
