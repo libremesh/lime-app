@@ -3,6 +3,8 @@ import { QueryKey } from "@tanstack/react-query";
 import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
 
 import {
+    useMeshWideBabel,
+    useMeshWideBabelReference,
     useMeshWideBatman,
     useMeshWideBatmanReference,
     useMeshWideLinks,
@@ -11,6 +13,7 @@ import {
     useMeshWideNodesReference,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
+    IBabelLinks,
     IBatmanLinks,
     INodes,
     IWifiLinks,
@@ -37,7 +40,7 @@ export const useMeshWideDataErrors = () => {
     const addError = (
         queryKey: QueryKey,
         error?: unknown,
-        data?: IWifiLinks | IBatmanLinks | INodes
+        data?: IWifiLinks | IBatmanLinks | INodes | IBabelLinks
     ) => {
         if (data) {
             // Check also node by node if reference state is empty
@@ -78,6 +81,23 @@ export const useMeshWideDataErrors = () => {
         sharedStateQueries.getFromSharedState("bat_links_info_ref"),
         batmanReferenceIsError ? batmanReferenceError : null,
         batmanReferenceData
+    );
+
+    const { error: babelError } = useMeshWideBabel({});
+    addError(
+        sharedStateQueries.getFromSharedState("babel_links_info"),
+        babelError
+    );
+
+    const {
+        data: babelReferenceData,
+        error: babelReferenceError,
+        isError: babelReferenceIsError,
+    } = useMeshWideBabelReference({});
+    addError(
+        sharedStateQueries.getFromSharedState("babel_links_info_ref"),
+        babelReferenceIsError ? babelReferenceError : null,
+        babelReferenceData
     );
 
     const { error: batmanError } = useMeshWideBatman({});

@@ -17,6 +17,7 @@ import {
 export type LinkDataTypes = {
     wifi_links_info: IWifiLinkData;
     bat_links_info: IBatManLinkData;
+    babel_links_info: IBabelLinkData;
 };
 export type LinkType = keyof LinkDataTypes;
 export type IBaseLink<T extends LinkType> = {
@@ -60,6 +61,11 @@ export type IBatManLinkData = {
     iface: string;
 };
 
+export type IBabelLinkData = {
+    src_ip: string;
+    iface: string;
+};
+
 /**
  * List of Link info retrieved from the API
  */
@@ -72,6 +78,7 @@ export interface ILinks<T extends LinkType> {
 
 export type IWifiLinks = ILinks<"wifi_links_info">;
 export type IBatmanLinks = ILinks<"bat_links_info">;
+export type IBabelLinks = ILinks<"bat_links_info">;
 
 export type Coordinates = {
     lat: string;
@@ -152,6 +159,15 @@ export enum BatmanLinkErrorCodes {
     LINK_DOWN = "LINK_DOWN",
 }
 
+export enum BabelLinkErrorCodes {
+    LINK_DOWN = "LINK_DOWN",
+}
+
+export type LinksErrorCodesTypes =
+    | WifiLinkErrorCodes
+    | BatmanLinkErrorCodes
+    | BabelLinkErrorCodes;
+
 export enum NodeErrorCodes {
     NODE_DOWN = "NODE_DOWN",
     MACS_MISSMATCH = "MACS_MISSMATCH",
@@ -162,7 +178,7 @@ export enum NodeErrorCodes {
  */
 export type ILinkMtoMErrors = {
     linkErrors: {
-        [nodeName: string]: WifiLinkErrorCodes[] | BatmanLinkErrorCodes[];
+        [nodeName: string]: LinksErrorCodesTypes[];
     };
     hasErrors: boolean;
     linkUp: boolean;
@@ -202,9 +218,11 @@ const completeDataTypeKeys: CompleteDataTypeKeys = {
     node_info: true,
     wifi_links_info: true,
     bat_links_info: true,
+    babel_links_info: true,
     node_info_ref: true,
     wifi_links_info_ref: true,
     bat_links_info_ref: true,
+    babel_links_info_ref: true,
 };
 export const getMeshWideMapTypes = () => {
     return Object.keys(completeDataTypeKeys) as MeshWideMapDataTypeKeys[];

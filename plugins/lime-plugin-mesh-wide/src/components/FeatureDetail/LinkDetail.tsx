@@ -21,8 +21,10 @@ import {
 } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import { useSetLinkReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
+    BabelLinkErrorCodes,
     BaseMacToMacLink,
     BatmanLinkErrorCodes,
+    IBabelLinkData,
     IBatManLinkData,
     ILinkMtoMErrors,
     IWifiLinkData,
@@ -57,6 +59,37 @@ const BatmanDetail = ({
                 </TitleAndText>
                 <TitleAndText title={<Trans>Last seen</Trans>}>
                     <>{node?.last_seen_msecs} ms</>
+                </TitleAndText>
+            </Row>
+        </>
+    );
+};
+
+const BabelDetail = ({
+    name,
+    errorsArray,
+    node,
+}: {
+    name: string;
+    errorsArray: BabelLinkErrorCodes[] | undefined;
+    node: IBabelLinkData;
+}) => {
+    return (
+        <>
+            <Row>
+                <div className={"flex"}>
+                    <strong>{name}</strong>
+                    {errorsArray?.length > 0 && <Warning />}
+                </div>
+            </Row>
+            <Row>
+                <TitleAndText title={<Trans>Iface</Trans>}>
+                    {node?.iface}
+                </TitleAndText>
+            </Row>
+            <Row>
+                <TitleAndText title={<Trans>Source IP</Trans>}>
+                    {node?.src_ip}
                 </TitleAndText>
             </Row>
         </>
@@ -155,21 +188,43 @@ const SelectedLink = ({
             {names.map((name, i) => {
                 const node = linkDetail.linkByName(name);
                 const errorsArray = errors?.linkErrors[name] ?? [];
-                return linkType === "wifi_links_info" ? (
-                    <WifiDetail
-                        key={i}
-                        name={name}
-                        errorsArray={errorsArray as WifiLinkErrorCodes[]}
-                        node={node as IWifiLinkData}
-                    />
-                ) : (
-                    <BatmanDetail
-                        key={i}
-                        name={name}
-                        errorsArray={errorsArray as BatmanLinkErrorCodes[]}
-                        node={node as IBatManLinkData}
-                    />
-                );
+                switch (linkType) {
+                    case "wifi_links_info":
+                        return (
+                            <WifiDetail
+                                key={i}
+                                name={name}
+                                errorsArray={
+                                    errorsArray as WifiLinkErrorCodes[]
+                                }
+                                node={node as IWifiLinkData}
+                            />
+                        );
+                    case "babel_links_info":
+                        return (
+                            <BabelDetail
+                                key={i}
+                                name={name}
+                                errorsArray={
+                                    errorsArray as BabelLinkErrorCodes[]
+                                }
+                                node={node as IBabelLinkData}
+                            />
+                        );
+                    case "bat_links_info":
+                        return (
+                            <BatmanDetail
+                                key={i}
+                                name={name}
+                                errorsArray={
+                                    errorsArray as BatmanLinkErrorCodes[]
+                                }
+                                node={node as IBatManLinkData}
+                            />
+                        );
+                    default:
+                        return <Trans>Unknown link type</Trans>;
+                }
             })}
         </>
     );

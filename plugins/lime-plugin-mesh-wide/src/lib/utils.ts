@@ -82,6 +82,10 @@ export const dataTypeNameMapping = (dataType: SharedStateDataTypeKeys) => {
             return t`Batman Links`;
         case "bat_links_info_ref":
             return t`Batman Links Reference`;
+        case "babel_links_info":
+            return t`Babel Links`;
+        case "babel_links_info_ref":
+            return t`Babel Links Reference`;
         default:
             return dataType;
     }

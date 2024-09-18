@@ -15,6 +15,7 @@ import {
     useLocation,
 } from "plugins/lime-plugin-locate/src/locateQueries";
 import {
+    BabelLinksLayer,
     BatmanLinksLayer,
     WifiLinksLayer,
 } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayers";
@@ -29,12 +30,14 @@ interface ILayersChecked {
     nodes?: boolean;
     wifiLinks?: boolean;
     batmanLinks?: boolean;
+    babelLinks?: boolean;
 }
 
 export const MeshWideMap = ({
     nodes = true,
     wifiLinks = true,
     batmanLinks = false,
+    babelLinks = false,
 }: ILayersChecked) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
@@ -93,6 +96,11 @@ export const MeshWideMap = ({
             name: "Batman",
             layer: <BatmanLinksLayer />,
             checked: batmanLinks,
+        },
+        babel_links_info: {
+            name: "Babel",
+            layer: <BabelLinksLayer />,
+            checked: babelLinks,
         },
     };
 

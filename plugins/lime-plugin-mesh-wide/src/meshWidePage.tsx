@@ -8,6 +8,7 @@ import { FloatingAlert } from "plugins/lime-plugin-mesh-wide/src/components/Map/
 import { MeshWideMap } from "plugins/lime-plugin-mesh-wide/src/containers/Map";
 import { SelectedFeatureBottomSheet } from "plugins/lime-plugin-mesh-wide/src/containers/SelectedFeatureBottomSheet";
 import {
+    BabelLinksProvider,
     BatmanLinksProvider,
     MeshWideLinksProvider,
 } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
@@ -54,9 +55,11 @@ const MeshWidePage = () => {
     return (
         <NodesProvider>
             <BatmanLinksProvider>
-                <MeshWideLinksProvider>
-                    <MeshWide />
-                </MeshWideLinksProvider>
+                <BabelLinksProvider>
+                    <MeshWideLinksProvider>
+                        <MeshWide />
+                    </MeshWideLinksProvider>
+                </BabelLinksProvider>
             </BatmanLinksProvider>
         </NodesProvider>
     );

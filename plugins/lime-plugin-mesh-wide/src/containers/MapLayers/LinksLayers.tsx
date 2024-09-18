@@ -81,3 +81,23 @@ export const BatmanLinksLayer = () => {
         </div>
     );
 };
+
+export const BabelLinksLayer = () => {
+    const {
+        locatedNewLinks: newLinks,
+        locatedLinks,
+        locatedLinksReference,
+        linksLoaded,
+    } = useLocatedLinks({ type: "babel_links_info" });
+
+    return (
+        <div>
+            <LinksLayer
+                links={locatedLinks}
+                linksReference={locatedLinksReference}
+                linksLoaded={linksLoaded}
+                newLinks={newLinks}
+            />
+        </div>
+    );
+};
