@@ -1,6 +1,8 @@
 import { Trans } from "@lingui/macro";
+import { route } from "preact-router";
 import React from "react";
 
+import FloatingButton from "components/buttons/floatting-button";
 import Loading from "components/loading";
 
 import { useLoadLeaflet } from "plugins/lime-plugin-locate/src/locateQueries";
@@ -46,7 +48,7 @@ const MeshWide = () => {
             <FloatingAlert />
             <MeshWideMap />
             <SelectedFeatureBottomSheet />
-            {/*<FloatingButton onClick={() => route("/meshwide/config")} />*/}
+            <FloatingButton onClick={() => route("/meshwide/config")} />
         </>
     );
 };

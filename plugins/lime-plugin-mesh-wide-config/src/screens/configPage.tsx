@@ -5,9 +5,9 @@ import { FullScreenModal } from "components/Modal/FullScreenModal";
 import {
     AddNewSectionBtn,
     ConfigSection,
-} from "plugins/lime-plugin-mesh-wide/src/components/configPage/ConfigSection";
-import { MeshStatus } from "plugins/lime-plugin-mesh-wide/src/components/configPage/MeshStatus";
-import { useMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
+} from "plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection";
+import { MeshStatus } from "plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus";
+import { useMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshWideQueries";
 
 const MeshWideConfigPage = () => {
     const { data: meshWideConfig, isLoading } = useMeshWideConfig({});

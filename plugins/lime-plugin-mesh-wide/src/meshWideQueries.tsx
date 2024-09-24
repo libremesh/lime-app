@@ -233,20 +233,6 @@ export const useSetLinkReferenceState = ({
 };
 
 /**
- * Set mesh wide config
- */
-
-export function useMeshWideConfig(params) {
-    return useQuery<IMeshWideConfig>(
-        ["lime-meshwide", "get_mesh_config"],
-        getMeshWideConfig,
-        {
-            ...params,
-        }
-    );
-}
-
-/**
  * This query is used to store the selected feature on the map.
  *
  * Used to store the state between components.

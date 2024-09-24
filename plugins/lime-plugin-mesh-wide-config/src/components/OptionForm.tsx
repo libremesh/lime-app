@@ -7,11 +7,11 @@ import Divider from "components/divider";
 import InputField from "components/inputs/InputField";
 import { useToast } from "components/toast/toastProvider";
 
-import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 import {
     useDeletePropModal,
     useEditPropModal,
-} from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
+} from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
+import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 
 const EditOptionForm = ({
     keyString,
