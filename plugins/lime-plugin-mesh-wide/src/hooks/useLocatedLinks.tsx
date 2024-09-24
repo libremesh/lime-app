@@ -8,6 +8,8 @@ import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/Poi
 import { mergeLinksAndCoordinates } from "plugins/lime-plugin-mesh-wide/src/lib/links/getLinksCoordinates";
 import { compareLinks } from "plugins/lime-plugin-mesh-wide/src/lib/links/processLinkErrors";
 import {
+    useMeshWideBabel,
+    useMeshWideBabelReference,
     useMeshWideBatman,
     useMeshWideBatmanReference,
     useMeshWideLinks,
@@ -40,6 +42,11 @@ export const getQueryByLinkType = <T extends LinkType>(
             return {
                 state: useMeshWideBatman,
                 reference: useMeshWideBatmanReference,
+            } as getQueryByLinkTypeReturnType<T>;
+        case "babel_links_info":
+            return {
+                state: useMeshWideBabel,
+                reference: useMeshWideBabelReference,
             } as getQueryByLinkTypeReturnType<T>;
         case "wifi_links_info":
         default:
@@ -166,18 +173,25 @@ export const usePointToPointErrors = ({
 // Define separate contexts for each type of link
 const BatmanLinksContext = createContext<IUselocatedLinks | null>(null);
 const MeshWideLinksContext = createContext<IUselocatedLinks | null>(null);
+const BabelLinksContext = createContext<IUselocatedLinks | null>(null);
 
 // Export a hook that return the proper context based on the type of link
 export const useLocatedLinks = ({ type }: { type: LinkType }) => {
+    // By default use wifi links
     let requestedContext = MeshWideLinksContext;
-    if (type === "bat_links_info") {
-        requestedContext = BatmanLinksContext;
+    switch (type) {
+        case "bat_links_info":
+            requestedContext = BatmanLinksContext;
+            break;
+        case "babel_links_info":
+            requestedContext = BabelLinksContext;
+            break;
     }
 
     const context = useContext(requestedContext);
     if (context === null) {
         throw new Error(
-            `useLocatedLinks must be used within a provider for ${requestedContext} links`
+            `useLocatedLinks must be used within a provider for ${type} links`
         );
     }
     return context;
@@ -204,5 +218,17 @@ export const MeshWideLinksProvider = ({ children }) => {
         <MeshWideLinksContext.Provider value={meshWideLinksData}>
             {children}
         </MeshWideLinksContext.Provider>
+    );
+};
+
+export const BabelLinksProvider = ({ children }) => {
+    const babelLinksData = useCalculateLocatedLinks({
+        type: "babel_links_info",
+    });
+
+    return (
+        <BabelLinksContext.Provider value={babelLinksData}>
+            {children}
+        </BabelLinksContext.Provider>
     );
 };

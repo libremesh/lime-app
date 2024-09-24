@@ -1,9 +1,12 @@
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import {
+    BabelLinkErrorCodes,
     BatmanLinkErrorCodes,
+    IBabelLinkData,
     IBatManLinkData,
     ILinkPtoPErrors,
     IWifiLinkData,
+    LinksErrorCodesTypes,
     WifiLinkErrorCodes,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
@@ -45,6 +48,17 @@ const compareBatmanData = (
     const errors: BatmanLinkErrorCodes[] = [];
     if (actual === undefined) {
         return [BatmanLinkErrorCodes.LINK_DOWN];
+    }
+    return errors;
+};
+
+const compareBabelData = (
+    reference: IBabelLinkData,
+    actual: IBabelLinkData
+) => {
+    const errors: BabelLinkErrorCodes[] = [];
+    if (actual === undefined) {
+        return [BabelLinkErrorCodes.LINK_DOWN];
     }
     return errors;
 };
@@ -94,16 +108,27 @@ export const compareLinks = ({
         Object.entries(macToMacReference.data).forEach(
             ([nodeNameReference, wifiDataReference]) => {
                 const wifiDataActual = macToMacActual?.data[nodeNameReference];
-                const errors =
-                    referenceLink.type === "wifi_links_info"
-                        ? compareWifiData(
-                              wifiDataReference as IWifiLinkData,
-                              wifiDataActual as IWifiLinkData
-                          )
-                        : compareBatmanData(
-                              wifiDataReference as IBatManLinkData,
-                              wifiDataActual as IBatManLinkData
-                          );
+                let errors: LinksErrorCodesTypes[] = [];
+                switch (referenceLink.type) {
+                    case "wifi_links_info":
+                        errors = compareWifiData(
+                            wifiDataReference as IWifiLinkData,
+                            wifiDataActual as IWifiLinkData
+                        );
+                        break;
+                    case "bat_links_info":
+                        errors = compareBatmanData(
+                            wifiDataReference as IBatManLinkData,
+                            wifiDataActual as IBatManLinkData
+                        );
+                        break;
+                    case "babel_links_info":
+                        errors = compareBabelData(
+                            wifiDataReference as IBabelLinkData,
+                            wifiDataActual as IBabelLinkData
+                        );
+                        break;
+                }
                 ptoPErrors.macToMacErrors[macToMacReference.id].linkErrors[
                     nodeNameReference
                 ] = errors;
@@ -112,14 +137,7 @@ export const compareLinks = ({
                         true;
                     ptoPErrors.hasErrors = true;
 
-                    if (
-                        (errors as WifiLinkErrorCodes[]).includes(
-                            WifiLinkErrorCodes.LINK_DOWN
-                        ) ||
-                        (errors as BatmanLinkErrorCodes[]).includes(
-                            BatmanLinkErrorCodes.LINK_DOWN
-                        )
-                    ) {
+                    if (errors.includes(WifiLinkErrorCodes.LINK_DOWN)) {
                         ptoPErrors.macToMacErrors[macToMacReference.id].linkUp =
                             false;
                         downCounter++;

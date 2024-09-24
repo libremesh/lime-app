@@ -1,5 +1,6 @@
 import { MeshWideUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import {
+    IBabelLinks,
     IBatmanLinks,
     INodes,
     IWifiLinks,
@@ -13,6 +14,7 @@ export type MeshWideMapTypes = {
     node_info: INodes;
     wifi_links_info: IWifiLinks;
     bat_links_info: IBatmanLinks;
+    babel_links_info: IBabelLinks;
 };
 
 // Reference state types

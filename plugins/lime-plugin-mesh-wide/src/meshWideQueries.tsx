@@ -10,6 +10,7 @@ import { getQueryByLinkType } from "plugins/lime-plugin-mesh-wide/src/hooks/useL
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 import {
+    IBabelLinks,
     IBaseLink,
     IBatmanLinks,
     ILinks,
@@ -70,6 +71,32 @@ export function useMeshWideBatman(params) {
     const dataType: MeshWideMapDataTypeKeys = "bat_links_info";
     const queryKey = sharedStateQueries.getFromSharedState(dataType);
     return useQuery<IBatmanLinks>(
+        queryKey,
+        () => doSharedStateApiCall<typeof dataType>(queryKey),
+        {
+            refetchInterval,
+            ...params,
+        }
+    );
+}
+
+export function useMeshWideBabelReference(params) {
+    const dataType: MeshWideMapDataTypeKeys = "babel_links_info_ref";
+    const queryKey = sharedStateQueries.getFromSharedState(dataType);
+    return useQuery<IBabelLinks>(
+        queryKey,
+        () => doSharedStateApiCall<typeof dataType>(queryKey),
+        {
+            refetchInterval,
+            ...params,
+        }
+    );
+}
+
+export function useMeshWideBabel(params) {
+    const dataType: MeshWideMapDataTypeKeys = "babel_links_info";
+    const queryKey = sharedStateQueries.getFromSharedState(dataType);
+    return useQuery<IBabelLinks>(
         queryKey,
         () => doSharedStateApiCall<typeof dataType>(queryKey),
         {
@@ -198,12 +225,6 @@ export const useSetLinkReferenceState = ({
                     },
                 } as ILinks<typeof linkType>
             );
-            console.log("linkToUpdate", linkToUpdate);
-            console.log("newReferenceLinks", newReferenceLinks);
-            console.log("referenceData", referenceData);
-            console.log("data[hostname]", data[hostname]);
-            console.log("hostname", hostname);
-            console.log("queryKey", queryKey);
             return doSharedStateApiCall<typeof linkType>(queryKey, ip);
         },
         ips: Object.keys(nodesToUpdate),
