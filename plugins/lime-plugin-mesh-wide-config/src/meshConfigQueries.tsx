@@ -1,11 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
-import { IMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
-
-/**
- * Set mesh wide config
- */
+import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigApi";
+import { IMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
 
 export function useMeshWideConfig(params) {
     return useQuery<IMeshWideConfig>(

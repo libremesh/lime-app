@@ -7,7 +7,7 @@ import {
     ConfigSection,
 } from "plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection";
 import { MeshStatus } from "plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus";
-import { useMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshWideQueries";
+import { useMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigQueries";
 
 const MeshWideConfigPage = () => {
     const { data: meshWideConfig, isLoading } = useMeshWideConfig({});

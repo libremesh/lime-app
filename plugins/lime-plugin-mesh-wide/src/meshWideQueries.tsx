@@ -8,13 +8,11 @@ import { useErrrorConnectionToast } from "components/toast/toasts";
 import { meshUpgradeQueryKeys } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";
 import { getQueryByLinkType } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocatedLinks";
 import { PontToPointLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
-import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide/src/meshWideMocks";
 import {
     IBabelLinks,
     IBaseLink,
     IBatmanLinks,
     ILinks,
-    IMeshWideConfig,
     INodes,
     IWifiLinks,
     LinkType,
