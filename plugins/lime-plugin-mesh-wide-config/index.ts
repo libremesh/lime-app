@@ -4,4 +4,5 @@ export default {
     name: "meshwide/config",
     page: MeshConfigPage,
     isCommunityProtected: true,
+    additionalRoutes: [["/meshwide/config", MeshConfigPage]],
 } as LimePlugin;

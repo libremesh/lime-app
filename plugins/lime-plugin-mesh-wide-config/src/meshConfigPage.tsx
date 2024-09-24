@@ -1,36 +1,19 @@
-import { Trans } from "@lingui/macro";
+import { useState } from "preact/hooks";
 import React from "react";
 
-import { FullScreenModal } from "components/Modal/FullScreenModal";
+import { Button } from "components/elements/button";
 
-import {
-    AddNewSectionBtn,
-    ConfigSection,
-} from "plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection";
-import { MeshStatus } from "plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus";
-import { useMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigQueries";
+import EditConfiguration from "plugins/lime-plugin-mesh-wide-config/src/containers/EditConfiguration";
 
 const MeshConfigPage = () => {
-    const { data: meshWideConfig, isLoading } = useMeshWideConfig({});
+    // State to show modal
+    const [showEditConfig, setShowEditConfig] = useState(false);
 
-    return (
-        <FullScreenModal
-            title={<Trans>Mesh wide config</Trans>}
-            isLoading={isLoading}
-        >
-            {meshWideConfig && (
-                <>
-                    <div className={"flex flex-col gap-3"}>
-                        {meshWideConfig.map((dropdown, index) => (
-                            <ConfigSection key={index} dropdown={dropdown} />
-                        ))}
-                        <AddNewSectionBtn />
-                    </div>
-                    <MeshStatus />
-                </>
-            )}
-        </FullScreenModal>
-    );
+    if (showEditConfig) {
+        return <EditConfiguration onClose={() => setShowEditConfig(false)} />;
+    }
+
+    return <Button onClick={() => setShowEditConfig(true)}>Show modal</Button>;
 };
 
 export default MeshConfigPage;
