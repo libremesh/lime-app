@@ -32,7 +32,7 @@ const Ports = ({ switches }: { switches: SwitchStatus[] }) => {
                         <div className={"flex flex-row gap-5 "}>
                             {ports[role].map((port) => {
                                 const link =
-                                    port.link.toLowerCase() === "up"
+                                    port.link?.toLowerCase() === "up"
                                         ? "fill-primary-dark"
                                         : "fill-disabled";
                                 return (

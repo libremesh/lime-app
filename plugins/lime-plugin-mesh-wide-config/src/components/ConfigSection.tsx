@@ -4,14 +4,14 @@ import { Button } from "components/buttons/button";
 import { Collapsible } from "components/collapsible";
 import { useToast } from "components/toast/toastProvider";
 
-import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
-import { OptionContainer } from "plugins/lime-plugin-mesh-wide/src/components/configPage/OptionForm";
+import { OptionContainer } from "plugins/lime-plugin-mesh-wide-config/src/components/OptionForm";
 import {
     useAddNewSectionModal,
     useDeletePropModal,
     useEditPropModal,
-} from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
-import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+} from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
+import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 
 export const ConfigSection = ({ dropdown }: { dropdown: IMeshWideSection }) => {
     return (

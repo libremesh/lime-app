@@ -8,7 +8,7 @@ import Tabs from "components/tabs";
 import { useToast } from "components/toast/toastProvider";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
-import { useSetLinkReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/configPage/modals";
+import { useSetLinkReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/modals";
 import {
     getQueryByLinkType,
     usePointToPointErrors,

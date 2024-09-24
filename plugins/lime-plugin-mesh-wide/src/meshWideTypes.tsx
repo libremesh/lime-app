@@ -142,13 +142,6 @@ export type SelectedMapFeature = {
     };
 }[FeatureType];
 
-export interface IMeshWideSection {
-    name: string;
-    options: { [key: string]: string };
-}
-
-export type IMeshWideConfig = IMeshWideSection[];
-
 export enum WifiLinkErrorCodes {
     LINK_DOWN = "LINK_DOWN",
     SIGNAL_LOSS = "SIGNAL_LOSS",
