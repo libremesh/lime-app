@@ -1,6 +1,7 @@
 import MeshConfigPage from "./src/meshConfigPage";
 
 export default {
-    name: "MeshWide",
+    name: "meshwide/config",
     page: MeshConfigPage,
+    isCommunityProtected: true,
 } as LimePlugin;
