@@ -9,9 +9,8 @@ import { NoNewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src
 import { TransactionStarted } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/TransactionStarted";
 import { UpgradeScheduled } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeScheduled";
 import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
-import { CenterFlex } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/divs";
 
-const MeshWideUpgradeStatusState = () => {
+export const MeshWideUpgradeStatus = () => {
     const { stepperState, meshWideError } = useMeshUpgrade();
 
     switch (stepperState) {
@@ -70,12 +69,4 @@ const MeshWideUpgradeStatusState = () => {
         default:
             return <NoNewVersionAvailable />;
     }
-};
-
-export const MeshWideUpgradeStatus = () => {
-    return (
-        <CenterFlex>
-            <MeshWideUpgradeStatusState />
-        </CenterFlex>
-    );
 };
