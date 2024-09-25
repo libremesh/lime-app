@@ -1,6 +1,32 @@
-import { IMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import {
+    IMeshWideConfig,
+    MeshWideConfigState,
+} from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+
+export const getMeshWideConfigState = async () => meshWideConfigState;
 
 export const getMeshWideConfig = async () => meshWideConfig;
+
+const meshWideConfigState: MeshWideConfigState = {
+    node1: {
+        state: "DEFAULT",
+        timestamp: "2021-09-01T00:00:00Z",
+        main_node: "NO",
+        error: "",
+        node_ip: "",
+        bleachTTL: 0,
+        author: "node1",
+    },
+    node2: {
+        state: "DEFAULT",
+        timestamp: "2021-09-01T00:00:00Z",
+        main_node: "NO",
+        error: "",
+        node_ip: "",
+        bleachTTL: 0,
+        author: "node2",
+    },
+};
 
 const options = {
     primary_interface: "eth0",
