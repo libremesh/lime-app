@@ -1,22 +1,19 @@
 import { Trans } from "@lingui/macro";
-import { ComponentType } from "preact";
+import { ComponentType, VNode } from "preact";
 import { useState } from "preact/hooks";
 
 import Loading from "components/loading";
+import { ErrorState } from "components/mesh-wide-wizard/ErrorState";
 import Tabs from "components/tabs";
 
-import { ErrorState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ErrorState";
-import { NodesList } from "plugins/lime-plugin-mesh-wide-upgrade/src/containers/nodesList";
-import { CenterFlex } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/divs";
-
 interface WrapperProps {
-    isError: boolean;
-    error: unknown;
-    isLoading: boolean;
-    banner: ComponentType;
+    isError?: boolean;
+    error?: unknown;
+    isLoading?: boolean;
+    banner?: ComponentType;
     statusPage: ComponentType;
     nodesList: ComponentType;
-    footer: ComponentType;
+    footer?: ComponentType;
 }
 
 const WizardWrapper = ({
@@ -74,7 +71,7 @@ const WizardWrapper = ({
 
     return (
         <div className={"flex flex-col h-full w-full max-h-full"}>
-            <Banner />
+            {Banner && <Banner />}
             <div className={"flex-grow flex flex-col max-h-full w-full"}>
                 <Tabs
                     tabs={tabs}
@@ -90,7 +87,15 @@ const WizardWrapper = ({
                     {showNodeList === 1 && <NodesList />}
                 </div>
             </div>
-            <Footer />
+            {Footer && <Footer />}
+        </div>
+    );
+};
+
+export const CenterFlex = ({ children }: { children: VNode }) => {
+    return (
+        <div className="flex-grow flex flex-col justify-center content-center text-center h-full max-h-full">
+            {children}
         </div>
     );
 };

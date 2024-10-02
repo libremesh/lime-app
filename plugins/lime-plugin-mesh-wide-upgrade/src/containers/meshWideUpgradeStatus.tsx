@@ -1,8 +1,9 @@
 import { Trans } from "@lingui/macro";
 
+import { ErrorState } from "components/mesh-wide-wizard/ErrorState";
+
 import { ConfirmationPending } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ConfirmationPending";
 import { Confirmed } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/Confirmed";
-import { ErrorState } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ErrorState";
 import { LoadingPage } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/LoadingPage";
 import { NewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable";
 import { NoNewVersionAvailable } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NoNewVersion";
