@@ -1,9 +1,9 @@
-import { MainNodeStatusType } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
-
 export interface IMeshWideSection {
     name: string;
     options: { [key: string]: string };
 }
+
+export type MainNodeStatusType = "NO" | "MAIN_NODE";
 
 export type IMeshWideConfig = IMeshWideSection[];
 

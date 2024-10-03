@@ -1,7 +1,8 @@
 import { Trans } from "@lingui/macro";
 import { ComponentChildren } from "preact";
 
-import { INodeInfoBodyItemProps } from "plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo";
+import { INodeInfoBodyItemProps } from "components/mesh-wide-wizard/NodeInfoListItem";
+
 import {
     MainNodeStatusType,
     MeshWideNodeUpgradeInfo,
