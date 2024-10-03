@@ -1,3 +1,5 @@
+import { MeshConfigTypes } from "components/shared-state/SharedStateTypes";
+
 export interface IMeshWideSection {
     name: string;
     options: { [key: string]: string };
@@ -32,3 +34,5 @@ export type MeshWideNodeConfigInfo = {
 export interface MeshWideConfigState {
     [key: string]: MeshWideNodeConfigInfo;
 }
+
+export const meshConfigStateKey: keyof MeshConfigTypes = "mesh_wide_config";

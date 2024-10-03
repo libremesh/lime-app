@@ -7,7 +7,10 @@ import NodeInfoListItem, {
 import { NodesListWrapper } from "components/mesh-wide-wizard/NodesListWrapper";
 
 import { useMeshWideConfigState } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigQueries";
-import { MeshWideNodeConfigInfo } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import {
+    MeshWideNodeConfigInfo,
+    meshConfigStateKey,
+} from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
 import {
     InfoStatusMessageMap,
     mainNodeStatusMessageMap,
@@ -50,7 +53,7 @@ const NodeConfigItem = ({
             name={name}
             descriptionMsg={descriptionMsg}
             ip={info.node_ip}
-            sharedStateUpdateTypes={["mesh_wide_upgrade"]}
+            sharedStateUpdateTypes={[meshConfigStateKey]}
         />
     );
 };
