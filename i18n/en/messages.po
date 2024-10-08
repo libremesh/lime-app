@@ -13,6 +13,18 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:46
+msgid "(Main Node) {descriptionMsg}"
+msgstr "(Main Node) {descriptionMsg}"
+
+#: plugins/lime-plugin-mesh-wide/src/components/Map/NodeMarker.tsx:40
+msgid "(new)"
+msgstr "(new)"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus.tsx:26
+msgid "10 of 12 node are ready to update"
+msgstr "10 of 12 node are ready to update"
+
 #: plugins/lime-plugin-firmware/src/upgradeAvailable.js:67
 msgid "A new firmware version has been released"
 msgstr ""
@@ -20,6 +32,19 @@ msgstr ""
 #: src/containers/RebootBanner/rebootBanner.js:15
 msgid "A reboot is needed to apply changes"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:109
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:256
+msgid "Abort"
+msgstr "Abort"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:102
+msgid "Abort current mesh wide upgrade?"
+msgstr "Abort current mesh wide upgrade?"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:23
+msgid "Aborting"
+msgstr "Aborting"
 
 #: plugins/lime-plugin-pirania/src/piraniaMenu.js:9
 msgid "Access Vouchers"
@@ -49,6 +74,23 @@ msgstr "Activation deadline: {0}"
 msgid "Active"
 msgstr "Active"
 
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:80
+msgid "Add"
+msgstr "Add"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection.tsx:101
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:78
+msgid "Add new section"
+msgstr "Add new section"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection.tsx:92
+msgid "Added section {0} - {1}"
+msgstr "Added section {0} - {1}"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:46
+msgid "After a time the upgrade will be performed"
+msgstr "After a time the upgrade will be performed"
+
 #: plugins/lime-plugin-align/src/alignMenu.js:9
 msgid "Align"
 msgstr ""
@@ -57,9 +99,37 @@ msgstr ""
 msgid "All Vouchers"
 msgstr "All Vouchers"
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:54
+msgid "All nodes are ready"
+msgstr "All nodes are ready"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:80
+msgid "All nodes are upgraded successfully"
+msgstr "All nodes are upgraded successfully"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:232
+msgid "All nodes scheduled successful"
+msgstr "All nodes scheduled successful"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:87
+msgid "Are you sure you want to confirm the upgrade? <0/>Check node list to see the network status"
+msgstr "Are you sure you want to confirm the upgrade? <0/>Check node list to see the network status"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:66
+msgid "Are you sure you want to reboot this node? This action will disconnect the node from the network for a few minutes. <0/>Add shared password or let it empty if no password is set."
+msgstr "Are you sure you want to reboot this node? This action will disconnect the node from the network for a few minutes. <0/>Add shared password or let it empty if no password is set."
+
 #: src/containers/RebootPage/RebootPage.js:39
 msgid "Are you sure you want to reboot?"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:61
+msgid "Are you sure you want to start mesh wide upgrade? <0/>Check node list to see the network status"
+msgstr "Are you sure you want to start mesh wide upgrade? <0/>Check node list to see the network status"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:24
+msgid "Are you sure you want to {title} the <0>{prop}</0> property?"
+msgstr "Are you sure you want to {title} the <0>{prop}</0> property?"
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:24
 msgid "Are you sure?"
@@ -88,6 +158,22 @@ msgstr "Author node: {author_node}"
 msgid "Available"
 msgstr "Available"
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:54
+msgid "Await until it reboots"
+msgstr "Await until it reboots"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:50
+msgid "Awaiting confirmation"
+msgstr "Awaiting confirmation"
+
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:86
+msgid "Babel Links"
+msgstr "Babel Links"
+
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:88
+msgid "Babel Links Reference"
+msgstr "Babel Links Reference"
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:22
 msgid "Back"
 msgstr "Back"
@@ -96,9 +182,21 @@ msgstr "Back"
 msgid "Background Color"
 msgstr "Background Color"
 
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:82
+msgid "Batman Links"
+msgstr "Batman Links"
+
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:84
+msgid "Batman Links Reference"
+msgstr "Batman Links Reference"
+
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:41
 msgid "Best signal"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:65
+msgid "Board"
+msgstr "Board"
 
 #: plugins/lime-plugin-metrics/src/metricsPage.tsx:96
 msgid "Calculating network path"
@@ -107,6 +205,8 @@ msgstr ""
 #: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:83
 #: plugins/lime-plugin-fbw/src/containers/NetworkForm.js:150
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/buttons.js:14
+#: src/components/Modal/Modal.tsx:62
+#: src/components/Modal/Modal.tsx:128
 #: src/components/banner/index.js:20
 msgid "Cancel"
 msgstr ""
@@ -131,6 +231,10 @@ msgstr "Cannot use Radio 0, it's being used for mesh links"
 msgid "Cellphone Instructions"
 msgstr "Cellphone Instructions"
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:132
+msgid "Chains"
+msgstr "Chains"
+
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:76
 msgid "Change"
 msgstr ""
@@ -140,8 +244,17 @@ msgid "Change Shared Password"
 msgstr ""
 
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:123
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:143
 msgid "Channel"
 msgstr "Channel"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ConfirmationPending.tsx:22
+msgid "Check if network is working properly and confirm the upgrade<0/>If not confirmed, the upgrade will be rolled back after a while"
+msgstr "Check if network is working properly and confirm the upgrade<0/>If not confirmed, the upgrade will be rolled back after a while"
+
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:91
+msgid "Check<0/>Alignment"
+msgstr "Check<0/>Alignment"
 
 #: plugins/lime-plugin-fbw/src/containers/Setting.js:100
 msgid "Checking connection"
@@ -172,6 +285,10 @@ msgstr ""
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:159
 msgid "Click at Show Console to follow the remote support session."
 msgstr ""
+
+#: src/components/Modal/Modal.tsx:205
+msgid "Close"
+msgstr "Close"
 
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:170
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:183
@@ -205,12 +322,45 @@ msgid "Configure your new community network"
 msgstr ""
 
 #: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:11
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:241
 msgid "Confirm"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:82
+msgid "Confirm mesh wide upgrade for all nodes on the network"
+msgstr "Confirm mesh wide upgrade for all nodes on the network"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:240
+msgid "Confirm upgrade on all nodes"
+msgstr "Confirm upgrade on all nodes"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:18
+msgid "Confirmation pending"
+msgstr "Confirmation pending"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:19
+msgid "Confirmed"
+msgstr "Confirmed"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/Confirmed.tsx:19
+msgid "Confirmed with some errors"
+msgstr "Confirmed with some errors"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/Confirmed.tsx:15
+msgid "Confirmed!"
+msgstr "Confirmed!"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:63
+msgid "Confirming all upgraded nodes"
+msgstr "Confirming all upgraded nodes"
 
 #: plugins/lime-plugin-fbw/src/containers/Setting.js:127
 msgid "Congratulations"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:62
+msgid "Congratulations, this node was upgraded and confirmed successfully"
+msgstr "Congratulations, this node was upgraded and confirmed successfully"
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:71
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:37
@@ -234,6 +384,11 @@ msgstr "Connection to the cellphone"
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:83
 msgid "Connection to the internet"
 msgstr "Connection to the internet"
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:34
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:90
+msgid "Continue"
+msgstr "Continue"
 
 #: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:134
 #: plugins/lime-plugin-pirania/src/screens/voucherList.js:122
@@ -273,6 +428,30 @@ msgstr "Creation date: {0}"
 msgid "Currently your node has version:"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:44
+msgid "Delete"
+msgstr "Delete"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:43
+msgid "Delete property"
+msgstr "Delete property"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:206
+msgid "Delete this this node from reference state"
+msgstr "Delete this this node from reference state"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:372
+msgid "Delete this {0}<0/>from reference state"
+msgstr "Delete this {0}<0/>from reference state"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/OptionForm.tsx:99
+msgid "Deleted {keyString}"
+msgstr "Deleted {keyString}"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection.tsx:64
+msgid "Deleted {name} - {0}"
+msgstr "Deleted {name} - {0}"
+
 #: plugins/lime-plugin-pirania/src/screens/editVoucher.js:28
 msgid "Description"
 msgstr "Description"
@@ -282,9 +461,14 @@ msgstr "Description"
 msgid "Description: {name}"
 msgstr "Description: {name}"
 
-#: plugins/lime-plugin-rx/src/rxPage.js:51
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:89
+#: plugins/lime-plugin-rx/src/sections/system.tsx:48
 msgid "Device"
 msgstr ""
+
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:125
+msgid "Diagnose"
+msgstr "Diagnose"
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:54
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:72
@@ -298,13 +482,30 @@ msgstr ""
 msgid "Don't show this message again"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-config/src/components/OptionForm.tsx:53
+msgid "Done"
+msgstr "Done"
+
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:96
 msgid "Download"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:183
+msgid "Download remote firmware<0/>to start mesh upgrade"
+msgstr "Download remote firmware<0/>to start mesh upgrade"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable.tsx:50
+msgid "Downloaded version<0/>{0}"
+msgstr "Downloaded version<0/>{0}"
+
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:103
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:35
 msgid "Downloading"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:15
+msgid "Downloading new firmware"
+msgstr "Downloading new firmware"
 
 #: plugins/lime-plugin-pirania/src/screens/postCreate.js:18
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:59
@@ -316,6 +517,7 @@ msgstr "Duration: is permanent"
 msgid "Duration: {days, plural, one {# day} other {# days}}"
 msgstr "Duration: {days, plural, one {# day} other {# days}}"
 
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:51
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:90
 msgid "Edit"
 msgstr "Edit"
@@ -324,9 +526,21 @@ msgstr "Edit"
 msgid "Edit Voucher"
 msgstr "Edit Voucher"
 
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:50
+msgid "Edit property"
+msgstr "Edit property"
+
 #: plugins/lime-plugin-pirania/nodeAdmin/PortalConfigPage.js:50
 msgid "Edit wellcome screen"
 msgstr "Edit wellcome screen"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/OptionForm.tsx:123
+msgid "Edited {keyString}"
+msgstr "Edited {keyString}"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection.tsx:47
+msgid "Edited {name} - {0}"
+msgstr "Edited {name} - {0}"
 
 #: plugins/lime-plugin-node-admin/src/screens/roamingAP.js:25
 msgid "Enable Community Roaming AP"
@@ -361,6 +575,10 @@ msgstr "Encryption: {encryptionMethod}"
 msgid "Error"
 msgstr ""
 
+#: src/components/toast/toasts.tsx:13
+msgid "Error connecting with {nodeInfo}, is node up?"
+msgstr "Error connecting with {nodeInfo}, is node up?"
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:61
 msgid "Error destination network is not configured yet"
 msgstr "Error destination network is not configured yet"
@@ -377,6 +595,14 @@ msgstr "Error downloading lime community"
 msgid "Error getting scan results"
 msgstr "Error getting scan results"
 
+#: plugins/lime-plugin-mesh-wide/src/meshWidePage.tsx:41
+msgid "Error loading leaflet"
+msgstr "Error loading leaflet"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:85
+msgid "Error performing reboot: {error}"
+msgstr "Error performing reboot: {error}"
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:40
 msgid "Error reaching hostname!"
 msgstr "Error reaching hostname!"
@@ -386,6 +612,14 @@ msgstr "Error reaching hostname!"
 msgid "Error retrieving associated list"
 msgstr "Error retrieving associated list"
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:43
+msgid "Error retrieving the status, is this node outdated?"
+msgstr "Error retrieving the status, is this node outdated?"
+
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:101
+msgid "Error retrieving<0/>last internet path"
+msgstr "Error retrieving<0/>last internet path"
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:155
 msgid "Error scanning networks"
 msgstr "Error scanning networks"
@@ -394,13 +628,30 @@ msgstr "Error scanning networks"
 msgid "Error setting network"
 msgstr "Error setting network"
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:355
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:189
+msgid "Error setting new reference state!"
+msgstr "Error setting new reference state!"
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/ScanPage.tsx:83
 msgid "Error stopping scan"
 msgstr "Error stopping scan"
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ErrorState.tsx:12
+msgid "Error!"
+msgstr "Error!"
+
 #: plugins/lime-plugin-node-admin/src/layouts/configPageLayout.tsx:55
 msgid "Error: Not Saved"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradePage.tsx:35
+msgid "Errors found getting mesh info!"
+msgstr "Errors found getting mesh info!"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:32
+msgid "Everything is up to date!"
+msgstr "Everything is up to date!"
 
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:66
 msgid "Expiration date: {0}"
@@ -422,7 +673,7 @@ msgstr "Expires {0}"
 
 #: plugins/lime-plugin-align/src/alignPage.js:37
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:80
-#: plugins/lime-plugin-rx/src/rxPage.js:93
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:67
 msgid "Fetching name"
 msgstr ""
 
@@ -435,9 +686,22 @@ msgid "Filter by"
 msgstr "Filter by"
 
 #: plugins/lime-plugin-firmware/src/firmwareMenu.js:9
-#: plugins/lime-plugin-rx/src/rxPage.js:58
+#: plugins/lime-plugin-rx/src/sections/system.tsx:49
 msgid "Firmware"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:40
+msgid "Firmware download and verified"
+msgstr "Firmware download and verified"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:16
+msgid "Firmware downloaded"
+msgstr "Firmware downloaded"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:80
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:69
+msgid "Firmware version"
+msgstr "Firmware version"
 
 #: plugins/lime-plugin-metrics/src/metricsPage.tsx:151
 msgid "From"
@@ -484,8 +748,16 @@ msgid "I don't know the shared password"
 msgstr ""
 
 #: plugins/lime-plugin-rx/src/rxPage.js:181
-msgid "IP Addresses"
-msgstr ""
+#~ msgid "IP Addresses"
+#~ msgstr ""
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:85
+msgid "IPv4"
+msgstr "IPv4"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:86
+msgid "IPv6"
+msgstr "IPv6"
 
 #: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:73
 msgid "If network has been already created, look it up to join"
@@ -503,14 +775,38 @@ msgstr "If you invalidate this voucher no one will be able to use it anymore. Th
 msgid "If your community network has local services, you can point a link to them."
 msgstr "If your community network has local services, you can point a link to them."
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:57
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:86
+msgid "Iface"
+msgstr "Iface"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:222
+msgid "In the reference state this node is on"
+msgstr "In the reference state this node is on"
+
 #: plugins/lime-plugin-rx/src/rxPage.js:98
-msgid "Interface"
-msgstr ""
+#~ msgid "Interface"
+#~ msgstr ""
+
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:72
+msgid "Interface:"
+msgstr "Interface:"
+
+#: plugins/lime-plugin-rx/src/components/internetPathChart.tsx:165
+msgid "Internet"
+msgstr "Internet"
 
 #: plugins/lime-plugin-metrics/src/components/internetStatus.js:10
-#: plugins/lime-plugin-rx/src/rxPage.js:149
 msgid "Internet connection"
 msgstr ""
+
+#: plugins/lime-plugin-rx/src/components/internetStatus.tsx:17
+msgid "Internet<0/>connection"
+msgstr "Internet<0/>connection"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail.tsx:16
+msgid "Invalid Nodes"
+msgstr "Invalid Nodes"
 
 #: plugins/lime-plugin-pirania/src/screens/voucher.js:97
 msgid "Invalidate"
@@ -521,6 +817,10 @@ msgstr "Invalidate"
 #: plugins/lime-plugin-pirania/src/screens/voucherList.js:97
 msgid "Invalidated"
 msgstr "Invalidated"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:73
+msgid "Ip"
+msgstr "Ip"
 
 #: plugins/lime-plugin-pirania/src/components/createVoucherForm.tsx:75
 msgid "Is permanent"
@@ -539,14 +839,30 @@ msgstr ""
 msgid "It must start with https:// or http://"
 msgstr "It must start with https:// or http://"
 
+#: plugins/lime-plugin-rx/src/components/footer.tsx:22
+msgid "Join <0>foro.librerouter.org</0>"
+msgstr "Join <0>foro.librerouter.org</0>"
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:72
 msgid "Join the mesh"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/OptionForm.tsx:44
+msgid "Key"
+msgstr "Key"
 
 #: plugins/lime-plugin-align/src/alignPage.js:55
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:134
 msgid "Last packet"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:60
+msgid "Last seen"
+msgstr "Last seen"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus.tsx:29
+msgid "Last update: 30 second ago"
+msgstr "Last update: 30 second ago"
 
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:120
 msgid "Link Title"
@@ -556,17 +872,33 @@ msgstr "Link Title"
 msgid "Link URL"
 msgstr "Link URL"
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:181
+msgid "Link from <0>{0}</0> to <1>{1}</1>"
+msgstr "Link from <0>{0}</0> to <1>{1}</1>"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:248
+msgid "Link {0} {1}"
+msgstr "Link {0} {1}"
+
 #: plugins/lime-plugin-metrics/src/metricsPage.tsx:106
 msgid "Load last known Internet path"
 msgstr ""
 
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:84
+msgid "Loading <0/>last internet path..."
+msgstr "Loading <0/>last internet path..."
+
 #: plugins/lime-plugin-rx/src/rxPage.js:128
-msgid "Loading node status..."
-msgstr ""
+#~ msgid "Loading node status..."
+#~ msgstr ""
 
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:111
 msgid "Local services link"
 msgstr "Local services link"
+
+#: plugins/lime-plugin-locate/src/locateMenu.js:9
+msgid "Locate"
+msgstr "Locate"
 
 #: src/containers/SharedPasswordLogin/sharedPasswordLogin.tsx:81
 msgid "Logging in"
@@ -576,6 +908,14 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:94
+msgid "Macs ({0})"
+msgstr "Macs ({0})"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:106
+msgid "Macs not found ({0})"
+msgstr "Macs not found ({0})"
+
 #: plugins/lime-plugin-pirania/src/screens/wellcomeScreenEditor.js:57
 msgid "Main Text"
 msgstr "Main Text"
@@ -584,7 +924,7 @@ msgstr "Main Text"
 msgid "Manage Vouchers"
 msgstr "Manage Vouchers"
 
-#: plugins/lime-plugin-locate/src/locateMenu.js:9
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:128
 msgid "Map"
 msgstr ""
 
@@ -595,6 +935,30 @@ msgstr "Max. {length} characters"
 #: plugins/lime-plugin-metrics/src/metricsPage.tsx:101
 msgid "Measuring links"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide/src/meshWideMenu.tsx:9
+msgid "Mesh Map"
+msgstr "Mesh Map"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeMenu.tsx:9
+msgid "Mesh Wide Upgrade"
+msgstr "Mesh Wide Upgrade"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/Confirmed.tsx:16
+msgid "Mesh upgrade confirmed successfully"
+msgstr "Mesh upgrade confirmed successfully"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/Confirmed.tsx:20
+msgid "Mesh upgrade confirmed with some errors"
+msgstr "Mesh upgrade confirmed with some errors"
+
+#: plugins/lime-plugin-mesh-wide-config/src/containers/EditConfiguration.tsx:20
+msgid "Mesh wide config"
+msgstr "Mesh wide config"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/TransactionStarted.tsx:10
+msgid "Mesh wide upgrade started!"
+msgstr "Mesh wide upgrade started!"
 
 #: plugins/lime-plugin-metrics/src/metricsMenu.js:9
 msgid "Metrics"
@@ -613,16 +977,61 @@ msgid "More than 10 characters"
 msgstr ""
 
 #: plugins/lime-plugin-rx/src/rxPage.js:80
-msgid "Most Active"
-msgstr ""
+#~ msgid "Most Active"
+#~ msgstr ""
+
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:60
+msgid "Most active link"
+msgstr "Most active link"
 
 #: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:129
 msgid "Must select a valid hostname"
 msgstr "Must select a valid hostname"
 
+#: plugins/lime-plugin-mesh-wide-config/src/components/modals.tsx:73
+msgid "Name"
+msgstr "Name"
+
+#: plugins/lime-plugin-rx/src/components/footer.tsx:19
+msgid "Need support?"
+msgstr "Need support?"
+
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:82
 msgid "Network Name: {ssid}"
 msgstr "Network Name: {ssid}"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:126
+msgid "New Macs ({0})"
+msgstr "New Macs ({0})"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable.tsx:36
+msgid "New available version:<0/>{0}"
+msgstr "New available version:<0/>{0}"
+
+#: plugins/lime-plugin-mesh-wide/src/components/Map/LinkLine.tsx:85
+msgid "New link"
+msgstr "New link"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:351
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:184
+msgid "New reference state set!"
+msgstr "New reference state set!"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable.tsx:64
+msgid "New version available!"
+msgstr "New version available!"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:33
+msgid "No new version available is found"
+msgstr "No new version available is found"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NoNewVersion.tsx:11
+msgid "No new version available!"
+msgstr "No new version available!"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/nodesList.tsx:23
+msgid "No nodes present on the <0/>mesh wide upgrade state yet!"
+msgstr "No nodes present on the <0/>mesh wide upgrade state yet!"
 
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:35
 msgid "No password"
@@ -631,6 +1040,10 @@ msgstr ""
 #: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:132
 msgid "No scan result"
 msgstr "No scan result"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:14
+msgid "No upgrade in progres"
+msgstr "No upgrade in progres"
 
 #: plugins/lime-plugin-pirania/src/screens/invalidateVoucher.js:30
 #: src/containers/RebootPage/RebootPage.js:45
@@ -642,11 +1055,23 @@ msgstr ""
 msgid "Node Configuration"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:74
+msgid "Node Info"
+msgstr "Node Info"
+
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:76
+msgid "Node Info Reference"
+msgstr "Node Info Reference"
+
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:20
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:43
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:48
 msgid "Node Name"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:53
+msgid "Node is upgrading"
+msgstr "Node is upgrading"
 
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:71
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/components/testBoxes.js:99
@@ -699,6 +1124,10 @@ msgstr "Or if this node is already configured, you can skip this step"
 msgid "Or upgrade to latest release"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:94
+msgid "Other nodes will download the firmware from it"
+msgstr "Other nodes will download the firmware from it"
+
 #: plugins/lime-plugin-metrics/src/components/box/index.js:110
 msgid "Packet loss"
 msgstr ""
@@ -711,6 +1140,10 @@ msgstr ""
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:87
 msgid "Password: {password}"
 msgstr "Password: {password}"
+
+#: plugins/lime-plugin-rx/src/sections/internetPath.tsx:119
+msgid "Path to Internet"
+msgstr "Path to Internet"
 
 #: plugins/lime-plugin-pirania/src/components/voucherListItem.js:58
 msgid "Permanent"
@@ -759,13 +1192,36 @@ msgstr ""
 msgid "Re-enter the shared password"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:196
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:207
+msgid "Ready to start mesh wide upgrade"
+msgstr "Ready to start mesh wide upgrade"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable.tsx:67
+msgid "Ready to start mesh wide<0/>firmware upgrade"
+msgstr "Ready to start mesh wide<0/>firmware upgrade"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:95
 #: src/containers/RebootBanner/rebootBanner.js:17
 msgid "Reboot"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/RebootNodeBtn.tsx:63
+msgid "Reboot node {0}"
+msgstr "Reboot node {0}"
+
 #: src/containers/RebootPage/RebootPage.js:25
 msgid "Rebooting"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail.tsx:35
+msgid "Reference State is not set"
+msgstr "Reference State is not set"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:387
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:220
+msgid "Reference is not set or has errors"
+msgstr "Reference is not set or has errors"
 
 #: plugins/lime-plugin-ground-routing/src/groundRoutingPage.js:32
 msgid "Reload"
@@ -778,6 +1234,14 @@ msgstr ""
 #: plugins/lime-plugin-remotesupport/src/remoteSupportMenu.js:9
 msgid "Remote Support"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:67
+msgid "Remove this {0} from the reference state"
+msgstr "Remove this {0} from the reference state"
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:21
+msgid "Remove {nodeName} from the reference state"
+msgstr "Remove {nodeName} from the reference state"
 
 #: src/components/form/index.js:17
 msgid "Required"
@@ -798,6 +1262,15 @@ msgstr ""
 #: plugins/lime-plugin-firmware/src/confirmPage/confirmPage.js:33
 msgid "Reverting to previous version"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:151
+msgid "RxRate"
+msgstr "RxRate"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:380
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:218
+msgid "Same status as in the reference state"
+msgstr "Same status as in the reference state"
 
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:84
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:49
@@ -820,6 +1293,30 @@ msgstr ""
 #: plugins/lime-plugin-fbw/src/containers/scanPage/ScanList.js:161
 msgid "Scanning for existing networks"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:20
+msgid "Schedule"
+msgstr "Schedule"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:56
+msgid "Schedule a firmware upgrade for all nodes on the network"
+msgstr "Schedule a firmware upgrade for all nodes on the network"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:220
+msgid "Schedule again"
+msgstr "Schedule again"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:214
+msgid "Schedule upgrade"
+msgstr "Schedule upgrade"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:46
+msgid "Schedule upgrade to all available nodes"
+msgstr "Schedule upgrade to all available nodes"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:44
+msgid "Scheduling upgrade"
+msgstr "Scheduling upgrade"
 
 #: plugins/lime-plugin-pirania/src/screens/voucherList.js:60
 msgid "Search by"
@@ -858,13 +1355,45 @@ msgstr ""
 msgid "Selected network to join"
 msgstr "Selected network to join"
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:25
+msgid "Sending abort message to this node. The abort order will be propagated to all nodes."
+msgstr "Sending abort message to this node. The abort order will be propagated to all nodes."
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/containers/meshWideUpgradeStatus.tsx:62
+msgid "Sending confirmation"
+msgstr "Sending confirmation"
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/SelectForm.js:106
 msgid "Set network"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:204
+msgid "Set reference state for this node"
+msgstr "Set reference state for this node"
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:58
+msgid "Set reference state for this {0}?"
+msgstr "Set reference state for this {0}?"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:363
+msgid "Set reference state for this<0/> {0}"
+msgstr "Set reference state for this<0/> {0}"
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:17
+msgid "Set reference state for {nodeName}"
+msgstr "Set reference state for {nodeName}"
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:18
+msgid "Set the reference state for this node."
+msgstr "Set the reference state for this node."
+
 #: plugins/lime-plugin-fbw/src/containers/Setting.js:80
 msgid "Setting network"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:86
+msgid "Setting up main node"
+msgstr "Setting up main node"
 
 #: plugins/lime-plugin-network-admin/src/netAdminPage.js:82
 msgid "Setting up new password"
@@ -895,10 +1424,26 @@ msgstr ""
 msgid "Shared Password changed successfully"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail.tsx:68
+msgid "Shared state error"
+msgstr "Shared state error"
+
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:156
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:165
 msgid "Show Console"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradePage.tsx:65
+msgid "Show nodes"
+msgstr "Show nodes"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradePage.tsx:57
+msgid "Show state"
+msgstr "Show state"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:118
+msgid "Signal"
+msgstr "Signal"
 
 #: plugins/lime-plugin-align/src/alignPage.js:52
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:64
@@ -909,6 +1454,50 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:59
+msgid "Some nodes are not ready"
+msgstr "Some nodes are not ready"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:209
+msgid "Some nodes are not ready for upgrade <0/>Check node details for more info"
+msgstr "Some nodes are not ready for upgrade <0/>Check node details for more info"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/TransactionStarted.tsx:18
+msgid "Some nodes are still downloading the firmware<0/>check network page for more information"
+msgstr "Some nodes are still downloading the firmware<0/>check network page for more information"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:85
+msgid "Some nodes don't upgraded properly"
+msgstr "Some nodes don't upgraded properly"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:226
+msgid "Some nodes have errors"
+msgstr "Some nodes have errors"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeState.tsx:36
+msgid "Some nodes have errors:"
+msgstr "Some nodes have errors:"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:91
+msgid "Source IP"
+msgstr "Source IP"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:197
+msgid "Start"
+msgstr "Start"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:189
+msgid "Start mesh upgrade"
+msgstr "Start mesh upgrade"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:74
+msgid "Start mesh wide firmware upgrade again"
+msgstr "Start mesh wide firmware upgrade again"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable.tsx:59
+msgid "Start mesh wide upgrade"
+msgstr "Start mesh wide upgrade"
+
 #: plugins/lime-plugin-rx/src/rxMenu.js:9
 msgid "Status"
 msgstr ""
@@ -917,7 +1506,12 @@ msgstr ""
 msgid "Status: {0}"
 msgstr "Status: {0}"
 
-#: plugins/lime-plugin-rx/src/rxPage.js:42
+#: src/components/Modal/Modal.tsx:60
+#: src/components/Modal/Modal.tsx:126
+msgid "Success"
+msgstr "Success"
+
+#: plugins/lime-plugin-rx/src/sections/system.tsx:78
 msgid "System"
 msgstr ""
 
@@ -933,6 +1527,14 @@ msgstr "The Community Portal enables a welcome screen to be displayed in the web
 msgid "The are not mesh interfaces available"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:88
+msgid "The become main node process is starting on this node"
+msgstr "The become main node process is starting on this node"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:135
+msgid "The difference between chains is too big"
+msgstr "The difference between chains is too big"
+
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:113
 msgid "The download failed"
 msgstr ""
@@ -941,6 +1543,22 @@ msgstr ""
 msgid "The firmware is being upgraded..."
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:52
+msgid "The firmware seems to be installed successfully. Confirm that the node is working properly or will be downgraded to the previous version"
+msgstr "The firmware seems to be installed successfully. Confirm that the node is working properly or will be downgraded to the previous version"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail.tsx:20
+msgid "The following nodes are not located or have not reference state. Please, set their location to see them on the map:"
+msgstr "The following nodes are not located or have not reference state. Please, set their location to see them on the map:"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail.tsx:72
+msgid "The following shared states packages have errors. Are they installed or properly initialized?"
+msgstr "The following shared states packages have errors. Are they installed or properly initialized?"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail.tsx:39
+msgid "The following shared states packages have not data set"
+msgstr "The following shared states packages have not data set"
+
 #: plugins/lime-plugin-node-admin/src/screens/hotspot/src/hotspotPage.js:115
 msgid "The hotspot couldn’t be found, please review the instructions above."
 msgstr "The hotspot couldn’t be found, please review the instructions above."
@@ -948,6 +1566,10 @@ msgstr "The hotspot couldn’t be found, please review the instructions above."
 #: plugins/lime-plugin-node-admin/src/screens/hostname.js:70
 msgid "The name should have at least 3 characters"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:77
+msgid "The node is down"
+msgstr "The node is down"
 
 #: plugins/lime-plugin-node-admin/src/screens/password.js:60
 msgid "The password should have at least 8 characters"
@@ -974,6 +1596,14 @@ msgstr ""
 msgid "The shared password has been chosen by the community when the network was created. You can ask other community members for it."
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:123
+msgid "The signal is X below the reference state"
+msgstr "The signal is X below the reference state"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:44
+msgid "The upgrade is scheduled"
+msgstr "The upgrade is scheduled"
+
 #: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:9
 msgid "The upgrade should be done"
 msgstr ""
@@ -994,6 +1624,10 @@ msgstr ""
 msgid "These are the nodes associated on this radio"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:384
+msgid "This Link is not registered on the reference state"
+msgstr "This Link is not registered on the reference state"
+
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:35
 msgid "This device does not support secure rollback to previous version if something goes wrong"
 msgstr ""
@@ -1006,13 +1640,86 @@ msgstr ""
 msgid "This field is required"
 msgstr "This field is required"
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:92
+msgid "This is a main node"
+msgstr "This is a main node"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:389
+msgid "This link has errors"
+msgstr "This link has errors"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:169
+msgid "This link seems down"
+msgstr "This link seems down"
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:73
+msgid "This link seems down, remove them from the reference state?"
+msgstr "This link seems down, remove them from the reference state?"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:111
+msgid "This macs are not on the actual state"
+msgstr "This macs are not on the actual state"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:129
+msgid "This macs are not on the reference state"
+msgstr "This macs are not on the reference state"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:73
+msgid "This node aborted"
+msgstr "This node aborted"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradePage.tsx:86
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:21
+msgid "This node aborted successfully"
+msgstr "This node aborted successfully"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:41
+msgid "This node es ready for upgrade"
+msgstr "This node es ready for upgrade"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:20
+msgid "This node has an error"
+msgstr "This node has an error"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:69
+msgid "This node has an error!"
+msgstr "This node has an error!"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:36
+msgid "This node is downloading a new firmware"
+msgstr "This node is downloading a new firmware"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:225
+msgid "This node is not registered on the reference state"
+msgstr "This node is not registered on the reference state"
+
 #: plugins/lime-plugin-metrics/src/components/showPathButton.js:16
 msgid "This node is the gateway"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:36
+msgid "This node seems down"
+msgstr "This node seems down"
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:24
+msgid "This node seems down, remove them from the reference state?"
+msgstr "This node seems down, remove them from the reference state?"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/NewVersionAvailable.tsx:21
+msgid "This node version<0/>{0}"
+msgstr "This node version<0/>{0}"
+
 #: plugins/lime-plugin-align/src/alignPage.js:119
 msgid "This radio is not associated with other nodes"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide/src/components/modals.tsx:63
+msgid "This will set the reference state of this link:"
+msgstr "This will set the reference state of this link:"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/modals.tsx:104
+msgid "This will the abort current upgrade process on all nodes. Are you sure you want to proceed?"
+msgstr "This will the abort current upgrade process on all nodes. Are you sure you want to proceed?"
 
 #: plugins/lime-plugin-metrics/src/metricsPage.tsx:120
 msgid "This your last working path to the Internet"
@@ -1031,16 +1738,36 @@ msgid "To enable remote access an internet connection is needed"
 msgstr "To enable remote access an internet connection is needed"
 
 #: plugins/lime-plugin-rx/src/rxPage.js:103
-msgid "Traffic"
-msgstr ""
+#~ msgid "Traffic"
+#~ msgstr ""
+
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:78
+msgid "Traffic:"
+msgstr "Traffic:"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/hooks/useStepper.tsx:248
+msgid "Try last step again"
+msgstr "Try last step again"
 
 #: plugins/lime-plugin-firmware/src/upgradingPage/upgradingPage.js:12
 msgid "Try reloading the app"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:148
+msgid "TxRate"
+msgstr "TxRate"
+
 #: plugins/lime-plugin-fbw/src/containers/scanPage/components/networkTile.js:100
 msgid "Unknown error"
 msgstr "Unknown error"
+
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/LinkDetail.tsx:226
+msgid "Unknown link type"
+msgstr "Unknown link type"
+
+#: plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus.tsx:16
+msgid "Updating shared state {0}"
+msgstr "Updating shared state {0}"
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:229
 msgid "Upgrade"
@@ -1049,6 +1776,22 @@ msgstr ""
 #: plugins/lime-plugin-firmware/src/upgradeAvailable.js:101
 msgid "Upgrade Now"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradePage.tsx:74
+msgid "Upgrade all network nodes at once. This proces will take a while and will require user interaction."
+msgstr "Upgrade all network nodes at once. This proces will take a while and will require user interaction."
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeScheduled.tsx:16
+msgid "Upgrade is scheduled!"
+msgstr "Upgrade is scheduled!"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:17
+msgid "Upgrade scheduled"
+msgstr "Upgrade scheduled"
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:60
+msgid "Upgrade successful"
+msgstr "Upgrade successful"
 
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:85
 msgid "Upgrade to lastest firmware version"
@@ -1059,11 +1802,17 @@ msgstr ""
 msgid "Upgrade to {versionName}"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/ConfirmationPending.tsx:12
+msgid "Upgraded!<0/>Awaiting confirmation"
+msgstr "Upgraded!<0/>Awaiting confirmation"
+
 #: plugins/lime-plugin-firmware/src/upgradePage/upgradePage.js:181
 msgid "Upload firmware image from your device"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:45
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:72
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/NodeDetail.tsx:76
+#: plugins/lime-plugin-rx/src/sections/system.tsx:45
 msgid "Uptime"
 msgstr ""
 
@@ -1071,9 +1820,17 @@ msgstr ""
 msgid "Use vouchers for access"
 msgstr "Use vouchers for access"
 
+#: plugins/lime-plugin-mesh-wide-config/src/components/OptionForm.tsx:49
+msgid "Value"
+msgstr "Value"
+
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:75
 msgid "Visit"
 msgstr ""
+
+#: plugins/lime-plugin-rx/src/components/footer.tsx:33
+msgid "Visit <0>docs.altermundi.net</0>"
+msgstr "Visit <0>docs.altermundi.net</0>"
 
 #: plugins/lime-plugin-changeNode/src/changeNodeMenu.js:9
 #: plugins/lime-plugin-changeNode/src/changeNodePage.js:50
@@ -1100,6 +1857,10 @@ msgstr "Voucher list"
 msgid "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 msgstr "Vouchers can be used to limit access through the Community Portal to those who have an authorization code"
 
+#: plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages.tsx:37
+msgid "Wait until the download is finished!"
+msgstr "Wait until the download is finished!"
+
 #: plugins/lime-plugin-fbw/src/containers/FbwBanner.tsx:54
 msgid "Welcome to LimeApp"
 msgstr "Welcome to LimeApp"
@@ -1112,11 +1873,23 @@ msgstr "Wellcome Screen"
 msgid "When reloading the app you will be asked to confirm the upgrade, otherwise it will be reverted"
 msgstr ""
 
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:78
+msgid "Wifi Links"
+msgstr "Wifi Links"
+
+#: plugins/lime-plugin-mesh-wide/src/lib/utils.ts:80
+msgid "Wifi Links Reference"
+msgstr "Wifi Links Reference"
+
 #: plugins/lime-plugin-node-admin/src/nodeAdminPage.js:34
 #: plugins/lime-plugin-node-admin/src/screens/password.js:45
 #: plugins/lime-plugin-node-admin/src/screens/password.js:105
 msgid "Wifi Password"
 msgstr ""
+
+#: plugins/lime-plugin-rx/src/sections/wired.tsx:62
+msgid "Wired connections"
+msgstr "Wired connections"
 
 #: plugins/lime-plugin-align/src/containers/alignSingle/index.js:121
 msgid "With radio {fromRadio} alignin with"
@@ -1167,31 +1940,34 @@ msgstr ""
 msgid "You should try to connect to the network {wifiSsid}."
 msgstr ""
 
+#: plugins/lime-plugin-rx/src/sections/alignment.tsx:113
+msgid "Your Alignment"
+msgstr "Your Alignment"
+
 #: plugins/lime-plugin-remotesupport/src/remoteSupportPage.js:74
 msgid "Your node has no internet connection"
 msgstr "Your node has no internet connection"
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:207
 #: plugins/lime-plugin-locate/src/locatePage.tsx:225
 msgid "cancel"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:193
 #: plugins/lime-plugin-locate/src/locatePage.tsx:211
 msgid "confirm location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:209
 #: plugins/lime-plugin-locate/src/locatePage.tsx:227
 msgid "edit location"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:199
+#: plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/ShowErrorsDetail.tsx:54
+msgid "for the following nodes: {nodes}"
+msgstr "for the following nodes: {nodes}"
+
 #: plugins/lime-plugin-locate/src/locatePage.tsx:217
 msgid "hide community"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:212
 #: plugins/lime-plugin-locate/src/locatePage.tsx:230
 msgid "locate my node"
 msgstr ""
@@ -1200,7 +1976,6 @@ msgstr ""
 msgid "more than a minute ago"
 msgstr ""
 
-#: plugins/lime-plugin-locate/src/locateMap.tsx:201
 #: plugins/lime-plugin-locate/src/locatePage.tsx:219
 msgid "show community"
 msgstr ""
@@ -1217,23 +1992,33 @@ msgstr ""
 msgid "{0, plural, =0 {No one has joined yet.} one {One person has joined.} other {# people have joined.}}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:20
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:66
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:70
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/nodeUpgradeInfo.tsx:74
+msgid "{0}"
+msgstr "{0}"
+
+#: plugins/lime-plugin-rx/src/sections/system.tsx:22
 msgid "{days, plural, one {# day} other {# days}}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:23
+#: plugins/lime-plugin-rx/src/sections/system.tsx:25
 msgid "{hours, plural, one {# hour} other {# hours}}"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:26
+#: plugins/lime-plugin-rx/src/sections/system.tsx:28
 msgid "{mins, plural, one {# minute} other {# minutes}}"
 msgstr ""
+
+#: plugins/lime-plugin-mesh-wide-upgrade/src/components/upgradeState/UpgradeScheduled.tsx:18
+msgid "{nodesToBeUpgraded} of {totalNodes} will be upgraded"
+msgstr "{nodesToBeUpgraded} of {totalNodes} will be upgraded"
 
 #: plugins/lime-plugin-align/src/components/secondsAgo.js:23
 msgid "{secondsAmount} seconds ago"
 msgstr ""
 
-#: plugins/lime-plugin-rx/src/rxPage.js:29
+#: plugins/lime-plugin-rx/src/sections/system.tsx:31
 msgid "{secs, plural, one {# second} other {# seconds}}"
 msgstr ""
 
