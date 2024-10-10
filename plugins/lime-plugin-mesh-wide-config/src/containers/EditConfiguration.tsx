@@ -24,9 +24,15 @@ const EditConfiguration = (props: Partial<IFullScreenModalProps>) => {
             {meshWideConfig && (
                 <>
                     <div className={"flex flex-col gap-3"}>
-                        {meshWideConfig.map((dropdown, index) => (
-                            <ConfigSection key={index} dropdown={dropdown} />
-                        ))}
+                        {Object.entries(meshWideConfig).map(
+                            ([title, dropdown], index) => (
+                                <ConfigSection
+                                    key={index}
+                                    title={title}
+                                    dropdown={dropdown}
+                                />
+                            )
+                        )}
                         <AddNewSectionBtn />
                     </div>
                     <MeshStatus />

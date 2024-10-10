@@ -8,11 +8,17 @@ import {
     IMeshWideConfig,
     MeshWideConfigState,
 } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import { parseConfigFile } from "plugins/lime-plugin-mesh-wide-config/src/utils/jsonParser";
+
+const parseMeshWideConfig = async () => {
+    const text = await getMeshWideConfig();
+    return parseConfigFile(text);
+};
 
 export function useMeshWideConfig(params) {
     return useQuery<IMeshWideConfig>(
         ["lime-mesh-config", "get_mesh_config"],
-        getMeshWideConfig,
+        parseMeshWideConfig,
         {
             ...params,
         }

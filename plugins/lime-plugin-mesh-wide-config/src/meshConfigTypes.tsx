@@ -1,13 +1,16 @@
 import { MeshConfigTypes } from "components/shared-state/SharedStateTypes";
 
+export type ConfigItemType = string | string[];
+
 export interface IMeshWideSection {
-    name: string;
-    options: { [key: string]: string };
+    [key: string]: ConfigItemType;
 }
 
-export type MainNodeStatusType = "NO" | "MAIN_NODE";
+export type IMeshWideConfig = {
+    [section: string]: IMeshWideSection;
+};
 
-export type IMeshWideConfig = IMeshWideSection[];
+export type MainNodeStatusType = "NO" | "MAIN_NODE";
 
 export type ConfigUpdateState =
     | "DEFAULT"
