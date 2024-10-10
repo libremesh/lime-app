@@ -27,7 +27,11 @@ export const ConfigSection = ({
             optionsComponent={<SectionEditOrDelete name={title} />}
         >
             {Object.entries(dropdown).map(([key, value]) => (
-                <OptionContainer key={key} section={title} keyString={key} />
+                <OptionContainer
+                    key={key}
+                    sectionName={title}
+                    keyString={key}
+                />
             ))}
         </Collapsible>
     );

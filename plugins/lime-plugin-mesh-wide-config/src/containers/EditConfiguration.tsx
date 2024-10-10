@@ -66,6 +66,7 @@ const DrawForm = () => {
     const { watch } = useFormContext<IMeshWideConfig>();
     const formData = watch();
 
+    console.log("formData", formData);
     return (
         <>
             {Object.entries(formData).map(([title, dropdown], index) => (
