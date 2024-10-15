@@ -1,13 +1,6 @@
 import { Trans } from "@lingui/macro";
-import { ComponentChild } from "preact";
-import { useState } from "preact/hooks";
-import {
-    Controller,
-    ControllerRenderProps,
-    FieldValues,
-    Path,
-    useFormContext,
-} from "react-hook-form";
+import { StateUpdater, useState } from "preact/hooks";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { Button } from "components/buttons/button";
 import Divider from "components/divider";
@@ -19,48 +12,27 @@ import {
 } from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
 import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 
-const InputField = <TFieldValues extends FieldValues>({
-    id,
-    label,
-    ...field
-}: {
-    id: Path<TFieldValues>;
-    label: string | ComponentChild;
-} & Partial<ControllerRenderProps>) => {
-    return (
-        <div>
-            <label htmlFor={id}>{label}</label>
-            <input
-                type="text"
-                data-testid="password-input"
-                className="w-100"
-                {...field}
-            />
-        </div>
-    );
+type OptionContainerProps = {
+    sectionName: string;
+    keyString: string;
 };
 
 export const OptionContainer = ({
     keyString,
     sectionName,
-}: {
-    sectionName: string;
-    keyString: string;
-}) => {
-    const { control, watch, setValue, getFieldState } = useFormContext();
+}: OptionContainerProps) => {
+    const { watch, setValue } = useFormContext();
     const [isEditing, setIsEditing] = useState(false);
 
     const { toggleModal: toggleDeleteModal, actionModal: deletePropModal } =
         useDeletePropModal();
-    const { toggleModal: toggleEditModal, actionModal: editPropertyModal } =
-        useEditPropModal();
+    // const { toggleModal: toggleEditModal, actionModal: editPropertyModal } =
+    //     useEditPropModal();
     const { showToast } = useToast();
 
     const name = `${sectionName}[${keyString}]`;
     const value = watch(name);
     const section = watch(sectionName);
-
-    const [inputState, setInputState] = useState(value);
 
     let _value = value;
     const isList = Array.isArray(value);
@@ -82,7 +54,7 @@ export const OptionContainer = ({
                             {isList && <Trans>(List)</Trans>} {keyString}
                         </div>
                         <EditOrDelete
-                            onEdit={() => setIsEditing(true)}
+                            onEdit={() => setIsEditing((prev) => !prev)}
                             onDelete={(e) => {
                                 e.stopPropagation();
                                 deletePropModal(keyString, () => {
@@ -104,60 +76,113 @@ export const OptionContainer = ({
                     </div>
                     {!isEditing && <div>{_value}</div>}
                     {isEditing && (
-                        <Controller
-                            name={`${section}.${keyString}`}
-                            control={control}
-                            render={({
-                                field: { onChange, value, ...field },
-                            }) => {
-                                return (
-                                    <>
-                                        <InputField
-                                            id={name}
-                                            name={name}
-                                            label={<Trans>Value</Trans>}
-                                            value={inputState}
-                                            onChange={(v) => {
-                                                setInputState(v.target.value);
-                                            }}
-                                            {...field}
-                                        />
-                                        <div className={"flex flex-row gap-4"}>
-                                            <Button
-                                                onClick={() => {
-                                                    setValue(name, inputState);
-                                                    setIsEditing(false);
-                                                    showToast({
-                                                        text: (
-                                                            <Trans>
-                                                                Edited{" "}
-                                                                {keyString}
-                                                            </Trans>
-                                                        ),
-                                                    });
-                                                }}
-                                                outline={true}
-                                            >
-                                                <Trans>Done</Trans>
-                                            </Button>
-                                            <Button
-                                                color={"danger"}
-                                                onClick={() => {
-                                                    setInputState(value);
-                                                    setIsEditing(false);
-                                                }}
-                                                outline={true}
-                                            >
-                                                <Trans>Cancel</Trans>
-                                            </Button>
-                                        </div>
-                                    </>
-                                );
-                            }}
+                        <EditableField
+                            isList={isList}
+                            name={name}
+                            keyString={keyString}
+                            setIsEditing={setIsEditing}
                         />
                     )}
                 </>
             </div>
         </div>
+    );
+};
+
+const EditableField = ({
+    isList,
+    name,
+    keyString,
+    setIsEditing,
+}: {
+    isList: boolean;
+    name: string;
+    setIsEditing: StateUpdater<boolean>;
+} & Omit<OptionContainerProps, "sectionName">) => {
+    const { control, setValue, watch, getValues } = useFormContext();
+    const { showToast } = useToast();
+    const value = watch(name);
+    const [initialState] = useState(value);
+    const removeListItem = (listName, index) => {
+        const currentValues = getValues(listName);
+        const updatedValues = currentValues.filter((_, i) => i !== index);
+        setValue(listName, updatedValues); // Update form values
+    };
+
+    return (
+        <>
+            {isList ? (
+                <div key={name} className={"flex flex-col gap-6"}>
+                    {value.map((item, index) => (
+                        <Controller
+                            key={index}
+                            control={control}
+                            name={`${name}[${index}]`}
+                            render={({ field }) => (
+                                <div
+                                    className={
+                                        "flex flex-row justify-center align-items-center gap-4"
+                                    }
+                                >
+                                    <input
+                                        type="text"
+                                        className="w-100"
+                                        {...field}
+                                        value={getValues(`${name}[${index}]`)}
+                                    />
+                                    <EditOrDelete
+                                        onDelete={() =>
+                                            removeListItem(name, index)
+                                        }
+                                    />
+                                </div>
+                            )}
+                        />
+                    ))}
+                </div>
+            ) : (
+                <>
+                    <label>{<Trans>Value</Trans>}</label>
+                    <Controller
+                        name={name}
+                        control={control}
+                        render={({ field }) => (
+                            <input
+                                type="text"
+                                data-testid="password-input"
+                                className="w-100"
+                                {...field}
+                            />
+                        )}
+                    />
+                </>
+            )}
+            <div className={"flex flex-row gap-4"}>
+                <Button
+                    onClick={() => {
+                        setIsEditing(false);
+                        showToast({
+                            text: <Trans>Edited {keyString}</Trans>,
+                            onAction: () => {
+                                setValue(name, initialState);
+                            },
+                        });
+                    }}
+                    outline={true}
+                >
+                    <Trans>Done</Trans>
+                </Button>
+                <Button
+                    color={"danger"}
+                    onClick={() => {
+                        setValue(name, initialState);
+                        setIsEditing(false);
+                    }}
+                    outline={true}
+                >
+                    <Trans>Cancel</Trans>
+                </Button>
+            </div>
+        </>
     );
 };
