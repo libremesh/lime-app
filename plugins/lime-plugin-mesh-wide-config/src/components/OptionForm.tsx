@@ -6,6 +6,7 @@ import { Button } from "components/buttons/button";
 import Divider from "components/divider";
 import { useToast } from "components/toast/toastProvider";
 
+import { AddElementButton } from "plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection";
 import {
     useDeletePropModal,
     useEditPropModal,
@@ -103,10 +104,15 @@ const EditableField = ({
     const { showToast } = useToast();
     const value = watch(name);
     const [initialState] = useState(value);
-    const removeListItem = (listName, index) => {
-        const currentValues = getValues(listName);
-        const updatedValues = currentValues.filter((_, i) => i !== index);
-        setValue(listName, updatedValues); // Update form values
+    // const currentValues = getValues(listName);
+
+    const removeListItem = (index) => {
+        const updatedValues = value.filter((_, i) => i !== index);
+        setValue(name, updatedValues); // Update form values
+    };
+
+    const addListItem = () => {
+        setValue(name, [...value, ""]); // Update form values
     };
 
     return (
@@ -131,14 +137,13 @@ const EditableField = ({
                                         value={getValues(`${name}[${index}]`)}
                                     />
                                     <EditOrDelete
-                                        onDelete={() =>
-                                            removeListItem(name, index)
-                                        }
+                                        onDelete={() => removeListItem(index)}
                                     />
                                 </div>
                             )}
                         />
                     ))}
+                    <AddElementButton onClick={addListItem} />
                 </div>
             ) : (
                 <>
