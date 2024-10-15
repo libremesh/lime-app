@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/macro";
+import { useFormContext } from "react-hook-form";
 
 import { Button } from "components/buttons/button";
 import { Collapsible } from "components/collapsible";
@@ -10,7 +11,10 @@ import {
     useDeletePropModal,
     useEditPropModal,
 } from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
-import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import {
+    IMeshWideConfig,
+    IMeshWideSection,
+} from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
 import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 
 export const ConfigSection = ({
@@ -88,22 +92,19 @@ export const SectionEditOrDelete = ({ name }) => {
 export const AddNewSectionBtn = () => {
     const { toggleModal: toggleNewSectionModal, actionModal: addSectionModal } =
         useAddNewSectionModal();
+    const { setValue } = useFormContext<IMeshWideConfig>();
 
     const { showToast } = useToast();
+
     return (
         <Button
             color={"info"}
             onClick={() => {
                 addSectionModal((data) => {
-                    console.log(`Added`, data);
                     toggleNewSectionModal();
+                    setValue(data.name, {});
                     showToast({
-                        text: (
-                            <Trans>
-                                Added section {data.name} -{" "}
-                                {new Date().toDateString()}
-                            </Trans>
-                        ),
+                        text: <Trans>Added section {data.name}</Trans>,
                     });
                 });
             }}
