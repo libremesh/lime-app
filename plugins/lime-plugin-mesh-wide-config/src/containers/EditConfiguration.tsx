@@ -13,7 +13,7 @@ import {
 } from "components/Modal/FullScreenModal";
 
 import {
-    AddNewSectionBtn,
+    AddNewElementBtn,
     ConfigSection,
 } from "plugins/lime-plugin-mesh-wide-config/src/components/ConfigSection";
 import { MeshStatus } from "plugins/lime-plugin-mesh-wide-config/src/components/MeshStatus";
@@ -54,7 +54,7 @@ const EditConfigurationInner = ({
             <form onSubmit={fMethods.handleSubmit(onSubmit)}>
                 <div className={"flex flex-col gap-3"}>
                     <DrawForm />
-                    <AddNewSectionBtn />
+                    <AddNewElementBtn />
                 </div>
                 <MeshStatus />
             </form>

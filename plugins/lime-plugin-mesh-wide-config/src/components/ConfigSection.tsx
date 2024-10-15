@@ -37,6 +37,7 @@ export const ConfigSection = ({
                     keyString={key}
                 />
             ))}
+            <AddNewElementBtn sectionName={title} />
         </Collapsible>
     );
 };
@@ -89,10 +90,11 @@ export const SectionEditOrDelete = ({ name }) => {
     );
 };
 
-export const AddNewSectionBtn = () => {
+export const AddNewElementBtn = ({ sectionName }: { sectionName?: string }) => {
     const { toggleModal: toggleNewSectionModal, actionModal: addSectionModal } =
         useAddNewSectionModal();
-    const { setValue } = useFormContext<IMeshWideConfig>();
+    const { watch, setValue } = useFormContext<IMeshWideConfig>();
+    const section = watch(sectionName);
 
     const { showToast } = useToast();
 
@@ -101,12 +103,17 @@ export const AddNewSectionBtn = () => {
             color={"info"}
             onClick={() => {
                 addSectionModal((data) => {
+                    if (!sectionName) {
+                        setValue(data.name, {});
+                    } else {
+                        const kaka = { ...section, [data.name]: "" };
+                        setValue(sectionName, kaka);
+                    }
                     toggleNewSectionModal();
-                    setValue(data.name, {});
                     showToast({
                         text: <Trans>Added section {data.name}</Trans>,
                     });
-                });
+                }, sectionName);
             }}
         >
             <Trans>Add new section</Trans>

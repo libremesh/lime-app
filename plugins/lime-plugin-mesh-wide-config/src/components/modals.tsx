@@ -64,7 +64,11 @@ export const useAddNewSectionModal = () => {
     });
 
     const actionModal = useCallback(
-        (actionCb: (data) => void) => {
+        (actionCb: (data) => void, sectionName?: string) => {
+            let title = <Trans>Add new section</Trans>;
+            if (sectionName) {
+                title = <Trans>Add new section for {sectionName}</Trans>;
+            }
             setModalState({
                 content: (
                     <div>
@@ -75,7 +79,7 @@ export const useAddNewSectionModal = () => {
                         />
                     </div>
                 ),
-                title: <Trans>Add new section</Trans>,
+                title,
                 successCb: handleSubmit(actionCb),
                 successBtnText: <Trans>Add</Trans>,
             });
