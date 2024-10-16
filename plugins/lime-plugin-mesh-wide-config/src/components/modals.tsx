@@ -1,11 +1,15 @@
 import { Trans } from "@lingui/macro";
+import { Label } from "@tanstack/react-query-devtools/build/lib/Explorer";
 import { ComponentChildren } from "preact";
 import { useCallback } from "preact/compat";
-import { useForm } from "react-hook-form";
+import { useEffect } from "preact/hooks";
+import { FormProvider, useForm } from "react-hook-form";
 
 import { ModalActions, useModal } from "components/Modal/Modal";
 import InputField from "components/inputs/InputField";
+import switchStyle from "components/switch";
 
+import { EditableField } from "plugins/lime-plugin-mesh-wide-config/src/components/OptionForm";
 import { dataTypeNameMapping } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import { MeshWideMapDataTypeKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
@@ -52,40 +56,67 @@ export const useEditPropModal = () =>
         "success"
     );
 
-export const useAddNewSectionModal = () => {
-    const { toggleModal, setModalState } = useModal();
+export const useAddNewSectionModal = (
+    actionCb: (data) => void,
+    sectionName?: string
+) => {
+    const { toggleModal, setModalState, isModalOpen, openModalKey } =
+        useModal();
+    const modalKey = `addnewSectionModal${sectionName}`;
+
+    const fmethods = useForm({
+        defaultValues: { name: "", value: [""] },
+    });
 
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
-    } = useForm({
-        defaultValues: { name: "" },
-    });
+        watch,
+    } = fmethods;
 
-    const actionModal = useCallback(
-        (actionCb: (data) => void, sectionName?: string) => {
-            let title = <Trans>Add new section</Trans>;
-            if (sectionName) {
-                title = <Trans>Add new section for {sectionName}</Trans>;
-            }
-            setModalState({
-                content: (
-                    <div>
-                        <InputField
-                            id={"name"}
-                            label={<Trans>Name</Trans>}
-                            register={register}
-                        />
-                    </div>
-                ),
-                title,
-                successCb: handleSubmit(actionCb),
-                successBtnText: <Trans>Add</Trans>,
-            });
-            toggleModal();
-        },
-        [handleSubmit, register, setModalState, toggleModal]
-    );
+    const value = watch("value");
+    console.log("values! ", value);
+
+    const updateState = useCallback(() => {
+        let title = <Trans>Add new section</Trans>;
+        if (sectionName) {
+            title = <Trans>Add new section for {sectionName}</Trans>;
+        }
+        setModalState({
+            content: (
+                <FormProvider {...fmethods}>
+                    <InputField
+                        id={"name"}
+                        label={<Trans>Name</Trans>}
+                        register={register}
+                    />
+                    {sectionName && (
+                        <>
+                            <Label>Value</Label>
+                            <EditableField name={"value"} isList={true} />
+                        </>
+                    )}
+                </FormProvider>
+            ),
+            title,
+            successCb: handleSubmit(actionCb),
+            successBtnText: <Trans>Add</Trans>,
+        });
+    }, [handleSubmit, register, setModalState, toggleModal]);
+
+    const actionModal = useCallback(() => {
+        updateState();
+        toggleModal(modalKey);
+    }, [toggleModal, updateState]);
+
+    // Update modal state with mutation result
+    useEffect(() => {
+        if (isModalOpen && openModalKey === modalKey) {
+            updateState();
+        }
+    }, [value, isModalOpen, actionModal, openModalKey]);
+
     return { actionModal, toggleModal };
 };

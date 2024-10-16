@@ -91,28 +91,30 @@ export const SectionEditOrDelete = ({ name }) => {
 };
 
 export const AddNewElementBtn = ({ sectionName }: { sectionName?: string }) => {
-    const { toggleModal: toggleNewSectionModal, actionModal: addSectionModal } =
-        useAddNewSectionModal();
     const { watch, setValue } = useFormContext<IMeshWideConfig>();
     const section = watch(sectionName);
-
     const { showToast } = useToast();
+
+    const sectionAdded = (data) => {
+        if (!sectionName) {
+            setValue(data.name, {});
+        } else {
+            const kaka = { ...section, [data.name]: "" };
+            setValue(sectionName, kaka);
+        }
+        toggleNewSectionModal();
+        showToast({
+            text: <Trans>Added section {data.name}</Trans>,
+        });
+    };
+
+    const { toggleModal: toggleNewSectionModal, actionModal: addSectionModal } =
+        useAddNewSectionModal(sectionAdded, sectionName);
 
     return (
         <AddElementButton
             onClick={() => {
-                addSectionModal((data) => {
-                    if (!sectionName) {
-                        setValue(data.name, {});
-                    } else {
-                        const kaka = { ...section, [data.name]: "" };
-                        setValue(sectionName, kaka);
-                    }
-                    toggleNewSectionModal();
-                    showToast({
-                        text: <Trans>Added section {data.name}</Trans>,
-                    });
-                }, sectionName);
+                addSectionModal();
             }}
         />
     );
