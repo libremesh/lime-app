@@ -1,3 +1,4 @@
+import { MeshWideConfigState } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
 import { MeshWideUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
 import {
     IBabelLinks,
@@ -5,6 +6,10 @@ import {
     INodes,
     IWifiLinks,
 } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+
+export type MeshConfigTypes = {
+    mesh_wide_config: MeshWideConfigState;
+};
 
 export type MeshUpgradeTypes = {
     mesh_wide_upgrade: MeshWideUpgradeInfo;
@@ -25,7 +30,8 @@ export type MeshWideMapReferenceTypes = AppendRef<MeshWideMapTypes>;
 
 export type AllSharedStateTypes = MeshWideMapTypes &
     MeshUpgradeTypes &
-    MeshWideMapReferenceTypes;
+    MeshWideMapReferenceTypes &
+    MeshConfigTypes;
 
 export type SharedStateDataTypeKeys = keyof AllSharedStateTypes;
 

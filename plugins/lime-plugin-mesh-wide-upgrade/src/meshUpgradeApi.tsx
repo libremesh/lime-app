@@ -4,6 +4,7 @@ import {
 } from "components/shared-state/SharedStateApi";
 import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
 
+import { meshUpgradeSharedStateKey } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";
 import {
     MeshWideRPCReturnTypes,
     MeshWideUpgradeInfo,
@@ -14,7 +15,9 @@ import api, { UhttpdService } from "utils/uhttpd.service";
 
 // todo(kon): refactor this to use doSharedStateApiCall??
 export const getMeshWideUpgradeInfo = async () => {
-    const query = sharedStateQueries.getFromSharedState("mesh_wide_upgrade");
+    const query = sharedStateQueries.getFromSharedState(
+        meshUpgradeSharedStateKey
+    );
     const res = await api.call(...query);
     if (res.error) {
         throw new Error(

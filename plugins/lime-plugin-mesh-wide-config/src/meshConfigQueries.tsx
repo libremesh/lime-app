@@ -1,12 +1,34 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigApi";
-import { IMeshWideConfig } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import {
+    getMeshWideConfig,
+    getMeshWideConfigState,
+} from "plugins/lime-plugin-mesh-wide-config/src/meshConfigApi";
+import {
+    IMeshWideConfig,
+    MeshWideConfigState,
+} from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import { parseConfigFile } from "plugins/lime-plugin-mesh-wide-config/src/utils/jsonParser";
+
+const parseMeshWideConfig = async () => {
+    const text = await getMeshWideConfig();
+    return parseConfigFile(text);
+};
 
 export function useMeshWideConfig(params) {
     return useQuery<IMeshWideConfig>(
-        ["lime-meshwide", "get_mesh_config"],
-        getMeshWideConfig,
+        ["lime-mesh-config", "get_mesh_config"],
+        parseMeshWideConfig,
+        {
+            ...params,
+        }
+    );
+}
+
+export function useMeshWideConfigState(params) {
+    return useQuery<MeshWideConfigState>(
+        ["lime-mesh-config", "get_mesh_config_state"],
+        getMeshWideConfigState,
         {
             ...params,
         }

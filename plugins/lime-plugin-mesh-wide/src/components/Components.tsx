@@ -51,11 +51,13 @@ export const EditOrDelete = ({
     onEdit,
     onDelete,
 }: {
-    onEdit: (e) => void;
-    onDelete: (e) => void;
+    onEdit?: (e) => void;
+    onDelete?: (e) => void;
 }) => (
     <div className={"flex flex-row gap-3"}>
-        <EditIcon className={"cursor-pointer"} onClick={onEdit} />
-        <BinIcon className={"cursor-pointer"} onClick={onDelete} />
+        {!!onEdit && <EditIcon className={"cursor-pointer"} onClick={onEdit} />}
+        {!!onDelete && (
+            <BinIcon className={"cursor-pointer"} onClick={onDelete} />
+        )}
     </div>
 );

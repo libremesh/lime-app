@@ -4,30 +4,32 @@ import { StatusIcons } from "components/icons/status";
 import NodeInfoListItem, {
     INodeInfoBodyItemProps,
 } from "components/mesh-wide-wizard/NodeInfoListItem";
+import { NodesListWrapper } from "components/mesh-wide-wizard/NodesListWrapper";
 
-import { meshUpgradeSharedStateKey } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueriesKeys";
-import { MeshWideNodeUpgradeInfo } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeTypes";
+import { useMeshWideConfigState } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigQueries";
+import {
+    MeshWideNodeConfigInfo,
+    meshConfigStateKey,
+} from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
 import {
     InfoStatusMessageMap,
-    detailedInfoStatusMessageMap,
     mainNodeStatusMessageMap,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/utils/upgradeStatusMessages";
 
-const NodeUpgradeInfoItem = ({
+const NodeConfigItem = ({
     info,
     name,
 }: {
-    info: MeshWideNodeUpgradeInfo;
+    info: MeshWideNodeConfigInfo;
     name: string;
 }) => {
-    const status: StatusIcons =
-        info.upgrade_state === "ERROR" ? "warning" : "success";
+    const status: StatusIcons = info.error ? "warning" : "success";
+    const nodeStatusInfo: INodeInfoBodyItemProps = {
+        title: info.state,
+        description: `info.state description`,
+    };
 
-    const nodeStatusInfo: INodeInfoBodyItemProps =
-        detailedInfoStatusMessageMap(info)[info.upgrade_state] ??
-        detailedInfoStatusMessageMap()["DEFAULT"];
-
-    let descriptionMsg = InfoStatusMessageMap[info.upgrade_state] ?? (
+    let descriptionMsg = InfoStatusMessageMap[info.state] ?? (
         <Trans>Error retrieving the status, is this node outdated?</Trans>
     );
 
@@ -40,19 +42,10 @@ const NodeUpgradeInfoItem = ({
         nodeStatusInfo,
         ...(mainNodeStatusInfo ? [mainNodeStatusInfo] : []),
         {
-            title: <Trans>Board</Trans>,
-            description: <Trans>{info.board_name}</Trans>,
-        },
-        {
-            title: <Trans>Firmware version</Trans>,
-            description: <Trans>{info.current_fw}</Trans>,
-        },
-        {
             title: <Trans>Ip</Trans>,
             description: <Trans>{info.node_ip}</Trans>,
         },
     ];
-
     return (
         <NodeInfoListItem
             extraInfoItems={extraInfoItems}
@@ -60,9 +53,20 @@ const NodeUpgradeInfoItem = ({
             name={name}
             descriptionMsg={descriptionMsg}
             ip={info.node_ip}
-            sharedStateUpdateTypes={[meshUpgradeSharedStateKey]}
+            sharedStateUpdateTypes={[meshConfigStateKey]}
         />
     );
 };
 
-export default NodeUpgradeInfoItem;
+const NodesListPage = () => {
+    const { data, isLoading } = useMeshWideConfigState({});
+    return (
+        <NodesListWrapper
+            data={data}
+            isLoading={isLoading}
+            NodeInfoComponent={NodeConfigItem}
+        />
+    );
+};
+
+export default NodesListPage;

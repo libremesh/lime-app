@@ -1,6 +1,7 @@
 import { QueryKey } from "@tanstack/react-query";
 
 import { sharedStateQueries } from "components/shared-state/SharedStateQueriesKeys";
+import { MeshUpgradeTypes } from "components/shared-state/SharedStateTypes";
 
 interface MeshUpgradeQueryKeysProps {
     [key: string]: QueryKey;
@@ -13,9 +14,12 @@ const MeshUpgradeQueryKeys: MeshUpgradeQueryKeysProps = {
     remoteAbort: ["lime-mesh-upgrade", "abort"],
 };
 
+export const meshUpgradeSharedStateKey: keyof MeshUpgradeTypes =
+    "mesh_wide_upgrade";
+
 export const meshUpgradeQueryKeys = {
     getMeshWideUpgradeInfo: (): QueryKey =>
-        sharedStateQueries.getFromSharedState("mesh_wide_upgrade"),
+        sharedStateQueries.getFromSharedState(meshUpgradeSharedStateKey),
     getMeshUpgradeNodeStatus: (): QueryKey =>
         MeshUpgradeQueryKeys.getMeshUpgradeNodeStatus,
     remoteScheduleUpgrade: (): QueryKey =>

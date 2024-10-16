@@ -1,6 +1,7 @@
 import { Trans } from "@lingui/macro";
+import { useFormContext } from "react-hook-form";
 
-import { Button } from "components/buttons/button";
+import { Button, ButtonProps } from "components/buttons/button";
 import { Collapsible } from "components/collapsible";
 import { useToast } from "components/toast/toastProvider";
 
@@ -10,19 +11,33 @@ import {
     useDeletePropModal,
     useEditPropModal,
 } from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
-import { IMeshWideSection } from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
+import {
+    IMeshWideConfig,
+    IMeshWideSection,
+} from "plugins/lime-plugin-mesh-wide-config/src/meshConfigTypes";
 import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 
-export const ConfigSection = ({ dropdown }: { dropdown: IMeshWideSection }) => {
+export const ConfigSection = ({
+    title,
+    dropdown,
+}: {
+    title: string;
+    dropdown: IMeshWideSection;
+}) => {
     return (
         <Collapsible
-            title={dropdown.name}
+            title={title}
             initCollapsed={true}
-            optionsComponent={<SectionEditOrDelete name={dropdown.name} />}
+            optionsComponent={<SectionEditOrDelete name={title} />}
         >
-            {Object.entries(dropdown.options).map(([key, value]) => (
-                <OptionContainer key={key} keyString={key} value={value} />
+            {Object.entries(dropdown).map(([key, value]) => (
+                <OptionContainer
+                    key={key}
+                    sectionName={title}
+                    keyString={key}
+                />
             ))}
+            <AddNewElementBtn sectionName={title} />
         </Collapsible>
     );
 };
@@ -75,29 +90,39 @@ export const SectionEditOrDelete = ({ name }) => {
     );
 };
 
-export const AddNewSectionBtn = () => {
-    const { toggleModal: toggleNewSectionModal, actionModal: addSectionModal } =
-        useAddNewSectionModal();
-
+export const AddNewElementBtn = ({ sectionName }: { sectionName?: string }) => {
+    const { watch, setValue } = useFormContext<IMeshWideConfig>();
+    const section = watch(sectionName);
     const { showToast } = useToast();
+
+    const sectionAdded = (data) => {
+        if (!sectionName) {
+            setValue(data.name, {});
+        } else {
+            const kaka = { ...section, [data.name]: "" };
+            setValue(sectionName, kaka);
+        }
+        toggleNewSectionModal();
+        showToast({
+            text: <Trans>Added section {data.name}</Trans>,
+        });
+    };
+
+    const { toggleModal: toggleNewSectionModal, actionModal: addSectionModal } =
+        useAddNewSectionModal(sectionAdded, sectionName);
+
     return (
-        <Button
-            color={"info"}
+        <AddElementButton
             onClick={() => {
-                addSectionModal((data) => {
-                    console.log(`Added`, data);
-                    toggleNewSectionModal();
-                    showToast({
-                        text: (
-                            <Trans>
-                                Added section {data.name} -{" "}
-                                {new Date().toDateString()}
-                            </Trans>
-                        ),
-                    });
-                });
+                addSectionModal();
             }}
-        >
+        />
+    );
+};
+
+export const AddElementButton = (props: ButtonProps) => {
+    return (
+        <Button color={"info"} {...props}>
             <Trans>Add new section</Trans>
         </Button>
     );
