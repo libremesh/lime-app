@@ -53,9 +53,21 @@ export const EditOrDelete = ({
 }: {
     onEdit: (e) => void;
     onDelete: (e) => void;
-}) => (
-    <div className={"flex flex-row gap-3"}>
-        <EditIcon className={"cursor-pointer"} onClick={onEdit} />
-        <BinIcon className={"cursor-pointer"} onClick={onDelete} />
-    </div>
-);
+}) => {
+    const runCb = (e, cb) => {
+        e.stopPropagation();
+        cb();
+    };
+    return (
+        <div className={"flex flex-row gap-3"}>
+            <EditIcon
+                className={"cursor-pointer"}
+                onClick={(e) => runCb(e, onEdit)}
+            />
+            <BinIcon
+                className={"cursor-pointer"}
+                onClick={(e) => runCb(e, onDelete)}
+            />
+        </div>
+    );
+};
