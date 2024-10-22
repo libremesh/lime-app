@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { createContext } from "preact";
-import { useContext, useState } from "preact/hooks";
-import { useCallback } from "react";
+import { createPortal } from "preact/compat";
+import { useCallback, useContext, useState } from "preact/hooks";
 
 import { Button } from "components/buttons/button";
 import Divider from "components/divider";
@@ -116,7 +116,7 @@ const ModalPortal = ({
         return null;
     }
 
-    return (
+    return createPortal(
         <>
             <div className={"fixed z-[90] inset-0 overflow-y-auto"}>
                 <div
@@ -184,7 +184,8 @@ const ModalPortal = ({
                     </div>
                 </div>
             </div>
-        </>
+        </>,
+        document.body
     );
 };
 
