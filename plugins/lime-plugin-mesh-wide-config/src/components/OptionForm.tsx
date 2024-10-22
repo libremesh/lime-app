@@ -2,16 +2,17 @@ import { Trans } from "@lingui/macro";
 import { useState } from "preact/hooks";
 import { SubmitHandler, useForm } from "react-hook-form";
 
+import { useDisclosure } from "components/Modal/useDisclosure";
 import { Button } from "components/buttons/button";
 import Divider from "components/divider";
 import InputField from "components/inputs/InputField";
 import { useToast } from "components/toast/toastProvider";
 
+import { EditOrDelete } from "plugins/lime-plugin-mesh-wide-config/src/components/Components";
 import {
-    useDeletePropModal,
-    useEditPropModal,
+    DeletePropModal,
+    EditPropModal,
 } from "plugins/lime-plugin-mesh-wide-config/src/components/modals";
-import { EditOrDelete } from "plugins/lime-plugin-mesh-wide/src/components/Components";
 
 const EditOptionForm = ({
     keyString,
@@ -63,15 +64,30 @@ export const OptionContainer = ({
     keyString: string;
     value: string;
 }) => {
+    const {
+        open: isDeleteModalOpen,
+        onOpen: openDeleteModal,
+        onClose: onCloseDeleteModal,
+    } = useDisclosure();
+    const { showToast } = useToast();
+
+    const onDelete = async () => {
+        console.log("delete stuff");
+        onCloseDeleteModal();
+        showToast({
+            text: (
+                <Trans>
+                    Deleted {keyString} - {new Date().toDateString()}
+                </Trans>
+            ),
+            onAction: () => {
+                console.log("Undo action");
+            },
+        });
+    };
     const [isEditing, setIsEditing] = useState(false);
 
     const toggleIsEditing = () => setIsEditing(!isEditing);
-
-    const { toggleModal: toggleDeleteModal, actionModal: deletePropModal } =
-        useDeletePropModal();
-    const { toggleModal: toggleEditModal, actionModal: editPropertyModal } =
-        useEditPropModal();
-    const { showToast } = useToast();
 
     return (
         <div class={"px-4"}>
@@ -89,23 +105,7 @@ export const OptionContainer = ({
                             <div>{keyString}</div>
                             <EditOrDelete
                                 onEdit={toggleIsEditing}
-                                onDelete={(e) => {
-                                    e.stopPropagation();
-                                    deletePropModal(keyString, () => {
-                                        console.log("delete stuff");
-                                        toggleDeleteModal();
-                                        showToast({
-                                            text: (
-                                                <Trans>
-                                                    Deleted {keyString}
-                                                </Trans>
-                                            ),
-                                            onAction: () => {
-                                                console.log("Undo action");
-                                            },
-                                        });
-                                    });
-                                }}
+                                onDelete={openDeleteModal}
                             />
                         </div>
                         <div>{value}</div>
@@ -115,18 +115,21 @@ export const OptionContainer = ({
                         keyString={keyString}
                         value={value}
                         onSubmit={(data) => {
-                            editPropertyModal(keyString, () => {
-                                console.log("edited stuff");
-                                toggleEditModal();
-                                toggleIsEditing();
-                                showToast({
-                                    text: <Trans>Edited {keyString}</Trans>,
-                                });
+                            console.log("edited stuff", data);
+                            toggleIsEditing();
+                            showToast({
+                                text: <Trans>Edited {data.key}</Trans>,
                             });
                         }}
                     />
                 )}
             </div>
+            <DeletePropModal
+                prop={keyString}
+                isOpen={isDeleteModalOpen}
+                onDelete={onDelete}
+                onClose={onCloseDeleteModal}
+            />
         </div>
     );
 };
