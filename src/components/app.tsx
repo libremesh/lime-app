@@ -6,7 +6,6 @@ import Router from "preact-router";
 import { useEffect } from "preact/hooks";
 import { Provider } from "react-redux";
 
-import { UseModalProvider } from "components/Modal/Modal";
 import { ToastProvider } from "components/toast/toastProvider";
 
 import { Menu } from "containers/Menu";
@@ -112,11 +111,9 @@ const AppDefault = () => {
             <QueryClientProvider client={queryCache}>
                 <AppContextProvider>
                     <Provider store={store}>
-                        <UseModalProvider>
-                            <ToastProvider>
-                                <App />
-                            </ToastProvider>
-                        </UseModalProvider>
+                        <ToastProvider>
+                            <App />
+                        </ToastProvider>
                     </Provider>
                 </AppContextProvider>
             </QueryClientProvider>

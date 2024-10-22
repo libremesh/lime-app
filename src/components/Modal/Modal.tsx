@@ -57,6 +57,9 @@ export const Modal = ({
             if (isLoading) return;
             setIsLoading(true);
             await cb();
+            // For some reason non async functions doesn't work properly.
+            // This is a trick to let them be called properly
+            await new Promise((resolve) => setTimeout(resolve, 0));
             setIsLoading(false);
         },
         [isLoading]
@@ -103,10 +106,16 @@ const ModalPortal = ({
     successBtnText = <Trans>Success</Trans>,
     deleteBtnText = <Trans>Delete</Trans>,
 }: ModalPortalProps) => {
+    const { isOpen, isLoading, onClose, onSuccess, onDelete } = useModal();
+
     const stopPropagation = (e) => {
         e.stopPropagation();
     };
-    const { isLoading, onClose, onSuccess, onDelete } = useModal();
+
+    if (!isOpen) {
+        return null;
+    }
+
     return (
         <>
             <div className={"fixed z-[90] inset-0 overflow-y-auto"}>
