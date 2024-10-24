@@ -1,87 +1,75 @@
 import { Trans } from "@lingui/macro";
-import { ComponentChildren } from "preact";
-import { useCallback } from "preact/compat";
 import { useForm } from "react-hook-form";
 
-import { ModalActions, useModal } from "components/Modal/Modal";
+import { Modal, ModalProps } from "components/Modal/Modal";
 import InputField from "components/inputs/InputField";
 
-import { dataTypeNameMapping } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
-import { MeshWideMapDataTypeKeys } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
+export const DeletePropModal = ({
+    prop,
+    ...rest
+}: { prop: string } & Pick<ModalProps, "onDelete" | "isOpen" | "onClose">) => (
+    <Modal title={<Trans>Delete property</Trans>} {...rest}>
+        <div>
+            <Trans>
+                Are you sure you want to delete the <strong>{prop}</strong>{" "}
+                property?
+            </Trans>
+        </div>
+    </Modal>
+);
 
-const useActionModal = (
-    title: ComponentChildren,
-    btnText: ComponentChildren,
-    actionName: ModalActions
-) => {
-    const { toggleModal, setModalState } = useModal();
+export const EditPropModal = ({
+    prop,
+    ...rest
+}: { prop: string } & Pick<ModalProps, "onSuccess" | "isOpen" | "onClose">) => (
+    <Modal
+        title={<Trans>Edit property</Trans>}
+        successBtnText={<Trans>Edit</Trans>}
+        {...rest}
+        cancelBtn
+    >
+        <div>
+            <Trans>
+                Are you sure you want to edit the <strong>{prop}</strong>{" "}
+                property?
+            </Trans>
+        </div>
+    </Modal>
+);
 
-    const actionModal = useCallback(
-        (prop: string, actionCb: () => void) => {
-            setModalState({
-                content: (
-                    <div>
-                        <Trans>
-                            Are you sure you want to {title} the{" "}
-                            <strong>{prop}</strong> property?
-                        </Trans>
-                    </div>
-                ),
-                title,
-                [`${actionName}Cb`]: actionCb,
-                [`${actionName}BtnText`]: btnText,
-            });
-            toggleModal();
-        },
-        [actionName, btnText, setModalState, title, toggleModal]
-    );
-    return { actionModal, toggleModal };
-};
+export interface AddNewSectionFormProps {
+    name: string;
+}
 
-export const useDeletePropModal = () =>
-    useActionModal(
-        <Trans>Delete property</Trans>,
-        <Trans>Delete</Trans>,
-        "delete"
-    );
-
-export const useEditPropModal = () =>
-    useActionModal(
-        <Trans>Edit property</Trans>,
-        <Trans>Edit</Trans>,
-        "success"
-    );
-
-export const useAddNewSectionModal = () => {
-    const { toggleModal, setModalState } = useModal();
-
+export const AddNewSectionModal = ({
+    onSuccess,
+    ...rest
+}: { onSuccess: (data: AddNewSectionFormProps) => void } & Pick<
+    ModalProps,
+    "isOpen" | "onClose"
+>) => {
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm({
+    } = useForm<AddNewSectionFormProps>({
         defaultValues: { name: "" },
     });
 
-    const actionModal = useCallback(
-        (actionCb: (data) => void) => {
-            setModalState({
-                content: (
-                    <div>
-                        <InputField
-                            id={"name"}
-                            label={<Trans>Name</Trans>}
-                            register={register}
-                        />
-                    </div>
-                ),
-                title: <Trans>Add new section</Trans>,
-                successCb: handleSubmit(actionCb),
-                successBtnText: <Trans>Add</Trans>,
-            });
-            toggleModal();
-        },
-        [handleSubmit, register, setModalState, toggleModal]
+    return (
+        <Modal
+            title={<Trans>Add new section</Trans>}
+            successBtnText={<Trans>Add</Trans>}
+            {...rest}
+            onSuccess={handleSubmit(onSuccess)}
+        >
+            <div>
+                <InputField
+                    id={"name"}
+                    label={<Trans>Name</Trans>}
+                    register={register}
+                />
+            </div>
+        </Modal>
     );
-    return { actionModal, toggleModal };
 };

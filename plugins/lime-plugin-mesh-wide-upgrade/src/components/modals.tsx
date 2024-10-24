@@ -1,61 +1,65 @@
 import { Trans } from "@lingui/macro";
-import { VNode } from "preact";
+import { ComponentChildren, VNode } from "preact";
 import { useCallback } from "react";
 
-import { useModal } from "components/Modal/Modal";
+import {
+    CallbackFn,
+    Modal,
+    ModalProps,
+    useModal,
+} from "components/Modal/Modal";
 
-interface IUseParallelQueriesModalProps {
-    useSuccessBtn?: boolean;
-    cb?: (e) => void;
-    title?: VNode;
-    content?: VNode;
-    btnTxt?: VNode;
-}
+import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
+import {
+    useParallelConfirmUpgrade,
+    useParallelScheduleUpgrade,
+} from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 
-const useParallelQueriesModal = ({
-    useSuccessBtn,
+type IUseParallelQueriesModalProps = {
+    isSuccess: boolean;
+} & Pick<ModalProps, "isOpen" | "onClose">;
+
+export const ParallelQueriesModal = ({
+    children,
+    isSuccess,
     cb,
-    title,
-    content,
-    btnTxt = <Trans>Schedule</Trans>,
-}: IUseParallelQueriesModalProps) => {
-    const { toggleModal, setModalState } = useModal();
-    const runAndClose = useCallback(() => {
-        cb(null);
-        toggleModal();
-    }, [cb, toggleModal]);
-
-    const showModal = useCallback(() => {
-        setModalState({
-            content,
-            title,
-            successCb: useSuccessBtn ? runAndClose : undefined,
-            deleteCb: !useSuccessBtn ? runAndClose : undefined,
-            successBtnText: btnTxt,
-            deleteBtnText: btnTxt,
-        });
-        toggleModal();
-    }, [
-        setModalState,
-        content,
-        title,
-        useSuccessBtn,
-        runAndClose,
-        btnTxt,
-        toggleModal,
-    ]);
-    return { showModal, toggleModal };
+    ...rest
+}: {
+    cb: CallbackFn;
+    children: ComponentChildren;
+} & IUseParallelQueriesModalProps &
+    Pick<ModalProps, "title">) => {
+    let props: Partial<
+        Pick<
+            ModalProps,
+            "onSuccess" | "onDelete" | "successBtnText" | "deleteBtnText"
+        >
+    > = {
+        onSuccess: cb,
+        successBtnText: <Trans>Schedule</Trans>,
+    };
+    if (!isSuccess) {
+        props = {
+            onDelete: cb,
+            deleteBtnText: <Trans>Schedule</Trans>,
+        };
+    }
+    return (
+        <Modal {...props} {...rest}>
+            {children}
+        </Modal>
+    );
 };
 
-export const useScheduleUpgradeModal = ({
-    useSuccessBtn,
-    cb,
-}: IUseParallelQueriesModalProps) => {
+export const ScheduleUpgradeModal = (props: IUseParallelQueriesModalProps) => {
+    const { callMutations: startScheduleMeshUpgrade } =
+        useParallelScheduleUpgrade();
+
     let title = <Trans>All nodes are ready</Trans>;
     let content = (
         <Trans>Schedule a firmware upgrade for all nodes on the network</Trans>
     );
-    if (!useSuccessBtn) {
+    if (!props.isSuccess) {
         title = <Trans>Some nodes are not ready</Trans>;
         content = (
             <Trans>
@@ -65,23 +69,28 @@ export const useScheduleUpgradeModal = ({
         );
     }
 
-    return useParallelQueriesModal({
-        useSuccessBtn,
-        cb,
-        title,
-        content,
-    });
+    return (
+        <ParallelQueriesModal
+            cb={() => {
+                startScheduleMeshUpgrade();
+                props.onClose();
+            }}
+            title={title}
+            {...props}
+        >
+            {content}
+        </ParallelQueriesModal>
+    );
 };
 
-export const useConfirmModal = ({
-    useSuccessBtn,
-    cb,
-}: IUseParallelQueriesModalProps) => {
+export const ConfirmModal = (props: IUseParallelQueriesModalProps) => {
+    const { callMutations: confirmMeshUpgrade } = useParallelConfirmUpgrade();
+
     let title = <Trans>All nodes are upgraded successfully</Trans>;
     let content = (
         <Trans>Confirm mesh wide upgrade for all nodes on the network</Trans>
     );
-    if (!useSuccessBtn) {
+    if (!props.isSuccess) {
         title = <Trans>Some nodes don't upgraded properly</Trans>;
         content = (
             <Trans>
@@ -90,15 +99,25 @@ export const useConfirmModal = ({
             </Trans>
         );
     }
-    return useParallelQueriesModal({
-        useSuccessBtn,
-        cb,
-        title,
-        content,
-    });
+    return (
+        <ParallelQueriesModal
+            cb={() => {
+                confirmMeshUpgrade();
+                props.onClose();
+            }}
+            title={title}
+            {...props}
+        >
+            {content}
+        </ParallelQueriesModal>
+    );
 };
 
-export const useAbortModal = ({ cb }: IUseParallelQueriesModalProps) => {
+export const AbortModal = ({
+    ...props
+}: Omit<IUseParallelQueriesModalProps, "isSuccess">) => {
+    const { abort } = useMeshUpgrade();
+
     const title = <Trans>Abort current mesh wide upgrade?</Trans>;
     const content = (
         <Trans>
@@ -107,11 +126,17 @@ export const useAbortModal = ({ cb }: IUseParallelQueriesModalProps) => {
         </Trans>
     );
     const btnTxt = <Trans>Abort</Trans>;
-    return useParallelQueriesModal({
-        useSuccessBtn: false,
-        cb,
-        title,
-        content,
-        btnTxt,
-    });
+    return (
+        <Modal
+            title={title}
+            deleteBtnText={btnTxt}
+            onDelete={() => {
+                abort();
+                props.onClose();
+            }}
+            {...props}
+        >
+            {content}
+        </Modal>
+    );
 };

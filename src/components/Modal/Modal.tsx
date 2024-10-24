@@ -1,153 +1,128 @@
 import { Trans } from "@lingui/macro";
-import { ComponentChildren, createContext } from "preact";
-import { useContext, useState } from "preact/hooks";
-import { useCallback } from "react";
+import { createContext } from "preact";
+import { createPortal } from "preact/compat";
+import { useCallback, useContext, useState } from "preact/hooks";
 
 import { Button } from "components/buttons/button";
 import Divider from "components/divider";
 
-interface ModalContextProps {
-    isModalOpen: boolean;
-    openModalKey?: string | null;
-    toggleModal: (key?: string) => void;
-    closeModal: (key?: string) => void;
-    setModalState: (state?: ModalState) => void;
+export type ModalActionsProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    onSuccess?: CallbackFn;
+    onDelete?: CallbackFn;
+};
+
+export type ModalPortalProps = {
+    children?;
+    title?;
+    cancelBtn?;
+    successBtnText?;
+    deleteBtnText?;
+};
+
+type ModalContextProps = {
     isLoading: boolean;
-}
+} & ModalProps;
 
-type CallbackFn = () => void | Promise<void>;
+export type CallbackFn = () => void | Promise<unknown>;
 
-interface ModalState {
-    content?: ComponentChildren;
-    title: ComponentChildren | string;
-    cancelBtn?: boolean;
-    successCb?: CallbackFn;
-    successBtnText?: ComponentChildren;
-    deleteCb?: CallbackFn;
-    deleteBtnText?: ComponentChildren;
-    isLoading?: boolean;
-}
+const ModalContext = createContext<ModalContextProps | null>(null);
 
-const ModalContext = createContext<ModalContextProps>({
-    isModalOpen: false,
-    openModalKey: null,
-    toggleModal: () => {},
-    closeModal: () => {},
-    setModalState: () => {},
-    isLoading: false,
-});
+export type ModalProps = ModalActionsProps & ModalPortalProps;
 
 export const useModal = () => {
     const context = useContext(ModalContext);
     if (context === undefined) {
-        throw new Error("useModal must be used within a UseModalProvider");
+        throw new Error("useModal must be used within a Modal component");
     }
     return context;
 };
 
-export type ModalActions = "success" | "delete";
-
-export const UseModalProvider = ({ children }) => {
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [openModalKey, setOpenModalKey] = useState<string | null>(null);
+export const Modal = ({
+    children,
+    title,
+    cancelBtn = false,
+    onSuccess,
+    successBtnText,
+    onDelete,
+    deleteBtnText,
+    isOpen,
+    onClose,
+}: ModalProps) => {
     const [isLoading, setIsLoading] = useState(false);
-
-    const [modalState, setModalState] = useState<ModalState>({
-        content: <></>,
-        title: "",
-        cancelBtn: false,
-        successCb: () => {},
-        successBtnText: <Trans>Success</Trans>,
-        deleteCb: () => {},
-        deleteBtnText: <Trans>Cancel</Trans>,
-    });
-
-    const toggleModal = useCallback((key?: string) => {
-        setModalOpen((prevIsModalOpen) => !prevIsModalOpen);
-        setOpenModalKey(key ?? null);
-    }, []);
-
-    const closeModal = useCallback((key?: string) => {
-        setModalOpen(false);
-        setOpenModalKey(null);
-    }, []);
 
     const runCb = useCallback(
         async (cb: CallbackFn) => {
             if (isLoading) return;
             setIsLoading(true);
             await cb();
+            // For some reason non async functions doesn't work properly.
+            // This is a trick to let them be called properly
+            await new Promise((resolve) => setTimeout(resolve, 0));
             setIsLoading(false);
         },
         [isLoading]
     );
 
-    const successCb =
-        modalState.successCb != null ? () => runCb(modalState.successCb) : null;
-    const deleteCb =
-        modalState.deleteCb != null ? () => runCb(modalState.deleteCb) : null;
+    let successCb = null;
+    if (onSuccess) {
+        successCb = () => runCb(onSuccess);
+    }
+
+    let deleteCb = null;
+    if (onDelete) {
+        deleteCb = () => runCb(onDelete);
+    }
 
     return (
         <ModalContext.Provider
             value={{
-                isModalOpen,
-                toggleModal,
-                setModalState,
-                closeModal,
+                isOpen,
+                onClose,
                 isLoading,
-                openModalKey,
+                onSuccess: successCb,
+                onDelete: deleteCb,
             }}
         >
-            {children}
-            <Modal
-                isModalOpen={isModalOpen}
-                toggleModal={toggleModal}
-                title={modalState.title}
-                cancelBtn={modalState.cancelBtn}
-                successCb={successCb}
-                successBtnText={modalState.successBtnText}
-                deleteCb={deleteCb}
-                deleteBtnText={modalState.deleteBtnText}
-                isLoading={isLoading}
-            >
-                {modalState.content}
-            </Modal>
+            {isOpen && (
+                <ModalPortal
+                    title={title}
+                    cancelBtn={cancelBtn}
+                    successBtnText={successBtnText}
+                    deleteBtnText={deleteBtnText}
+                >
+                    {children}
+                </ModalPortal>
+            )}
         </ModalContext.Provider>
     );
 };
 
-const Modal = ({
-    isModalOpen,
-    toggleModal,
+const ModalPortal = ({
     children,
     title,
-    cancelBtn = true,
-    successCb,
+    cancelBtn = false,
     successBtnText = <Trans>Success</Trans>,
-    deleteCb,
-    deleteBtnText = <Trans>Cancel</Trans>,
-    isLoading,
-}: {
-    isModalOpen: boolean;
-    toggleModal: () => void;
-    children?: ComponentChildren;
-} & ModalState) => {
+    deleteBtnText = <Trans>Delete</Trans>,
+}: ModalPortalProps) => {
+    const { isOpen, isLoading, onClose, onSuccess, onDelete } = useModal();
+
     const stopPropagation = (e) => {
         e.stopPropagation();
     };
-    return (
+
+    if (!isOpen) {
+        return null;
+    }
+
+    return createPortal(
         <>
-            <div
-                className={`${
-                    isModalOpen
-                        ? "fixed z-[90] inset-0 overflow-y-auto"
-                        : "hidden"
-                }`}
-            >
+            <div className={"fixed z-[90] inset-0 overflow-y-auto"}>
                 <div
                     className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:p-0"
                     onClick={() => {
-                        if (!isLoading) toggleModal();
+                        if (!isLoading) onClose();
                     }}
                 >
                     <div
@@ -176,20 +151,19 @@ const Modal = ({
                                 <Divider color={"gray"} />
                             </div>
                             <div className="pb-5 pt-2 sm:px-6 flex flex-row-reverse gap-3">
-                                {/*<div className="px-4 py-3 sm:px-6 flex flex-col md:flex md:flex-row-reverse gap-3">*/}
-                                {successCb && (
+                                {onSuccess && (
                                     <Button
                                         color={"primary"}
-                                        onClick={successCb}
+                                        onClick={onSuccess}
                                         disabled={isLoading}
                                     >
                                         {successBtnText}
                                     </Button>
                                 )}
-                                {deleteCb && (
+                                {onDelete && (
                                     <Button
                                         color={"danger"}
-                                        onClick={deleteCb}
+                                        onClick={onDelete}
                                         disabled={isLoading}
                                     >
                                         {deleteBtnText}
@@ -199,7 +173,7 @@ const Modal = ({
                                     <Button
                                         color={"info"}
                                         outline={true}
-                                        onClick={toggleModal}
+                                        onClick={onClose}
                                         disabled={isLoading}
                                     >
                                         <Trans>Close</Trans>
@@ -210,7 +184,8 @@ const Modal = ({
                     </div>
                 </div>
             </div>
-        </>
+        </>,
+        document.body
     );
 };
 

@@ -1,6 +1,8 @@
 import { Trans } from "@lingui/macro";
+import { DomEvent } from "leaflet";
 import { useCallback } from "react";
 
+import { useDisclosure } from "components/Modal/useDisclosure";
 import UpdateSharedStateBtn from "components/shared-state/UpdateSharedStateBtn";
 import useSharedStateSync from "components/shared-state/useSharedStateSync";
 import { useToast } from "components/toast/toastProvider";
@@ -11,7 +13,7 @@ import {
     Row,
     TitleAndText,
 } from "plugins/lime-plugin-mesh-wide/src/components/FeatureDetail/index";
-import { useSetNodeInfoReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/modals";
+import { SetNodeInfoReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/modals";
 import { useSingleNodeErrors } from "plugins/lime-plugin-mesh-wide/src/hooks/useSingleNodeErrors";
 import { getArrayDifference } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import {
@@ -146,6 +148,7 @@ const NodeDetails = ({ actual, reference, name }: NodeMapFeature) => {
 };
 
 export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
+    const { open, onOpen, onClose } = useDisclosure();
     const {
         hasErrors: hasNodeErrors,
         isDown,
@@ -162,8 +165,6 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     const { data: meshWideNodesReference, isError: isReferenceError } =
         useMeshWideNodesReference({});
 
-    const { toggleModal, confirmModal, isModalOpen } =
-        useSetNodeInfoReferenceStateModal();
     const { showToast } = useToast();
 
     const { syncNode } = useSharedStateSync({
@@ -190,16 +191,10 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
                 });
             },
             onSettled: () => {
-                if (isModalOpen) toggleModal();
+                if (open) onClose();
             },
         },
     });
-
-    const setReferenceState = useCallback(async () => {
-        confirmModal(hostname, isDown, async () => {
-            await mutateAsync();
-        });
-    }, [confirmModal, hostname, isDown, mutateAsync]);
 
     let btnText = <Trans>Set reference state for this node</Trans>;
     if (isDown) {
@@ -230,13 +225,24 @@ export const NodeReferenceStatus = ({ actual, reference }: NodeMapFeature) => {
     const showSetReferenceButton = hasNodeErrors || isNewNode || referenceError;
 
     return (
-        <StatusAndButton
-            isError={hasErrors}
-            btn={showSetReferenceButton && btnText}
-            onClick={setReferenceState}
-        >
-            {errorMessage}
-        </StatusAndButton>
+        <>
+            <StatusAndButton
+                isError={hasErrors}
+                btn={showSetReferenceButton && btnText}
+                onClick={onOpen}
+            >
+                {errorMessage}
+            </StatusAndButton>
+            <SetNodeInfoReferenceStateModal
+                nodeName={hostname}
+                isDown={isDown}
+                onSuccess={async () => {
+                    await mutateAsync();
+                }}
+                onClose={onClose}
+                isOpen={open}
+            />
+        </>
     );
 };
 
