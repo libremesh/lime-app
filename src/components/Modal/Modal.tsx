@@ -25,7 +25,7 @@ type ModalContextProps = {
     isLoading: boolean;
 } & ModalProps;
 
-type CallbackFn = () => void | Promise<void>;
+export type CallbackFn = () => void | Promise<unknown>;
 
 const ModalContext = createContext<ModalContextProps | null>(null);
 

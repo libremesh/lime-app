@@ -3,12 +3,13 @@ import { useMemo } from "preact/compat";
 import { useState } from "preact/hooks";
 import { useCallback } from "react";
 
+import { useDisclosure } from "components/Modal/useDisclosure";
 import { Warning } from "components/icons/status";
 import Tabs from "components/tabs";
 import { useToast } from "components/toast/toastProvider";
 
 import { StatusAndButton } from "plugins/lime-plugin-mesh-wide/src/components/Components";
-import { useSetLinkReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/modals";
+import { SetLinkReferenceStateModal } from "plugins/lime-plugin-mesh-wide/src/components/modals";
 import {
     getQueryByLinkType,
     usePointToPointErrors,
@@ -283,6 +284,8 @@ export const LinkReferenceStatus = ({
     linkToShow,
     reference,
 }: LinkMapFeature) => {
+    const { open, onOpen, onClose } = useDisclosure();
+
     const isNewLink = !reference;
 
     const { errors } = usePointToPointErrors({
@@ -307,9 +310,6 @@ export const LinkReferenceStatus = ({
         referenceError = true;
     }
 
-    // Modal to set ref state
-    const { closeModal, confirmModal, isModalOpen } =
-        useSetLinkReferenceStateModal();
     const { showToast } = useToast();
 
     // Get nodes to update
@@ -355,9 +355,9 @@ export const LinkReferenceStatus = ({
                 text: <Trans>Error setting new reference state!</Trans>,
             });
         } finally {
-            closeModal();
+            onClose();
         }
-    }, [callMutations, closeModal, showToast]);
+    }, [callMutations, onClose, showToast]);
 
     let btnText = (
         <Trans>
@@ -394,20 +394,23 @@ export const LinkReferenceStatus = ({
         errors?.hasErrors || isDown || isNewLink || referenceError;
 
     return (
-        <StatusAndButton
-            isError={hasError}
-            btn={showSetReferenceButton && btnText}
-            onClick={() =>
-                confirmModal({
-                    dataType: linkToShow.type,
-                    nodes: Object.values(nodesToUpdate),
-                    isDown,
-                    cb: setReferenceState,
-                })
-            }
-        >
-            {errorMessage}
-        </StatusAndButton>
+        <>
+            <StatusAndButton
+                isError={hasError}
+                btn={showSetReferenceButton && btnText}
+                onClick={onOpen}
+            >
+                {errorMessage}
+            </StatusAndButton>
+            <SetLinkReferenceStateModal
+                isOpen={open}
+                onClose={onClose}
+                onSuccess={setReferenceState}
+                dataType={linkToShow.type}
+                nodes={Object.values(nodesToUpdate)}
+                isDown={isDown}
+            />
+        </>
     );
 };
 

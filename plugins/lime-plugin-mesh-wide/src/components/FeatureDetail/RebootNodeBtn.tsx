@@ -1,9 +1,9 @@
 import { Trans } from "@lingui/macro";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "preact/hooks";
-import { useCallback } from "react";
+import { useCallback, useState } from "preact/hooks";
 
-import { useModal } from "components/Modal/Modal";
+import { Modal, ModalProps } from "components/Modal/Modal";
+import { useDisclosure } from "components/Modal/useDisclosure";
 import { Button } from "components/buttons/button";
 import { ErrorMsg } from "components/form";
 import Loading from "components/loading";
@@ -39,14 +39,15 @@ const useRemoteReboot = (opts?) => {
     });
 };
 
-const useRebootNodeModal = ({ node }: { node: INodeInfo }) => {
-    const modalKey = "rebootNodeModal";
-    const { toggleModal, setModalState, isModalOpen, openModalKey } =
-        useModal();
+const RebootNodeModal = ({
+    node,
+    isOpen,
+    onClose,
+}: { node: INodeInfo } & Pick<ModalProps, "isOpen" | "onClose">) => {
     const [password, setPassword] = useState("");
     const { mutate, isLoading, error } = useRemoteReboot({
         onSuccess: () => {
-            toggleModal(modalKey);
+            onClose();
         },
     });
 
@@ -58,73 +59,58 @@ const useRebootNodeModal = ({ node }: { node: INodeInfo }) => {
         mutate({ ip: node.ipv4, password });
     }, [mutate, node.ipv4, password]);
 
-    const updateModalState = useCallback(() => {
-        setModalState({
-            title: <Trans>Reboot node {node.hostname}</Trans>,
-            content: (
-                <div>
-                    <Trans>
-                        Are you sure you want to reboot this node? This action
-                        will disconnect the node from the network for a few
-                        minutes. <br />
-                        Add shared password or let it empty if no password is
-                        set.
-                    </Trans>
-                    {isLoading && <Loading />}
-                    {!isLoading && (
-                        <div className={"mt-4"}>
-                            <label htmlFor={"password"}>Node password</label>
-                            <input
-                                type="password"
-                                id={"password"}
-                                value={password}
-                                onInput={changePassword}
-                            />
-                            {error && (
-                                <ErrorMsg>
-                                    <Trans>
-                                        Error performing reboot: {error}
-                                    </Trans>
-                                </ErrorMsg>
-                            )}
-                        </div>
-                    )}
-                </div>
-            ),
-            successCb: doLogin,
-            successBtnText: <Trans>Reboot</Trans>,
-        });
-    }, [doLogin, error, isLoading, node.hostname, password, setModalState]);
-
-    const rebootModal = useCallback(() => {
-        updateModalState();
-        toggleModal(modalKey);
-    }, [toggleModal, updateModalState]);
-
-    // Update modal state with mutation result
-    useEffect(() => {
-        if (isModalOpen && openModalKey === modalKey) {
-            updateModalState();
-        }
-    }, [isLoading, error, isModalOpen, updateModalState, openModalKey]);
-
-    return { rebootModal, toggleModal, isModalOpen };
+    return (
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            onSuccess={doLogin}
+            title={<Trans>Reboot node {node.hostname}</Trans>}
+            successBtnText={<Trans>Reboot</Trans>}
+        >
+            <div>
+                <Trans>
+                    Are you sure you want to reboot this node? This action will
+                    disconnect the node from the network for a few minutes.{" "}
+                    <br />
+                    Add shared password or let it empty if no password is set.
+                </Trans>
+                {isLoading && <Loading />}
+                {!isLoading && (
+                    <div className={"mt-4"}>
+                        <label htmlFor={"password"}>Node password</label>
+                        <input
+                            type="password"
+                            id={"password"}
+                            value={password}
+                            onInput={changePassword}
+                        />
+                        {error && (
+                            <ErrorMsg>
+                                <Trans>Error performing reboot: {error}</Trans>
+                            </ErrorMsg>
+                        )}
+                    </div>
+                )}
+            </div>
+        </Modal>
+    );
 };
 
 const RemoteRebootBtn = ({ node }: { node: INodeInfo }) => {
-    const { rebootModal, isModalOpen } = useRebootNodeModal({
-        node,
-    });
+    const { open, onOpen, onClose } = useDisclosure();
 
     return (
-        <Button
-            color={"danger"}
-            outline={true}
-            size={"sm"}
-            onClick={() => !isModalOpen && rebootModal()}
-        >
-            <PowerIcon />
-        </Button>
+        <>
+            <Button
+                color={"danger"}
+                outline={true}
+                size={"sm"}
+                onClick={() => onOpen()}
+            >
+                <PowerIcon />
+            </Button>
+            <RebootNodeModal node={node} isOpen={open} onClose={onClose} />
+        </>
     );
 };
 

@@ -3,9 +3,11 @@ import { useCallback, useState } from "preact/hooks";
 export interface UseDisclosureProps {
     open?: boolean;
     defaultOpen?: boolean;
-    onClose?(): void;
-    onOpen?(): void;
     id?: string;
+
+    onClose?(): void;
+
+    onOpen?(): void;
 }
 
 /**
@@ -27,7 +29,6 @@ export function useDisclosure(props: UseDisclosureProps = {}) {
     const isControlled = openProp !== undefined;
 
     const onClose = useCallback(() => {
-        console.log("Inside onclose");
         if (!isControlled) {
             setopen(false);
         }
