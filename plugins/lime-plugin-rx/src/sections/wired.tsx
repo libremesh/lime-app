@@ -3,6 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 
 import Modal, { ModalProps } from "components/Modal/Modal";
 import { useDisclosure } from "components/Modal/useDisclosure";
+import { useToast } from "components/toast/toastProvider";
 
 import {
     IconsClassName,
@@ -149,7 +150,11 @@ const ChangeRoleConfirmationModal = ({
     ...rest
 }: { newRole: string } & ModalProps) => {
     return (
-        <Modal {...rest} title={<Trans>Changing role to {newRole}</Trans>}>
+        <Modal
+            {...rest}
+            title={<Trans>Changing role to {newRole}</Trans>}
+            successBtnText={<Trans>Confirm</Trans>}
+        >
             <div className={"flex flex-col gap-4"}>
                 <p>
                     <Trans>
@@ -163,23 +168,36 @@ const ChangeRoleConfirmationModal = ({
 };
 
 const PortRoleSelector = ({ port }: { port: SwitchStatus }) => {
-    const { mutateAsync } = useSetPortRole({
-        onSettled: () => {
-            queryCache.invalidateQueries({
-                queryKey: ["lime-rx", "node-status"],
-            });
-        },
-    });
+    const { showToast } = useToast();
     const [newRole, setNewRole] = useState<SupportedPortRoles>();
     const { open, onOpen, onClose } = useDisclosure({
         onClose() {
             setNewRole(null);
         },
     });
+    const { mutateAsync } = useSetPortRole({
+        onSettled: () => {
+            queryCache.invalidateQueries({
+                queryKey: ["lime-rx", "node-status"],
+            });
+            onClose();
+        },
+        onError: (error) => {
+            console.error(error);
+            showToast({
+                type: "error",
+                text: (
+                    <div>
+                        <Trans>Error changing role: </Trans>
+                        {error.message}
+                    </div>
+                ),
+            });
+        },
+    });
 
     const changeRole = async () => {
         await mutateAsync({ ...port, role: newRole });
-        onClose();
     };
 
     useEffect(() => {
