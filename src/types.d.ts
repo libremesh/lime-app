@@ -12,15 +12,8 @@ interface LimePlugin {
     name: string;
     page: typeof JSX.Element;
     menu: typeof JSX.Element;
-    menuView?: string;
     isCommunityProtected?: boolean;
     additionalRoutes?: LimeRoutes[];
     additionalProtectedRoutes?: LimeRoutes[];
-    store?: {
-        name: string;
-        epics?: any; // FIXME
-        reducer?: any; // FIXME
-        selector?: any; // FIXME
-        constants?: any; // FIXME
-    };
+    menuGroup?: string;
 }

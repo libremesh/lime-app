@@ -1,6 +1,8 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
 const preactPreset = require("jest-preset-preact");
 
+const esModules = ["@react-leaflet", "react-leaflet"].join("|");
+
 /** @returns {Promise<import('jest').Config>} */
 module.exports = {
     preset: "jest-preset-preact",
@@ -22,4 +24,5 @@ module.exports = {
         "^.+\\.[tj]sx?$": "babel-jest",
     },
     clearMocks: true,
+    transformIgnorePatterns: [`/node_modules/(?!${esModules})`],
 };

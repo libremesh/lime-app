@@ -1,18 +1,18 @@
-import { Trans } from "@lingui/macro";
-import { useState } from "preact/hooks";
-
 import { plugins } from "../../config";
 import style from "./style.less";
 
 export const Menu = ({ opened, toggle }) => {
-    const [currentView, setCurrentView] = useState("node");
-    const hasCommunityPlugins = () =>
-        plugins.filter((p) => p.menuView && p.menuView === "community").length >
-        0;
-    function changeCurrentView(e) {
-        e.preventDefault();
-        setCurrentView(currentView === "node" ? "community" : "node");
-    }
+    // Group plugins by menuGroup
+    const groupedPlugins = plugins
+        .filter((plugin) => plugin.page && plugin.menu) // Only include plugins with both `page` and `menu`
+        .reduce((groups, plugin) => {
+            const group = plugin.menuGroup || "default"; // Use "default" for plugins without a menuGroup
+            if (!groups[group]) {
+                groups[group] = [];
+            }
+            groups[group].push(plugin.menu);
+            return groups;
+        }, {});
 
     return (
         <div
@@ -21,38 +21,15 @@ export const Menu = ({ opened, toggle }) => {
             } d-flex flex-column`}
         >
             <nav className={style.menuItemsWrapper} onClick={toggle}>
-                {plugins
-                    .map((plugin) => ({
-                        ...plugin,
-                        menuView: plugin.menuView || "node",
-                    }))
-                    .filter(
-                        (plugin) =>
-                            plugin.page &&
-                            plugin.menu &&
-                            plugin.menuView === currentView
-                    )
-                    .map((plugin) => plugin.menu)
-                    .map((Component, index) => (
-                        <Component key={index} />
-                    ))}
+                {Object.entries(groupedPlugins).map(([group, components]) => (
+                    <div key={group} className={style.menuGroup}>
+                        {group !== "default" && <hr />}
+                        {components.map((Component, index) => (
+                            <Component key={index} />
+                        ))}
+                    </div>
+                ))}
             </nav>
-            {hasCommunityPlugins() && (
-                <nav className={style.viewSwitchWrapper}>
-                    <a
-                        href="#0"
-                        className={style.viewSwitch}
-                        onClick={changeCurrentView}
-                    >
-                        {currentView === "node" && (
-                            <Trans>Go to Community View</Trans>
-                        )}
-                        {currentView === "community" && (
-                            <Trans>Go to Node View</Trans>
-                        )}
-                    </a>
-                </nav>
-            )}
         </div>
     );
 };

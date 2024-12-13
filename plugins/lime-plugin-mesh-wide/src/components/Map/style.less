@@ -1,0 +1,85 @@
+@good: #006a05;
+@warning: #eaab7e;
+@bad: #eb7575;
+
+.markerContainer {
+    position: relative;
+    display: inline-block;
+}
+
+//Delete a leaflet strange div
+.leaflet-div-custom-icon {
+    background: none !important;
+    border: none !important;
+}
+
+// Default Marker shape
+.defaultMarker {
+    position: absolute;
+    left: -1.4rem;
+    top: -1.5rem;
+    border-radius: 50% 50% 50% 0;
+    width: 3rem;
+    height: 3rem;
+    transform: rotate(-45deg);
+}
+.defaultMarker::after {
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    top: 55%;
+    left: 56%;
+    margin-left: -6px;
+    margin-top: -5px;
+    background-color: #fff;
+}
+
+// Marker status colors
+.syncedMarker {
+    background-color: @good;
+}
+.errorMarker {
+    background-color: @bad;
+}
+.notUpMarker {
+    opacity: 0.8;
+    background-size: 10px 10px;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #fff 0,
+        #fff 1px,
+        @bad 0,
+        @bad 50%
+    );
+}
+
+.newNodeMarker {
+    opacity: 0.8;
+    background-size: 10px 10px;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #fff 0,
+        #fff 1px,
+        @good 0,
+        @good 50%
+    );
+}
+
+// Selected marker feature
+.selectedMarker,
+.defaultMarker:hover {
+    border: 2px solid black;
+}
+
+.badge {
+    position: absolute;
+    top: 7px;
+    right: -3px;
+    background-color: @warning;
+    color: white;
+    border-radius: 50%;
+    padding: 6px 6px;
+    font-size: 0.8em;
+}
