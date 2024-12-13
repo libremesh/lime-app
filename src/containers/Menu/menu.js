@@ -23,10 +23,7 @@ export const Menu = ({ opened, toggle }) => {
             <nav className={style.menuItemsWrapper} onClick={toggle}>
                 {Object.entries(groupedPlugins).map(([group, components]) => (
                     <div key={group} className={style.menuGroup}>
-                        {group !== "default" && (
-                            // <div className={style.menuGroupTitle}>{group}</div>
-                            <hr />
-                        )}
+                        {group !== "default" && <hr />}
                         {components.map((Component, index) => (
                             <Component key={index} />
                         ))}
