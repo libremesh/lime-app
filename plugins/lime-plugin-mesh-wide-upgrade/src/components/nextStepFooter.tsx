@@ -152,7 +152,7 @@ const NextStepFooter = () => {
             default:
                 step = {
                     status: "warning",
-                    children: <Trans>Try last step again</Trans>,
+                    children: <Trans>Abort current upgrade process</Trans>,
                 };
         }
         if (isShowAbortButtonState(stepperState)) {

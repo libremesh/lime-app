@@ -1,20 +1,6 @@
-import { Trans } from "@lingui/macro";
-import { useMemo } from "react";
-
-import { useDisclosure } from "components/Modal/useDisclosure";
-import { IStatusAndButton } from "components/status/statusAndButton";
-
-import {
-    AbortModal,
-    ConfirmModal,
-    ScheduleUpgradeModal,
-} from "plugins/lime-plugin-mesh-wide-upgrade/src/components/modals";
-import { useMeshUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/hooks/meshWideUpgradeProvider";
 import {
     UseConfirmUpgradeType,
     UseScheduleMeshSafeUpgradeType,
-    useParallelConfirmUpgrade,
-    useParallelScheduleUpgrade,
 } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 import {
     MeshWideUpgradeInfo,
@@ -70,14 +56,14 @@ export const getStepperStatus = (
         if (scheduleMeshSafeUpgradeStatus?.isLoading) {
             return "SENDING_START_SCHEDULE";
         }
-        if (someNodeAreDownloading) {
-            return "NODES_DOWNLOADING";
-        }
         if (
             scheduleMeshSafeUpgradeStatus?.results?.length ||
             scheduleMeshSafeUpgradeStatus?.errors?.length
         ) {
             return "UPGRADE_SCHEDULED";
+        }
+        if (someNodeAreDownloading) {
+            return "NODES_DOWNLOADING";
         }
         // Here the user can send the schedule upgrade to the nodes
         return "TRANSACTION_STARTED";
