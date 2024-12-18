@@ -1,4 +1,4 @@
-import { DivIconOptions, IconOptions } from "leaflet";
+import { IconOptions } from "leaflet";
 
 const leafletVersion = "1.9.3";
 

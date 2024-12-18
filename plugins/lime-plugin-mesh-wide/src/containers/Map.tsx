@@ -1,6 +1,5 @@
-import L from "leaflet";
 import { ComponentChildren } from "preact";
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect } from "preact/hooks";
 import {
     LayerGroup,
     LayersControl,
@@ -10,21 +9,28 @@ import {
 
 import { MeshWideMapTypes } from "components/shared-state/SharedStateTypes";
 
-import {
-    useLoadLeaflet,
-    useLocation,
-} from "plugins/lime-plugin-locate/src/locateQueries";
+import LocateNode from "plugins/lime-plugin-mesh-wide/src/containers/LocateNode";
 import {
     BabelLinksLayer,
     BatmanLinksLayer,
     WifiLinksLayer,
 } from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/LinksLayers";
 import NodesLayer from "plugins/lime-plugin-mesh-wide/src/containers/MapLayers/NodesLayer";
+import style from "plugins/lime-plugin-mesh-wide/src/containers/style.less";
+import { useLocateNode } from "plugins/lime-plugin-mesh-wide/src/hooks/useLocateNode";
+import {
+    useLoadLeaflet,
+    useLocation,
+} from "plugins/lime-plugin-mesh-wide/src/locateNodeQueries";
 import { useSelectedMapFeature } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 
 const openStreetMapTileString = "https://{s}.tile.osm.org/{z}/{x}/{y}.png";
 const openStreetMapAttribution =
     '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors';
+
+const gmSatellite = "https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}";
+const gmHybrid = "https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}";
+const gmSubdomains = ["mt0", "mt1", "mt2", "mt3"];
 
 interface ILayersChecked {
     nodes?: boolean;
@@ -33,12 +39,7 @@ interface ILayersChecked {
     babelLinks?: boolean;
 }
 
-export const MeshWideMap = ({
-    nodes = true,
-    wifiLinks = true,
-    batmanLinks = false,
-    babelLinks = false,
-}: ILayersChecked) => {
+export const MeshWideMap = (layers: ILayersChecked) => {
     const { data: selectedMapFeature, setData: setSelectedMapFeature } =
         useSelectedMapFeature();
 
@@ -50,7 +51,8 @@ export const MeshWideMap = ({
         enabled: !!leafletData,
     });
 
-    const mapRef = useRef<L.Map | null>();
+    const { mapRef, editingLocation } = useLocateNode();
+
     const loading = assetsLoading || isLoadingLocation;
 
     useEffect(() => {
@@ -81,6 +83,34 @@ export const MeshWideMap = ({
         }
     }, [loading, nodeLocation]);
 
+    return (
+        <MapContainer
+            center={[-30, -60]}
+            zoom={3}
+            scrollWheelZoom={true}
+            className={"w-screen h-screen sm:h-auto sm:pt-14 z-0"}
+            ref={mapRef}
+        >
+            <TileLayer
+                attribution={openStreetMapAttribution}
+                url={openStreetMapTileString}
+            />
+            <LayersControlMeshWide {...layers} />
+            <LayersControlMaps />
+            <LocateNode />
+            {editingLocation && (
+                <div id="location-marker" className={style.locationMarker} />
+            )}
+        </MapContainer>
+    );
+};
+
+const LayersControlMeshWide = ({
+    nodes = true,
+    wifiLinks = true,
+    batmanLinks = false,
+    babelLinks = false,
+}: ILayersChecked) => {
     // @ts-ignore
     const mapSupportedLayers: Record<
         keyof MeshWideMapTypes,
@@ -105,30 +135,35 @@ export const MeshWideMap = ({
     };
 
     return (
-        <MapContainer
-            center={[-30, -60]}
-            zoom={3}
-            scrollWheelZoom={true}
-            className={"w-screen h-screen sm:h-auto sm:pt-14 z-0"}
-            ref={mapRef}
-        >
+        <LayersControl position="topright">
+            {Object.values(mapSupportedLayers).map(
+                ({ name, layer, checked }, k) => (
+                    <LayersControl.Overlay
+                        key={k}
+                        name={name}
+                        checked={checked}
+                    >
+                        <LayerGroup>{layer}</LayerGroup>
+                    </LayersControl.Overlay>
+                )
+            )}
+        </LayersControl>
+    );
+};
+
+const LayersControlMaps = () => (
+    <LayersControl position="bottomright">
+        <LayersControl.BaseLayer checked name="Open Street Map">
             <TileLayer
                 attribution={openStreetMapAttribution}
                 url={openStreetMapTileString}
             />
-            <LayersControl position="topright">
-                {Object.values(mapSupportedLayers).map(
-                    ({ name, layer, checked }, k) => (
-                        <LayersControl.Overlay
-                            key={k}
-                            name={name}
-                            checked={checked}
-                        >
-                            <LayerGroup>{layer}</LayerGroup>
-                        </LayersControl.Overlay>
-                    )
-                )}
-            </LayersControl>
-        </MapContainer>
-    );
-};
+        </LayersControl.BaseLayer>
+        <LayersControl.BaseLayer name="Google Maps Satellite">
+            <TileLayer url={gmSatellite} subdomains={gmSubdomains} />
+        </LayersControl.BaseLayer>
+        <LayersControl.BaseLayer name="Google Maps Hybrid">
+            <TileLayer url={gmHybrid} subdomains={gmSubdomains} />
+        </LayersControl.BaseLayer>
+    </LayersControl>
+);
