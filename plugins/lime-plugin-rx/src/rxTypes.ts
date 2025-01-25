@@ -53,3 +53,9 @@ export interface IGetInternetStatus {
     IPv4: { working: boolean };
     status: string;
 }
+
+export enum SupportedPortRoles {
+    WAN = "wan",
+    LAN = "lan",
+    MESH = "mesh",
+}

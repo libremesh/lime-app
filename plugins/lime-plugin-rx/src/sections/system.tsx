@@ -40,6 +40,11 @@ const SystemInfo = () => {
 
     const boardData = bd as IGetBoardDataResponse;
     const secNum = parseInt(node?.uptime, 10);
+    const ips =
+        node?.ips.map((ip) => ({
+            label: `IPv${ip.version}`,
+            value: ip.address,
+        })) || [];
     const attributes = [
         {
             label: t`Uptime`,
@@ -47,7 +52,9 @@ const SystemInfo = () => {
         },
         { label: t`Device`, value: boardData.board_name },
         { label: t`Firmware`, value: boardData.release.description },
+        ...ips,
     ];
+
     return (
         <div className="flex justify-start px-10">
             <div className="grid grid-cols-4 gap-4">

@@ -1,6 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
+import { MutationKey } from "@tanstack/query-core/src/types";
+import {
+    UseMutationOptions,
+    useMutation,
+    useQuery,
+} from "@tanstack/react-query";
 
-import { getInternetStatus, getNodeStatus } from "./rxApi";
+import { SupportedPortRoles } from "plugins/lime-plugin-rx/src/rxTypes";
+
+import {
+    SetPortRoleArgs,
+    getInternetStatus,
+    getNodeStatus,
+    setPortRole,
+} from "./rxApi";
 
 const refetchInterval = 2000;
 
@@ -24,3 +36,16 @@ export function useInternetStatus(params?) {
         ...params,
     });
 }
+
+export const useSetPortRole = (
+    options?: Omit<
+        UseMutationOptions<boolean, Error, SetPortRoleArgs>,
+        "mutationFn" | "mutationKey"
+    >
+) => {
+    return useMutation<boolean, Error, SetPortRoleArgs>({
+        mutationFn: setPortRole,
+        mutationKey: ["useSetPortRole"] as MutationKey,
+        ...options,
+    });
+};
