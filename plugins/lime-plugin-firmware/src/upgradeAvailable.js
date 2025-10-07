@@ -22,7 +22,7 @@ export const UpgradeAvailableBanner = () => {
         // @ts-ignore
         <Match>
             {({ path }) =>
-                !["firmware", "releaseInfo", "meshwide/upgrade"].includes(
+                !["firmware", "releaseInfo", "meshwideupgrade"].includes(
                     path.replace("/", "")
                 ) && (
                     <div

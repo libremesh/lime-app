@@ -47,6 +47,8 @@ export interface NodeMeshUpgradeInfo {
     board_name: string;
     current_fw: string;
     node_ip: string;
+    confirm_remaining: number;
+    safeupgrade_start_remaining: number;
 }
 
 export type MeshWideNodeUpgradeInfo = {

@@ -18,7 +18,7 @@ import { useNodes } from "plugins/lime-plugin-mesh-wide/src/hooks/useNodes";
 import { MacToMacLink } from "plugins/lime-plugin-mesh-wide/src/lib/links/PointToPointLink";
 import {
     dataTypeNameMapping,
-    readableBytes,
+    readableKBits,
 } from "plugins/lime-plugin-mesh-wide/src/lib/utils";
 import { useSetLinkReferenceState } from "plugins/lime-plugin-mesh-wide/src/meshWideQueries";
 import {
@@ -147,10 +147,10 @@ const WifiDetail = ({
             </Row>
             <Row>
                 <TitleAndText title={<Trans>TxRate</Trans>}>
-                    {`${readableBytes(node.tx_rate)}`}
+                    {`${readableKBits(node.tx_rate*1000)}`}
                 </TitleAndText>
                 <TitleAndText title={<Trans>RxRate</Trans>}>
-                    {`${readableBytes(node.rx_rate)}`}
+                    {`${readableKBits(node.rx_rate*1000)}`}
                 </TitleAndText>
             </Row>
         </div>

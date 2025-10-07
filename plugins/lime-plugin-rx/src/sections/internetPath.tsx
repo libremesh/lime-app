@@ -124,7 +124,7 @@ export const InternetPath = () => {
                     <Button href={"#/metrics"}>
                         <Trans>Diagnose</Trans>
                     </Button>
-                    <Button href={"#/locate"}>
+                    <Button href={"#/meshwide"}>
                         <Trans>Map</Trans>
                     </Button>
                 </div>

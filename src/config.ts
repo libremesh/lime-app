@@ -2,7 +2,6 @@ import Align from "plugins/lime-plugin-align";
 import ChangeNode from "plugins/lime-plugin-changeNode";
 import Fbw from "plugins/lime-plugin-fbw";
 import Firmware from "plugins/lime-plugin-firmware";
-import Locate from "plugins/lime-plugin-locate";
 import MeshWide from "plugins/lime-plugin-mesh-wide";
 import MeshConfigPage from "plugins/lime-plugin-mesh-wide-config";
 import MeshUpgrade from "plugins/lime-plugin-mesh-wide-upgrade";
@@ -18,7 +17,6 @@ import Rx from "plugins/lime-plugin-rx";
 export const plugins: LimePlugin[] = [
     Rx,
     Align,
-    Locate,
     MeshWide,
     Metrics,
     Notes,

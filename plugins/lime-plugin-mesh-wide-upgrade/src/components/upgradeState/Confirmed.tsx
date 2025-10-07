@@ -1,4 +1,5 @@
 import { Trans } from "@lingui/macro";
+import { useEffect } from "preact/hooks";
 
 import {
     MeshUpgradeErrorIcon,
@@ -9,12 +10,19 @@ import {
 
 import { useParallelConfirmUpgrade } from "plugins/lime-plugin-mesh-wide-upgrade/src/meshUpgradeQueries";
 
+import queryCache from "utils/queryCache";
+
 export const Confirmed = () => {
     const { errors } = useParallelConfirmUpgrade();
-    // let icon = <div className="text-9xl text-primary-light">✓</div>;
     let icon = <MeshUpgradeSuccessIcon />;
     let title = <Trans>Confirmed!</Trans>;
     let desc = <Trans>Mesh upgrade confirmed successfully</Trans>;
+
+    // Invalidate confirmation banner queries to avoid showing the banner again
+    useEffect(() => {
+        queryCache.invalidateQueries(["lime-utils", "get_upgrade_info"]);
+    }, []);
+
     if (errors?.length > 0) {
         icon = <MeshUpgradeErrorIcon />;
         title = <Trans>Confirmed with some errors</Trans>;

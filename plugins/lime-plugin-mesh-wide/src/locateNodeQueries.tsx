@@ -1,11 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { loadLeafLet } from "plugins/lime-plugin-locate/src/leafletUtils";
+import { loadLeafLet } from "plugins/lime-plugin-mesh-wide/src/lib/leafletUtils";
 import {
     changeLocation,
     getLocation,
-    getNodesandlinks,
-} from "plugins/lime-plugin-locate/src/locateApi";
+} from "plugins/lime-plugin-mesh-wide/src/locateApi";
 
 import queryCache from "utils/queryCache";
 
@@ -17,8 +16,9 @@ export interface INodeLocation {
     default: boolean;
 }
 
+export const getLocationQueryKey = ["lime-location", "get"];
 export function useLocation(params) {
-    return useQuery<INodeLocation>(["lime-location", "get"], getLocation, {
+    return useQuery<INodeLocation>(getLocationQueryKey, getLocation, {
         placeholderData: {
             default: false,
             location: {
@@ -28,16 +28,6 @@ export function useLocation(params) {
         },
         ...params,
     });
-}
-
-export function useNodesandlinks(params) {
-    return useQuery(
-        ["lime-location", "all_nodes_and_links"],
-        getNodesandlinks,
-        {
-            ...params,
-        }
-    );
 }
 
 interface IChangeUserParams {

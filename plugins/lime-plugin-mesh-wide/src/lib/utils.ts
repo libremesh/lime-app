@@ -4,17 +4,17 @@ import { SharedStateDataTypeKeys } from "components/shared-state/SharedStateType
 
 import { INodes } from "plugins/lime-plugin-mesh-wide/src/meshWideTypes";
 
-export const readableBytes = (bytes: number) => {
-    const sizes = ["B", "KB", "MB", "GB", "TB"];
+export const readableKBits = (bytes: number) => {
+    const sizes = ["Bit/s", "KBit/s", "MBit/s", "GBit/s", "TBit/s"];
 
-    if (bytes === 0) return "0 Byte";
+    if (bytes === 0) return "0 Bit/s";
     const i = parseInt(
-        Math.floor(Math.log(bytes) / Math.log(1024)).toString(),
+        Math.floor(Math.log(bytes) / Math.log(1000)).toString(),
         10
     );
     if (i === 0) return `${bytes} ${sizes[i]}`;
 
-    return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${sizes[i]}`;
+    return `${(bytes / Math.pow(1000, i)).toFixed(1)} ${sizes[i]}`;
 };
 
 /**
